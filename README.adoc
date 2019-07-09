@@ -1,0 +1,3 @@
+= OpenShift cluster manager API model
+
+This project contains the code for the API model.
