@@ -61,7 +61,7 @@ resource Clusters {
 		in out Body Cluster
 	}
 
-	// Retursn a reference to the service that manages an specific cluster.
+	// Returns a reference to the service that manages an specific cluster.
 	locator Cluster {
 		target Cluster
 		variable ID
