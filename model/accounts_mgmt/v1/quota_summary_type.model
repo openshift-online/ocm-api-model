@@ -14,27 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific organization.
-resource Organization {
-	// Retrieves the details of the organization.
-	method Get {
-		out Body Organization
-	}
-
-	// Updates the organization.
-	method Update {
-		in out Body Organization
-	}
-
-	// Reference to the service that manages the resource quotas for this
-	// organization.
-	locator ResourceQuota {
-		target ResourceQuotas
-	}
-
-	// Reference to the service that returns the summary of the resource quota for this
-	// organization.
-	locator QuotaSummary {
-		target QuotaSummary
-	}
+struct QuotaSummary {
+	OrganizationID string
+	ResourceName string
+	ResourceType string
+	BYOC boolean
+	AvailabilityZoneType string
+	Allowed integer
+	Reserved integer
 }
