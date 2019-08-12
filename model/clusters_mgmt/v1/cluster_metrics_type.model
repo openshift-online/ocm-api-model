@@ -27,6 +27,12 @@ struct ClusterMetrics {
 	// WARNING: This isn't currently populated. 
 	Storage ClusterMetric
 
+	// The amount of CPU provisioned and used in the cluster by compute nodes.
+	ComputeNodesCPU ClusterMetric
+
+	// The amount of memory provisioned and used in the cluster by compute nodes.
+	ComputeNodesMemory ClusterMetric
+
 	// The number of nodes provisioned for the cluster.
 	Nodes ClusterNodes
 }
