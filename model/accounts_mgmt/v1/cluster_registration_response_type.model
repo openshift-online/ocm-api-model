@@ -20,5 +20,5 @@ struct ClusterRegistrationResponse {
 	AccountID String
 
 	// Cluster registration expiration.
-	ExpiresAt Long
+	ExpiresAt String
 }
