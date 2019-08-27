@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Representation of an _OpenShift_ version.
-class Version {
+lass Version {
 	// Indicates if this version can be used to create clusters.
 	Enabled boolean
 
