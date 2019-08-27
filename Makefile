@@ -1,4 +1,3 @@
-#!/bin/bash -ex
 #
 # Copyright (c) 2019 Red Hat, Inc.
 #
@@ -15,8 +14,21 @@
 # limitations under the License.
 #
 
-# This script is executed by a Jenkins job for each change request. If it
-# doesn't succeed the change won't be merged.
+# Details of the metamodel used to check the model:
+metamodel_version:=v0.0.2
+metamodel_url:=https://github.com/openshift-online/ocm-api-metamodel.git
 
-# Check the model:
-make check
+.PHONY: check
+check: metamodel
+	metamodel/ocm-metamodel-tool check --model=model
+
+.PHONY: metamodel
+metamodel:
+	[ -d "$@" ] || git clone "$(metamodel_url)" "$@"
+	cd "$@" && git fetch origin
+	cd "$@" && git checkout -B build "$(metamodel_version)"
+	make -C "$@"
+
+.PHONY: clean
+clean:
+	rm -rf metamodel
