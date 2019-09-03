@@ -25,7 +25,7 @@ check: metamodel
 .PHONY: metamodel
 metamodel:
 	[ -d "$@" ] || git clone "$(metamodel_url)" "$@"
-	cd "$@" && git fetch origin
+	cd "$@" && git fetch --tags origin
 	cd "$@" && git checkout -B build "$(metamodel_version)"
 	make -C "$@"
 
