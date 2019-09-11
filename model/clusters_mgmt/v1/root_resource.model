@@ -16,6 +16,11 @@ limitations under the License.
 
 // Root of the tree of resources of the clusters management service.
 resource Root {
+	// Reference to the resource that manages the collection of cloud providers.
+	locator CloudProviders {
+		target CloudProviders
+	}
+
 	// Reference to the resource that manages the collection of clusters.
 	locator Clusters {
 		target Clusters

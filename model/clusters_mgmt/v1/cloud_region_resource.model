@@ -14,12 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Cloud provider.
-class CloudProvider {
-	// Human friendly identifier of the cloud provider, for example `aws`.
-	Name String
-
-	// Name of the cloud provider for display purposes. It can contain any characters,
-	// including spaces.
-	DisplayName String
+// Manages a specific cloud region.
+resource CloudRegion {
+	// Retrieves the details of the region.
+	method Get {
+		out Body CloudRegion
+	}
 }
