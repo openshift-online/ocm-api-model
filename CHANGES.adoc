@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.3 Sep 11 2019
+
+- Add `order` parameter to the collections that suport it.
+- Add cloud providers collection.
+
 == 0.0.2 Sep 10 2019
 
 - Add `DisplayName` attribute to `Subscription` type.
