@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.5 Sep 12 2019
+
+- Add `order` parameter to the methods to list accounts and subscriptions.
+
 == 0.0.4 Sep 12 2019
 
 - Update to metamodel 0.0.6:
