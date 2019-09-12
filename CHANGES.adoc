@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.4 Sep 12 2019
+
+- Update to metamodel 0.0.6:
+** Explicitly enable Go modules so that the build works correctly when the
+   project is located inside the Go path.
+
 == 0.0.3 Sep 11 2019
 
 - Add `order` parameter to the collections that suport it.
