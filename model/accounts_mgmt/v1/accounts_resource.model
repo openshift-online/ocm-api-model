@@ -32,6 +32,21 @@ resource Accounts {
 		// regardless of the size of the page.
 		in out Total Integer
 
+		// Order criteria.
+		//
+		// The syntax of this parameter is similar to the syntax of the _order by_ clause of
+		// a SQL statement. For example, in order to sort the
+		// clusters descending by name identifier the value should be:
+		//
+		// [source,sql]
+		// ----
+		// name desc
+		// ----
+		//
+		// If the parameter isn't provided, or if the value is empty, then the order of the
+		// results is undefined.
+		in Order String
+
 		// Retrieved list of accounts.
 		out Items []Account
 	}
