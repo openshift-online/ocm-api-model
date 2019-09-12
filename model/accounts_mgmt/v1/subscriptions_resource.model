@@ -36,7 +36,7 @@ resource Subscriptions {
 		//
 		// The syntax of this parameter is similar to the syntax of the _order by_ clause of
 		// a SQL statement. For example, in order to sort the
-		// clusters descending by name identifier the value should be:
+		// subscriptions descending by name identifier the value should be:
 		//
 		// [source,sql]
 		// ----
