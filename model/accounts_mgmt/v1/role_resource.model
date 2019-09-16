@@ -23,7 +23,7 @@ resource Role {
 
 	// Updates the role.
 	method Update {
-		in out Body Role
+		in Body Role
 	}
 
 	// Deletes the role.
