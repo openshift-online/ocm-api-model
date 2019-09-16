@@ -129,9 +129,6 @@ class Cluster {
 	// Link to the collection of groups of user of the cluster.
 	link Groups []Group
 
-	// Mail address of the user that created the cluster.
-	Creator String
-
 	// Link to the version of _OpenShift_ that will be used to install the cluster.
 	link Version Version
 
