@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.7 Sep 16 2019
+
+- Add `search` parameter to the `List` method of the subscriptions resource.
+
 == 0.0.6 Sep 16 2019
 
 - Remove the `creator` attribute of the `Cluster` type.
