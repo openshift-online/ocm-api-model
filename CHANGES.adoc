@@ -4,6 +4,10 @@ This document describes the relevant changes between releases of the API model.
 
 == 0.0.9 Oct 7 2019
 
+- Add `cpu_total_by_node_roles_os` metric query.
+
+== 0.0.9 Oct 7 2019
+
 - Add `type` attribute to the `ResourceQuota` type.
 - Add `config_managed` attribute to the `RoleBinding` type.
 
