@@ -23,4 +23,5 @@ class ResourceQuota {
 	AvailabilityZoneType String
 	Allowed Integer
 	Reserved Integer
+	Type String
 }

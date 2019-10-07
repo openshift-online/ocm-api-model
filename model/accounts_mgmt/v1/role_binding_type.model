@@ -20,4 +20,5 @@ class RoleBinding {
 	Account Account
 	Organization Organization
 	Role Role
+	ConfigManaged Boolean
 }
