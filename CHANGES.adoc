@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.9 Oct 7 2019
+
+- Add `type` attribute to the `ResourceQuota` type.
+- Add `config_managed` attribute to the `RoleBinding` type.
+
 == 0.0.8 Sep 17 2019
 
 - Update methods don't return body.
