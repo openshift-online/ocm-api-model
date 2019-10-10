@@ -2,7 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
-== 0.0.9 Oct 7 2019
+== 0.0.11 Oct 10 2019
+
+- Add `export_control_review` resource.
+
+== 0.0.10 Oct 7 2019
 
 - Add `cpu_total_by_node_roles_os` metric query.
 
