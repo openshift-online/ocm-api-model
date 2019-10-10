@@ -16,7 +16,7 @@ limitations under the License.
 
 // Manages export control review.
 resource ExportControlReview {
-	// Screens a user by account username
+	// Screens a user by account user name.
 	method Post {
 		in Request ExportControlReviewRequest
 		out Response ExportControlReviewResponse
