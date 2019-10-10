@@ -14,20 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Root of the tree of resources of the authorization service.
-resource Root {
-	// Reference to the resource that is used to submit export control review requests.
-	locator ExportControlReview {
-		target ExportControlReview
-	}
-
-	// Reference to the resource that is used to submit access review requests.
-	locator AccessReview {
-		target AccessReview
-	}
-
-	// Reference to the resource that is used to submit self access review requests.
-	locator SelfAccessReview {
-		target SelfAccessReview
+// Manages access review.
+resource SelfAccessReview {
+	// Reviews a user's access to a resource
+	method Post {
+		in Request SelfAccessReviewRequest
+		out Response SelfAccessReviewResponse
 	}
 }
