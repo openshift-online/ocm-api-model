@@ -14,11 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages access tokens.
-resource AccessToken {
-	// Returns access token generated from registries in docker format.
-	method Post {
-		in Request AccessTokenRequest
-		out Body AccessToken
-	}
+struct AccessTokenRequest {
 }
