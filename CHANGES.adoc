@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.13 Oct 15 2019
+
+- Added `AccessTokenAuth` type.
+- Added `auths` attribute to `AccessToken` type.
+- Update to metamodel 0.0.9.
+
 == 0.0.12 Oct 10 2019
 
 - Add `access_review` resource.
