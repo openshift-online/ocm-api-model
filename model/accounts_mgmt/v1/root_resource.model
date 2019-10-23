@@ -80,4 +80,8 @@ resource Root {
 	locator Subscriptions {
 		target Subscriptions
 	}
+
+	locator Skus {
+		target Skus
+	}
 }
