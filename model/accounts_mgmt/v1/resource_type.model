@@ -14,8 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// Identifies computing resources
 class Resource {
+	// platform-specific name, such as "M5.2Xlarge" for a type of EC2 node
 	ResourceName String
 	ResourceType String
+	// Number of allowed nodes
 	Allowed Integer
 }

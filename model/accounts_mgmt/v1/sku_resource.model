@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific sku.
-resource Sku {
-	// Retrieves the details of the sku.
+// Manages a specific SKU.
+resource SKU {
+	// Retrieves the details of the SKU.
 	method Get {
-		out Body Sku
+		out Body SKU
 	}
 }

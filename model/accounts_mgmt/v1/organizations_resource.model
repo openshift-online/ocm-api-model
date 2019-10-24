@@ -48,7 +48,6 @@ resource Organizations {
 		// items that the user has permission to see will be returned.
 		in Search String
 
-
 		// Retrieved list of organizations.
 		out Items []Organization
 	}

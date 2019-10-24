@@ -81,7 +81,9 @@ resource Root {
 		target Subscriptions
 	}
 
-	locator Skus {
-		target Skus
+	// Reference to the resource that manages the collection of
+	// SKUS
+	locator SKUS {
+		target SKUS
 	}
 }
