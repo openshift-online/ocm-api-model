@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.14 Oct 24 2019
+
+- Added `SKU` type.
+- Improved organizations.
+- Improved roles.
+
 == 0.0.13 Oct 15 2019
 
 - Added `AccessTokenAuth` type.
