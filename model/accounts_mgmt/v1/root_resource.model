@@ -80,4 +80,10 @@ resource Root {
 	locator Subscriptions {
 		target Subscriptions
 	}
+
+	// Reference to the resource that manages the collection of
+	// SKUS
+	locator SKUS {
+		target SKUS
+	}
 }
