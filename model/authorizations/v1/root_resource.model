@@ -30,4 +30,9 @@ resource Root {
 	locator SelfAccessReview {
 		target SelfAccessReview
 	}
+
+	// Reference to the resource that is used to submit resource review requests.
+	locator ResourceReview {
+		target ResourceReview
+	}
 }
