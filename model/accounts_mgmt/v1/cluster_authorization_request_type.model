@@ -15,11 +15,14 @@ limitations under the License.
 */
 
 struct ClusterAuthorizationRequest {
-	ClusterID String
 	AccountUsername String
+	AvailabilityZone String
+	BYOC Boolean
+	ClusterID String
+	Disconnected Boolean
+	DisplayName String
+	ExternalClusterID String
 	Managed Boolean
 	Reserve Boolean
-	BYOC Boolean
-	AvailabilityZone String
 	Resources []ReservedResource
 }

@@ -15,9 +15,11 @@ limitations under the License.
 */
 
 struct ReservedResource {
+	AvailabilityZoneType String
+	BYOC Boolean
+	Count Integer
+	CreatedAt Date
 	ResourceName String
 	ResourceType String
-	BYOC Boolean
-	AvailabilityZoneType String
-	Count Integer
+	UpdatedAt Date
 }
