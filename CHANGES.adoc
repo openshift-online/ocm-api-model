@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.17 Oct 28 2019
+
+- Added `Disconnected`, `DisplayName` and `ExternalClusterID` attributes to the
+  cluster authorization request type.
+
 == 0.0.16 Oct 27 2019
 
 - Added `ResourceReview` resource to the authorizations service.
