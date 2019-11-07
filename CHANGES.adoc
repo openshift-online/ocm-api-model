@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.18 Nov 7 2019
+
+- Added support to search role bindings and resource quota.
+
 == 0.0.17 Oct 28 2019
 
 - Added `Disconnected`, `DisplayName` and `ExternalClusterID` attributes to the
