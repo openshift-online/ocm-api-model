@@ -18,7 +18,10 @@ class RoleBinding {
 	Type String
 	Subscription Subscription
 	Account Account
+	AccountID String
 	Organization Organization
+	OrganizationID string
 	Role Role
+	RoleID String
 	ConfigManaged Boolean
 }
