@@ -139,4 +139,7 @@ class Cluster {
 	//
 	// When provisioning a cluster this will be ignored.
 	Metrics ClusterMetrics
+
+	// List of add-ons on this cluster.
+	link Addons []Addon
 }

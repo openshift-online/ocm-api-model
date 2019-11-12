@@ -16,6 +16,11 @@ limitations under the License.
 
 // Root of the tree of resources of the clusters management service.
 resource Root {
+	// Reference to the resource that manages the collection of add-ons.
+	locator Addons {
+		target Addons
+	}
+
 	// Reference to the resource that manages the collection of cloud providers.
 	locator CloudProviders {
 		target CloudProviders
@@ -31,7 +36,7 @@ resource Root {
 		target Dashboards
 	}
 
-	// Reference to the service that manages the collection of flavours. 
+	// Reference to the service that manages the collection of flavours.
 	locator Flavours {
 		target Flavours
 	}
