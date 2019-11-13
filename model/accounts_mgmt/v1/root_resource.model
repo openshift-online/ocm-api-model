@@ -75,6 +75,12 @@ resource Root {
 		target RoleBindings
 	}
 
+	// Reference to the resource that manages the collection of resource
+	// quota.
+	locator ResourceQuota {
+		target ResourceQuotas
+	}
+
 	// Reference to the resource that manages the collection of
 	// subscriptions.
 	locator Subscriptions {
