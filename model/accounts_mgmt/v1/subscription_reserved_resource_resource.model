@@ -14,20 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific subscription.
-resource Subscription {
-	// Retrieves the details of the subscription.
+// Manages a specific resource reserved by a subscription.
+resource SubscriptionReservedResource {
+	// Retrieves the reserved resource.
 	method Get {
-		out Body Subscription
-	}
-
-	// Deletes the subscription.
-	method Delete {
-	}
-
-	// Reference to the resource that manages the collection of resources reserved by the
-	// subscription.
-	locator ReservedResources {
-		target SubscriptionReservedResources
+		// Retrieved reserved resource.
+		out Body ReservedResource
 	}
 }
