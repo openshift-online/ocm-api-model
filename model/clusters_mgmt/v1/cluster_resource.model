@@ -59,4 +59,9 @@ resource Cluster {
 	locator MetricQueries {
 		target MetricQueries
 	}
+
+	// Refrence to the resource that manages the collection of add-ons installed on this cluster.
+	locator Addons {
+		target Addons
+	}
 }
