@@ -25,4 +25,8 @@ resource ResourceQuota {
 	method Update {
 		in Body ResourceQuota
 	}
+
+	// Deletes the resource quota.
+	method Delete {
+	}
 }
