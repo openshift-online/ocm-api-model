@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.20 Nov 14 2019
+
+- Query resource quota from root and delete by identifier.
+
 == 0.0.19 Nov 8 2019
 
 - Added identifiers to role binding type.
