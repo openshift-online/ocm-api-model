@@ -18,7 +18,7 @@ limitations under the License.
 resource Root {
 	// Reference to the resource that manages the collection of add-ons.
 	locator Addons {
-		target Addons
+		target AddOns
 	}
 
 	// Reference to the resource that manages the collection of cloud providers.
