@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Manages the collection of add-ons.
-resource Addons {
+resource AddOns {
 	// Retrieves the list of add-ons.
 	method List {
 		// Index of the requested page, where one corresponds to the first page.
@@ -65,18 +65,18 @@ resource Addons {
 		in out Total Integer
 
 		// Retrieved list of add-ons.
-		out Items []Addon
+		out Items []AddOn
 	}
 
 	// Create a new add-on and add it to the collection of add-ons.
 	method Add {
 		// Description of the add-on.
-		in out Body Addon
+		in out Body AddOn
 	}
 
 	// Returns a reference to the service that manages a specific add-on.
 	locator Addon {
-		target Addon
+		target AddOn
 		variable ID
 	}
 }

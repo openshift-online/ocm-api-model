@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Representation of an add-on that can be installed in a cluster.
-class Addon {
+class AddOn {
 	// Name of the add-on.
 	Name String
 

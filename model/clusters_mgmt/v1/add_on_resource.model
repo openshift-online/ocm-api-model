@@ -15,15 +15,15 @@ limitations under the License.
 */
 
 // Manages a specific add-on.
-resource Addon {
+resource AddOn {
 	// Retrieves the details of the add-on.
 	method Get {
-		out Body Addon
+		out Body AddOn
 	}
 
 	// Updates the add-on.
 	method Update {
-		in out Body Addon
+		in out Body AddOn
 	}
 
 	// Deletes the add-on.
