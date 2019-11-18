@@ -142,4 +142,10 @@ class Cluster {
 
 	// List of add-ons on this cluster.
 	link Addons []AddOn
+
+	// Storage quota to be assigned to the cluster.
+	StorageQuota Value
+
+	// Load Balancer quota to be assigned to the cluster.
+	LoadBalancerQuota Integer
 }
