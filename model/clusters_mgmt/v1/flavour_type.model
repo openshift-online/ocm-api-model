@@ -29,7 +29,7 @@ class Flavour {
 	// this flavour.
 	//
 	// These can be overriden specifying in the cluster itself a different number of nodes.
-	Nodes ClusterNodes
+	Nodes FlavourNodes
 
 	// Human friendly identifier of the cluster, for example `4`.
 	//
