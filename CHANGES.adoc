@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.22 Nov 19 2019
+
+- Add `socket_total_by_node_roles_os` metric query.
+
 == 0.0.21 Nov 17 2019
 
 - Added add-on resources and types.
