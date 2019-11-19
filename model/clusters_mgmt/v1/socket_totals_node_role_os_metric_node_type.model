@@ -14,17 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages metric queries for a cluster.
-resource MetricQueries {
-	// Reference to the resource that retrieves the total cpu
-	// capacity in the cluster by node role and operating system.
-	locator CPUTotalByNodeRolesOS {
-		target CPUTotalByNodeRolesOSMetricQuery
-	}
 
-	// Reference to the resource that retrieves the total socket
-	// capacity in the cluster by node role and operating system.
-	locator SocketTotalByNodeRolesOS {
-		target SocketTotalByNodeRolesOSMetricQuery
-	}
+// Representation of information from telemetry about the socket capacity by node
+// role and OS of a cluster.
+struct SocketTotalsNodeRoleOSMetricNode {
+	SocketTotals []SocketTotalNodeRoleOSMetricNode
 }

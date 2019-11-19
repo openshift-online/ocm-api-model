@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Retrieves 24 hour history of the amount of total cpu capacity in the cluster by node role and
-// operating system.
+// Total cpu capacity in the cluster by node role and operating system.
 resource CPUTotalByNodeRolesOSMetricQuery {
 	// Retrieves the metrics.
 	method Get {
