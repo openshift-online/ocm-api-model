@@ -21,4 +21,7 @@ struct FlavourNodes {
 
 	// Number of compute nodes of the cluster.
 	Compute Integer
+
+	// Number of infra nodes of the cluster.
+	Infra Integer
 }
