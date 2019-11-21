@@ -19,10 +19,10 @@ resource Users {
 	// Retrieves the list of users.
 	method List {
 		// Index of the requested page, where one corresponds to the first page.
-		out Page Integer
+		in out Page Integer
 
 		// Number of items contained in the returned page.
-		out Size Integer
+		in out Size Integer
 
 		// Total number of items of the collection.
 		out Total Integer

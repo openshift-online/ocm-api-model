@@ -62,7 +62,7 @@ resource CloudProviders {
 
 		// Total number of items of the collection that match the search criteria,
 		// regardless of the size of the page.
-		in out Total Integer
+		out Total Integer
 
 		// Retrieved list of cloud providers.
 		out Items []CloudProvider

@@ -17,6 +17,6 @@ limitations under the License.
 // Provides detailed information about the status of an specific cluster.
 resource ClusterStatus {
 	method Get {
-		out Status ClusterStatus
+		out Body ClusterStatus
 	}
 }

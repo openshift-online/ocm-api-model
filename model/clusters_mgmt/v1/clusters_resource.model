@@ -63,7 +63,7 @@ resource Clusters {
 
 		// Total number of items of the collection that match the search criteria,
 		// regardless of the size of the page.
-		in out Total Integer
+		out Total Integer
 
 		// Retrieved list of clusters.
 		out Items []Cluster
