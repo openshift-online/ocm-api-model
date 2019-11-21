@@ -62,7 +62,7 @@ resource Versions {
 
 		// Total number of items of the collection that match the search criteria,
 		// regardless of the size of the page.
-		in out Total integer
+		out Total integer
 
 		// Retrieved list of versions.
 		out Items []Version
