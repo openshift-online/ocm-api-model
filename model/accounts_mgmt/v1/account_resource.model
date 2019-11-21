@@ -23,6 +23,6 @@ resource Account {
 
 	// Updates the account.
 	method Update {
-		in Body Account
+		in out Body Account
 	}
 }
