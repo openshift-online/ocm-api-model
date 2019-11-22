@@ -23,7 +23,7 @@ resource Cluster {
 
 	// Updates the cluster.
 	method Update {
-		in Body Cluster
+		in out Body Cluster
 	}
 
 	// Deletes the cluster.

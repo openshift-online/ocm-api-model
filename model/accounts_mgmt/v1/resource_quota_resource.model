@@ -23,7 +23,7 @@ resource ResourceQuota {
 
 	// Updates the resource quota.
 	method Update {
-		in Body ResourceQuota
+		in out Body ResourceQuota
 	}
 
 	// Deletes the resource quota.
