@@ -19,14 +19,12 @@ resource Versions {
 	// Retrieves a list of versions.
 	method List {
 		// Index of the requested page, where one corresponds to the first page.
-		//
-		// Default value is `1`.
-		in out Page integer
+		in out Page Integer = 1
 
 		// Maximum number of items that will be contained in the returned page.
 		//
 		// Default value is `100`.
-		in out Size integer
+		in out Size Integer = 100
 
 		// Search criteria.
 		//
@@ -62,7 +60,7 @@ resource Versions {
 
 		// Total number of items of the collection that match the search criteria,
 		// regardless of the size of the page.
-		out Total integer
+		out Total Integer
 
 		// Retrieved list of versions.
 		out Items []Version

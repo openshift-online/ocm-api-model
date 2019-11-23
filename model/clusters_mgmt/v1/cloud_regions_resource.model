@@ -24,12 +24,12 @@ resource CloudRegions {
 	method List {
 		// Index of the returned page, where one corresponds to the first page. As this
 		// collection doesn't support paging the result will always be `1`.
-		in out Page Integer
+		in out Page Integer = 1
 
 		// Number of items that will be contained in the returned page. As this collection
 		// doesn't support paging or searching the result will always be the total number of
 		// regions of the provider.
-		in out Size Integer
+		in out Size Integer = 100
 
 		// Total number of items of the collection that match the search criteria,
 		// regardless of the size of the page. As this collection doesn't support paging or
