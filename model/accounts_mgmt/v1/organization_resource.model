@@ -23,7 +23,7 @@ resource Organization {
 
 	// Updates the organization.
 	method Update {
-		in Body Organization
+		in out Body Organization
 	}
 
 	// Reference to the service that manages the resource quotas for this
