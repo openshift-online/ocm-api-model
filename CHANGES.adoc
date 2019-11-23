@@ -2,6 +2,13 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.24 Nov 23 2019
+
+- Fix directions of paging parameters.
+- Fix direction of `Body` parameter of `Update`.
+- Add default values to paging parameters.
+- Update to metamodel 0.0.17.
+
 == 0.0.23 Nov 20 2019
 
 - Add infra nodes to `FlavourNodes`.
