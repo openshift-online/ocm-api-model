@@ -21,6 +21,10 @@ resource RoleBinding {
 		out Body RoleBinding
 	}
 
+	// Updates the account.
+	method Update {
+		in out Body RoleBinding
+	}
 	// Deletes the role binding.
 	method Delete {
 	}
