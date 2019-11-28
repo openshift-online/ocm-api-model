@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.25 Nov 28 2019
+
+- Allow patching role binding.
+
 == 0.0.24 Nov 23 2019
 
 - Fix directions of paging parameters.
