@@ -20,10 +20,7 @@ class Flavour {
 	// Default _Amazon Web Services_ settings of the cluster.
 	//
 	// These can be overriden specifying in the clsuter itself a different set of settings.
-	AWS AWS
-
-	// Version of _OpenShift_ that will be used to create the cluster.
-	Version String
+	AWS AWSFlavour
 
 	// Number of nodes that will be used by default when creating a cluster that uses
 	// this flavour.
@@ -41,4 +38,15 @@ class Flavour {
 	//
 	// These can be overriden specifying in the cluster itself a different set of settings.
 	Network Network
+
+	// AWS default instance type for the master volume.
+	MasterInstanceType String
+
+	// AWS default instance type for the worker volume.
+	//
+	// Tins can be overriden specifying in the cluster itself a type for compute node.
+	ComputeInstanceType String
+
+	// AWS default instance type for the infra volume.
+	InfraInstanceType String
 }
