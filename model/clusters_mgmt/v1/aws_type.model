@@ -16,6 +16,9 @@ limitations under the License.
 
 // _Amazon Web Services_ specific settings of a cluster.
 struct AWS {
+	// AWS account identifier.
+	AccountID String
+
 	// AWS access key identifier.
 	AccessKeyID String
 
