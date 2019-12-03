@@ -30,4 +30,10 @@ class AddOn {
 
 	// Indicates if this add-on can be added to clusters.
 	Enabled Boolean
+
+	// Used to determine from where to reserve quota for this add-on.
+	ResourceName String
+
+	// Used to determine how many units of quota an add-on consumes per resource name.
+	ResourceCost Float
 }
