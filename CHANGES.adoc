@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.28 Dec 10 2019
+
+- Add `AddOnInstallation` type.
+
 == 0.0.27 Dec 4 2019
 
 - Add `resource_name` and `resource_cost` attributes to the add-on type.
