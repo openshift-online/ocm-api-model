@@ -17,6 +17,7 @@ limitations under the License.
 class RoleBinding {
 	Type String
 	Subscription Subscription
+	SubscriptionID string
 	Account Account
 	AccountID String
 	Organization Organization
