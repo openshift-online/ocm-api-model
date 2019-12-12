@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.29 Dec 12 2019
+
+- Allow subscription identifier on role binding.
+
 == 0.0.28 Dec 10 2019
 
 - Add `AddOnInstallation` type.
