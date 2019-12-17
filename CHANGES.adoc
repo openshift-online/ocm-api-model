@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.30 Dec 17 2019
+
+- Add support for `ClusterUUID` field.
+
 == 0.0.29 Dec 12 2019
 
 - Allow subscription identifier on role binding.
