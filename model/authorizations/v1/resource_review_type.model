@@ -25,8 +25,11 @@ struct ResourceReview {
 	// Type of resource.
 	ResourceType string
 
-	// Identifiers of the clusters that the user has permission to perform the action upon.
+	// Identifiers of the Clusters (internal ids) that the user has permission to perform the action upon.
 	ClusterIDs []string
+
+	// Identifiers which Clusters (external ids) that the user has permission to perform the action upon.
+	ClusterUUIDs []string
 
 	// Identifiers of the subscriptions that the user has permission to perform the action upon.
 	SubscriptionIDs []string
