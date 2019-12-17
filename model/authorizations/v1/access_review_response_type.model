@@ -28,8 +28,11 @@ struct AccessReviewResponse {
 	// Indicates which Organization the resource type belongs to
 	OrganizationID string
 
-	// Indicates which Cluster the resource type belongs to
+	// Indicates which Cluster (internal id) the resource type belongs to
 	ClusterID string
+
+	// Indicates which Cluster (external id) the resource type belongs to
+	ClusterUUID string
 
 	// Indicates which Subscription the resource type belongs to
 	SubscriptionID string
