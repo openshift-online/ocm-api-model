@@ -22,5 +22,6 @@ class Account {
 	LastName string
 	Banned Boolean
 	BanDescription string
+	BanCode string
 	Organization Organization
 }
