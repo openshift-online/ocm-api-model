@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.32 Dec 24 2019
+
+- Replace `AddOns` with `AddOnInstallations`.
+
 == 0.0.31 Dec 19 2019
 
 - Add `ban_code` attribute to `Account` type.
