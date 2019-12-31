@@ -21,6 +21,8 @@ class Subscription {
 	ExternalClusterID String
 	OrganizationID String
 	DisplayName String
+	CreatedAt Date
+	UpdatedAt Date
 
 	// Last telemetry authorization request for this subscription.
 	LastTelemetryDate Date
