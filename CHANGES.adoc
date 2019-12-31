@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.33 Dec 31 2019
+
+- Add 'UpdatedAt' and 'CreatedAt' fields to Subscription type.
+
 == 0.0.32 Dec 24 2019
 
 - Replace `AddOns` with `AddOnInstallations`.
