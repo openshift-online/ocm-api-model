@@ -42,7 +42,7 @@ defined: `Name` of type string and `Flavour` of type `Flavour`.
 
 In the model language attributes are written using _CamelCase_ because that is
 what is typically used in Go, which is the language that the model language
-tries to be close to. But the actual JSON representation uses _camel_case_.
+tries to be close to. But the actual JSON representation uses _snake_case_.
 These are some examples of what is the correspondence between attribute names
 in the model and in JSON:
 
