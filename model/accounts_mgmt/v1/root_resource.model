@@ -22,15 +22,15 @@ resource Root {
 	}
 
 	// Reference to the resource that manages the current authenticated
-	// acount.
+	// account.
 	locator CurrentAccount {
 		target CurrentAccount
 	}
 
 	// Reference to the resource that manages the current authenticated
-	// acount.
+	// account.
 	locator CurrentAccess {
-		target CurrentAccess
+		target Roles
 	}
 
 	// Reference to the resource that manages the collection of
