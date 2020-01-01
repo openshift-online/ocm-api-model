@@ -2,9 +2,13 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.34 Jan 01 2020
+
+- Add `CurrentAccess` resource.
+
 == 0.0.33 Dec 31 2019
 
-- Add 'UpdatedAt' and 'CreatedAt' fields to Subscription type.
+- Add `UpdatedAt` and `CreatedAt` fields to `Subscription` type.
 
 == 0.0.32 Dec 24 2019
 
