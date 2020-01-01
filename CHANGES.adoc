@@ -2,10 +2,6 @@
 
 This document describes the relevant changes between releases of the API model.
 
-== 0.0.35 Jan 01 2020
-
-- Fixes for `CurrentAccess` resource.
-
 == 0.0.34 Jan 01 2020
 
 - Add `CurrentAccess` resource.
