@@ -27,12 +27,6 @@ resource Root {
 		target CurrentAccount
 	}
 
-	// Reference to the resource that manages the current authenticated
-	// acount.
-	locator CurrentAccess {
-		target CurrentAccess
-	}
-
 	// Reference to the resource that manages the collection of
 	// organizations.
 	locator Organizations {
