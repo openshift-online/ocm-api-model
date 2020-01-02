@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2019 Red Hat, Inc.
+Copyright (c) 2020 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,24 +15,15 @@ limitations under the License.
 */
 
 // Specification for different classes of nodes inside a flavour.
-struct AWSFlavour {
-	// AWS default instance type for the master volume.
+struct GCPFlavour {
+	// GCP default instance type for the master volume.
 	MasterInstanceType String
 
-	// AWS default instance type for the worker volume.
+	// GCP default instance type for the worker volume.
 	//
 	// User can be overridden specifying in the cluster itself a type for compute node.
 	ComputeInstanceType String
 
-	// AWS default instance type for the infra volume.
+	// GCP default instance type for the infra volume.
 	InfraInstanceType String
-
-	// Master volume specification.
-	MasterVolume AWSVolume
-
-	// Infra volume specification.
-	InfraVolume AWSVolume
-
-	// Worker volume specification.
-	WorkerVolume AWSVolume
 }
