@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.36 Jan 3 2020
+
+- Add types and resources for AWS infrastructure access roles.
+- Add GCP flavour and change AWS flavour to contain also the instance type.
+
 == 0.0.35 Jan 01 2020
 
 - Fixes for `CurrentAccess` resource.
