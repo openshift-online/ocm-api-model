@@ -49,8 +49,6 @@ resource Root {
 	// Reference to the resource that manages the collection of AWS
 	// infrastructure access roles.
 	locator AWSInfrastructureAccessRoles {
-        target AWSInfrastructureAccessRoles
+		target AWSInfrastructureAccessRoles
 	}
-
-
 }
