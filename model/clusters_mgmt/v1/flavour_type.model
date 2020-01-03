@@ -18,14 +18,15 @@ limitations under the License.
 // with 10 infra nodes and 1000 compute nodes.
 class Flavour {
 	// Default _Amazon Web Services_ settings of the cluster.
-	//
-	// These can be overriden specifying in the clsuter itself a different set of settings.
 	AWS AWSFlavour
+
+	// Default _Google Cloud Platform_ settings of the cluster.
+	GCP GCPFlavour
 
 	// Number of nodes that will be used by default when creating a cluster that uses
 	// this flavour.
 	//
-	// These can be overriden specifying in the cluster itself a different number of nodes.
+	// These can be overridden specifying in the cluster itself a different number of nodes.
 	Nodes FlavourNodes
 
 	// Human friendly identifier of the cluster, for example `4`.
@@ -36,17 +37,6 @@ class Flavour {
 
 	// Default network settings of the cluster.
 	//
-	// These can be overriden specifying in the cluster itself a different set of settings.
+	// These can be overridden specifying in the cluster itself a different set of settings.
 	Network Network
-
-	// AWS default instance type for the master volume.
-	MasterInstanceType String
-
-	// AWS default instance type for the worker volume.
-	//
-	// Tins can be overriden specifying in the cluster itself a type for compute node.
-	ComputeInstanceType String
-
-	// AWS default instance type for the infra volume.
-	InfraInstanceType String
 }
