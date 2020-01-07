@@ -46,6 +46,11 @@ resource Root {
 		target Versions
 	}
 
+	// Reference to the resource that manage the collection of machine types.
+	locator MachineTypes {
+		target MachineTypes
+	}
+
 	// Reference to the resource that manages the collection of AWS
 	// infrastructure access roles.
 	locator AWSInfrastructureAccessRoles {
