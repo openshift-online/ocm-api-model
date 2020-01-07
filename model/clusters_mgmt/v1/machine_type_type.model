@@ -19,12 +19,12 @@ class MachineType {
 	// Human friendly identifier of the machine type, for example `r5.xlarge - Memory Optimized`.
 	Name String
 
-	// The amount of memory of the machine type
+	// The amount of memory of the machine type.
 	Memory Value
 
-    // The amount of cpu's of the machine type
-    Cpu Value
+	// The amount of cpu's of the machine type.
+	CPU Value
 
-    // Link to the cloud provider that the machine type belongs to.
+	// Link to the cloud provider that the machine type belongs to.
 	link CloudProvider CloudProvider
 }
