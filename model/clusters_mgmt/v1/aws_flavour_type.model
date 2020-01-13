@@ -16,6 +16,17 @@ limitations under the License.
 
 // Volume specification for different classes of nodes inside a flavour.
 struct AWSFlavour {
+	// AWS default instance type for the master volume.
+	MasterInstanceType String
+
+	// AWS default instance type for the worker volume.
+	//
+	// Tins can be overridden specifying in the cluster itself a type for compute node.
+	ComputeInstanceType String
+
+	// AWS default instance type for the infra volume.
+	InfraInstanceType String
+
 	// Master volume specification.
 	MasterVolume AWSVolume
 

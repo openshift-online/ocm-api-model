@@ -38,15 +38,4 @@ class Flavour {
 	//
 	// These can be overriden specifying in the cluster itself a different set of settings.
 	Network Network
-
-	// AWS default instance type for the master volume.
-	MasterInstanceType String
-
-	// AWS default instance type for the worker volume.
-	//
-	// Tins can be overriden specifying in the cluster itself a type for compute node.
-	ComputeInstanceType String
-
-	// AWS default instance type for the infra volume.
-	InfraInstanceType String
 }
