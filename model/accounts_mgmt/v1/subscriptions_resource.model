@@ -59,6 +59,15 @@ resource Subscriptions {
 		// results is undefined.
 		in Order String
 
+		// Filter subscriptions by a comma separated list of labels:
+		//
+		// [source]
+		// ----
+		// env=staging,department=sales
+		// ----
+		//
+		in Labels String
+
 		// Retrieved list of subscriptions.
 		out Items []Subscription
 	}
