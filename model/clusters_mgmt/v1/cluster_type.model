@@ -146,6 +146,9 @@ class Cluster {
 	// List of add-ons on this cluster.
 	link Addons []AddOnInstallation
 
+	// List of AWS infrastructure access role grants on this cluster.
+	link AWSInfrastructureAccessRoleGrants []AWSInfrastructureAccessRoleGrant
+
 	// Storage quota to be assigned to the cluster.
 	StorageQuota Value
 

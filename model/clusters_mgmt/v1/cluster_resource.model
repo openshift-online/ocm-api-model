@@ -64,4 +64,10 @@ resource Cluster {
 	locator Addons {
 		target AddOnInstallations
 	}
+
+	// Refrence to the resource that manages the collection of AWS infrastructure 
+	// access role grants on this cluster.
+	locator AWSInfrastructureAccessRoleGrants {
+		target AWSInfrastructureAccessRoleGrants
+	}
 }
