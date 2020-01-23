@@ -2,6 +2,13 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.38 Jan 23 2020
+
+- Add `search` and `order` parameters to the method that lists registry
+  credentials.
+- Add `labels` parameter to the method that lists subscriptions.
+- Add types and resources for management of AWS infrastructure access roles.
+
 == 0.0.37 Jan 8 2020
 
 - Add new `service_logs` service.
