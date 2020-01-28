@@ -24,4 +24,12 @@ enum AWSInfrastructureAccessRoleGrantState {
 
 	// The attempt to grant access role to user ARN failed.
 	Failed
+
+	// The access role grant is in the process of being deleted.
+	Deleting
+
+	// This ia a special state intended for the user know
+	// that the access role grant has been removed by SRE.
+	// The user can delete this grant from the DB.
+	Removed
 }
