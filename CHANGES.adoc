@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.39 Feb 3 2020
+
+- Add types and resources for cluster operator metrics.
+- Add `deleting` and `removed` states to AWS infrastructure access role grant
+  status.
+
 == 0.0.38 Jan 23 2020
 
 - Add `search` and `order` parameters to the method that lists registry
