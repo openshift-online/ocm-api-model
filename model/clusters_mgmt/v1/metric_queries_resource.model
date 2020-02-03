@@ -28,8 +28,8 @@ resource MetricQueries {
 		target SocketTotalByNodeRolesOSMetricQuery
 	}
 
-    // Reference to the resource that retrieves the cluster operator status metrics.
+	// Reference to the resource that retrieves the cluster operator status metrics.
 	locator ClusterOperators {
-         target ClusterOperatorsMetricQuery
-    }
+		target ClusterOperatorsMetricQuery
+	}
 }
