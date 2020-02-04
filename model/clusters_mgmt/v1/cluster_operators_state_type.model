@@ -16,8 +16,12 @@ limitations under the License.
 
 // Overall state of a cluster operator.
 enum ClusterOperatorState {
+	// Operator is working normally.
 	Available
+	// Operator is partially working, there is an issue.
 	Degraded
+	// Operator is not running or not working.
 	Failing
+	// Operator is upgrading to newer version, possibly degraded until upgrade completes.
 	Upgrading
 }
