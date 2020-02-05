@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.40 Feb 5 2020
+
+- Add method to update flavour.
+
 == 0.0.39 Feb 3 2020
 
 - Add types and resources for cluster operator metrics.
