@@ -20,4 +20,14 @@ resource Flavour {
 	method Get {
 		out Body Flavour
 	}
+
+	// Updates the flavour.
+	// Attributes that can be updated are:
+	// nodes-> infra
+    // aws -> infra_volume
+    // aws -> infra_instance_type
+    // gcp -> infra_instance_type
+    method Update {
+    	in out Body Flavour
+    }
 }
