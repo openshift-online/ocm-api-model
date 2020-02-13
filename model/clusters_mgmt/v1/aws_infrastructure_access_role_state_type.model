@@ -14,15 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// A set of acces permissions for AWS resources
-class AWSInfrastructureAccessRole {
-	// Human friendly identifier of the role, for example `Read only`.
-	DisplayName String
+// State of an AWS infrastructure access role.
+enum AWSInfrastructureAccessRoleState {
 
-	// Description of the role.
-	Description String
+	// Access role is valid an can be used.
+	// Only valid roles can be used in a role grant.
+	Valid
 
-	// State of the role.
-	State AWSInfrastructureAccessRoleState
+	// Role definition is invalid. Role can't be used.
+	Invalid
 
+	// This is a special state intended for the user know
+	// that the access role has been removed by SRE,
+	// but there are still grants referencing it.
+	// Role can't be used in a new grant.
+	Removed
 }
