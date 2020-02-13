@@ -16,7 +16,8 @@ limitations under the License.
 
 // Representation of an AWS infrastructure access role grant.
 class AWSInfrastructureAccessRoleGrant {
-	// Link to AWS infrastructure access role. 
+	// Link to AWS infrastructure access role.
+	// Grant must use a 'valid' role. 
 	link Role AWSInfrastructureAccessRole
 
 	// The user AWS IAM ARN we want to grant the role.
