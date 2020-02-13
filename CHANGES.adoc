@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.41 Feb 13 2020
+
+- Add `target_namespace` and `install_mode` attributes to `AddOn` type.
+- Add `state` attribute to `AWSInfrastructureAccessRole` type.
+
 == 0.0.40 Feb 5 2020
 
 - Add method to update flavour.
