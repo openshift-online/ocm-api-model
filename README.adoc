@@ -117,9 +117,12 @@ method List {
 	// Order criteria.
 	in Order String
 
+        // Kind of the result - "ClusterList".
+        out Kind String
+
 	// Total number of items of the collection that match the search criteria,
 	// regardless of the size of the page.
-	in Total Integer
+	out Total Integer
 
 	// Retrieved list of clusters.
 	out Items []Cluster
@@ -127,9 +130,27 @@ method List {
 ----
 
 Methods have _parameters_ defined by their direction (_in_ or _out_), their
-name and their type. In the above example there are five input parameters
-(named `Page`, `Size`, `Search` and `Order`) and one output parameter (named
+name and their type. In the above example there are four input parameters
+(named `Page`, `Size`, `Search` and `Order`) and four output parameter (named
 `Items`).
+
+- "List" conceptual method is implemented by http GET method, with
+  _in_ parameters represented in the URL as http query parameters.
+
+  `cluster_mgmt` API supports an alternative way to List — as http
+  POST method, with a `method=get` query parameter and _in_ paramaters
+  sent as fields of a JSON request body.
+
+  _Out_ parameters become top-level fields in the JSON response body.
+
+- "Get" is regular http GET method, declared with single _out_ parameter
+  representing the JSON response body.
+
+- "Add" is performed by http POST method, declared with single _in
+  out_ parameter representing the JSON request body — as well as the
+  response body.
+
+- "Delete" is performed by http DELETE method, with no parameters.
 
 In addition to methods resources also have _locators_, defined by nested
 `locator` blocks. Locators represent the relationships between resources. For
@@ -288,6 +309,5 @@ could be used:
 in Search String
 ----
 
-Currently this _AsciiDoc_ documentation isn't used to generate other
-documentation formats, but in the future it will be processed by tools that
-will automatically generate the reference documentation.
+This documentation is used to automatically generate OpenAPI reference
+documentation (with some constructs converted to markdown).
