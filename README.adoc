@@ -132,24 +132,24 @@ name and their type. In the above example there are four input parameters
 `Page`, `Size`, `Total` and `Items`).
 
 - "List" conceptual method is implemented by HTTP GET method, with
-  _in_ parameters represented in the URL as HTTP query parameters
-  (with names converted from _CamelCase_ to _snake_case_).
-
-  `cluster_mgmt` API supports an alternative way to List — as HTTP
-  POST method, with a `method=get` query parameter and _in_ paramaters
-  sent as fields of a JSON request body (again, with _snake_case_ names).
-
-  _Out_ parameters become top-level fields in the JSON response body
-  (again, with _snake_case_ names).
-  An additional `kind` field is added automatically (set to the type's
-  name + a "List" suffix), it should not be included in the method block.
+_in_ parameters represented in the URL as HTTP query parameters
+(with names converted from _CamelCase_ to _snake_case_).
++
+`cluster_mgmt` API supports an alternative way to List — as HTTP
+POST method, with a `method=get` query parameter and _in_ paramaters
+sent as fields of a JSON request body (again, with _snake_case_ names).
++
+_Out_ parameters become top-level fields in the JSON response body
+(again, with _snake_case_ names).
+An additional `kind` field is added automatically (set to the type's
+name + a "List" suffix), it should not be included in the method block.
 
 - "Get" is regular HTTP GET method, declared with single _out_ parameter
-  representing the JSON response body.
+representing the JSON response body.
 
 - "Add" is performed by HTTP POST method, declared with single _in
-  out_ parameter representing the JSON request body — as well as the
-  response body.
+out_ parameter representing the JSON request body — as well as the
+response body.
 
 - "Delete" is performed by HTTP DELETE method, with no parameters.
 
