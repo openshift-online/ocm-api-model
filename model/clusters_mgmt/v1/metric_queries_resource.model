@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages metric queries for a cluster.
+// Manages telemetry queries for a cluster.
 resource MetricQueries {
 	// Reference to the resource that retrieves the total cpu
 	// capacity in the cluster by node role and operating system.
@@ -26,6 +26,11 @@ resource MetricQueries {
 	// capacity in the cluster by node role and operating system.
 	locator SocketTotalByNodeRolesOS {
 		target SocketTotalByNodeRolesOSMetricQuery
+	}
+
+	// Reference to the resource that retrieves the firing alerts in the cluster.
+	locator Alerts {
+		target AlertsMetricQuery
 	}
 
 	// Reference to the resource that retrieves the cluster operator status metrics.
