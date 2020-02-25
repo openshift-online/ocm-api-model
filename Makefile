@@ -15,12 +15,16 @@
 #
 
 # Details of the metamodel used to check the model:
-metamodel_version:=v0.0.17
+metamodel_version:=v0.0.25
 metamodel_url:=https://github.com/openshift-online/ocm-api-metamodel.git
 
 .PHONY: check
 check: metamodel
-	metamodel/ocm-metamodel-tool check --model=model
+	metamodel/metamodel check --model=model
+
+.PHONY: openapi
+openapi: metamodel
+	metamodel/metamodel generate openapi --model=model --output=openapi
 
 .PHONY: metamodel
 metamodel:
@@ -32,4 +36,7 @@ metamodel:
 
 .PHONY: clean
 clean:
-	rm -rf metamodel
+	rm -rf \
+		metamodel \
+		openapi \
+		$(NULL)
