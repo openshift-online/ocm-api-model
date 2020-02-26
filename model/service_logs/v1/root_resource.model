@@ -17,7 +17,7 @@ limitations under the License.
 // Root of the tree of resources of the service logs service.
 resource Root {
 	// Reference to the resource that manages the collection of cluster logs.
-	locator ClusterLogs {
+    locator ClusterLogs {
 		target ClusterLogs
 	}
 }

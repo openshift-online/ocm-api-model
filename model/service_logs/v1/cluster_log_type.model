@@ -23,19 +23,18 @@ enum Severity {
 }
 
 class LogEntry {
+	// Log severity for the specific log entry
+	Severity	Severity
 
-    // Log severity for the specific log entry
-    Severity        Severity
+	// The name of the service who created the log
+	ServiceName	String
 
-    // The name of the service who created the log
-    ServiceName     String
-    
-    ClusterUUID     String
-    Summary         String
-    Description     String
+	ClusterUUID	String
+	Summary		String
+	Description	String
 
-    // A flag that indicates whether the log entry should be internal/private only
-    InternalOnly    Boolean
-    
-    Timestamp       Date
+	// A flag that indicates whether the log entry should be internal/private only
+	InternalOnly	Boolean
+
+	Timestamp	Date
 }
