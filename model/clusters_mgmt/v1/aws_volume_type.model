@@ -23,7 +23,7 @@ struct AWSVolume {
 	Size Integer
 
 	// Volume Type
-    //
-    // Possible values are: 'io1', 'gp2', 'st1', 'sc1', 'standard'
+	//
+	// Possible values are: 'io1', 'gp2', 'st1', 'sc1', 'standard'
 	Type String
 }

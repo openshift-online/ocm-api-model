@@ -18,16 +18,16 @@ limitations under the License.
 resource CurrentAccess {
 	// Retrieves the details of the account.
 	method List {
-        // Index of the requested page, where one corresponds to the first page.
-        in out Page Integer = 1
+		// Index of the requested page, where one corresponds to the first page.
+		in out Page Integer = 1
 
-        // Maximum number of items that will be contained in the returned page.
-        in out Size Integer = 100
+		// Maximum number of items that will be contained in the returned page.
+		in out Size Integer = 100
 
-        // Total number of items of the collection that match the search criteria,
-        // regardless of the size of the page.
-        out Total Integer
+		// Total number of items of the collection that match the search criteria,
+		// regardless of the size of the page.
+		out Total Integer
 
-        out Items []Role
+		out Items []Role
 	}
 }
