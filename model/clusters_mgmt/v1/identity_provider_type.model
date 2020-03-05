@@ -86,6 +86,9 @@ struct GithubIdentityProvider {
 
 	// Optional list of temas. Cannot be used in combination with the organizations field.
 	Teams []String
+
+	// Client secret.
+    ClientSecret String
 }
 
 // Details for `gitlab` identity providers.
