@@ -29,9 +29,6 @@ class LogEntry {
 	// The name of the service who created the log.
 	ServiceName String
 
-	// The name of the service who created the log.
-	ServiceName String
-    
 	// External cluster ID.
 	ClusterUUID String
 
