@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.43 Mar 9 2020
+
+- Improve documentation of the `LogEntry` type.
+
 == 0.0.42 Mar 5 2020
 
 - Add `client_secret` attribute to _GitHub_ identity provider.
