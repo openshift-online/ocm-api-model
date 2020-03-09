@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.44 Mar 9 2020
+
+- Remove duplicated attribute.
+
 == 0.0.43 Mar 9 2020
 
 - Improve documentation of the `LogEntry` type.
