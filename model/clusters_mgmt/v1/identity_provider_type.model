@@ -77,7 +77,7 @@ struct GithubIdentityProvider {
 	// Client identifier of a registered _GitHub_ OAuth application.
 	ClientID String
 
-	// Client secret.
+	// Client secret of a registered _GitHub_ OAuth application.
 	ClientSecret String
 
 	// For _GitHub Enterprise_ you must provide the host name of your instance, such as
@@ -87,7 +87,10 @@ struct GithubIdentityProvider {
 	// For plain _GitHub_ omit this parameter.
 	Hostname String
 
-	// Optional list of temas. Cannot be used in combination with the organizations field.
+	// Optional list of organizations. Cannot be used in combination with the Teams field.
+	Organizations []String
+
+	// Optional list of teams. Cannot be used in combination with the Organizations field.
 	Teams []String
 }
 
