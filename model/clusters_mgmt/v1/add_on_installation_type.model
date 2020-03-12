@@ -21,5 +21,20 @@ class AddOnInstallation {
 
 	// Link to add-on attached to this cluster.
 	link Addon AddOn
+
+	// Overall state of the add-on installation.
+	State AddOnInstallationState
+
+	// Reason for the current State.
+	StateDescription String
+
+	// Version of the operator installed by the add-on.
+	OperatorVersion String
+
+	// Date and time when the add-on was initially installed in the cluster.
+	CreationTimestamp Date
+
+	// Date and time when the add-on installation information was last updated.
+	UpdatedTimestamp Date
 }
 
