@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.46 Mar 18 2020
+
+- Add new fields to `AddOn` and `AddOnInstallation`.
+
 == 0.0.45 Mar 11 2020
 
 - Add `Organizations` attribute to GitHub `IdP`
