@@ -154,4 +154,7 @@ class Cluster {
 
 	// Load Balancer quota to be assigned to the cluster.
 	LoadBalancerQuota Integer
+
+	// Flag indicating if cluster-admin access is enabled.
+	ClusterAdminEnabled Boolean
 }
