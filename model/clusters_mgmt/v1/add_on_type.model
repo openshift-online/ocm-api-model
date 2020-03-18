@@ -42,4 +42,7 @@ class AddOn {
 
 	// The mode in which the addon is deployed.
 	InstallMode AddOnInstallMode
+
+	// The name of the operator installed by this add-on.
+	OperatorName String
 }
