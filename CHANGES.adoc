@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.47 Mar 19 2020
+
+- Add `ClusterAdminEnabled` flag.
+- Add `PullSecrets` endpoint.
+- Fix `LDAPIdentityProvider` attribute name.
+
 == 0.0.46 Mar 18 2020
 
 - Add new fields to `AddOn` and `AddOnInstallation`.
