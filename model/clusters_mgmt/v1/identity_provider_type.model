@@ -124,7 +124,7 @@ struct GoogleIdentityProvider {
 // Details for `ldap` identity providers.
 struct LDAPIdentityProvider {
 	// LDAP attributes used to configure the provider.
-	LDAPAttributes LDAPAttributes
+	Attributes LDAPAttributes
 
 	// Optional distinguished name to use to bind during the search phase.
 	BindDN String
