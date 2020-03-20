@@ -180,8 +180,8 @@ struct OpenIDIdentityProvider {
 	// authorization token request.
 	ExtraScopes []String
 
-	// URLs of the provider.
-	URLS OpenIDURLs
+	// The URL that the OpenID Provider asserts as the Issuer Identifier
+	Issuer String
 }
 
 // _OpenID_ identity provider claims.
@@ -194,16 +194,4 @@ struct OpenIDClaims {
 
 	// List of claims to use as the preferred user name when provisioning a user.
 	PreferredUsername []String
-}
-
-// _OpenID_ identity provider URLs.
-struct OpenIDURLs {
-	// Authorization endpoint described in the _OpenID_ specification. Must use HTTPS.
-	Authorize String
-
-	// Token endpoint described in the _OpenID_ specification. Must use HTTPS.
-	Token String
-
-	// User information endpoint described in the _OpenID_ specification. Must use HTTPS.
-	UserInfo String
 }
