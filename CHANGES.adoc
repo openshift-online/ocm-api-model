@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.48 Mar 22 2020
+
+- Add `API` listening method.
+
 == 0.0.47 Mar 19 2020
 
 - Add `ClusterAdminEnabled` flag.
