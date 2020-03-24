@@ -38,7 +38,4 @@ struct ClusterMetrics {
 
 	// The number of nodes provisioned for the cluster.
 	Nodes ClusterNodes
-
-    // The operation system provisioned for the cluster.
-	OperatingSystem String
 }
