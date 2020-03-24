@@ -145,6 +145,9 @@ class Cluster {
 
 	// List of add-ons on this cluster.
 	link Addons []AddOnInstallation
+ 
+        // List of ingresses on this cluster.
+	link Ingresses []Ingress
 
 	// List of AWS infrastructure access role grants on this cluster.
 	link AWSInfrastructureAccessRoleGrants []AWSInfrastructureAccessRoleGrant
