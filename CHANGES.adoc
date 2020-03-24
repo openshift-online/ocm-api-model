@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.49 Mar 24 2020
+
+- Add `Ingress` resource.
+
 == 0.0.48 Mar 22 2020
 
 - Add `API` listening method.
