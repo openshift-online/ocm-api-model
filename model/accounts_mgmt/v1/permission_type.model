@@ -17,5 +17,4 @@ limitations under the License.
 class Permission {
 	Action Action
 	ResourceType String
-	RoleID String
 }

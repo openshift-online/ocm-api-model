@@ -14,18 +14,66 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// TODO - Fix these Enums after fix for compiler will be in place
+
+// Usage of Subscription.
+enum UsageEnum {
+    // Production
+    // Development/Test
+    // Disaster Recovery
+}
+
+// Usage of Subscription.
+enum SystemUnitsEnum {
+    // Cores/vCPU
+    // Sockets
+}
+
+// Usage of Subscription.
+enum ProductBundleEnum {
+    // Openshift
+    // JBoss-Middleware
+    // IBM-CloudPak
+}
+
+// Service Level of Subscription.
+enum ServiceLevelEnum {
+    // L1-L3
+    // L3-only
+}
+
+// Support Level of Subscription.
+enum SupportLevelEnum {
+    // Eval
+    // Standard
+    // Premium
+    // Self-Support
+    // None
+}
+
 class Subscription {
 	Plan Plan
-	RegistryCredential RegistryCredential
 	ClusterID String
 	ExternalClusterID String
 	OrganizationID String
-	DisplayName String
+	// Last telemetry authorization request for this  cluster/subscription in Unix time
+	LastTelemetryDate Date
 	CreatedAt Date
 	UpdatedAt Date
-
-	// Last telemetry authorization request for this subscription.
-	LastTelemetryDate Date
+	SupportLevel SupportLevelEnum
+	ServiceLevel ServiceLevelEnum
+	Usage UsageEnum
+	ProductBundle ProductBundleEnum
+    SystemUnits SystemUnitsEnum
+    CpuTotal Integer
+    SocketTotal Integer
+	DisplayName String
+	Managed Boolean
+	Status String
+	// Last time this subscription were reconciled about cluster usage
+	LastReconcileDate Date
+	ConsumerUUID String
+	Labels []Label
 
 	// Link to the account that created the subscription.
 	link Creator Account
