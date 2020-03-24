@@ -19,12 +19,15 @@ struct ClusterMetrics {
 	// The amount of CPU provisioned and used in the cluster.
 	CPU ClusterMetric
 
+	// The amount of sockets provisioned and used in the cluster.
+	Sockets ClusterMetric
+
 	// The amount of memory provisioned and used in the cluster.
 	Memory ClusterMetric
 
 	// The amount of storage provisioned and used in the cluster.
 	//
-	// WARNING: This isn't currently populated. 
+	// WARNING: This isn't currently populated.
 	Storage ClusterMetric
 
 	// The amount of CPU provisioned and used in the cluster by compute nodes.
@@ -35,4 +38,7 @@ struct ClusterMetrics {
 
 	// The number of nodes provisioned for the cluster.
 	Nodes ClusterNodes
+
+    // The operation system provisioned for the cluster.
+	OperatingSystem String
 }
