@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.51 Mar 25 2020
+
+- Update AMS Models
+
 == 0.0.50 Mar 24 2020
 
 - Add sockets to cluster_metrics_type
