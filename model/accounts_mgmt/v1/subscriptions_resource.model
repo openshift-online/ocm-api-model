@@ -68,6 +68,12 @@ resource Subscriptions {
 		//
 		in Labels String
 
+        // If true, includes the account reference information in the output. Could slow request response time.
+        in fetchAccounts Boolean
+
+        // If true, includes the labels on a subscription in the output. Could slow request response time.
+        in fetchLabels Boolean
+
 		// Retrieved list of subscriptions.
 		out Items []Subscription
 	}

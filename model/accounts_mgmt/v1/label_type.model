@@ -14,12 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-class RegistryCredential {
-	Username String
-	ExternalResourceID string
-	Token String
-	Registry Registry
-	Account Account
-	CreatedAt Date
+class Label {
+    Key String
+    Value String
+    Internal Boolean
+    CreatedAt Date
     UpdatedAt Date
 }

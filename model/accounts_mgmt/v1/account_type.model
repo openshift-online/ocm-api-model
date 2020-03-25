@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 class Account {
-	Name String
 	Username String
 	Email String
 	FirstName string
@@ -23,5 +22,8 @@ class Account {
 	Banned Boolean
 	BanDescription string
 	BanCode string
+	CreatedAt Date
+	UpdatedAt Date
+	ServiceAccount Boolean
 	Organization Organization
 }

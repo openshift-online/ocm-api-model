@@ -25,4 +25,6 @@ class RoleBinding {
 	Role Role
 	RoleID String
 	ConfigManaged Boolean
+	CreatedAt Date
+    UpdatedAt Date
 }

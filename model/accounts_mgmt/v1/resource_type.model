@@ -16,9 +16,12 @@ limitations under the License.
 
 // Identifies computing resources
 class Resource {
+    SKU string
 	// platform-specific name, such as "M5.2Xlarge" for a type of EC2 node
 	ResourceName String
 	ResourceType String
+	BYOC Boolean
+	AvailabilityZoneType String
 	// Number of allowed nodes
 	Allowed Integer
 }

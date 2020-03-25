@@ -21,4 +21,6 @@ class Registry {
 	OrgName String
 	Type String
 	CloudAlias Boolean
+	CreatedAt Date
+    UpdatedAt Date
 }

@@ -16,12 +16,27 @@ limitations under the License.
 
 // Manages a specific subscription.
 resource Subscription {
-	// Retrieves the details of the subscription.
+	// Retrieves the details of the subscription by ID.
 	method Get {
+	    // If true, includes the account reference information in the output. Could slow request response time.
+	    in fetchAccounts Boolean
+
+	    // If true, includes the labels on a subscription in the output. Could slow request response time.
+	    in fetchLabels Boolean
+
+	    // If true, fetches, from the clusters service, the total numbers of CPU's and sockets under an obligation, and includes in the output. Could slow request response time.
+	    in fetchCpuAndSocket Boolean
+
 		out Body Subscription
 	}
 
-	// Deletes the subscription.
+    // Update a subscription
+    method Update {
+        // Updated subscription data
+ 		in out Body Subscription
+   }
+
+	// Deletes the subscription by ID.
 	method Delete {
 	}
 
