@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.52 Mar 26 2020
+
+- Removal of `in` parameters for `Get` functions
+
 == 0.0.51 Mar 25 2020
 
 - Update AMS Models
