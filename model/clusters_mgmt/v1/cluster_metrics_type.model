@@ -38,4 +38,7 @@ struct ClusterMetrics {
 
 	// The number of nodes provisioned for the cluster.
 	Nodes ClusterNodes
+
+	// AlertsFiring contains information about alerts firing.
+	AlertsFiring ClusterAlertsFiring
 }
