@@ -41,4 +41,7 @@ struct ClusterMetrics {
 
 	// AlertsFiring contains information about alerts firing.
 	AlertsFiring ClusterAlertsFiring
+
+	// OperatorsConditions contains information about operator conditions in the cluster.
+	OperatorsConditions ClusterOperatorsConditions
 }
