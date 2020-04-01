@@ -56,4 +56,9 @@ resource Root {
 	locator AWSInfrastructureAccessRoles {
 		target AWSInfrastructureAccessRoles
 	}
+
+	// Reference to the resource that manages the collection of products.
+	locator Products {
+		target Products
+	}
 }
