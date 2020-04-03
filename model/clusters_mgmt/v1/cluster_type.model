@@ -160,4 +160,7 @@ class Cluster {
 
 	// Flag indicating if cluster-admin access is enabled.
 	ClusterAdminEnabled Boolean
+
+	// Link to the product type of this cluster.
+	link Product Product
 }

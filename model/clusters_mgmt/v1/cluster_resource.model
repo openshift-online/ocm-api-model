@@ -70,4 +70,9 @@ resource Cluster {
 	locator AWSInfrastructureAccessRoleGrants {
 		target AWSInfrastructureAccessRoleGrants
 	}
+
+	// Reference to the resource that manages the product type of the cluster
+	locator Product {
+		target Product
+	}
 }
