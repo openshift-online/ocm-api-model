@@ -25,9 +25,6 @@ enum ClusterState {
 	// The cluster is waiting to be provisioned.
 	Pending
 
-	// Creation of the cluster is waiting for the creation of an account in the cloud provider.
-	PendingAccount
-
 	// The cluster is ready to use.
 	Ready
 
