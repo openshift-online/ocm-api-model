@@ -33,6 +33,9 @@ struct ClusterMetrics {
 	// The amount of CPU provisioned and used in the cluster by compute nodes.
 	ComputeNodesCPU ClusterMetric
 
+	// The amount of sockets provisioned and used in the cluster by compute nodes.
+      ComputeNodesSockets ClusterMetric
+
 	// The amount of memory provisioned and used in the cluster by compute nodes.
 	ComputeNodesMemory ClusterMetric
 
