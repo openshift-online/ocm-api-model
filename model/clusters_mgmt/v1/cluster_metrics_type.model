@@ -34,7 +34,7 @@ struct ClusterMetrics {
 	ComputeNodesCPU ClusterMetric
 
 	// The amount of sockets provisioned and used in the cluster by compute nodes.
-      ComputeNodesSockets ClusterMetric
+	ComputeNodesSockets ClusterMetric
 
 	// The amount of memory provisioned and used in the cluster by compute nodes.
 	ComputeNodesMemory ClusterMetric
@@ -42,9 +42,9 @@ struct ClusterMetrics {
 	// The number of nodes provisioned for the cluster.
 	Nodes ClusterNodes
 
-	// AlertsFiring contains information about alerts firing.
-	AlertsFiring ClusterAlertsFiring
+	// CriticalAlertsFiring contains information about critical alerts firing.
+	CriticalAlertsFiring Integer
 
-	// OperatorsConditions contains information about operator conditions in the cluster.
-	OperatorsConditions ClusterOperatorsConditions
+	// OperatorsConditionFailing contains information about operator in failing condition in the cluster.
+	OperatorsConditionFailing Integer
 }
