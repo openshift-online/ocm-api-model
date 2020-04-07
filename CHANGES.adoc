@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.54 Apr 7 2020
+
+- Update to metamodel 0.0.27
+
 == 0.0.53 Apr 3 2020
 
 - Add pull secret deletion
