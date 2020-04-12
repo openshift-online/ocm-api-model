@@ -18,7 +18,7 @@ limitations under the License.
 class CloudRegion {
 	// Human friendly identifier of the region, for example `us-east-1`.
 	//
-	// NOTE: Currently for all cloud provideers and all regions `id` and `name` have exactly
+	// NOTE: Currently for all cloud providers and all regions `id` and `name` have exactly
 	// the same values.
 	Name String
 

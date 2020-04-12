@@ -17,11 +17,11 @@ limitations under the License.
 // ClusterHealthState indicates the health of a cluster.
 enum ClusterHealthState {
   // Cluster is Ready and healthy.
-  Healthy   
+  Healthy
 
   // Cluster is Ready and unhealthy.
-  Unhealthy 
+  Unhealthy
 
-  // Cluster health is unkown.
+  // Cluster health is unknown.
   Unknown
 }
