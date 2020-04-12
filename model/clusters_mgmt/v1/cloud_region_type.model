@@ -27,4 +27,7 @@ class CloudRegion {
 
 	// Link to the cloud provider that the region belongs to.
 	link CloudProvider CloudProvider
+
+	// Whether the region is enabled for deploying an OSD cluster.
+	Enabled Boolean
 }
