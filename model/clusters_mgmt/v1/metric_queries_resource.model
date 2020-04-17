@@ -37,4 +37,9 @@ resource MetricQueries {
 	locator ClusterOperators {
 		target ClusterOperatorsMetricQuery
 	}
+
+    // Reference to the resource that retrieves the nodes in the cluster.
+    locator Nodes {
+        target NodesMetricQuery
+    }
 }
