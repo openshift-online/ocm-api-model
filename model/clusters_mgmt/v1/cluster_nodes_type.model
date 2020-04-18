@@ -27,4 +27,7 @@ struct ClusterNodes {
 
 	// Number of compute nodes of the cluster.
 	Compute Integer
+
+        // Compute nodes machine type.
+	ComputeMachineType MachineType
 }
