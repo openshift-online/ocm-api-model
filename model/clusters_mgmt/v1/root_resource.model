@@ -61,4 +61,9 @@ resource Root {
 	locator Products {
 		target Products
 	}
+
+	// Reference to the resource that manages registration of disconnected cluster.
+	locator RegisterDisconnected {
+		target RegisterDisconnected
+	}
 }
