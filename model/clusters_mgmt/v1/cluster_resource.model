@@ -55,6 +55,11 @@ resource Cluster {
 		target IdentityProviders
 	}
 
+	// Reference to the resource that manages the collection of ingress resources.
+	locator Ingresses {
+		target Ingresses
+	}
+
 	// Reference to the resource that manages metrics queries for the cluster.
 	locator MetricQueries {
 		target MetricQueries
