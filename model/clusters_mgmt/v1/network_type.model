@@ -24,4 +24,7 @@ struct Network {
 
 	// IP address block from which to assign service IP addresses, for example `172.30.0.0/16`.
 	ServiceCIDR String
+
+	// Network host prefix which is defaulted to `23` if not specified.
+	HostPrefix Integer
 }
