@@ -27,4 +27,7 @@ struct ClusterNodes {
 
 	// Number of compute nodes of the cluster.
 	Compute Integer
+
+	// The compute machine type to use, for example `r5.xlarge`.
+	ComputeMachineType MachineType
 }
