@@ -26,6 +26,11 @@ resource Organization {
 		in out Body Organization
 	}
 
+	// Creates the organization
+	method Add {
+		in out Body Organization
+	}
+
 	// Reference to the service that manages the resource quotas for this
 	// organization.
 	locator ResourceQuota {
