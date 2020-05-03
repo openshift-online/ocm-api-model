@@ -19,5 +19,6 @@ class Organization {
 	ExternalID string
 	EbsAccountID string
 	CreatedAt Date
-    UpdatedAt Date
+	UpdatedAt Date
+	Labels []Label
 }
