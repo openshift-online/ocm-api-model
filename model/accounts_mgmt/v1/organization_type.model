@@ -20,4 +20,5 @@ class Organization {
 	EbsAccountID string
 	CreatedAt Date
     UpdatedAt Date
+    Labels []Label
 }
