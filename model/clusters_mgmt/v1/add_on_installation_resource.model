@@ -20,8 +20,4 @@ resource AddOnInstallation {
 	method Get {
 		out Body AddOnInstallation
 	}
-
-	// Deletes the add-on installation.
-	method Delete {
-	}
 }
