@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.57 May 13 2020
+
+- AddOnInstallations: Remove DELETE operation
+- Added Label to Account
+
 == 0.0.56 May 03 2020
 
 - Added Label to Organization
