@@ -22,6 +22,9 @@ class AddOn {
 	// Description of the add-on.
 	Description String
 
+	// Link to documentation about the add-on.
+	Link String
+
 	// Label used to attach to a cluster deployment when add-on is installed.
 	Label String
 
