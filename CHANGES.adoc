@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.58 May 15 2020
+
+- AddOns: Add link attribute
+- Update to metamodel v0.0.28
+
 == 0.0.57 May 13 2020
 
 - AddOnInstallations: Remove DELETE operation
