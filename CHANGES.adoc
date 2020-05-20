@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.59 May 20 2020
+
+- FeatureToggle: Add model and resource
+
 == 0.0.58 May 15 2020
 
 - AddOns: Add link attribute
