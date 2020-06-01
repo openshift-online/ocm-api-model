@@ -44,6 +44,9 @@ resource Organizations {
 		// items that the user has permission to see will be returned.
 		in Search String
 
+		// If true, includes the labels on an organization in the output. Could slow request response time.
+		in fetchLabels Boolean
+
 		// Retrieved list of organizations.
 		out Items []Organization
 	}
