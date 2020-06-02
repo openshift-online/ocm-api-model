@@ -17,6 +17,7 @@ limitations under the License.
 class Label {
     Key String
     Value String
+    Type String
     Internal Boolean
     CreatedAt Date
     UpdatedAt Date

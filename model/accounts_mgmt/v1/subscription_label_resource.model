@@ -14,21 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific account.
-resource Account {
-	// Retrieves the details of the account.
+// Manages a specific label by a subscription.
+resource SubscriptionLabelResource {
+	// Retrieves the label.
 	method Get {
-		out Body Account
-	}
-
-	// Updates the account.
-	method Update {
-		in out Body Account
-	}
-
-	// Returns a reference to the service that manages a specific Label.
-	locator Labels {
-    	target Labels
-		variable ID
+		// Retrieved label.
+		out Body Label
 	}
 }

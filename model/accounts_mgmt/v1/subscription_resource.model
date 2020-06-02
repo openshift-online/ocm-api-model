@@ -36,4 +36,10 @@ resource Subscription {
 	locator ReservedResources {
 		target SubscriptionReservedResources
 	}
+
+	// Returns a reference to the service that manages a specific Label.
+	locator SubscriptionLabels {
+		target SubscriptionLabels
+		variable ID
+	}
 }
