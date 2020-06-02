@@ -14,17 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-class Account {
-	Username String
-	Email String
-	FirstName string
-	LastName string
-	Banned Boolean
-	BanDescription string
-	BanCode string
-	CreatedAt Date
-	UpdatedAt Date
-	ServiceAccount Boolean
-	Organization Organization
-	Labels []AccountLabel
+struct SubscriptionLabel {
+    Key String
+    Value String
+    Internal Boolean
+    CreatedAt Date
+    UpdatedAt Date
 }

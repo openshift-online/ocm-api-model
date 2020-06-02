@@ -59,4 +59,10 @@ resource Organizations {
 		target Organization
 		variable ID
 	}
+
+	// Returns a reference to the service that manages a specific Subscription Label.
+    locator Organizationabels {
+		target OrganizationLabels
+		variable ID
+	}
 }

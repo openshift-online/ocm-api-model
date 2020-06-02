@@ -74,4 +74,10 @@ resource Accounts {
 		target Account
 		variable ID
 	}
+
+	// Returns a reference to the service that manages a specific Account Label.
+	locator AccountLabels {
+		target AccountLabels
+		variable ID
+	}
 }

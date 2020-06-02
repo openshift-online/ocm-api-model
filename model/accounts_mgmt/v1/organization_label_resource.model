@@ -14,17 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-class Account {
-	Username String
-	Email String
-	FirstName string
-	LastName string
-	Banned Boolean
-	BanDescription string
-	BanCode string
-	CreatedAt Date
-	UpdatedAt Date
-	ServiceAccount Boolean
-	Organization Organization
-	Labels []AccountLabel
+// Manages a specific label by an organization.
+resource OrganizationLabelResource {
+	// Retrieves the label.
+	method Get {
+		// Retrieved label.
+		out Body OrganizationLabel
+	}
 }

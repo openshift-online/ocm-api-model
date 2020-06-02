@@ -37,4 +37,9 @@ resource Organization {
 	locator QuotaSummary {
 		target QuotaSummary
 	}
+
+	// Returns a reference to the service that manages a specific Label.
+	locator Labels {
+		target OrganizationLabels
+	}
 }

@@ -25,4 +25,9 @@ resource Account {
 	method Update {
 		in out Body Account
 	}
+
+	// Returns a reference to the service that manages a specific Label.
+	locator Labels {
+    	target AccountLabels
+	}
 }

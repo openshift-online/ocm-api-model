@@ -73,7 +73,6 @@ class Subscription {
 	// Last time this subscription were reconciled about cluster usage
 	LastReconcileDate Date
 	ConsumerUUID String
-	Labels []Label
 
 	// Link to the account that created the subscription.
 	link Creator Account
