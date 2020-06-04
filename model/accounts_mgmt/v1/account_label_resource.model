@@ -14,17 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-class Account {
-	Username String
-	Email String
-	FirstName string
-	LastName string
-	Banned Boolean
-	BanDescription string
-	BanCode string
-	CreatedAt Date
-	UpdatedAt Date
-	ServiceAccount Boolean
-	Organization Organization
-	Labels []AccountLabel
+// Manages a specific account label.
+resource AccountLabel {
+	// Retrieves the details of the label.
+	method Get {
+		out Body AccountLabel
+	}
+
+	// Create a new account label.
+	method Add {
+		// Label
+		in out Body AccountLabel
+	}
+
+	// Updates the account label.
+    method Update {
+        in out Body AccountLabel
+    }
+
+    // Deletes the account label.
+    method Delete {
+    }
 }

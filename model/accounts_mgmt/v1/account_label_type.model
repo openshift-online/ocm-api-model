@@ -14,17 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-class Account {
-	Username String
-	Email String
-	FirstName string
-	LastName string
-	Banned Boolean
-	BanDescription string
-	BanCode string
-	CreatedAt Date
-	UpdatedAt Date
-	ServiceAccount Boolean
-	Organization Organization
-	Labels []AccountLabel
+// Description of a label of an account.
+class AccountLabel {
+	// NOTE: `id` and `key` have exactly the same values.
+	Key String
+
+	// Value of a label
+	Value String
+
+	// Whether the label is internal
+	Internal Boolean
 }
