@@ -21,11 +21,11 @@ resource Subscription {
 		out Body Subscription
 	}
 
-    // Update a subscription
-    method Update {
-        // Updated subscription data
- 		in out Body Subscription
-   }
+	// Update a subscription
+	method Update {
+		// Updated subscription data
+		in out Body Subscription
+	}
 
 	// Deletes the subscription by ID.
 	method Delete {
@@ -40,5 +40,10 @@ resource Subscription {
 	// Reference to the list of labels of a specific subscription.
 	locator Labels {
 		target GenericLabels
+	}
+
+	// Notify a user related to the subscription via email
+	locator Notify {
+		target SubscriptionNotify
 	}
 }
