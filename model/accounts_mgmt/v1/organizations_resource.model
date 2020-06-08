@@ -44,6 +44,14 @@ resource Organizations {
 		// items that the user has permission to see will be returned.
 		in Search String
 
+ 		// Projection
+		// This field contains a comma-separated list of fields you'd like to get in
+		// a result. No new fields can be added, only existing ones can be filtered.
+		// To specify a field 'id' of a structure 'plan' use 'plan.id'.
+		// To specify all fields of a structure 'labels' use 'labels.*'.
+		//
+		in Fields String
+
 		// Retrieved list of organizations.
 		out Items []Organization
 	}
