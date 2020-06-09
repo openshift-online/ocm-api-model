@@ -48,7 +48,7 @@ resource Accounts {
 		// The syntax of this parameter is similar to the syntax of the _where_ clause
 		// of an SQL statement, but using the names of the attributes of the account
 		// instead of the names of the columns of a table. For example, in order to
-	        // retrieve accounts with username starting with my:
+		// retrieve accounts with username starting with my:
 		//
 		// [source,sql]
 		// ----
@@ -59,8 +59,17 @@ resource Accounts {
 		// items that the user has permission to see will be returned.
 		in Search String
 
+		// Projection
+		// This field contains a comma-separated list of fields you'd like to get in
+		// a result. No new fields can be added, only existing ones can be filtered.
+		// To specify a field 'id' of a structure 'plan' use 'plan.id'.
+		// To specify all fields of a structure 'labels' use 'labels.*'.
+		//
+		in Fields String
+
 		// If true, includes the labels on an account in the output. Could slow request response time.
 		in fetchLabels Boolean
+
 
 		// Retrieved list of accounts.
 		out Items []Account
