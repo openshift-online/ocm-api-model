@@ -36,4 +36,9 @@ resource Subscription {
 	locator ReservedResources {
 		target SubscriptionReservedResources
 	}
+
+	// Reference to the list of labels of a specific subscription.
+	locator Labels {
+		target GenericLabels
+	}
 }
