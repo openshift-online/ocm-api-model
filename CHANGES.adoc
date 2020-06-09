@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.62 Jun 9 2020
+
+- Add subscription notify endpoint
+
 == 0.0.61 Jun 9 2020
 
 - accounts_mgmt: Add 'fields' parameter to all list-requests
