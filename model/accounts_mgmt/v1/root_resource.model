@@ -98,8 +98,14 @@ resource Root {
 	locator SKUS {
 		target SKUS
 	}
+
 	// Reference to the resource that manages generates access tokens.
 	locator PullSecrets {
 		target PullSecrets
+	}
+
+	// Reference to the resource that manages the collection of labels.
+	locator Labels {
+		target Labels
 	}
 }

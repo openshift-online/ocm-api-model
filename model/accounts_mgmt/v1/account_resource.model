@@ -28,12 +28,6 @@ resource Account {
 
 	// Reference to the list of labels of a specific account.
 	locator Labels {
-		target AccountLabels
-	}
-
-	// Reference to the labels of a specific account.
-	locator Labels {
-		target AccountLabel
-        variable ID
+		target GenericLabels
 	}
 }

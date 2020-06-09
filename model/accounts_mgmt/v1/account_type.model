@@ -26,5 +26,5 @@ class Account {
 	UpdatedAt Date
 	ServiceAccount Boolean
 	Organization Organization
-	Labels []AccountLabel
+	Labels []Label
 }

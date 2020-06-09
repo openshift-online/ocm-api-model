@@ -37,4 +37,9 @@ resource Organization {
 	locator QuotaSummary {
 		target QuotaSummary
 	}
+
+	// Reference to the list of labels of a specific organization.
+	locator Labels {
+		target GenericLabels
+	}
 }
