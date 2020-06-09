@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.61 Jun 9 2020
+
+- accounts_mgmt: Add 'fields' parameter to all list-requests
+- accounts_mgmt: Support for Labels resources
+
 == 0.0.60 Jun 3 2020
 
 - Add parameters 'offset' and 'tail' to log resource
