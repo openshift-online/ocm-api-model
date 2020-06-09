@@ -14,10 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-class Label {
-    Key String
-    Value String
-    Internal Boolean
-    CreatedAt Date
-    UpdatedAt Date
+// Manages a specific account label.
+resource GenericLabel {
+	// Retrieves the details of the label.
+	method Get {
+		out Body Label
+	}
+
+	// Updates the account label.
+	method Update {
+		in out Body Label
+	}
+
+	// Deletes the account label.
+	method Delete {
+	}
 }

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2019 Red Hat, Inc.
+Copyright (c) 2020 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages the collection of accounts.
-resource Accounts {
-	// Retrieves the list of accounts.
+// Manages the collection of labels.
+resource Labels {
+	// Retrieves a list of labels.
 	method List {
 		// Index of the requested page, where one corresponds to the first page.
 		in out Page Integer = 1
@@ -28,53 +28,23 @@ resource Accounts {
 		// regardless of the size of the page.
 		out Total Integer
 
-		// Order criteria.
-		//
-		// The syntax of this parameter is similar to the syntax of the _order by_ clause of
-		// a SQL statement. For example, in order to sort the
-		// accounts descending by name identifier the value should be:
-		//
-		// [source,sql]
-		// ----
-		// name desc
-		// ----
-		//
-		// If the parameter isn't provided, or if the value is empty, then the order of the
-		// results is undefined.
-		in Order String
-
 		// Search criteria.
 		//
 		// The syntax of this parameter is similar to the syntax of the _where_ clause
-		// of an SQL statement, but using the names of the attributes of the account
+		// of an SQL statement, but using the names of the attributes of the organization
 		// instead of the names of the columns of a table. For example, in order to
-	        // retrieve accounts with username starting with my:
+	        // retrieve labels with name starting with my:
 		//
 		// [source,sql]
 		// ----
-		// username like 'my%'
+		// name like 'my%'
 		// ----
 		//
 		// If the parameter isn't provided, or if the value is empty, then all the
 		// items that the user has permission to see will be returned.
 		in Search String
 
-		// If true, includes the labels on an account in the output. Could slow request response time.
-		in fetchLabels Boolean
-
-		// Retrieved list of accounts.
-		out Items []Account
-	}
-
-	// Creates a new account.
-	method Add {
-		// Account data.
-		in out Body Account
-	}
-
-	// Reference to the service that manages an specific account.
-	locator Account {
-		target Account
-		variable ID
+		// Retrieved list of labels.
+		out Items []Label
 	}
 }
