@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.63 Jun 18 2020
+
+- cluster: Remove support for expiration_timestamp
+- Added top-level Notify endpoint to AMS
+
 == 0.0.62 Jun 9 2020
 
 - Add subscription notify endpoint
