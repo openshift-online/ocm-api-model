@@ -17,12 +17,24 @@ limitations under the License.
 // This struct is a request to send a templated email to a user related to this
 // subscription.
 struct SubscriptionNotify {
+	// Indicates which Cluster (internal id) the resource type belongs to
+	ClusterID string
+
+	// Indicates which Cluster (external id) the resource type belongs to
+	ClusterUUID string
+
+	// Indicates which Subscription the resource type belongs to
+	SubscriptionID string
+
 	// The BCC address to be included on the email that is sent
 	BccAddress string
+
 	// The email subject
 	Subject string
+
 	// The name of the template used to construct the email contents
 	TemplateName string
+	
 	// The values which will be substituted into the templated email
 	TemplateParameters []TemplateParameter
 }
