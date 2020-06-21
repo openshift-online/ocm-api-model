@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.64 Jun 21 2020
+
+- Added Notify to root_resource in AMS
+
 == 0.0.63 Jun 18 2020
 
 - cluster: Remove support for expiration_timestamp
