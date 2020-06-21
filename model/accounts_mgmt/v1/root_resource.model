@@ -108,4 +108,9 @@ resource Root {
 	locator Labels {
 		target Labels
 	}
+
+	// Reference to the resource that manages the notifications.
+	locator Notify {
+		target Notify
+	}
 }
