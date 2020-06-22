@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2019 Red Hat, Inc.
+Copyright (c) 2020 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a collection of logs.
-resource Logs {
-	// Retrieves the list of clusters.
+// Manages a collection of install logs.
+resource InstallLogs {
+	// Retrieves the list of install logs.
 	method List {
 		// Index of the requested page, where one corresponds to the first page.
 		in out Page Integer = 1
@@ -27,7 +27,7 @@ resource Logs {
 		// Total number of items of the collection.
 		out Total Integer
 
-		// Retrieved list of logs.
+		// Retrieved list of install logs.
 		out Items []Log
 	}
 
@@ -35,14 +35,5 @@ resource Logs {
 	locator Log {
 		target Log
 		variable ID
-	}  
-	locator Install {
-		target InstallLogs
-		
-	} 
-	locator Uninstall {
-		target UninstallLogs
-		
-	}  
-
+	}
 }
