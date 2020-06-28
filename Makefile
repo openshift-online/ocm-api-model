@@ -15,7 +15,7 @@
 #
 
 # Details of the metamodel used to check the model:
-metamodel_version:=v0.0.28
+metamodel_version:=v0.0.30
 metamodel_url:=https://github.com/openshift-online/ocm-api-metamodel.git
 
 .PHONY: check
