@@ -16,8 +16,9 @@ limitations under the License.
 
 // Manages feature toggles.
 resource FeatureToggle {
-	// Retrieves the details of the feature toggle.
-	method Get {
-		out Body FeatureToggle
+	// Retrieves the details of the feature toggle by providing query context
+	method Post {
+		in Request FeatureToggleQueryRequest
+		out Response FeatureToggle
 	}
 }
