@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.65 Jun 29 2020
+
+- Added Syncsets API
+- Added Uninstall Log
+- Update to metamodel v0.0.30
+
 == 0.0.64 Jun 21 2020
 
 - Added Notify to root_resource in AMS
