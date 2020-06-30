@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.66 Jun 30 2020
+
+- Change feature toggle query API to receive organization ID by POST
+
 == 0.0.65 Jun 29 2020
 
 - Added Syncsets API
