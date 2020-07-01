@@ -17,7 +17,3 @@ limitations under the License.
 class FeatureToggle {
 	Enabled Boolean
 }
-
-class FeatureToggleQueryRequest {
-	OrganizationID String
-}
