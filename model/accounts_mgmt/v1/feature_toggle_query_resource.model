@@ -14,9 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages feature toggle.
-resource FeatureToggle {
-	locator Query {
-		target FeatureToggleQuery
+// Manages feature toggle query.
+resource FeatureToggleQuery {
+	// Retrieves the details of the feature toggle by providing query context
+	method Post {
+		in Request FeatureToggleQueryRequest
+		out Response FeatureToggle
 	}
 }

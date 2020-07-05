@@ -70,6 +70,11 @@ resource Root {
 		target ClusterRegistrations
 	}
 
+	// Reference to the resource that manages feature toggles.
+	locator FeatureToggles {
+		target FeatureToggles
+	}
+
 	// Reference to the resource that manages the collection of roles.
 	locator Roles {
 		target Roles

@@ -14,9 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages feature toggle.
-resource FeatureToggle {
-	locator Query {
-		target FeatureToggleQuery
-	}
+struct FeatureToggleQueryRequest {
+	OrganizationID String
 }
