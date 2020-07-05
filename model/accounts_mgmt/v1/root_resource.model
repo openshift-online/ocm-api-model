@@ -99,6 +99,12 @@ resource Root {
 		target SKUS
 	}
 
+	// Reference to the resource that manages the collection of
+	// Sku Rules
+	locator SkuRules {
+		target SkuRules
+	}
+
 	// Reference to the resource that manages generates access tokens.
 	locator PullSecrets {
 		target PullSecrets
