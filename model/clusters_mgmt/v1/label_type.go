@@ -14,23 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific external configuration.
-resource ExternalConfiguration {
-	// Retrieves the details of the external configuration.
-	method Get {
-		// Retreived log.
-		out Body ExternalConfiguration
-	}
-    
-    // Reference to the resource that manages the collection of syncsets.
-	locator Syncsets {
-		target Syncsets
-	}
-
-    // Reference to the resource that manages the collection of labels.
-	locator Labels {
-		target Labels
-	}
-
-
+// Representation of a label in clusterdeployment.
+class Label {
+	// the value to set in the label
+	Value String
 }
