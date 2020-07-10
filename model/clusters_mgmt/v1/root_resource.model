@@ -66,4 +66,9 @@ resource Root {
 	locator ProvisionShards {
 		target ProvisionShards
   }
+
+	// Reference to the resource that registers clusters.
+	locator RegisterCluster {
+    	target RegisterCluster
+    }
 }
