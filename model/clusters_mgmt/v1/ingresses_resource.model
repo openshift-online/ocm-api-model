@@ -37,6 +37,11 @@ resource Ingresses {
 		in out Body Ingress
 	}
 
+	// Updates all ingresses
+	method Update {
+		in out Body []Ingress
+    }
+
 	// Reference to the service that manages a specific ingress.
 	locator Ingress {
 		target Ingress
