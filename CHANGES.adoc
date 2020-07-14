@@ -2,6 +2,13 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.70 Jul 14 2020
+
+- Add API for custerdeployment labels
+- add organization_id to cluster_registration
+- label: Fix erroneous file extensions
+- MachineType: Expose instance size enum
+
 == 0.0.69 Jul 05 2020
 
 - Added top level sku_rules endpoint to AMS
