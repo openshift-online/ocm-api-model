@@ -28,6 +28,9 @@ class MachineType {
 	// The amount of cpu's of the machine type.
 	CPU Value
 
+	// The size of the machine type.
+	Size MachineTypeSize
+
 	// Link to the cloud provider that the machine type belongs to.
 	link CloudProvider CloudProvider
 }
