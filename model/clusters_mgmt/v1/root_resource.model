@@ -61,4 +61,9 @@ resource Root {
 	locator Products {
 		target Products
 	}
+
+	// Reference to the resource that manages the collection of external cluster services.
+	locator ExternalClusterServices {
+		target ExternalClusterServicesCollection
+  }
 }
