@@ -60,6 +60,10 @@ resource Cluster {
 		target ExternalConfiguration
 	}
 
+	// Reference to the resource that manages the cluster's provision shard.
+	locator ProvisionShard {
+		target ProvisionShard
+	}
 
 	// Reference to the resource that manages the collection of ingress resources.
 	locator Ingresses {
@@ -76,7 +80,7 @@ resource Cluster {
 		target AddOnInstallations
 	}
 
-	// Refrence to the resource that manages the collection of AWS infrastructure 
+	// Refrence to the resource that manages the collection of AWS infrastructure
 	// access role grants on this cluster.
 	locator AWSInfrastructureAccessRoleGrants {
 		target AWSInfrastructureAccessRoleGrants
