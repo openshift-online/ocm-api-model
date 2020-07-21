@@ -30,4 +30,7 @@ class CloudRegion {
 
 	// Whether the region is enabled for deploying an OSD cluster.
 	Enabled Boolean
+
+	// Whether the region supports multiple availability zones.
+	SupportsMultiAZ Boolean
 }
