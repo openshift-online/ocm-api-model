@@ -14,10 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages ExternalClusterServices.
-resource ExternalClusterServices {
-	// Retrieves the details of the external cluster services.
-	method Get {
-		out Body ExternalClusterServices
+// Manages the collection of provision shards.
+resource ProvisionShards {
+	method List {
+		// Index of the requested page, where one corresponds to the first page.
+		in out Page Integer = 1
+
+		// Maximum number of items that will be contained in the returned page.
+		in out Size Integer = 100
+
+		// Total number of items of the collection.
+		out Total Integer
+
+		// Retrieved list provision shards.
+		out Items []ProvisionShard
+	}
+
+	// Reference to the resource that manages a specific provision shard.
+	locator ProvisionShard {
+		target ProvisionShard
+		variable ID
 	}
 }

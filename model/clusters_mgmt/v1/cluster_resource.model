@@ -60,9 +60,9 @@ resource Cluster {
 		target ExternalConfiguration
 	}
 
-	// Reference to the resource that manages the external cluster services.
-	locator ExternalClusterServices {
-		target ExternalClusterServices
+	// Reference to the resource that manages the cluster's provision shard.
+	locator ProvisionShard {
+		target ProvisionShard
 	}
 
 	// Reference to the resource that manages the collection of ingress resources.

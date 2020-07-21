@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Contains the properties of the external cluster services, including AWS and GCP related configurations
-class ExternalClusterServices {
+// Contains the properties of the provision shard, including AWS and GCP related configurations
+class ProvisionShard {
 
 	// Contains the configuration for the AWS account operator
 	AWSAccountOperatorConfig ServerConfig
