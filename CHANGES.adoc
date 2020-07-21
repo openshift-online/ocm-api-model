@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+
+== 0.0.71 Jul 21 2020
+
+- Add API for getting cluster's provision shard
+- Add API for getting provision shards
+
 == 0.0.70 Jul 14 2020
 
 - Add API for custerdeployment labels
