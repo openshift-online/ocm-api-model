@@ -41,8 +41,7 @@ resource Logs {
 		
 	} 
 	locator Uninstall {
-		target UninstallLogs
-		
-	}  
+		target UninstallLog
+	}
 
 }
