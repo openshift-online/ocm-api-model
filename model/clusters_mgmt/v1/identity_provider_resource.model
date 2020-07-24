@@ -24,4 +24,10 @@ resource IdentityProvider {
 	// Deletes the identity provider.
 	method Delete {
 	}
+
+	//Update identity provider in the cluster.
+    method Update {
+        in out Body IdentityProvider
+    }
+
 }
