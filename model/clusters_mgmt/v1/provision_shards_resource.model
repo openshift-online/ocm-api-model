@@ -26,7 +26,7 @@ resource ProvisionShards {
 		// Total number of items of the collection.
 		out Total Integer
 
-		// Retrieved list provision shards.
+		// Retrieved a list of provision shards.
 		out Items []ProvisionShard
 	}
 
