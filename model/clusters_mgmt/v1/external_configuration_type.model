@@ -18,4 +18,7 @@ limitations under the License.
 struct ExternalConfiguration {
 	// list of syncsets externally configured on the cluster.
 	link Syncsets []Syncset
+
+	// list of labels externally configured on the clusterdeployment.
+	link Labels []Label
 }
