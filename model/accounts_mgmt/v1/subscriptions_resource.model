@@ -86,6 +86,12 @@ resource Subscriptions {
 		out Items []Subscription
 	}
 
+    // Create a new subscription and register a cluster for it.
+	method Post {
+		in Request SubscriptionRegistration
+		out Response Subscription
+	}
+
 	// Reference to the service that manages a specific subscription.
 	locator Subscription {
 		target Subscription
