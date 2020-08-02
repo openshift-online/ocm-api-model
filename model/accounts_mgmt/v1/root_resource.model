@@ -124,4 +124,9 @@ resource Root {
 	locator Notify {
 		target Notify
 	}
+
+	// Reference to the resource that manages the support cases.
+	locator SupportCases {
+		target SupportCases
+	}
 }
