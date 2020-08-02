@@ -35,4 +35,14 @@ resource Root {
 	locator ResourceReview {
 		target ResourceReview
 	}
+
+	// Reference to the resource that is used to submit self capability review requests.
+	locator SelfCapabilityReview {
+		target SelfCapabilityReview
+	}
+
+	// Reference to the resource that is used to submit capability review requests.
+	locator CapabilityReview {
+		target CapabilityReview
+	}
 }
