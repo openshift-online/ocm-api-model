@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.73 Aug 3 2020
+
+- Add capability_review endpoint
+- Add support_cases endpoint
+
 == 0.0.72 Jul 30 2020
 
 - Fix comment
