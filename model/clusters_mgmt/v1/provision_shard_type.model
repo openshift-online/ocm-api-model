@@ -17,6 +17,9 @@ limitations under the License.
 // Contains the properties of the provision shard, including AWS and GCP related configurations
 class ProvisionShard {
 
+	// Contains the configuration for Hive
+	HiveConfig ServerConfig
+
 	// Contains the configuration for the AWS account operator
 	AWSAccountOperatorConfig ServerConfig
 
