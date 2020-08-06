@@ -14,19 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-class SupportCase {
-    // Support case title.
-    Summary String
+// Manages a specific support case.
+resource SupportCase {
 
-    // Support case desciption.
-    Description String
-    
-    // Support case severity.
-    Severity String
-
-    // (optional) event stream id for the support case so we could track it.
-    EventStreamId String
-
-    // (optional) cluster uuid in case we want to create an osl log.
-    ClusterUuid String
+	// Deletes the support case by Case ID.
+	method Delete {
+	}
 }

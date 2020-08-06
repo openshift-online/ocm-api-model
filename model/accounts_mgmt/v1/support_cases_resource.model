@@ -17,11 +17,14 @@ limitations under the License.
 // Manages the support cases endpoint
 resource SupportCases {
 	// Create a support case related to Hydra
-	method Add {
-		in out Body SupportCase
+	method Post {
+		in Request SupportCaseRequest
+		out Response SupportCaseResponse
 	}
 
-	// Close a support case in Hydra. 
-	method Delete {
+	// Reference to the service that manages a specific support case.
+	locator SupportCase {
+		target SupportCase
+		variable ID
 	}
 }
