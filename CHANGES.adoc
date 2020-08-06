@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.75 Aug 6 2020
+
+- Added TokenAuthorization to root_resource
+- Added SupportCase resource
+
 == 0.0.74 Aug 5 2020
 
 - [CS] Add hive_config to the provision shard
