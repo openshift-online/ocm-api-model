@@ -22,4 +22,9 @@ class Version {
 	// Indicates if this should be selected as the default version when a cluster is created
 	// without specifying explicitly the version.
 	Default boolean
+
+	// ChannelGroup is the name of the group where this image belongs.
+	// ChannelGroup is a mechanism to partition the images to different groups,
+	// each image belongs to only a single group.
+	ChannelGroup string
 }
