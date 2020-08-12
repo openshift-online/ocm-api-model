@@ -147,8 +147,8 @@ class Cluster {
 
 	// List of add-ons on this cluster.
 	link Addons []AddOnInstallation
- 
-        // List of ingresses on this cluster.
+
+	// List of ingresses on this cluster.
 	link Ingresses []Ingress
 
 	// List of AWS infrastructure access role grants on this cluster.
@@ -171,4 +171,7 @@ class Cluster {
 
 	// ExternalConfiguration shows external configuration on the cluster.
 	ExternalConfiguration ExternalConfiguration
+
+	// ProvisionShard contains the properties of the provision shard, including AWS and GCP related configurations
+	ProvisionShard ProvisionShard
 }
