@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.76 Aug 13 2020
+
+- Add link to missing provision shard 
+
 == 0.0.75 Aug 6 2020
 
 - Added TokenAuthorization to root_resource
