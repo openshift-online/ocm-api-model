@@ -26,4 +26,10 @@ resource CloudProvider {
 	locator Regions {
 		target CloudRegions
 	}
+
+	// Reference to the resource that manages the collection of available regions for
+	// this cloud provider.
+	locator AvailableRegions {
+		target AvailableRegions
+	}
 }
