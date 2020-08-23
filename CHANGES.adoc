@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.77 Aug 23 2020
+
+- Update to metamodel v0.0.32
+- Add the ChannelGroup attribute to the Version model
+- Add Available AWS regions command
+ 
 == 0.0.76 Aug 13 2020
 
 - Add link to missing provision shard 
