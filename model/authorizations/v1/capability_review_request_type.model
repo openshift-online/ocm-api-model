@@ -26,8 +26,8 @@ struct CapabilityReviewRequest {
 	// See uhc-account-manager/openapi/openapi.yaml for a list of possible values.
 	ResourceType string
 
-    // Capability to review [manage_cluster_admin].
-    Capability string
+	// Capability to review [manage_cluster_admin].
+	Capability string
 
 	// Indicates which Cluster (internal id) the resource type belongs to.
 	ClusterID string

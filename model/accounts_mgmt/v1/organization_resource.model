@@ -42,4 +42,10 @@ resource Organization {
 	locator Labels {
 		target GenericLabels
 	}
+
+	// Reference to the service that manages the resource quotas for this
+	// organization.
+	locator SummaryDashboard {
+		target SummaryDashboard
+	}
 }
