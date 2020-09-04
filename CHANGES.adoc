@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.78 Sep 4 2020
+
+- Added New DNS_READY
+- version: Add moa_enabled flag
+
 == 0.0.77 Aug 23 2020
 
 - Update to metamodel v0.0.32
