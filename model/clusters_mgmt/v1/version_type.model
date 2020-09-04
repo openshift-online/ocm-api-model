@@ -27,4 +27,7 @@ class Version {
 	// ChannelGroup is a mechanism to partition the images to different groups,
 	// each image belongs to only a single group.
 	ChannelGroup string
+
+	// MOAEnabled indicates whether this version can be used to create MOA clusters.
+	MOAEnabled boolean
 }
