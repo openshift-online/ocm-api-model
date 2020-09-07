@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.79 Sep 7 2020
+
+- Add 'available_upgrades' list to version type
+- Add CCS type and Attribute to Cluster type
+
 == 0.0.78 Sep 4 2020
 
 - Added New DNS_READY
