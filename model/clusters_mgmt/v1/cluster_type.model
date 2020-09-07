@@ -148,6 +148,9 @@ class Cluster {
 	// When provisioning a cluster this will be ignored.
 	Metrics ClusterMetrics
 
+	// Contains configuration of a Customer Cloud Subscription cluster.
+	CCS CCS
+
 	// List of add-ons on this cluster.
 	link Addons []AddOnInstallation
 
