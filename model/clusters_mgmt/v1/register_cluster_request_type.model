@@ -48,5 +48,5 @@ struct RegisterClusterRequest {
 	ConsoleURL string
 
 	// Optional Display Name for the cluster
-    DisplayName String
+	DisplayName String
 }
