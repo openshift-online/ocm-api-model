@@ -36,6 +36,18 @@ resource Root {
 		target ResourceReview
 	}
 
+	// Reference to the resource that is used to submit Red Hat's Terms and Conditions
+	// for using OpenShift Dedicated and Amazon Red Hat OpenShift review requests.
+	locator TermsReview {
+		target TermsReview
+	}
+
+	// Reference to the resource that is used to submit Red Hat's Terms and Conditions
+	// for using OpenShift Dedicated and Amazon Red Hat OpenShift self-review requests.
+	locator SelfTermsReview {
+		target SelfTermsReview
+	}
+
 	// Reference to the resource that is used to submit self capability review requests.
 	locator SelfCapabilityReview {
 		target SelfCapabilityReview
