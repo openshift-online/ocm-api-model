@@ -16,9 +16,6 @@ limitations under the License.
 
 // Representation of an upgrade policy that can be set for a cluster.
 class UpgradePolicy {
-	// ID of the upgrade policy.
-	ID String
-
 	// Cluster ID this upgrade policy is defined for.
 	ClusterID String
 
