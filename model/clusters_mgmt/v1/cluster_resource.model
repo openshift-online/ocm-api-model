@@ -75,12 +75,12 @@ resource Cluster {
 		target MetricQueries
 	}
 
-	// Refrence to the resource that manages the collection of add-ons installed on this cluster.
+	// Reference to the resource that manages the collection of add-ons installed on this cluster.
 	locator Addons {
 		target AddOnInstallations
 	}
 
-	// Refrence to the resource that manages the collection of AWS infrastructure
+	// Reference to the resource that manages the collection of AWS infrastructure
 	// access role grants on this cluster.
 	locator AWSInfrastructureAccessRoleGrants {
 		target AWSInfrastructureAccessRoleGrants
@@ -90,4 +90,10 @@ resource Cluster {
 	locator Product {
 		target Product
 	}
+
+	// Reference to the resource that manages the collection of upgrade policies defined for this cluster.
+	locator UpgradePolicies {
+		target UpgradePolicies
+	}
+
 }
