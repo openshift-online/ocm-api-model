@@ -16,6 +16,8 @@ limitations under the License.
 
 // Representation of a label in clusterdeployment.
 class Label {
+	// the key of the label
+	Key String
 	// the value to set in the label
 	Value String
 }
