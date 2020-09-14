@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.80 Sep 14 2020
+
+- Add upgrade policy type and resource
+- Add terms review and self terms review
+- Add dashboards summary
+
 == 0.0.79 Sep 7 2020
 
 - Add 'available_upgrades' list to version type
@@ -17,10 +23,10 @@ This document describes the relevant changes between releases of the API model.
 - Update to metamodel v0.0.32
 - Add the ChannelGroup attribute to the Version model
 - Add Available AWS regions command
- 
+
 == 0.0.76 Aug 13 2020
 
-- Add link to missing provision shard 
+- Add link to missing provision shard
 
 == 0.0.75 Aug 6 2020
 
