@@ -21,4 +21,14 @@ class ClusterStatus {
 
 	// Detailed description of the cluster status.
 	Description String
+
+	//DNSReady from Provisioner
+	DNSReady Boolean
+
+	//Provisioning Error Type
+	ProvisionErrorType   String
+
+	//Provisioning Error Reason
+	ProvisionErrorReason String
+
 }
