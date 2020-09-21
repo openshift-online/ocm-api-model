@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.82 Sep 21 2020
+
+- Added Install Error Details From Provisioner
+
 == 0.0.81 Sep 14 2020
 
 - Remove redundant ID from upgrade policy class
