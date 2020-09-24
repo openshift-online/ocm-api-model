@@ -34,6 +34,9 @@ class AddOn {
 	// Indicates if this add-on can be added to clusters.
 	Enabled Boolean
 
+	// Indicates if this add-on is hidden.
+	Hidden Boolean
+
 	// Used to determine from where to reserve quota for this add-on.
 	ResourceName String
 
