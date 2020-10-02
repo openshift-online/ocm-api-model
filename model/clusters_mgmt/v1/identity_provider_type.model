@@ -45,6 +45,9 @@ class IdentityProvider {
 	// Details for `google` identity providers.
 	Google GoogleIdentityProvider
 
+	// Details for `htpasswd` identity providers.
+	Htpasswd HTPasswdIdentityProvider
+
 	// Details for `ldap` identity providers.
 	LDAP LDAPIdentityProvider
 
@@ -57,6 +60,7 @@ enum IdentityProviderType {
 	Github
 	Gitlab
 	Google
+	Htpasswd
 	LDAP
 	OpenID
 }
@@ -114,11 +118,20 @@ struct GoogleIdentityProvider {
 	// Client identifier of a registered _Google_ project.
 	ClientID String
 
-	// Client secret issued by _Google.
+	// Client secret issued by _Google_.
 	ClientSecret String
 
 	// Optional hosted domain to restrict sign-in accounts to.
 	HostedDomain string
+}
+
+// Details for `htpasswd` identity providers.
+struct HTPasswdIdentityProvider {
+	// Username to be used in the _HTPasswd_ data file.
+	Username String
+
+	// Password to be used in the _HTPasswd_ data file.
+	Password String
 }
 
 // Details for `ldap` identity providers.
