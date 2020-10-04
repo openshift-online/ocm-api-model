@@ -30,4 +30,7 @@ struct ClusterNodes {
 
 	// The compute machine type to use, for example `r5.xlarge`.
 	ComputeMachineType MachineType
+
+	// The availability zones upon which the nodes are created.
+	AvailabilityZones []String
 }
