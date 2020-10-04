@@ -154,6 +154,9 @@ class Cluster {
 	// List of add-ons on this cluster.
 	link Addons []AddOnInstallation
 
+	// List of machine pools on this cluster.
+	link MachinePools []MachinePool
+
 	// List of ingresses on this cluster.
 	link Ingresses []Ingress
 
