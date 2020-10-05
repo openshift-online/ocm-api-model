@@ -105,6 +105,9 @@ class Cluster {
 	// Amazon Web Services settings of the cluster.
 	AWS AWS
 
+	// Google cloud platform settings of the cluster.
+	GCP GCP
+
 	// Network settings of the cluster.
 	Network Network
 
