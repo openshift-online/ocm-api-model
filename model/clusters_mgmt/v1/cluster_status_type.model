@@ -25,10 +25,10 @@ class ClusterStatus {
 	//DNSReady from Provisioner
 	DNSReady Boolean
 
-	//Provisioning Error Type
-	ProvisionErrorType   String
+	//Provisioning Error Message
+	ProvisionErrorMessage   String
 
-	//Provisioning Error Reason
-	ProvisionErrorReason String
+	//Provisioning Error Code
+	ProvisionErrorCode String
 
 }
