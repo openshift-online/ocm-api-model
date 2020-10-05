@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.86 Oct 5 2020
+
+- Added New Error Message implementation
+- idp: Add HTPasswd provider
+- Uptdating SDK with GCP credentials
+
 == 0.0.85 Oct 5 2020
 
 - Add upgrade policy state
