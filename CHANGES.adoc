@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.85 Oct 5 2020
+
+- Add upgrade policy state
+
 == 0.0.84 Oct 4 2020
 
 - Add machine pools link and type
