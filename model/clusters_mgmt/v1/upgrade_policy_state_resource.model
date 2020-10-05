@@ -14,24 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific upgrade policy.
-resource UpgradePolicy {
-	// Retrieves the details of the upgrade policy.
+// Manages a specific upgrade policy state.
+resource UpgradePolicyState {
+	// Retrieves the details of the upgrade policy state.
 	method Get {
-		out Body UpgradePolicy
+		out Body UpgradePolicyState
 	}
 
-	// Update the upgrade policy.
+	// Update the upgrade policy state.
 	method Update {
-		in out Body UpgradePolicy
-	}
-
-	// Deletes the upgrade policy.
-	method Delete {
-	}
-
-	// Reference to the state of the upgrade policy.
-	locator State {
-		target UpgradePolicyState
+		in out Body UpgradePolicyState
 	}
 }
