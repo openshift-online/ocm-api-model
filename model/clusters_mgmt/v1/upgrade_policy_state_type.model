@@ -14,24 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific upgrade policy.
-resource UpgradePolicy {
-	// Retrieves the details of the upgrade policy.
-	method Get {
-		out Body UpgradePolicy
-	}
+// Representation of an upgrade policy state that that is set for a cluster.
+class UpgradePolicyState {
+	// State value, can be 'pending', 'started', 'delayed', 'failed' or 'completed'.
+	Value String
 
-	// Update the upgrade policy.
-	method Update {
-		in out Body UpgradePolicy
-	}
-
-	// Deletes the upgrade policy.
-	method Delete {
-	}
-
-	// Reference to the state of the upgrade policy.
-	locator State {
-		target UpgradePolicyState
-	}
+	// Description of the state.
+	Description String
 }
