@@ -54,4 +54,8 @@ class AddOn {
 
 	// Indicates if this add-on has external resources associated with it 
 	HasExternalResources Boolean
+
+	// List of parameters for this add-on.
+	link Parameters []AddOnParameter
+
 }
