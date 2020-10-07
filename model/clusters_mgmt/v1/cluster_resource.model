@@ -70,6 +70,11 @@ resource Cluster {
 		target Ingresses
 	}
 
+        // Reference to the resource that manages the collection of machine pool resources.
+	locator MachinePools {
+		target MachinePools
+	}
+
 	// Reference to the resource that manages metrics queries for the cluster.
 	locator MetricQueries {
 		target MetricQueries
