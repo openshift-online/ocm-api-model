@@ -18,10 +18,4 @@ limitations under the License.
 struct FlavourNodes {
 	// Number of master nodes of the cluster.
 	Master Integer
-
-	// Number of compute nodes of the cluster.
-	Compute Integer
-
-	// Number of infra nodes of the cluster.
-	Infra Integer
 }
