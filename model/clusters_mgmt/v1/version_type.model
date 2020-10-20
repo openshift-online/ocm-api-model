@@ -16,6 +16,9 @@ limitations under the License.
 
 // Representation of an _OpenShift_ version.
 class Version {
+	// RawID is the id of the version - without channel group and prefix.
+	RawID string
+
 	// Indicates if this version can be used to create clusters.
 	Enabled boolean
 
