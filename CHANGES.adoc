@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.93 Oct 26 2020
+
+- version: Rename field from MOA to ROSA
+
 == 0.0.92 Oct 21 2020
 
 - Add RawID field to version type.
