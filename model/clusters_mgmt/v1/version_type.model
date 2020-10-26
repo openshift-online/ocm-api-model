@@ -31,8 +31,8 @@ class Version {
 	// each image belongs to only a single group.
 	ChannelGroup string
 
-	// MOAEnabled indicates whether this version can be used to create MOA clusters.
-	MOAEnabled boolean
+	// ROSAEnabled indicates whether this version can be used to create ROSA clusters.
+	ROSAEnabled boolean
 
 	// AvailableUpgrades is the list of versions this version can be upgraded to.
 	AvailableUpgrades []String
