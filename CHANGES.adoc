@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.95 Oct 27 2020
+
+ - Add SubnetIDs to the AWS model.
+
 == 0.0.94 Oct 26 2020
 
 - [AMS] Add IncludeRedHatAssociates to SubscriptionNotify
