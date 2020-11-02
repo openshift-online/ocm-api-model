@@ -38,4 +38,7 @@ class AddOnParameter {
 	// Indicates if this parameter can be edited after creation.
 	Editable Boolean
 
+	// Indicates if this parameter is enabled for the add-on.
+	Enabled Boolean
+
 }
