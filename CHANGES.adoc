@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.96 Nov 2 2020
+
+- Add Enabled to AddOnParameter type.
+
 == 0.0.95 Oct 27 2020
 
  - Add SubnetIDs to the AWS model.
