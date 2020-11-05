@@ -19,15 +19,20 @@ class MachinePool {
 	// ID used to identify the cluster that this machinepool is attached to.
 	link Cluster Cluster
 
-    // The number of Machines (and Nodes) to create.
+	// The number of Machines (and Nodes) to create.
+	// Replicas and autoscaling cannot be used together.    
 	Replicas Integer
 
-    // The instance type of Nodes to create.
-    InstanceType String
+	// Details for auto-scaling the machine pool.
+	// Replicas and autoscaling cannot be used together.    
+	Autoscaling MachinePoolAutoscaling
 
-    // The availability zones upon which the nodes are created.
-    AvailabilityZones []String
+	// The instance type of Nodes to create.
+	InstanceType String
 
-    // The labels set on the Nodes created.
-    Labels [String]String
+	// The availability zones upon which the nodes are created.
+	AvailabilityZones []String
+
+	// The labels set on the Nodes created.
+	Labels [String]String
 }
