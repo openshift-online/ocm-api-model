@@ -26,7 +26,12 @@ struct ClusterNodes {
 	Infra Integer
 
 	// Number of compute nodes of the cluster.
+	// Compute and AutoscaleCompute cannot be used together.    
 	Compute Integer
+
+	// Details for auto-scaling the compute machine pool.
+	// Compute and AutoscaleCompute cannot be used together.    
+	AutoscaleCompute MachinePoolAutoscaling
 
 	// The compute machine type to use, for example `r5.xlarge`.
 	ComputeMachineType MachineType
