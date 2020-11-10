@@ -16,7 +16,7 @@ limitations under the License.
 
 
 // Representation of a Taint set on a MachinePool in a cluster.
-class Taint {
+struct Taint {
     // The key for the taint
     Key String
 
