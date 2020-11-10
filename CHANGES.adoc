@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.98 Nov 10 2020
+
+- Change Taints to struct.
+
 == 0.0.97 Nov 10 2020
 
 - Remove BYOC flag from Cluster type.
