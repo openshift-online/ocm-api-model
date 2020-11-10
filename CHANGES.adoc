@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.97 Nov 10 2020
+
+- Remove BYOC flag from Cluster type.
+- Add Taints field to MachinePool type.
+
 == 0.0.96 Nov 2 2020
 
 - Add Enabled to AddOnParameter type.
