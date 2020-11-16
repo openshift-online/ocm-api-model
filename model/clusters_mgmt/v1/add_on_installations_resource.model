@@ -70,6 +70,10 @@ resource AddOnInstallations {
 		in out Body AddOnInstallation
 	}
 
+	// Delete an add-on installation and remove it from the collection of add-on installations on the cluster.
+	method Delete {
+	}
+
 	// Returns a reference to the service that manages a specific add-on installation.
 	locator Addoninstallation {
 		target AddOnInstallation
