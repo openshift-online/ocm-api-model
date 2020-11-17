@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.99 Nov 16 2020
+
+- Add deletion add-on installation endpoint
+- Add Update method to addon installation resource
+
 == 0.0.98 Nov 10 2020
 
 - Change Taints to struct.
