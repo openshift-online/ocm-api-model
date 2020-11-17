@@ -20,4 +20,9 @@ resource AddOnInstallation {
 	method Get {
 		out Body AddOnInstallation
 	}
+
+	// Updates the add-on installation.
+	method Update {
+		in out Body AddOnInstallation
+	}
 }
