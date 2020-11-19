@@ -183,4 +183,7 @@ class Cluster {
 
 	//Status of cluster
 	Status ClusterStatus
+
+	// Node drain grace period.
+	NodeDrainGracePeriod Value
 }
