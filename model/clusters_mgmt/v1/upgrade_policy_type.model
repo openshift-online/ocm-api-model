@@ -33,7 +33,4 @@ class UpgradePolicy {
 
 	// Next time the upgrade should run.
 	NextRun Date
-
-	// Node drain grace period.
-	NodeDrainGracePeriod Value
 }
