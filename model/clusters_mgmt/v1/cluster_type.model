@@ -186,4 +186,8 @@ class Cluster {
 
 	// Node drain grace period.
 	NodeDrainGracePeriod Value
+
+	// Indicates whether that etcd is encrypted or not.
+	// This is set only during cluster creation.
+	EtcdEncryption Boolean
 }
