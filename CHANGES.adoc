@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.100 Nov 25 2020
+
+- Remove node drain grace period from upgrade policy
+- Add node drain grace period to the cluster
+- Add etcd_encryption to sdk
+
 == 0.0.99 Nov 16 2020
 
 - Add deletion add-on installation endpoint
