@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.101 Dec 2 2020
+- Fix add-on installation delete endpoint
+
 == 0.0.100 Nov 25 2020
 
 - Remove node drain grace period from upgrade policy
