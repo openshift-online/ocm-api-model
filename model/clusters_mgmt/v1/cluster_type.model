@@ -190,4 +190,7 @@ class Cluster {
 	// Indicates whether that etcd is encrypted or not.
 	// This is set only during cluster creation.
 	EtcdEncryption Boolean
+
+	// Channel group to be used for upgrading the cluster. Valid values: stable (default), fast, candidate, nightly.
+	UpgradeChannelGroup String
 }
