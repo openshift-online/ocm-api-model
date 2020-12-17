@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.102 Dec 17 2020
+
+- add default value to add-on parameter type
+- Add upgrade channel group for a cluster
+
 == 0.0.101 Dec 2 2020
 - Fix add-on installation delete endpoint
 
