@@ -166,9 +166,6 @@ class Cluster {
 	// Load Balancer quota to be assigned to the cluster.
 	LoadBalancerQuota Integer
 
-	// Flag indicating if cluster-admin access is enabled.
-	ClusterAdminEnabled Boolean
-
 	// Link to the product type of this cluster.
 	link Product Product
 
