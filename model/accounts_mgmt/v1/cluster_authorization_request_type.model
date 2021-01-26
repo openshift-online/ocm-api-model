@@ -25,4 +25,8 @@ struct ClusterAuthorizationRequest {
 	Managed Boolean
 	Reserve Boolean
 	Resources []ReservedResource
+	ProductID String
+	ProductCategory String
+	CloudAccountID String
+	CloudProviderID String
 }
