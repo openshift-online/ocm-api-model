@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.103 Jan 26 2021
+
+- Remove `cluster_admin_enabled` attribute from cluster type.
+- Add missing subscription, cluster authorization and plan attributes.
+
 == 0.0.102 Dec 17 2020
 
 - add default value to add-on parameter type
