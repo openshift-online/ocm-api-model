@@ -52,10 +52,12 @@ class AddOn {
 	// The name of the operator installed by this add-on.
 	OperatorName String
 
-	// Indicates if this add-on has external resources associated with it 
+	// Indicates if this add-on has external resources associated with it
 	HasExternalResources Boolean
 
 	// List of parameters for this add-on.
 	link Parameters []AddOnParameter
 
+	// List of requirements for this add-on.
+	Requirements []AddOnRequirement
 }
