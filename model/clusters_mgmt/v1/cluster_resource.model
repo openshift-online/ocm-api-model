@@ -75,6 +75,17 @@ resource Cluster {
 		target MachinePools
 	}
 
+	// Initiates cluster hibernation. While hibernating a cluster will not consume any cloud provider infrastructure
+	// but will be counted for quota.
+    method Hibernate {
+
+    }
+
+    // Resumes from Hibernation.
+    method Resume {
+
+    }
+
 	// Reference to the resource that manages metrics queries for the cluster.
 	locator MetricQueries {
 		target MetricQueries
