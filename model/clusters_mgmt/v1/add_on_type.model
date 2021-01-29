@@ -56,7 +56,7 @@ class AddOn {
 	HasExternalResources Boolean
 
 	// List of parameters for this add-on.
-	link Parameters []AddOnParameter
+	Parameters []AddOnParameter
 
 	// List of requirements for this add-on.
 	Requirements []AddOnRequirement

@@ -15,7 +15,10 @@ limitations under the License.
 */
 
 // Representation of an add-on parameter.
-class AddOnParameter {
+struct AddOnParameter {
+
+	// ID of the add-on parameter.
+	ID String
 
 	// Link to add-on.
 	link Addon AddOn

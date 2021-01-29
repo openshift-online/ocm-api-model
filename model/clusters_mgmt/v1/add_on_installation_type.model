@@ -32,7 +32,7 @@ class AddOnInstallation {
 	OperatorVersion String
 
 	// List of add-on parameters for this add-on installation.
-	link Parameters []AddOnInstallationParameter
+	Parameters []AddOnInstallationParameter
 
 	// Date and time when the add-on was initially installed in the cluster.
 	CreationTimestamp Date
