@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.105 Feb 2 2021
+
+- Add cluster hibernation support
+
 == 0.0.104 Jan 27 2021
 
 - Add addon requirement type.
