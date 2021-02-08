@@ -190,4 +190,7 @@ class Cluster {
 
 	// Channel group to be used for upgrading the cluster. Valid values: stable (default), fast, candidate, nightly.
 	UpgradeChannelGroup String
+
+	// Billing model for cluster resources.
+	BillingModel BillingModel
 }
