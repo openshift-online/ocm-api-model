@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.106 Feb 8 2021
+
+- Add billing_model field to cluster type
+- subscriptions: Add label locator
+- Update metamodel to v0.0.36
+
 == 0.0.105 Feb 2 2021
 
 - Add cluster hibernation support
