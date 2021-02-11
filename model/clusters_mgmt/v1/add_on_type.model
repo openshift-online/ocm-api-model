@@ -60,4 +60,7 @@ class AddOn {
 
 	// List of requirements for this add-on.
 	Requirements []AddOnRequirement
+
+	// List of sub operators for this add-on.
+	SubOperators []AddOnSubOperator
 }
