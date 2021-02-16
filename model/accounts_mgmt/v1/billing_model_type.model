@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2019 Red Hat, Inc.
+Copyright (c) 2021 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,13 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-struct ReservedResource {
-	AvailabilityZoneType String
-	BYOC Boolean
-	Count Integer
-	CreatedAt Date
-	ResourceName String
-	ResourceType String
-	BillingModel BillingModel
-	UpdatedAt Date
+// Billing model for subscripiton and reserved_resource resources.
+enum BillingModel {
+	// Standard. This is the default billing model
+	Standard
+
+	// Red Hat Marketplace billing model.
+	Marketplace
 }
