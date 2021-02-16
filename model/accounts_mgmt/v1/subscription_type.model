@@ -78,6 +78,7 @@ class Subscription {
 	CloudAccountID String
 	CloudProviderID String
 	RegionID String
+	ClusterBillingModel BillingModel
 
 	// Link to the account that created the subscription.
 	link Creator Account
