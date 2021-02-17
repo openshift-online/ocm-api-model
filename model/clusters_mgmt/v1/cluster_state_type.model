@@ -31,6 +31,15 @@ enum ClusterState {
 	// The cluster is being uninstalled.
 	Uninstalling
 
+	// The cluster is moving from 'Ready' state to 'Hibernating'.
+	PoweringDown
+
+	// The cluster is moving from 'Hibernating' state to 'Ready'.
+	Resuming
+
+	// The cluster will consume marginal cloud provider infrastructure but will be counted for quota.
+	Hibernating
+
 	// The state of the cluster is unknown.
 	Unknown
 }
