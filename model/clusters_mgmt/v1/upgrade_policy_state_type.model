@@ -16,8 +16,9 @@ limitations under the License.
 
 // Representation of an upgrade policy state that that is set for a cluster.
 class UpgradePolicyState {
-	// State value, can be 'pending', 'started', 'delayed', 'failed' or 'completed'.
-	Value String
+	// State value can be 'pending', 'scheduled', 'cancelled', 'started', 'delayed', 
+	// 'failed' or 'completed'.
+	Value UpgradePolicyStateValue
 
 	// Description of the state.
 	Description String
