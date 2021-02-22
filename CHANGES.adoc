@@ -2,9 +2,13 @@
 
 This document describes the relevant changes between releases of the API model.
 
-== 0.0.109 Feb 22 2021
+== 0.0.110 Feb 22 2021
 
 - organization: Add quota_cost endpoint resources
+
+== 0.0.109 Feb 22 2021
+
+- Remove deprecated upgrade channel group field
 
 == 0.0.108 Feb 16 2021
 
