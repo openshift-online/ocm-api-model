@@ -48,4 +48,9 @@ resource Organization {
 	locator SummaryDashboard {
 		target SummaryDashboard
 	}
+
+	// Reference to the service that returns a summary of quota cost for this organization
+	locator QuotaCost {
+		target QuotaCost
+	}
 }
