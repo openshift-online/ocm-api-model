@@ -44,7 +44,7 @@ class Subscription {
 	RegionID String
 	ClusterBillingModel BillingModel
 	// Metrics array. One or zero elements will present
-	Metrics []ClusterMetric
+	Metrics []ClusterMetrics
 
 	// Link to the account that created the subscription.
 	link Creator Account
