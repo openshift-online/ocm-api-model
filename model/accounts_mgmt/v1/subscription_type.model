@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2019 Red Hat, Inc.
+Copyright (c) 2021 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,42 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// TODO - Fix these Enums after fix for compiler will be in place
-
-// Usage of Subscription.
-enum UsageEnum {
-    // Production
-    // Development/Test
-    // Disaster Recovery
-}
-
-// Usage of Subscription.
-enum SystemUnitsEnum {
-    // Cores/vCPU
-    // Sockets
-}
-
-// Usage of Subscription.
-enum ProductBundleEnum {
-    // Openshift
-    // JBoss-Middleware
-    // IBM-CloudPak
-}
-
-// Service Level of Subscription.
-enum ServiceLevelEnum {
-    // L1-L3
-    // L3-only
-}
-
-// Support Level of Subscription.
-enum SupportLevelEnum {
-    // Eval
-    // Standard
-    // Premium
-    // Self-Support
-    // None
-}
 
 class Subscription {
 	Plan Plan
@@ -60,11 +24,11 @@ class Subscription {
 	LastTelemetryDate Date
 	CreatedAt Date
 	UpdatedAt Date
-	SupportLevel SupportLevelEnum
-	ServiceLevel ServiceLevelEnum
-	Usage UsageEnum
-	ProductBundle ProductBundleEnum
-	SystemUnits SystemUnitsEnum
+	SupportLevel String
+	ServiceLevel String
+	Usage String
+	ProductBundle String
+	SystemUnits String
 	CpuTotal Integer
 	SocketTotal Integer
 	DisplayName String
@@ -79,6 +43,8 @@ class Subscription {
 	CloudProviderID String
 	RegionID String
 	ClusterBillingModel BillingModel
+	// Metrics array. One or zero elements will present
+	Metrics []SubscriptionMetrics
 
 	// Link to the account that created the subscription.
 	link Creator Account
