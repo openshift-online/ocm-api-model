@@ -33,4 +33,7 @@ class MachineType {
 
 	// Link to the cloud provider that the machine type belongs to.
 	link CloudProvider CloudProvider
+
+	// 'true' if the instance type is supported only for CCS clusters, 'false' otherwise.
+	CCSOnly Boolean
 }
