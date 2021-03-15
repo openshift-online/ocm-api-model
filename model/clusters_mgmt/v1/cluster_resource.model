@@ -28,6 +28,14 @@ resource Cluster {
 
 	// Deletes the cluster.
 	method Delete {
+		// If false it will only delete from OCM but not the actual cluster resources.
+		// false is only allowed for OCP clusters. true by default.
+		in Deprovision Boolean = true
+
+		// If true it will force delete the cluster even if external dependecies
+		// cleanup was not finalized. Should be used with extreme caution, after manual cleanup
+		// of external dependencies. OSD only. false by default. 
+		in Force Boolean = false
 	}
 
 	// Reference to the resource that manages the detailed status of the cluster.
