@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.111 Mar 17 2021
+
+- Add subscription metrics.
+- Add `deprovision` and `force` parameters to delete cluster method.
+- Ensure all subscription fields are available.
+
 == 0.0.110 Feb 22 2021
 
 - organization: Add quota_cost endpoint resources
