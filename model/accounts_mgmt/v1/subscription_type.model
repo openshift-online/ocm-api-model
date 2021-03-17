@@ -34,17 +34,27 @@ class Subscription {
 	DisplayName String
 	Managed Boolean
 	Status String
-	// Last time this subscription were reconciled about cluster usage
+	// The origin of cluster registration (values are defined in AMS at pkg/api/subscription_types.go).
+	Provenance String
+	// Last time this subscription were reconciled about cluster usage.
 	LastReconcileDate Date
 	ConsumerUUID String
+	ConsoleURL String
 	Labels []Label
-	Provenance String
+	Capabilities []Capability
+	// Last time status was set to Released for this cluster/subscription.
+	LastReleasedAt Date
+	// Flag used to denote whether or not the owner of the cluster has released the ownership and ready to be transferred to a different user.
+	Released Boolean
+	// Metrics array. One or zero elements will present.
+	Metrics []SubscriptionMetrics
+	NotificationContacts []Account
 	CloudAccountID String
 	CloudProviderID String
 	RegionID String
 	ClusterBillingModel BillingModel
-	// Metrics array. One or zero elements will present
-	Metrics []SubscriptionMetrics
+	// If the subscription is a trial, date the trial ends.
+	TrialEndDate Date
 
 	// Link to the account that created the subscription.
 	link Creator Account
