@@ -25,6 +25,9 @@ struct AWS {
 	// AWS secret access key.
 	SecretAccessKey String
 
-	// SubnetIDs are the subnet ids to be used when installing the cluster.
+	// The subnet ids to be used when installing the cluster.
 	SubnetIDs []String
+
+	// Sets cluster to be inaccessible externally.
+	PrivateLink Boolean
 }
