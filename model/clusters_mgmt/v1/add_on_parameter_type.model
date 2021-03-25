@@ -41,7 +41,10 @@ class AddOnParameter {
 	// Indicates if this parameter is enabled for the add-on.
 	Enabled Boolean
 
-    // Indicates the value default for the add-on parameter
+	// Indicates the value default for the add-on parameter.
 	DefaultValue String
+
+	// List of options for the add-on parameter value.
+	Options []AddOnParameterOption
 
 }
