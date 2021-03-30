@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.112 Mar 30 2021
+
+- Add Options to AddOnParameter type.
+- aws: Support PrivateLink for fully-private clusters
+
 == 0.0.111 Mar 17 2021
 
 - Add subscription metrics.
