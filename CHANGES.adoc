@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.114 Apr 6 2021
+
+- related-resources: Add resource type and cloud provider
+- event: Track ad-hoc authenticated events
+
 == 0.0.113 Apr 6 2021
 
 - Add RelatedResources struct to QuotaCost
