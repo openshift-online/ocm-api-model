@@ -65,5 +65,10 @@ resource Root {
 	// Reference to the resource that manages the collection of provision shards.
 	locator ProvisionShards {
 		target ProvisionShards
-  }
+	}
+
+	// Reference to the resource that manages the collection of trackable events.
+	locator Events {
+		target Events
+	}
 }
