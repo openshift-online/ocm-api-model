@@ -140,11 +140,6 @@ class Cluster {
 	// Link to the collection of identity providers of the cluster.
 	link IdentityProviders []IdentityProvider
 
-	// Cluster metrics received from telemetry.
-	//
-	// When provisioning a cluster this will be ignored.
-	Metrics ClusterMetrics
-
 	// Contains configuration of a Customer Cloud Subscription cluster.
 	CCS CCS
 
