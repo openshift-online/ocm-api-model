@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages Red Hat's Terms and Conditions for using OpenShift Dedicated and Amazon Red Hat OpenShift [Terms]
-// self-review requests.
-resource SelfTermsReview {
-	// Reviews a user's status of Terms.
-	method Post {
-		in Request SelfTermsReviewRequest
-		out Response TermsReviewResponse
-	}
+// Representation of Red Hat's Terms and Conditions for using OpenShift Dedicated and Amazon Red Hat OpenShift [Terms]
+// review requests.
+struct SelfTermsReviewRequest {
+	// Defines the site code of the terms being checked
+	SiteCode string
+	// Defines the event code of the terms being checked
+	EventCode string
 }
