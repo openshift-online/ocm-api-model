@@ -19,4 +19,8 @@ limitations under the License.
 struct TermsReviewRequest {
 	// Defines the username of the account of which Terms is being reviewed.
 	AccountUsername string
+    // Defines the site code of the terms being checked
+    SiteCode string
+    // Defines the event code of the terms being checked
+    EventCode string
 }

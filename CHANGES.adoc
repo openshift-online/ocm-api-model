@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.115 Apr 13 2021
+
+- Add event_code and site_code to TermsReviewRequest type
+- Add new SelfTermsReviewRequest type
+
 == 0.0.114 Apr 6 2021
 
 - related-resources: Add resource type and cloud provider
