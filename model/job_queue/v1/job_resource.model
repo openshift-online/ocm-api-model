@@ -19,13 +19,13 @@ resource Job {
     // Mark a job as Successful. This method returns '204 No Content'
     method Success {
         // A unique ID of a pop'ed job
-        in ReceiptId Integer
+        in ReceiptId String
     }
 
     // Mark a job as Failed. This method returns '204 No Content'
     method Failure {
         // A unique ID of a pop'ed job
-        in ReceiptId Integer
+        in ReceiptId String
         in FailureReason String
     }
 }
