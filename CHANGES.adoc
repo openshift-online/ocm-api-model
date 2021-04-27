@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.116 Apr 27 2021
+
+- Add a new service JobQueue
+
 == 0.0.115 Apr 13 2021
 
 - Add event_code and site_code to TermsReviewRequest type
