@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.117 Apr 27 2021
+
+- JobQueue: ReceiptId is String and not Integer
+
 == 0.0.116 Apr 27 2021
 
 - Add a new service JobQueue
