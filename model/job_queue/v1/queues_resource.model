@@ -18,9 +18,11 @@ limitations under the License.
 resource Queues {
 	// Retrieves a list of job queues.
 	method List {
-		// Index of the requested page, where one corresponds to the first page.
-		// Page may be a token to the next page
-		in out Page Integer = 1
+		// Token of the requested page. Empty token means the first one.
+		in out Page String = ""
+
+		// Token to the next page
+		out NextPage String = ""
 
 		// Maximum number of items that will be contained in the returned page.
 		in out Size Integer = 100
