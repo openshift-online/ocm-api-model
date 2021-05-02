@@ -23,7 +23,15 @@ resource Queue {
 
     // PUSH a new job into job queue
     method Push {
-        in out Body Job
+        out ID String
+        out Kind String
+        out HREF String
+        in out Arguments String
+        out Attempts Integer
+        out AbandonedAt Date
+        out ReceiptId String
+        out CreatedAt Date
+        out UpdatedAt Date
     }
 
     // POP new job from a job queue
