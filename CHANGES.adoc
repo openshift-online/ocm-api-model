@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+
+== 0.0.118 May 2 2021
+
+- Add 'hibernating', "powering-down' and 'resuming' cluster states.
+
 == 0.0.117 Apr 27 2021
 
 - JobQueue: ReceiptId is String and not Integer
