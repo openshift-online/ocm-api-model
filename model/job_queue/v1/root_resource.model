@@ -16,8 +16,9 @@ limitations under the License.
 
 // Root of the tree of resources of the job queue service.
 resource Root {
-    // Reference to the resource that manages the collection of job queues.
-	locator Queues {
-		target Queues
-	}
+// Returns a reference to the service that manages a specific job queue.
+    locator Queue {
+            target Queue
+            variable ID
+    }
 }
