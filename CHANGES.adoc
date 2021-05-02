@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.119 May 2 2021
+
+- JobQueue: We're unable to support 'List of Job Queues'
 
 == 0.0.118 May 2 2021
 
