@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.121 May 4 2021
+
+- JobQueue: Attributes to Pop changed
+
 == 0.0.120 May 4 2021
 
 - JobQueue: Attributes to Push changed
