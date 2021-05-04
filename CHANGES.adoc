@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.120 May 4 2021
+
+- JobQueue: Attributes to Push changed
+
 == 0.0.119 May 3 2021
 
 - STS: Support attributes to allow STS clusters
