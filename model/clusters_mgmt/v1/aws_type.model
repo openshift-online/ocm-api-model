@@ -31,6 +31,6 @@ struct AWS {
 	// Sets cluster to be inaccessible externally.
 	PrivateLink Boolean
 
-	// STS contains the necessary attributes to support role-based authentication on AWS.
+	// Contains the necessary attributes to support role-based authentication on AWS.
 	STS STS
 }
