@@ -14,9 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// OperatorIAMRole contains the necessary attributes to allow each operator to access the necessary AWS resources
+// Contains the necessary attributes to allow each operator to access the necessary AWS resources
 struct OperatorIAMRole {
+	// Name of the operator
 	Name String
+
+	// Namespace where the operator lives in the cluster
 	Namespace String
+
+	// Role to assume when accessing AWS resources
 	RoleARN String
 }
