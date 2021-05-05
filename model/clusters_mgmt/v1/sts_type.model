@@ -27,4 +27,7 @@ struct STS {
 
 	// List of roles necessary to access the AWS resources of the various operators used during installation
 	OperatorIAMRoles []OperatorIAMRole
+
+	// Optional keys and values that the installer will add as tags to all AWS resources it creates
+	Tags [String]String
 }
