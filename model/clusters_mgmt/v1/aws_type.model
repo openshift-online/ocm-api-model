@@ -31,6 +31,9 @@ struct AWS {
 	// Sets cluster to be inaccessible externally.
 	PrivateLink Boolean
 
+	// Optional keys and values that the installer will add as tags to all AWS resources it creates
+	Tags [String]String
+
 	// Contains the necessary attributes to support role-based authentication on AWS.
 	STS STS
 }
