@@ -17,11 +17,6 @@ limitations under the License.
 class ResourceQuota {
 	OrganizationID String
 	SKU String
-	ResourceName String
-	ResourceType String
-	BYOC Boolean
-	AvailabilityZoneType String
-	Allowed Integer
 	SkuCount Integer
 	Type String
 	CreatedAt Date
