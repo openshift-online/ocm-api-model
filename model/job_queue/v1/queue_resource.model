@@ -39,6 +39,7 @@ resource Queue {
         out ID String
         out Kind String
         out HREF String
+        out Arguments String
         out Attempts Integer
         out AbandonedAt Date
         out ReceiptId String
