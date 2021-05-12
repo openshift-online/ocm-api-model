@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.123 May 12 2021
+
+- [SDB-2062] remove fields on ResourceQuota
+
 == 0.0.122 May 12 2021
 
 - JobQueue: Attribute Arguments added to Pop
