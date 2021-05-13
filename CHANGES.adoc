@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.124 May 13 2021
+
+- JobQueue: Updated attributes of Push
+
 == 0.0.123 May 12 2021
 
 - [SDB-2062] remove fields on ResourceQuota
