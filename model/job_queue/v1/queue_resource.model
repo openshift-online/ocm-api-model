@@ -27,10 +27,10 @@ resource Queue {
         out Kind String
         out HREF String
         in out Arguments String
-        out Attempts Integer
-        out AbandonedAt Date
+        in out Attempts Integer
+        in out AbandonedAt Date
         out ReceiptId String
-        out CreatedAt Date
+        in out CreatedAt Date
         out UpdatedAt Date
     }
 
