@@ -31,6 +31,12 @@ class MachineType {
 	// The size of the machine type.
 	Size MachineTypeSize
 
+	// Generic name for quota purposes, for example `highmem-4`.
+	// Cloud provider agnostic - many values are shared between "similar"
+	// machine types on different providers.
+	// Corresponds to `resource_name` values in "compute.node"  quota cost data.
+	GenericName String
+
 	// Link to the cloud provider that the machine type belongs to.
 	link CloudProvider CloudProvider
 
