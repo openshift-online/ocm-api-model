@@ -28,6 +28,6 @@ struct STS {
 	// List of roles necessary to access the AWS resources of the various operators used during installation
 	OperatorIAMRoles []OperatorIAMRole
 
-	//Custom IAM roles to use for the instance profiles of the master and worker instances
-	CustomIAMRoles CustomIAMRoles
+	// Instance IAM roles to use for the instance profiles of the master and worker instances
+	InstanceIAMRoles InstanceIAMRoles
 }
