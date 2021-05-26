@@ -31,12 +31,7 @@ resource Root {
 		target Clusters
 	}
 
-	// Reference to the resource that manages the collection of dashboards.
-	locator Dashboards {
-		target Dashboards
-	}
-
-	// Reference to the service that manages the collection of flavours.
+	// Reference to the service that manages the collection of flavours. 
 	locator Flavours {
 		target Flavours
 	}
