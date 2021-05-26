@@ -71,4 +71,14 @@ resource Root {
 	locator Events {
 		target Events
 	}
+
+	// Reference to the resource that manages the collection of aws inquiries.
+	locator AWSInquiries {
+		target AWSInquiries
+	}
+
+	// Reference to the resource that manages the collection of gcp inquiries.
+	locator GCPInquiries {
+		target GCPInquiries
+	}
 }
