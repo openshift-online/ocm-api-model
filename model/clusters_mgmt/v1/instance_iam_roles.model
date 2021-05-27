@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 // Contains the necessary attributes to support role-based authentication on AWS.
-struct CustomIAMRoles {
-	// The name of the IAM role that will be attached to master instances
-	MasterIAMRole String
+struct InstanceIAMRoles {
+	// The IAM role ARN that will be attached to master instances
+	MasterRoleARN String
 
-	// The name of the IAM role that will be attached to worker instances
-	WorkerIAMRole String
+	// The IAM role ARN that will be attached to worker instances
+	WorkerRoleARN String
 
 
 }
