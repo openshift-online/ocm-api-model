@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.126 May 27 2021
+
+- Add ClusterConfigurationMode type under ClusterStatus
+- sts: Change custom roles to instance roles
+
 == 0.0.125 May 18 2021
 
 - Added Custom IAM roles For STS
