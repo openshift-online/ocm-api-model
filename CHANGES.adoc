@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.128 May 31 2021
+
+- Add CCSOnly, GenericName fields to machine type.
+- Add AcceleratedComputing value to MachineTypeCategory enum.
+
 == 0.0.127 May 31 2021
 
 - Remove the Dashboards resource.
