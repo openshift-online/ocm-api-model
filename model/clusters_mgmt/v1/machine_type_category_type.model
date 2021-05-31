@@ -24,4 +24,7 @@ enum MachineTypeCategory {
 
 	// Compute Optimized machine type.
 	ComputeOptimized
+
+	// Accelerated Computing machine type.
+	AcceleratedComputing
 }
