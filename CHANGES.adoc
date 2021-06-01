@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.129 Jun 1 2021
+
+- Add cloud provider inquiries to api-model
+- sts: Add support role ARN
+
 == 0.0.128 May 31 2021
 
 - Add CCSOnly, GenericName fields to machine type.
