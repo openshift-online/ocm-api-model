@@ -22,6 +22,9 @@ struct STS {
 	// Optional unique identifier when assuming role in another account
 	ExternalID String
 
+	// ARN of the AWS role used by SREs to access the cluster AWS account in order to provide support
+	SupportRoleARN String
+
 	// URL of the location where OIDC configuration and keys are available
 	OIDCEndpointURL String
 
