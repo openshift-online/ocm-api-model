@@ -57,4 +57,14 @@ resource Root {
 	locator CapabilityReview {
 		target CapabilityReview
 	}
+
+	// Reference to the resource that is used to submit feature review requests.
+	locator FeatureReview {
+		target FeatureReview
+	}
+
+	// Reference to the resource that is used to submit self feature review requests.
+	locator SelfFeatureReview {
+		target SelfFeatureReview
+	}
 }
