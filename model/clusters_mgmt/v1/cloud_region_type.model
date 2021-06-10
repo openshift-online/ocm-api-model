@@ -33,4 +33,8 @@ class CloudRegion {
 
 	// Whether the region supports multiple availability zones.
 	SupportsMultiAZ Boolean
+
+	// 'true' if the region is supported only for CCS clusters, 'false' otherwise.
+	CCSOnly Boolean
+
 }
