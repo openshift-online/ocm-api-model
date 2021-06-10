@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.131 Jun 10 2021
+
+- Add Feature Review and Self Feature Review Locators
+
 == 0.0.130 Jun 10 2021
 
 - Add Disable workload monitoring Field to Cluster Type 
