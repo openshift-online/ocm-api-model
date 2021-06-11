@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.132 Jun 11 2021
+
+- Add ccs_only flag for cloud regions
+
 == 0.0.131 Jun 10 2021
 
 - Add Feature Review and Self Feature Review Locators
