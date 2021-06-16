@@ -21,4 +21,5 @@ class Organization {
 	CreatedAt Date
 	UpdatedAt Date
 	Labels []Label
+	Capabilities []Capability
 }
