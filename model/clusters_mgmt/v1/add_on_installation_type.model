@@ -16,27 +16,9 @@ limitations under the License.
 
 // Representation of an add-on installation in a cluster.
 class AddOnInstallation {
-	// ID used to identify the cluster that this add-on is attached to.
-	link Cluster Cluster
-
 	// Link to add-on attached to this cluster.
 	link Addon AddOn
 
-	// Overall state of the add-on installation.
-	State AddOnInstallationState
-
-	// Reason for the current State.
-	StateDescription String
-
-	// Version of the operator installed by the add-on.
-	OperatorVersion String
-
 	// List of add-on parameters for this add-on installation.
 	link Parameters []AddOnInstallationParameter
-
-	// Date and time when the add-on was initially installed in the cluster.
-	CreationTimestamp Date
-
-	// Date and time when the add-on installation information was last updated.
-	UpdatedTimestamp Date
 }
