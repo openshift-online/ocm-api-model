@@ -37,6 +37,9 @@ struct SubscriptionNotify {
 
 	// Indicates whether to include red hat associates in the email notification
 	IncludeRedHatAssociates boolean
+
+	// Indicates whether the service log is internal only to RH
+	InternalOnly boolean
 	
 	// The values which will be substituted into the templated email
 	TemplateParameters []TemplateParameter
