@@ -42,4 +42,7 @@ class LogEntry {
 	InternalOnly Boolean
 
 	Timestamp Date
+
+	// The username that triggered the event (if available).
+	Username String
 }
