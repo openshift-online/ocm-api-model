@@ -38,4 +38,7 @@ class MachinePool {
 
 	// The taints set on the Nodes created.
 	Taints []Taint
+
+	// AWS specific parameters (Optional).
+	AWS AWSMachinePool
 }
