@@ -14,9 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific clusterdeployment.
-resource Clusterdeployment {
-	// Deletes the clusterdeployment.
-	method Delete {
-	}
+// Manages a collection of resources for a cluster
+resource Resources {
+    // Retrieves a list of resources for a cluster in error state
+    method Get {
+        // List of cluster resources
+        out Body Resource
+    }
+
+    // Retrieves a list of currently available resources for a cluster
+    locator Live {
+        // Retrieved list of currently available resources for a cluster
+        target Resource
+    }
 }
