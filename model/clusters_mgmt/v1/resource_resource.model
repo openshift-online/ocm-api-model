@@ -17,8 +17,8 @@ limitations under the License.
 // Manages currently available cluster resources 
 resource Resource {
     // Retrieves currently available cluster resources
-    method Fetch {
+    method Get {
         // List of cluster resources
-        out Resources Resource
+        out Body Resource
     }
 }

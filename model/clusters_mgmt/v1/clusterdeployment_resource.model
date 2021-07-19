@@ -16,11 +16,6 @@ limitations under the License.
 
 // Manages a specific clusterdeployment.
 resource Clusterdeployment {
-	// Retrieves the details of the clusterdeployment.
-	method Get {
-		out Body ClusterDeployment
-	}
-
 	// Deletes the clusterdeployment.
 	method Delete {
 	}

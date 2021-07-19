@@ -20,6 +20,6 @@ class Resource {
     ClusterID String
     // Returned map of resources fetched.
     Resources [String]String
-  	// Date and time when the resources were fetched.
-	CreationTimestamp Date
+    // Date and time when the resources were fetched.
+    CreationTimestamp Date
 }

@@ -120,4 +120,9 @@ resource Cluster {
 		target Clusterdeployment
 	}
 
+	// Reference to cluster resources
+	locator Resources {
+	    target Resources
+	}
+
 }
