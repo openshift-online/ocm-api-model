@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.137 Jul 19 2021
+
+-  Add cluster resource type
+-  Remove GET cluster deployment endpoint
+
 == 0.0.136 Jul 19 2021
 
 -  Added Spot Market Options to MachinePool
