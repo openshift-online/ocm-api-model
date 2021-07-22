@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.138 Jul 22 2021
+
+- Add addon inquiries endpoints get and list
+
 == 0.0.137 Jul 19 2021
 
 -  Add cluster resource type
