@@ -36,4 +36,7 @@ struct AWS {
 
 	// Contains the necessary attributes to support role-based authentication on AWS.
 	STS STS
+
+	// Customer Managed Key to encrypt EBS Volume
+	KMSKeyArn String
 }
