@@ -23,4 +23,6 @@ struct TermsReviewRequest {
     SiteCode string
     // Defines the event code of the terms being checked
     EventCode string
+    // If false, only `terms_required` will be checked
+    CheckOptionalTerms Boolean
 }
