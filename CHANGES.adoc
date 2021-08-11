@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.140 Aug 11 2021
+
+- Add check_optional_terms to TermsReview and SelfTermsReview
+- Add reduceClusterList to ResourceReview and SelfResourceReview
+
 == 0.0.139 Aug 3 2021
 
 - Add kms key arn to aws ccs cluster encryption
