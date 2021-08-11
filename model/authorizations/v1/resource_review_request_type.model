@@ -24,4 +24,8 @@ struct ResourceReviewRequest {
 
 	// Type of resource.
 	ResourceType string
+
+	// If true, in the case when all subscriptions in organization are permitted, response will *not* include
+	// these subscriptions' ID, but organization only.
+	ReduceClusterList Boolean
 }
