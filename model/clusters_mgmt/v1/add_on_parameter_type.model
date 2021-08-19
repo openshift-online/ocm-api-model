@@ -32,6 +32,9 @@ class AddOnParameter {
 	// Validation rule for the add-on parameter.
 	Validation String
 
+	// Validation Error returned when Validation regex is not matched.
+	ValidationError String
+
 	// Indicates if this parameter is required by the add-on.
 	Required Boolean
 
