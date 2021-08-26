@@ -1,6 +1,5 @@
-#!/bin/bash -ex
 #
-# Copyright (c) 2019 Red Hat, Inc.
+# Copyright (c) 2021 Red Hat, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,8 +14,29 @@
 # limitations under the License.
 #
 
-# This script is executed by a Jenkins job for each change request. If it
-# doesn't succeed the change won't be merged.
+name: Check pull request
 
-# Check the model:
-make check
+on:
+  pull_request:
+    branches:
+    - master
+
+jobs:
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the source
+      uses: actions/checkout@v2
+
+    - name: Setup Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.16
+
+    - name: Setup Goimports
+      run: go install golang.org/x/tools/cmd/goimports@v0.0.0-20200518194103-259583f2d8a9
+
+    - name: Run the checks
+      run: make check
