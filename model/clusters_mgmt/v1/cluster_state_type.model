@@ -16,14 +16,14 @@ limitations under the License.
 
 // Overall state of a cluster.
 enum ClusterState {
-	// Error during installation.
-	Error
+	// The cluster is waiting for user action.
+	Waiting
+
+	// The cluster is pending resources before being provisioned.
+	Pending
 
 	// The cluster is still being installed.
 	Installing
-
-	// The cluster is waiting to be provisioned.
-	Pending
 
 	// The cluster is ready to use.
 	Ready
@@ -39,6 +39,9 @@ enum ClusterState {
 
 	// The cluster will consume marginal cloud provider infrastructure but will be counted for quota.
 	Hibernating
+
+	// Error during installation.
+	Error
 
 	// The state of the cluster is unknown.
 	Unknown
