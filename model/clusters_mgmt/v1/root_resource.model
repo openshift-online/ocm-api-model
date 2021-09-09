@@ -76,4 +76,10 @@ resource Root {
 	locator GCPInquiries {
 		target GCPInquiries
 	}
+	
+	// Reference to limited support reason templates.
+	locator LimitedSupportReasonTemplates {
+	    target LimitedSupportReasonTemplates
+	}
+
 }
