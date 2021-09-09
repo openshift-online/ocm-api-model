@@ -31,6 +31,13 @@ resource LimitedSupportReasons {
 		out Items []LimitedSupportReason
 	}
 
+	// Adds a new reason to the cluster.
+	method Add {
+		// Description of the reason.
+		in out Body LimitedSupportReason
+	}
+
+
 	// Reference to the service that manages an specific reason.
 	locator LimitedSupportReason {
 		target LimitedSupportReason
