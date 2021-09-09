@@ -125,9 +125,13 @@ resource Cluster {
 		target Clusterdeployment
 	}
 
-	// Reference to cluster resources
+	// Reference to cluster resources.
 	locator Resources {
 	    target Resources
 	}
 
+	// Reference to cluster limited support reasons.
+	locator LimitedSupportReasons {
+	    target LimitedSupportReasons
+	}
 }
