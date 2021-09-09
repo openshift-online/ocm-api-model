@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.143 Sep 9 2021
+
+- Add Add() method to limited support reasons resource
+
 == 0.0.142 Sep 9 2021
 
 - Add Limited Support Reason and Templates API
