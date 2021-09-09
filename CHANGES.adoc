@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.142 Sep 9 2021
+
+- Add Limited Support Reason and Templates API
+
 == 0.0.141 Aug 18 2021
 
 - Add EndOfLifeTimestamp for versions
