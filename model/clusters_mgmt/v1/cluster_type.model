@@ -105,6 +105,15 @@ class Cluster {
 	// Network settings of the cluster.
 	Network Network
 
+	// Proxy.
+	Proxy Proxy
+
+	// Additional trust bundle.
+	AdditionalTrustBundle String
+
+	// GCP Network.
+	GCPNetwork GCPNetwork
+
 	// Date and time when the cluster was initially created, using the
 	// format defined in https://www.ietf.org/rfc/rfc3339.txt[RC3339].
 	CreationTimestamp Date
