@@ -85,6 +85,6 @@ resource Root {
 	// Reference to limited support reason templates.
 	locator ArchivedClusters {
 	    target ArchivedClusters
-    }
+    	}
 
 }
