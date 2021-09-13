@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.145 Sep 13 2021
+
+- Add Archived cluster endpoint
+- Add cluster waiting state
+
 == 0.0.144 Sep 12 2021
 
 - Add cluster-wide proxy and gcp network attributes
