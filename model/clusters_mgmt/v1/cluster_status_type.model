@@ -25,6 +25,9 @@ class ClusterStatus {
 	// DNSReady from Provisioner
 	DNSReady Boolean
 
+	// OIDCReady from user configuration.
+	OIDCReady Boolean
+
 	// Provisioning Error Message
 	ProvisionErrorMessage   String
 
