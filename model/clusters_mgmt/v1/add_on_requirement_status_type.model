@@ -14,22 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of an add-on requirement.
-struct AddOnRequirement {
+// Representation of an add-on requirement status.
+struct AddOnRequirementStatus {
 
-	// ID of the add-on requirement.
-	ID String
+	// Indicates if this requirement is fulfilled.
+	Fulfilled Boolean
 
-	// Type of resource of the add-on requirement.
-	Resource String
-
-	// Data for the add-on requirement.
-	Data [String]Interface
-
-	// Indicates if this requirement is enabled for the add-on.
-	Enabled Boolean
-
-    // Optional cluster specific status for the add-on.
-	Status AddOnRequirementStatus
+	// Error messages detailing reasons for unfulfilled requirements.
+	ErrorMsgs []String
 
 }
