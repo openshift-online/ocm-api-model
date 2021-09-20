@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2019 Red Hat, Inc.
+Copyright (c) 2021 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,24 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific add-on.
-resource AddOn {
-	// Retrieves the details of the add-on.
+// Manages a specific add-on version.
+resource AddOnVersion {
+	// Retrieves the details of the add-on version.
 	method Get {
-		out Body AddOn
+		out Body AddOnVersion
 	}
 
-	// Updates the add-on.
+	// Updates the add-on version.
 	method Update {
-		in out Body AddOn
+		in out Body AddOnVersion
 	}
 
-	// Deletes the add-on.
+	// Deletes the add-on version.
 	method Delete {
 	}
 
-	// Reference to the resource that manages the collection of addon versions.
-	locator Versions {
-		target AddOnVersions
-	}
 }

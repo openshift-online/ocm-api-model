@@ -22,6 +22,9 @@ class AddOnInstallation {
 	// Link to add-on attached to this cluster.
 	link Addon AddOn
 
+	// Link to the installed version of this add-on.
+	link Version AddOnVersion
+
 	// Overall state of the add-on installation.
 	State AddOnInstallationState
 

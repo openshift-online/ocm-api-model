@@ -63,4 +63,7 @@ class AddOn {
 
 	// List of sub operators for this add-on.
 	SubOperators []AddOnSubOperator
+
+	// Link to the current default version of this add-on.
+	link Version AddOnVersion
 }
