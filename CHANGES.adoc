@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.146 Sep 21 2021
+
+- Add Status to AddOnRequirement
+
 == 0.0.145 Sep 13 2021
 
 - Add Archived cluster endpoint
