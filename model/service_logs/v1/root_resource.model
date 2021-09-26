@@ -20,4 +20,8 @@ resource Root {
 	locator ClusterLogs {
 		target ClusterLogs
 	}
+	// Reference to the resource that manages the collection of clusters for clusters logs.
+	locator Clusters {
+		target Clusters
+	}
 }
