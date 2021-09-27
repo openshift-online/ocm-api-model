@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.147 Sep 27 2021
+
+- Add missing connection to clusters collection in the `service_logs` service.
+
 == 0.0.146 Sep 21 2021
 
 - Add Status to AddOnRequirement
