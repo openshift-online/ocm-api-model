@@ -108,9 +108,6 @@ class Cluster {
 	// Proxy.
 	Proxy Proxy
 
-	// Additional trust bundle.
-	AdditionalTrustBundle String
-
 	// GCP Network.
 	GCPNetwork GCPNetwork
 

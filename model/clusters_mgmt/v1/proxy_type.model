@@ -25,4 +25,7 @@ struct Proxy {
 	// NoProxy is a comma-separated list of domains and CIDRs for which 
 	// the proxy should not be used.
 	NoProxy String
+
+	// Additional trust bundle.
+	AdditionalTrustBundle String
 }
