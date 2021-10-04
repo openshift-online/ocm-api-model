@@ -31,7 +31,7 @@ resource Root {
 		target Clusters
 	}
 
-	// Reference to the service that manages the collection of flavours.
+	// Reference to the service that manages the collection of flavours. 
 	locator Flavours {
 		target Flavours
 	}
@@ -76,15 +76,10 @@ resource Root {
 	locator GCPInquiries {
 		target GCPInquiries
 	}
-
+	
 	// Reference to limited support reason templates.
 	locator LimitedSupportReasonTemplates {
 	    target LimitedSupportReasonTemplates
 	}
-
-	// Reference to limited support reason templates.
-	locator ArchivedClusters {
-	    target ArchivedClusters
-    	}
 
 }
