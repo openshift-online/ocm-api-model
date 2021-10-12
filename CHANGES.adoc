@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.149 Oct 11 2021
+
+- Add AddOn Versions
+
 == 0.0.148 Oct 05 2021
 
 - Revert archived cluster endpoint
