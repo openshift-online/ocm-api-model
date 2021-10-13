@@ -23,7 +23,7 @@ class AddOnInstallation {
 	link Addon AddOn
 
 	// Link to the installed version of this add-on.
-	link Version AddOnVersion
+	link AddonVersion AddOnVersion
 
 	// Overall state of the add-on installation.
 	State AddOnInstallationState
