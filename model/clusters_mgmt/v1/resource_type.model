@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// A Resource which belongs to a cluster, example Cluster Deployment.
-class Resource {
+// Cluster Resource which belongs to a cluster, example Cluster Deployment.
+class ClusterResources {
     // Cluster ID for the fetched resources
     ClusterID String
-    // Returned map of resources fetched.
+    // Returned map of cluster resources fetched.
     Resources [String]String
     // Date and time when the resources were fetched.
     CreationTimestamp Date
