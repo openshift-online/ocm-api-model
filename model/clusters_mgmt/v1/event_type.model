@@ -20,4 +20,8 @@ struct Event {
 	// uppercase letter followed by alphanumeric characters or
 	// underscores. The entire key needs to be smaller than 64 characters.
 	Key String
+
+	//Body of the event to track the details of the tracking event as Key value pair
+	Body [String]String
+
 }
