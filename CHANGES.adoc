@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.150 Oct 27 2021
+
+-  Fix addon installation version (addon_version vs version)
+-  Remove no_proxy attribute from SDK
+-  Add body to the external tracking event
+
 == 0.0.149 Oct 11 2021
 
 - Add AddOn Versions
