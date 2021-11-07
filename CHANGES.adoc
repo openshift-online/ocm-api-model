@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.151 Nov 7 2021
+
+-  Add Name field to LDAP identity provider
+
 == 0.0.150 Oct 27 2021
 
 -  Fix addon installation version (addon_version vs version)
