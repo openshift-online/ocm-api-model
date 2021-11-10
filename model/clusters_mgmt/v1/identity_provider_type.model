@@ -136,9 +136,6 @@ struct HTPasswdIdentityProvider {
 
 // Details for `ldap` identity providers.
 struct LDAPIdentityProvider {
-	// Name is the name for the provider
-	Name String
-
 	// LDAP attributes used to configure the provider.
 	Attributes LDAPAttributes
 
