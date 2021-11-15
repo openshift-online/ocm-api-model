@@ -19,12 +19,12 @@ resource Resources {
     // Retrieves a list of resources for a cluster in error state
     method Get {
         // List of cluster resources
-        out Body Resource
+        out Body ClusterResources
     }
 
     // Retrieves a list of currently available resources for a cluster
     locator Live {
         // Retrieved list of currently available resources for a cluster
-        target Resource
+        target ClusterResources
     }
 }

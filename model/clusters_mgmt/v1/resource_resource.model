@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 // Manages currently available cluster resources 
-resource Resource {
+resource ClusterResources {
     // Retrieves currently available cluster resources
     method Get {
         // List of cluster resources
-        out Body Resource
+        out Body ClusterResources
     }
 }
