@@ -18,7 +18,7 @@ limitations under the License.
 enum AddOnInstallMode {
 	// This mode means that the the addon CRD exists in a single specific namespace.
 	// This namespace is reflected by the TargetNamespace addon field
-	SingleNamespace
+	OwnNamespace
 
 	// This mode means that the addon is deployed in all namespaces.
 	// However, the addon status is retrieved from the target namespace
