@@ -23,6 +23,9 @@ class AddOnVersion {
 	// The catalog source image for this add-on version.
 	SourceImage String
 
+	// The specific addon catalog source channel of packages 
+	Channel String
+
 	// List of parameters for this add-on version.
 	link Parameters []AddOnParameter
 
