@@ -188,6 +188,9 @@ class Cluster {
 	// Node drain grace period.
 	NodeDrainGracePeriod Value
 
+	// Create cluster that uses FIPS Validated / Modules in Process cryptographic libraries.
+	FIPS Boolean
+
 	// Indicates whether that etcd is encrypted or not.
 	// This is set only during cluster creation.
 	EtcdEncryption Boolean
