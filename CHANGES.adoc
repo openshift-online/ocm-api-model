@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+== 0.0.153 Nov 22 2021
+
+- Enable FIPS mode
+
 == 0.0.152 Nov 18 2021
 
 - Update type `resource` to `clusterResources`
