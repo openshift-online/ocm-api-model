@@ -20,8 +20,7 @@ limitations under the License.
 // cluster is retrieved it will be a link to the cloud provider, containing only
 // the kind, id and href attributes:
 //
-// [source,json]
-// ----
+// ```json
 // {
 //   "cloud_provider": {
 //     "kind": "CloudProviderLink",
@@ -29,19 +28,18 @@ limitations under the License.
 //     "href": "/api/clusters_mgmt/v1/cloud_providers/123"
 //   }
 // }
-// ----
+// ```
 //
 // When a cluster is created this is optional, and if used it should contain the
 // identifier of the cloud provider to use:
 //
-// [source,json]
-// ----
+// ```json
 // {
 //   "cloud_provider": {
 //     "id": "123",
 //   }
 // }
-// ----
+// ```
 //
 // If not included, then the cluster will be created using the default cloud
 // provider, which is currently Amazon Web Services.
@@ -115,11 +113,11 @@ class Cluster {
 	GCPNetwork GCPNetwork
 
 	// Date and time when the cluster was initially created, using the
-	// format defined in https://www.ietf.org/rfc/rfc3339.txt[RC3339].
+	// format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 	CreationTimestamp Date
 
 	// Date and time when the cluster will be automatically deleted, using the format defined in
-	// https://www.ietf.org/rfc/rfc3339.txt[RFC3339]. If no timestamp is provided, the cluster
+	// [RFC3339](https://www.ietf.org/rfc/rfc3339.txt). If no timestamp is provided, the cluster
 	// will never expire.
 	//
 	// This option is unsupported.

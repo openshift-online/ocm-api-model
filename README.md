@@ -1,11 +1,11 @@
-= OpenShift cluster manager API model
+# OpenShift cluster manager API model
 
-== Introduction
+## Introduction
 
 This project contains the specification of the OpenShift cluster manager API,
 also known as the _model_.
 
-== Concepts
+## Concepts
 
 The specification of the API is written using a DSL (the model language)
 similar to _Go_.
@@ -22,8 +22,7 @@ For example, the `Cluster` type defining the _cluster_ concept should be located
 in a file within the `clusters_mgmt/v1` directory, should be named
 `cluster_type.model` and should contain something like this:
 
-[source]
-----
+```
 // Definition of an _OpenShift_ cluster.
 class Cluster {
 	// Name of the cluster.
@@ -34,7 +33,7 @@ class Cluster {
 
 	...
 }
-----
+```
 
 Classes and structs contain _attributes_ defined by an attribute name followed
 by the type of that attribute. In the above example there are two attributes
@@ -46,14 +45,12 @@ tries to be close to. But the actual JSON representation uses _snake_case_.
 These are some examples of what is the correspondence between attribute names
 in the model and in JSON:
 
-|===
-| Model | JSON
-
-| `ID` | `id`
-| `HREF` | `href`
-| `Cluster` | `cluster`
-| `AccessKeyID` | `access_key_id`
-|===
+| Model         | JSON            |
+| ------------- | --------------- |
+| `ID`          | `id`            |
+| `HREF`        | `href`          |
+| `Cluster`     | `cluster`       |
+| `AccessKeyID` | `access_key_id` |
 
 The main difference between classes and structs is that classes are intended to
 represent objects that have an _identity_. In practice that means that classes
@@ -62,14 +59,13 @@ unique identifier of the object, and the `HREF` attribute will contain the
 location of the object in the server. For example, when retrieving a particular
 cluster from the server the returned JSON document will be like this:
 
-[source,json]
-----
+```json
 {
     "id": "123",
     "href": "/api/clusters_mgmt/v1/clusters/123",
     ...
 }
-----
+```
 
 Resources are represented by `resource` blocks.
 
@@ -77,8 +73,7 @@ For example, the `Clusters` resource defining the collection of clusters should
 be located in a file within the `clusters_mgmt/v1` directory, should be named
 `clusters_resource.model` and should contain something like this:
 
-[source]
-----
+```
 // Manages the collection of clusters.
 resource Clusters {
 	// Retrieves the list of clusters.
@@ -93,7 +88,7 @@ resource Clusters {
 
 	...
 }
-----
+```
 
 Resource _methods_ are represented as nested `method` blocks.
 
@@ -101,8 +96,7 @@ For example, the method that retrieves the list of clusters is defined in a
 nested `List` method block inside the `resource` block for the clusters
 resource:
 
-[source]
-----
+```
 // Retrieves the list of clusters.
 method List {
 	// Index of the requested page, where one corresponds to the first page.
@@ -124,7 +118,7 @@ method List {
 	// Retrieved list of clusters.
 	out Items []Cluster
 }
-----
+```
 
 Methods have _parameters_ defined by their direction (_in_ or _out_), their
 name and their type. In the above example there are four input parameters
@@ -132,24 +126,24 @@ name and their type. In the above example there are four input parameters
 `Page`, `Size`, `Total` and `Items`).
 
 - "List" conceptual method is implemented by HTTP GET method, with
-_in_ parameters represented in the URL as HTTP query parameters
-(with names converted from _CamelCase_ to _snake_case_).
-+
-`cluster_mgmt` API supports an alternative way to List — as HTTP
-POST method, with a `method=get` query parameter and _in_ paramaters
-sent as fields of a JSON request body (again, with _snake_case_ names).
-+
-_Out_ parameters become top-level fields in the JSON response body
-(again, with _snake_case_ names).
-An additional `kind` field is added automatically (set to the type's
-name + a "List" suffix), it should not be included in the method block.
+  _in_ parameters represented in the URL as HTTP query parameters
+  (with names converted from _CamelCase_ to _snake_case_).
+
+  `cluster_mgmt` API supports an alternative way to List — as HTTP
+  POST method, with a `method=get` query parameter and _in_ paramaters
+  sent as fields of a JSON request body (again, with _snake_case_ names).
+ 
+  _Out_ parameters become top-level fields in the JSON response body
+  (again, with _snake_case_ names).
+  An additional `kind` field is added automatically (set to the type's
+  name + a "List" suffix), it should not be included in the method block.
 
 - "Get" is regular HTTP GET method, declared with single _out_ parameter
-representing the JSON response body.
+  representing the JSON response body.
 
 - "Add" is performed by HTTP POST method, declared with single _in
-out_ parameter representing the JSON request body — as well as the
-response body.
+  out_ parameter representing the JSON request body — as well as the
+  response body.
 
 - "Delete" is performed by HTTP DELETE method, with no parameters.
 
@@ -159,14 +153,13 @@ example, the resource that manages the collection of clusters knows how to
 _locate_ the resource that manages a specific cluster. That is represented in
 the model language with a `locator` block like this:
 
-[source]
-----
+```
 // Returns a reference to the service that manages an specific cluster.
 locator Cluster {
 	target Cluster
 	variable ID
 }
-----
+```
 
 All resource locators have a name and a _target_. The target is defined using
 the `target` keyword and the name of the resource.
@@ -185,13 +178,12 @@ Locators without variable are intended for cases where no additional
 information is needed to identify the sub-resource. For example, the locator
 for the credentials sub-resource of a cluster can be defined like this:
 
-[source]
-----
+```
 // Reference to the resource that manages the credentials of the cluster.
 locator Credentials {
 	target Credentials
 }
-----
+```
 
 Locators also define the URL structure of the API: the path component of the
 URL of a particular resource is constructed concatenating the names/variables
@@ -203,9 +195,9 @@ clusters collection, then the `Cluster` locator with variable `123` to get the
 cluster resource and finally the `Credentials` locator to get to the
 credentials resource:
 
-....
+```
 Root -> Clusters -> Cluster(123) -> Credentials
-....
+```
 
 Each link in that chain of locators is translated into an URL path segment
 using the following rules:
@@ -225,11 +217,11 @@ using the following rules:
 Taking these rules into account the complete URL path for the above example
 would be the following:
 
-....
+```
 /api/clusters_mgmt/v1/clusters/123/credentials
-....
+```
 
-== Documentation
+## Documentation
 
 The Go language supports adding documentation in the code itself, using the
 documentation comments. These comments start with `//` and appear immediately
@@ -237,16 +229,14 @@ before the documented item. The model language uses the same kind of
 documentation comments. For example, the `Cluster` type can be documented
 like this:
 
-[source]
-----
+```
 // Definition of an _OpenShift_ cluster.
 //
 // The `cloud_provider` attribute is a reference to the cloud provider. When a
 // cluster is retrieved it will be a link to the cloud provider, containing only
 // the kind, id and href attributes:
 //
-// [source,json]
-// ----
+// ```json
 // {
 //   "cloud_provider": {
 //     "kind": "CloudProviderLink",
@@ -254,19 +244,18 @@ like this:
 //     "href": "/api/clusters_mgmt/v1/cloud_providers/123"
 //   }
 // }
-// ----
+// ```
 //
 // When a cluster is created this is optional, and if used it should contain the
 // identifier of the cloud provider to use:
 //
-// [source,json]
-// ----
+// ```
 // {
 //   "cloud_provider": {
 //     "id": "123",
 //   }
 // }
-// ----
+// ```
 //
 // If not included, then the cluster will be created using the default cloud
 // provider, which is currently Amazon Web Services.
@@ -279,10 +268,10 @@ like this:
 class Cluster {
 	...
 }
-----
+```
 
 Unlike Go the format of this documentation isn't plain text, but
-http://asciidoc.org[Asciidoc].
+[Markdown](https://daringfireball.net/projects/markdown/syntax).
 
 Attributes of types, methods of resources and parameters of methods can all be
 documented in a similar way, just placing documentation comment before the
@@ -290,8 +279,7 @@ definition of the item. For example, to document the `Search` parameter of the
 `List` method of the `Clusters` resource the following documentation comment
 could be used:
 
-[source]
-----
+```
 // Search criteria.
 //
 // The syntax of this parameter is similar to the syntax of the _where_ clause of a
@@ -300,15 +288,15 @@ could be used:
 // clusters with a name starting with `my` in the `us-east-1` region the value
 // should be:
 //
-// [source,sql]
+// ```sql
 // ----
 // name like 'my%' and region.id = 'us-east-1'
-// ----
+// ```
 //
 // If the parameter isn't provided, or if the value is empty, then all the
 // clusters that the user has permission to see will be returned.
 in Search String
-----
+```
 
 This documentation is used to automatically generate OpenAPI reference
-documentation (with some constructs converted to markdown).
+documentation.
