@@ -4,7 +4,7 @@ This document describes the relevant changes between releases of the API model.
 
 ## 0.0.154 Dec 3 2021
 
-In version doesn't contain changes to the model, only to the development and
+This version doesn't contain changes to the model, only to the development and
 build workflows:
 
 - Rename `master` branch to `main`.
