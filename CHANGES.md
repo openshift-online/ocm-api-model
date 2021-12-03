@@ -2,6 +2,25 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.154 Dec 3 2021
+
+In version doesn't contain changes to the model, only to the development and
+build workflows:
+
+- Rename `master` branch to `main`.
+
+  To adapt your local repository to the new branch name run the following
+  commands:
+
+  ```shell
+  git branch -m master main
+  git fetch origin
+  git branch -u origin/main main
+  git remote set-head origin -a
+  ```
+
+- Automatically add changes from `CHANGES.md` to release descriptions.
+
 ## 0.0.153 Nov 22 2021
 
 - Enable FIPS mode
