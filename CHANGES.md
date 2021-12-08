@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.155 Dec 8 2021
+
+- Add `status_board` service.
+
 ## 0.0.154 Dec 3 2021
 
 This version doesn't contain changes to the model, only to the development and
