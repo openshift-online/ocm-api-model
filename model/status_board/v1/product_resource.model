@@ -29,5 +29,9 @@ resource Product {
 
   locator Applications {
     target Applications
-  } 
+  }
+
+  locator Updates {
+    target Statuses
+  }
 }

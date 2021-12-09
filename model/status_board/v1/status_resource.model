@@ -17,7 +17,7 @@ limitations under the License.
 // Provides detailed information about the specified status.
 resource Status {
   method Get {
-    out Body Service
+    out Body Status
   }
 
   method Update {
