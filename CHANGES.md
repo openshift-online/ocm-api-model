@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.156 Dec 10 2021
+
+- Add `updates` method to status board product resource.
+- Fix status get method of status board.
+
 ## 0.0.155 Dec 8 2021
 
 - Add `status_board` service.
