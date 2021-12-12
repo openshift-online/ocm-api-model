@@ -132,6 +132,9 @@ struct HTPasswdIdentityProvider {
 
 	// Password to be used in the _HTPasswd_ data file.
 	Password String
+
+    // Link to the collection of _HTPasswd_ users.
+    link Users []HTPasswdUser
 }
 
 // Details for `ldap` identity providers.
