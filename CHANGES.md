@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.157 Dec 10 2021
+
+- Add support for multi-user `HTPasswd` IDP.
+
 ## 0.0.156 Dec 10 2021
 
 - Add `updates` method to status board product resource.
