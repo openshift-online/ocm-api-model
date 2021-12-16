@@ -27,10 +27,12 @@ resource Product {
   method Delete {
   }
 
+  // /api/status-board/v1/products/{id}/applications
   locator Applications {
     target Applications
   }
 
+  // /api/status-board/v1/products/{id}/updates
   locator Updates {
     target Statuses
   }
