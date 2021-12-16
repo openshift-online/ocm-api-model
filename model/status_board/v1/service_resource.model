@@ -27,7 +27,6 @@ resource Service  {
   method Delete {
   }
 
-  // /api/status-board/v1/services/{id}/statuses
   locator Statuses {
     target Statuses
   }
