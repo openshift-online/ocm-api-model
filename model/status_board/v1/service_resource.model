@@ -26,4 +26,8 @@ resource Service  {
 
   method Delete {
   }
+
+  locator Statuses {
+    target Statuses
+  }
 }
