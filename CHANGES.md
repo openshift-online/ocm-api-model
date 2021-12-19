@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.158 Dec 19 2021
+
+- Adding subnetworks to vpc inquiry
+- Add statuses path to service model, add some comments.
+- [SDB-2509] Update OSL API schema to be compatible with ocm-sdk-go
+
 ## 0.0.157 Dec 10 2021
 
 - Add support for multi-user `HTPasswd` IDP.
