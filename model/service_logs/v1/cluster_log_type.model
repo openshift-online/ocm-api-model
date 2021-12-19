@@ -45,4 +45,13 @@ class LogEntry {
 
 	// The username that triggered the event (if available).
 	Username String
+	
+	// Internal cluster ID.
+	ClusterID String
+
+	// Log custom event id for a simple search of related cluster logs.
+	EventStreamID String
+
+	// The related subscription id of the cluster.
+	SubscriptionID String
 }
