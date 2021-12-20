@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.161 Dec 20 2021
+- Add support for version gate agreements.
+
 ## 0.0.160 Dec 20 2021
 - Change version gates URL.
 
