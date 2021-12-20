@@ -22,7 +22,7 @@ resource Version {
 	}
 
 	// Reference to version gates.
-	locator VersionGates {
+	locator Gates {
 		target VersionGates
 	}
 }
