@@ -289,7 +289,6 @@ could be used:
 // should be:
 //
 // ```sql
-// ----
 // name like 'my%' and region.id = 'us-east-1'
 // ```
 //
