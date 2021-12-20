@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2019 Red Hat, Inc.
+Copyright (c) 2021 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,15 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific version.
-resource Version {
-	// Retrieves the details of the version.
+// Manages a specific version gate.
+resource VersionGate {
+	// Retrieves the details of the version gate.
 	method Get {
-		out Body Version
-	}
-
-	// Reference to version gates.
-	locator VersionGates {
-		target VersionGates
+		out Body VersionGate
 	}
 }
