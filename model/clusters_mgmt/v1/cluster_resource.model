@@ -134,4 +134,9 @@ resource Cluster {
 	locator LimitedSupportReasons {
 	    target LimitedSupportReasons
 	}
+
+	// Reference to cluster's agreed version gate.
+	locator VersionGateAgreements {
+	    target VersionGateAgreements
+	}
 }
