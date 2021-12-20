@@ -15,29 +15,22 @@
 #
 
 # Details of the metamodel used to check the model:
-metamodel_version:=v0.0.36
-metamodel_url:=https://github.com/openshift-online/ocm-api-metamodel.git
+metamodel_version:=v0.0.45
+metamodel_url:=https://github.com/openshift-online/ocm-api-metamodel/releases/download/$(metamodel_version)/metamodel-linux-amd64
+metamodel_sum:=200ffc61e3e65d28b323f3068b642355795185cf7c335ba5115ba54ccebb7f71
 
 .PHONY: check
 check: metamodel
-	metamodel/metamodel check --model=model
+	./metamodel check --model=model
 
 .PHONY: openapi
 openapi: metamodel
-	metamodel/metamodel generate openapi --model=model --output=openapi
+	./metamodel generate openapi --model=model --output=openapi
 
-.PHONY: metamodel
 metamodel:
-	rm -rf "$@"
-	if [ -d "$(metamodel_url)" ]; then \
-		cp -r "$(metamodel_url)" "$@"; \
-	else \
-		git clone "$(metamodel_url)" "$@"; \
-		cd "$@"; \
-		git fetch --tags origin; \
-		git checkout -B build "$(metamodel_version)"; \
-	fi
-	make -C "$@"
+	wget --progress=dot:giga --output-document="$@" "$(metamodel_url)"
+	echo "$(metamodel_sum) $@" | sha256sum --check
+	chmod +x "$@"
 
 # Enforce indentation by tabs. License contains 2 spaces, so reject 3+.
 lint:
