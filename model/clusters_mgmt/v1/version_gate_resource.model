@@ -20,4 +20,8 @@ resource VersionGate {
 	method Get {
 		out Body VersionGate
 	}
+
+	// Deletes the version gate.
+	method Delete {
+	}
 }

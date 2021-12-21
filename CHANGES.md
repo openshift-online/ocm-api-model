@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.163 Dec 21 2021
+- Add support for version gate deletion.
+
 ## 0.0.162 Dec 21 2021
 - Add support for version gate creation.
 
