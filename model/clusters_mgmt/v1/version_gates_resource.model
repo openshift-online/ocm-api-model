@@ -59,6 +59,12 @@ resource VersionGates {
 		out Items []VersionGate
 	}
 
+	// Adds a new version gate
+	method Add {
+		// Details of the version gate
+		in out Body VersionGate
+	}
+
 	// Reference to the resource that manages a specific version gate.
 	locator VersionGate {
 		target VersionGate
