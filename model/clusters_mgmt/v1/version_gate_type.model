@@ -16,6 +16,9 @@ limitations under the License.
 
 // Representation of an _OpenShift_ version gate.
 class VersionGate {
+  // VersionRawIDPrefix represents the versions prefix that the gate applies to.
+  VersionRawIDPrefix string
+
   // Label representing the version gate in OpenShift.
   Label string
 
