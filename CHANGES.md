@@ -2,7 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
-## 0.0.164 Dec 21 2021
+## 0.0.165 Dec 22 2021
+- Add version raw id prefix to version gate.
+
+## 0.0.164 Dec 22 2021
 - Move version gates to be top level resource.
 
 ## 0.0.163 Dec 21 2021
