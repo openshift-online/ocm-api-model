@@ -20,9 +20,4 @@ resource Version {
 	method Get {
 		out Body Version
 	}
-
-	// Reference to version gates.
-	locator Gates {
-		target VersionGates
-	}
 }
