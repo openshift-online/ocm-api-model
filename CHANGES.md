@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.166 Dec 26 2021
+- Change version gate agreement URL.
+
 ## 0.0.165 Dec 22 2021
 - Add version raw id prefix to version gate.
 
