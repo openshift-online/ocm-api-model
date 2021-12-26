@@ -136,7 +136,7 @@ resource Cluster {
 	}
 
 	// Reference to cluster's agreed version gate.
-	locator VersionGateAgreements {
+	locator GateAgreements {
 	    target VersionGateAgreements
 	}
 }
