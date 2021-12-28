@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.167 Dec 27 2021
+- Change field name in version gate agreement link to version gate.
+
 ## 0.0.166 Dec 26 2021
 - Change version gate agreement URL.
 

@@ -17,7 +17,7 @@ limitations under the License.
 // VersionGateAgreement represents a version gate that the user agreed to for a specific cluster.
 class VersionGateAgreement {
 	// link to the version gate that the user agreed to
-	link Gate VersionGate
+	link VersionGate VersionGate
 
 	// The time the user agreed to the version gate
 	AgreedTimestamp Date
