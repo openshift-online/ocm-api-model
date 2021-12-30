@@ -16,7 +16,7 @@ limitations under the License.
 
 // Manages the collection of vpcs inquiry.
 resource VpcsInquiry {
-	// Retrieves the list of available vpcs of the cloud provider pair specific region.
+	// Retrieves the list of available vpcs of the cloud provider for specific region.
 	// IMPORTANT: This collection doesn't currently support paging or searching, so the returned
 	// `page` will always be 1 and `size` and `total` will always be the total number of available vpcs
 	// of the provider.
