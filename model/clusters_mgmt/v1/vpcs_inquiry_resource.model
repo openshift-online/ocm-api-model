@@ -16,9 +16,9 @@ limitations under the License.
 
 // Manages the collection of vpcs inquiry.
 resource VpcsInquiry {
-	// Retrieves the list of available regions of the cloud provider.
+	// Retrieves the list of available vpcs of the cloud provider for specific region.
 	// IMPORTANT: This collection doesn't currently support paging or searching, so the returned
-	// `page` will always be 1 and `size` and `total` will always be the total number of available regions
+	// `page` will always be 1 and `size` and `total` will always be the total number of available vpcs
 	// of the provider.
 	method Search {
 		// Index of the returned page, where one corresponds to the first page. As this
@@ -27,12 +27,12 @@ resource VpcsInquiry {
 
 		// Number of items that will be contained in the returned page. As this collection
 		// doesn't support paging or searching the result will always be the total number of
-		// regions of the provider.
+		// vpcs of the provider.
 		in out Size Integer = 100
 
 		// Total number of items of the collection that match the search criteria,
 		// regardless of the size of the page. As this collection doesn't support paging or
-		// searching the result will always be the total number of available regions of the provider.
+		// searching the result will always be the total number of available vpcs of the provider.
 		out Total Integer
 
 		// Retrieved list of cloud VPC.
