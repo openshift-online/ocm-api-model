@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.168 Jan 10 2022
+- Fix description of various API attributes
+- OVN: Add network type selection
+- adding field to hold validation error message
+
 ## 0.0.167 Dec 28 2021
 - Change field name in version gate agreement link to version gate.
 
