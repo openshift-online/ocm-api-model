@@ -16,6 +16,9 @@ limitations under the License.
 
 // Network configuration of a cluster.
 struct Network {
+	// The main controller responsible for rendering the core networking components.
+	Type String
+
 	// IP address block from which to assign pod IP addresses, for example `10.128.0.0/14`.
 	PodCIDR String
 
