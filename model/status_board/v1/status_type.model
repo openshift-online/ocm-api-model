@@ -25,6 +25,9 @@ class Status {
   // The associated service ID.
   Service Service
 
+  // Additional Service related data.
+  ServiceInfo ServiceInfo
+
   // A status message for the given service.
   Status String
 
