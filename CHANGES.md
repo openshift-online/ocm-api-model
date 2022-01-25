@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.169 Jan 25 2022
+- Version gate type: Add warning message field
+
 ## 0.0.168 Jan 10 2022
 - Fix description of various API attributes
 - OVN: Add network type selection

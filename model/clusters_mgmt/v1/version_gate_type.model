@@ -25,6 +25,9 @@ class VersionGate {
   // Value represents the required value of the label.
   Value string
 
+  // WarningMessage is a warning that will be displayed to the user before they acknowledge the gate
+  WarningMessage string
+
   // Description of the version gate.
   Description string
 
