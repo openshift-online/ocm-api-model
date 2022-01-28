@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.170 Jan 28 2022
+
+- Add `ServiceInfo` type status board service.
+
 ## 0.0.169 Jan 25 2022
 - Version gate type: Add warning message field
 
