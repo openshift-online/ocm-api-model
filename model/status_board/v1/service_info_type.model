@@ -14,23 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Definition of a Status Board status.
-class Status {
-  // Object creation timestamp.
-  CreatedAt Date
+// Definition of a Status Board service info.
+struct ServiceInfo {
+  // Full name of the service
+  Fullname string
 
-  // Object modification timestamp.
-  UpdatedAt Date
-
-  // The associated service ID.
-  Service Service
-
-  // Additional Service related data.
-  ServiceInfo ServiceInfo
-
-  // A status message for the given service.
-  Status String
-
-  // Miscellaneous metadata about the application.
-  Metadata Interface
+  // Type of the service status
+  StatusType string
 }
