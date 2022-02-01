@@ -139,4 +139,8 @@ resource Cluster {
 	locator GateAgreements {
 	    target VersionGateAgreements
 	}
+
+	locator STSOperatorRoles {
+		target OperatorIAMRoles
+	}
 }
