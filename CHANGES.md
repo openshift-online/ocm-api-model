@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.171 Feb 03 2022
+
+- Remove deprecated `SKUs` endpoint
+
 ## 0.0.170 Jan 28 2022
 
 - Add `ServiceInfo` type status board service.
