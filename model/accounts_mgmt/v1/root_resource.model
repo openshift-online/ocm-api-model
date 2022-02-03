@@ -99,12 +99,6 @@ resource Root {
 	}
 
 	// Reference to the resource that manages the collection of
-	// SKUS
-	locator SKUS {
-		target SKUS
-	}
-
-	// Reference to the resource that manages the collection of
 	// Sku Rules
 	locator SkuRules {
 		target SkuRules
