@@ -34,6 +34,9 @@ class AddOnInstallation {
 	// Version of the operator installed by the add-on.
 	OperatorVersion String
 
+	// Role ARN used to authenticate the addon operator
+	RoleARN String
+
 	// List of add-on parameters for this add-on installation.
 	link Parameters []AddOnInstallationParameter
 
