@@ -32,12 +32,6 @@ resource Organization {
 		target ResourceQuotas
 	}
 
-	// Reference to the service that returns the summary of the resource quota for this
-	// organization.
-	locator QuotaSummary {
-		target QuotaSummary
-	}
-
 	// Reference to the list of labels of a specific organization.
 	locator Labels {
 		target GenericLabels
