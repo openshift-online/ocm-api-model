@@ -29,4 +29,5 @@ struct ClusterAuthorizationRequest {
 	ProductCategory String
 	CloudAccountID String
 	CloudProviderID String
+	QuotaVersion String
 }
