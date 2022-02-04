@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.172 Feb 4 2022
+
+- Remove deprecated quota summary resource and type.
+- Add QuotaVersion to ClusterAuth.
+- Allow adding/removing operator roles.
+
 ## 0.0.171 Feb 03 2022
 
 - Remove deprecated `SKUs` endpoint
