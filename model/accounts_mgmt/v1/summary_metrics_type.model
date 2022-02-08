@@ -15,6 +15,6 @@ limitations under the License.
 */
 
 struct SummaryMetrics {
-	Name string
+	Name String
 	Vector []SummarySample
 }

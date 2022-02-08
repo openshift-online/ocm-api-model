@@ -26,8 +26,8 @@ struct CloudProviderData {
     Region CloudRegion
 
     // Key location
-    KeyLocation string
+    KeyLocation String
 
     // Key ring name
-    KeyRingName  string
+    KeyRingName  String
 }

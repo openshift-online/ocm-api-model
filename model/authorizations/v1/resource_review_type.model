@@ -17,24 +17,24 @@ limitations under the License.
 // Contains the result of performing a resource access review.
 struct ResourceReview {
 	// Name of the account that is trying to perform the access.
-	AccountUsername string
+	AccountUsername String
 
 	// Action that will the user is trying to perform.
-	Action string
+	Action String
 
 	// Type of resource.
-	ResourceType string
+	ResourceType String
 
 	// Identifiers of the Clusters (internal ids) that the user has permission to perform the action upon.
-	ClusterIDs []string
+	ClusterIDs []String
 
 	// Identifiers which Clusters (external ids) that the user has permission to perform the action upon.
-	ClusterUUIDs []string
+	ClusterUUIDs []String
 
 	// Identifiers of the subscriptions that the user has permission to perform the action upon.
-	SubscriptionIDs []string
+	SubscriptionIDs []String
 
 	// Identifiers of the organizations that the user has permissions to perform the action
 	// upon.
-	OrganizationIDs []string
+	OrganizationIDs []String
 }

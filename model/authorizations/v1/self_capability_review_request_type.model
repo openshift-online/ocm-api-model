@@ -17,24 +17,24 @@ limitations under the License.
 // Representation of a capability review.
 struct SelfCapabilityReviewRequest {
     // Defines the username of the account of which capability is being reviewed.
-    AccountUsername string
+    AccountUsername String
 
     // Type of capability [Cluster].
-    Type string
+    Type String
 
     // Indicates the type of the resource.
     // See uhc-account-manager/openapi/openapi.yaml for a list of possible values.
-    ResourceType string
+    ResourceType String
 
     // Capability to review [manage_cluster_admin].
-    Capability string
+    Capability String
 
     // Indicates which Cluster (internal id) the resource type belongs to.
-    ClusterID string
+    ClusterID String
 
     // Indicates which Subscription the resource type belongs to.
-    SubscriptionID string
+    SubscriptionID String
 
     // Indicates which Organization the resource type belongs to.
-    OrganizationID string
+    OrganizationID String
 }

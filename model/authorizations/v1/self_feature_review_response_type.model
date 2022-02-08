@@ -20,5 +20,5 @@ struct SelfFeatureReviewResponse {
   Enabled Boolean
 
   // Defines the feature id which can be toggled
-  FeatureID string
+  FeatureID String
 }

@@ -17,25 +17,25 @@ limitations under the License.
 // Representation of an _OpenShift_ version gate.
 class VersionGate {
   // VersionRawIDPrefix represents the versions prefix that the gate applies to.
-  VersionRawIDPrefix string
+  VersionRawIDPrefix String
 
   // Label representing the version gate in OpenShift.
-  Label string
+  Label String
 
   // Value represents the required value of the label.
-  Value string
+  Value String
 
   // WarningMessage is a warning that will be displayed to the user before they acknowledge the gate
-  WarningMessage string
+  WarningMessage String
 
   // Description of the version gate.
-  Description string
+  Description String
 
   // DocumentationURL is the URL for the documentation of the version gate.
-  DocumentationURL string
+  DocumentationURL String
 
   // STSOnly indicates if this version gate is for STS clusters only
-  STSOnly boolean
+  STSOnly Boolean
 
   // CreationTimestamp is the date and time when the version gate was created,
   // format defined in https://www.ietf.org/rfc/rfc3339.txt[RC3339].

@@ -18,8 +18,8 @@ limitations under the License.
 // Representation of a feature review
 struct FeatureReviewRequest {
   // Defines the username of the account of which access is being reviewed 
-  AccountUsername string
+  AccountUsername String
 
   // Indicates the feature which can be toggled
-  Feature string
+  Feature String
 }

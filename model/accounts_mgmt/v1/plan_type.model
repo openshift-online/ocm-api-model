@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 class Plan {
-    Name string
-    Type string
-    Category string
+    Name String
+    Type String
+    Category String
 }

@@ -18,5 +18,5 @@ limitations under the License.
 // Representation of a feature review performed against oneself
 struct SelfFeatureReviewRequest {
   // Indicates the feature which can be toggled
-  Feature string
+  Feature String
 }

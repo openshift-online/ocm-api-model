@@ -17,24 +17,24 @@ limitations under the License.
 // Representation of an access review
 struct AccessReviewRequest {
 	// Defines the username of the account of which access is being reviewed
-	AccountUsername string
+	AccountUsername String
 
 	// Indicates the action, one of: [get,list,create,delete,update]
-	Action string
+	Action String
 
 	// Indicates which Organization the resource type belongs to
-	OrganizationID string
+	OrganizationID String
 
 	// Indicates which Cluster (internal id) the resource type belongs to
-	ClusterID string
+	ClusterID String
 
 	// Indicates which Cluster (external id) the resource type belongs to
-	ClusterUUID string
+	ClusterUUID String
 
 	// Indicates which Subscription the resource type belongs to
-	SubscriptionID string
+	SubscriptionID String
 
 	// Indicates the type of the resource an action would be taken on.
 	// See uhc-account-manager/openapi/openapi.yaml for a list of possible values
-	ResourceType string
+	ResourceType String
 }

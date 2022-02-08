@@ -17,13 +17,13 @@ limitations under the License.
 // Request to perform a resource access review.
 struct ResourceReviewRequest {
 	// Name of the account that is trying to access the resource.
-	AccountUsername string
+	AccountUsername String
 
 	// Action that will be performed on the resource.
-	Action string
+	Action String
 
 	// Type of resource.
-	ResourceType string
+	ResourceType String
 
 	// If true, in the case when all subscriptions in organization are permitted, response will *not* include
 	// these subscriptions' ID, but organization only.
