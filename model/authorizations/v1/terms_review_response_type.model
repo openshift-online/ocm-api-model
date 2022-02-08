@@ -18,18 +18,18 @@ limitations under the License.
 // review response.
 struct TermsReviewResponse {
 	// Account ID of requesting user.
-	AccountId string
+	AccountId String
 
 	// Indicates which Organization the user belongs to.
-	OrganizationID string
+	OrganizationID String
 
 	// Defines whether Terms are available.
-	TermsAvailable boolean
+	TermsAvailable Boolean
 
 	// Defines whether user is required to accept Terms before using OpenShift Dedicated and Amazon Red Hat OpenShift.
-	TermsRequired boolean
+	TermsRequired Boolean
 
 	// Optional URL to Red Hat's Terms and Conditions Application if the user has either required or available Terms
 	// needs to acknowledge.
-	RedirectUrl string
+	RedirectUrl String
 }

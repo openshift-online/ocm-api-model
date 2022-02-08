@@ -17,8 +17,8 @@ limitations under the License.
 // Definition of a Status Board service info.
 struct ServiceInfo {
   // Full name of the service
-  Fullname string
+  Fullname String
 
   // Type of the service status
-  StatusType string
+  StatusType String
 }

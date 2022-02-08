@@ -29,7 +29,7 @@ resource Logs {
         out Total Integer
 
         // Retrieved list of log links.
-        out Items []log
+        out Items []Log
     }
 
 	locator Install {

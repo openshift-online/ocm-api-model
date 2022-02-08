@@ -17,11 +17,11 @@ limitations under the License.
 class Account {
 	Username String
 	Email String
-	FirstName string
-	LastName string
+	FirstName String
+	LastName String
 	Banned Boolean
-	BanDescription string
-	BanCode string
+	BanDescription String
+	BanCode String
 	CreatedAt Date
 	UpdatedAt Date
 	ServiceAccount Boolean

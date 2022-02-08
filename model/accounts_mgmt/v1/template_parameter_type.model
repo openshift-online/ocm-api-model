@@ -18,7 +18,7 @@ limitations under the License.
 // values specific to the email recipient.
 struct TemplateParameter {
 	// Name of the value to be replaced
-	Name string
+	Name String
 	// The content that will replace the template parameter in the email
-	Content string
+	Content String
 }

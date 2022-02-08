@@ -122,7 +122,7 @@ struct GoogleIdentityProvider {
 	ClientSecret String
 
 	// Optional hosted domain to restrict sign-in accounts to.
-	HostedDomain string
+	HostedDomain String
 }
 
 // Details for `htpasswd` identity providers.

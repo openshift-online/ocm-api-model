@@ -16,5 +16,5 @@ limitations under the License.
 
 // Representation of a capability review response.
 struct SelfCapabilityReviewResponse {
-	Result string
+	Result String
 }

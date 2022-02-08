@@ -17,11 +17,11 @@ limitations under the License.
 // GCP Network configuration of a cluster.
 struct GCPNetwork {
     // VPC mame used by the cluster.
-    VPCName  string
+    VPCName  String
 
     // Control plane subnet used by the cluster.
-    ControlPlaneSubnet string
+    ControlPlaneSubnet String
 
     // Compute subnet used by the cluster.
-    ComputeSubnet   string
+    ComputeSubnet   String
 }

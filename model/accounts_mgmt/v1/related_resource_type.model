@@ -16,12 +16,12 @@ limitations under the License.
 
 // Resource which can be provisioned using the allowed quota.
 struct RelatedResource {
-	CloudProvider        string
-	ResourceName         string
-	ResourceType         string
-	BYOC                 string
-	AvailabilityZoneType string
-	Product              string
-	BillingModel         string
-	Cost                 integer
+	CloudProvider        String
+	ResourceName         String
+	ResourceType         String
+	BYOC                 String
+	AvailabilityZoneType String
+	Product              String
+	BillingModel         String
+	Cost                 Integer
 }

@@ -19,17 +19,17 @@ enum PlanID {
 // Registration of a new subscription.
 struct SubscriptionRegistration {
 	// External cluster ID.
-	ClusterUUID string
+	ClusterUUID String
 
 	// Status of subscription.
-	Status string
+	Status String
 
 	// Plan ID of subscription.
 	PlanID PlanID
 
 	// Display name of subscription (optional).
-	DisplayName string
+	DisplayName String
 
 	// Console URL of subscription (optional).
-	ConsoleURL string
+	ConsoleURL String
 }

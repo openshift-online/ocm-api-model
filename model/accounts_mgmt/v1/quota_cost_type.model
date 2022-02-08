@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 struct QuotaCost {
-	OrganizationID string
-	QuotaID string
-	Allowed integer
-	Consumed integer
+	OrganizationID String
+	QuotaID String
+	Allowed Integer
+	Consumed Integer
 	RelatedResources []RelatedResource
 }

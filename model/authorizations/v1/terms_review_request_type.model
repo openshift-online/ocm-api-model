@@ -18,11 +18,11 @@ limitations under the License.
 // review requests.
 struct TermsReviewRequest {
 	// Defines the username of the account of which Terms is being reviewed.
-	AccountUsername string
+	AccountUsername String
     // Defines the site code of the terms being checked
-    SiteCode string
+    SiteCode String
     // Defines the event code of the terms being checked
-    EventCode string
+    EventCode String
     // If false, only `terms_required` will be checked
     CheckOptionalTerms Boolean
 }

@@ -18,7 +18,7 @@ limitations under the License.
 // review requests.
 struct SelfTermsReviewRequest {
 	// Defines the site code of the terms being checked
-	SiteCode string
+	SiteCode String
 	// Defines the event code of the terms being checked
-	EventCode string
+	EventCode String
 }

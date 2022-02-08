@@ -17,11 +17,11 @@ limitations under the License.
 class RoleBinding {
 	Type String
 	Subscription Subscription
-	SubscriptionID string
+	SubscriptionID String
 	Account Account
 	AccountID String
 	Organization Organization
-	OrganizationID string
+	OrganizationID String
 	Role Role
 	RoleID String
 	ConfigManaged Boolean

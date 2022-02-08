@@ -18,28 +18,28 @@ limitations under the License.
 // subscription.
 struct SubscriptionNotify {
 	// Indicates which Cluster (internal id) the resource type belongs to
-	ClusterID string
+	ClusterID String
 
 	// Indicates which Cluster (external id) the resource type belongs to
-	ClusterUUID string
+	ClusterUUID String
 
 	// Indicates which Subscription the resource type belongs to
-	SubscriptionID string
+	SubscriptionID String
 
 	// The BCC address to be included on the email that is sent
-	BccAddress string
+	BccAddress String
 
 	// The email subject
-	Subject string
+	Subject String
 
 	// The name of the template used to construct the email contents
-	TemplateName string
+	TemplateName String
 
 	// Indicates whether to include red hat associates in the email notification
-	IncludeRedHatAssociates boolean
+	IncludeRedHatAssociates Boolean
 
 	// Indicates whether the service log is internal only to RH
-	InternalOnly boolean
+	InternalOnly Boolean
 	
 	// The values which will be substituted into the templated email
 	TemplateParameters []TemplateParameter

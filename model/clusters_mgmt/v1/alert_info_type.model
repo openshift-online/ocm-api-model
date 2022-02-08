@@ -17,7 +17,7 @@ limitations under the License.
 // Provides information about a single alert firing on the cluster.
 struct AlertInfo {
 	// The alert name. Multiple alerts with same name are possible.
-	Name string
+	Name String
 
 	// The alert severity.
 	Severity AlertSeverity

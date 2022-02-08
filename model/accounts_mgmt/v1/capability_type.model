@@ -19,7 +19,7 @@ struct Capability {
 	// Name of the capability label.
 	Name String
 	// Value that can be assigned to the capability (eg. "true", "false" etc).
-	Value string
+	Value String
 	// Dynamic attribute of the capability that tells us that this capability was inherited from the subscription's organization. 
 	Inherited Boolean
 }
