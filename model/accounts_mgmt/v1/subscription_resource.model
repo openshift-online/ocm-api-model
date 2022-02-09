@@ -49,6 +49,6 @@ resource Subscription {
 
     //Reference to the role bindings
 	locator RoleBindings {
-        target RoleBindings
+        	target RoleBindings
     }
 }
