@@ -46,4 +46,9 @@ resource Subscription {
 	locator Notify {
 		target SubscriptionNotify
 	}
+
+    //Reference to the role bindings
+	locator RoleBindings {
+        	target RoleBindings
+    }
 }
