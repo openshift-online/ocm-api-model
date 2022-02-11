@@ -2,6 +2,13 @@
 
 This document describes the relevant changes between releases of the API model.
 
+
+## 0.0.173 Feb 11 2022
+
+- addons: Support attributes necessary for STS.
+- Add ProductIds param to Status Resource.
+- Add Role bindings to Subscription.
+
 ## 0.0.172 Feb 4 2022
 
 - Remove deprecated quota summary resource and type.
