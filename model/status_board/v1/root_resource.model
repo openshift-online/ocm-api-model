@@ -39,4 +39,8 @@ resource Root {
   locator Statuses {
     target Statuses
   }
+
+  locator StatusUpdates {
+    target Statuses
+  }
 }
