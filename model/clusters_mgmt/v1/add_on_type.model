@@ -70,6 +70,9 @@ class AddOn {
 	// List of sub operators for this add-on.
 	SubOperators []AddOnSubOperator
 
+	// Additional configs to be used by the addon once its installed in the cluster.
+	Config  AddOnConfig
+
 	// Link to the current default version of this add-on.
 	link Version AddOnVersion
 }
