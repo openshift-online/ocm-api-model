@@ -27,4 +27,5 @@ class Account {
 	ServiceAccount Boolean
 	Organization Organization
 	Labels []Label
+	RhitAccountID string
 }
