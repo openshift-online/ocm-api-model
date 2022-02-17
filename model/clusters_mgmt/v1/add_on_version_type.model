@@ -23,7 +23,7 @@ class AddOnVersion {
 	// The catalog source image for this add-on version.
 	SourceImage String
 
-	// The specific addon catalog source channel of packages 
+	// The specific addon catalog source channel of packages
 	Channel String
 
 	// List of parameters for this add-on version.
@@ -34,6 +34,9 @@ class AddOnVersion {
 
 	// List of sub operators for this add-on version.
 	SubOperators []AddOnSubOperator
+
+	// Additional configs to be used by the addon once its installed in the cluster.
+	Config  AddOnConfig
 
 	// AvailableUpgrades is the list of versions this version can be upgraded to.
 	AvailableUpgrades []String
