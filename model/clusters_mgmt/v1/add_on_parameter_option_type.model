@@ -23,4 +23,7 @@ struct AddOnParameterOption {
 	// Value of the add-on parameter option.
 	Value String
 
+	// List of add-on requirements for this parameter option.
+	Requirements []AddOnRequirement
+
 }
