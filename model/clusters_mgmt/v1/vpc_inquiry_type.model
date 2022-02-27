@@ -16,8 +16,11 @@ limitations under the License.
 
 // Description of a cloud provider virtual private cloud.
 struct CloudVPC {
-	// Name of virtual private cloud
+	// Name of virtual private cloud according to its `Name` tag on AWS
 	Name String
+
+	// ID of virtual private cloud
+	ID String
 
 	// List of subnets used by the virtual private cloud.
 	Subnets []String
