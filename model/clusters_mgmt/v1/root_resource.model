@@ -87,4 +87,8 @@ resource Root {
 	    target VersionGates
 	}
 
+	// Reference to the resource that manages the environment.
+    locator Environment {
+        target Environment
+    }
 }
