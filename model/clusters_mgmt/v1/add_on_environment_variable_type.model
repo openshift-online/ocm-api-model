@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Representation of an add-on env object.
-class EnvObject {
+class AddOnEnvironmentVariable {
     // Name of the env object.
     Name String
 
