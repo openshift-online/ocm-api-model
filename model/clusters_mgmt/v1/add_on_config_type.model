@@ -18,5 +18,5 @@ limitations under the License.
 // The attributes under it are to be used by the addon once its installed in the cluster.
 class AddOnConfig {
     // List of environment variables for the addon
-    EnvironmentVariables []EnvObject
+    AddOnEnvironmentVariables []AddOnEnvironmentVariable
 }
