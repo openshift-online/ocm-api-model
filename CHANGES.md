@@ -2,6 +2,14 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.175 Mar 01 2022
+- Add new apis for addon config attribute
+- Add list of requirements to addon parameter options
+- Add Name fields to VPCs and Subnetworks
+- Rename addon config env object
+
+## 0.0.174 Feb 16 2022
+- Add rhit_account_id to Account Class
 
 ## 0.0.173 Feb 11 2022
 
