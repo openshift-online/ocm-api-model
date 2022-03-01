@@ -11,6 +11,9 @@ This document describes the relevant changes between releases of the API model.
 ## 0.0.174 Feb 16 2022
 - Add rhit_account_id to Account Class
 
+## 0.1.175 Mar 02 2022
+- Add environment endpoints get and patch
+
 ## 0.0.173 Feb 11 2022
 
 - addons: Support attributes necessary for STS.
