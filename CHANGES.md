@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.1.176 Mar 02 2022
+- Add environment endpoint get and patch
+
 ## 0.0.175 Mar 01 2022
 - Add new apis for addon config attribute
 - Add list of requirements to addon parameter options
