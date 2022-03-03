@@ -36,7 +36,7 @@ class AddOnVersion {
 	SubOperators []AddOnSubOperator
 
 	// Additional configs to be used by the addon once its installed in the cluster.
-	Config  AddOnConfig
+	link Config  AddOnConfig
 
 	// AvailableUpgrades is the list of versions this version can be upgraded to.
 	AvailableUpgrades []String
