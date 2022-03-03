@@ -27,7 +27,7 @@ resource Environment {
     //
     // - `last_upgrade_available_check`
     // - `last_limited_support_check`
-    method Patch {
+    method Update {
     	in out Body Environment
     }
 }
