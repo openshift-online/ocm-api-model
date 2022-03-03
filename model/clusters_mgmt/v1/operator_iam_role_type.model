@@ -19,10 +19,10 @@ struct OperatorIAMRole {
 	// Randomly-generated ID to identify the operator role
 	ID String
 
-	// Name of the operator
+	// Name of the credentials secret used to access cloud resources
 	Name String
 
-	// Namespace where the operator lives in the cluster
+	// Namespace where the credentials secret lives in the cluster
 	Namespace String
 
 	// Role to assume when accessing AWS resources
