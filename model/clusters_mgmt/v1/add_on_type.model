@@ -75,4 +75,7 @@ class AddOn {
 
 	// Link to the current default version of this add-on.
 	link Version AddOnVersion
+
+	// Indicates if add-on is part of a managed service
+	ManagedService Boolean
 }
