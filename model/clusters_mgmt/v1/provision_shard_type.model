@@ -31,4 +31,7 @@ class ProvisionShard {
 
 	// Contains the GCP base domain
 	GCPBaseDomain String
+
+	// Contains the region for the Hypershift service cluster
+	Region String
 }
