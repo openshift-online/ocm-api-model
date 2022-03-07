@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.1.178 Mar 7 2022
+
+- Add `managed_service` field to add-on type.
+- Add `credentials_secret` field to add-on type.
+- Add `region` field to provision shard.
+
 ## 0.1.177 Mar 3 2022
 
 - Fix update method of environment endpoint, should be `Update` instead of
