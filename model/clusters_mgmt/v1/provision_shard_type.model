@@ -31,4 +31,7 @@ class ProvisionShard {
 
 	// Contains the GCP base domain
 	GCPBaseDomain String
+
+	// Contains the cloud-provider region in which the provisioner spins up the cluster
+	link Region CloudRegion
 }
