@@ -2,13 +2,13 @@
 
 This document describes the relevant changes between releases of the API model.
 
-## 0.1.178 Mar 7 2022
+## 0.0.178 Mar 7 2022
 
 - Add `managed_service` field to add-on type.
 - Add `credentials_secret` field to add-on type.
 - Add `region` field to provision shard.
 
-## 0.1.177 Mar 3 2022
+## 0.0.177 Mar 3 2022
 
 - Fix update method of environment endpoint, should be `Update` instead of
   `Patch`.
@@ -16,7 +16,7 @@ This document describes the relevant changes between releases of the API model.
 - Remove unimplemented `POST /api/service_logs/v1/cluster_logs/clusters/{uuid}/cluster_logs`
   method.
 
-## 0.1.176 Mar 02 2022
+## 0.0.176 Mar 02 2022
 - Add environment endpoint get and patch
 
 ## 0.0.175 Mar 01 2022
