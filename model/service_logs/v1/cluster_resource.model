@@ -18,7 +18,7 @@ limitations under the License.
 resource Cluster {
 
 	// Reference to the list of cluster logs for a specific cluster uuid.
-	locator ClusterLogsUUID {
+	locator ClusterLogs {
 		target ClusterLogsUUID
 	}
 }
