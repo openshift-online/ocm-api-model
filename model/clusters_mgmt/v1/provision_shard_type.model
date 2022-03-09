@@ -34,4 +34,7 @@ class ProvisionShard {
 
 	// Contains the cloud-provider region in which the provisioner spins up the cluster
 	link Region CloudRegion
+
+	// Contains the cloud provider name
+	link CloudProvider CloudProvider
 }
