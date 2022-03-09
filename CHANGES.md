@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.180 Mar 9 2022
+
+- Add CloudProvider info to ProvisionShard
+
 ## 0.0.179 Mar 9 2022
 
 - Fix cluster logs URL, should be `cluster_logs` instead of `cluster_logs_uuid`.
