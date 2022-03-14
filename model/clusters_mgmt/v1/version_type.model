@@ -40,4 +40,7 @@ class Version {
 	// EndOfLifeTimestamp is the date and time when the version will get to End of Life, using the
 	// format defined in https://www.ietf.org/rfc/rfc3339.txt[RC3339].
 	EndOfLifeTimestamp Date
+
+	// ReleaseImage contains the URI of Openshift release image
+	ReleaseImage String
 }
