@@ -18,11 +18,11 @@ limitations under the License.
 struct AWSSTSPolicy {
 
     //Policy ID
-   	ID String
+    ID String
 
     //Policy Details
-	Details String
+    Details String
 
     //Type of policy operator/account role
-	Type String
+    Type String
 }
