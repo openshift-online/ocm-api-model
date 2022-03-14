@@ -14,20 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages the collection of aws inquiries.
-resource AWSInquiries {
-    // Reference to the resource that manages a collection of vpcs.
-    locator Vpcs {
-        target VpcsInquiry
-    }
+// Representation of an sts policies for rosa cluster
+struct AWSSTSPolicy {
 
-    // Reference to the resource that manages a collection of regions.
-    locator Regions {
-        target AvailableRegionsInquiry
-    }
+    //Policy ID
+    ID String
 
-    // Reference to the resource that manages aws sts policies.
-    locator STSPolicies {
-        target AWSSTSPoliciesInquiry
-    }
+    //Policy Details
+    Details String
+
+    //Type of policy operator/account role
+    Type String
 }
