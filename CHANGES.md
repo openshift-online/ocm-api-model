@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+
+## 0.0.181 Mar 14 2022
+
+- Add STS policies endpoint
+
 ## 0.0.180 Mar 9 2022
 
 - Add CloudProvider info to ProvisionShard
