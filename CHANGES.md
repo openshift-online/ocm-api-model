@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.182 Mar 15 2022
+
+- Adding `service_mgmt` service.
+
 ## 0.0.181 Mar 14 2022
 
 - add aws sts policy 
