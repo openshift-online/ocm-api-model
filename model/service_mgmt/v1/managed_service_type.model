@@ -18,6 +18,7 @@ limitations under the License.
 class ManagedService {
   Service String
   ServiceState String
+  Parameters []ServiceParameter
   Cluster Cluster
   Resources []StatefulObject
   Addon StatefulObject
