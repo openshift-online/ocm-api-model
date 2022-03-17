@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.183 Mar 17 2022
+
+- Added field for parameters to be specified for managed services.
+
 ## 0.0.182 Mar 15 2022
 
 - Adding `service_mgmt` service.
