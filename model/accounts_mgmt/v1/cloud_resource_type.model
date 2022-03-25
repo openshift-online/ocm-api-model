@@ -27,6 +27,6 @@ class CloudResource {
 	MemoryPretty String
 	SizePretty String
 	Active Boolean
-    CreatedAt Date
-    UpdatedAt Date
+	CreatedAt Date
+	UpdatedAt Date
 }
