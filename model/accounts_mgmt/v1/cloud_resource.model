@@ -31,7 +31,7 @@ resource CloudResource {
 		in out Body CloudResource
 	}
 
-    // Deletes the cloud resource.
-    method Delete {
-    }
+	// Deletes the cloud resource.
+	method Delete {
+	}
 }
