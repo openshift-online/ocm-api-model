@@ -16,11 +16,6 @@ limitations under the License.
 
 // Manages a specific cloud resource.
 resource CloudResource {
-	// Creates a new cloud resource.
-	method Add {
-		in out Body CloudResource
-	}
-
 	// Retrieves the details of the cloud resource.
 	method Get {
 		out Body CloudResource
