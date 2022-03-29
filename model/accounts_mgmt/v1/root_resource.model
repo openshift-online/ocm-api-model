@@ -129,4 +129,9 @@ resource Root {
 		target SupportCases
 	}
 
+    // Reference to the resource that manages the collection of cloud resources.
+    locator CloudResources {
+        target CloudResources
+    }
+
 }
