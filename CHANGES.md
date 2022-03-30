@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.185 mar 30 2022
+
+- Fixes for `CloudResources` resource.
+
 ## 0.0.184 mar 29 2022
 
 - Added field for parameters to be specified for managed services.
