@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.186 mar 30 2022
+
+- Add ManagementCluster to ProvisionShard.
+
 ## 0.0.185 mar 30 2022
 
 - Fixes for `CloudResources` resource.
