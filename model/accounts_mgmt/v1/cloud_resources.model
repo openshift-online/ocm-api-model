@@ -41,4 +41,16 @@ resource CloudResources {
 		// Retrieved list of cloud resources.
 		out Items []CloudResource
 	}
+
+    // Creates a new cloud resource
+    method Add {
+        in out Body CloudResource
+    }
+
+    // Reference to the service that manages a specific cloud resource.
+    locator CloudResource {
+        target CloudResource
+        variable ID
+    }
+
 }
