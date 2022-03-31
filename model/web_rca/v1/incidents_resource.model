@@ -29,7 +29,7 @@ resource Incidents {
     in ResponsibleManagerId String
     in ParticipantId String
     in Mine Boolean
-    // in Status String - TODO: This causes problems, figure out why
+    in Status String
     in IncidentName String
     out Total Integer
     out Items []Incident
