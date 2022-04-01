@@ -2,9 +2,13 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.188 Apr 1 2022
+
+- Add Status query param for incidents resource.
+
 ## 0.0.187 Mar 31 2022
 
-Add new `web_rca` service.
+- Add new `web_rca` service.
 
 ## 0.0.186 mar 30 2022
 
