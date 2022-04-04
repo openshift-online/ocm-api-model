@@ -21,4 +21,10 @@ struct Proxy {
 
 	// HTTPSProxy is the URL of the proxy for HTTPS requests.
 	HTTPSProxy String
+
+	// NoProxy is a comma-separated list of domains and CIDRs for which 
+	// the proxy should not be used
+	NoProxy	String
+
+
 }
