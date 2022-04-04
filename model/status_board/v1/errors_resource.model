@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2021 Red Hat, Inc.
+Copyright (c) 2022 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,37 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Root of the tree of resources for applications.
-resource Root {
-  locator Applications {
-    target Applications
+// Manages the collection of errors.
+resource Errors {
+  // Retrieves the list of errors.
+  method List {
+    in out Page Integer = 1
+    in out Size Integer = 100
+    out Total Integer
+    out Items []Error
   }
 
-  locator ApplicationDependencies {
-    target ApplicationDependencies
-  }
-
-  locator PeerDependencies {
-    target PeerDependencies
-  }
-
-  locator Products {
-    target Products 
-  }
-
-  locator Services {
-    target Services 
-  }
-
-  locator Statuses {
-    target Statuses
-  }
-
-  locator StatusUpdates {
-    target Statuses
-  }
-
-  locator Errors {
-    target Errors
+  locator Error {
+    target Error
+    variable ID
   }
 }
