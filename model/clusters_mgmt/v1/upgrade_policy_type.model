@@ -33,4 +33,7 @@ class UpgradePolicy {
 
 	// Next time the upgrade should run.
 	NextRun Date
+
+	// Indicates if minor version upgrades are allowed for automatic upgrades (for manual it's always allowed).
+	EnableMinorVersionUpgrades Boolean
 }
