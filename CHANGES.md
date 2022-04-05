@@ -2,6 +2,13 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.189 Apr 5 2022
+
+- Added QuotaRules to ocm-sdk-go
+- added no_proxy field to the proxy project
+- Added errors resource.
+- Added errors support for status-board.
+
 ## 0.0.188 Apr 1 2022
 
 - Add Status query param for incidents resource.
