@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.190 Apr 8 2022
+
+- Fix JSON names of identity provider types.
+- Add enable minor version upgrades flag to upgrade policy.
+
 ## 0.0.189 Apr 5 2022
 
 - Added QuotaRules to ocm-sdk-go
