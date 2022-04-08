@@ -57,11 +57,22 @@ class IdentityProvider {
 
 // Type of identity provider.
 enum IdentityProviderType {
+	@json(name = "GithubIdentityProvider")
 	Github
+
+	@json(name = "GitlabIdentityProvider")
 	Gitlab
+
+	@json(name = "GoogleIdentityProvider")
 	Google
+
+	@json(name = "HTPasswdIdentityProvider")
 	Htpasswd
+
+	@json(name = "LDAPIdentityProvider")
 	LDAP
+
+	@json(name = "OpenIDIdentityProvider")
 	OpenID
 }
 
