@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.191 Apr 11 2022
+
+- Fix JSON representation of log severity.
+
 ## 0.0.190 Apr 8 2022
 
 - Fix JSON names of identity provider types.
