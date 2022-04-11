@@ -33,4 +33,13 @@ struct STS {
 
 	// Instance IAM roles to use for the instance profiles of the master and worker instances
 	InstanceIAMRoles InstanceIAMRoles
+
+	// Auto creation mode for cluster - OCM will create the operator roles and OIDC provider. false by default.
+	AutoMode Boolean
+
+	// Optional user provided prefix for operator roles.
+	OperatorRolePrefix String
+
+	// Optional user provided permission boundary.
+	PermissionBoundary String
 }
