@@ -22,7 +22,9 @@ resource StatusUpdates {
     in out Size Integer = 100
     in CreatedAfter Date
     in CreatedBefore Date
+    in LimitScope Date
     in ProductIds String
+    in FullNames String
     out Total Integer
     out Items []Status
   }
