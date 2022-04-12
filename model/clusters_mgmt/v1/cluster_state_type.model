@@ -19,6 +19,9 @@ enum ClusterState {
 	// The cluster is waiting for user action.
 	Waiting
 
+	// The cluster is validating user input.
+	Validating
+
 	// The cluster is pending resources before being provisioned.
 	Pending
 
