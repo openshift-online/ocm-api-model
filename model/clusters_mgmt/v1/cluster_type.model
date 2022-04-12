@@ -162,6 +162,9 @@ class Cluster {
 	// List of AWS infrastructure access role grants on this cluster.
 	link AWSInfrastructureAccessRoleGrants []AWSInfrastructureAccessRoleGrant
 
+	// List of inflight checks on this cluster.
+	link InflightChecks []InflightCheck
+
 	// Storage quota to be assigned to the cluster.
 	StorageQuota Value
 
