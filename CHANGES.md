@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.192 Apr 12 2022
+
+- Add inflight checks and 'validating' state.
+- Add STS missing fields.
+
 ## 0.0.191 Apr 11 2022
 
 - Fix JSON representation of log severity.
