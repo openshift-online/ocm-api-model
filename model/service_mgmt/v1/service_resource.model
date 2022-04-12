@@ -21,6 +21,10 @@ resource ManagedService {
     out Body ManagedService
   }
 
+  method Update {
+    in out Body ManagedService
+  }
+
   // Deletes the Managed Service
   method Delete {
   }
