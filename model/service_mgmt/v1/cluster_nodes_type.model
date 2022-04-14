@@ -14,21 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// This represents the parameters needed by Managed Service to create a cluster.
-struct Cluster {
-  id String
-  href String
-	Name String
-  State String
-	// DisplayName is the name of the cluster for display purposes.
-	// It can contain spaces.
-	DisplayName String
-	Region CloudRegion
-	// Flag indicating if the cluster should be created with nodes in
-	// different availability zones or all the nodes in a single one
-	// randomly selected.
-	MultiAZ Boolean
-	AWS AWS
-	Nodes ClusterNodes
-	Properties [String]String
+struct ClusterNodes {
+	AvailabilityZones []String
 }
