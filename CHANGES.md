@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.194 Apr 14 2022
+
+- Added availability zone fields to managed service cluster struct.
+
 ## 0.0.193 Apr 14 2022
 
 - Add LimitedSupportReasonCount to cluster status struct.
