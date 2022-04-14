@@ -36,4 +36,7 @@ class ClusterStatus {
 
 	// Configuration mode
 	ConfigurationMode ClusterConfigurationMode
+
+	// Limited Support Reason Count
+	LimitedSupportReasonCount Integer
 }
