@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.193 Apr 14 2022
+
+- Add LimitedSupportReasonCount to cluster status struct.
+
 ## 0.0.192 Apr 12 2022
 
 - Add inflight checks and 'validating' state.
