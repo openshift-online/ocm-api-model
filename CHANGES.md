@@ -9,6 +9,8 @@ This document describes the relevant changes between releases of the API model.
 ## 0.0.193 Apr 14 2022
 
 - Add LimitedSupportReasonCount to cluster status struct.
+- Add FullNames and LimitScope param fields for status-board status updates.
+- Add Update method for `service_mgmt`
 
 ## 0.0.192 Apr 12 2022
 
