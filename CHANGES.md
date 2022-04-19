@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.195 Apr 19 2022
+
+- Added Import method to the HTPasswd IDP user collection.
+
 ## 0.0.194 Apr 14 2022
 
 - Added availability zone fields to managed service cluster struct.
