@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.196 Apr 20 2022
+
+- Added Machine Pool Security Group Filters for Machine Pools and Cluster Nodes
+- Drop RoleARN from AddOnInstallation
+
 ## 0.0.195 Apr 19 2022
 
 - Added Import method to the HTPasswd IDP user collection.
