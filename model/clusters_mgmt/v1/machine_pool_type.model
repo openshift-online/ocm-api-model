@@ -41,4 +41,7 @@ class MachinePool {
 
 	// AWS specific parameters (Optional).
 	AWS AWSMachinePool
+
+	// List of security groups to be applied to MachinePool (Optional)
+	SecurityGroupFilters []MachinePoolSecurityGroupFilter
 }

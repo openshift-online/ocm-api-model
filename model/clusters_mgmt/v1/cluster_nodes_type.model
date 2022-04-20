@@ -41,4 +41,7 @@ struct ClusterNodes {
 
 	// The availability zones upon which the nodes are created.
 	AvailabilityZones []String
+
+	// List of security groups to be applied to nodes (Optional)
+	SecurityGroupFilters []MachinePoolSecurityGroupFilter
 }
