@@ -27,5 +27,7 @@ class Account {
 	ServiceAccount Boolean
 	Organization Organization
 	Labels []Label
+        // RhitAccountID will be deprecated in favor of RhitWebUserId
 	RhitAccountID string
+	RhitWebUserId string
 }
