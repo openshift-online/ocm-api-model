@@ -22,6 +22,9 @@ struct AWS {
 	// AWS access key identifier.
 	AccessKeyID String
 
+	// For PrivateLink-enabled clusters
+	PrivateLink Boolean
+
 	// AWS secret access key.
 	SecretAccessKey String
 
