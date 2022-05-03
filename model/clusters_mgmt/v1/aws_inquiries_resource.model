@@ -31,8 +31,13 @@ resource AWSInquiries {
         target AWSSTSPoliciesInquiry
     }
 
-     // Reference to the resource that manages sts cred request.
-     locator STSCredentialRequests {
+    // Reference to the resource that manages sts cred request.
+    locator STSCredentialRequests {
         target STSCredentialRequestsInquiry
-     }
+    }
+
+    // Reference to the resource that manages aws machine types by regions.
+    locator MachineTypes {
+        target AWSRegionMachineTypesInquiry
+    }
 }
