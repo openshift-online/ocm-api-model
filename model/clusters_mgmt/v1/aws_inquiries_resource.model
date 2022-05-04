@@ -30,4 +30,9 @@ resource AWSInquiries {
     locator STSPolicies {
         target AWSSTSPoliciesInquiry
     }
+
+     // Reference to the resource that manages aws sts policies.
+     locator STSCredentialRequests {
+        target STSCredentialRequestsInquiry
+     }
 }
