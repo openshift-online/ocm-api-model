@@ -23,7 +23,7 @@ class InflightCheck {
     State InflightCheckState
 
     // Details regarding the state of the inflight check.
-    Details [String]String
+    Details Interface
 
     // The time the check started running.
     StartedAt Date
