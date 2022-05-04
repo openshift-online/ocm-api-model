@@ -205,4 +205,7 @@ class Cluster {
 
   // Contains information about Managed Service
   ManagedService ManagedService
+
+  // Contains the type of the cluster
+  ClusterType String
 }
