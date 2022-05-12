@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.198 May 12 2022
+
+  - Add cred request to api model
+  - Add AWSRegionMachineTypes endpoint to api model
+
 ## 0.0.197 May 4 2022
 
 - Change inflight check type Details field to Interface
