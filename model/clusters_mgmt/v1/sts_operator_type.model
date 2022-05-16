@@ -23,7 +23,7 @@ struct STSOperator {
     Namespace           String
 
     //Service Accounts
-    ServiceAccountNames []String
+    ServiceAccounts []String
 
     //Minimum ocp version supported
     MinVersion          String
