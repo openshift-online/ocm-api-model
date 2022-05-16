@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+
+## 0.0.199 May 16 2022
+
+  - Fix cred request api model parameters
+
 ## 0.0.198 May 12 2022
 
   - Add cred request to api model
