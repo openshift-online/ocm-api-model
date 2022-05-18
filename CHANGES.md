@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.200 May 18 2022
+
+- Add `hypershift.enabled` field to cluster type.
 
 ## 0.0.199 May 16 2022
 
