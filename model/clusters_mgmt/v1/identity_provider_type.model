@@ -221,4 +221,7 @@ struct OpenIDClaims {
 
 	// List of claims to use as the preferred user name when provisioning a user.
 	PreferredUsername []String
+
+	// List of claims to use as the group name.
+	Groups []String
 }
