@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.201 May 26 2022
+
+- Adding groups claim to openID IDP
+
 ## 0.0.200 May 18 2022
 
 - Add `hypershift.enabled` field to cluster type.
