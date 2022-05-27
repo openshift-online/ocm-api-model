@@ -6,7 +6,7 @@ This document describes the relevant changes between releases of the API model.
 
 - Add `CloudAccount` type.
 - Add `CloudAccounts` field to QuotaCost type.
-- Add `BillingMarketplaceAccount` field to subscription type.
+- Add `BillingMarketplaceAccount` field to Subscription type.
   
 ## 0.0.201 May 26 2022
 
