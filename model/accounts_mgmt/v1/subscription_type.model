@@ -51,6 +51,7 @@ class Subscription {
 	NotificationContacts []Account
 	CloudAccountID String
 	CloudProviderID String
+	BillingMarketplaceAccount String
 	RegionID String
 	ClusterBillingModel BillingModel
 	// If the subscription is a trial, date the trial ends.
