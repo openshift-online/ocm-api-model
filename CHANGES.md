@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.203 May 31 2022
+- Add `MarketplaceAWS`, `MarketplaceAzure`, `MarketplaceRHM` billing models.
+
 ## 0.0.202 May 26 2022
 
 - Add `CloudAccount` type.
