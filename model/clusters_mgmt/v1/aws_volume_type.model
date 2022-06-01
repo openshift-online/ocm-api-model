@@ -21,9 +21,4 @@ struct AWSVolume {
 
 	// Volume size in Gib.
 	Size Integer
-
-	// Volume Type
-	//
-	// Possible values are: 'io1', 'gp2', 'st1', 'sc1', 'standard'
-	Type String
 }
