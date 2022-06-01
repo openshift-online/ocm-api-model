@@ -28,6 +28,7 @@ struct Cluster {
 	// different availability zones or all the nodes in a single one
 	// randomly selected.
 	MultiAZ Boolean
+	Network Network
 	AWS AWS
 	Nodes ClusterNodes
 	Properties [String]String
