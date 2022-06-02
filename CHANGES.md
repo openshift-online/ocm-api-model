@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.204 Jun 02 2022
+- Remove volume type from flavour
+- Add Network Configuration for Managed Services
+
 ## 0.0.203 May 31 2022
 - Add `MarketplaceAWS`, `MarketplaceAzure`, `MarketplaceRHM` billing models.
 
