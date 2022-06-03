@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.205 Jun 03 2022
+- Add `BillingMarketplaceAccount` field to ReservedResource type.
+
 ## 0.0.204 Jun 02 2022
 - Remove volume type from flavour
 - Add Network Configuration for Managed Services

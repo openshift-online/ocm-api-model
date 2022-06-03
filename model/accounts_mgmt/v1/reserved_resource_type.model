@@ -22,5 +22,6 @@ struct ReservedResource {
 	ResourceName String
 	ResourceType String
 	BillingModel BillingModel
+	BillingMarketplaceAccount String
 	UpdatedAt Date
 }
