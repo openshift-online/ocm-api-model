@@ -31,6 +31,9 @@ resource Cluster {
 		// If false it will only delete from OCM but not the actual cluster resources.
 		// false is only allowed for OCP clusters. true by default.
 		in Deprovision Boolean = true
+
+		// Dry run flag is used to check if the operation can be completed, but won't delete.
+		in DryRun Boolean = false
 	}
 
 	// Reference to the resource that manages the detailed status of the cluster.
