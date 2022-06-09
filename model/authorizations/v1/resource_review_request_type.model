@@ -28,4 +28,8 @@ struct ResourceReviewRequest {
 	// If true, in the case when all subscriptions in organization are permitted, response will *not* include
 	// these subscriptions' ID, but organization only.
 	ReduceClusterList Boolean
+
+	// A comma-separated list of subscription statuses.
+	// Subscriptions with these statuses will be excluded from results.
+	excludeSubscriptionStatuses string
 }
