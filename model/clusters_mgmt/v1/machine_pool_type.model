@@ -33,6 +33,9 @@ class MachinePool {
 	// The availability zones upon which the nodes are created.
 	AvailabilityZones []String
 
+	// The subnets upon which the nodes are created.
+	Subnets []String
+
 	// The labels set on the Nodes created.
 	Labels [String]String
 
