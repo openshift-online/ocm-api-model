@@ -23,6 +23,9 @@ struct AddOnParameterOption {
 	// Value of the add-on parameter option.
 	Value String
 
+	// Rank of option to be used in cases where editable direction should be restricted.
+	Rank Integer
+
 	// List of add-on requirements for this parameter option.
 	Requirements []AddOnRequirement
 
