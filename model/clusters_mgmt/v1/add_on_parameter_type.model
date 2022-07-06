@@ -41,6 +41,10 @@ class AddOnParameter {
 	// Indicates if this parameter can be edited after creation.
 	Editable Boolean
 
+	// Restricts if the parameter can be upscaled/downscaled
+	// Expected values are "up", "down", or "" (no restriction).
+	EditableDirection String
+
 	// Indicates if this parameter is enabled for the add-on.
 	Enabled Boolean
 
