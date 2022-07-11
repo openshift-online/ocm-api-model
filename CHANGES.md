@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.208 Jul 11 2022
+- Add `Delete` method to RegistryCredentialResource model.
+
 ## 0.0.207 Jun 27 2022
 - Add `Subnets` field to MachinePool type.
 
