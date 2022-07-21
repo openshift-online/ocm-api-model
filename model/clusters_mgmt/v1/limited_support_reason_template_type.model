@@ -19,6 +19,6 @@ class LimitedSupportReasonTemplate {
 	// Summary of the reason.
 	Summary String
 
-	// URL with a link to a detailed description of the reason.
+	// A detailed description of the reason.
 	Details String
 }
