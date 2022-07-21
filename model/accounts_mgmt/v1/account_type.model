@@ -30,4 +30,5 @@ class Account {
         // RhitAccountID will be deprecated in favor of RhitWebUserId
 	RhitAccountID string
 	RhitWebUserId string
+	Capabilities []Capability
 }
