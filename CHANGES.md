@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.209 Jul 11 2022
+- Add `Capabilities` property to AccountType model.
+
 ## 0.0.208 Jul 11 2022
 - Add `Delete` method to RegistryCredentialResource model.
 
