@@ -74,10 +74,6 @@ class Cluster {
 	// Link to the cloud provider region where the cluster is installed.
 	link Region CloudRegion
 
-	// Name of the cluster for display purposes. It can contain any
-	// characters, including spaces.
-	DisplayName String
-
 	// DNS settings of the cluster.
 	DNS DNS
 
