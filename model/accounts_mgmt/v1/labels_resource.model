@@ -46,4 +46,9 @@ resource Labels {
 		// Retrieved list of labels.
 		out Items []Label
 	}
+
+	// Create a new account/organization/subscription label.
+	method Add {
+		in out Body Label
+	}
 }

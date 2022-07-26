@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.211 Jul 25 2022
+- Added `Add` method to label model.
+
 ## 0.0.210 Jul 25 2022
 - Remove `DisplayName` field from Cluster model.
 
