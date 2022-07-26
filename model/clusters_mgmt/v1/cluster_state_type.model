@@ -28,6 +28,9 @@ enum ClusterState {
 	// The cluster is still being installed.
 	Installing
 
+	// The cluster is installed and being prepared for use.
+	FinalizingInstallation
+
 	// The cluster is ready to use.
 	Ready
 
