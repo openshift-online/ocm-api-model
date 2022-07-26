@@ -38,7 +38,7 @@ class ProvisionShard {
 	// Contains the cloud provider name
 	link CloudProvider CloudProvider
 
-	// Contains the name of the managment cluster for Hypershift clusters that are assigned to this shard.
+	// Contains the name of the management cluster for Hypershift clusters that are assigned to this shard.
 	// This field is populated by OCM, and must not be overwritten via API.
 	ManagementCluster String
 }
