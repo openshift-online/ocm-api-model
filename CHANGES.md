@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.211 Jul 27 2022
+- Add API for adding and removing a provision shard.
+
 ## 0.0.210 Jul 25 2022
 - Remove `DisplayName` field from Cluster model.
 
