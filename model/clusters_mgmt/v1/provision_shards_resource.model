@@ -30,6 +30,13 @@ resource ProvisionShards {
 		out Items []ProvisionShard
 	}
 
+	// Adds a provision shard.
+	method Add {
+		// Description of the provision shard.
+		in out Body ProvisionShard
+	}
+
+
 	// Reference to the resource that manages a specific provision shard.
 	locator ProvisionShard {
 		target ProvisionShard
