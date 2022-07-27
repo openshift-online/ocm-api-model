@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.212 Jul 27 2022
+- Add new cluster state - FinalizingInstallation.
+
 ## 0.0.211 Jul 27 2022
 - Add API for adding and removing a provision shard.
 
