@@ -20,4 +20,8 @@ resource ProvisionShard {
 	method Get {
 		out Body ProvisionShard
 	}
+
+	// Delete the provision shard.
+	method Delete {
+	}
 }
