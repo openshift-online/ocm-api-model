@@ -46,4 +46,10 @@ resource Labels {
 		// Retrieved list of labels.
 		out Items []Label
 	}
+
+	// Reference to the service that manages a specific label.
+	locator Label {
+		target Label
+		variable ID
+	}
 }

@@ -1,0 +1,6 @@
+// Manages a specific label.
+resource Label {
+	// Delete the label
+	method Delete {
+	}
+}
