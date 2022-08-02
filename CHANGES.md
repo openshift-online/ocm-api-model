@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.213 Aug 02 2022
+- Add update function to provision shard API.
+
 ## 0.0.212 Aug 01 2022
 - Add status to provision shard API.
 
