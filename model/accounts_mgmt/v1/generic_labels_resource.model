@@ -52,6 +52,7 @@ resource GenericLabels {
 		variable ID
 	}
 
+	// Reference to the label of a specific account/organization/subscription for the given key.
 	locator Label {
 		target GenericLabel
 		variable Key
