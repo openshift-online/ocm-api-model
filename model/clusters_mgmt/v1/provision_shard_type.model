@@ -17,28 +17,28 @@ limitations under the License.
 // Contains the properties of the provision shard, including AWS and GCP related configurations
 class ProvisionShard {
 
-	// Contains the configuration for Hive
+	// Contains the configuration for Hive.
 	HiveConfig ServerConfig
 
-	// Contains the configuration for the AWS account operator
+	// Contains the configuration for the AWS account operator.
 	AWSAccountOperatorConfig ServerConfig
 
-	// Contains the configuration for the GCP project operator
+	// Contains the configuration for the GCP project operator.
 	GCPProjectOperator ServerConfig
 
-	// Contains the AWS base domain
+	// Contains the AWS base domain.
 	AWSBaseDomain String
 
-	// Contains the GCP base domain
+	// Contains the GCP base domain.
 	GCPBaseDomain String
 
-	// Contains the cloud-provider region in which the provisioner spins up the cluster
+	// Contains the cloud-provider region in which the provisioner spins up the cluster.
 	link Region CloudRegion
 
-	// Contains the cloud provider name
+	// Contains the cloud provider name.
 	link CloudProvider CloudProvider
 
-	// Contains the configuration for Hypershift
+	// Contains the configuration for Hypershift.
 	HypershiftConfig ServerConfig
 
 	// Contains the OCM cluster ID of the management cluster for Hypershift clusters that are assigned to this shard.
