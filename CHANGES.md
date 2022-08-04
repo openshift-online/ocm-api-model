@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.215 Aug 04 2022
+- Add hypershift config to provision shard.
+
 ## 0.0.214 Aug 02 2022
 - Add locator `label` to Generic Labels resource.
 
