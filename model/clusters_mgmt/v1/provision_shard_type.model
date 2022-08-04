@@ -41,9 +41,9 @@ class ProvisionShard {
 	// Contains the configuration for Hypershift.
 	HypershiftConfig ServerConfig
 
-	// Contains the OCM cluster ID of the management cluster for Hypershift clusters that are assigned to this shard.
+	// Contains the name of the management cluster for Hypershift clusters that are assigned to this shard.
 	// This field is populated by OCM, and must not be overwritten via API.
-	ManagementClusterID String
+	ManagementCluster String
 
 	// Status of the provision shard. Possible values: active/maintenance/offline.
 	Status String
