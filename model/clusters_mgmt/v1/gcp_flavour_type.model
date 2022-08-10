@@ -26,4 +26,13 @@ struct GCPFlavour {
 
 	// GCP default instance type for the infra volume.
 	InfraInstanceType String
+	
+	// Master volume specification.
+	MasterVolume GCPVolume
+
+	// Infra volume specification.
+	InfraVolume GCPVolume
+
+	// Worker volume specification.
+	WorkerVolume GCPVolume
 }
