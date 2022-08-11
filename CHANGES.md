@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.216 Aug 11 2022
+- Change provision shard to include kube client configurations.
+- Add GCP volume size to flavour API.
+- Add fleet manager related structures and API.
+
 ## 0.0.215 Aug 04 2022
 - Add hypershift config to provision shard.
 
