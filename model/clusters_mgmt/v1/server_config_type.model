@@ -18,4 +18,7 @@ limitations under the License.
 class ServerConfig {
 	// The URL of the server
 	Server String
+
+	// The kubeconfig of the server
+	Kubeconfig String
 }
