@@ -17,14 +17,14 @@ limitations under the License.
 // Contains the properties of the provision shard, including AWS and GCP related configurations
 class ProvisionShard {
 
-	// Contains the kube client configuration for Hive.
-	HiveConfig String
+	// Contains the configuration for Hive.
+	HiveConfig ServerConfig
 
-	// Contains the kube client configuration for the AWS account operator.
-	AWSAccountOperatorConfig String
+	// Contains the configuration for the AWS account operator.
+	AWSAccountOperatorConfig ServerConfig
 
-	// Contains the kube client configuration for the GCP project operator.
-	GCPProjectOperator String
+	// Contains the configuration for the GCP project operator.
+	GCPProjectOperator ServerConfig
 
 	// Contains the AWS base domain.
 	AWSBaseDomain String
@@ -38,8 +38,8 @@ class ProvisionShard {
 	// Contains the cloud provider name.
 	link CloudProvider CloudProvider
 
-	// Contains the kube client configuration for Hypershift.
-	HypershiftConfig String
+	// Contains the configuration for Hypershift.
+	HypershiftConfig ServerConfig
 
 	// Contains the name of the management cluster for Hypershift clusters that are assigned to this shard.
 	// This field is populated by OCM, and must not be overwritten via API.
