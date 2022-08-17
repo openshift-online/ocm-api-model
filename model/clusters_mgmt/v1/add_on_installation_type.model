@@ -34,6 +34,9 @@ class AddOnInstallation {
 	// Version of the operator installed by the add-on.
 	OperatorVersion String
 
+	// Billing details for add-on installation resource 
+	Billing AddOnInstallationBilling
+
 	// List of add-on parameters for this add-on installation.
 	link Parameters []AddOnInstallationParameter
 

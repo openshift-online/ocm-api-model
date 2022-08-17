@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.219 Aug 17 2022
+- Add Billing Model to Addon Installation
+
 ## 0.0.218 Aug 16 2022
 - Change provision shard to include kube client configurations as well as server URL.
 
