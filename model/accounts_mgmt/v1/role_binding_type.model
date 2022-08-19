@@ -27,4 +27,5 @@ class RoleBinding {
 	ConfigManaged Boolean
 	CreatedAt Date
     UpdatedAt Date
+	ManagedBy String
 }
