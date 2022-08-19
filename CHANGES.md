@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.220 Aug 19 2022
+- Add `ManagedBy` property to RoleBinding model.
+
 ## 0.0.219 Aug 17 2022
 - Add Billing Model to Addon Installation
 
