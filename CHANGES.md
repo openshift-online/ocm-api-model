@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.221 Aug 29 2022
+- Add `ConsoleUrl` and `DisplayName` properties to ClusterRegistration model and correct documentation.
+
 ## 0.0.220 Aug 19 2022
 - Add `ManagedBy` property to RoleBinding model.
 
@@ -63,7 +66,7 @@ This document describes the relevant changes between releases of the API model.
 - Add `CloudAccount` type.
 - Add `CloudAccounts` field to QuotaCost type.
 - Add `BillingMarketplaceAccount` field to Subscription type.
-  
+
 ## 0.0.201 May 26 2022
 
 - Adding groups claim to openID IDP
@@ -157,7 +160,7 @@ This document describes the relevant changes between releases of the API model.
 
 ## 0.0.181 Mar 14 2022
 
-- add aws sts policy 
+- add aws sts policy
 - Add ReleaseImage to Version
 
 ## 0.0.180 Mar 9 2022
@@ -295,7 +298,7 @@ build workflows:
 
 - Update type `resource` to `clusterResources`
 - Revert "Add Name field to LDAP identity provider"
-- Remove addon install mode `singleNamespace` 
+- Remove addon install mode `singleNamespace`
 - Add addon install mode `ownNamespace`
 - Add channel to addon version class
 
