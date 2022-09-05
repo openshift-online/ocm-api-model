@@ -205,6 +205,6 @@ class Cluster {
   // Contains information about Managed Service
   ManagedService ManagedService
 
-	// HyperShift configuration.
-	Hypershift HyperShift
+	// Hypershift configuration.
+	Hypershift Hypershift
 }
