@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.222 Aug 29 2022
+- Drop deprecated `DisplayName` property from ClusterRegistration model.
+
 ## 0.0.221 Aug 29 2022
 - Add `ConsoleUrl` and `DisplayName` properties to ClusterRegistration model and correct documentation.
 
