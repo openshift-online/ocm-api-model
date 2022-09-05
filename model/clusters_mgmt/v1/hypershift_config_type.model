@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Hypershift configuration.
-struct Hypershift {
+struct HypershiftConfig {
 	// Boolean flag indicating if the cluster should be creating using _Hypershift_.
 	//
 	// By default this is `false`.
@@ -23,4 +23,8 @@ struct Hypershift {
 	// To enable it the cluster needs to be ROSA cluster and the organization of the user needs
 	// to have the `hypershift` capability enabled.
 	Enabled Boolean
+
+	// Contains the name of the current management cluster for this Hypershift cluster.
+	// Empty for non Hypershift clusters.
+	ManagementCluster String
 }

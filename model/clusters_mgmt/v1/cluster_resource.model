@@ -146,4 +146,8 @@ resource Cluster {
 	locator STSOperatorRoles {
 		target OperatorIAMRoles
 	}
+
+	locator Hypershift {
+		target Hypershift
+	}
 }
