@@ -199,8 +199,8 @@ class Cluster {
 	// It is enabled by default
 	DisableUserWorkloadMonitoring Boolean
 
-  // Contains information about Managed Service
-  ManagedService ManagedService
+    // Contains information about Managed Service
+    ManagedService ManagedService
 
 	// HyperShift configuration.
 	Hypershift HyperShift
