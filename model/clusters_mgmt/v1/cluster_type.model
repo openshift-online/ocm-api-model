@@ -54,6 +54,9 @@ class Cluster {
 	// cluster is created.
 	Name String
 
+	// InfraID is used for example to name the VPCs.
+	InfraID String
+
 	// Link to the _flavour_ that was used to create the cluster.
 	link Flavour Flavour
 
