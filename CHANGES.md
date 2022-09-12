@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.223 Sep 12 2022
+- Add `Version` property to CloudProviderData model.
+- Add `InfraID` property to Cluster model.
+
 ## 0.0.222 Aug 29 2022
 - Drop deprecated `DisplayName` property from ClusterRegistration model.
 
