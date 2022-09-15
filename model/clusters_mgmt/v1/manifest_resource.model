@@ -14,14 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of cluster external configuration.
-struct ExternalConfiguration {
-	// list of syncsets externally configured on the cluster.
-	link Syncsets []Syncset
+// Manages a specific Manifest.
+resource Manifest {
+	// Retrieves the details of the manifest.
+	method Get {
+		out Body Manifest
+	}
 
-	// list of labels externally configured on the clusterdeployment.
-	link Labels []Label
+	// Update the manifest.
+	method Update {
+		in out Body Manifest
+	}
 
-	// list of manifest externally configured for a hosted cluster.
-	link Manifests []Manifest
+	// Deletes the manifest.
+	method Delete {
+	}
 }
