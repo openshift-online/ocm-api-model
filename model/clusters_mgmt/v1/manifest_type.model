@@ -14,14 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of cluster external configuration.
-struct ExternalConfiguration {
-	// list of syncsets externally configured on the cluster.
-	link Syncsets []Syncset
-
-	// list of labels externally configured on the clusterdeployment.
-	link Labels []Label
-
-	// list of manifest externally configured for a hosted cluster.
-	link Manifests []Manifest
+// Representation of a manifestwork.
+class Manifest {
+	// List of k8s objects to deploy on a hosted cluster.
+	Workloads []Interface
 }
