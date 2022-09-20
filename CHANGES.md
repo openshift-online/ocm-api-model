@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.225 Sep 20 2022
+- [Hypershift] Expose /manifests
+
 ## 0.0.224 Sep 16 2022
 - Add hypershift endpoint with its ManagementCluster.
 - Align hypershift case usage.
