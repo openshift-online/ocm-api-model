@@ -24,4 +24,5 @@ class ManagedService {
   Addon StatefulObject
   CreatedAt  Date
   UpdatedAt  Date
+  ExpiredAt  Date
 }
