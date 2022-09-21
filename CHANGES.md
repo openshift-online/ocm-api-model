@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.226 Sep 21 2022
+- Added expiry setting to managed service clusters.
+
 ## 0.0.225 Sep 20 2022
 - [Hypershift] Expose /manifests
 
