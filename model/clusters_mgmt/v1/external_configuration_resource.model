@@ -27,6 +27,11 @@ resource ExternalConfiguration {
 		target Syncsets
 	}
 
+	// Reference to the resource that manages the collection of manifests.
+	locator Manifests {
+		target Manifests
+	}
+
     // Reference to the resource that manages the collection of labels.
 	locator Labels {
 		target Labels
