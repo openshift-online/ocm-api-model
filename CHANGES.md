@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.227 Sep 28 2022
+-  Added Manifests to external_configuration.
+
 ## 0.0.226 Sep 21 2022
 - Added expiry setting to managed service clusters.
 
