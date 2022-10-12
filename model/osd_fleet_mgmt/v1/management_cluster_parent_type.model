@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Cluster Mgmt reference settings of the cluster.
+// ManagementClusterParent reference settings of the cluster.
 struct ManagementClusterParent {
 	// Parent Cluster ID 
 	ClusterId String

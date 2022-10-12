@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages the collection of clusters.
+// Manages the collection of service clusters.
 resource ServiceClusters {
 	// Retrieves the list of service clusters.
 	method List {
@@ -28,12 +28,12 @@ resource ServiceClusters {
 		// regardless of the size of the page.
 		out Total Integer
 
-		// Retrieved list of clusters.
+		// Retrieved a list of service clusters.
 		out Items []ServiceCluster
 	}
 
 
-	// Returns a reference to the service that manages an specific service cluster.
+	// Returns a reference to the resource that manages a specific service cluster.
 	locator ServiceCluster {
 		target ServiceCluster
 		variable ID

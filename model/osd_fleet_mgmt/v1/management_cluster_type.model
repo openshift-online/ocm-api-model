@@ -65,7 +65,7 @@ class ManagementCluster {
 	// Status of cluster
 	Status String
 
-	// Service cluster handling the management cluster
+	// Management cluster handling the management cluster
 	link Parent ManagementClusterParent
 
 

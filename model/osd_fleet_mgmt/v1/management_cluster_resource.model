@@ -14,22 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific service cluster.
+// Manages a specific management cluster.
 resource ManagementCluster {
-	// Retrieves the details of the cluster.
+	// Retrieves the details of the management cluster.
 	method Get {
 		out Body ManagementCluster
 	}
 
-	// Updates the service cluster.
+	// Updates the management cluster.
 	method Post {
 		in Request ManagementClusterRequestPayload
 		out Response ManagementCluster
 	}
 
-	// Deletes the service cluster.
+	// Deletes the management cluster.
 	method Delete {
-		
 	}
 
 }
