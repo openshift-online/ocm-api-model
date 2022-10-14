@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.228 Oct 14 2022
+-  Add `search` parameter to provision shards.
+
 ## 0.0.227 Sep 28 2022
 -  Added Manifests to external_configuration.
 
