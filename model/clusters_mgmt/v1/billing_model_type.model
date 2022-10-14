@@ -19,6 +19,18 @@ enum BillingModel {
 	// Standard. This is the default billing model
 	Standard
 
-	// Red Hat Marketplace billing model.
+	// BillingModel Marketplace Legacy Marketplace billing model. Currently only used for tests. Use cloud-provider specific billing models instead.
 	Marketplace
+
+    // AWS Marketplace billing model.
+    @json(name = "marketplace-aws")
+    MarketplaceAWS
+
+    // Azure Marketplace billing model.
+    @json(name = "marketplace-azure")
+    MarketplaceAzure
+
+    // RH Marketplace billing model.
+    @json(name = "marketplace-rhm")
+    MarketplaceRHM
 }
