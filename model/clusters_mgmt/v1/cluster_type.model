@@ -111,6 +111,9 @@ class Cluster {
 	// GCP Network.
 	GCPNetwork GCPNetwork
 
+	// Key used for encryption of GCP cluster nodes.
+	GCPEncryptionKey GCPEncryptionKey
+
 	// Date and time when the cluster was initially created, using the
 	// format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 	CreationTimestamp Date
