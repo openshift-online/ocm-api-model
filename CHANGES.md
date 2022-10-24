@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.229 Oct 24 2022
+- Add Addon Management models
+- Add GCP Encryption Keys to cluster model
+
 ## 0.0.228 Oct 14 2022
 - Add marketplace specific enum for clusters mgmt
 - Add Search method to ProvisionShards
