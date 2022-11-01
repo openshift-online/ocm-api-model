@@ -14,12 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of an add-on config.
-// The attributes under it are to be used by the addon once its installed in the cluster.
-class AddOnConfig {
-    // List of environment variables for the addon
-    AddOnEnvironmentVariables []AddOnEnvironmentVariable
+// Representation of an addon catalog source object used by addon versions.
+struct AdditionalCatalogSource {
+    // ID of the additional catalog source
+    ID String
 
-    // List of secret propagations for the addon
-    SecretPropagations []AddOnSecretPropagation
+    // Name of the additional catalog source.
+    Name String
+
+    // Image of the additional catalog source.
+    Image String
+
+    // Indicates is this additional catalog source is enabled for the addon
+    Enabled Boolean
 }

@@ -54,4 +54,6 @@ class AddOnParameter {
 	// List of options for the add-on parameter value.
 	Options []AddOnParameterOption
 
+	// Conditions in which this parameter is valid for
+	Conditions []AddOnRequirement
 }

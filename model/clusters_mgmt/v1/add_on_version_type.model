@@ -20,11 +20,17 @@ class AddOnVersion {
 	// Indicates if this add-on version can be added to clusters.
 	Enabled Boolean
 
+	// The pull secret name used for this addon version.
+	PullSecretName String
+
 	// The catalog source image for this add-on version.
 	SourceImage String
 
 	// The specific addon catalog source channel of packages
 	Channel String
+
+	// Additional catalog sources associated with this addon version
+	AdditionalCatalogSources []AdditionalCatalogSource
 
 	// List of parameters for this add-on version.
 	link Parameters []AddOnParameter
