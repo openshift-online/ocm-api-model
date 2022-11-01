@@ -2,6 +2,13 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.230 Nov 01 2022
+- Add creation timestamp and modification timestamp to provision shard
+- Add pull secret for addon version
+- Add addon secret props for addon version config
+- Add additional catalog sources for addon version
+- Add addon parameter condition
+
 ## 0.0.229 Oct 24 2022
 - Add Addon Management models
 - Add GCP Encryption Keys to cluster model
