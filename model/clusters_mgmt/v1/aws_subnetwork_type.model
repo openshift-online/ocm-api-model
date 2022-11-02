@@ -22,6 +22,9 @@ struct Subnetwork {
 	// Name of the subnet according to its `Name` tag on AWS
 	Name String
 
+	// Whether it is a public subnet
+	Public Boolean
+    
 	// The availability zone to which the subnet is related
 	AvailabilityZone String
 }
