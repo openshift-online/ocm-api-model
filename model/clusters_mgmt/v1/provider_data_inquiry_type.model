@@ -33,4 +33,7 @@ struct CloudProviderData {
 
     // Openshift version
     Version Version
+
+    // Availability zone
+    AvailabilityZone String
 }
