@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.231 Nov 03 2022
+- Add `AvailabilityZone` property to CloudProviderData model.
+- Add `Public` property to Subnetwork model.
+
 ## 0.0.230 Nov 01 2022
 - Add creation timestamp and modification timestamp to provision shard
 - Add pull secret for addon version
