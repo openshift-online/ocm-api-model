@@ -35,5 +35,5 @@ struct CloudProviderData {
     Version Version
 
     // Availability zone
-    AvailabilityZone String
+    AvailabilityZones []String
 }
