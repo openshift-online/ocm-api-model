@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2020 Red Hat, Inc.
+Copyright (c) 2022 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,19 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific machine pool.
-resource MachinePool {
-	// Retrieves the details of the machine pool.
-	method Get {
-		out Body MachinePool
-	}
+// Representation of a autoscaling in a node pool.
+class NodePoolAutoscaling {
+    // The minimum number of replicas for the node pool.
+    Min Integer
 
-	// Updates the machine pool.
-	method Update {
-		in out Body MachinePool
-	}
-
-	// Deletes the machine pool.
-	method Delete {
-	}
+    // The maximum number of replicas for the node pool.
+    Max Integer
 }

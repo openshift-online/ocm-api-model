@@ -76,10 +76,15 @@ resource Cluster {
 		target Ingresses
 	}
 
-        // Reference to the resource that manages the collection of machine pool resources.
+    // Reference to the resource that manages the collection of machine pool resources.
 	locator MachinePools {
 		target MachinePools
 	}
+
+    // Reference to the resource that manages the collection of node pool resources.
+    locator NodePools {
+        target NodePools
+    }
 
 	// Initiates cluster hibernation. While hibernating a cluster will not consume any cloud provider infrastructure
 	// but will be counted for quota.

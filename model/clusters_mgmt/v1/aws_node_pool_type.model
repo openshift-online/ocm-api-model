@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2020 Red Hat, Inc.
+Copyright (c) 2022 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,19 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific machine pool.
-resource MachinePool {
-	// Retrieves the details of the machine pool.
-	method Get {
-		out Body MachinePool
-	}
+// Representation of aws node pool specific parameters.
+class AWSNodePool {
+    // InstanceType is an ec2 instance type for node instances (e.g. m5.large).
+    InstanceType String
 
-	// Updates the machine pool.
-	method Update {
-		in out Body MachinePool
-	}
+    // InstanceProfile is the AWS EC2 instance profile, which is a container for an IAM role that the EC2 instance uses.
+    InstanceProfile String
 
-	// Deletes the machine pool.
-	method Delete {
-	}
+    // Optional keys and values that the installer will add as tags to all AWS resources it creates
+    Tags [String]String
 }
