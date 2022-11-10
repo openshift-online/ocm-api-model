@@ -158,6 +158,10 @@ class Cluster {
 	// List of machine pools on this cluster.
 	link MachinePools []MachinePool
 
+    // List of node pools on this cluster.
+    // NodePool is a scalable set of worker nodes attached to a hosted cluster.
+    link NodePools []NodePool
+
 	// List of ingresses on this cluster.
 	link Ingresses []Ingress
 
@@ -205,8 +209,8 @@ class Cluster {
 	// It is enabled by default
 	DisableUserWorkloadMonitoring Boolean
 
-  // Contains information about Managed Service
-  ManagedService ManagedService
+    // Contains information about Managed Service
+    ManagedService ManagedService
 
 	// Hypershift configuration.
 	Hypershift Hypershift

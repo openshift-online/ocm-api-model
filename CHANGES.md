@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.237 Nov 27 2022
+- Add `NodePools` resource model.
+- Add `NodePools` locator on `Cluster` model.
+
 ## 0.0.236 Nov 23 2022
 - Add extra fields to label model:
   - Type
