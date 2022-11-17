@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.233 Nov 17 2022
+- Add `SupportsHypershift` property to CloudRegion model.
+
 ## 0.0.232 Nov 07 2022
 - Modify `availabilityZone` property in CloudProviderData model from `string` to `[]string`.
 
