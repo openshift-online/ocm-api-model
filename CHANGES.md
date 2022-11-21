@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.234 Nov 17 2022
+- Add `Capabilities` resource model.
+
 ## 0.0.233 Nov 17 2022
 - Add `SupportsHypershift` property to CloudRegion model.
 
