@@ -134,4 +134,8 @@ resource Root {
         target CloudResources
     }
 
+    // Reference to the resource that manages the collection of capabilities.
+    locator Capabilities {
+        target Capabilities
+    }
 }
