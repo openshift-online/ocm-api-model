@@ -10,7 +10,6 @@ This document describes the relevant changes between releases of the API model.
   - SubscriptionID
   - OrganizationID
 
-
 ## 0.0.235 Nov 21 2022
 - Add `Capabilities` locator in root resource model.
 
