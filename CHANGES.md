@@ -3,7 +3,11 @@
 This document describes the relevant changes between releases of the API model.
 
 ## 0.0.236 Nov 23 2022
-- Add extra fields to label model.
+- Add extra fields to label model:
+  - type
+  - accountID
+  - subscriptionID
+  - organizationID
 
 
 ## 0.0.235 Nov 21 2022
