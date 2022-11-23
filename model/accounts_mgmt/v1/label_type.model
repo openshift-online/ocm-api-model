@@ -18,6 +18,11 @@ class Label {
     Key String
     Value String
     Internal Boolean
+    Type String
+    ManagedBy String
+    AccountID String
+    SubscriptionID String
+    OrganizationID String
     CreatedAt Date
     UpdatedAt Date
 }
