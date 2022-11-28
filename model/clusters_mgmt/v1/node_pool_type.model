@@ -40,5 +40,5 @@ class NodePool {
     Subnet String
 
     // AWS specific parameters (Optional).
-    AWS AWSMachinePool
+    AWS AWSNodePool
 }
