@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.238 Nov 28 2022
+- Fix `AWSNodePool` on `NodePool` resource model.
+
 ## 0.0.237 Nov 27 2022
 - Add `NodePools` resource model.
 - Add `NodePools` locator on `Cluster` model.
