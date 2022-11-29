@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.240 Nov 30 2022
+- Fix `AddonConfig` on `AddonConfigType` resource model.
+
 ## 0.0.239 Nov 30 2022
 - Fix `NodePoolAutoScaling` resource model.
 - Fix `AWSNodePool` field mapping.

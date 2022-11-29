@@ -18,8 +18,8 @@ limitations under the License.
 // The attributes under it are to be used by the addon once its installed in the cluster.
 struct AddonConfig {
     // List of environment variables for the addon
-    EnvironmentVariables []AddonEnvironmentVariable
+    AddOnEnvironmentVariables []AddonEnvironmentVariable
 
     // List of secret propagations for the addon
-    SecretPropagations []AddonSecretPropagation
+    AddOnSecretPropagations []AddonSecretPropagation
 }
