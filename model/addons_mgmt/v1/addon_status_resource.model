@@ -16,17 +16,17 @@ limitations under the License.
 
 // Manages a specific addon status.
 resource AddonStatus {
-	// Retrieves the details of the addon version.
-	method Get {
-		out Body AddonStatus
-	}
+    // Retrieves the details of the addon version.
+    method Get {
+        out Body AddonStatus
+    }
 
-	// Updates the addon version.
-	method Update {
-		in out Body AddonStatus
-	}
+    // Updates the addon version.
+    method Update {
+        in out Body AddonStatus
+    }
 
-	// Deletes the addon version.
-	method Delete {
-	}
+    // Deletes the addon version.
+    method Delete {
+    }
 }

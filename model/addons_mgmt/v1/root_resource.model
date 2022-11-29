@@ -20,4 +20,9 @@ resource Root {
     locator Addons {
         target Addons
     }
+
+    locator Clusters {
+        target Clusters
+    }
+
 }

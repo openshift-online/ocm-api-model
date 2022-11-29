@@ -14,16 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
-// Representation of an addon status.
-class AddonStatus {
-
-    // ID of the addon whose status belongs to.
-    AddonId String
-
-    // Identifier for co-relating current AddonCR revision and reported status.
-    CorrelationID String
-
-    // List of reported addon status conditions
-    StatusConditions []AddonStatusCondition
+// Manages a list of clusters.
+resource Clusters {
+    // Reference to the specific cluster which an addon can be installed on
+    locator Cluster {
+        target Cluster
+        variable ID
+    }
 }

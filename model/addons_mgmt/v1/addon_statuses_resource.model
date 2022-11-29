@@ -16,34 +16,34 @@ limitations under the License.
 
 // Manages the collection of addon statuses for a cluster.
 resource AddonStatuses {
-	// Retrieves the list of addon statuses for a cluster.
-	method List {
-		// Index of the requested page, where one corresponds to the first page.
-		in out Page Integer = 1
+    // Retrieves the list of addon statuses for a cluster.
+    method List {
+        // Index of the requested page, where one corresponds to the first page.
+        in out Page Integer = 1
 
-		// Maximum number of items that will be contained in the returned page.
-		in out Size Integer = 100
+        // Maximum number of items that will be contained in the returned page.
+        in out Size Integer = 100
 
-		// If the parameter isn't provided, or if the value is empty, then the order of the
-		// results is undefined.
-		in Order String
+        // If the parameter isn't provided, or if the value is empty, then the order of the
+        // results is undefined.
+        in Order String
 
-		// Total number of items of the collection regardless of the size of the page.
-		out Total Integer
+        // Total number of items of the collection regardless of the size of the page.
+        out Total Integer
 
-		// Retrieved list of addon status conditions
-		out Items []AddonStatus
-	}
+        // Retrieved list of addon status conditions
+        out Items []AddonStatus
+    }
 
-	// Create a new addon status and add it to the collection of addons statuses.
-	method Add {
-		// Description of the addon status.
-		in out Body AddonStatus
-	}
+    // Create a new addon status and add it to the collection of addons statuses.
+    method Add {
+        // Description of the addon status.
+        in out Body AddonStatus
+    }
 
-	// Returns a reference to the service that manages a specific addon status.
-	locator Version {
-		target AddonStatus
-		variable ID
-	}
+    // Returns a reference to a specific addon status.
+    locator Addon {
+        target AddonStatus
+        variable ID
+    }
 }
