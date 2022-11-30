@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.239 Nov 30 2022
+- Fix `NodePoolAutoScaling` resource model.
+- Fix `AWSNodePool` field mapping.
+
 ## 0.0.238 Nov 28 2022
 - Fix `AWSNodePool` on `NodePool` resource model.
 

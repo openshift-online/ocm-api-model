@@ -17,8 +17,8 @@ limitations under the License.
 // Representation of a autoscaling in a node pool.
 class NodePoolAutoscaling {
     // The minimum number of replicas for the node pool.
-    Min Integer
+    MinReplica Integer
 
     // The maximum number of replicas for the node pool.
-    Max Integer
+    MaxReplica Integer
 }

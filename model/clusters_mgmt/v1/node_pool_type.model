@@ -30,15 +30,12 @@ class NodePool {
     // Specifies whether health checks should be enabled for machines in the NodePool.
     AutoRepair Boolean
 
-    // The instance type of Nodes to create.
-    InstanceType String
+    // AWS specific parameters (Optional).
+    AWSNodePool AWSNodePool
 
     // The availability zone upon which the node is created.
     AvailabilityZone String
 
     // The subnet upon which the nodes are created.
     Subnet String
-
-    // AWS specific parameters (Optional).
-    AWS AWSNodePool
 }
