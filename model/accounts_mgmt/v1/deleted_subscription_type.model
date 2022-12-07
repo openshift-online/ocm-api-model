@@ -16,8 +16,6 @@ limitations under the License.
 
 
 class DeletedSubscription {
-	Kind String
-	Href String
 	PlanID String
 	ClusterID String
 	ExternalClusterID String
