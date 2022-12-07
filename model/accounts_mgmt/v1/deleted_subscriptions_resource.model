@@ -55,7 +55,7 @@ resource DeletedSubscriptions {
 		//
 		// If the parameter isn't provided, or if the value is empty, then the order of the
 		// results is undefined.
-		in OrderBy String
+		in Order String
 
 		// Retrieved list of DeletedSubscriptions.
 		out Items []DeletedSubscription
