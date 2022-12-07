@@ -4,6 +4,7 @@ This document describes the relevant changes between releases of the API model.
 
 ## 0.0.241 Dec 07 2022
 - Add `DeletedSubscription` resource model.
+- Add `DeletedSubscriptions` to root resource model.
 
 ## 0.0.240 Nov 30 2022
 - Fix `AddonConfig` on `AddonConfigType` resource model.
