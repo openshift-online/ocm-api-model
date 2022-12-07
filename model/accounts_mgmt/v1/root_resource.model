@@ -138,4 +138,9 @@ resource Root {
     locator Capabilities {
         target Capabilities
     }
+
+	// Reference to the resource that manages the collection of deleted subscriptions.
+    locator DeletedSubscriptions {
+        target DeletedSubscriptions
+    }
 }
