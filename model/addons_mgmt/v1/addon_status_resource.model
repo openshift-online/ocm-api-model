@@ -14,15 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Root of the tree of resources of the Addons Management.
-resource Root {
-    // Reference to the resource that manages the collection of Addons.
-    locator Addons {
-        target Addons
+// Manages a specific addon status.
+resource AddonStatus {
+    // Retrieves the details of the addon version.
+    method Get {
+        out Body AddonStatus
     }
 
-    locator Clusters {
-        target Clusters
+    // Updates the addon version.
+    method Update {
+        in out Body AddonStatus
     }
 
+    // Deletes the addon version.
+    method Delete {
+    }
 }

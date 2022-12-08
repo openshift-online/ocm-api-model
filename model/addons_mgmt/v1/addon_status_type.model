@@ -14,15 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Root of the tree of resources of the Addons Management.
-resource Root {
-    // Reference to the resource that manages the collection of Addons.
-    locator Addons {
-        target Addons
-    }
 
-    locator Clusters {
-        target Clusters
-    }
+// Representation of an addon status.
+class AddonStatus {
 
+    // ID of the addon whose status belongs to.
+    AddonId String
+
+    // Identifier for co-relating current AddonCR revision and reported status.
+    CorrelationID String
+
+    // List of reported addon status conditions
+    StatusConditions []AddonStatusCondition
 }

@@ -14,15 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Root of the tree of resources of the Addons Management.
-resource Root {
-    // Reference to the resource that manages the collection of Addons.
-    locator Addons {
-        target Addons
+// Manages a list of clusters.
+resource Clusters {
+    // Reference to the specific cluster which an addon can be installed on
+    locator Cluster {
+        target Cluster
+        variable ID
     }
-
-    locator Clusters {
-        target Clusters
-    }
-
 }
