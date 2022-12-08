@@ -1,8 +1,11 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
-
-## 0.0.241 Dec 07 2022
+## 0.0.241 Dec 08 2022
+- Add `AddonCluster` resource model.
+- Add `AddonClusters` locator in root resource model.
+- Add `Addon` locator in `AddonStatuses` resource model
+- Updated `AddOnStatusType` for `StatusConditions` and `AddonId`
 - Add `DeletedSubscription` resource model.
 - Add `DeletedSubscriptions` to root resource model.
 
