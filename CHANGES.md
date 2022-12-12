@@ -1,7 +1,7 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
-## 0.0.241 Dec 09 2022
+## 0.0.241 Dec 12 2022
 - Add `AddonCluster` resource model.
 - Add `AddonClusters` resource model.
 - Add `AddonStatusConditionType` model.
