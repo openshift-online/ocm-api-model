@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2020 Red Hat, Inc.
+Copyright (c) 2022 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,23 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of an ingress.
-class Ingress {
-	// ID used to identify the cluster that this ingress is attached to. 
-	link Cluster Cluster
+// Ingress load balancer type.
+enum LoadBalancerType {
+	// Uses only classic load balancer.
+	Classic
 
-	// Indicates if this is the default ingress.
-	Default Boolean
-
-	// Listening method of the ingress
-	Listening ListeningMethod
-
-	// Load Balancer type of the ingress
-	LoadBalancer LoadBalancerType
-
-	// DNS Name of the ingress.
-	DNSName String
-
-	// A set of labels for the ingress. 
-	RouteSelectors [String]String
+	// Uses network load balancer.
+	Nlb
 }
