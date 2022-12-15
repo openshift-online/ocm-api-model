@@ -1,6 +1,14 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+
+
+## 0.0.242 Dec 21 2022
+- Add `AddonNamespace` resource model.
+- Add `CommonLabels` attribute to the `Addon` model.
+- Add `CommonAnnotations` attribute to the `Addon` model.
+- Add `MachineType` locator on `MachineTypes` model.
+
 ## 0.0.241 Dec 13 2022
 - Add `AddonCluster` resource model.
 - Add `AddonClusters` resource model.
