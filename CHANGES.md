@@ -2,6 +2,8 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.243 Dec 21 2022
+- Add `BoundServiceAccountSigningKey` attribute to the `Sts` model.
 
 ## 0.0.242 Dec 21 2022
 - Add `AddonNamespace` resource model.
