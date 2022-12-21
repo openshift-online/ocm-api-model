@@ -61,4 +61,10 @@ resource MachineTypes {
 		// Retrieved list of cloud providers.
 		out Items []MachineType
 	}
+
+	// Returns a reference to the service that manages an specific MachineType.
+	locator MachineType {
+		target MachineType
+		variable ID
+	}
 }
