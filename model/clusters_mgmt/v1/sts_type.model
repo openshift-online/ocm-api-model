@@ -42,4 +42,7 @@ struct STS {
 
 	// Optional user provided permission boundary.
 	PermissionBoundary String
+
+	// Private key used to sign the service account token and allow cluster resources to authenticate against the cloud provider
+	BoundServiceAccountSigningKey String
 }
