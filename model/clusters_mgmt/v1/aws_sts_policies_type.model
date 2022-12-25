@@ -25,4 +25,7 @@ struct AWSSTSPolicy {
 
     //Type of policy operator/account role
     Type String
+
+    //The ARN of the managed policy
+    ARN String
 }
