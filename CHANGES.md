@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.245 Dec 29 2022
+- Add `BoundServiceAccountKeyKmsId` attribute to the `Sts` model.
+
 ## 0.0.244 Dec 25 2022
 - Add `ARN` attribute to the `AWSSTSPolicy` model.
 
