@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.246 Jan 04 2023
+- Add Search to `Capabilities` resource
+
 ## 0.0.245 Dec 29 2022
 - Add `BoundServiceAccountKeyKmsId` attribute to the `Sts` model.
 
