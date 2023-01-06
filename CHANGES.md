@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.247 Jan 06 2023
+- Corrected `Metrics` type on `DeletedSubscription`
+
 ## 0.0.246 Jan 04 2023
 - Add Search to `Capabilities` resource
 
