@@ -47,5 +47,5 @@ class DeletedSubscription {
 	BillingMarketplaceAccount String
 	CreatedAt Date
 	QueryTimestamp Date
-	Metrics []SubscriptionMetrics
+	Metrics String
 }
