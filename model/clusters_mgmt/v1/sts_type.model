@@ -16,6 +16,10 @@ limitations under the License.
 
 // Contains the necessary attributes to support role-based authentication on AWS.
 struct STS {
+
+	// If STS is enabled or disabled
+	Enabled Boolean
+
 	// ARN of the AWS role to assume when installing the cluster
 	RoleARN String
 
