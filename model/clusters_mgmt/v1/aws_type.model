@@ -39,4 +39,7 @@ struct AWS {
 
 	// Customer Managed Key to encrypt EBS Volume
 	KMSKeyArn String
+
+	// Related etcd encryption configuration
+	EtcdEncryption AwsEtcdEncryption
 }
