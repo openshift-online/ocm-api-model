@@ -39,4 +39,7 @@ class ClusterStatus {
 
 	// Limited Support Reason Count
 	LimitedSupportReasonCount Integer
+
+    // Current Replicas available for a Hosted Cluster
+    CurrentCompute Integer
 }

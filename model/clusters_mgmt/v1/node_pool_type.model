@@ -38,4 +38,7 @@ class NodePool {
 
     // The subnet upon which the nodes are created.
     Subnet String
+
+    // NodePool status.
+    Status NodePoolStatus
 }
