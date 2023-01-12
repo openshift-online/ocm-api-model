@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.248 Jan 12 2023
+- Add `AwsEtcdEncryption` type model and reference from `AWS`.
+- Add `Enabled` attribute to `STS` model.
+
 ## 0.0.247 Jan 06 2023
 - Corrected `Metrics` type on `DeletedSubscription`
 
