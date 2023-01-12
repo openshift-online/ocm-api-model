@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022 Red Hat, Inc.
+Copyright (c) 2023 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,15 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific cluster.
-resource Cluster {
-    // Reference to the status of addon installation on a specific cluster
-    locator Status {
-        target AddonStatuses
-    }
-
-    // Reference to the inquiries of addons on a specific cluster
-    locator AddonInquiries {
-        target AddonInquiries
+// Manages a specific add-on inquiry
+resource AddonInquiry {
+    method Get {
+        out Body Addon
     }
 }
