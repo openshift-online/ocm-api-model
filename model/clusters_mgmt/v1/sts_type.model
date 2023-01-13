@@ -52,4 +52,7 @@ struct STS {
 
 	// Kms Id for the bound service account signing key.
 	BoundServiceAccountKeyKmsId String
+
+	// Secrets Manager ARN for the bound service account signing key.
+	BoundServiceAccountKeySecretArn String
 }
