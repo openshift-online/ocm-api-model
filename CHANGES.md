@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+
+## 0.0.249 Jan 13 2023
+- Add `BoundServiceAccountKeySecretArn` attribute to the `Sts` model.
+
 ## 0.0.248 Jan 12 2023
 - Add `AwsEtcdEncryption` type model and reference from `AWS`.
 - Add `Enabled` attribute to `STS` model.
