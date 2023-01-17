@@ -2,6 +2,8 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.250 Jan 17 2023
+- Add `Addon Inquiries API` to `addons_mgmt`.
 
 ## 0.0.249 Jan 13 2023
 - Add `BoundServiceAccountKeySecretArn` attribute to the `Sts` model.
