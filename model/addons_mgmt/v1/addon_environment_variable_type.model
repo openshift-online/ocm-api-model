@@ -16,10 +16,13 @@ limitations under the License.
 
 // Representation of an addon env object.
 struct AddonEnvironmentVariable {
-    // Name of the env object.
+    // ID for the environment variable
+    ID string
+
+    // Name of the environment variable
     Name String
 
-    // Value of the env object.
+    // Value of the environment variable
     Value String
 
     // Indicates is this environment variable is enabled for the addon
