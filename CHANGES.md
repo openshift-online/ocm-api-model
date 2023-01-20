@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.251 Jan 20 2023
+- Update `NodePool` with status attributes
+- Added `current_compute` attribute in `ClusterStatus` for hosted clusters.
+- Added missing variable to `addon environment variable` for addons mgmt
+
 ## 0.0.250 Jan 17 2023
 - Add `Addon Inquiries API` to `addons_mgmt`.
 
