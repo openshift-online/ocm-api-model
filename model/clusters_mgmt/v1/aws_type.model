@@ -31,6 +31,9 @@ struct AWS {
 	// Sets cluster to be inaccessible externally.
 	PrivateLink Boolean
 
+	// Manages additional configuration for Private Links.
+	PrivateLinkConfiguration PrivateLinkClusterConfiguration
+
 	// Optional keys and values that the installer will add as tags to all AWS resources it creates
 	Tags [String]String
 
