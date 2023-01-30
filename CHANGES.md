@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+# 0.0.253 Jan 30 2023
+- Update `Permission` resource attributes
+  * Rename `ResourceType` to `Resource`
+
 ## 0.0.252 Jan 20 2023
 - Update `STS` resource attributes
   * Remove `BoundServiceAccountSigningKey`
