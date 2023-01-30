@@ -91,4 +91,9 @@ resource Root {
     locator Environment {
         target Environment
     }
+
+	// Reference to the resource that manages oidc
+	locator HostedOidcConfigs {
+		target HostedOidcConfigs
+	}
 }
