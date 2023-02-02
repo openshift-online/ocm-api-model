@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+# 0.0.254 Feb 2 2023
+- Add `PrivateLinkConfiguration` type with related endpoints
+
 # 0.0.253 Jan 30 2023
 - Update `Permission` resource attributes
   * Rename `ResourceType` to `Resource`
