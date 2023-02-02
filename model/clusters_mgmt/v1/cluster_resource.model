@@ -155,4 +155,8 @@ resource Cluster {
 	locator Hypershift {
 		target Hypershift
 	}
+
+	locator AWS {
+		target AWS
+	}
 }
