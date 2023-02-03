@@ -63,4 +63,7 @@ class LogEntry {
 
 	// The related subscription id of the cluster.
 	SubscriptionID String
+
+	// Type of the service log entry.
+	LogType LogType
 }
