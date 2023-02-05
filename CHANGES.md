@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+# 0.0.255 Feb 5 2023
+- Add `Version` field to node pool
+
 # 0.0.254 Feb 2 2023
 - Add `PrivateLinkConfiguration` type with related endpoints
 
