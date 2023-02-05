@@ -16,7 +16,7 @@ limitations under the License.
 
 // Representation of a node pool in a cluster.
 class NodePool {
-    // ID used to identify the cluster that this nodepool is attached to.
+    // ID used to identify the cluster that this node pool is attached to.
     link Cluster Cluster
 
     // The number of Machines (and Nodes) to create.
@@ -41,4 +41,7 @@ class NodePool {
 
     // NodePool status.
     Status NodePoolStatus
+
+    // Version of the node pool.
+    Version Version
 }
