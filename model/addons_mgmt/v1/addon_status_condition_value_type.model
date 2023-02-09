@@ -16,7 +16,12 @@ limitations under the License.
 
 // Representation of an addon status condition value field.
 enum AddonStatusConditionValue {
+    @json(name = "True")
     True
+
+    @json(name = "False")
     False
+
+    @json(name = "Unknown")
     Unknown
 }
