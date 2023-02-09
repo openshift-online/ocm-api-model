@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+# 0.0.256 Feb 9 2023
+- Add `LogType` field to Cluster Log type model
+- Fix Addon status type and value constants
+
 # 0.0.255 Feb 5 2023
 - Add `Version` field to node pool
 
