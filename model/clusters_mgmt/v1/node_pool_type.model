@@ -44,4 +44,10 @@ class NodePool {
 
     // Version of the node pool.
     Version Version
+
+    // The labels set on the Nodes created.
+    Labels [String]String
+
+    // The taints set on the Nodes created.
+    Taints []Taint
 }
