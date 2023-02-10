@@ -128,6 +128,11 @@ resource Cluster {
 		target UpgradePolicies
 	}
 
+	// Reference to the resource that manages the collection of addon upgrade policies defined for this cluster.
+	locator AddonUpgradePolicies {
+	    target AddonUpgradePolicies
+	}
+
 	// Reference to the resource that manages the cluster deployment.
 	locator Clusterdeployment {
 		target Clusterdeployment
