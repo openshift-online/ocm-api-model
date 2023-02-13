@@ -53,6 +53,9 @@ class ServiceCluster {
 	// Cluster mgmt reference
 	ClusterManagementReference ClusterManagementReference
 
+	// Cluster name
+	Name String
+
 	// Cloud provider region where the cluster is installed.
 	Region String
 

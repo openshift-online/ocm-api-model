@@ -19,6 +19,9 @@ struct ManagementClusterParent {
 	// Parent Cluster ID 
 	ClusterId String
 
+	// Parent Cluster Name
+	Name String
+
 	// Reference link to internal parent cluster
 	Href String 
 

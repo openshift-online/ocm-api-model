@@ -53,6 +53,9 @@ class ManagementCluster {
 	// Cluster mgmt reference
 	ClusterManagementReference ClusterManagementReference
 
+	// Cluster name
+	Name String
+
 	// Cloud provider region where the cluster is installed.
 	Region String
 
@@ -67,6 +70,4 @@ class ManagementCluster {
 
 	// Management cluster handling the management cluster
 	link Parent ManagementClusterParent
-
-
 }
