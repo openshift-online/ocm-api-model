@@ -214,4 +214,7 @@ class Cluster {
 
 	// Hypershift configuration.
 	Hypershift Hypershift
+
+	// Contains information about BYO OIDC.
+	ByoOidc ByoOidc
 }
