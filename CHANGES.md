@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+# 0.0.257 Feb 16 2023
+- Add `ByoOidc` type to Cluster type model
+
 # 0.0.256 Feb 9 2023
 - Add `LogType` field to Cluster Log type model
 - Fix Addon status type and value constants
