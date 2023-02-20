@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+# 0.0.258 Feb 20 2023
+- Export cluster name for mgmt, mgmt_parent, and svc clusters
+
 # 0.0.257 Feb 17 2023
 - Add `ByoOidc` type to Cluster type model
 - Add addon upgrade policy to clusters_mgmt
