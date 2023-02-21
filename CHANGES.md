@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+# 0.0.259 Feb 21 2023
+- Add master machine type and infra machine type to cluster nodes type
+
 # 0.0.258 Feb 20 2023
 - Export cluster name for mgmt, mgmt_parent, and svc clusters
 

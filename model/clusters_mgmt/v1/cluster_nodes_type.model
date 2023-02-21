@@ -26,11 +26,11 @@ struct ClusterNodes {
 	Infra Integer
 
 	// Number of compute nodes of the cluster.
-	// Compute and AutoscaleCompute cannot be used together.    
+	// Compute and AutoscaleCompute cannot be used together.
 	Compute Integer
 
 	// Details for auto-scaling the compute machine pool.
-	// Compute and AutoscaleCompute cannot be used together.    
+	// Compute and AutoscaleCompute cannot be used together.
 	AutoscaleCompute MachinePoolAutoscaling
 
 	// The compute machine type to use, for example `r5.xlarge`.
@@ -42,6 +42,12 @@ struct ClusterNodes {
 	// The availability zones upon which the nodes are created.
 	AvailabilityZones []String
 
-	// List of security groups to be applied to nodes (Optional)
+	// List of security groups to be applied to nodes (Optional).
 	SecurityGroupFilters []MachinePoolSecurityGroupFilter
+
+	// The master machine type to use, for example `r5.xlarge` (Optional).
+	MasterMachineType MachineType
+
+	// The infra machine type to use, for example `r5.xlarge` (Optional).
+	InfraMachineType MachineType
 }
