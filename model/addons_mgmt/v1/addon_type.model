@@ -78,4 +78,10 @@ class Addon {
 
     // Indicates if addon is part of a managed service
     ManagedService Boolean
+
+    // Common Labels for this addon.
+    CommonLabels [String]String
+
+    // Common Annotations for this addon.
+    CommonAnnotations [String]String
 }
