@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+# 0.0.260 Feb 21 2023
+- Add `ManagedPolicies` field to the `STS` type model.
+
 # 0.0.259 Feb 21 2023
 - Add master machine type and infra machine type to cluster nodes type
 
