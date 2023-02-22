@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.261 Feb 22 2023
+- Add `CommonAnnotations` and `CommonLabels` filed to Addon Type.
+
 # 0.0.260 Feb 21 2023
 - Add `ManagedPolicies` field to the `STS` type model.
 
