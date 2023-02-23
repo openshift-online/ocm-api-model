@@ -30,4 +30,8 @@ enum LogType {
 
 	@json(name = "cluster-state-updates")
 	ClusterStateUpdates
+
+	@json(name = "nodepool-state-updates")
+	NodePoolStateUpdates
+}
 }
