@@ -34,4 +34,3 @@ enum LogType {
 	@json(name = "nodepool-state-updates")
 	NodePoolStateUpdates
 }
-}
