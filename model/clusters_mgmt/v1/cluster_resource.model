@@ -128,6 +128,11 @@ resource Cluster {
 		target UpgradePolicies
 	}
 
+	// Reference to the resource that manages the collection of upgrade policies defined for control plane for this cluster.
+	locator ControlPlane {
+		target ControlPlane
+	}
+
 	// Reference to the resource that manages the collection of addon upgrade policies defined for this cluster.
 	locator AddonUpgradePolicies {
 	    target AddonUpgradePolicies
