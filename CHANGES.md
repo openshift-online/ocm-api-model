@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.262 Mar 6 2023
+- Add `Control Plane Upgrade Scheduler` endpoints.
+
 ## 0.0.261 Feb 22 2023
 - Add `CommonAnnotations` and `CommonLabels` filed to Addon Type.
 
