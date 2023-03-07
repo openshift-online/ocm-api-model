@@ -34,6 +34,9 @@ class Version {
 	// ROSAEnabled indicates whether this version can be used to create ROSA clusters.
 	ROSAEnabled Boolean
 
+	// HypershiftEnabled indicates whether this version can be used to create Hypershift clusters.
+	HypershiftEnabled Boolean
+
 	// AvailableUpgrades is the list of versions this version can be upgraded to.
 	AvailableUpgrades []String
 
