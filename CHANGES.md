@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.264 Mar 10 2023
+- Add `Hosted Oidc Configs` endpoints.
+
 ## 0.0.263 Mar 7 2023
 - Add `HypershiftEnabled` boolean to `Version` Type model.
 
