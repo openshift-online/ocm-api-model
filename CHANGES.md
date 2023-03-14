@@ -2,6 +2,8 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.265 Mar 14 2023
+- Rename `HypershiftEnabled` boolean to `HostedControlPlaneEnabled` in `Version` Type model.
 ## 0.0.264 Mar 10 2023
 - Add `Hosted Oidc Configs` endpoints.
 
