@@ -93,7 +93,7 @@ resource Root {
     }
 
 	// Reference to the resource that manages oidc
-	locator HostedOidcConfigs {
-		target HostedOidcConfigs
+	locator OidcConfigs {
+		target OidcConfigs
 	}
 }

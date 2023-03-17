@@ -14,14 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a hosted oidc configuration.
-resource HostedOidcConfig {
-	// Retrieves the details of a HostedOidcConfig
+// Manages an Oidc Config configuration.
+resource OidcConfig {
+	// Retrieves the details of an OidcConfig.
 	method Get {
-		out Body HostedOidcConfig
+		out Body OidcConfig
 	}
 
-	// Deletes the HostedOidcConfig.
+	// Updates attributes of an OidcConfig.
+	method Update {
+		in out Body OidcConfig
+	}
+
+	// Deletes the OidcConfig.
 	method Delete {
 	}
 }

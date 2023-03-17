@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages the collection hosted oidc configurations.
-resource HostedOidcConfigs {
-	// Retrieves the list of hosted oidc configs.
+// Manages the collection of oidc configurations.
+resource OidcConfigs {
+	// Retrieves the list of oidc configs.
 	method List {
 		// Index of the requested page, where one corresponds to the first page.
 		in out Page Integer = 1
@@ -28,18 +28,18 @@ resource HostedOidcConfigs {
 		out Total Integer
 
 		// Retrieved list of identity providers.
-		out Items []HostedOidcConfig
+		out Items []OidcConfig
 	}
 
 	
 	// Creates a hosting under Red Hat's S3 bucket for byo oidc configuration
 	method Add {
-	    in out Body HostedOidcConfig
+	    in out Body OidcConfig
 	}
 
 	// Reference to the service that manages an specific identity provider.
-	locator HostedOidcConfig {
-		target HostedOidcConfig
+	locator OidcConfig {
+		target OidcConfig
 		variable ID
 	}
 }
