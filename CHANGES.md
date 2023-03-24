@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.267 Mar 24 2023
+- Add `OidcConfigId` to `STS` resource.
+- Remove `OidcPrivateKeySecretArn` from `STS` resource.
+
 ## 0.0.266 Mar 17 2023
 - Adjust `Oidc Configs` endpoints.
 
