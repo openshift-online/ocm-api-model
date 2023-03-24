@@ -47,9 +47,9 @@ struct STS {
 	// Optional user provided permission boundary.
 	PermissionBoundary String
 
-	// Secrets Manager ARN for the OIDC private key key.
-	OidcPrivateKeySecretArn String
-
 	// If true, cluster account and operator roles have managed policies attached.
 	ManagedPolicies Boolean
+
+	// Registered Oidc Config ID, if available holds information related to the oidc config
+	OidcConfigId String
 }
