@@ -217,4 +217,7 @@ class Cluster {
 
 	// Contains information about BYO OIDC.
 	ByoOidc ByoOidc
+
+	// Delete protection
+	DeleteProtection DeleteProtection
 }
