@@ -169,4 +169,8 @@ resource Cluster {
 	locator AWS {
 		target AWS
 	}
+
+	locator DeleteProtection {
+		target DeleteProtection
+	}
 }
