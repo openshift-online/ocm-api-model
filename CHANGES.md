@@ -2,8 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.270 Mar 31 2023
+- adding quota auth to root resource model
+
 ## 0.0.269 Mar 30 2023
 - Add `DeleteProtection` resource to `Cluster` resource.
+- adding quota auth models
 
 ## 0.0.268 Mar 24 2023
 - Replace `OidcConfigId` for `OidcConfig` in `STS` resource.
