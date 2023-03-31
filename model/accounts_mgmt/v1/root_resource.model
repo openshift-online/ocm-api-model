@@ -143,4 +143,9 @@ resource Root {
 	locator DeletedSubscriptions {
 		target DeletedSubscriptions
 	}
+
+	// Reference to the resource that manages quota authorizations.
+	locator QuotaAuthorizations {
+		target QuotaAuthorizations
+	}
 }
