@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.272 Apr 3 2023
+- adding quota version
+-
 ## 0.0.271 Apr 3 2023
 - Adding `version_inquiry` endpoint to Managed Services.
 
