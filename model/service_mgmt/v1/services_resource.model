@@ -42,4 +42,8 @@ resource Services {
 		target ManagedService
 		variable ID
 	}
+
+  locator VersionInquiry {
+    target VersionInquiry
+  }
 }
