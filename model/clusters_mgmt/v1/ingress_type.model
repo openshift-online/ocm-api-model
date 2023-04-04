@@ -16,9 +16,6 @@ limitations under the License.
 
 // Representation of an ingress.
 class Ingress {
-	// ID used to identify the cluster that this ingress is attached to. 
-	link Cluster Cluster
-
 	// Indicates if this is the default ingress.
 	Default Boolean
 
