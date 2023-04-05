@@ -16,9 +16,6 @@ limitations under the License.
 
 // Representation of a node pool in a cluster.
 class NodePool {
-    // ID used to identify the cluster that this node pool is attached to.
-    link Cluster Cluster
-
     // The number of Machines (and Nodes) to create.
     // Replicas and autoscaling cannot be used together.
     Replicas Integer

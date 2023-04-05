@@ -16,9 +16,6 @@ limitations under the License.
 
 // Representation of an add-on installation in a cluster.
 class AddOnInstallation {
-	// ID used to identify the cluster that this add-on is attached to.
-	link Cluster Cluster
-
 	// Link to add-on attached to this cluster.
 	link Addon AddOn
 
