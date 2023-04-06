@@ -170,6 +170,11 @@ resource Cluster {
 		target AWS
 	}
 
+	// Reference to the resource that manages the collection of tuning configs for this cluster.
+	locator TuningConfigs {
+		target TuningConfigs
+	}
+
 	locator DeleteProtection {
 		target DeleteProtection
 	}
