@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.273 Apr 14 2023
+- update metamodel version 0.0.57
+- remove circular dependencies from clusters mgmt
+
 ## 0.0.272 Apr 3 2023
 - adding quota version
 -
