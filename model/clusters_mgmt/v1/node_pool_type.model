@@ -47,4 +47,7 @@ class NodePool {
 
     // The taints set on the Nodes created.
     Taints []Taint
+
+    // The names of the tuning configs for this node pool.
+    TuningConfigs []String
 }
