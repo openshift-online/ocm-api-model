@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Represents a pending delete entry for a specific cluster
+// Represents a pending delete entry for a specific cluster.
 class PendingDeleteCluster {
-	// Cluster is the details of the cluster that is pending deletion
+	// Cluster is the details of the cluster that is pending deletion.
 	link Cluster Cluster
 
 	// Date and time when the cluster was initially created, using the
@@ -24,6 +24,5 @@ class PendingDeleteCluster {
 	CreationTimestamp Date
 
 	// Flag indicating if the cluster deletion should be best-effort mode or not.
-	// randomly selected.
 	BestEffort Boolean
 }
