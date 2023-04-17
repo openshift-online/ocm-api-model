@@ -88,12 +88,17 @@ resource Root {
 	}
 
 	// Reference to the resource that manages the environment.
-    locator Environment {
-        target Environment
-    }
+	locator Environment {
+		target Environment
+	}
 
 	// Reference to the resource that manages oidc
 	locator OidcConfigs {
 		target OidcConfigs
+	}
+
+	// Reference to the resource that manages the collection of pending delete clusters.
+	locator PendingDeleteClusters {
+		target PendingDeleteClusters
 	}
 }
