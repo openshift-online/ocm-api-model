@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.275 Apr 17 2023
+- Add pending delete clusters API.
+
 ## 0.0.274 Apr 16 2023
 - Add `Subnets` property to the CloudProviderData model.
 
