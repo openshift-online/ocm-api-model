@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.274 Apr 16 2023
+- Add `Subnets` property to the CloudProviderData model.
+
 ## 0.0.273 Apr 14 2023
 - update metamodel version 0.0.57
 - remove circular dependencies from clusters mgmt
