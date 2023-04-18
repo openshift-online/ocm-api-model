@@ -5,6 +5,8 @@ This document describes the relevant changes between releases of the API model.
 
 ## 0.0.276 Apr 18 2023
 - Add delete method to `Account` resource.
+- Add `tuning_configs` endpoints.
+- Add `tuning_configs` field to Node Pools.
 
 ## 0.0.275 Apr 17 2023
 - Add pending delete clusters API.
