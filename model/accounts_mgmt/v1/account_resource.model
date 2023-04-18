@@ -26,6 +26,9 @@ resource Account {
 		in out Body Account
 	}
 
+	method Delete {
+	}
+
 	// Reference to the list of labels of a specific account.
 	locator Labels {
 		target GenericLabels
