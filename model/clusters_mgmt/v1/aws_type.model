@@ -45,4 +45,7 @@ struct AWS {
 
 	// Related etcd encryption configuration
 	EtcdEncryption AwsEtcdEncryption
+
+	// BillingAccountID is the account used for billing subscriptions purchased via the marketplace
+	BillingAccountID String
 }

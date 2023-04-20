@@ -2,6 +2,8 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.277 Apr 20 2023
+- Add `BillingAccountID` to AWS model
 
 ## 0.0.276 Apr 18 2023
 - Add delete method to `Account` resource.
