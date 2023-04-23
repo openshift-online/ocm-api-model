@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.278 Apr 23 2023
+- Add InflightChecks locator to cluster resource
+
 ## 0.0.277 Apr 20 2023
 - Add `BillingAccountID` to AWS model
 
