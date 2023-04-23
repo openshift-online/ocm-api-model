@@ -76,6 +76,11 @@ resource Cluster {
 		target Ingresses
 	}
 
+	// Reference to the resource that manages the collection of inflight checks.
+	locator InflightChecks {
+		target InflightChecks
+	}
+
     // Reference to the resource that manages the collection of machine pool resources.
 	locator MachinePools {
 		target MachinePools
