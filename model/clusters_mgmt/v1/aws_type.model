@@ -48,4 +48,7 @@ struct AWS {
 
 	// BillingAccountID is the account used for billing subscriptions purchased via the marketplace
 	BillingAccountID String
+
+	// Audit log forwarding configuration
+	AuditLog AuditLog
 }
