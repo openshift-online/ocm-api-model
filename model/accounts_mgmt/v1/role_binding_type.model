@@ -20,6 +20,7 @@ class RoleBinding {
 	SubscriptionID String
 	Account Account
 	AccountID String
+	AccountGroupID String
 	Organization Organization
 	OrganizationID String
 	Role Role

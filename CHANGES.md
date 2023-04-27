@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.280 Apr 27 2023
+- [AMS] Added account_group_id to role_binding
+
 ## 0.0.279 Apr 26 2023
 - Add `AuditLog` to `AWS` resource.
 - Add `RoleArn` attribute to the `AuditLog` model.
