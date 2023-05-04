@@ -14,10 +14,32 @@
 # limitations under the License.
 #
 
+# Determine the operating system
+ifeq ($(OS), Windows_NT)
+	UNAME := windows
+else
+	UNAME := $(shell uname|tr '[:upper:]' '[:lower:]')
+	ifeq ($(UNAME),darwin)
+	else ifeq ($(UNAME),linux)
+	else
+        # Unsupported OS
+        # this block uses spaces instead of tabs so that we can do proper indentation enforcement
+        $(error This Makefile only supports Linux, macOS (Darwin), and Windows.)
+	endif
+endif
+
+ifneq (, $(shell command -v shasum))
+SHA256CMD := shasum -a 256 --check
+else ifneq (, $(shell command -v sha256sum))
+SHA256CMD := sha256sum --check
+else
+$(error "please install 'shasum' or 'sha256sum'")
+endif
+
 # Details of the metamodel used to check the model:
 metamodel_version:=v0.0.57
-metamodel_url:=https://github.com/openshift-online/ocm-api-metamodel/releases/download/$(metamodel_version)/metamodel-linux-amd64
-metamodel_sum:=c229bd1fbaa882de5d2ba1f435d10cb3f86d6f79a441e8accc9c90ebb5365e93
+metamodel_url:=https://github.com/openshift-online/ocm-api-metamodel/releases/download/$(metamodel_version)/metamodel-$(UNAME)-amd64
+metamodel_sha1_url:=https://github.com/openshift-online/ocm-api-metamodel/releases/download/$(metamodel_version)/metamodel-$(UNAME)-amd64.sha256
 
 .PHONY: check
 check: metamodel
@@ -29,7 +51,9 @@ openapi: metamodel
 
 metamodel:
 	wget --progress=dot:giga --output-document="$@" "$(metamodel_url)"
-	echo "$(metamodel_sum) $@" | sha256sum --check
+	@# the following echo line prints the sha256sum of the downloaded binary, and then the filename,
+	@# separated by TWO SPACES, do NOT change that
+	echo "$$(wget --output-document="$@" -O- --quiet - $(metamodel_sha1_url) | awk '{print $$1}')  $@"|$(SHA256CMD)
 	chmod +x "$@"
 
 # Enforce indentation by tabs. License contains 2 spaces, so reject 3+.
