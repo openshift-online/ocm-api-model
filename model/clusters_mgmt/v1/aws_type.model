@@ -51,4 +51,7 @@ struct AWS {
 
 	// Audit log forwarding configuration
 	AuditLog AuditLog
+
+       // Which HttpTokensState to use for metadata service interaction options for EC2 instances
+	HttpTokensState HttpTokenState
 }
