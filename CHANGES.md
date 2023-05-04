@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.280 May 4 2023
+- Add `HttpTokensState` to `AWS` resource.
+
 ## 0.0.279 Apr 26 2023
 - Add `AuditLog` to `AWS` resource.
 - Add `RoleArn` attribute to the `AuditLog` model.
