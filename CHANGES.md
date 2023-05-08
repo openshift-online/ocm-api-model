@@ -2,6 +2,8 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.281 May 8 2023
+- Add `Aws` to `CloudRegion` Type model.
 ## 0.0.280 May 4 2023
 - Add `HttpTokensState` to `AWS` resource.
 

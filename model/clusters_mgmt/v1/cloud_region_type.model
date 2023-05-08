@@ -40,4 +40,6 @@ class CloudRegion {
 	// 'true' if the region is supported for Hypershift deployments, 'false' otherwise.
 	SupportsHypershift Boolean
 
+	// AWS credentials for checking if cloud region exists when POSTing
+	Aws AWS
 }
