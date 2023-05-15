@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.281 May 15 2023
+- Add `RootVolume` of type `MachineTypeRootVolume` to `MachineType` type.
+
 ## 0.0.280 May 4 2023
 - Add `HttpTokensState` to `AWS` resource.
 
