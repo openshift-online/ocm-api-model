@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Which HttpTokensState to use for metadata service interaction options for EC2 instances
-enum HttpTokenState {
+// Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances
+enum Ec2MetadataHttpTokens {
 	// imdsv2 is optional
 	Optional
 
