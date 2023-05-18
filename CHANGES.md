@@ -1,6 +1,8 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.282 May 18 2023
+- Rename HttpTokensState to Ec2MetadataHttpTokens
 
 ## 0.0.281 May 15 2023
 - Add `RootVolume` of type `MachineTypeRootVolume` to `MachineType` type.
