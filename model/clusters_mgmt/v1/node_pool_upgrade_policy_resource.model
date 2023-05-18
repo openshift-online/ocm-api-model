@@ -14,24 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific nodepool.
-resource NodePool {
-    // Retrieves the details of the node pool.
-    method Get {
-        out Body NodePool
-    }
+// Manages a specific upgrade policy for the node pool.
+resource NodePoolUpgradePolicy {
+	// Retrieves the details of the upgrade policy for the node pool.
+	method Get {
+		out Body NodePoolUpgradePolicy
+	}
 
-    // Updates the node pool.
-    method Update {
-        in out Body NodePool
-    }
+	// Update the upgrade policy for the node pool.
+	method Update {
+		in out Body NodePoolUpgradePolicy
+	}
 
-    // Deletes the node pool.
-    method Delete {
-    }
-
-    // Reference to the state of the upgrade policy.
-    locator UpgradePolicies {
-        target NodePoolUpgradePolicies
-    }
+	// Deletes the upgrade policy for the node pool.
+	method Delete {
+	}
 }
