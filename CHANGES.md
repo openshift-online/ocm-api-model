@@ -1,6 +1,10 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.283 May 18 2023
+- Fix Ec2MetadataHttpTokens field OpenAPI formatting
+- Add node pool upgrade structs and resources
+
 ## 0.0.282 May 18 2023
 - Rename HttpTokensState to Ec2MetadataHttpTokens
 
