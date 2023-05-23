@@ -45,4 +45,9 @@ resource CloudRegions {
 		target CloudRegion
 		variable ID
 	}
+
+	// Adds a cloud region to the database.
+	method Add {
+		in out Body CloudRegion
+	}
 }
