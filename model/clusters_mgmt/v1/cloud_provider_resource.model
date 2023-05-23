@@ -32,4 +32,9 @@ resource CloudProvider {
 	locator AvailableRegions {
 		target AvailableRegions
 	}
+
+	// Adds a cloud region to the database.
+	method Add {
+		in out Body CloudRegion
+	}
 }

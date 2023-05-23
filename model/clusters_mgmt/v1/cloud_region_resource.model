@@ -20,4 +20,13 @@ resource CloudRegion {
 	method Get {
 		out Body CloudRegion
 	}
+
+	// Updates the region.
+	method Update {
+		in out Body CloudRegion
+	}
+
+	// Deletes the region.
+	method Delete {
+	}
 }
