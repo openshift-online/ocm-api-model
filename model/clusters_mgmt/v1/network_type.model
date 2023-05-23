@@ -30,4 +30,19 @@ struct Network {
 
 	// Network host prefix which is defaulted to `23` if not specified.
 	HostPrefix Integer
+
+	// Listening method of the default ingress
+    DefaultIngressPrivate Boolean
+
+	// A list of namespaces to exclude for the default ingress. Must not exclude openshift-* or kube-* namespaces.
+    DefaultIngressNamespacesExclude []String
+
+	// A set of labels to exclude for the default ingress. Must not exclude any route labels in openshift-* or kube-* namespaces.
+    DefaultIngressRoutesExclude [String]String
+
+	// Whether routes with wildcard domains are allowed on the default ingress controller.
+    DefaultIngressRouteWildcardsAllowed Boolean
+
+	// Whether routes on the default ingress are allowed to target services in different namespaces.
+    DefaultIngressRouteInterNamespaceOwnership Boolean
 }

@@ -27,4 +27,16 @@ class Ingress {
 
 	// A set of labels for the ingress. 
 	RouteSelectors [String]String
+
+	// A list of namespaces to exclude for the default ingress. Must not exclude openshift-* or kube-* namespaces.
+    NamespacesExclude []String
+
+	// A set of labels to exclude for the default ingress. Must not exclude any route labels in openshift-* or kube-* namespaces.
+    RoutesExclude [String]String
+
+	// Whether routes with wildcard domains are allowed on the default ingress controller.
+    RouteWildcardsAllowed Boolean
+
+	// Whether routes on the default ingress are allowed to target services in different namespaces.
+    RouteInterNamespaceOwnership Boolean
 }
