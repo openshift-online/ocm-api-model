@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Contains the properties of a DNS domain.
-class DNSDomain {
+struct DNSDomain {
     // Contains the DNS base domain.
     ID string
 
