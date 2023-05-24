@@ -28,6 +28,9 @@ struct AWS {
 	// The subnet ids to be used when installing the cluster.
 	SubnetIDs []String
 
+	// PrivateHostedZoneID to use preexisting hosted zone for BYO VPC clusters
+	PrivateHostedZoneID String
+
 	// Sets cluster to be inaccessible externally.
 	PrivateLink Boolean
 
