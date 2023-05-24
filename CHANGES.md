@@ -1,6 +1,9 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.284 May 24 2023
+- Add 'add, update & delete' to cloud region/regions resource model
+
 ## 0.0.283 May 18 2023
 - Fix Ec2MetadataHttpTokens field OpenAPI formatting
 - Add node pool upgrade structs and resources
