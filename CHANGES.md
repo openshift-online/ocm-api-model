@@ -1,6 +1,10 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.285 May 25 2023
+- Changed DNS Domain from Class to a Struct.
+- Change dns domain type to class and remove ID.
+
 ## 0.0.284 May 24 2023
 - Add 'add, update & delete' to cloud region/regions resource model
 
