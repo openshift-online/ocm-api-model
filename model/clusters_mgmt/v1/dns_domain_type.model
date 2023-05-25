@@ -15,10 +15,7 @@ limitations under the License.
 */
 
 // Contains the properties of a DNS domain.
-struct DNSDomain {
-    // Contains the DNS base domain.
-    ID string
-
+class DNSDomain {
     // Link to the organization that reserved the DNS domain.
     link OrganizationLink OrganizationLink
 
