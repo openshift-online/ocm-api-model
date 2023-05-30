@@ -32,7 +32,7 @@ resource OidcConfigs {
 	}
 
 	
-	// Creates a hosting under Red Hat's S3 bucket for byo oidc configuration
+	// Creates a hosting under Red Hat's S3 bucket for byo oidc configuration.
 	method Add {
 	    in out Body OidcConfig
 	}
