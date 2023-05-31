@@ -14,26 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific service cluster.
-resource ServiceCluster {
-	// Retrieves the details of the cluster.
-	method Get {
-		out Body ServiceCluster
-	}
-
-	// Updates the service cluster.
-	method Post {
-		in Request ServiceClusterRequestPayload
-		out Response ServiceCluster
-	}
-
-	// Deletes the service cluster.
-	method Delete {
-		
-	}
-
-	// Reference to the resource that manages the collection of label
-	locator Labels {
-		target Labels
-	}
+// label settings of the cluster.
+struct Label {
+	// Label ID associated to the OSD FM managed cluster
+    Id String
+    // Label key associated to the OSD FM managed cluster
+    Key String
+    // Label value associated to the OSD FM managed cluster
+    Value String
 }

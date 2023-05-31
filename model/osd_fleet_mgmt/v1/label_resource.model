@@ -14,26 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific service cluster.
-resource ServiceCluster {
+// Manages a specific label.
+resource Label {
 	// Retrieves the details of the cluster.
 	method Get {
-		out Body ServiceCluster
+		out Body Label
 	}
 
-	// Updates the service cluster.
+	// Creates the label.
 	method Post {
-		in Request ServiceClusterRequestPayload
-		out Response ServiceCluster
+		in Request LabelRequestPayload
+		out Response Label
 	}
 
-	// Deletes the service cluster.
+	// Deletes the label.
 	method Delete {
 		
-	}
-
-	// Reference to the resource that manages the collection of label
-	locator Labels {
-		target Labels
 	}
 }
