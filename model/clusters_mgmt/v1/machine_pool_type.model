@@ -44,4 +44,7 @@ class MachinePool {
 
 	// List of security groups to be applied to MachinePool (Optional)
 	SecurityGroupFilters []MachinePoolSecurityGroupFilter
+
+	// The machine root volume capabilities.
+	RootVolume MachineTypeRootVolume
 }
