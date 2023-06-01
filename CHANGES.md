@@ -1,6 +1,9 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.286 June 1 2023
+- Add `MachineTypeRootVolume` to `MachinePool`.
+
 ## 0.0.285 May 25 2023
 - Changed DNS Domain from Class to a Struct.
 - Change dns domain type to class and remove ID.
