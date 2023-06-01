@@ -1,6 +1,9 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.287 June 1 2023
+- Add `Htpasswd` to `Cluster`.
+
 ## 0.0.286 June 1 2023
 - Add `MachineTypeRootVolume` to `MachinePool`.
 
