@@ -220,4 +220,7 @@ class Cluster {
 
 	// Delete protection
 	DeleteProtection DeleteProtection
+
+	// Details for `htpasswd` identity provider.
+	Htpasswd HTPasswdIdentityProvider	
 }
