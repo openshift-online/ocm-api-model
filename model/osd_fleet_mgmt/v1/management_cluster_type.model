@@ -68,6 +68,18 @@ class ManagementCluster {
 	// Status of cluster
 	Status String
 
-	// Management cluster handling the management cluster
+	//Sector of cluster
+	Sector String
+
+	// Service cluster handling the management cluster
 	link Parent ManagementClusterParent
+
+	// Labels on management cluster
+	link LabelsReference []LabelReference
+
+	// Creation timestamp of the cluster
+	CreationTimestamp Date
+
+	// Update timestamp of the cluster
+	UpdateTimestamp Date
 }

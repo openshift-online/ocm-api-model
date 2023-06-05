@@ -67,4 +67,13 @@ class ServiceCluster {
 
 	//Status of cluster
 	Status String
+
+	//Sector of cluster
+	Sector String
+
+	// Labels refrences on service cluster
+	link LabelsReference []LabelReference
+
+	// Provision shard reference for the service cluster
+	link ProvisionShardsReference ProvisionShardsReference
 }

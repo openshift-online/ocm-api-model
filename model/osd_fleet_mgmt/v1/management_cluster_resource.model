@@ -31,4 +31,9 @@ resource ManagementCluster {
 	method Delete {
 	}
 
+	// Reference to the resource that manages the collection of label
+	locator Labels {
+		target Labels
+	}
+
 }
