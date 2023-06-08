@@ -1,6 +1,14 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+
+## 0.0.289 June 7 2023
+- Add Load balancer type to Ingress model
+- remove unused API endpoints
+
+## 0.0.288 June 5 2023
+- Complete OSD FM api for SDK usage
+
 ## 0.0.287 June 1 2023
 - Add `Htpasswd` to `Cluster`.
 
