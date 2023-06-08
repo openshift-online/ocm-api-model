@@ -1,6 +1,8 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.290 June 8 2023
+- Add `deleteAssociatedResources` locator to account resource
 
 ## 0.0.289 June 7 2023
 - Add Load balancer type to Ingress model
