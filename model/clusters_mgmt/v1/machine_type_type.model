@@ -42,7 +42,4 @@ class MachineType {
 
 	// 'true' if the instance type is supported only for CCS clusters, 'false' otherwise.
 	CCSOnly Boolean
-
-	// The machine root volume capabilities.
-	RootVolume MachineTypeRootVolume
 }
