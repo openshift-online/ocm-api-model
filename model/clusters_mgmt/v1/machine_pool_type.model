@@ -17,11 +17,11 @@ limitations under the License.
 // Representation of a machine pool in a cluster.
 class MachinePool {
 	// The number of Machines (and Nodes) to create.
-	// Replicas and autoscaling cannot be used together.    
+	// Replicas and autoscaling cannot be used together.
 	Replicas Integer
 
 	// Details for auto-scaling the machine pool.
-	// Replicas and autoscaling cannot be used together.    
+	// Replicas and autoscaling cannot be used together.
 	Autoscaling MachinePoolAutoscaling
 
 	// The instance type of Nodes to create.
@@ -46,5 +46,5 @@ class MachinePool {
 	SecurityGroupFilters []MachinePoolSecurityGroupFilter
 
 	// The machine root volume capabilities.
-	RootVolume MachineTypeRootVolume
+	RootVolume RootVolume
 }

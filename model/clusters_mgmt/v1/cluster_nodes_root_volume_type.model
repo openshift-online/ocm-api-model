@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Machine type root volume.
-struct MachineTypeRootVolume {
+// Root volume capabilities.
+struct RootVolume {
 	// AWS volume specification
 	AWS AWSVolume
 

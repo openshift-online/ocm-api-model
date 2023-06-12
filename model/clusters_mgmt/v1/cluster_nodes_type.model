@@ -50,4 +50,7 @@ struct ClusterNodes {
 
 	// The infra machine type to use, for example `r5.xlarge` (Optional).
 	InfraMachineType MachineType
+
+	// The compute machine root volume capabilities.
+	ComputeRootVolume RootVolume
 }
