@@ -92,7 +92,7 @@ resource Root {
 		target Environment
 	}
 
-	// Reference to the resource that manages oidc
+	// Reference to the resource that manages oidc.
 	locator OidcConfigs {
 		target OidcConfigs
 	}
@@ -102,8 +102,13 @@ resource Root {
 		target PendingDeleteClusters
 	}
 
-	//Reference to the resource that manages dns domains
+	//Reference to the resource that manages dns domains.
 	locator DNSDomains {
 	    target DNSDomains
+	}
+
+	// Reference to the resource that manages network verifications.
+	locator NetworkVerifications {
+		target NetworkVerifications
 	}
 }
