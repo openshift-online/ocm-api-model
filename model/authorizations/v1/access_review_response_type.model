@@ -19,6 +19,9 @@ struct AccessReviewResponse {
 	// Defines whether the action on the specified resource type is allowed
 	Allowed Boolean
 
+	// Defines further context for the value in allowed (if applicable)
+	Reason String
+
 	// Defines the username of the account of which access is being reviewed
 	AccountUsername String
 
