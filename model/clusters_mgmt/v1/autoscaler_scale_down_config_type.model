@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2021 Red Hat, Inc.
+Copyright (c) 2023 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,22 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-struct ScaleDownConfig {
-	// Should CA scale down the cluster
+struct AutoscalerScaleDownConfig {
+	// Should cluster-autoscaler scale down the cluster.
 	Enabled Boolean
 
-	// How long a node should be unneeded before it is eligible for scale down
+	// How long a node should be unneeded before it is eligible for scale down.
 	UnneededTime String
 
-	// Node utilization level, defined as sum of requested resources divided by capacity, below which a node can be considered for scale down
+	// Node utilization level, defined as sum of requested resources divided by capacity, below which a node can be considered for scale down.
 	UtilizationThreshold String
 
-	// How long after scale up that scale down evaluation resumes
+	// How long after scale up that scale down evaluation resumes.
 	DelayAfterAdd String
 
-	// How long after node deletion that scale down evaluation resumes, defaults to scan-interval
+	// How long after node deletion that scale down evaluation resumes, defaults to scan-interval.
 	DelayAfterDelete String
 
-	// How long after scale down failure that scale down evaluation resumes
+	// How long after scale down failure that scale down evaluation resumes.
 	DelayAfterFailure String
 }
