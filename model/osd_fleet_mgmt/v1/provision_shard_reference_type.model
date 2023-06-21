@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Provision Shards Reference of the cluster.
-struct ProvisionShardsReference {
+// Provision Shard Reference of the cluster.
+struct ProvisionShardReference {
   // Id of the Provision Shards associated to the Ocluster
   Id String
   // link to the Provision Shards associated to the cluster

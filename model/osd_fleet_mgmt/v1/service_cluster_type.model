@@ -72,8 +72,8 @@ class ServiceCluster {
 	Sector String
 
 	// Labels refrences on service cluster
-	link LabelsReference []LabelReference
+	LabelsReference []LabelReference
 
 	// Provision shard reference for the service cluster
-	link ProvisionShardsReference ProvisionShardsReference
+	ProvisionShardReference ProvisionShardReference
 }
