@@ -15,9 +15,7 @@ limitations under the License.
 */
 
 // label settings of the cluster.
-struct Label {
-	// Label ID associated to the OSD FM managed cluster
-    Id String
+class Label {
     // Label key associated to the OSD FM managed cluster
     Key String
     // Label value associated to the OSD FM managed cluster

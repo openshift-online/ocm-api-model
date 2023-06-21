@@ -75,7 +75,7 @@ class ManagementCluster {
 	link Parent ManagementClusterParent
 
 	// Labels on management cluster
-	LabelsReference []LabelReference
+	Labels []Label
 
 	// Creation timestamp of the cluster
 	CreationTimestamp Date
