@@ -52,7 +52,8 @@ resource Organizations {
 		in Fields String
 
 		// If true, includes the labels on an organization in the output. Could slow request response time.
-		in fetchLabels Boolean
+		@http(name = "fetchLabels")
+		in FetchLabels Boolean
 
 		// Retrieved list of organizations.
 		out Items []Organization
