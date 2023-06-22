@@ -5,6 +5,7 @@ This document describes the relevant changes between releases of the API model.
 ## 0.0.293 June 21 2023
 * Add label list to OSDFM cluster request payloads
 * Replace references to labels in OSDFM cluster structs with the labels themselves
+* Fix typos in OSDFM cluster Label struct fields
 
 ## 0.0.292 June 21 2023
 * Add cluster autoscaler structs (#747)
