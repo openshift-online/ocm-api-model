@@ -24,7 +24,7 @@ resource AddonVersion {
 	// Updates the addon version.
 	method Update {
 		// DryRun indicates the request body will not be persisted when dryRun=true. 
-		@json(name = "dryRun")
+		@http(name = "dryRun")
 		in DryRun Boolean
 
 		in out Body AddonVersion

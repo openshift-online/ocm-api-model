@@ -65,7 +65,7 @@ resource AddonVersions {
 	// Create a new addon version and add it to the collection of addons.
 	method Add {
 		// DryRun indicates the request body will not be persisted when dryRun=true. 
-		@json(name = "dryRun")
+		@http(name = "dryRun")
 		in DryRun Boolean
 
 		// Description of the addon version.
