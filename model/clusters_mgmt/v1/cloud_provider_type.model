@@ -22,4 +22,7 @@ class CloudProvider {
 	// Name of the cloud provider for display purposes. It can contain any characters,
 	// including spaces.
 	DisplayName String
+
+	// (optional) Provider's regions - only included when listing providers with `fetchRegions=true`.
+	Regions []CloudRegion
 }
