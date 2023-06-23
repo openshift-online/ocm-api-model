@@ -27,7 +27,7 @@ resource Account {
 	}
 
 	method Delete {
-	    in deleteAssociatedResources Boolean
+	    in DeleteAssociatedResources Boolean
 	}
 
 	// Reference to the list of labels of a specific account.
