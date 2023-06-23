@@ -14,11 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Machine type root volume.
-struct MachineTypeRootVolume {
-	// AWS volume specification
-	AWS AWSVolume
+struct NetworkVerification {
+	// Cloud provider data to execute the network verification.
+	CloudProviderData CloudProviderData
 
-	// GCP Volume specification
-	GCP GCPVolume
+	// Amount of network verifier executions started.
+	Total Integer
+
+	// Details about each subnet network verification.
+	Items []SubnetNetworkVerification
 }

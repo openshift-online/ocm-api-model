@@ -4,6 +4,25 @@ This document describes the relevant changes between releases of the API model.
 ## 0.0.290 June 8 2023
 - Add `deleteAssociatedResources` locator to account resource
 
+## 0.0.293 June 21 2023
+* Add label list to OSDFM cluster request payloads
+* Replace references to labels in OSDFM cluster structs with the labels themselves
+* Fix typos in OSDFM cluster Label struct fields
+* Add HashedPassword field to clusters_mgmt to provide encrypted value
+
+## 0.0.292 June 21 2023
+* Add cluster autoscaler structs (#747)
+
+## 0.0.291 June 15 2023
+* Add Reason to access review responses
+* Enable users to provide both hashed and plain-text passwords
+* API model for network verification
+
+## 0.0.290 June 12 2023
+- Rename `MachineTypeRootVolume` to `RootVolume`
+- Put `RootVolume` in `ClusterNodes`
+- add contracts to cloud accounts (#765)
+
 ## 0.0.289 June 7 2023
 - Add Load balancer type to Ingress model
 - remove unused API endpoints
