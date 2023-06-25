@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Cluster-wide autoscaling configuration.
-class ClusterAutoscaler {
+// Contains the necessary attributes to allow creation of cluster autoscalers
+struct ClusterAutoscalerRequest {
 	// BalanceSimilarNodeGroups enables/disables the
 	// `--balance-similar-node-groups` cluster-autoscaler feature.
 	// This feature will automatically identify node groups with
