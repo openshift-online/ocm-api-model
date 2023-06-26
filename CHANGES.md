@@ -1,7 +1,7 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
-## 0.0.294 June 23 2023
+## 0.0.294 June 26 2023
 - Add `DeleteAssociatedResources` locator to account resource
 
 ## 0.0.293 June 21 2023
