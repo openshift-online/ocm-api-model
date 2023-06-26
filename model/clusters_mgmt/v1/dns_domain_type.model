@@ -23,5 +23,5 @@ class DNSDomain {
     link ClusterLink ClusterLink
 
     // Date and time when the DNS domain was reserved.
-    ReservedAt Date
+    ReservedAtTimestamp Date
 }
