@@ -1,6 +1,9 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.295 June 26 2023
+- Update `ReserveAt` to `ReserveAtTimestamp` in dns domain type
+
 ## 0.0.294 June 26 2023
 - Add `DeleteAssociatedResources` locator to account resource
 
