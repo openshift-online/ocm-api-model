@@ -27,6 +27,7 @@ resource Account {
 	}
 
 	method Delete {
+	    @json(name = "deleteAssociatedResources")
 	    in DeleteAssociatedResources Boolean = false
 	}
 
