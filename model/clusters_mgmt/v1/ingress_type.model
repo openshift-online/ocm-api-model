@@ -30,4 +30,19 @@ class Ingress {
 
 	// A set of labels for the ingress. 
 	RouteSelectors [String]String
+
+	// A set of excluded namespaces for the ingress.
+	ExcludedNamespaces []String
+
+	// Wildcard policy for the ingress.
+	RouteWildcardPolicy WildcardPolicy
+
+	// Namespace Ownership Policy for the ingress.
+	RouteNamespaceOwnershipPolicy NamespaceOwnershipPolicy
+
+	// Cluster routes hostname.
+	ClusterRoutesHostname String
+
+	// Cluster routes TLS Secret reference.
+	ClusterRoutesTlsSecretRef String
 }
