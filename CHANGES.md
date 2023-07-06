@@ -1,6 +1,10 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.297 July 5th 2023
+- Add managed ingress attributes
+- Fix `fetchLabels` and `fetchAccounts` url parameter names
+
 ## 0.0.296 June 28 2023
 - Add json annotation to `DeleteAssociatedResources` locator in account resource
 
