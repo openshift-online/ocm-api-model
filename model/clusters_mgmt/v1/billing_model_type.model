@@ -33,4 +33,8 @@ enum BillingModel {
     // RH Marketplace billing model.
     @json(name = "marketplace-rhm")
     MarketplaceRHM
+
+    // AWS Marketplace billing model.
+    @json(name = "marketplace-gcp")
+    MarketplaceGCP
 }
