@@ -1,6 +1,10 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+
+## 0.0.298 July 9 2023
+* Add cluster autoscaler API resources (#781)
+
 ## 0.0.297 July 6th 2023
 - Add managed ingress attributes
 - Fix `fetchLabels` and `fetchAccounts` url parameter names
