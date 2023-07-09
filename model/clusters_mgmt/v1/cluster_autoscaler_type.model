@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 // Cluster-wide autoscaling configuration.
-struct ClusterAutoscaler {
+class ClusterAutoscaler {
 	// BalanceSimilarNodeGroups enables/disables the
-	// `--balance-similar-node-groups` cluster-autocaler feature.
+	// `--balance-similar-node-groups` cluster-autoscaler feature.
 	// This feature will automatically identify node groups with
 	// the same instance type and the same set of labels and try
 	// to keep the respective sizes of those node groups balanced.
