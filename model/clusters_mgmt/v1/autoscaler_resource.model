@@ -23,7 +23,7 @@ resource Autoscaler {
 
 	// Creates a new cluster autoscaler object.
 	method Post {
-		in Request ClusterAutoscalerRequest
+		in Request ClusterAutoscaler
 		out Body ClusterAutoscaler
 	}
 
