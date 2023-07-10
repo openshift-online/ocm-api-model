@@ -14,13 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Type of load balancer for AWS cloud provider parameters.
-enum LoadBalancerFlavor {
-	// Classic Load Balancer.
-	@json(name = "classic")
-	Classic
+// Manages global autoscaler configurations for a cluster.
+resource Autoscaler {
+	// Retrieves the autoscaler of a cluster.
+	method Get {
+		out Body ClusterAutoscaler
+	}
 
-	// Network Load Balancer.
-	@json(name = "nlb")
-	Nlb
+	// Creates a new cluster autoscaler object.
+	method Post {
+		in Request ClusterAutoscaler
+		out Body ClusterAutoscaler
+	}
+
+	// Updates the cluster autoscaler.
+	method Update {
+		in out Body ClusterAutoscaler
+	}
+
+	// Deletes the cluster autoscaler.
+	method Delete {
+	}
 }

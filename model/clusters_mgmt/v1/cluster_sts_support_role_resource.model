@@ -14,13 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Type of load balancer for AWS cloud provider parameters.
-enum LoadBalancerFlavor {
-	// Classic Load Balancer.
-	@json(name = "classic")
-	Classic
-
-	// Network Load Balancer.
-	@json(name = "nlb")
-	Nlb
+// Provides the role arn to use to assume the support role in the customer's aws account.
+resource ClusterStsSupportRole {
+	method Get {
+		out Body ClusterStsSupportRole
+	}
 }

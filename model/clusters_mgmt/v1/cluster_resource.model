@@ -183,4 +183,8 @@ resource Cluster {
 	locator DeleteProtection {
 		target DeleteProtection
 	}
+
+	locator ClusterStsSupportRole{
+		target ClusterStsSupportRole
+	}
 }

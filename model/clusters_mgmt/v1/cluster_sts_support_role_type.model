@@ -14,13 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Type of load balancer for AWS cloud provider parameters.
-enum LoadBalancerFlavor {
-	// Classic Load Balancer.
-	@json(name = "classic")
-	Classic
-
-	// Network Load Balancer.
-	@json(name = "nlb")
-	Nlb
+// Isolated STS support role created per organization.
+struct ClusterStsSupportRole {
+	// ARN of the support role created in the SRE jump account.
+	RoleArn String
 }
