@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.300 July 11 2023
+* Add `UserDefined` in dns domain resource
+
 ## 0.0.299 July 11 2023
 * Add autoscaler locator in cluster resource (#789)
 
