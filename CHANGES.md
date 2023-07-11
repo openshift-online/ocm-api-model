@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.299 July 11 2023
+* Add autoscaler locator in cluster resource (#789)
+
 ## 0.0.298 July 9 2023
 * Add cluster autoscaler API resources (#781)
 
