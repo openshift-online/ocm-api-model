@@ -24,4 +24,7 @@ class DNSDomain {
 
     // Date and time when the DNS domain was reserved.
     ReservedAtTimestamp Date
+
+    // Indicates if this dns domain is user defined.
+    UserDefined Boolean
 }
