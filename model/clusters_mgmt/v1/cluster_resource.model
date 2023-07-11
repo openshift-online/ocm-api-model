@@ -187,4 +187,9 @@ resource Cluster {
 	locator ClusterStsSupportRole{
 		target ClusterStsSupportRole
 	}
+
+	// Reference to the resource that manages the cluster autoscaler.
+	locator Autoscaler {
+		target Autoscaler
+	}
 }
