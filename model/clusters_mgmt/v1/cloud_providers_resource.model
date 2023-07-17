@@ -54,6 +54,10 @@ resource CloudProviders {
 		// results is undefined.
 		in Order String
 
+		// If true, includes the regions on each provider in the output. Could slow request response time.
+		@http(name = "fetchRegions")
+		in FetchRegions Boolean
+
 		// Total number of items of the collection that match the search criteria,
 		// regardless of the size of the page.
 		out Total Integer
