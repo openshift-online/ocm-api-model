@@ -28,7 +28,7 @@ class CloudRegion {
 	// Link to the cloud provider that the region belongs to.
 	link CloudProvider CloudProvider
 
-	// Whether the region is enabled for deploying an OSD cluster.
+	// Whether the region is enabled for deploying a managed cluster.
 	Enabled Boolean
 
 	// Whether the region supports multiple availability zones.
@@ -40,4 +40,16 @@ class CloudRegion {
 	// 'true' if the region is supported for Hypershift deployments, 'false' otherwise.
 	SupportsHypershift Boolean
 
+	// Whether the region is an AWS GovCloud region.
+	@json(name = "govcloud")
+	GovCloud Boolean
+
+	// (GCP only) Comma-separated list of KMS location IDs that can be used with this region.
+	// E.g. "global,nam4,us". Order is not guaranteed.
+	KMSLocationID String
+
+	// (GCP only) Comma-separated list of display names corresponding to KMSLocationID.
+	// E.g. "Global,nam4 (Iowa, South Carolina, and Oklahoma),US". Order is not guaranteed but will match KMSLocationID.
+	// Unfortunately, this API doesn't allow robust splitting - Contact ocm-feedback@redhat.com if you want to rely on this.
+	KMSLocationName String
 }

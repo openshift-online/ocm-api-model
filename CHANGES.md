@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.301 July 12 2023
+* Update name for `ClusterStsSupportRole` resource and type to `StsSupportJumpRole`
+
 ## 0.0.300 July 11 2023
 * Add `UserDefined` in dns domain resource
 

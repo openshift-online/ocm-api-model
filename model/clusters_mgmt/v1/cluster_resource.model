@@ -184,8 +184,8 @@ resource Cluster {
 		target DeleteProtection
 	}
 
-	locator ClusterStsSupportRole{
-		target ClusterStsSupportRole
+	locator StsSupportJumpRole{
+		target StsSupportJumpRole
 	}
 
 	// Reference to the resource that manages the cluster autoscaler.

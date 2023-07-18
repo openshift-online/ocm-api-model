@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Isolated STS support role created per organization.
-struct ClusterStsSupportRole {
-	// ARN of the support role created in the SRE jump account.
-	RoleArn String
+// Provides the role arn to use to assume the support role in the customer's aws account.
+resource StsSupportJumpRole {
+	method Get {
+		out Body StsSupportJumpRole
+	}
 }
