@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.302 July 20 2023
+* Add property `MarketplaceGCP` to `billing_model_type` in `clusters_mgmt` and `accounts_mgmt`
+* Document `GovCloud`, `KMSLocationID` and `KMSLocationName` fields to `CloudRegion`
+* Document `fetchRegions=true` to `cloud_providers`
+
 ## 0.0.301 July 12 2023
 * Update name for `ClusterStsSupportRole` resource and type to `StsSupportJumpRole`
 
