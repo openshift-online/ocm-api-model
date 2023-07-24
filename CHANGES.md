@@ -2,22 +2,26 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.303 July 24 2023
+- Add upgrade related constants.
+- Fix CHANGES.md formatting.
+
 ## 0.0.302 July 20 2023
-* Add property `MarketplaceGCP` to `billing_model_type` in `clusters_mgmt` and `accounts_mgmt`
-* Document `GovCloud`, `KMSLocationID` and `KMSLocationName` fields to `CloudRegion`
-* Document `fetchRegions=true` to `cloud_providers`
+- Add property `MarketplaceGCP` to `billing_model_type` in `clusters_mgmt` and `accounts_mgmt`
+- Document `GovCloud`, `KMSLocationID` and `KMSLocationName` fields to `CloudRegion`
+- Document `fetchRegions=true` to `cloud_providers`
 
 ## 0.0.301 July 12 2023
-* Update name for `ClusterStsSupportRole` resource and type to `StsSupportJumpRole`
+- Update name for `ClusterStsSupportRole` resource and type to `StsSupportJumpRole`
 
 ## 0.0.300 July 11 2023
-* Add `UserDefined` in dns domain resource
+- Add `UserDefined` in dns domain resource
 
 ## 0.0.299 July 11 2023
-* Add autoscaler locator in cluster resource (#789)
+- Add autoscaler locator in cluster resource (#789)
 
 ## 0.0.298 July 9 2023
-* Add cluster autoscaler API resources (#781)
+- Add cluster autoscaler API resources (#781)
 
 ## 0.0.297 July 6th 2023
 - Add managed ingress attributes
@@ -34,18 +38,18 @@ This document describes the relevant changes between releases of the API model.
 - Add `DeleteAssociatedResources` locator to account resource
 
 ## 0.0.293 June 21 2023
-* Add label list to OSDFM cluster request payloads
-* Replace references to labels in OSDFM cluster structs with the labels themselves
-* Fix typos in OSDFM cluster Label struct fields
-* Add HashedPassword field to clusters_mgmt to provide encrypted value
+- Add label list to OSDFM cluster request payloads
+- Replace references to labels in OSDFM cluster structs with the labels themselves
+- Fix typos in OSDFM cluster Label struct fields
+- Add HashedPassword field to clusters_mgmt to provide encrypted value
 
 ## 0.0.292 June 21 2023
-* Add cluster autoscaler structs (#747)
+- Add cluster autoscaler structs (#747)
 
 ## 0.0.291 June 15 2023
-* Add Reason to access review responses
-* Enable users to provide both hashed and plain-text passwords
-* API model for network verification
+- Add Reason to access review responses
+- Enable users to provide both hashed and plain-text passwords
+- API model for network verification
 
 ## 0.0.290 June 12 2023
 - Rename `MachineTypeRootVolume` to `RootVolume`
