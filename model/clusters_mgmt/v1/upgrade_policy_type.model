@@ -22,11 +22,11 @@ class UpgradePolicy {
 	// Schedule cron expression that defines automatic upgrade scheduling.
 	Schedule String
 
-	// Schedule type can be either "manual" (single execution) or "automatic" (re-occurring).
-	ScheduleType String
+	// Schedule type of the upgrade.
+	ScheduleType ScheduleType
 
-	// Upgrade type specify the type of the upgrade. Can be "OSD" or "CVE".
-	UpgradeType String
+	// Upgrade type specify the type of the upgrade.
+	UpgradeType UpgradeType
 
 	// Version is the desired upgrade version.
 	Version String
