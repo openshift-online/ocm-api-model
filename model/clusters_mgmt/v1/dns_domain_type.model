@@ -17,10 +17,10 @@ limitations under the License.
 // Contains the properties of a DNS domain.
 class DNSDomain {
     // Link to the organization that reserved the DNS domain.
-    link OrganizationLink OrganizationLink
+    link Organization OrganizationLink
 
     // Link to the cluster that is registered with the DNS domain (optional).
-    link ClusterLink ClusterLink
+    link Cluster ClusterLink
 
     // Date and time when the DNS domain was reserved.
     ReservedAtTimestamp Date
