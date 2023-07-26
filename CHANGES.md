@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.304 July 26 2023
+- Add upgrade related constants also for `NodePoolUpgradePolicy`.
+- Change DNS domain field names.
+
 ## 0.0.303 July 24 2023
 - Add upgrade related constants.
 - Fix CHANGES.md formatting.
