@@ -25,11 +25,11 @@ class NodePoolUpgradePolicy {
 	// Schedule cron expression that defines automatic upgrade scheduling.
 	Schedule String
 
-	// Schedule type can be either "manual" (single execution) or "automatic" (re-occurring).
-	ScheduleType String
+	// Schedule type of the upgrade.
+	ScheduleType ScheduleType
 
-	// Upgrade type specify the type of the upgrade. Can only be "NodePool".
-	UpgradeType String
+	// Upgrade type of the node pool.
+	UpgradeType UpgradeType
 
 	// Version is the desired upgrade version.
 	Version String
