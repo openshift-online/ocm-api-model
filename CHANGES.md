@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.306 July 27 2023
+- Fix upgrade related constants JSON output to align with existing values
+
 ## 0.0.305 July 26 2023
 - Add `PrivateHostedZoneID` and `PrivateHostedZoneRoleARN` to `cluster_type` resource
 
