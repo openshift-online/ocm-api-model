@@ -17,11 +17,18 @@ limitations under the License.
 // UpgradeType defines which type of upgrade should be used.
 enum UpgradeType {
 	// Upgrade of OSD cluster, which will upgrade the cluster's control plane, and all the node pools.
+	@json(name = "OSD")
 	OSD
 
 	// Control plane upgrade, relevant only for hosted control plane clusters.
+	@json(name = "ControlPlane")
 	ControlPlane
 
 	// Node pool upgrade, relevant only for hosted control plane clusters.
+	@json(name = "NodePool")
 	NodePool
+
+	// Upgrade of an AddOn
+	@json(name = "ADDON")
+	AddOn
 }
