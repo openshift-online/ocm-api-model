@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.305 July 26 2023
+- Add `PrivateHostedZoneID` and `PrivateHostedZoneRoleARN` to `cluster_type` resource
+
 ## 0.0.304 July 26 2023
 - Add upgrade related constants also for `NodePoolUpgradePolicy`.
 - Change DNS domain field names.
