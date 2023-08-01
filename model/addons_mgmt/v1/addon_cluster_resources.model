@@ -25,4 +25,9 @@ resource Cluster {
     locator AddonInquiries {
         target AddonInquiries
     }
+
+    // Reference to the installations of addon on a specific cluster
+    locator Addons {
+        target AddonInstallations
+    }
 }

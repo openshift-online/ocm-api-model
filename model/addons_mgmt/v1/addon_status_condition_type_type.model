@@ -28,9 +28,18 @@ enum AddonStatusConditionType {
     @json(name = "Degraded")
     Degraded
 
-    @json(name = "Upgrading")
-    Upgrading
+    @json(name = "UpgradeStarted")
+    UpgradeStarted
 
     @json(name = "Paused")
     Paused
+
+    @json(name = "UpgradeSucceeded")
+    UpgradeSucceeded
+
+    @json(name = "ReadyToBeDeleted")
+    ReadyToBeDeleted
+
+    @json(name = "DeleteTimeout")
+    DeleteTimeout
 }
