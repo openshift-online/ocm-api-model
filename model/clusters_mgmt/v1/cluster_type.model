@@ -226,10 +226,4 @@ class Cluster {
 
 	// Details for `htpasswd` identity provider.
 	Htpasswd HTPasswdIdentityProvider
-
-	// ID of private hosted zone.
-	PrivateHostedZoneID String
-
-	// Role ARN for private hosted zone.
-	PrivateHostedZoneRoleARN String
 }
