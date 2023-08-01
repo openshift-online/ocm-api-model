@@ -55,4 +55,10 @@ struct AWS {
 	// Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances
 	@json(name = "ec2_metadata_http_tokens")
 	Ec2MetadataHttpTokens Ec2MetadataHttpTokens
+
+	// ID of private hosted zone.
+	PrivateHostedZoneID String
+
+	// Role ARN for private hosted zone.
+	PrivateHostedZoneRoleARN String
 }
