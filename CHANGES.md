@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.307 Aug 1 2023
+- Move `PrivateHostedZoneID` and `PrivateHostedZoneRoleARN` to `AWS` resource.
+
 ## 0.0.306 July 27 2023
 - Fix upgrade related constants JSON output to align with existing values
 
