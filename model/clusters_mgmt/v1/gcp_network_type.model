@@ -19,6 +19,9 @@ struct GCPNetwork {
     // VPC mame used by the cluster.
     VPCName  String
 
+    // The name of the host project where the shared VPC exists.
+    VPCProjectID String
+
     // Control plane subnet used by the cluster.
     ControlPlaneSubnet String
 
