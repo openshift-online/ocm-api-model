@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.308 August 08 2023
+- Modify access review response to include is_ocm_internal field
+- gcp: Add support for Shared VPC
+
 ## 0.0.307 August 01 2023
 - Move `PrivateHostedZoneID` and `PrivateHostedZoneRoleARN` to `aws_type` resource
 

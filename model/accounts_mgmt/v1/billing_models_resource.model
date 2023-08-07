@@ -1,0 +1,16 @@
+resource BillingModels {
+    // Retrieves a list of BillingModels.
+	method List {
+		// Index of the requested page, where one corresponds to the first page.
+		in out Page Integer = 1
+
+		// Maximum number of items that will be contained in the returned page.
+		in out Size Integer = 100
+
+		// Total number of items of the collection, regardless of the size of the page.
+		out Total Integer
+
+		// Retrieved list of Capabilities.
+		out Items []BillingModelItem
+	}
+}
