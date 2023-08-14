@@ -10,7 +10,7 @@ resource BillingModels {
 		// Total number of items of the collection, regardless of the size of the page.
 		out Total Integer
 
-		// Retrieve list of BillingModelItem.
+		// Retrieve list of Billing Models.
 		out Items []BillingModelItem
 	}
 }
