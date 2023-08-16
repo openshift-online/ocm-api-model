@@ -13,4 +13,10 @@ resource BillingModels {
 		// Retrieve list of Billing Models.
 		out Items []BillingModelItem
 	}
+
+	// Reference to the service that manages a specific billing model.
+    locator BillingModel {
+    	target BillingModel
+    	variable ID
+    }
 }
