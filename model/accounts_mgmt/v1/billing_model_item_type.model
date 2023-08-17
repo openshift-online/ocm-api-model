@@ -2,6 +2,8 @@
 struct BillingModelItem {
 	// Id for the BillingModel.
 	Id String
+	// HREF for the billing model
+    HREF String
 	// Model type of the BillingModel. e.g. standard, marketplace, marketplace-aws, etc.
 	Model String
 	// Indicates the marketplace of the billing model. e.g. gcp, aws, etc.

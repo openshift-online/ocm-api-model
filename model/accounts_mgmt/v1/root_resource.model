@@ -150,7 +150,7 @@ resource Root {
 	}
 
 	// Reference to the resource that manages billing models.
-    locator BillingModels {
-    	target BillingModels
-    }
+	locator BillingModels {
+		target BillingModels
+	}
 }
