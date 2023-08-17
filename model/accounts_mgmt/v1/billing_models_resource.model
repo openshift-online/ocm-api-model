@@ -1,5 +1,5 @@
 resource BillingModels {
-    // Retrieves a list of BillingModels.
+	// Retrieves a list of BillingModels.
 	method List {
 		// Index of the requested page, where one corresponds to the first page.
 		in out Page Integer = 1
@@ -15,8 +15,8 @@ resource BillingModels {
 	}
 
 	// Reference to the service that manages a specific billing model.
-    locator BillingModel {
-    	target BillingModel
-    	variable ID
-    }
+	locator BillingModel {
+		target BillingModel
+		variable ID
+	}
 }
