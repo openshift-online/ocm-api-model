@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.310 August 17 2023
+- Modify SelfAccessReview to return IsOCMInternal field
+
 ## 0.0.309 August 13 2023
 - Add the remainder of autoscaler params (#813)
 
