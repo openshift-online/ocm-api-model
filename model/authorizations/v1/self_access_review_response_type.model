@@ -16,28 +16,31 @@ limitations under the License.
 
 // Representation of an access review response, performed against oneself
 struct SelfAccessReviewResponse {
-	// Defines whether the action on the specified resource type is allowed
+	// Defines whether the action on the specified resource type is allowed.
 	Allowed Boolean
 
-	// Defines further context for the value in allowed (if applicable)
+	// Defines whether an account is ocm internal.
+	IsOCMInternal Boolean
+
+	// Defines further context for the value in allowed (if applicable).
 	Reason String
 
-	// Indicates the action, one of: [get,list,create,delete,update]
+	// Indicates the action, one of: [get,list,create,delete,update].
 	Action String
 
-	// Indicates which Organization the resource type belongs to
+	// Indicates which Organization the resource type belongs to.
 	OrganizationID String
 
-	// Indicates which Cluster (internal id) the resource type belongs to
+	// Indicates which Cluster (internal id) the resource type belongs to.
 	ClusterID String
 
-	// Indicates which Cluster (external id) the resource type belongs to
+	// Indicates which Cluster (external id) the resource type belongs to.
 	ClusterUUID String
 
-	// Indicates which Subscription the resource type belongs to
+	// Indicates which Subscription the resource type belongs to.
 	SubscriptionID String
 
 	// Indicates the type of the resource an action would be taken on.
-	// See uhc-account-manager/openapi/openapi.yaml for a list of possible values
+	// See uhc-account-manager/openapi/openapi.yaml for a list of possible values.
 	ResourceType String
 }
