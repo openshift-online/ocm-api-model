@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2019 Red Hat, Inc.
+Copyright (c) 2023 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages the collection of cluster logs.
-resource ClusterLogs {
-	// Retrieves the list of cluster logs.
-	// Use this endpoint to list service logs (including private logs).
-	// This endpoint is limited to users who allowed to view private logs.
+// Manages the collection of Clusters cluster logs.
+resource ClustersClusterLogs {
+	// Retrieves the list of cluster logs by the cluster_id and/or cluster_uuid parameters.
+	// Use this endpoint to list service logs for a specific cluster (excluding private logs).
+	// Any authenticated user is able to use this endpoint without any special permissions.
 	method List {
 		// Index of the requested page, where one corresponds to the first page.
 		in out Page Integer = 1
@@ -59,19 +59,13 @@ resource ClusterLogs {
 		// items that the user has permission to see will be returned.
 		in Search String
 
+		// cluster_id parameter.
+		in ClusterID String
+
+		// cluster_uuid parameter.
+		in ClusterUUID String
+
 		// Retrieved list of Cluster logs.
 		out Items []LogEntry
-	}
-
-	// Creates a new log entry.
-	method Add {
-		// Log entry data.
-		in out Body LogEntry
-	}
-
-	// Reference to the service that manages a specific Log entry.
-	locator LogEntry {
-		target LogEntry
-		variable ID
 	}
 }

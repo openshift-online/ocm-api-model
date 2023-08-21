@@ -17,6 +17,11 @@ limitations under the License.
 // Manages the collection of clusters for clusters logs.
 resource Clusters {
 
+	// Reference to the service that manages the cluster logs.
+	locator ClusterLogs {
+		target ClustersClusterLogs
+	}
+
 	// Reference to the service that manages a specific Cluster uuid.
 	locator Cluster {
 		target Cluster
