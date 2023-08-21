@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.311 August 21 2023
+- Add a new resource to OSL clusters/cluster_logs
+
 ## 0.0.310 August 17 2023
 - Modify SelfAccessReview to return IsOCMInternal field
 
