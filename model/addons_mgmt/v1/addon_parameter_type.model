@@ -55,4 +55,9 @@ struct AddonParameter {
 
     // Conditions in which this parameter is valid for
     Conditions []AddonRequirement
+
+    Addon Addon
+
+    // Indicates the weight of the AddonParameter which would be used by sort order
+    Order Integer
 }

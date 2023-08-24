@@ -45,4 +45,10 @@ class AddonVersion {
 
     // AvailableUpgrades is the list of versions this version can be upgraded to.
     AvailableUpgrades []String
+
+    // Configuration parameters which will determine the underlying configuration of the MonitoringStack CR. 
+    MonitoringStack MonitoringStack
+
+    // Configuration parameters to be injected in the ServiceMonitor used for federation.
+    MetricsFederation MetricsFederation
 }

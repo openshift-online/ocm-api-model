@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022 Red Hat, Inc.
+Copyright (c) 2023 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,18 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of an addon sub operator. A sub operator is an operator
-// who's life cycle is controlled by the addon umbrella operator.
-struct AddonSubOperator {
-    // Name of the addon sub operator
-    OperatorName String
+// Representation of Monitoring Stack Resource
+struct MonitoringStackResource {
+    // Indicates the CPU resource for monitoring stack.
+    Cpu String
 
-    // Namespace of the addon sub operator
-    OperatorNamespace String
-
-    // Indicates if the sub operator is enabled for the addon
-    Enabled Boolean
-
-    Addon Addon
+    // Indicates the memory resource for monitoring stack.
+    Memory String
 }
-

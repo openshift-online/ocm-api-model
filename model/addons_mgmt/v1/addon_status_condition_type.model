@@ -25,4 +25,7 @@ struct AddonStatusCondition {
 
     // Reason for the condition
     Reason String
+
+    // Message for the condition
+    Message String
 }
