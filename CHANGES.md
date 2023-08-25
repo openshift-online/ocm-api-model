@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.312 August 25 2023
+- Updated existing API's and added support for `Addon Installations` endpoints
+
 ## 0.0.311 August 21 2023
 - Add a new resource to OSL clusters/cluster_logs
 
