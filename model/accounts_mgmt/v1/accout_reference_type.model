@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 class AccountReference {
-    Kind	    string
     Email	    string
     Name	    string
     Username	string
