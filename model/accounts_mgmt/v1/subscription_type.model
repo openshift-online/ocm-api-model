@@ -58,5 +58,8 @@ class Subscription {
 	TrialEndDate Date
 
 	// Link to the account that created the subscription.
-	link Creator Account
+	// Deprecated: Creator exists for backwards compatibility with previous versoins of the model.
+	// Use CreatorAccount instead to consume the updated type of AccountReference
+	link Creator 	Account
+	link CreatorAccount AccountReference
 }
