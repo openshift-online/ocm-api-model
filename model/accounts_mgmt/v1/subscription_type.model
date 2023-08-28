@@ -61,5 +61,6 @@ class Subscription {
 	// Deprecated: Creator exists for backwards compatibility with previous versoins of the model.
 	// Use CreatorAccount instead to consume the updated type of AccountReference
 	link Creator 	Account
+	@json(name = "creator")
 	link CreatorAccount AccountReference
 }

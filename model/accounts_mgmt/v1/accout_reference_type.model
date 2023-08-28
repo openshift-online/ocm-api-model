@@ -15,8 +15,6 @@ limitations under the License.
 */
 
 class AccountReference {
-    Href	    string
-    Id	        string
     Kind	    string
     Email	    string
     Name	    string
