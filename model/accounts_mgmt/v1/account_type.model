@@ -19,6 +19,7 @@ class Account {
 	Email String
 	FirstName String
 	LastName String
+	Name String
 	Banned Boolean
 	BanDescription String
 	BanCode String
