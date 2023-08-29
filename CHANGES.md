@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.313 August 29 2023
+- Add new resources and a type for `BillingModelItem`
+
 ## 0.0.312 August 25 2023
 - Updated existing API's and added support for `Addon Installations` endpoints
 
