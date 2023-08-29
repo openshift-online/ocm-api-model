@@ -1,0 +1,11 @@
+// BillingModelItem that represents a billing model (defined in pkg/api/billing_types.go). Using BillingModelItem to keep backwards compatibility as we already have a BillingModel enum defined.
+struct BillingModelItem {
+	// Id for the BillingModel.
+	Id String
+	// HREF for the billing model
+	HREF String
+	// Model type of the BillingModel. e.g. standard, marketplace, marketplace-aws, etc.
+	Model String
+	// Indicates the marketplace of the billing model. e.g. gcp, aws, etc.
+	Marketplace String
+}

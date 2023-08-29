@@ -148,4 +148,9 @@ resource Root {
 	locator QuotaAuthorizations {
 		target QuotaAuthorizations
 	}
+
+	// Reference to the resource that manages billing models.
+	locator BillingModels {
+		target BillingModels
+	}
 }
