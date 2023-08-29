@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.314 August 29 2023
+- Revert "adding name field to Account type"
+
 ## 0.0.313 August 29 2023
 - Add new resources and a type for `BillingModelItem`
 
