@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.315 September 5 2023
+- Add DisplayName and Description properties to `BillingModelItem`
+
 ## 0.0.314 August 29 2023
 - Revert "adding name field to Account type"
 
