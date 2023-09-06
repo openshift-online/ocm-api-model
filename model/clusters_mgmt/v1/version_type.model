@@ -46,4 +46,7 @@ class Version {
 
 	// ReleaseImage contains the URI of Openshift release image
 	ReleaseImage String
+
+	// ImageOverrides contains the lists of images per cloud provider
+	ImageOverrides ImageOverrides
 }
