@@ -15,15 +15,9 @@ limitations under the License.
 */
 
 // BillingModelItem represents a billing model
-struct BillingModelItem {
-	// Id for the BillingModel.
-	Id String
-
-	// HREF for the billing model
-	HREF String
-
-	// Model type of the BillingModel. e.g. standard, marketplace, marketplace-aws, etc.
-	Model String
+class BillingModelItem {
+	// BillingModelType is the type of the BillingModel. e.g. standard, marketplace, marketplace-aws, etc.
+	BillingModelType String
 
 	// Indicates the marketplace of the billing model. e.g. gcp, aws, etc.
 	Marketplace String
