@@ -22,9 +22,9 @@ class BillingModelItem {
 	// Indicates the marketplace of the billing model. e.g. gcp, aws, etc.
 	Marketplace String
 
-	// User friendly display name of the billing model.
+	// User friendly display name of the billing model
 	DisplayName String
 
-	// Single line description of the billing model for better understanding.
+	// Single line description of the billing model
 	Description String
 }
