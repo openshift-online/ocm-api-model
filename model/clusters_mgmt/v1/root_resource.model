@@ -111,4 +111,9 @@ resource Root {
 	locator NetworkVerifications {
 		target NetworkVerifications
 	}
+
+	// Reference to the resource that manages the collection of trusted ip addresses.
+	locator TrustedIPAddresses {
+		target TrustedIps
+	}
 }
