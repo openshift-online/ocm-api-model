@@ -1,6 +1,8 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.317 September 11 2023
+- Add new resources and type for `TrustedIps`
 
 ## 0.0.316 September 6 2023
 - Add `CIDRBlockp` field to `Subnetwork` and `CloudVPC`
