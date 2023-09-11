@@ -1,6 +1,9 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.318 September 11 2023
+- Add `ImageOverrides` to `Version` type
+
 ## 0.0.317 September 11 2023
 - Add new resources and type for `TrustedIps`
 
