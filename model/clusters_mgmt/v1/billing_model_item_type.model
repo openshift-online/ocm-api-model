@@ -16,15 +16,15 @@ limitations under the License.
 
 // BillingModelItem represents a billing model
 class BillingModelItem {
-	// BillingModelType is the type of the BillingModel. e.g. standard, marketplace
+	// BillingModelType is the type of the BillingModel. e.g. standard, marketplace.
 	BillingModelType String
 
 	// Indicates the marketplace of the billing model. e.g. gcp, aws, etc.
 	Marketplace String
 
-	// User friendly display name of the billing model
+	// User friendly display name of the billing model.
 	DisplayName String
 
-	// Single line description of the billing model
+	// Single line description of the billing model.
 	Description String
 }
