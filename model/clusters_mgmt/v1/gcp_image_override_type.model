@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// BillingModelItem represents a billing model
-class BillingModelItem {
-	// BillingModelType is the type of the BillingModel. e.g. standard, marketplace.
-	BillingModelType String
+// GcpImageOverride specifies what a GCP VM Image should be used for a particular product and billing model
+class GCPImageOverride {
+    // Link to the product type.
+    link Product Product
 
-	// Indicates the marketplace of the billing model. e.g. gcp, aws, etc.
-	Marketplace String
+    // Link to the billing model.
+    link BillingModel BillingModelItem
 
-	// User friendly display name of the billing model.
-	DisplayName String
+    // ImageID is the id of the Google Cloud Platform image.
+    ImageID String
 
-	// Single line description of the billing model.
-	Description String
+    // ProjectID is the id of the Google Cloud Platform project that hosts the image.
+    ProjectID String
 }

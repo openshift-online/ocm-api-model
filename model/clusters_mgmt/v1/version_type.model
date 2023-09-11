@@ -44,6 +44,9 @@ class Version {
 	// format defined in https://www.ietf.org/rfc/rfc3339.txt[RC3339].
 	EndOfLifeTimestamp Date
 
-	// ReleaseImage contains the URI of Openshift release image
+	// ReleaseImage contains the URI of Openshift release image.
 	ReleaseImage String
+
+	// ImageOverrides contains the lists of images per cloud provider.
+	ImageOverrides ImageOverrides
 }

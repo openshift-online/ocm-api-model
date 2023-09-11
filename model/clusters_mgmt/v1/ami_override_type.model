@@ -14,17 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// BillingModelItem represents a billing model
-class BillingModelItem {
-	// BillingModelType is the type of the BillingModel. e.g. standard, marketplace.
-	BillingModelType String
+// AMIOverride specifies what Amazon Machine Image should be used for a particular product and region.
+class AMIOverride {
+    // Link to the product type.
+    link Product Product
 
-	// Indicates the marketplace of the billing model. e.g. gcp, aws, etc.
-	Marketplace String
+    // Link to the cloud provider region.
+    link Region CloudRegion
 
-	// User friendly display name of the billing model.
-	DisplayName String
-
-	// Single line description of the billing model.
-	Description String
+    // AMI is the id of the Amazon Machine Image.
+    AMI String
 }
