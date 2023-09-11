@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.316 September 6 2023
+- Add `CIDRBlockp` field to `Subnetwork` and `CloudVPC`
+- Add `ProvisionShardTopology` field to `ServerConfig`
+
 ## 0.0.315 September 5 2023
 - Add DisplayName and Description properties to `BillingModelItem`
 
