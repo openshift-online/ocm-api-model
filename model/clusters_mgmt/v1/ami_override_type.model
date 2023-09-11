@@ -16,12 +16,12 @@ limitations under the License.
 
 // AMIOverride specifies what Amazon Machine Image should be used for a particular product and region.
 class AMIOverride {
-    // Link to the product type
+    // Link to the product type.
     link Product Product
 
-    // Link to the cloud provider region
+    // Link to the cloud provider region.
     link Region CloudRegion
 
-    // AMI is the id of the Amazon Machine Image
+    // AMI is the id of the Amazon Machine Image.
     AMI String
 }

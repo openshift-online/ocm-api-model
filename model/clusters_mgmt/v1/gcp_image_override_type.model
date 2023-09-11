@@ -16,15 +16,15 @@ limitations under the License.
 
 // GcpImageOverride specifies what a GCP VM Image should be used for a particular product and billing model
 class GCPImageOverride {
-    // Link to the product type
+    // Link to the product type.
     link Product Product
 
-    // Link to the billing model
+    // Link to the billing model.
     link BillingModel BillingModelItem
 
-    // ImageID is the id of the Google Cloud Platform image
+    // ImageID is the id of the Google Cloud Platform image.
     ImageID String
 
-    // ProjectID is the id of the Google Cloud Platform project that hosts the image
+    // ProjectID is the id of the Google Cloud Platform project that hosts the image.
     ProjectID String
 }
