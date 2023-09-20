@@ -1,6 +1,9 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.319 September 20 2023
+- Add `BackplaneURL` to `Environment` type
+
 ## 0.0.318 September 11 2023
 - Add `ImageOverrides` to `Version` type
 
