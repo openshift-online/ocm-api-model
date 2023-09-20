@@ -1,6 +1,11 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.320 September 20 2023
+- Exposed the `/api/clusters_mgmt/v1/aws_inquiries/sts_account_roles` endpoint
+- Added the `AWSSTSAccountRole` type
+- Added the `AWSSTSRole` type
+
 ## 0.0.319 September 20 2023
 - Add `BackplaneURL` to `Environment` type
 
