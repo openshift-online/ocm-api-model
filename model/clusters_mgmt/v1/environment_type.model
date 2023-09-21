@@ -24,7 +24,4 @@ struct Environment {
 
 	// last time that the worker checked for limited support clusters
 	LastLimitedSupportCheck Date
-
-	// the backplane url for the environment
-	BackplaneURL String
 }
