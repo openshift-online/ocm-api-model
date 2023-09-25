@@ -49,4 +49,7 @@ class Version {
 
 	// ImageOverrides contains the lists of images per cloud provider.
 	ImageOverrides ImageOverrides
+
+	// GCPMarketplaceEnabled indicates if this version can be used to create GCP Marketplace clusters.
+	GCPMarketplaceEnabled Boolean
 }
