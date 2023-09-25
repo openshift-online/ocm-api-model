@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2021 Red Hat, Inc.
+Copyright (c) 2023 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,25 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Description of a cloud provider virtual private cloud.
-struct CloudVPC {
-	// Name of virtual private cloud according to its `Name` tag on AWS.
-	Name String
-
-	// ID of virtual private cloud.
+// AWS security group object
+struct SecurityGroup {
+	// The security group ID.
 	ID String
 
-	// List of subnets used by the virtual private cloud.
-	Subnets []String
-
-	// List of AWS subnetworks with details.
-	AWSSubnets []Subnetwork
-
-	// List of AWS security groups with details.
-	AWSSecurityGroups []SecurityGroup
-
-	// CIDR block of the virtual private cloud.
-	CIDRBlock String
+	// Name of the security group according to its `Name` tag on AWS.
+	Name String
 
 	// If the resource is RH managed.
 	RedHatManaged Boolean

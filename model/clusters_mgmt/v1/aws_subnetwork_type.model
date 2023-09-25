@@ -30,4 +30,7 @@ struct Subnetwork {
 
 	// The CIDR Block of the subnet.
 	CIDRBlock String
+
+	// If the resource is RH managed.
+	RedHatManaged Boolean
 }

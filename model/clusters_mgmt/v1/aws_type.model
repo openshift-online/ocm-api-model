@@ -61,4 +61,7 @@ struct AWS {
 
 	// Role ARN for private hosted zone.
 	PrivateHostedZoneRoleARN String
+
+	// Additional AWS Security Groups to be added to default worker (compute) machine pool.
+	AdditionalComputeSecurityGroupIds []String
 }

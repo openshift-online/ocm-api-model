@@ -1,6 +1,12 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+
+## 0.0.322 September 25 2023
+- Add `AdditionalComputeSecurityGroupIds` to `AWS` type
+- Add `AdditionalSecurityGroupIds` to `AWS Machine Pool` type
+- Add `AwsSecurityGroups` to `VPC` type
+
 ## 0.0.321 September 21 2023
 - Revert the addition of `BackplaneURL` to `Environment` type
 

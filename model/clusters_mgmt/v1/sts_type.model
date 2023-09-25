@@ -50,6 +50,6 @@ struct STS {
 	// If true, cluster account and operator roles have managed policies attached.
 	ManagedPolicies Boolean
 
-	// Registered Oidc Config, if available holds information related to the oidc config
+	// Registered Oidc Config, if available holds information related to the oidc config.
 	OidcConfig OidcConfig
 }
