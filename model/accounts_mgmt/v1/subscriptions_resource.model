@@ -58,7 +58,6 @@ resource Subscriptions {
 		@http(name = "orderBy")
 		in OrderBy String
 
-		@deprecated
 		// Deprecated, it is not functional. Use OrderBy instead
 		in Order String
 
