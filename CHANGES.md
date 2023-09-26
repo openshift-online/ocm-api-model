@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.324 September 26 2023
+- Add `CreatedAt` to `cluster_log` type
+- Add `CreatedBy` to `cluster_log` type
+
 ## 0.0.323 September 25 2023
 - Add `GCPMarketplaceEnabled` to `version` type
 
