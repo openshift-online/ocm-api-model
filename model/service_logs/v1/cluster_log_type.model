@@ -67,7 +67,7 @@ class LogEntry {
 	// Type of the service log entry.
 	LogType LogType
 
-	// The time at which the cluster log was created
+	// The time at which the cluster log was created.
 	CreatedAt Date
 
 	// The name of the user who created the cluster log
