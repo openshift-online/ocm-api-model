@@ -70,6 +70,6 @@ class LogEntry {
 	// The time at which the cluster log was created.
 	CreatedAt Date
 
-	// The name of the user who created the cluster log
+	// The name of the user who created the cluster log.
 	CreatedBy String
 }
