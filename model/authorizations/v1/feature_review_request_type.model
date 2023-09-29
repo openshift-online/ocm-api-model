@@ -22,4 +22,7 @@ struct FeatureReviewRequest {
 
   // Indicates the feature which can be toggled
   Feature String
+
+  // Defines the organisation id of the account of which access is being reviewed
+  OrganizationId String
 }
