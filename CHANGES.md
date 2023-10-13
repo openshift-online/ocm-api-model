@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.326 October 13 2023
+- Add `BackplaneURL` to `Environment` type
+
 ## 0.0.325 September 28 2023
 - Add `OrganizationId` to `feature_review_request` type
 
