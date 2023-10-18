@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.327 October 18 2023
+- Add `BestEffort` to method `Delete` in `Cluster` resource
+
 ## 0.0.326 October 13 2023
 - Add `BackplaneURL` to `Environment` type
 
