@@ -34,6 +34,9 @@ resource Cluster {
 
 		// Dry run flag is used to check if the operation can be completed, but won't delete.
 		in DryRun Boolean = false
+
+		// BestEffort flag is used to check if the cluster deletion should be best-effort mode or not.
+		in BestEffort Boolean = false
 	}
 
 	// Reference to the resource that manages the detailed status of the cluster.
