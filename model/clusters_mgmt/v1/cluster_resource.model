@@ -195,4 +195,9 @@ resource Cluster {
 	locator Autoscaler {
 		target Autoscaler
 	}
+
+	// Reference to the resource that manages the vpc resource.
+	locator Vpc {
+		target Vpc
+	}
 }
