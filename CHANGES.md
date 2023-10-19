@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.328 October 19 2023
+- Add get `VPC` to `Cluster` resource
+
 ## 0.0.327 October 18 2023
 - Add `BestEffort` to method `Delete` in `Cluster` resource
 
