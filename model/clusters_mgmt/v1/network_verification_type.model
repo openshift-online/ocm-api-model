@@ -18,6 +18,9 @@ struct NetworkVerification {
 	// Cloud provider data to execute the network verification.
 	CloudProviderData CloudProviderData
 
+	// Cluster ID needed to execute the network verification.
+	ClusterId String
+
 	// Amount of network verifier executions started.
 	Total Integer
 
