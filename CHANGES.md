@@ -1,6 +1,8 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.329 October 23 2023
+- Add get `ClusterId` to `network_verification_type` resource
 
 ## 0.0.328 October 19 2023
 - Add get `VPC` to `Cluster` resource
