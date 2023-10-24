@@ -20,4 +20,9 @@ resource Hypershift {
 	method Get {
 		out Body HypershiftConfig
 	}
+
+	// Updates the Hypershift details for a single cluster.
+	method Update {
+		in out Body HypershiftConfig
+	}
 }
