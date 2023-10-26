@@ -200,4 +200,8 @@ resource Cluster {
 	locator Vpc {
 		target Vpc
 	}
+
+	locator KubeletConfig {
+	    target KubeletConfig
+	}
 }

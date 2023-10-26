@@ -226,4 +226,7 @@ class Cluster {
 
 	// Details for `htpasswd` identity provider.
 	Htpasswd HTPasswdIdentityProvider
+
+	// Details of cluster-wide KubeletConfig
+	KubeletConfig KubeletConfig
 }
