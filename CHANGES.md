@@ -1,6 +1,9 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.330 October 26 2023
+- Add `Update` method to `HypershiftConfig` resource
+
 ## 0.0.329 October 23 2023
 - Add get `ClusterId` to `network_verification_type` resource
 
