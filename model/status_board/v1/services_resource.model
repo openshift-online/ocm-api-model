@@ -23,6 +23,7 @@ resource Services {
     in OrderBy String
     in Fullname String
     in Mine Boolean
+    in Search String
     out Total Integer
     out Items []Service
   }
