@@ -64,4 +64,10 @@ struct AWS {
 
 	// Additional AWS Security Groups to be added to default worker (compute) machine pool.
 	AdditionalComputeSecurityGroupIds []String
+
+	// Additional AWS Security Groups to be added to default infra machine pool.
+	AdditionalInfraSecurityGroupIds []String
+
+	// Additional AWS Security Groups to be added to default control plane machine pool.
+	AdditionalControlPlaneSecurityGroupIds []String
 }
