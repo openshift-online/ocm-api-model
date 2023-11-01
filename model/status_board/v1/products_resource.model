@@ -22,6 +22,7 @@ resource Products {
     in out Size Integer = 100
     in Fullname String
     in OrderBy String
+    in Search String
     out Total Integer
     out Items []Product
   }

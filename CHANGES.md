@@ -1,6 +1,9 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.331 October 27 2023
+- Add `Search` method to `status_board` `products_resource`, `applications_resource`, and `services_resource` models
+
 ## 0.0.330 October 26 2023
 - Add `Update` method to `HypershiftConfig` resource
 
