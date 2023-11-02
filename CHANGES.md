@@ -1,6 +1,9 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.334 November 02 2023
+- Add `Search` method to `status_board` `status_updates` model
+
 ## 0.0.333 November 02 2023
 - Added `/api/clusters_mgmt/v1/clusters/{id}/kubelet_config` endpoint
 - Added `KubeletConfig` struct to support requests to the `kubelet_config` endpoint
