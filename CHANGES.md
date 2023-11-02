@@ -1,6 +1,11 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.333 November 02 2023
+- Added `/api/clusters_mgmt/v1/clusters/{id}/kubelet_config` endpoint
+- Added `KubeletConfig` struct to support requests to the `kubelet_config` endpoint
+- Updated `Cluster` struct to be able to have the embedded `KubeletConfig`
+
 ## 0.0.332 November 01 2023
 - Add `AdditionalInfraSecurityGroupIds` to `AWS` type
 - Add `AdditionalControlPlaneSecurityGroupIds` to `AWS` type
