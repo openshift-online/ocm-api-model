@@ -20,4 +20,7 @@ class SubnetNetworkVerification {
   
   // State of the subnet network verification.
   State String
+
+  // Tags supplied to the network verifier for this subnet.
+  Tags [String]String
 }
