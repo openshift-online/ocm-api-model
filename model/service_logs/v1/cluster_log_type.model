@@ -67,6 +67,9 @@ class LogEntry {
 	// Type of the service log entry.
 	LogType LogType
 
+	// The list of documentation references (i.e links) contained in the event.
+	DocReferences []String
+
 	// The time at which the cluster log was created.
 	CreatedAt Date
 
