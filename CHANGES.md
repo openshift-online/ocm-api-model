@@ -1,6 +1,10 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+
+## 0.0.335 November 03 2023
+- Add `doc_references` field in `LogEntry`
+
 ## 0.0.334 November 02 2023
 - Add `Search` method to `status_board` `status_updates` model
 
