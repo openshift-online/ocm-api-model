@@ -36,4 +36,6 @@ struct GCP {
 	AuthProviderX509CertURL String
 	// GCP client x509 certificate url
 	ClientX509CertURL       String
+	// GCP Security Settings
+	Security GcpSecurity
 }
