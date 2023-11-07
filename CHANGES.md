@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.336 November 07 2023
+- Added `security` field to Cluster Service GCP structure.
+
 ## 0.0.335 November 03 2023
 - Add `doc_references` field in `LogEntry`
 
