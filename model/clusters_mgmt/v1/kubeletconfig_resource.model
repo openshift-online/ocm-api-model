@@ -23,8 +23,7 @@ resource KubeletConfig {
 
 	// Creates a new cluster KubeletConfig
 	method Post {
-		in Request KubeletConfig
-		out Body KubeletConfig
+		in out Body KubeletConfig
 	}
 
 	// Updates the existing cluster KubeletConfig
