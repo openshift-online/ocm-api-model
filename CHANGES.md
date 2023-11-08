@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.338 November 08 2023
+- Add `ProductTechnologyPreviews` and `ProductMinimalVersions` endpoints
+
 ## 0.0.337 November 08 2023
 - Updated `post` method definition on `KubeletConfig` resource for consistency with `update` 
 
