@@ -32,5 +32,9 @@ resource GCPInquiries {
     locator Regions {
         target AvailableRegionsInquiry
     }
+    // Reference to the resource that manages gcp machine types by regions.
+    locator MachineTypes {
+        target GCPRegionMachineTypesInquiry
+    }
 }
 
