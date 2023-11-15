@@ -1,6 +1,8 @@
 # Changes
 
 This document describes the relevant changes between releases of the API model.
+## 0.0.352 February 01 2024
+- Remove the `Fullname` search parameter from the `status_board` model.
 
 ## 0.0.351 Jan 30 2024
 - Deprecate Notify resource
