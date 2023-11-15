@@ -20,7 +20,6 @@ resource Products {
   method List {
     in out Page Integer = 1
     in out Size Integer = 100
-    in Fullname String
     in OrderBy String
     in Search String
     out Total Integer

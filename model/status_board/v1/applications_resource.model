@@ -18,7 +18,6 @@ limitations under the License.
 resource Applications {
   // Retrieves the list of applications.
   method List {
-    in Fullname String
     in OrderBy String
     in out Page Integer = 1
     in out Size Integer = 100

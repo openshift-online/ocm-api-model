@@ -21,7 +21,6 @@ resource Services {
     in out Page Integer = 1
     in out Size Integer = 100
     in OrderBy String
-    in Fullname String
     in Mine Boolean
     in Search String
     out Total Integer
