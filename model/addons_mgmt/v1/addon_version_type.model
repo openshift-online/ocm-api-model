@@ -22,6 +22,9 @@ class AddonVersion {
     // The catalog source image for this addon version.
     SourceImage String
 
+    // The package image for this addon version
+    PackageImage String
+
     // The pull secret name used for this addon version.
     PullSecretName String
 
