@@ -31,8 +31,14 @@ class AddonVersion {
     // Additional catalog sources associated with this addon version
     AdditionalCatalogSources []AdditionalCatalogSource
 
+    // The url for the package image
+    PackageImage String
+
+    // Indicates if upgrade plans have been created for this addon version
+    UpgradePlansCreated Boolean
+
     // List of parameters for this addon version.
-    Parameters []AddonParameter
+    Parameters AddonParameters
 
     // List of requirements for this addon version.
     Requirements []AddonRequirement

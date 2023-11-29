@@ -56,7 +56,7 @@ class Addon {
     HasExternalResources Boolean
 
     // List of parameters for this addon.
-    Parameters []AddonParameter
+    Parameters AddonParameters
 
     // List of requirements for this addon.
     Requirements []AddonRequirement
