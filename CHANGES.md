@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.340 Dec 01 2023
+- Add `Platform` type
+- Add `Platform` to `network_verification_type` resource
+
 ## 0.0.339 November 14 2023
 - Add GCP inquiries resource machinetypes
 
