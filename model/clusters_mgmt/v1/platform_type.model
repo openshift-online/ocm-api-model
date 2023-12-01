@@ -14,19 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-struct NetworkVerification {
-	// Cloud provider data to execute the network verification.
-	CloudProviderData CloudProviderData
+// Representation of an platform type field.
+enum Platform {
+    @json(name = "aws")
+    Aws
 
-	// Cluster ID needed to execute the network verification.
-	ClusterId String
+    @json(name = "gcp")
+    Gcp
 
-	// Platform needed to execute the network verification.
-	Platform Platform
-
-	// Amount of network verifier executions started.
-	Total Integer
-
-	// Details about each subnet network verification.
-	Items []SubnetNetworkVerification
+    @json(name = "hostedcluster")
+    HostedCluster
 }
