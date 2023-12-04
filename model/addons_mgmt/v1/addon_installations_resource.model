@@ -41,6 +41,9 @@ resource AddonInstallations {
 		in out Body AddonInstallation
 	}
 
+	method Delete {
+	}
+
 	// Returns a reference to the service that manages a specific addon installation.
 	locator Addon {
 		target AddonInstallation
