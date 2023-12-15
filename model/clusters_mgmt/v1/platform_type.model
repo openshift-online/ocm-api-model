@@ -24,4 +24,10 @@ enum Platform {
 
     @json(name = "hostedcluster")
     HostedCluster
+
+    @json(name = "aws-classic")
+    AwsClassic
+
+    @json(name = "aws-hosted-cp")
+    AwsHostedCp
 }
