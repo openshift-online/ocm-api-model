@@ -23,4 +23,7 @@ class SubnetNetworkVerification {
 
   // Tags supplied to the network verifier for this subnet.
   Tags [String]String
+
+  // Platform supplied to the network verifier for this subnet.
+  Platform Platform
 }
