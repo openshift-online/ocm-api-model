@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.343 Dec 15 2023
+- Add `Platform` to `subnet_network_verification_type` resource
+
 ## 0.0.342 Dec 12 2023
 - Add `Search` and `Order` methods to List `/api/clusters_mgmt/v1/clusters/{id}/node_pools`
 
