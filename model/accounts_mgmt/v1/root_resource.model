@@ -119,6 +119,11 @@ resource Root {
 		target Notify
 	}
 
+	// Reference to the resource that manages the notifications details.
+	locator NotifyDetails {
+		target NotifyDetails
+	}
+
 	// Reference to the resource that manages token authorization.
 	locator TokenAuthorization {
 		target TokenAuthorization
