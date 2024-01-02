@@ -41,8 +41,13 @@ resource AWSInquiries {
         target AWSRegionMachineTypesInquiry
     }
 
-    // Reference to the resource that manages aws sts roles
+    // Reference to the resource that manages aws sts roles.
     locator STSAccountRoles {
         target AWSSTSAccountRolesInquiry
+    }
+
+    // Reference to the resource that manages creds validation.
+    locator ValidateCredentials {
+        target AwsValidateCredentials
     }
 }
