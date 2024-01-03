@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.345 Jan 03 2024
+- Add `validate_credentials` resource to `AwsInquiries`
+  
 ## 0.0.344 Jan 03 2024
 - [OCM-5426] Add the /notify_details endpoint to the SDK
 
