@@ -19,6 +19,6 @@ resource NotifyDetails {
 	// Post Notification details about user related to subscription/cluster via email and get the data associated with it.
 	method Post {
 		in Request NotificationDetailsRequest
-		out Response NotificationDetailsResponse
+		out Response GenericNotifyDetailsResponse
 	}
 }

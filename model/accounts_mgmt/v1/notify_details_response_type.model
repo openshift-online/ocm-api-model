@@ -14,15 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// This struct is a request to get a templated email to a user related to this.
-// subscription/cluster.
-struct NotificationDetailsResponse {
-	// Indicates the external organization id of the subscription.
-	ExternalOrgID String
+// This class is a single response item for the notify details list.
+class NotificationDetailsResponse {
+	// Indicates the key of the response parameter.
+	Key String
 
-	// Indicates a list of recipients username.
-	Recipients []String
-
-	// Indicates a list of associates email address.
-	Associates []String
+	// Indicates the value of the response parameter.
+	Value String
 }
