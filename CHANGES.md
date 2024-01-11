@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.346 Jan 11 2024
+- Modify notify_details response
+
 ## 0.0.345 Jan 03 2024
 - Add `validate_credentials` resource to `AwsInquiries`
   
