@@ -22,6 +22,9 @@ class AWSNodePool {
     // InstanceProfile is the AWS EC2 instance profile, which is a container for an IAM role that the EC2 instance uses.
     InstanceProfile String
 
-    // Optional keys and values that the installer will add as tags to all AWS resources it creates
+    // Optional keys and values that the installer will add as tags to all AWS resources it creates.
     Tags [String]String
+
+    // Type of Availability Zone of the node pool.
+    AvailabilityZoneType AvailabilityZoneType
 }
