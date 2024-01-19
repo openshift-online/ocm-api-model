@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.347 Jan 19 2024
+- Add `AvailabilityZoneType` type
+- Add `AvailabilityZoneType` to `aws_machine_pool_type` and `aws_node_pool_type` resources
+
 ## 0.0.346 Jan 11 2024
 - Modify notify_details response
 
