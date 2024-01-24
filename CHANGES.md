@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.347 Jan 23 2024
+- Add `HostedControlPlaneDefault` boolean to `Version` Type model.
+
 ## 0.0.346 Jan 11 2024
 - Modify notify_details response
 
