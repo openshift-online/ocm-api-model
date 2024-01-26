@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.348 Jan 26 2024
+- Add `SubnetOutposts` and `AvailabilityZoneTypes` to `aws_node_pool_type` and `aws_machine_pool_type` models.
+
 ## 0.0.347 Jan 23 2024
 - Add `HostedControlPlaneDefault` boolean to `Version` Type model.
 

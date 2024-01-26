@@ -21,4 +21,10 @@ class AWSMachinePool {
 
     // Additional AWS Security Groups to be added machine pool. Note that machine pools can only be worker node at the time.
     AdditionalSecurityGroupIds []String
+
+    // Associates nodepool subnets with AWS Outposts.
+    SubnetOutposts [String]String
+
+    // Associates nodepool availability zones with zone types (e.g. wavelength, local).
+    AvailabilityZoneTypes [String]String
 }
