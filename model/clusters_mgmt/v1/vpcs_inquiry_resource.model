@@ -41,4 +41,10 @@ resource VpcsInquiry {
 		// Cloud provider data needed for the inquiry
 		in Body CloudProviderData
 	}
+
+    // Returns a reference to the service that manages an specific vpc inquiry.
+    locator VpcInquiry {
+        target VpcInquiry
+        variable ID
+    }
 }
