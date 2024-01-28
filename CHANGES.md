@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.349 Jan 28 2024
+-  [OCM-5561] Remove redundant fields from /notify_details
+
 ## 0.0.348 Jan 26 2024
 - Add `SubnetOutposts` and `AvailabilityZoneTypes` to `aws_node_pool_type` and `aws_machine_pool_type` models.
 
