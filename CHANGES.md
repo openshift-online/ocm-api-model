@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.350 Jan 29 2024
+- [OCM-5802] Add `ExternalAuthConfig` to `Cluster` model.
+
 ## 0.0.349 Jan 28 2024
 -  [OCM-5561] Remove redundant fields from /notify_details
 
