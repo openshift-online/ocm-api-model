@@ -229,4 +229,7 @@ class Cluster {
 
 	// Details of cluster-wide KubeletConfig
 	KubeletConfig KubeletConfig
+
+	// External authentication configuration
+	ExternalAuthConfig ExternalAuthConfig
 }
