@@ -114,11 +114,6 @@ resource Root {
 		target Labels
 	}
 
-	// Reference to the resource that manages the notifications.
-	locator Notify {
-		target Notify
-	}
-
 	// Reference to the resource that manages the notifications details.
 	locator NotifyDetails {
 		target NotifyDetails

@@ -42,11 +42,6 @@ resource Subscription {
 		target GenericLabels
 	}
 
-	// Notify a user related to the subscription via email
-	locator Notify {
-		target SubscriptionNotify
-	}
-
     //Reference to the role bindings
 	locator RoleBindings {
         	target RoleBindings

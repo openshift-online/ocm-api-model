@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.351 Jan 30 2024
+- Deprecate Notify resource
+
 ## 0.0.350 Jan 29 2024
 - [OCM-5802] Add `ExternalAuthConfig` to `Cluster` model.
 
