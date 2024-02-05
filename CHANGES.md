@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.352 Feb 05 2024
+- [OSDEV-1296] Remove StatusBoard `fullname` search parameter.
+
 ## 0.0.351 Jan 30 2024
 - Deprecate Notify resource
 
