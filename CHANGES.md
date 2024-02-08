@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.353 Feb 08 2024
+- Add support for `PackageImage` in `clusters_mgmt`
+
 ## 0.0.352 Feb 05 2024
 - [OSDEV-1296] Remove StatusBoard `fullname` search parameter.
 
