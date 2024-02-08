@@ -25,8 +25,4 @@ resource ProvisionShard {
 	method Update {
 		in out Body ProvisionShard
 	}
-
-	// Delete the provision shard.
-	method Delete {
-	}
 }

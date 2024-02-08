@@ -21,11 +21,6 @@ resource DNSDomain {
 		out Body DNSDomain
 	}
 
-	// Updates the details of the DNS domain.
-	method Update {
-		in out Body DNSDomain
-	}
-
 	// Delete the DNS domain.
 	method Delete {
 	}

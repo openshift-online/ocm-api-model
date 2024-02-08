@@ -126,11 +126,6 @@ resource Cluster {
 		target AWSInfrastructureAccessRoleGrants
 	}
 
-	// Reference to the resource that manages the product type of the cluster
-	locator Product {
-		target Product
-	}
-
 	// Reference to the resource that manages the collection of upgrade policies defined for this cluster.
 	locator UpgradePolicies {
 		target UpgradePolicies
