@@ -70,4 +70,8 @@ struct AWS {
 
 	// Additional AWS Security Groups to be added to default control plane machine pool.
 	AdditionalControlPlaneSecurityGroupIds []String
+
+	// Sets cluster to be inaccessible externally.
+	PreserveBootstrapIgnition Boolean
+
 }
