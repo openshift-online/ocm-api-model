@@ -30,4 +30,7 @@ class AWSNodePool {
 
     // Associates nodepool availability zones with zone types (e.g. wavelength, local).
     AvailabilityZoneTypes [String]String
+
+    // Additional AWS Security Groups to be added node pool.
+    AdditionalSecurityGroupIds []String
 }
