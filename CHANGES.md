@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.354 Feb 12 2024
+- Add `AdditionalSecurityGroupIds` to `AWS Node Pool` type.
+
 ## 0.0.353 Feb 08 2024
 - Add support for `PackageImage` in `clusters_mgmt`
 
