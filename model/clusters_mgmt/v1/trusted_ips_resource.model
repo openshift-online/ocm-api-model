@@ -30,10 +30,4 @@ resource TrustedIps {
 		// Retrieved list of trusted ip addresses.
 		out Items []TrustedIp
 	}
-
-	// Reference to the resource that manages a specific trusted Ip address.
-	locator TrustedIp {
-		target TrustedIp
-		variable ID
-	}
 }

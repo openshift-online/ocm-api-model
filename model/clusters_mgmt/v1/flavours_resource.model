@@ -61,12 +61,6 @@ resource Flavours {
 		out Items []Flavour
 	}
 
-	// Adds a new cluster flavour.
-	method Add {
-		// Details of the cluster flavour.
-		in out Body Flavour
-	}
-
 	// Reference to the resource that manages a specific flavour.
 	locator Flavour {
 		target Flavour
