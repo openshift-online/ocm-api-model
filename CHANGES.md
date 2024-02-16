@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.355 Feb 16 2024
+- [OCM-5976] Removed undefined api calls
+
 ## 0.0.354 Feb 12 2024
 - Add `AdditionalSecurityGroupIds` to `AWS Node Pool` type.
 
