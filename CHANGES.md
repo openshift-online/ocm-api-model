@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.356 Feb 19 2024
+- Reverting change to remove DELETE `provision_shards/{id}`
+
 ## 0.0.355 Feb 16 2024
 - [OCM-5976] Removed undefined api calls
 
