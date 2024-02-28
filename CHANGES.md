@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.359 Feb 28 2024
+- Add `ExternalAuthConfig` resource to `Cluster`.
+
 ## 0.0.358 Feb 28 2024
 - Add `DomainPrefix` to `Cluster` model.
 
