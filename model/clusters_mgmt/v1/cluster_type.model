@@ -51,8 +51,12 @@ limitations under the License.
 // Services account.
 class Cluster {
 	// Name of the cluster. This name is assigned by the user when the
-	// cluster is created.
+	// cluster is created. This is used to uniquely identify the cluster
 	Name String
+
+	// DomainPrefix of the cluster. This prefix is optionally assigned by the user when the
+	// cluster is created. It will appear in the Cluster's domain when the cluster is provisioned.
+	DomainPrefix String
 
 	// InfraID is used for example to name the VPCs.
 	InfraID String
