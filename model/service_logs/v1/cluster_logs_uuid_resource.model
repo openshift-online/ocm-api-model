@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages the collection of cluster logs by custer uuid.
+// Manages the collection of cluster logs by cluster uuid.
 resource ClusterLogsUUID {
 	// Retrieves the list of cluster logs by cluster uuid.
 	method List {
