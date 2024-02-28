@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.358 Feb 28 2024
+- Add `DomainPrefix` to `Cluster` model.
+
 ## 0.0.357 Feb 26 2024
 - [OCM-5822] Add `ExternalAuth` to `ExternalAuthConfig` model.
 
