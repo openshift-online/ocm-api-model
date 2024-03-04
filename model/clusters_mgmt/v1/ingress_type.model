@@ -45,4 +45,7 @@ class Ingress {
 
 	// Cluster routes TLS Secret reference.
 	ClusterRoutesTlsSecretRef String
+
+	// Component Routes settings.
+	ComponentRoutes [ComponentRouteType]ComponentRoute
 }
