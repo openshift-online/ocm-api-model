@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.360 Mar 04 2024
+- Add `ComponentRoutes` attribute to `Ingress`.
+
 ## 0.0.359 Feb 28 2024
 - Add `ExternalAuthConfig` resource to `Cluster`.
 
