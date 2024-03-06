@@ -84,6 +84,7 @@ struct ExternalAuthClaim {
 struct TokenClaimMappings {
 
     // Username is a name of the claim that should be used to construct usernames for the cluster identity.
+    @json(name = "username")
     UserName UsernameClaim
 
 	// Groups is a name of the claim that should be used to construct groups for the cluster identity.
