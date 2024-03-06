@@ -24,4 +24,5 @@ struct ReservedResource {
 	BillingModel BillingModel
 	BillingMarketplaceAccount String
 	UpdatedAt Date
+	Scope String
 }
