@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.361 Mar 06 2024
+- Add `Scope` attribute to `ReservedResource`.
+- Add `Scope` attribute to `ClusterAuthorizationRequest`.
+
 ## 0.0.360 Mar 04 2024
 - Add `ComponentRoutes` attribute to `Ingress`.
 
