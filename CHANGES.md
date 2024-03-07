@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.363 Mar 07 2024
+- Add `NodeDrainGracePeriod` to the `NodePool` model.
+
 ## 0.0.362 Mar 06 2024
 - Changed `UserName` attribute for TokenClaimMappings to `Username`.
 
