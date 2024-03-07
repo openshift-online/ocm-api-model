@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.362 Mar 06 2024
+- Changed `UserName` attribute for TokenClaimMappings to `Username`.
+
 ## 0.0.361 Mar 06 2024
 - Add `Scope` attribute to `ReservedResource`.
 - Add `Scope` attribute to `ClusterAuthorizationRequest`.
