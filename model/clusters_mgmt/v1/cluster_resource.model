@@ -74,6 +74,11 @@ resource Cluster {
 		target ExternalConfiguration
 	}
 
+	// Reference to the resource that manages the break glass credentials.
+    locator BreakGlassCredentials {
+        target BreakGlassCredentials
+    }
+
 	// Reference to the resource that manages the cluster's provision shard.
 	locator ProvisionShard {
 		target ProvisionShard
