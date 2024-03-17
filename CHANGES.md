@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.365 Mar 17 2024
+- [OCM-6763] Add default capability resource to SDK
+
 ## 0.0.364 Mar 12 2024
 - Add `BreakGlassCredentials` to the `Cluster` resource model.
 
