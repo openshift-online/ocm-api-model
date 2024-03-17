@@ -139,6 +139,11 @@ resource Root {
 		target Capabilities
 	}
 
+	// Reference to the resource that manages the collection of default capabilities.
+	locator DefaultCapabilities {
+		target DefaultCapabilities
+	}
+
 	// Reference to the resource that manages the collection of deleted subscriptions.
 	locator DeletedSubscriptions {
 		target DeletedSubscriptions
