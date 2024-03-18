@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-class DefaultCapability {
+struct DefaultCapability {
     // Name of the default capability (the key).
 	Name String
     // Value of the default capability.
