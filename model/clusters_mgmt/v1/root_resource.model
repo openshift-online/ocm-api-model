@@ -116,4 +116,9 @@ resource Root {
 	locator TrustedIPAddresses {
 		target TrustedIps
 	}
+
+	// Reference to the resource that manages the load balancer quota values.
+	locator LoadBalancerQuotaValues{
+		target LoadBalancerQuotaValues
+	}
 }
