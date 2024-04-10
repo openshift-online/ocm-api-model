@@ -103,6 +103,9 @@ class Cluster {
 	// Google cloud platform settings of the cluster.
 	GCP GCP
 
+	// Microsoft Azure settings of the cluster.
+	Azure Azure
+
 	// Network settings of the cluster.
 	Network Network
 
