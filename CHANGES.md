@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+# 0.0.368 Apr 10 2024
+- Add `Azure` resource to `Cluster` resource.
+
 # 0.0.367 Apr 10 2024
 - Update metamodel version to 0.0.60
 - [OCM-6294] add /load_balancer_quota_values endpoint
