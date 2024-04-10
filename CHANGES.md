@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+# 0.0.367 Apr 10 2024
+- Update metamodel version to 0.0.60
+- [OCM-6294] add /load_balancer_quota_values endpoint
+- [OCM-7027] feat: document pagination and ordering support for break glass
+- [OCM-7144] Add  /storage_quota_values endpoint
+
 ## 0.0.366 Mar 18 2024
 - Fix default capabilities
 
