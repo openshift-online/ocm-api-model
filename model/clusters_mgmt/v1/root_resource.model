@@ -121,4 +121,9 @@ resource Root {
 	locator LoadBalancerQuotaValues{
 		target LoadBalancerQuotaValues
 	}
+
+	// Reference to the resource that manages the storage quota values.
+	locator StorageQuotaValues{
+		target StorageQuotaValues
+	}
 }
