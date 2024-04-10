@@ -38,7 +38,7 @@ struct Azure {
 	// value, within the Azure Subscription `subscription_id` of the cluster.
 	// `managed_resource_group_name` cannot be equal to the value of `managed_resource_group`.
 	// `managed_resource_group_name` is located in the same Azure location as the
-	//  cluster's region.
+	// cluster's region.
 	// Not to be confused with `resource_group_name`, which is the Azure Resource Group Name
 	// where the own Azure Resource associated to the cluster resides.
 	ManagedResourceGroupName String
