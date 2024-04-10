@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.369 Apr 10 2024
+- Fix spacing in description of Azure's ManagedResourceGroupName
+- Fix CHANGES.md formatting
+
 ## 0.0.368 Apr 10 2024
 - Add `Azure` resource to `Cluster` resource.
 
