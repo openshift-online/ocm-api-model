@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.370 Apr 24 2024
+- Add `RolePolicyBindings` to the `AWS` resource model to support STS Arbitrary Policies feature.
+
 ## 0.0.369 Apr 10 2024
 - Fix spacing in description of Azure's ManagedResourceGroupName
 - Fix CHANGES.md formatting
