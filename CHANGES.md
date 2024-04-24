@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.371 Apr 24 2024
+- Add `Tags` to the `AWSMachinePool` model to support custom AWS tags for day 2 creation of machine pools
+
 ## 0.0.370 Apr 24 2024
 - Add `RolePolicyBindings` to the `AWS` resource model to support STS Arbitrary Policies feature.
 
