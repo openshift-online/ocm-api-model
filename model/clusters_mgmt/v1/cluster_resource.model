@@ -188,6 +188,10 @@ resource Cluster {
 		target TuningConfigs
 	}
 
+	locator KubeletConfigs {
+	    target KubeletConfigs
+	}
+
 	locator DeleteProtection {
 		target DeleteProtection
 	}

@@ -51,6 +51,9 @@ class NodePool {
     // The names of the tuning configs for this node pool.
     TuningConfigs []String
 
+    // The names of the KubeletConfigs for this node pool.
+    KubeletConfigs []String
+
     // Time to wait for a NodePool to drain when it is upgraded or replaced before it is forcibly removed.
     NodeDrainGracePeriod Value
 }

@@ -35,3 +35,21 @@ resource KubeletConfig {
 	method Delete {
 	}
 }
+
+// Manages KubeletConfig configuration for Hosted Control Plane clusters. This resource does not support POST operations
+// in contrast to the KubeletConfig resource for Classic clusters.
+resource HcpKubeletConfig {
+	// Retrieves the KubeletConfig specified by the id.
+	method Get {
+		out Body KubeletConfig
+	}
+
+	// Updates the KubeletConfig specified by the id.
+	method Update {
+		in out Body KubeletConfig
+	}
+
+	// Deletes the KubeletConfig specified by the id.
+	method Delete {
+	}
+}

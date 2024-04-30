@@ -17,7 +17,11 @@ limitations under the License.
 // OCM representation of KubeletConfig, exposing the fields of Kubernetes
 // KubeletConfig that can be managed by users
 class KubeletConfig {
-	// Allows user to specify the podPidsLimit to be applied via KubeletConfig.
+	// Allows the user to specify the podPidsLimit to be applied via KubeletConfig.
 	// Useful if workloads have greater PIDs limit requirements than the OCP default.
 	PodPidsLimit Integer
+
+	// Allows the user to specify the name to be used to identify this KubeletConfig.
+	// Optional. A name will be generated if not provided.
+	Name String
 }
