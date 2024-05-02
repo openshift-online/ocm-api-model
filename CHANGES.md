@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.372 May 2 2024
+- Exposed `/api/clusters_mgmt/v1/clusters/{id}/kubelet_configs` for managed of KubeletConfig on HCP clusters
+- Added `kubelet_configs` field to `NodePool` API Resource
+- Added `name` field to `KubeletConfig` API resource
+
 ## 0.0.371 Apr 24 2024
 - Add `Tags` to the `AWSMachinePool` model to support custom AWS tags for day 2 creation of machine pools
 
