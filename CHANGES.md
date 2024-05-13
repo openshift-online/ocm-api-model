@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.373 May 13 2024
+- Add `subnet_resource_id` to `Azure` resource
+- Add `network_security_group_resource_id to `Azure` resource
+
 ## 0.0.372 May 2 2024
 - Exposed `/api/clusters_mgmt/v1/clusters/{id}/kubelet_configs` for managed of KubeletConfig on HCP clusters
 - Added `kubelet_configs` field to `NodePool` API Resource
