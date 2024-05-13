@@ -42,4 +42,43 @@ struct Azure {
 	// Not to be confused with `resource_group_name`, which is the Azure Resource Group Name
 	// where the own Azure Resource associated to the cluster resides.
 	ManagedResourceGroupName String
+
+	// [Required] The Azure Resource ID of a pre-existing Azure
+	// Subnet. It is an Azure Subnet used for the Data Plane of the cluster.
+	// `subnet_resource_id` must be located in the same Azure location as the
+	// cluster's region.
+	// The Azure Subscription specified as part of the `subnet_resource_id`
+	// must be located in the same Azure Subscription as `subscription_id`.
+	// The Azure Resource Group Name specified as part of `subnet_resource_id`
+	// must belong to the Azure Subscription `subscription_id`, and in the same
+	// Azure location as the cluster's region.
+	// The Azure Resource Group Name specified as part of `subnet_resource_id`
+	// must be a different Resource Group Name than the one specified in
+	// `managed_resource_group_name`.
+	// The Azure Resource Group Name specified as part of the `subnet_resource_id`
+	// can be the same, or a different one than the one specified in
+	// `resource_group_name`.
+	SubnetResourceID String
+
+	// [Required] The Azure Resource ID of a pre-existing
+	// Azure Network Security Group.
+	// The Network Security Group specified in network_security_group_resource_id
+	// must already be associated to the Azure Subnet `subnet_resource_id`.
+	// It is the Azure Network Security Group associated to the cluster's subnet
+	// specified in `subnet_resource_id`.
+	// `network_security_group_resource_id` must be located in the same Azure
+	// location as the cluster's region.
+	// The Azure Subscription specified as part of
+	// `network_security_group_resource_id` must be located in the same Azure
+	// Subscription as `subscription_id`.
+	// The Azure Resource Group Name specified as part of `network_security_group_resource_id`
+	// must belong to the Azure Subscription `subscription_id`, and in the same
+	// Azure location as the cluster's region.
+	// The Azure Resource Group Name specified as part of `network_security_group_resource_id`
+	// must be a different Resource Group Name than the one specified in
+	// `managed_resource_group_name`.
+	// The Azure Resource Group Name specified as part of `network_security_group_resource_id`
+	// can be the same, or a different one than the one specified in
+	// `resource_group_name`.
+	NetworkSecurityGroupResourceID String
 }
