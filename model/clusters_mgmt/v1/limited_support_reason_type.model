@@ -36,4 +36,7 @@ class LimitedSupportReason {
 	// Indicates if the reason was detected automatically or manually.
 	// When creating a new reason this field should be empty or "manual".
 	DetectionType DetectionType
+
+	// Indicates if the override is enabled
+	Override LimitedSupportReasonOverride
 }
