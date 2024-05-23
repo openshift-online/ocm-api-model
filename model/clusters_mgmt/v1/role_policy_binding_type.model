@@ -19,5 +19,7 @@ struct RolePolicyBinding {
 	Arn String
 	Type String
 	Status RolePolicyBindingStatus
+	CreationTimestamp Date
+	LastUpdateTimestamp Date
 	Policies []RolePolicy
 }
