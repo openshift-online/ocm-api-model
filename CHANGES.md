@@ -4,6 +4,7 @@ This document describes the relevant changes between releases of the API model.
 
 ## 0.0.374 May 23 2024
 - Add `CreationTimestamp` and `LastUpdateTimestamp` to `RolePolicyBinding` type
+- Add `access_transparecy` Service and it's resources
 
 ## 0.0.373 May 13 2024
 - Add `subnet_resource_id` to `Azure` resource
