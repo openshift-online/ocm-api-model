@@ -70,4 +70,7 @@ struct AWS {
 
 	// Additional AWS Security Groups to be added to default control plane machine pool.
 	AdditionalControlPlaneSecurityGroupIds []String
+
+	// Additional allowed principal ARNs to be added to the hosted control plane's VPC Endpoint Service.
+	AdditionalAllowedPrincipals []String
 }
