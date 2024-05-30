@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.375 May 30 2024
+- Add `ManagementUpgrade` parameters to the `NodePool` model to support additional upgrade configuration.
+- Rename file for access_request_status_type to .model
+- Add `AdditionalAllowedPrincipals` to `AWS` type to support additional allowed principal ARNs to be added to the hosted control plane's VPC Endpoint Service.
+
 ## 0.0.374 May 23 2024
 - Add `CreationTimestamp` and `LastUpdateTimestamp` to `RolePolicyBinding` type
 - Add `access_transparecy` Service and it's resources

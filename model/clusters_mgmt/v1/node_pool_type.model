@@ -56,4 +56,7 @@ class NodePool {
 
     // Time to wait for a NodePool to drain when it is upgraded or replaced before it is forcibly removed.
     NodeDrainGracePeriod Value
+
+    // Management parameters (Optional).
+    ManagementUpgrade NodePoolManagementUpgrade
 }
