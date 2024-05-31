@@ -30,6 +30,9 @@ class NodePool {
     // AWS specific parameters (Optional).
     AWSNodePool AWSNodePool
 
+    // Azure specific parameters.
+    AzureNodePool AzureNodePool
+
     // The availability zone upon which the node is created.
     AvailabilityZone String
 
