@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.376 May 31 2024
+- Add `AzureNodePool` resource to `NodePool` resource.
+
 ## 0.0.375 May 30 2024
 - Add `ManagementUpgrade` parameters to the `NodePool` model to support additional upgrade configuration.
 - Rename file for access_request_status_type to .model
