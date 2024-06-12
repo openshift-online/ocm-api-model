@@ -40,7 +40,7 @@ struct AzureNodePool {
     // Nodes in the Node Pool. The property
     // is the number of bytes x 1024^3.
     // If not specified, OS disk size is 30 GiB.
-    OSDiskSizeGibibytes String
+    OSDiskSizeGibibytes Integer
 
     // The disk storage account type to use for the OS disks of the Nodes in the
     // Node Pool. Valid values are:
