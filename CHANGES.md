@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## O.0.378 Jun 24 2024
+- Add `MultiArchEnabled` attribute to `Cluster` model
+
 ## 0.0.377 Jun 12 2024
 - Change type of the `OSDiskSizeGibibytes` attribute in the `AzureNodePool` resource from String to Integer.
 
