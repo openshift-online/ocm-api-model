@@ -239,4 +239,7 @@ class Cluster {
 
 	// External authentication configuration
 	ExternalAuthConfig ExternalAuthConfig
+
+	// Indicate whether the cluster is enabled for multi arch workers
+	MultiArchEnabled Boolean
 }
