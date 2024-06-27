@@ -40,4 +40,8 @@ class AWSNodePool {
 
     // Additional AWS Security Groups to be added node pool.
     AdditionalSecurityGroupIds []String
+
+    // Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances
+    @json(name = "ec2_metadata_http_tokens")
+    Ec2MetadataHttpTokens Ec2MetadataHttpTokens    
 }
