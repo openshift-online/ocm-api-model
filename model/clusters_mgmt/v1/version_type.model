@@ -48,7 +48,7 @@ class Version {
 	// format defined in https://www.ietf.org/rfc/rfc3339.txt[RC3339].
 	EndOfLifeTimestamp Date
 
-	// ReleaseImage contains the URI of Openshift release image.
+	// ReleaseImage contains the URI of Openshift release image for amd64 architecture.
 	ReleaseImage String
 
 	// ImageOverrides contains the lists of images per cloud provider.
@@ -56,4 +56,7 @@ class Version {
 
 	// GCPMarketplaceEnabled indicates if this version can be used to create GCP Marketplace clusters.
 	GCPMarketplaceEnabled Boolean
+
+	// ReleaseImages contains the URI of OpenShift release images for arm64 and multi architectures.
+	ReleaseImages ReleaseImages
 }
