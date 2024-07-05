@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.380 Jul 5 2024
+- Add `Architecture` attribute to `MachineType` model
+- Add `ReleaseImages` attribute to `Version` model
+
 ## O.0.379 Jun 28 2024
 - Add `Ec2MetadataHttpTokens` attribute to `AWSNodePool` model
 
