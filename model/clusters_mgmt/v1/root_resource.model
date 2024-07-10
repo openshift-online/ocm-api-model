@@ -123,7 +123,17 @@ resource Root {
 	}
 
 	// Reference to the resource that manages the storage quota values.
-	locator StorageQuotaValues{
+	locator StorageQuotaValues {
 		target StorageQuotaValues
+	}
+
+	// Reference to the resource that manages wif_configs
+	locator WifConfigs {
+		target WifConfigs
+	}
+
+	// Reference to the resource that manages wif_templates
+	locator WifTemplates {
+		target WifTemplate
 	}
 }
