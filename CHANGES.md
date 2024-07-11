@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.381 Jul 11 2024
+- Add WIF endpoints and resources
+
 ## 0.0.380 Jul 5 2024
 - Add `Architecture` attribute to `MachineType` model
 - Add `ReleaseImages` attribute to `Version` model
