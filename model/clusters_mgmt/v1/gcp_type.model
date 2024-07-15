@@ -38,4 +38,6 @@ struct GCP {
 	ClientX509CertURL       String
 	// GCP Security Settings
 	Security GcpSecurity
+	// GCP Authentication Method
+	Authentication GcpAuthentication
 }
