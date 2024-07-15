@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.382 Jul 15 2024
+- Add `Authentication` field to GCP model
+
 ## 0.0.381 Jul 11 2024
 - Add WIF endpoints and resources
 
