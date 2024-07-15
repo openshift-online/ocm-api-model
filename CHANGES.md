@@ -1239,7 +1239,7 @@ build workflows:
 
 ## 0.0.70 Jul 14 2020
 
-- Add API for custerdeployment labels
+- Add API for clusterdeployment labels
 - add organization_id to cluster_registration
 - label: Fix erroneous file extensions
 - MachineType: Expose instance size enum
