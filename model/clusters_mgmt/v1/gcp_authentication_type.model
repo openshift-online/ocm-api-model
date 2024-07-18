@@ -16,6 +16,12 @@ limitations under the License.
 
 // Google cloud platform authentication method of a cluster.
 struct GcpAuthentication {
-    // Self Link
+    // Indicates the type of this object
+    Kind String
+
+    // Unique identifier of the object
+    Id String
+
+    // Self link
     Href String
 }
