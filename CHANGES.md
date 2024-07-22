@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.383 Jul 22 2024
+- CS: Add kind and id field to GCP authentication structure
+
 ## 0.0.382 Jul 15 2024
 - Add `Authentication` field to GCP model
 
