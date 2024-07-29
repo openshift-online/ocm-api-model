@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.385 Jul 29 2024
+- Update WIF endpoint path
+- Remove WIF templates endpoints
+
 ## 0.0.384 Jul 29 2024
 - Add clusters_mgmt v2 API model
 
