@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.387 Jul 30 2024
+- Adjust `resources` from cluster resources to be [String]Interface
+
 ## 0.0.386 Jul 29 2024
 - Add `RootVolume` attribute to `AWSNodePool` model
 
