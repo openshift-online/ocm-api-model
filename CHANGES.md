@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.384 Jul 29 2024
+- Add clusters_mgmt v2 API model
+
 ## 0.0.383 Jul 23 2024
 - Add `Kind` and `Id` field to GCP `Authentication` structure
 
