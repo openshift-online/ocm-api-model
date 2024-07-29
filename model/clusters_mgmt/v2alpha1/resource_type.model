@@ -19,7 +19,7 @@ class ClusterResources {
     // Cluster ID for the fetched resources
     ClusterID String
     // Returned map of cluster resources fetched.
-    Resources [String]String
+    Resources [String]Interface
     // Date and time when the resources were fetched.
     CreationTimestamp Date
 }
