@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Definition of an wif_template resource.
-class WifTemplate {
-	// The list of service accounts and their associated roles that this template
-	// would require to be configured on the user's GCP project.
-	ServiceAccounts []WifServiceAccount
+// Manages the collection of gcp endpoints.
+resource GCP {
+	// Reference to the resource that manages wif_configs
+	locator WifConfigs {
+		target WifConfigs
+	}
 }
