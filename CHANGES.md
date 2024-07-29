@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.386 Jul 29 2024
+- Add `RootVolume` attribute to `AWSNodePool` model
+
 ## 0.0.385 Jul 29 2024
 - Update WIF endpoint path
 - Remove WIF templates endpoints

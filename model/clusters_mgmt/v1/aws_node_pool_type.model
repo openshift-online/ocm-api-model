@@ -44,4 +44,7 @@ class AWSNodePool {
     // Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances
     @json(name = "ec2_metadata_http_tokens")
     Ec2MetadataHttpTokens Ec2MetadataHttpTokens    
+    
+    // AWS Volume specification to be used to set custom worker disk size
+    RootVolume AWSVolume
 }
