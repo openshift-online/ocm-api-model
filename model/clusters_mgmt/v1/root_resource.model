@@ -127,13 +127,8 @@ resource Root {
 		target StorageQuotaValues
 	}
 
-	// Reference to the resource that manages wif_configs
-	locator WifConfigs {
-		target WifConfigs
-	}
-
-	// Reference to the resource that manages wif_templates
-	locator WifTemplates {
-		target WifTemplate
+	// Reference to the resource that manages the collection of gcp endpoints.
+	locator GCP {
+		target GCP
 	}
 }
