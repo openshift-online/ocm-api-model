@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.388 Aug 06 2024
+- Add 'OidcThumbprint' type model to v1 and v2alpha1
+- Add 'OidcThumbprintInput' type model to v1 and v2alpha1
+- Add 'OidcThumbprint' resource model to v1 and v2alpha1
+
 ## 0.0.387 Aug 05 2024
 - Add `ProjectNumber` field to `WifConfig` model
 
