@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.387 Aug 05 2024
+- Add `ProjectNumber` field to `WifConfig` model
+
 ## 0.0.386 Jul 29 2024
 - Add `RootVolume` attribute to `AWSNodePool` model
 
