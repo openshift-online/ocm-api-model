@@ -50,4 +50,9 @@ resource AWSInquiries {
     locator ValidateCredentials {
         target AwsValidateCredentials
     }
+
+    // Reference to the resource that manages OIDC Config Thumbprint fetching.
+    locator OidcThumbprint {
+        target OidcThumbprint
+    }
 }
