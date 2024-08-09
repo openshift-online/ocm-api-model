@@ -14,14 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of the status of a node pool.
-class NodePoolStatus {
-    // The current number of replicas for the node pool.
-    CurrentReplicas Integer
+// Overall state of a node pool.
+enum NodePoolStateValues {
+	// The node pool is being uninstalled.
+	Deleting
 
-    // Adds additional information about the NodePool status when the node pool doesn't reach the desired replicas.
-    Message String
+	// Error during installation or change.
+	Error
 
-    // The Current NodePool state.
-    State NodePoolState
+	// The node pool is still being created.
+	Creating
+
+	// The node pool is pending resources before being provisioned.
+	Pending
+
+	// The node pool is ready to use.
+	Ready
+
+	// The state of the node pool is unknown.
+	Unknown
+
+	// The state of the node pool is unknown.
+	Updating
+
+	// The node pool is validating user input.
+	Validating
 }
