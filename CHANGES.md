@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.389 Aug 13 2024
+- Add state struct to node pool
+- Add limited support reason override
+
 ## 0.0.388 Aug 06 2024
 - Add 'OidcThumbprint' type model to v1 and v2alpha1
 - Add 'OidcThumbprintInput' type model to v1 and v2alpha1
