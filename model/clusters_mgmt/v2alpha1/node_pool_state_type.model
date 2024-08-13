@@ -21,4 +21,8 @@ class NodePoolState {
 
     // Detailed user friendly status for node pool state.
     Details String
+
+    // Timestamp when the the state change las time. Using the format defined in
+    // [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
+    UpdatedTimestamp Date
 }
