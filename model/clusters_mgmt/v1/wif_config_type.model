@@ -31,6 +31,8 @@ struct WifGcp {
 	ProjectId String
 	// This represents the GCP project number in which the wif resources will be configured.
 	ProjectNumber String
+	// Prefix for naming GCP custom roles configured.
+	RolePrefix String
 	// The list of service accounts and their associated roles that will need to be
 	// configured on the user's GCP project.
 	ServiceAccounts []WifServiceAccount
