@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.390 Aug 26 2024
+- Add `RolePrefix` field to `WifGcp` model
+
 ## 0.0.389 Aug 13 2024
 - Add state struct to node pool
 - Add limited support reason override
