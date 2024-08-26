@@ -242,4 +242,7 @@ class Cluster {
 
 	// Indicate whether the cluster is enabled for multi arch workers
 	MultiArchEnabled Boolean
+
+	// Registry configuration for the cluster
+	RegistryConfig ClusterRegistryConfig
 }
