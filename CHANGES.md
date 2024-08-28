@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.391 Aug 28 2024
+- Add `RegistryConfig` attribute to `Cluster` model
+- Add `RegistryAllowlist` resource and endpoints
+
 ## 0.0.390 Aug 26 2024
 - Add `RolePrefix` field to `WifGcp` model
 
