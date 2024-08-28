@@ -131,4 +131,9 @@ resource Root {
 	locator GCP {
 		target GCP
 	}
+
+	// Reference to the resource that manages the collection of registry allowlists.
+	locator RegistryAllowlists {
+		target RegistryAllowlists
+	}
 }
