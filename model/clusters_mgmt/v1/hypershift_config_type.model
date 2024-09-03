@@ -27,4 +27,8 @@ struct HypershiftConfig {
 	// Contains the name of the current management cluster for this Hypershift cluster.
 	// Empty for non Hypershift clusters.
 	ManagementCluster String
+
+	// Contains the name of the hcp namespace for this Hypershift cluster.
+	// Empty for non Hypershift clusters.
+	HCPNamespace String
 }
