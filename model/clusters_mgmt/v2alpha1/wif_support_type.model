@@ -14,32 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-struct WifServiceAccount {
-	AccessMethod WifAccessMethod
-	CredentialRequest WifCredentialRequest
-	ServiceAccountId String
-	OsdRole String
+struct WifSupport {
+	Principal String
 	Roles []WifRole
-}
-
-enum WifAccessMethod {
-	Impersonate
-	Vm
-	Wif
-}
-
-struct WifCredentialRequest {
-	SecretRef WifSecretRef
-	ServiceAccountNames []String
-}
-
-struct WifSecretRef {
-	Name String
-	Namespace String
-}
-
-struct WifRole {
-	RoleId String
-	Predefined Boolean
-	Permissions []String
 }

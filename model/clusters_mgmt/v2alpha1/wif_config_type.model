@@ -32,6 +32,8 @@ struct WifGcp {
 	// The list of service accounts and their associated roles that will need to be
 	// configured on the user's GCP project.
 	ServiceAccounts []WifServiceAccount
+	// Defines the access configuration for support.
+	Support WifSupport
 	// The workload identity configuration data that will be used to create the
 	// workload identity pool on the user's account.
 	WorkloadIdentityPool WifPool

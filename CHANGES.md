@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.392 Sep 03 2024
+- Defined "support" field in WifConfig structure
+- Added "vm" WIF access method
+
 ## 0.0.391 Aug 28 2024
 - Add `RegistryConfig` attribute to `Cluster` model
 - Add `RegistryAllowlist` resource and endpoints
