@@ -18,4 +18,17 @@ limitations under the License.
 class Manifest {
 	// List of k8s objects to deploy on a hosted cluster.
 	Workloads []Interface
+
+	// Spec of Manifest Work object from open cluster management
+	// For more info please check https://open-cluster-management.io/concepts/manifestwork.
+	Spec Interface
+
+	// Date and time when the manifest got created in OCM database.
+	CreationTimestamp Date
+
+	// Date and time when the manifest got updated in OCM database.
+	UpdatedTimestamp Date
+
+	// Transient value to represent the underlying live resource.
+	LiveResource Interface
 }
