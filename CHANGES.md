@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.393 Sep 09 2024
+- Include missing field to hypershift model
+- Include new fields to manifest model
+- Remove v2alpha1 resources
+
 ## 0.0.392 Sep 03 2024
 - Defined "support" field in WifConfig structure
 - Added "vm" WIF access method
