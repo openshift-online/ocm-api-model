@@ -22,6 +22,8 @@ class WifConfig {
 	Gcp WifGcp
 	// The OCM organization that this wif_config resource belongs to.
 	Organization OrganizationLink
+	// Wif template(s) used to configure IAM resources
+	WifTemplates []String
 }
 
 struct WifGcp {
