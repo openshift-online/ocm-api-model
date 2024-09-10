@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.394 Sep 10 2024
+- Add `WifTemplates` field to `WifConfig` model
+
 ## 0.0.393 Sep 09 2024
 - Include missing field to hypershift model
 - Include new fields to manifest model
