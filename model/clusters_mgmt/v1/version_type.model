@@ -59,4 +59,7 @@ class Version {
 
 	// ReleaseImages contains the URI of OpenShift release images for arm64 and multi architectures.
 	ReleaseImages ReleaseImages
+
+	// WifEnabled is a flag that indicates whether this version is enabled for Workload Identity Federation.
+	WifEnabled Boolean
 }

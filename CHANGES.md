@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.395 Sep 13 2024
+- Add `WifEnabled` to `Version` model
+
 ## 0.0.394 Sep 10 2024
 - Add `WifTemplates` field to `WifConfig` model
 
