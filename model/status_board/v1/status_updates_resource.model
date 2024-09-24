@@ -26,6 +26,7 @@ resource StatusUpdates {
     in ProductIds String
     in FullNames String
     in Search String
+    in FlapDetection Boolean
     out Total Integer
     out Items []Status
   }
