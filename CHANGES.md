@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.396 Sep 24 2024
+- Add `FlapDetection` field to `status_board.status_updates` model
+
 ## 0.0.395 Sep 13 2024
 - Add `WifEnabled` to `Version` model
 - Add `AWSShard` to the `ProvisionShard` model
