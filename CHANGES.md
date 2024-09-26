@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.397 Sep 26 2024
+- Add `FlapDetection` field to `status_board.statuses` model
+
 ## 0.0.396 Sep 24 2024
 - Add `FlapDetection` field to `status_board.status_updates` model
 
