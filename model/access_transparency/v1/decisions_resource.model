@@ -52,7 +52,8 @@ resource Decisions {
 		//
 		// If the parameter isn't provided, or if the value is empty, then the order of the
 		// results is undefined.
-		in Order String
+		@json(name = "orderBy")
+		in OrderBy String
 
 		// Total number of items of the collection that match the search criteria,
 		// regardless of the size of the page.
