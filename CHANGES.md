@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.398 Oct 04 2024
+- Add updates for GCP Private Service Connect feature
+
 ## 0.0.397 Sep 26 2024
 - Add `FlapDetection` field to `status_board.statuses` model
 
