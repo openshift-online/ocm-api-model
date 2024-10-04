@@ -40,4 +40,7 @@ struct GCP {
 	Security GcpSecurity
 	// GCP Authentication Method
 	Authentication GcpAuthentication
+	// GCP PrivateServiceConnect configuration
+	PrivateServiceConnect GcpPrivateServiceConnect 
+
 }
