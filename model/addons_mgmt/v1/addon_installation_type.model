@@ -38,7 +38,7 @@ class AddonInstallation {
     CsvName String
 
     // Parameters in the installation
-    Parameters AddonInstallationParameters
+    link Parameters []AddonInstallationParameter
 
     // Addon Installation State
     State AddonInstallationState
