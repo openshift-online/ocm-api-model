@@ -40,6 +40,8 @@ struct WifGcp {
 	ServiceAccounts []WifServiceAccount
 	// Defines the access configuration for support.
 	Support WifSupport
+	// Determines whether tag-based access enforcement will be used.
+	TagEnforcement Boolean
 	// The workload identity configuration data that will be used to create the
 	// workload identity pool on the user's account.
 	WorkloadIdentityPool WifPool
