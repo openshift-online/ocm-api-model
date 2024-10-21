@@ -16,37 +16,49 @@ limitations under the License.
 
 // Microsoft Azure settings of a cluster.
 struct Azure {
-	// [Required] The Azure Subscription ID associated with the cluster. It must belong to
+	// The Azure Subscription ID associated with the cluster. It must belong to
 	// the Microsoft Entra Tenant ID `tenant_id`.
+	// Required during creation.
+	// Immutable.
 	SubscriptionID           String
 
-	// [Required] The Azure Resource Group Name of the cluster. It must be within `subscription_id`
-	// of the cluster. `resource_group_name` is located in the same Azure location
-	// as the cluster's region.
+	// The Azure Resource Group Name of the cluster. It must be a pre-existing
+	// Azure Resource Group and it must exist within the Azure Subscription
+	// `subscription_id` of the cluster.
+	// `resource_group_name` is located in the same Azure location as the
+	// cluster's region.
+	// Required during creation.
+	// Immutable.
 	ResourceGroupName        String
 
-	// [Required] The Azure Resource Name of the cluster. It must be within the
+	// The Azure Resource Name of the cluster. It must be within the
 	// Azure Resource Group Name `resource_group_name`.
 	// `resource_name` is located in the same Azure location as the cluster's region.
+	// Required during creation.
+	// Immutable.
 	ResourceName             String
 
-	// [Required] The Microsoft Entra Tenant ID where the cluster belongs.
+	// The Microsoft Entra Tenant ID where the cluster belongs.
+	// Required during creation.
+	// Immutable.
 	TenantID                 String
 
-	// [Required] The name of the Azure Resource Group where the Azure Resources related
-	// to the cluster are created. The Azure Resource Group is created with the given
-	// value, within the Azure Subscription `subscription_id` of the cluster.
+	// The desired name of the Azure Resource Group where the Azure Resources related
+	// to the cluster are created. It must not previously exist. The Azure Resource
+	// Group is created with the given value, within the Azure Subscription
+	// `subscription_id` of the cluster.
 	// `managed_resource_group_name` cannot be equal to the value of `managed_resource_group`.
 	// `managed_resource_group_name` is located in the same Azure location as the
 	// cluster's region.
 	// Not to be confused with `resource_group_name`, which is the Azure Resource Group Name
 	// where the own Azure Resource associated to the cluster resides.
+	// Required during creation.
+	// Immutable.
 	ManagedResourceGroupName String
 
-	// [Required] The Azure Resource ID of a pre-existing Azure
-	// Subnet. It is an Azure Subnet used for the Data Plane of the cluster.
-	// `subnet_resource_id` must be located in the same Azure location as the
-	// cluster's region.
+	// The Azure Resource ID of a pre-existing Azure Subnet. It is an Azure
+	// Subnet used for the Data Plane of the cluster. `subnet_resource_id`
+	// must be located in the same Azure location as the cluster's region.
 	// The Azure Subscription specified as part of the `subnet_resource_id`
 	// must be located in the same Azure Subscription as `subscription_id`.
 	// The Azure Resource Group Name specified as part of `subnet_resource_id`
@@ -58,10 +70,11 @@ struct Azure {
 	// The Azure Resource Group Name specified as part of the `subnet_resource_id`
 	// can be the same, or a different one than the one specified in
 	// `resource_group_name`.
+	// Required during creation.
+	// Immutable.
 	SubnetResourceID String
 
-	// [Required] The Azure Resource ID of a pre-existing
-	// Azure Network Security Group.
+	// The Azure Resource ID of a pre-existing Azure Network Security Group.
 	// The Network Security Group specified in network_security_group_resource_id
 	// must already be associated to the Azure Subnet `subnet_resource_id`.
 	// It is the Azure Network Security Group associated to the cluster's subnet
@@ -80,5 +93,7 @@ struct Azure {
 	// The Azure Resource Group Name specified as part of `network_security_group_resource_id`
 	// can be the same, or a different one than the one specified in
 	// `resource_group_name`.
+	// Required during creation.
+	// Immutable.
 	NetworkSecurityGroupResourceID String
 }
