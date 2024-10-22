@@ -96,4 +96,9 @@ struct Azure {
 	// Required during creation.
 	// Immutable.
 	NetworkSecurityGroupResourceID String
+
+	// Defines how the operators of the cluster authenticate to Azure.
+	// Required during creation.
+	// Immutable.
+	OperatorsAuthentication AzureOperatorsAuthentication
 }
