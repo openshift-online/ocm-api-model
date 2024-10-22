@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.399 Oct 22 2024
+- Improve Clusters Azure API type documentation
+- Add Azure Operators Authentication related resources
+- Add `AzureOperatorsAuthentication` resource to `Azure` resource
+
 ## 0.0.398 Oct 04 2024
 - Add updates for GCP Private Service Connect feature
 
