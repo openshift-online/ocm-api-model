@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.400 Oct 24 2024
+
+- Update `Parameters` attribute in addon_installation_type.model to the List of `AddonInstallationParameter` type.
+- Update `Parameters` attribute in addon_type.model to the  List of `AddonParameter` type.
+
 ## 0.0.399 Oct 22 2024
 - Improve Clusters Azure API type documentation
 - Add Azure Operators Authentication related resources
