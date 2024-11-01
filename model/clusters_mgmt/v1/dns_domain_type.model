@@ -27,4 +27,7 @@ class DNSDomain {
 
     // Indicates if this dns domain is user defined.
     UserDefined Boolean
+
+    // Signals which cluster architecture the domain is ready for.
+    ClusterArch ClusterArchitecture
 }

@@ -62,6 +62,12 @@ struct AWS {
 	// Role ARN for private hosted zone.
 	PrivateHostedZoneRoleARN String
 
+	// ID of local private hosted zone for hypershift internal communication.
+	HcpInternalCommunicationHostedZoneId String
+
+	// Role ARN for VPC Endpoint Service cross account role.
+	VpcEndpointRoleArn String
+
 	// Additional AWS Security Groups to be added to default worker (compute) machine pool.
 	AdditionalComputeSecurityGroupIds []String
 

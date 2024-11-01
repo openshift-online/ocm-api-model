@@ -2,8 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
-## 0.0.400 Oct 24 2024
+## 0.0.401 Oct 31 2024
+- Add settings for HCP Shared VPC to `Cluster` model
+- Add support for cluster arch to `DNS` model
 
+## 0.0.400 Oct 24 2024
 - Update `Parameters` attribute in addon_installation_type.model to the List of `AddonInstallationParameter` type.
 - Update `Parameters` attribute in addon_type.model to the  List of `AddonParameter` type.
 
