@@ -14,20 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific wif_config.
-resource WifConfig {
-	// Retrieves the details of the WifConfig.
+// Retrieves the details of the WifConfig status.
+resource WifConfigStatus {
 	method Get {
-		out Body WifConfig 
-	}
-
-	// Deletes the wif_config.
-	method Delete {
-		// Dry run flag is used to check if the operation can be completed, but won't delete.
-		in DryRun Boolean = false
-	}
-
-	locator Status {
-		target WifConfigStatus
+		out Body WifConfigStatus
 	}
 }
