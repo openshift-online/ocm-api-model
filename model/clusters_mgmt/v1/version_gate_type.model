@@ -34,8 +34,13 @@ class VersionGate {
   // DocumentationURL is the URL for the documentation of the version gate.
   DocumentationURL String
 
-  // STSOnly indicates if this version gate is for STS clusters only
+  // STSOnly indicates if this version gate is for STS clusters only,
+  // deprecated: to be replaced with ClusterCondition
   STSOnly Boolean
+
+  // ClusterCondition aims at selecting the clusters targeted by this version gate,
+  // ignored if STSOnly is true
+  ClusterCondition String
 
   // CreationTimestamp is the date and time when the version gate was created,
   // format defined in https://www.ietf.org/rfc/rfc3339.txt[RC3339].
