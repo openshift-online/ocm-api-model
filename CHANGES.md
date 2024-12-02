@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.402 Nov 15 2024
+- Add WifConfig status endpoint
+- Add `WifConfigStatus` model
+
 ## 0.0.401 Oct 31 2024
 - Add settings for HCP Shared VPC to `Cluster` model
 - Add support for cluster arch to `DNS` model
