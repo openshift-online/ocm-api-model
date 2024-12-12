@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.404 Dec 13 2024
+- Add WifConfig patch endpoint
+
 ## 0.0.403 Dec 13 2024
 - Add `NodesOutboundConnectivity` in azure_type.model to the `Azure` model
 - Add `AzureNodesOutboundConnectivity` model
