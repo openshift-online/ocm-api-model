@@ -101,4 +101,9 @@ struct Azure {
 	// Required during creation.
 	// Immutable.
 	OperatorsAuthentication AzureOperatorsAuthentication
+
+	// NodesOutboundConnectivity defines how the network outbound
+	// configuration of the Cluster's Node Pool's Nodes is performed.
+	// By default this is configured as Azure Load Balancer. This value is immutable.
+	NodesOutboundConnectivity AzureNodesOutboundConnectivity
 }
