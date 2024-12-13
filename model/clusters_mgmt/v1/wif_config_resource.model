@@ -21,6 +21,11 @@ resource WifConfig {
 		out Body WifConfig 
 	}
 
+	// Updates the WifConfig.
+	method Update {
+		in out Body WifConfig
+	}
+
 	// Deletes the wif_config.
 	method Delete {
 		// Dry run flag is used to check if the operation can be completed, but won't delete.
