@@ -221,6 +221,35 @@ would be the following:
 /api/clusters_mgmt/v1/clusters/123/credentials
 ```
 
+### Class references using @ref annotation
+One can define a class reference inside a service such that it will inherit its content from
+another service using the special `@ref` annotation, for example:
+
+```
+// In /aro_hcp/v1_alpha1/cluster_type.model
+@ref(path = "/clusters_mgmt/v1/cluster")
+class Cluster {
+}
+```
+
+The above decelaration will inherit its content from the `Cluster` class under the `/clusters_mgmt/v1` service.
+This means that any changes made in `Cluster` class will be reflected under this derived type as well.
+
+Links to other resources are preserved as they are.
+
+If one wishes to **override** a type she can create a class inside `/aro_hcp/v1_alpha1/` in order to override any nested types defined.
+For example the following type declaration will override the `NodePools` link inside `Cluster` under `/aro_hcp/v1`:
+
+```
+// In /aro_hcp/v1_alpha1/node_pool_type.model
+@ref(path = "/clusters_mgmt/v1/node_pool")
+class NodePool {
+}
+```
+
+This means that now under `Cluster` the `NodePools` field type is linked to the one defined in `/aro_hcp/v1_alpha1` (i.e. `v1alpha.NodePool`) which itself
+references and derived from the `NodePool` type under `/clusters_mgmt/v1`.
+
 ## Documentation
 
 The Go language supports adding documentation in the code itself, using the
