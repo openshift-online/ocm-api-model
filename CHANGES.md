@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+
+## 0.0.405 Dec 15 2024
+- Add aro_hcp v1alpha1 Root resource
+
 ## 0.0.404 Dec 13 2024
 - Add WifConfig patch endpoint
 
