@@ -213,4 +213,8 @@ resource Cluster {
 	locator KubeletConfig {
 	    target KubeletConfig
 	}
+
+	locator Migrations {
+	    target ClusterMigrations
+	}
 }

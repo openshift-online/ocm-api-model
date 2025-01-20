@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.407 Jan 17 2025
+- Add `ClusterMigration` type
+- Add `ClusterMigration` resources
+
 ## 0.0.406 Dec 18 2024
 - Expose the GCP Shielded VM secure boot setting at the machine pool level
 
