@@ -16,6 +16,6 @@ limitations under the License.
 
 // Type of cluster migration.
 enum ClusterMigrationType {
-    @json(name = "SdnToOvnClusterMigration")
+    @json(name = "sdnToOvn")
     SdnToOvn
 }
