@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.408 Jan 21 2025
+- Update SdnToOvn json value in `ClusterMigrationType` enum
+
 ## 0.0.407 Jan 17 2025
 - Add `ClusterMigration` type
 - Add `ClusterMigration` resources
