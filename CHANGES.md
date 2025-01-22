@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.409 Jan 22 2025
+- Update `ClusterMigrationState` value to be a struct
+
 ## 0.0.408 Jan 21 2025
 - Update SdnToOvn json value in `ClusterMigrationType` enum
 

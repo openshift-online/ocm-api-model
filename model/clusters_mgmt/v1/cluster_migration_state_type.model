@@ -14,8 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// Representation of a cluster migration state.
+struct ClusterMigrationState {
+    // The current state of the cluster migration.
+    Value ClusterMigrationStateValue
+
+    // A longer description of the current state of the cluster migration.
+    Description string
+}
+
 //  The state of the cluster migration.
-enum ClusterMigrationState {
+enum ClusterMigrationStateValue {
     @json(name = "scheduled")
     Scheduled
 
