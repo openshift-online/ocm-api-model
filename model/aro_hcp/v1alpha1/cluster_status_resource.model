@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2024 Red Hat, Inc.
+Copyright (c) 2025 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,28 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific cluster.
-resource Cluster {
-	// Retrieves the details of the cluster.
+// Provides detailed information about the status of an specific cluster.
+resource ClusterStatus {
 	method Get {
-		out Body Cluster
-	}
-
-	// Updates the cluster.
-	method Update {
-		in out Body Cluster
-	}
-
-	// Deletes the cluster.
-	method Delete {
-		// Dry run flag is used to check if the operation can be completed, but won't delete.
-		in DryRun Boolean = false
-
-		// BestEffort flag is used to check if the cluster deletion should be best-effort mode or not.
-		in BestEffort Boolean = false
-	}
-
-	locator Status {
-		target ClusterStatus
+		out Body ClusterStatus
 	}
 }
