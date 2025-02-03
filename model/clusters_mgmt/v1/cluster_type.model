@@ -245,4 +245,7 @@ class Cluster {
 
 	// Registry configuration for the cluster
 	RegistryConfig ClusterRegistryConfig
+
+    // Configure the optional components of the cluster.
+	Capabilities ClusterCapabilities
 }
