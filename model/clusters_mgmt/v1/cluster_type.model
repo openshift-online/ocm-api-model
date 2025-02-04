@@ -245,4 +245,8 @@ class Cluster {
 
 	// Registry configuration for the cluster
 	RegistryConfig ClusterRegistryConfig
+
+	// Disabled capabilities
+	DisabledCapabilities []OptionalClusterCapability
+
 }
