@@ -18,13 +18,16 @@ limitations under the License.
 struct SdnToOvnClusterMigration {
     // The IP address range to use for the internalTransSwitchSubnet parameter of OVN-Kubernetes
     // upon migration.
+    @json(name = "transit_ipv4")
     TransitIpv4 String
 
     // The IP address range to use for the internalJoinSubnet parameter of OVN-Kubernetes
     // upon migration.
+    @json(name = "join_ipv4")
     JoinIpv4 String
 
     // The IP address range to us for the internalMasqueradeSubnet parameter of OVN-Kubernetes
     // upon migration.
+    @json(name = "masquerade_ipv4")
     MasqueradeIpv4 String
 }
