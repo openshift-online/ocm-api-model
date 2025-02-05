@@ -2,8 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
-## 0.0.410 Jan 31 2025
+## 0.0.411 Feb 5 2025
+- Update json annotations for SdnToOvnClusterMigration properties
 
+## 0.0.410 Jan 31 2025
 - Add `ClusterStatus` type to aro_hcp
 - Add `ClusterStatus` resources to aro_hcp
 - Update metamodel version to v0.0.65
