@@ -1,0 +1,44 @@
+# github.com/antlr/antlr4/runtime/Go/antlr v0.0.0-20211106181442-e4c1a74c66bd
+## explicit; go 1.16
+github.com/antlr/antlr4/runtime/Go/antlr
+# github.com/inconshreveable/mousetrap v1.0.0
+## explicit
+github.com/inconshreveable/mousetrap
+# github.com/json-iterator/go v1.1.12
+## explicit; go 1.12
+github.com/json-iterator/go
+# github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
+## explicit
+github.com/modern-go/concurrent
+# github.com/modern-go/reflect2 v1.0.2
+## explicit; go 1.12
+github.com/modern-go/reflect2
+# github.com/openshift-online/ocm-api-metamodel v0.0.65 => github.com/deads2k/ocm-api-metamodel v0.0.0-20250303194925-822570a845c7
+## explicit; go 1.17
+github.com/openshift-online/ocm-api-metamodel/cmd/metamodel
+github.com/openshift-online/ocm-api-metamodel/cmd/metamodel/check
+github.com/openshift-online/ocm-api-metamodel/cmd/metamodel/generate
+github.com/openshift-online/ocm-api-metamodel/cmd/metamodel/generate/docs
+github.com/openshift-online/ocm-api-metamodel/cmd/metamodel/generate/golang
+github.com/openshift-online/ocm-api-metamodel/cmd/metamodel/generate/openapi
+github.com/openshift-online/ocm-api-metamodel/cmd/metamodel/version
+github.com/openshift-online/ocm-api-metamodel/pkg/annotations
+github.com/openshift-online/ocm-api-metamodel/pkg/concepts
+github.com/openshift-online/ocm-api-metamodel/pkg/generators
+github.com/openshift-online/ocm-api-metamodel/pkg/generators/docs
+github.com/openshift-online/ocm-api-metamodel/pkg/generators/golang
+github.com/openshift-online/ocm-api-metamodel/pkg/generators/openapi
+github.com/openshift-online/ocm-api-metamodel/pkg/http
+github.com/openshift-online/ocm-api-metamodel/pkg/info
+github.com/openshift-online/ocm-api-metamodel/pkg/language
+github.com/openshift-online/ocm-api-metamodel/pkg/markdown
+github.com/openshift-online/ocm-api-metamodel/pkg/names
+github.com/openshift-online/ocm-api-metamodel/pkg/nomenclator
+github.com/openshift-online/ocm-api-metamodel/pkg/reporter
+# github.com/spf13/cobra v1.4.0
+## explicit; go 1.15
+github.com/spf13/cobra
+# github.com/spf13/pflag v1.0.5
+## explicit; go 1.12
+github.com/spf13/pflag
+# github.com/openshift-online/ocm-api-metamodel => github.com/deads2k/ocm-api-metamodel v0.0.0-20250303194925-822570a845c7
