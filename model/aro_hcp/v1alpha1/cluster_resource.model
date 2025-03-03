@@ -38,4 +38,9 @@ resource Cluster {
 	locator Status {
 		target ClusterStatus
 	}
+
+	// Reference to the resource that manages the collection of inflight checks.
+	locator InflightChecks {
+		target InflightChecks
+	}
 }

@@ -37,7 +37,7 @@ $(error "please install 'shasum' or 'sha256sum'")
 endif
 
 # Details of the metamodel used to check the model:
-metamodel_version:=v0.0.65
+metamodel_version:=v0.0.66
 metamodel_url:=https://github.com/openshift-online/ocm-api-metamodel/releases/download/$(metamodel_version)/metamodel-$(UNAME)-amd64
 metamodel_sha1_url:=https://github.com/openshift-online/ocm-api-metamodel/releases/download/$(metamodel_version)/metamodel-$(UNAME)-amd64.sha256
 
