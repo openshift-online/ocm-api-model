@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.413 Mar 9 2025
+- Added inflight checks endpoints to the ARO HCP service
+- Update metamodel version to v0.0.66
+
 ## 0.0.412 Feb 26 2025
 - Added `ClusterCondition` field to `VersionGate` type
 
