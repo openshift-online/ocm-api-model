@@ -43,4 +43,8 @@ resource Cluster {
 	locator InflightChecks {
 		target InflightChecks
 	}
+
+	locator NodePools {
+		target NodePools
+	}
 }
