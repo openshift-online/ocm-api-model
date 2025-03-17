@@ -14,24 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Manages a specific nodepool.
-resource NodePool {
-	// Retrieves the details of the node pool.
+// Provides detailed information about the status of an specific NodePool.
+resource NodePoolStatus {
 	method Get {
-		out Body NodePool
+		out Body NodePoolStatus
 	}
-
-	// Updates the node pool.
-	method AsyncUpdate {
-		in out Body NodePool
-	}
-
-	// Deletes the node pool.
-	method AsyncDelete {
-	}
-
-	locator Status {
-		target NodePoolStatus
-	}
-
 }
