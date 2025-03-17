@@ -22,11 +22,13 @@ resource NodePool {
 	}
 
 	// Updates the node pool.
+	@go(name="Update")
 	method AsyncUpdate {
 		in out Body NodePool
 	}
 
 	// Deletes the node pool.
+	@go(name="Delete")
 	method AsyncDelete {
 	}
 
