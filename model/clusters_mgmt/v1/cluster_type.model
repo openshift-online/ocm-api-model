@@ -245,4 +245,7 @@ class Cluster {
 
 	// Registry configuration for the cluster
 	RegistryConfig ClusterRegistryConfig
+
+	// OpenShift Cluster Capabilities configuration
+	Capabilities ClusterCapabilities
 }
