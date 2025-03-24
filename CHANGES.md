@@ -2,7 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
-## 0.0.414 Mon 17 2025
+## 0.0.415 Mar 24 2025
+- Added `ClusterCapabilities` type
+- Added `Capabilities` field to `Cluster` type
+
+## 0.0.414 Mar 17 2025
 - Added annotations to async methods
 - Added node pool status endpoint to ARO HCP service
 - Added node pool endpoints to the ARO HCP service
