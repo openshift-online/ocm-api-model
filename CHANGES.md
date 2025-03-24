@@ -2,7 +2,7 @@
 
 This document describes the relevant changes between releases of the API model.
 
-## 0.0.414 Mon 17 2025
+## 0.0.414 Mar 17 2025
 - Added annotations to async methods
 - Added node pool status endpoint to ARO HCP service
 - Added node pool endpoints to the ARO HCP service
