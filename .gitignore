@@ -1,3 +1,4 @@
 .vscode/
 .idea/
 /metamodel
+/metamodel_generator/metamodel

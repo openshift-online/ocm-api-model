@@ -40,22 +40,22 @@ goimports_version:=v0.4.0
 
 .PHONY: check
 check: metamodel
-	./metamodel check --model=model
+	./metamodel_generator/metamodel check --model=model
 
 verify: verify-clientapi verify-openapi
 
 .PHONY: openapi
 openapi: metamodel
-	./metamodel generate openapi --model=model --output=openapi
+	./metamodel_generator/metamodel generate openapi --model=model --output=openapi
 
 verify-openapi: metamodel
 	$(eval TMPDIR := $(shell mktemp -d))
-	./metamodel generate openapi --model=model --output=$(TMPDIR)
+	./metamodel_generator/metamodel generate openapi --model=model --output=$(TMPDIR)
 	diff -r $(TMPDIR)/ openapi/
 	rm -rf $(TMPDIR)
 
 clientapi: metamodel goimports-install
-	./metamodel generate go \
+	./metamodel_generator/metamodel generate go \
 		--model=model \
 		--generators=types,builders,json \
 		--base=github.com/openshift-online/ocm-api-model/clientapi \
@@ -66,7 +66,8 @@ verify-clientapi: metamodel goimports-install
 	$(eval TMPDIR := $(shell mktemp -d))
 	cp clientapi/go.mod $(TMPDIR)
 	cp clientapi/go.sum $(TMPDIR)
-	./metamodel generate go \
+	cp -r clientapi/dependencymagnet $(TMPDIR)
+	./metamodel_generator/metamodel generate go \
 		--model=model \
 		--generators=types,builders,json \
 		--base=github.com/openshift-online/ocm-api-model/clientapi \
@@ -75,7 +76,7 @@ verify-clientapi: metamodel goimports-install
 	rm -rf $(TMPDIR)
 
 metamodel:
-	go build github.com/openshift-online/ocm-api-metamodel/cmd/metamodel
+	 $(MAKE) -C metamodel_generator metamodel
 
 # Enforce indentation by tabs. License contains 2 spaces, so reject 3+.
 lint:
