@@ -36,10 +36,7 @@ else
 $(error "please install 'shasum' or 'sha256sum'")
 endif
 
-# Details of the metamodel used to check the model:
-metamodel_version:=v0.0.67
-metamodel_url:=https://github.com/openshift-online/ocm-api-metamodel/releases/download/$(metamodel_version)/metamodel-$(UNAME)-amd64
-metamodel_sha1_url:=https://github.com/openshift-online/ocm-api-metamodel/releases/download/$(metamodel_version)/metamodel-$(UNAME)-amd64.sha256
+goimports_version:=v0.4.0
 
 .PHONY: check
 check: metamodel
@@ -49,12 +46,16 @@ check: metamodel
 openapi: metamodel
 	./metamodel generate openapi --model=model --output=openapi
 
+clientapi: metamodel goimports-install
+	./metamodel generate go \
+		--model=model \
+		--generators=types,builders,json \
+		--base=github.com/openshift-online/ocm-api-model/clientapi \
+		--output=clientapi
+	pushd clientapi; go mod tidy; popd
+
 metamodel:
-	wget --progress=dot:giga --output-document="$@" "$(metamodel_url)"
-	@# the following echo line prints the sha256sum of the downloaded binary, and then the filename,
-	@# separated by TWO SPACES, do NOT change that
-	echo "$$(wget --output-document="$@" -O- --quiet - $(metamodel_sha1_url) | awk '{print $$1}')  $@"|$(SHA256CMD)
-	chmod +x "$@"
+	go build github.com/openshift-online/ocm-api-metamodel/cmd/metamodel
 
 # Enforce indentation by tabs. License contains 2 spaces, so reject 3+.
 lint:
@@ -65,4 +66,22 @@ clean:
 	rm -rf \
 		metamodel \
 		openapi \
+		clientapi/accesstransparency \
+        clientapi/accountsmgmt \
+        clientapi/addonsmgmt \
+        clientapi/arohcp \
+        clientapi/authorizations \
+        clientapi/clustersmgmt \
+        clientapi/helpers \
+        clientapi/jobqueue \
+        clientapi/osdfleetmgmt \
+        clientapi/servicelogs \
+        clientapi/servicemgmt \
+        clientapi/statusboard \
+        clientapi/webrca \
 		$(NULL)
+
+.PHONY: goimports-install
+goimports-install:
+	@GOBIN=$(LOCAL_BIN_PATH) go install golang.org/x/tools/cmd/goimports@$(goimports_version)
+
