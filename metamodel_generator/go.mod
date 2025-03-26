@@ -13,3 +13,5 @@ require (
 	github.com/spf13/cobra v1.4.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 )
+
+replace github.com/openshift-online/ocm-api-metamodel => github.com/deads2k/ocm-api-metamodel v0.0.0-20250326194516-ba2daee63724
