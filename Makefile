@@ -42,9 +42,17 @@ goimports_version:=v0.4.0
 check: metamodel
 	./metamodel check --model=model
 
+verify: verify-clientapi verify-openapi
+
 .PHONY: openapi
 openapi: metamodel
 	./metamodel generate openapi --model=model --output=openapi
+
+verify-openapi: metamodel
+	$(eval TMPDIR := $(shell mktemp -d))
+	./metamodel generate openapi --model=model --output=$(TMPDIR)
+	diff -r $(TMPDIR)/ openapi/
+	rm -rf $(TMPDIR)
 
 clientapi: metamodel goimports-install
 	./metamodel generate go \
@@ -53,6 +61,18 @@ clientapi: metamodel goimports-install
 		--base=github.com/openshift-online/ocm-api-model/clientapi \
 		--output=clientapi
 	pushd clientapi; go mod tidy; popd
+
+verify-clientapi: metamodel goimports-install
+	$(eval TMPDIR := $(shell mktemp -d))
+	cp clientapi/go.mod $(TMPDIR)
+	cp clientapi/go.sum $(TMPDIR)
+	./metamodel generate go \
+		--model=model \
+		--generators=types,builders,json \
+		--base=github.com/openshift-online/ocm-api-model/clientapi \
+		--output=$(TMPDIR)
+	diff -r $(TMPDIR)/ clientapi/
+	rm -rf $(TMPDIR)
 
 metamodel:
 	go build github.com/openshift-online/ocm-api-metamodel/cmd/metamodel
