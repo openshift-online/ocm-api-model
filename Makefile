@@ -43,20 +43,21 @@ check: metamodel
 	./metamodel_generator/metamodel check --model=model
 
 verify: verify-clientapi verify-openapi
+update: update-clientapi update-openapi
 
 .PHONY: openapi
-openapi: metamodel
-	./metamodel_generator/metamodel generate openapi --model=model --output=openapi
+update-openapi: metamodel
+	./metamodel_generator/metamodel generate openapi --model=clientapi/model --output=openapi
 
 verify-openapi: metamodel
 	$(eval TMPDIR := $(shell mktemp -d))
-	./metamodel_generator/metamodel generate openapi --model=model --output=$(TMPDIR)
+	./metamodel_generator/metamodel generate openapi --model=clientapi/model --output=$(TMPDIR)
 	diff -r $(TMPDIR)/ openapi/
 	rm -rf $(TMPDIR)
 
-clientapi: metamodel goimports-install
+update-clientapi: metamodel goimports-install
 	./metamodel_generator/metamodel generate go \
-		--model=model \
+		--model=clientapi/model \
 		--generators=types,builders,json \
 		--base=github.com/openshift-online/ocm-api-model/clientapi \
 		--output=clientapi
@@ -64,11 +65,13 @@ clientapi: metamodel goimports-install
 
 verify-clientapi: metamodel goimports-install
 	$(eval TMPDIR := $(shell mktemp -d))
+	# copy content to make the diff clean
 	cp clientapi/go.mod $(TMPDIR)
 	cp clientapi/go.sum $(TMPDIR)
+	cp -r clientapi/model $(TMPDIR)
 	cp -r clientapi/dependencymagnet $(TMPDIR)
 	./metamodel_generator/metamodel generate go \
-		--model=model \
+		--model=clientapi/model \
 		--generators=types,builders,json \
 		--base=github.com/openshift-online/ocm-api-model/clientapi \
 		--output=$(TMPDIR)
