@@ -36,25 +36,50 @@ else
 $(error "please install 'shasum' or 'sha256sum'")
 endif
 
-# Details of the metamodel used to check the model:
-metamodel_version:=v0.0.67
-metamodel_url:=https://github.com/openshift-online/ocm-api-metamodel/releases/download/$(metamodel_version)/metamodel-$(UNAME)-amd64
-metamodel_sha1_url:=https://github.com/openshift-online/ocm-api-metamodel/releases/download/$(metamodel_version)/metamodel-$(UNAME)-amd64.sha256
+goimports_version:=v0.4.0
 
 .PHONY: check
 check: metamodel
-	./metamodel check --model=model
+	./metamodel_generator/metamodel check --model=model
+
+verify: verify-clientapi verify-openapi
+update: update-clientapi update-openapi
 
 .PHONY: openapi
-openapi: metamodel
-	./metamodel generate openapi --model=model --output=openapi
+update-openapi: metamodel
+	./metamodel_generator/metamodel generate openapi --model=clientapi/model --output=openapi
+
+verify-openapi: metamodel
+	$(eval TMPDIR := $(shell mktemp -d))
+	./metamodel_generator/metamodel generate openapi --model=clientapi/model --output=$(TMPDIR)
+	diff -r $(TMPDIR)/ openapi/
+	rm -rf $(TMPDIR)
+
+update-clientapi: metamodel goimports-install
+	./metamodel_generator/metamodel generate go \
+		--model=clientapi/model \
+		--generators=types,builders,json \
+		--base=github.com/openshift-online/ocm-api-model/clientapi \
+		--output=clientapi
+	pushd clientapi; go mod tidy; popd
+
+verify-clientapi: metamodel goimports-install
+	$(eval TMPDIR := $(shell mktemp -d))
+	# copy content to make the diff clean
+	cp clientapi/go.mod $(TMPDIR)
+	cp clientapi/go.sum $(TMPDIR)
+	cp -r clientapi/model $(TMPDIR)
+	cp -r clientapi/dependencymagnet $(TMPDIR)
+	./metamodel_generator/metamodel generate go \
+		--model=clientapi/model \
+		--generators=types,builders,json \
+		--base=github.com/openshift-online/ocm-api-model/clientapi \
+		--output=$(TMPDIR)
+	diff -r $(TMPDIR)/ clientapi/
+	rm -rf $(TMPDIR)
 
 metamodel:
-	wget --progress=dot:giga --output-document="$@" "$(metamodel_url)"
-	@# the following echo line prints the sha256sum of the downloaded binary, and then the filename,
-	@# separated by TWO SPACES, do NOT change that
-	echo "$$(wget --output-document="$@" -O- --quiet - $(metamodel_sha1_url) | awk '{print $$1}')  $@"|$(SHA256CMD)
-	chmod +x "$@"
+	 $(MAKE) -C metamodel_generator metamodel
 
 # Enforce indentation by tabs. License contains 2 spaces, so reject 3+.
 lint:
@@ -65,4 +90,22 @@ clean:
 	rm -rf \
 		metamodel \
 		openapi \
+		clientapi/accesstransparency \
+        clientapi/accountsmgmt \
+        clientapi/addonsmgmt \
+        clientapi/arohcp \
+        clientapi/authorizations \
+        clientapi/clustersmgmt \
+        clientapi/helpers \
+        clientapi/jobqueue \
+        clientapi/osdfleetmgmt \
+        clientapi/servicelogs \
+        clientapi/servicemgmt \
+        clientapi/statusboard \
+        clientapi/webrca \
 		$(NULL)
+
+.PHONY: goimports-install
+goimports-install:
+	@GOBIN=$(LOCAL_BIN_PATH) go install golang.org/x/tools/cmd/goimports@$(goimports_version)
+
