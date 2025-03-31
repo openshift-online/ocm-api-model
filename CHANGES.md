@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.416 Mar 31 2025
+- Added annotation to nodepool state
+
 ## 0.0.415 Mar 24 2025
 - Added `ClusterCapabilities` type
 - Added `Capabilities` field to `Cluster` type
