@@ -17,6 +17,7 @@ limitations under the License.
 // Representation of the status of a node pool.
 class NodePoolState {
 	// The current state of the node pool
+	@json(name="value")
 	NodePoolStateValue String
 
 	// The current number of replicas for the node pool.
