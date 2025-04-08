@@ -31,4 +31,5 @@ struct ClusterAuthorizationRequest {
 	CloudProviderID String
 	QuotaVersion String
 	Scope String
+	RhRegionID String
 }
