@@ -53,6 +53,7 @@ class Subscription {
 	CloudProviderID String
 	BillingMarketplaceAccount String
 	RegionID String
+	RhRegionID String
 	ClusterBillingModel BillingModel
 	// If the subscription is a trial, date the trial ends.
 	TrialEndDate Date

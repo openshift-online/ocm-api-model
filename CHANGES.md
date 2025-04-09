@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.417 Apr 08 2025
+- Add `RhRegionID` field to `Subscription` and `ClusterAuthorizationRequest` type
+
 ## 0.0.416 Mar 31 2025
 - Added annotation to nodepool state
 
