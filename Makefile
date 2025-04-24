@@ -41,6 +41,9 @@ metamodel_version:=v0.0.67
 metamodel_url:=https://github.com/openshift-online/ocm-api-metamodel/releases/download/$(metamodel_version)/metamodel-$(UNAME)-amd64
 metamodel_sha1_url:=https://github.com/openshift-online/ocm-api-metamodel/releases/download/$(metamodel_version)/metamodel-$(UNAME)-amd64.sha256
 
+verify: check
+.PHONY: verify
+
 .PHONY: check
 check: metamodel
 	./metamodel check --model=model
