@@ -55,4 +55,8 @@ struct AzureNodePool {
     // Enables Ephemeral OS Disks for the Nodes in the Node Pool.
     // If not specified, no Ephemeral OS Disks are used.
     EphemeralOSDiskEnabled Boolean
+
+    // Enables Disk Encryption for the Nodes in the Node Pool.
+    // If not specified, the Disk Encryption is disabled.
+    OSDiskEncryptionAtHost Boolean
 }
