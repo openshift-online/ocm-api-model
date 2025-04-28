@@ -55,4 +55,23 @@ struct AzureNodePool {
     // Enables Ephemeral OS Disks for the Nodes in the Node Pool.
     // If not specified, no Ephemeral OS Disks are used.
     EphemeralOSDiskEnabled Boolean
+
+    // EncryptionAtHost contains Encryption At Host disk encryption configuration.
+    // When enabled, it enhances Azure Disk Storage Server-Side Encryption to ensure that all temporary disks
+    // and disk caches are encrypted at rest and flow encrypted to the Storage clusters.
+    EncryptionAtHost AzureNodePoolEncryptionAtHost
+}
+
+// AzureNodePoolEncryptionAtHost defines the encryption setting for Encryption At Host.
+struct AzureNodePoolEncryptionAtHost {
+	// State indicates whether Encryption At Host is enabled.
+	// When enabled, it enhances Azure Disk Storage Server-Side Encryption to ensure that all temporary disks
+	// and disk caches are encrypted at rest and flow encrypted to the Storage clusters.
+	// Accepted values are: ["disabled", "enabled"]
+	State AzureNodePoolEncryptionAtHostState
+}
+
+enum AzureNodePoolEncryptionAtHostState {
+  enabled
+  disabled
 }
