@@ -97,10 +97,13 @@ struct Azure {
 	// Immutable.
 	NetworkSecurityGroupResourceID String
 
+    // This is renamed to 'required_operators_authentication'.
+	// It brings concerns of; what if one of the operators stop being required anymore all the time?
+	// How do people see the design considering the future evolutions concerns?
 	// Defines how the operators of the cluster authenticate to Azure.
 	// Required during creation.
 	// Immutable.
-	OperatorsAuthentication AzureOperatorsAuthentication
+	RequiredOperatorsAuthentication AzureOperatorsAuthentication
 
 	// NodesOutboundConnectivity defines how the network outbound
 	// configuration of the Cluster's Node Pool's Nodes is performed.

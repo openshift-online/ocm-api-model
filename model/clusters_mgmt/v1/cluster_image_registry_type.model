@@ -1,0 +1,4 @@
+struct ClusterImageRegistry {
+	ControlPlaneIdentity AzureControlPlaneManagedIdentity
+	DataPlaneIdentity AzureDataPlaneManagedIdentity
+}

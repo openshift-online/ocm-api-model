@@ -247,5 +247,11 @@ class Cluster {
 	RegistryConfig ClusterRegistryConfig
 
 	// OpenShift Cluster Capabilities configuration
-	Capabilities ClusterCapabilities
+	// Commented because it'll be removed from the API as par the proposal in the DDR
+	// Capabilities ClusterCapabilities
+
+    // At the moment it is top level at the cluster's spec.
+	// We could move it to the .Azure field as it contains Azure specific things.
+	// This is the one point we want to solve
+	ImageRegistry ClusterImageRegistry
 }
