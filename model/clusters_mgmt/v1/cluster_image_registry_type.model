@@ -1,4 +1,18 @@
 struct ClusterImageRegistry {
+	// controls whether a image registry feature is enabled or not.
+	// This is just to show that an optional feature can be enabled or not
+	State ClusterImageRegistryState
+
 	ControlPlaneIdentity AzureControlPlaneManagedIdentity
+	
 	DataPlaneIdentity AzureDataPlaneManagedIdentity
+}
+
+
+enum ClusterImageRegistryState {
+    @json(name = "enabled")
+    Enabled
+
+    @json(name = "disabled")
+    Disabled
 }
