@@ -3,11 +3,35 @@ struct ClusterImageRegistry {
 	// This is just to show that an optional feature can be enabled or not
 	State ClusterImageRegistryState
 
+	// authentication mechanism to the underlying cloud
+	Authentication OperatorAuthentication
+}
+
+// A union type of cloud authentication mechanism.
+struct OperatorAuthentication {
+	Aws AwsOperatorAuthentication
+	Azure AzureOperatorAuthentication
+}
+
+struct AzureManagedIdentity {
 	ControlPlaneIdentity AzureControlPlaneManagedIdentity
-	
 	DataPlaneIdentity AzureDataPlaneManagedIdentity
 }
 
+// cloud specific authentication mechanism can also be a union type
+struct AzureOperatorAuthentication {
+	ManagedIdentity AzureManagedIdentity
+}
+
+// cloud specific authentication mechanism can also be a union type
+struct AwsOperatorAuthentication {
+	Sts AwsSts
+}
+
+struct AwsSts {
+	ControlPlaneIamRole String 
+	DataPlaneIamRole String 
+}
 
 enum ClusterImageRegistryState {
     @json(name = "enabled")
