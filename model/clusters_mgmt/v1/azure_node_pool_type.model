@@ -59,19 +59,7 @@ struct AzureNodePool {
     // EncryptionAtHost contains Encryption At Host disk encryption configuration.
     // When enabled, it enhances Azure Disk Storage Server-Side Encryption to ensure that all temporary disks
     // and disk caches are encrypted at rest and flow encrypted to the Storage clusters.
+    // If not specified, Encryption at Host is not enabled.
+    // Immutable.
     EncryptionAtHost AzureNodePoolEncryptionAtHost
-}
-
-// AzureNodePoolEncryptionAtHost defines the encryption setting for Encryption At Host.
-struct AzureNodePoolEncryptionAtHost {
-	// State indicates whether Encryption At Host is enabled.
-	// When enabled, it enhances Azure Disk Storage Server-Side Encryption to ensure that all temporary disks
-	// and disk caches are encrypted at rest and flow encrypted to the Storage clusters.
-	// Accepted values are: ["disabled", "enabled"]
-	State AzureNodePoolEncryptionAtHostState
-}
-
-enum AzureNodePoolEncryptionAtHostState {
-  enabled
-  disabled
 }
