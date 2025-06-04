@@ -237,7 +237,10 @@ class Cluster {
 	// Details of cluster-wide KubeletConfig
 	KubeletConfig KubeletConfig
 
-	// External authentication configuration
+	// External authentication configuration.
+	// 
+	// For ROSA HCP, if this is not specified, external authentication configuration will be disabled by default
+	// For ARO HCP, if this is not specified, external authentication configuration will be enabled by default
 	ExternalAuthConfig ExternalAuthConfig
 
 	// Indicate whether the cluster is enabled for multi arch workers

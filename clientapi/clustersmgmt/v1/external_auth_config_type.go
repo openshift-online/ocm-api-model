@@ -19,31 +19,100 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// ExternalAuthConfigKind is the name of the type used to represent objects
+// of type 'external_auth_config'.
+const ExternalAuthConfigKind = "ExternalAuthConfig"
+
+// ExternalAuthConfigLinkKind is the name of the type used to represent links
+// to objects of type 'external_auth_config'.
+const ExternalAuthConfigLinkKind = "ExternalAuthConfigLink"
+
+// ExternalAuthConfigNilKind is the name of the type used to nil references
+// to objects of type 'external_auth_config'.
+const ExternalAuthConfigNilKind = "ExternalAuthConfigNil"
+
 // ExternalAuthConfig represents the values of the 'external_auth_config' type.
 //
-// ExternalAuthConfig configuration
+// Represents an external authentication configuration
 type ExternalAuthConfig struct {
 	bitmap_       uint32
+	id            string
+	href          string
 	externalAuths *ExternalAuthList
+	state         ExternalAuthConfigState
 	enabled       bool
+}
+
+// Kind returns the name of the type of the object.
+func (o *ExternalAuthConfig) Kind() string {
+	if o == nil {
+		return ExternalAuthConfigNilKind
+	}
+	if o.bitmap_&1 != 0 {
+		return ExternalAuthConfigLinkKind
+	}
+	return ExternalAuthConfigKind
+}
+
+// Link returns true if this is a link.
+func (o *ExternalAuthConfig) Link() bool {
+	return o != nil && o.bitmap_&1 != 0
+}
+
+// ID returns the identifier of the object.
+func (o *ExternalAuthConfig) ID() string {
+	if o != nil && o.bitmap_&2 != 0 {
+		return o.id
+	}
+	return ""
+}
+
+// GetID returns the identifier of the object and a flag indicating if the
+// identifier has a value.
+func (o *ExternalAuthConfig) GetID() (value string, ok bool) {
+	ok = o != nil && o.bitmap_&2 != 0
+	if ok {
+		value = o.id
+	}
+	return
+}
+
+// HREF returns the link to the object.
+func (o *ExternalAuthConfig) HREF() string {
+	if o != nil && o.bitmap_&4 != 0 {
+		return o.href
+	}
+	return ""
+}
+
+// GetHREF returns the link of the object and a flag indicating if the
+// link has a value.
+func (o *ExternalAuthConfig) GetHREF() (value string, ok bool) {
+	ok = o != nil && o.bitmap_&4 != 0
+	if ok {
+		value = o.href
+	}
+	return
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ExternalAuthConfig) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // Enabled returns the value of the 'enabled' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
-// Boolean flag indicating if the cluster should use an external authentication configuration.
+// Boolean flag indicating if the cluster should use an external authentication configuration for ROSA HCP clusters.
 //
 // By default this is false.
 //
 // To enable it the cluster needs to be ROSA HCP cluster and the organization of the user needs
 // to have the `external-authentication` feature toggle enabled.
+//
+// For ARO HCP clusters, use the "State" property to enable/disable this feature instead.
 func (o *ExternalAuthConfig) Enabled() bool {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.enabled
 	}
 	return false
@@ -52,14 +121,16 @@ func (o *ExternalAuthConfig) Enabled() bool {
 // GetEnabled returns the value of the 'enabled' attribute and
 // a flag indicating if the attribute has a value.
 //
-// Boolean flag indicating if the cluster should use an external authentication configuration.
+// Boolean flag indicating if the cluster should use an external authentication configuration for ROSA HCP clusters.
 //
 // By default this is false.
 //
 // To enable it the cluster needs to be ROSA HCP cluster and the organization of the user needs
 // to have the `external-authentication` feature toggle enabled.
+//
+// For ARO HCP clusters, use the "State" property to enable/disable this feature instead.
 func (o *ExternalAuthConfig) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.enabled
 	}
@@ -68,8 +139,12 @@ func (o *ExternalAuthConfig) GetEnabled() (value bool, ok bool) {
 
 // ExternalAuths returns the value of the 'external_auths' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
+//
+// A list of external authentication providers configured for the cluster.
+//
+// Only one external authentication provider can be configured.
 func (o *ExternalAuthConfig) ExternalAuths() *ExternalAuthList {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.externalAuths
 	}
 	return nil
@@ -77,10 +152,45 @@ func (o *ExternalAuthConfig) ExternalAuths() *ExternalAuthList {
 
 // GetExternalAuths returns the value of the 'external_auths' attribute and
 // a flag indicating if the attribute has a value.
+//
+// A list of external authentication providers configured for the cluster.
+//
+// Only one external authentication provider can be configured.
 func (o *ExternalAuthConfig) GetExternalAuths() (value *ExternalAuthList, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.externalAuths
+	}
+	return
+}
+
+// State returns the value of the 'state' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// Controls whether the cluster uses an external authentication configuration for ARO HCP clusters.
+//
+// For ARO HCP clusters, this will be "enabled" by default and cannot be set to "disabled".
+//
+// FOR ROSA HCP clusters, use the "Enabled" boolean flag to enable/disable this feature instead.
+func (o *ExternalAuthConfig) State() ExternalAuthConfigState {
+	if o != nil && o.bitmap_&32 != 0 {
+		return o.state
+	}
+	return ExternalAuthConfigState("")
+}
+
+// GetState returns the value of the 'state' attribute and
+// a flag indicating if the attribute has a value.
+//
+// Controls whether the cluster uses an external authentication configuration for ARO HCP clusters.
+//
+// For ARO HCP clusters, this will be "enabled" by default and cannot be set to "disabled".
+//
+// FOR ROSA HCP clusters, use the "Enabled" boolean flag to enable/disable this feature instead.
+func (o *ExternalAuthConfig) GetState() (value ExternalAuthConfigState, ok bool) {
+	ok = o != nil && o.bitmap_&32 != 0
+	if ok {
+		value = o.state
 	}
 	return
 }
@@ -102,6 +212,40 @@ type ExternalAuthConfigList struct {
 	href  string
 	link  bool
 	items []*ExternalAuthConfig
+}
+
+// Kind returns the name of the type of the object.
+func (l *ExternalAuthConfigList) Kind() string {
+	if l == nil {
+		return ExternalAuthConfigListNilKind
+	}
+	if l.link {
+		return ExternalAuthConfigListLinkKind
+	}
+	return ExternalAuthConfigListKind
+}
+
+// Link returns true iif this is a link.
+func (l *ExternalAuthConfigList) Link() bool {
+	return l != nil && l.link
+}
+
+// HREF returns the link to the list.
+func (l *ExternalAuthConfigList) HREF() string {
+	if l != nil {
+		return l.href
+	}
+	return ""
+}
+
+// GetHREF returns the link of the list and a flag indicating if the
+// link has a value.
+func (l *ExternalAuthConfigList) GetHREF() (value string, ok bool) {
+	ok = l != nil && l.href != ""
+	if ok {
+		value = l.href
+	}
+	return
 }
 
 // Len returns the length of the list.

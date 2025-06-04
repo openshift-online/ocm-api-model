@@ -48,4 +48,8 @@ resource Cluster {
 	locator NodePools {
 		target NodePools
 	}
+        
+	locator ExternalAuthConfig {
+		target ExternalAuthConfig
+	}
 }
