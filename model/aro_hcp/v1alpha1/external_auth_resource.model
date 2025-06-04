@@ -29,4 +29,9 @@ resource ExternalAuth {
     // Deletes the external authentication provider.
     method Delete {
     }
+
+    // Reference to the resource that manages a specific external authentication provider status.
+    locator Status {
+		target ExternalAuthStatus
+	}
 }
