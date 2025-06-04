@@ -1,0 +1,30 @@
+/*
+Copyright (c) 2024 Red Hat, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+// Represents an external authentication configuration for an ARO HCP cluster
+struct AzureExternalAuthConfig {
+    // Boolean flag indicating if the cluster should use an external authentication configuration.
+    //
+    // By default this is set to "true".
+    //
+    // This cannot be disabled, set to "false", for ARO HCP clusters.
+    Enabled Boolean
+
+    // A list of external authentication providers configured for the ARO HCP cluster.
+    // 
+    // Only one external authentication provider can be configured for ARO HCP Clusters.
+    link ExternalAuths []ExternalAuth
+}
