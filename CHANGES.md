@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.418 Jun 04 2025
+- Add arohcp `Version` types and endpoints
+
 ## 0.0.417 Apr 08 2025
 - Add `RhRegionID` field to `Subscription` and `ClusterAuthorizationRequest` type
 
