@@ -2649,6 +2649,10 @@
           "issuer": {
             "description": "The issuer describes the attributes of the OIDC token issuer.",
             "$ref": "#/components/schemas/TokenIssuer"
+          },
+          "status": {
+            "description": "The status describes the current state of the external authentication provider.",
+            "$ref": "#/components/schemas/ExternalAuthStatus"
           }
         }
       },
@@ -2731,6 +2735,33 @@
           "disabled",
           "enabled"
         ]
+      },
+      "ExternalAuthState": {
+        "description": "Representation of the state of an external authentication provider.",
+        "properties": {
+          "last_updated_timestamp": {
+            "description": "The date and time when the external authentication provider state was last updated.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "value": {
+            "description": "A string value representing the external authentication provider's current state.",
+            "type": "string"
+          }
+        }
+      },
+      "ExternalAuthStatus": {
+        "description": "Representation of the status of an external authentication provider.",
+        "properties": {
+          "message": {
+            "description": "A descriptive message providing additional context about the current \nstate of the external authentication provider.",
+            "type": "string"
+          },
+          "state": {
+            "description": "The current state of the external authentication provider.",
+            "$ref": "#/components/schemas/ExternalAuthState"
+          }
+        }
       },
       "ExternalConfiguration": {
         "description": "Representation of cluster external configuration.",
