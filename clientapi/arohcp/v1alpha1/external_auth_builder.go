@@ -29,6 +29,7 @@ type ExternalAuthBuilder struct {
 	claim   *ExternalAuthClaimBuilder
 	clients []*ExternalAuthClientConfigBuilder
 	issuer  *TokenIssuerBuilder
+	status  *ExternalAuthStatusBuilder
 }
 
 // NewExternalAuth creates a new builder of 'external_auth' objects.
@@ -95,6 +96,19 @@ func (b *ExternalAuthBuilder) Issuer(value *TokenIssuerBuilder) *ExternalAuthBui
 	return b
 }
 
+// Status sets the value of the 'status' attribute to the given value.
+//
+// Representation of the status of an external authentication provider.
+func (b *ExternalAuthBuilder) Status(value *ExternalAuthStatusBuilder) *ExternalAuthBuilder {
+	b.status = value
+	if value != nil {
+		b.bitmap_ |= 64
+	} else {
+		b.bitmap_ &^= 64
+	}
+	return b
+}
+
 // Copy copies the attributes of the given object into this builder, discarding any previous values.
 func (b *ExternalAuthBuilder) Copy(object *ExternalAuth) *ExternalAuthBuilder {
 	if object == nil {
@@ -120,6 +134,11 @@ func (b *ExternalAuthBuilder) Copy(object *ExternalAuth) *ExternalAuthBuilder {
 		b.issuer = NewTokenIssuer().Copy(object.issuer)
 	} else {
 		b.issuer = nil
+	}
+	if object.status != nil {
+		b.status = NewExternalAuthStatus().Copy(object.status)
+	} else {
+		b.status = nil
 	}
 	return b
 }
@@ -147,6 +166,12 @@ func (b *ExternalAuthBuilder) Build() (object *ExternalAuth, err error) {
 	}
 	if b.issuer != nil {
 		object.issuer, err = b.issuer.Build()
+		if err != nil {
+			return
+		}
+	}
+	if b.status != nil {
+		object.status, err = b.status.Build()
 		if err != nil {
 			return
 		}

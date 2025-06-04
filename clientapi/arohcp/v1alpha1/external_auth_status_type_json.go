@@ -17,7 +17,7 @@ limitations under the License.
 // IMPORTANT: This file has been generated automatically, refrain from modifying it manually as all
 // your changes will be lost when the file is generated again.
 
-package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
+package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
 import (
 	"io"
@@ -26,10 +26,10 @@ import (
 	"github.com/openshift-online/ocm-api-model/clientapi/helpers"
 )
 
-// MarshalExternalAuth writes a value of the 'external_auth' type to the given writer.
-func MarshalExternalAuth(object *ExternalAuth, writer io.Writer) error {
+// MarshalExternalAuthStatus writes a value of the 'external_auth_status' type to the given writer.
+func MarshalExternalAuthStatus(object *ExternalAuthStatus, writer io.Writer) error {
 	stream := helpers.NewStream(writer)
-	WriteExternalAuth(object, stream)
+	WriteExternalAuthStatus(object, stream)
 	err := stream.Flush()
 	if err != nil {
 		return err
@@ -37,15 +37,15 @@ func MarshalExternalAuth(object *ExternalAuth, writer io.Writer) error {
 	return stream.Error
 }
 
-// WriteExternalAuth writes a value of the 'external_auth' type to the given stream.
-func WriteExternalAuth(object *ExternalAuth, stream *jsoniter.Stream) {
+// WriteExternalAuthStatus writes a value of the 'external_auth_status' type to the given stream.
+func WriteExternalAuthStatus(object *ExternalAuthStatus, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
 	if object.bitmap_&1 != 0 {
-		stream.WriteString(ExternalAuthLinkKind)
+		stream.WriteString(ExternalAuthStatusLinkKind)
 	} else {
-		stream.WriteString(ExternalAuthKind)
+		stream.WriteString(ExternalAuthStatusKind)
 	}
 	count++
 	if object.bitmap_&2 != 0 {
@@ -65,59 +65,41 @@ func WriteExternalAuth(object *ExternalAuth, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0 && object.claim != nil
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
 		}
-		stream.WriteObjectField("claim")
-		WriteExternalAuthClaim(object.claim, stream)
+		stream.WriteObjectField("message")
+		stream.WriteString(object.message)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0 && object.clients != nil
+	present_ = object.bitmap_&16 != 0 && object.state != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
 		}
-		stream.WriteObjectField("clients")
-		WriteExternalAuthClientConfigList(object.clients, stream)
-		count++
-	}
-	present_ = object.bitmap_&32 != 0 && object.issuer != nil
-	if present_ {
-		if count > 0 {
-			stream.WriteMore()
-		}
-		stream.WriteObjectField("issuer")
-		WriteTokenIssuer(object.issuer, stream)
-		count++
-	}
-	present_ = object.bitmap_&64 != 0 && object.status != nil
-	if present_ {
-		if count > 0 {
-			stream.WriteMore()
-		}
-		stream.WriteObjectField("status")
-		WriteExternalAuthStatus(object.status, stream)
+		stream.WriteObjectField("state")
+		WriteExternalAuthState(object.state, stream)
 	}
 	stream.WriteObjectEnd()
 }
 
-// UnmarshalExternalAuth reads a value of the 'external_auth' type from the given
+// UnmarshalExternalAuthStatus reads a value of the 'external_auth_status' type from the given
 // source, which can be an slice of bytes, a string or a reader.
-func UnmarshalExternalAuth(source interface{}) (object *ExternalAuth, err error) {
+func UnmarshalExternalAuthStatus(source interface{}) (object *ExternalAuthStatus, err error) {
 	iterator, err := helpers.NewIterator(source)
 	if err != nil {
 		return
 	}
-	object = ReadExternalAuth(iterator)
+	object = ReadExternalAuthStatus(iterator)
 	err = iterator.Error
 	return
 }
 
-// ReadExternalAuth reads a value of the 'external_auth' type from the given iterator.
-func ReadExternalAuth(iterator *jsoniter.Iterator) *ExternalAuth {
-	object := &ExternalAuth{}
+// ReadExternalAuthStatus reads a value of the 'external_auth_status' type from the given iterator.
+func ReadExternalAuthStatus(iterator *jsoniter.Iterator) *ExternalAuthStatus {
+	object := &ExternalAuthStatus{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -126,7 +108,7 @@ func ReadExternalAuth(iterator *jsoniter.Iterator) *ExternalAuth {
 		switch field {
 		case "kind":
 			value := iterator.ReadString()
-			if value == ExternalAuthLinkKind {
+			if value == ExternalAuthStatusLinkKind {
 				object.bitmap_ |= 1
 			}
 		case "id":
@@ -135,22 +117,14 @@ func ReadExternalAuth(iterator *jsoniter.Iterator) *ExternalAuth {
 		case "href":
 			object.href = iterator.ReadString()
 			object.bitmap_ |= 4
-		case "claim":
-			value := ReadExternalAuthClaim(iterator)
-			object.claim = value
+		case "message":
+			value := iterator.ReadString()
+			object.message = value
 			object.bitmap_ |= 8
-		case "clients":
-			value := ReadExternalAuthClientConfigList(iterator)
-			object.clients = value
+		case "state":
+			value := ReadExternalAuthState(iterator)
+			object.state = value
 			object.bitmap_ |= 16
-		case "issuer":
-			value := ReadTokenIssuer(iterator)
-			object.issuer = value
-			object.bitmap_ |= 32
-		case "status":
-			value := ReadExternalAuthStatus(iterator)
-			object.status = value
-			object.bitmap_ |= 64
 		default:
 			iterator.ReadAny()
 		}

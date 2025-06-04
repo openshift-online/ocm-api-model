@@ -16389,6 +16389,10 @@
           "issuer": {
             "description": "The issuer describes the attributes of the OIDC token issuer.",
             "$ref": "#/components/schemas/TokenIssuer"
+          },
+          "status": {
+            "description": "The status describes the current state of the external authentication provider.",
+            "$ref": "#/components/schemas/ExternalAuthStatus"
           }
         }
       },
@@ -16461,6 +16465,45 @@
           "state": {
             "description": "Controls whether the cluster uses an external authentication configuration.\n\nPossible values are \"enabled\" or \"disabled\".\n\nFor ARO HCP clusters, this is always \"enabled\" by default and cannot be set to \"disabled\".\n\nFOR ROSA HCP clusters, please use the \"Enabled\" boolean flag to enable/disable this feature instead.",
             "type": "string"
+          }
+        }
+      },
+      "ExternalAuthState": {
+        "description": "Representation of the state of an external authentication provider.",
+        "properties": {
+          "last_updated_timestamp": {
+            "description": "The date and time when the external authentication provider state was last updated.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "value": {
+            "description": "A string value representing the external authentication provider's current state.",
+            "type": "string"
+          }
+        }
+      },
+      "ExternalAuthStatus": {
+        "description": "Representation of the status of an external authentication provider.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'ExternalAuthStatus' if this is a complete object or 'ExternalAuthStatusLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "message": {
+            "description": "A descriptive message providing additional context about the current \nstate of the external authentication provider.",
+            "type": "string"
+          },
+          "state": {
+            "description": "The current state of the external authentication provider.",
+            "$ref": "#/components/schemas/ExternalAuthState"
           }
         }
       },
