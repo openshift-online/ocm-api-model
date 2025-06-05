@@ -37,4 +37,7 @@ struct NotificationDetailsRequest {
 
 	// Indicates whether the service log is internal only to RH.
 	InternalOnly Boolean
+
+	// Indicates the type of the service log.
+	LogType String
 }
