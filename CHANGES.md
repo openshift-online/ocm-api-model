@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.419 Jun 05 2025
+- Add `LogType` to `NotificationDetailsRequest`
+
 ## 0.0.418 Jun 04 2025
 - Add arohcp `Version` types and endpoints
 
