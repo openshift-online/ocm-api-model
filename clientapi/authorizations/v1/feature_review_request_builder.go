@@ -25,6 +25,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations
 type FeatureReviewRequestBuilder struct {
 	bitmap_         uint32
 	accountUsername string
+	clusterId       string
 	feature         string
 	organizationId  string
 }
@@ -46,17 +47,24 @@ func (b *FeatureReviewRequestBuilder) AccountUsername(value string) *FeatureRevi
 	return b
 }
 
+// ClusterId sets the value of the 'cluster_id' attribute to the given value.
+func (b *FeatureReviewRequestBuilder) ClusterId(value string) *FeatureReviewRequestBuilder {
+	b.clusterId = value
+	b.bitmap_ |= 2
+	return b
+}
+
 // Feature sets the value of the 'feature' attribute to the given value.
 func (b *FeatureReviewRequestBuilder) Feature(value string) *FeatureReviewRequestBuilder {
 	b.feature = value
-	b.bitmap_ |= 2
+	b.bitmap_ |= 4
 	return b
 }
 
 // OrganizationId sets the value of the 'organization_id' attribute to the given value.
 func (b *FeatureReviewRequestBuilder) OrganizationId(value string) *FeatureReviewRequestBuilder {
 	b.organizationId = value
-	b.bitmap_ |= 4
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -67,6 +75,7 @@ func (b *FeatureReviewRequestBuilder) Copy(object *FeatureReviewRequest) *Featur
 	}
 	b.bitmap_ = object.bitmap_
 	b.accountUsername = object.accountUsername
+	b.clusterId = object.clusterId
 	b.feature = object.feature
 	b.organizationId = object.organizationId
 	return b
@@ -77,6 +86,7 @@ func (b *FeatureReviewRequestBuilder) Build() (object *FeatureReviewRequest, err
 	object = new(FeatureReviewRequest)
 	object.bitmap_ = b.bitmap_
 	object.accountUsername = b.accountUsername
+	object.clusterId = b.clusterId
 	object.feature = b.feature
 	object.organizationId = b.organizationId
 	return

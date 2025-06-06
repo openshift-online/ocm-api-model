@@ -25,6 +25,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations
 type FeatureReviewRequest struct {
 	bitmap_         uint32
 	accountUsername string
+	clusterId       string
 	feature         string
 	organizationId  string
 }
@@ -57,12 +58,35 @@ func (o *FeatureReviewRequest) GetAccountUsername() (value string, ok bool) {
 	return
 }
 
+// ClusterId returns the value of the 'cluster_id' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// Defines the cluster id which access is being reviewed
+func (o *FeatureReviewRequest) ClusterId() string {
+	if o != nil && o.bitmap_&2 != 0 {
+		return o.clusterId
+	}
+	return ""
+}
+
+// GetClusterId returns the value of the 'cluster_id' attribute and
+// a flag indicating if the attribute has a value.
+//
+// Defines the cluster id which access is being reviewed
+func (o *FeatureReviewRequest) GetClusterId() (value string, ok bool) {
+	ok = o != nil && o.bitmap_&2 != 0
+	if ok {
+		value = o.clusterId
+	}
+	return
+}
+
 // Feature returns the value of the 'feature' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
 // Indicates the feature which can be toggled
 func (o *FeatureReviewRequest) Feature() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.feature
 	}
 	return ""
@@ -73,7 +97,7 @@ func (o *FeatureReviewRequest) Feature() string {
 //
 // Indicates the feature which can be toggled
 func (o *FeatureReviewRequest) GetFeature() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.feature
 	}
@@ -85,7 +109,7 @@ func (o *FeatureReviewRequest) GetFeature() (value string, ok bool) {
 //
 // Defines the organisation id of the account of which access is being reviewed
 func (o *FeatureReviewRequest) OrganizationId() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.organizationId
 	}
 	return ""
@@ -96,7 +120,7 @@ func (o *FeatureReviewRequest) OrganizationId() string {
 //
 // Defines the organisation id of the account of which access is being reviewed
 func (o *FeatureReviewRequest) GetOrganizationId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.organizationId
 	}
