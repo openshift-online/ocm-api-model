@@ -4,8 +4,8 @@ github.com/cpuguy83/go-md2man/v2 v2.0.1/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46t
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/deads2k/ocm-api-metamodel v0.0.0-20250527182851-0cf699c36fe5 h1:l3PqTNn8mp17751o23j5lRFp30mTMj9V0uQHrMpvUi8=
-github.com/deads2k/ocm-api-metamodel v0.0.0-20250527182851-0cf699c36fe5/go.mod h1:Q8qCHM/JoQ0sJC4jfZ/bzQB2Oiyr5BA9ODTAEpvU2co=
+github.com/deads2k/ocm-api-metamodel v0.0.0-20250605203857-a9593d6d60f6 h1:WwuucbfNdd08rdALCeXO7KKcCx3nEuOGGF5jh48dCzs=
+github.com/deads2k/ocm-api-metamodel v0.0.0-20250605203857-a9593d6d60f6/go.mod h1:Q8qCHM/JoQ0sJC4jfZ/bzQB2Oiyr5BA9ODTAEpvU2co=
 github.com/google/gofuzz v1.0.0/go.mod h1:dBl0BpW6vV/+mYPU4Po3pmUjxk6FQPldtuIdl/M65Eg=
 github.com/inconshreveable/mousetrap v1.0.0 h1:Z8tu5sraLXCXIcARxBp/8cbvlwVa7Z1NHg9XEKhtSvM=
 github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
