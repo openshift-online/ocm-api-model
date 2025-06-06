@@ -1,4 +1,4 @@
 .vscode/
 .idea/
 /metamodel
-/openapi/
+/metamodel_generator/metamodel
