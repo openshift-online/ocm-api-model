@@ -22,4 +22,7 @@ resource Root {
     locator Versions {
         target Versions
     }
+	locator ManagedIdentitiesRequirements {
+		target ManagedIdentitiesRequirements
+	}
 }
