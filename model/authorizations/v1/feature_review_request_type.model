@@ -25,4 +25,7 @@ struct FeatureReviewRequest {
 
   // Defines the organisation id of the account of which access is being reviewed
   OrganizationId String
+
+  // Defines the cluster id which access is being reviewed
+  ClusterId String
 }
