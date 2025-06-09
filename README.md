@@ -5,6 +5,43 @@
 This project contains the specification of the OpenShift cluster manager API,
 also known as the _model_.
 
+## How to make a change
+### Structure
+1. `model` is a submodule that contains the API definitions that are described below.
+   It is a submodule so that dependencies can be expressed in golang tooling to ensure the ability to match.
+   It must forever be a zero dep golang module to eliminate diamond dependency problems.
+2. `clientapi` is a submodule that contains the generated serialization types for the ocm-sdk-go client.
+   Having these generated here allows the ocm-api-model repo to be a place where we can also collect server-side
+   representations of APIs that already exist and allows us to write fuzzers for determining mutual compatibility.
+   We cannot do this ocm-sdk-go due to cyclical dependency concerns.
+   It is important that `clientapi` is a low-dep submodule to easy diamond dep problems.
+   It must never depend on the `metamodel_generator` because there is no need to produce the diamond dep problems associated with it.
+   It must always depend on the `model` submodule to ensure that its possible for those depending on `clientapi` and `model`
+   to find matching levels with golang tooling.
+3. `metamodel_generator` is a submodule that takes a dependency on the `ocm-api-metamodel`.
+   We use it to have automated tooling for dependency management and development-time replacement of trial versions
+   of the `ocm-api-metamodel`.
+   This allows other libraries generating against the `clientapi` package to use exactly the same generator.
+
+### Modify the API Flow
+1. Update the `model`
+2. Run `make update`.
+   This will build the `metamodel` binary, update the `clientapi`, and update the `openapi` 
+3. Run `make verify`
+   This verifies that the current code in `clientapi` and `openapi` matches the expected.
+
+### Update the `metamodel` Generator Flow
+1. Update the `ocm-api-metamodel` version in the `metamodel_generator` `go mod` file.
+2. Run `make update`.
+3. Run `make verify`.
+
+### Update the `metamodel` Generator Flow to a Dev Branch
+1. Use the `replace` directive in the `ocm-api-metamodel` version in the `metamodel_generator` `go mod` file.
+2. Run `make update`.
+3. Run `make verify`.
+
+
+
 ## Concepts
 
 The specification of the API is written using a DSL (the model language)
