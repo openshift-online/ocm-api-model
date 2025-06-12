@@ -62,7 +62,8 @@ resource NodePools {
 	}
 
 	// Adds a new node pool to the cluster.
-	method Add {
+	@go(name="Add")
+	method AsyncAdd {
 		// Description of the node pool
 		in out Body NodePool
 	}
