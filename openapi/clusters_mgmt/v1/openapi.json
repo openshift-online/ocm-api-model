@@ -15119,6 +15119,11 @@
             "description": "Self link.",
             "type": "string"
           },
+          "creation_timestamp": {
+            "description": "CreationTimestamp is the date and time when the credential was created.",
+            "type": "string",
+            "format": "date-time"
+          },
           "expiration_timestamp": {
             "description": "ExpirationTimestamp is the date and time when the credential will expire.",
             "type": "string",
@@ -15137,9 +15142,27 @@
             "description": "Status is the status of this credential",
             "$ref": "#/components/schemas/BreakGlassCredentialStatus"
           },
+          "status_details": {
+            "description": "Additional information about the current state of this credential",
+            "$ref": "#/components/schemas/BreakGlassCredentialStatusDetails"
+          },
           "username": {
             "description": "Username is the user which will be used for this credential.",
             "type": "string"
+          }
+        }
+      },
+      "BreakGlassCredentialState": {
+        "description": "Representation of the state of a break glass credential",
+        "properties": {
+          "last_updated_timestamp": {
+            "description": "The date and time when the credential state was last updated",
+            "type": "string",
+            "format": "date-time"
+          },
+          "value": {
+            "description": "A string value representing the credential's current state",
+            "$ref": "#/components/schemas/BreakGlassCredentialStatus"
           }
         }
       },
@@ -15149,11 +15172,39 @@
         "enum": [
           "awaiting_revocation",
           "created",
+          "denied",
           "expired",
           "failed",
           "issued",
-          "revoked"
+          "issuing",
+          "revoked",
+          "revoking"
         ]
+      },
+      "BreakGlassCredentialStatusDetails": {
+        "description": "Representation of the status details of a break glass credential",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'BreakGlassCredentialStatusDetails' if this is a complete object or 'BreakGlassCredentialStatusDetailsLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "message": {
+            "description": "A descriptive message providing additional context about the current state of\nthe credential",
+            "type": "string"
+          },
+          "state": {
+            "description": "The current state of the credential",
+            "$ref": "#/components/schemas/BreakGlassCredentialState"
+          }
+        }
       },
       "ByoOidc": {
         "description": "ByoOidc configuration.",
