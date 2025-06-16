@@ -19,28 +19,30 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// ControlPlaneOperatorIdentity represents the values of the 'control_plane_operator_identity' type.
-type ControlPlaneOperatorIdentity struct {
+// DataPlaneOperatorIdentityRequirement represents the values of the 'data_plane_operator_identity_requirement' type.
+type DataPlaneOperatorIdentityRequirement struct {
 	bitmap_             uint32
 	maxOpenShiftVersion string
 	minOpenShiftVersion string
 	operatorName        string
 	required            string
-	roleDefinitions     []*RoleDefinition
+	roleDefinitions     []*RoleDefinitionOperatorIdentityRequirement
+	serviceAccounts     []*K8sServiceAccountOperatorIdentityRequirement
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
-func (o *ControlPlaneOperatorIdentity) Empty() bool {
+func (o *DataPlaneOperatorIdentityRequirement) Empty() bool {
 	return o == nil || o.bitmap_ == 0
 }
 
 // MaxOpenShiftVersion returns the value of the 'max_open_shift_version' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
-// The field is a string and it is of format X.Y.
+// The field is a string and it is of format X.Y (e.g 4.18) where X and Y are major and
+// minor segments of the OpenShift version respectively.
 // Not specifying it indicates support for this operator in all Openshift versions,
 // starting from min_openshift_version if min_openshift_version is defined.
-func (o *ControlPlaneOperatorIdentity) MaxOpenShiftVersion() string {
+func (o *DataPlaneOperatorIdentityRequirement) MaxOpenShiftVersion() string {
 	if o != nil && o.bitmap_&1 != 0 {
 		return o.maxOpenShiftVersion
 	}
@@ -50,10 +52,11 @@ func (o *ControlPlaneOperatorIdentity) MaxOpenShiftVersion() string {
 // GetMaxOpenShiftVersion returns the value of the 'max_open_shift_version' attribute and
 // a flag indicating if the attribute has a value.
 //
-// The field is a string and it is of format X.Y.
+// The field is a string and it is of format X.Y (e.g 4.18) where X and Y are major and
+// minor segments of the OpenShift version respectively.
 // Not specifying it indicates support for this operator in all Openshift versions,
 // starting from min_openshift_version if min_openshift_version is defined.
-func (o *ControlPlaneOperatorIdentity) GetMaxOpenShiftVersion() (value string, ok bool) {
+func (o *DataPlaneOperatorIdentityRequirement) GetMaxOpenShiftVersion() (value string, ok bool) {
 	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.maxOpenShiftVersion
@@ -64,10 +67,11 @@ func (o *ControlPlaneOperatorIdentity) GetMaxOpenShiftVersion() (value string, o
 // MinOpenShiftVersion returns the value of the 'min_open_shift_version' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
-// The field is a string and it is of format X.Y.
+// The field is a string and it is of format X.Y (e.g 4.18) where X and Y are major and
+// minor segments of the OpenShift version respectively.
 // Not specifying it indicates support for this operator in all Openshift versions,
 // or up to max_openshift_version, if defined.
-func (o *ControlPlaneOperatorIdentity) MinOpenShiftVersion() string {
+func (o *DataPlaneOperatorIdentityRequirement) MinOpenShiftVersion() string {
 	if o != nil && o.bitmap_&2 != 0 {
 		return o.minOpenShiftVersion
 	}
@@ -77,10 +81,11 @@ func (o *ControlPlaneOperatorIdentity) MinOpenShiftVersion() string {
 // GetMinOpenShiftVersion returns the value of the 'min_open_shift_version' attribute and
 // a flag indicating if the attribute has a value.
 //
-// The field is a string and it is of format X.Y.
+// The field is a string and it is of format X.Y (e.g 4.18) where X and Y are major and
+// minor segments of the OpenShift version respectively.
 // Not specifying it indicates support for this operator in all Openshift versions,
 // or up to max_openshift_version, if defined.
-func (o *ControlPlaneOperatorIdentity) GetMinOpenShiftVersion() (value string, ok bool) {
+func (o *DataPlaneOperatorIdentityRequirement) GetMinOpenShiftVersion() (value string, ok bool) {
 	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.minOpenShiftVersion
@@ -91,8 +96,8 @@ func (o *ControlPlaneOperatorIdentity) GetMinOpenShiftVersion() (value string, o
 // OperatorName returns the value of the 'operator_name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
-// The name of the control plane operator that needs the identity
-func (o *ControlPlaneOperatorIdentity) OperatorName() string {
+// The name of the data plane operator that needs the identity
+func (o *DataPlaneOperatorIdentityRequirement) OperatorName() string {
 	if o != nil && o.bitmap_&4 != 0 {
 		return o.operatorName
 	}
@@ -102,8 +107,8 @@ func (o *ControlPlaneOperatorIdentity) OperatorName() string {
 // GetOperatorName returns the value of the 'operator_name' attribute and
 // a flag indicating if the attribute has a value.
 //
-// The name of the control plane operator that needs the identity
-func (o *ControlPlaneOperatorIdentity) GetOperatorName() (value string, ok bool) {
+// The name of the data plane operator that needs the identity
+func (o *DataPlaneOperatorIdentityRequirement) GetOperatorName() (value string, ok bool) {
 	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.operatorName
@@ -114,12 +119,12 @@ func (o *ControlPlaneOperatorIdentity) GetOperatorName() (value string, ok bool)
 // Required returns the value of the 'required' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
-// Indicates the whether the identity is always required or not.
+// Indicates whether the identity is always required or not
 // "always" means that the identity is always required
 // "on_enablement" means that the identity is only required when a functionality
 // that leverages the operator is enabled.
 // Possible values are ("always", "on_enablement")
-func (o *ControlPlaneOperatorIdentity) Required() string {
+func (o *DataPlaneOperatorIdentityRequirement) Required() string {
 	if o != nil && o.bitmap_&8 != 0 {
 		return o.required
 	}
@@ -129,12 +134,12 @@ func (o *ControlPlaneOperatorIdentity) Required() string {
 // GetRequired returns the value of the 'required' attribute and
 // a flag indicating if the attribute has a value.
 //
-// Indicates the whether the identity is always required or not.
+// Indicates whether the identity is always required or not
 // "always" means that the identity is always required
 // "on_enablement" means that the identity is only required when a functionality
 // that leverages the operator is enabled.
 // Possible values are ("always", "on_enablement")
-func (o *ControlPlaneOperatorIdentity) GetRequired() (value string, ok bool) {
+func (o *DataPlaneOperatorIdentityRequirement) GetRequired() (value string, ok bool) {
 	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.required
@@ -146,7 +151,7 @@ func (o *ControlPlaneOperatorIdentity) GetRequired() (value string, ok bool) {
 // the zero value of the type if the attribute doesn't have a value.
 //
 // A list of roles that are required by the operator
-func (o *ControlPlaneOperatorIdentity) RoleDefinitions() []*RoleDefinition {
+func (o *DataPlaneOperatorIdentityRequirement) RoleDefinitions() []*RoleDefinitionOperatorIdentityRequirement {
 	if o != nil && o.bitmap_&16 != 0 {
 		return o.roleDefinitions
 	}
@@ -157,7 +162,7 @@ func (o *ControlPlaneOperatorIdentity) RoleDefinitions() []*RoleDefinition {
 // a flag indicating if the attribute has a value.
 //
 // A list of roles that are required by the operator
-func (o *ControlPlaneOperatorIdentity) GetRoleDefinitions() (value []*RoleDefinition, ok bool) {
+func (o *DataPlaneOperatorIdentityRequirement) GetRoleDefinitions() (value []*RoleDefinitionOperatorIdentityRequirement, ok bool) {
 	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.roleDefinitions
@@ -165,27 +170,56 @@ func (o *ControlPlaneOperatorIdentity) GetRoleDefinitions() (value []*RoleDefini
 	return
 }
 
-// ControlPlaneOperatorIdentityListKind is the name of the type used to represent list of objects of
-// type 'control_plane_operator_identity'.
-const ControlPlaneOperatorIdentityListKind = "ControlPlaneOperatorIdentityList"
+// ServiceAccounts returns the value of the 'service_accounts' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// It is a list of K8s ServiceAccounts leveraged by the operator.
+// There must be at least a single service account specified.
+// This information is needed to federate a managed identity to a k8s subject.
+// There should be no duplicated "name:namespace" entries within this field.
+func (o *DataPlaneOperatorIdentityRequirement) ServiceAccounts() []*K8sServiceAccountOperatorIdentityRequirement {
+	if o != nil && o.bitmap_&32 != 0 {
+		return o.serviceAccounts
+	}
+	return nil
+}
 
-// ControlPlaneOperatorIdentityListLinkKind is the name of the type used to represent links to list
-// of objects of type 'control_plane_operator_identity'.
-const ControlPlaneOperatorIdentityListLinkKind = "ControlPlaneOperatorIdentityListLink"
+// GetServiceAccounts returns the value of the 'service_accounts' attribute and
+// a flag indicating if the attribute has a value.
+//
+// It is a list of K8s ServiceAccounts leveraged by the operator.
+// There must be at least a single service account specified.
+// This information is needed to federate a managed identity to a k8s subject.
+// There should be no duplicated "name:namespace" entries within this field.
+func (o *DataPlaneOperatorIdentityRequirement) GetServiceAccounts() (value []*K8sServiceAccountOperatorIdentityRequirement, ok bool) {
+	ok = o != nil && o.bitmap_&32 != 0
+	if ok {
+		value = o.serviceAccounts
+	}
+	return
+}
 
-// ControlPlaneOperatorIdentityNilKind is the name of the type used to nil lists of objects of
-// type 'control_plane_operator_identity'.
-const ControlPlaneOperatorIdentityListNilKind = "ControlPlaneOperatorIdentityListNil"
+// DataPlaneOperatorIdentityRequirementListKind is the name of the type used to represent list of objects of
+// type 'data_plane_operator_identity_requirement'.
+const DataPlaneOperatorIdentityRequirementListKind = "DataPlaneOperatorIdentityRequirementList"
 
-// ControlPlaneOperatorIdentityList is a list of values of the 'control_plane_operator_identity' type.
-type ControlPlaneOperatorIdentityList struct {
+// DataPlaneOperatorIdentityRequirementListLinkKind is the name of the type used to represent links to list
+// of objects of type 'data_plane_operator_identity_requirement'.
+const DataPlaneOperatorIdentityRequirementListLinkKind = "DataPlaneOperatorIdentityRequirementListLink"
+
+// DataPlaneOperatorIdentityRequirementNilKind is the name of the type used to nil lists of objects of
+// type 'data_plane_operator_identity_requirement'.
+const DataPlaneOperatorIdentityRequirementListNilKind = "DataPlaneOperatorIdentityRequirementListNil"
+
+// DataPlaneOperatorIdentityRequirementList is a list of values of the 'data_plane_operator_identity_requirement' type.
+type DataPlaneOperatorIdentityRequirementList struct {
 	href  string
 	link  bool
-	items []*ControlPlaneOperatorIdentity
+	items []*DataPlaneOperatorIdentityRequirement
 }
 
 // Len returns the length of the list.
-func (l *ControlPlaneOperatorIdentityList) Len() int {
+func (l *DataPlaneOperatorIdentityRequirementList) Len() int {
 	if l == nil {
 		return 0
 	}
@@ -193,22 +227,22 @@ func (l *ControlPlaneOperatorIdentityList) Len() int {
 }
 
 // Items sets the items of the list.
-func (l *ControlPlaneOperatorIdentityList) SetLink(link bool) {
+func (l *DataPlaneOperatorIdentityRequirementList) SetLink(link bool) {
 	l.link = link
 }
 
 // Items sets the items of the list.
-func (l *ControlPlaneOperatorIdentityList) SetHREF(href string) {
+func (l *DataPlaneOperatorIdentityRequirementList) SetHREF(href string) {
 	l.href = href
 }
 
 // Items sets the items of the list.
-func (l *ControlPlaneOperatorIdentityList) SetItems(items []*ControlPlaneOperatorIdentity) {
+func (l *DataPlaneOperatorIdentityRequirementList) SetItems(items []*DataPlaneOperatorIdentityRequirement) {
 	l.items = items
 }
 
 // Items returns the items of the list.
-func (l *ControlPlaneOperatorIdentityList) Items() []*ControlPlaneOperatorIdentity {
+func (l *DataPlaneOperatorIdentityRequirementList) Items() []*DataPlaneOperatorIdentityRequirement {
 	if l == nil {
 		return nil
 	}
@@ -216,13 +250,13 @@ func (l *ControlPlaneOperatorIdentityList) Items() []*ControlPlaneOperatorIdenti
 }
 
 // Empty returns true if the list is empty.
-func (l *ControlPlaneOperatorIdentityList) Empty() bool {
+func (l *DataPlaneOperatorIdentityRequirementList) Empty() bool {
 	return l == nil || len(l.items) == 0
 }
 
 // Get returns the item of the list with the given index. If there is no item with
 // that index it returns nil.
-func (l *ControlPlaneOperatorIdentityList) Get(i int) *ControlPlaneOperatorIdentity {
+func (l *DataPlaneOperatorIdentityRequirementList) Get(i int) *DataPlaneOperatorIdentityRequirement {
 	if l == nil || i < 0 || i >= len(l.items) {
 		return nil
 	}
@@ -235,12 +269,12 @@ func (l *ControlPlaneOperatorIdentityList) Get(i int) *ControlPlaneOperatorIdent
 //
 // If you don't need to modify the returned slice consider using the Each or Range
 // functions, as they don't need to allocate a new slice.
-func (l *ControlPlaneOperatorIdentityList) Slice() []*ControlPlaneOperatorIdentity {
-	var slice []*ControlPlaneOperatorIdentity
+func (l *DataPlaneOperatorIdentityRequirementList) Slice() []*DataPlaneOperatorIdentityRequirement {
+	var slice []*DataPlaneOperatorIdentityRequirement
 	if l == nil {
-		slice = make([]*ControlPlaneOperatorIdentity, 0)
+		slice = make([]*DataPlaneOperatorIdentityRequirement, 0)
 	} else {
-		slice = make([]*ControlPlaneOperatorIdentity, len(l.items))
+		slice = make([]*DataPlaneOperatorIdentityRequirement, len(l.items))
 		copy(slice, l.items)
 	}
 	return slice
@@ -249,7 +283,7 @@ func (l *ControlPlaneOperatorIdentityList) Slice() []*ControlPlaneOperatorIdenti
 // Each runs the given function for each item of the list, in order. If the function
 // returns false the iteration stops, otherwise it continues till all the elements
 // of the list have been processed.
-func (l *ControlPlaneOperatorIdentityList) Each(f func(item *ControlPlaneOperatorIdentity) bool) {
+func (l *DataPlaneOperatorIdentityRequirementList) Each(f func(item *DataPlaneOperatorIdentityRequirement) bool) {
 	if l == nil {
 		return
 	}
@@ -263,7 +297,7 @@ func (l *ControlPlaneOperatorIdentityList) Each(f func(item *ControlPlaneOperato
 // Range runs the given function for each index and item of the list, in order. If
 // the function returns false the iteration stops, otherwise it continues till all
 // the elements of the list have been processed.
-func (l *ControlPlaneOperatorIdentityList) Range(f func(index int, item *ControlPlaneOperatorIdentity) bool) {
+func (l *DataPlaneOperatorIdentityRequirementList) Range(f func(index int, item *DataPlaneOperatorIdentityRequirement) bool) {
 	if l == nil {
 		return
 	}

@@ -26,11 +26,11 @@ import (
 	"github.com/openshift-online/ocm-api-model/clientapi/helpers"
 )
 
-// MarshalDataPlaneOperatorIdentityList writes a list of values of the 'data_plane_operator_identity' type to
+// MarshalK8sServiceAccountOperatorIdentityRequirementList writes a list of values of the 'K8s_service_account_operator_identity_requirement' type to
 // the given writer.
-func MarshalDataPlaneOperatorIdentityList(list []*DataPlaneOperatorIdentity, writer io.Writer) error {
+func MarshalK8sServiceAccountOperatorIdentityRequirementList(list []*K8sServiceAccountOperatorIdentityRequirement, writer io.Writer) error {
 	stream := helpers.NewStream(writer)
-	WriteDataPlaneOperatorIdentityList(list, stream)
+	WriteK8sServiceAccountOperatorIdentityRequirementList(list, stream)
 	err := stream.Flush()
 	if err != nil {
 		return err
@@ -38,37 +38,37 @@ func MarshalDataPlaneOperatorIdentityList(list []*DataPlaneOperatorIdentity, wri
 	return stream.Error
 }
 
-// WriteDataPlaneOperatorIdentityList writes a list of value of the 'data_plane_operator_identity' type to
+// WriteK8sServiceAccountOperatorIdentityRequirementList writes a list of value of the 'K8s_service_account_operator_identity_requirement' type to
 // the given stream.
-func WriteDataPlaneOperatorIdentityList(list []*DataPlaneOperatorIdentity, stream *jsoniter.Stream) {
+func WriteK8sServiceAccountOperatorIdentityRequirementList(list []*K8sServiceAccountOperatorIdentityRequirement, stream *jsoniter.Stream) {
 	stream.WriteArrayStart()
 	for i, value := range list {
 		if i > 0 {
 			stream.WriteMore()
 		}
-		WriteDataPlaneOperatorIdentity(value, stream)
+		WriteK8sServiceAccountOperatorIdentityRequirement(value, stream)
 	}
 	stream.WriteArrayEnd()
 }
 
-// UnmarshalDataPlaneOperatorIdentityList reads a list of values of the 'data_plane_operator_identity' type
+// UnmarshalK8sServiceAccountOperatorIdentityRequirementList reads a list of values of the 'K8s_service_account_operator_identity_requirement' type
 // from the given source, which can be a slice of bytes, a string or a reader.
-func UnmarshalDataPlaneOperatorIdentityList(source interface{}) (items []*DataPlaneOperatorIdentity, err error) {
+func UnmarshalK8sServiceAccountOperatorIdentityRequirementList(source interface{}) (items []*K8sServiceAccountOperatorIdentityRequirement, err error) {
 	iterator, err := helpers.NewIterator(source)
 	if err != nil {
 		return
 	}
-	items = ReadDataPlaneOperatorIdentityList(iterator)
+	items = ReadK8sServiceAccountOperatorIdentityRequirementList(iterator)
 	err = iterator.Error
 	return
 }
 
-// ReadDataPlaneOperatorIdentityList reads list of values of the ”data_plane_operator_identity' type from
+// ReadK8sServiceAccountOperatorIdentityRequirementList reads list of values of the ”K8s_service_account_operator_identity_requirement' type from
 // the given iterator.
-func ReadDataPlaneOperatorIdentityList(iterator *jsoniter.Iterator) []*DataPlaneOperatorIdentity {
-	list := []*DataPlaneOperatorIdentity{}
+func ReadK8sServiceAccountOperatorIdentityRequirementList(iterator *jsoniter.Iterator) []*K8sServiceAccountOperatorIdentityRequirement {
+	list := []*K8sServiceAccountOperatorIdentityRequirement{}
 	for iterator.ReadArray() {
-		item := ReadDataPlaneOperatorIdentity(iterator)
+		item := ReadK8sServiceAccountOperatorIdentityRequirement(iterator)
 		list = append(list, item)
 	}
 	return list

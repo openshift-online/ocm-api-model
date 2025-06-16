@@ -26,10 +26,10 @@ import (
 	"github.com/openshift-online/ocm-api-model/clientapi/helpers"
 )
 
-// MarshalControlPlaneOperatorIdentity writes a value of the 'control_plane_operator_identity' type to the given writer.
-func MarshalControlPlaneOperatorIdentity(object *ControlPlaneOperatorIdentity, writer io.Writer) error {
+// MarshalDataPlaneOperatorIdentityRequirement writes a value of the 'data_plane_operator_identity_requirement' type to the given writer.
+func MarshalDataPlaneOperatorIdentityRequirement(object *DataPlaneOperatorIdentityRequirement, writer io.Writer) error {
 	stream := helpers.NewStream(writer)
-	WriteControlPlaneOperatorIdentity(object, stream)
+	WriteDataPlaneOperatorIdentityRequirement(object, stream)
 	err := stream.Flush()
 	if err != nil {
 		return err
@@ -37,8 +37,8 @@ func MarshalControlPlaneOperatorIdentity(object *ControlPlaneOperatorIdentity, w
 	return stream.Error
 }
 
-// WriteControlPlaneOperatorIdentity writes a value of the 'control_plane_operator_identity' type to the given stream.
-func WriteControlPlaneOperatorIdentity(object *ControlPlaneOperatorIdentity, stream *jsoniter.Stream) {
+// WriteDataPlaneOperatorIdentityRequirement writes a value of the 'data_plane_operator_identity_requirement' type to the given stream.
+func WriteDataPlaneOperatorIdentityRequirement(object *DataPlaneOperatorIdentityRequirement, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
@@ -84,26 +84,35 @@ func WriteControlPlaneOperatorIdentity(object *ControlPlaneOperatorIdentity, str
 			stream.WriteMore()
 		}
 		stream.WriteObjectField("role_definitions")
-		WriteRoleDefinitionList(object.roleDefinitions, stream)
+		WriteRoleDefinitionOperatorIdentityRequirementList(object.roleDefinitions, stream)
+		count++
+	}
+	present_ = object.bitmap_&32 != 0 && object.serviceAccounts != nil
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
+		stream.WriteObjectField("service_accounts")
+		WriteK8sServiceAccountOperatorIdentityRequirementList(object.serviceAccounts, stream)
 	}
 	stream.WriteObjectEnd()
 }
 
-// UnmarshalControlPlaneOperatorIdentity reads a value of the 'control_plane_operator_identity' type from the given
+// UnmarshalDataPlaneOperatorIdentityRequirement reads a value of the 'data_plane_operator_identity_requirement' type from the given
 // source, which can be an slice of bytes, a string or a reader.
-func UnmarshalControlPlaneOperatorIdentity(source interface{}) (object *ControlPlaneOperatorIdentity, err error) {
+func UnmarshalDataPlaneOperatorIdentityRequirement(source interface{}) (object *DataPlaneOperatorIdentityRequirement, err error) {
 	iterator, err := helpers.NewIterator(source)
 	if err != nil {
 		return
 	}
-	object = ReadControlPlaneOperatorIdentity(iterator)
+	object = ReadDataPlaneOperatorIdentityRequirement(iterator)
 	err = iterator.Error
 	return
 }
 
-// ReadControlPlaneOperatorIdentity reads a value of the 'control_plane_operator_identity' type from the given iterator.
-func ReadControlPlaneOperatorIdentity(iterator *jsoniter.Iterator) *ControlPlaneOperatorIdentity {
-	object := &ControlPlaneOperatorIdentity{}
+// ReadDataPlaneOperatorIdentityRequirement reads a value of the 'data_plane_operator_identity_requirement' type from the given iterator.
+func ReadDataPlaneOperatorIdentityRequirement(iterator *jsoniter.Iterator) *DataPlaneOperatorIdentityRequirement {
+	object := &DataPlaneOperatorIdentityRequirement{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -127,9 +136,13 @@ func ReadControlPlaneOperatorIdentity(iterator *jsoniter.Iterator) *ControlPlane
 			object.required = value
 			object.bitmap_ |= 8
 		case "role_definitions":
-			value := ReadRoleDefinitionList(iterator)
+			value := ReadRoleDefinitionOperatorIdentityRequirementList(iterator)
 			object.roleDefinitions = value
 			object.bitmap_ |= 16
+		case "service_accounts":
+			value := ReadK8sServiceAccountOperatorIdentityRequirementList(iterator)
+			object.serviceAccounts = value
+			object.bitmap_ |= 32
 		default:
 			iterator.ReadAny()
 		}

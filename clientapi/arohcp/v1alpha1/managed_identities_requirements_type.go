@@ -47,8 +47,8 @@ type ManagedIdentitiesRequirements struct {
 	bitmap_                         uint32
 	id                              string
 	href                            string
-	controlPlaneOperatorsIdentities []*ControlPlaneOperatorIdentity
-	dataPlaneOperatorsIdentities    []*DataPlaneOperatorIdentity
+	controlPlaneOperatorsIdentities []*ControlPlaneOperatorIdentityRequirement
+	dataPlaneOperatorsIdentities    []*DataPlaneOperatorIdentityRequirement
 }
 
 // Kind returns the name of the type of the object.
@@ -112,7 +112,7 @@ func (o *ManagedIdentitiesRequirements) Empty() bool {
 // the zero value of the type if the attribute doesn't have a value.
 //
 // The control plane operators managed identities requirements
-func (o *ManagedIdentitiesRequirements) ControlPlaneOperatorsIdentities() []*ControlPlaneOperatorIdentity {
+func (o *ManagedIdentitiesRequirements) ControlPlaneOperatorsIdentities() []*ControlPlaneOperatorIdentityRequirement {
 	if o != nil && o.bitmap_&8 != 0 {
 		return o.controlPlaneOperatorsIdentities
 	}
@@ -123,7 +123,7 @@ func (o *ManagedIdentitiesRequirements) ControlPlaneOperatorsIdentities() []*Con
 // a flag indicating if the attribute has a value.
 //
 // The control plane operators managed identities requirements
-func (o *ManagedIdentitiesRequirements) GetControlPlaneOperatorsIdentities() (value []*ControlPlaneOperatorIdentity, ok bool) {
+func (o *ManagedIdentitiesRequirements) GetControlPlaneOperatorsIdentities() (value []*ControlPlaneOperatorIdentityRequirement, ok bool) {
 	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.controlPlaneOperatorsIdentities
@@ -134,8 +134,8 @@ func (o *ManagedIdentitiesRequirements) GetControlPlaneOperatorsIdentities() (va
 // DataPlaneOperatorsIdentities returns the value of the 'data_plane_operators_identities' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
-// The data plane operators managed identities requires
-func (o *ManagedIdentitiesRequirements) DataPlaneOperatorsIdentities() []*DataPlaneOperatorIdentity {
+// The data plane operators managed identities requirements
+func (o *ManagedIdentitiesRequirements) DataPlaneOperatorsIdentities() []*DataPlaneOperatorIdentityRequirement {
 	if o != nil && o.bitmap_&16 != 0 {
 		return o.dataPlaneOperatorsIdentities
 	}
@@ -145,8 +145,8 @@ func (o *ManagedIdentitiesRequirements) DataPlaneOperatorsIdentities() []*DataPl
 // GetDataPlaneOperatorsIdentities returns the value of the 'data_plane_operators_identities' attribute and
 // a flag indicating if the attribute has a value.
 //
-// The data plane operators managed identities requires
-func (o *ManagedIdentitiesRequirements) GetDataPlaneOperatorsIdentities() (value []*DataPlaneOperatorIdentity, ok bool) {
+// The data plane operators managed identities requirements
+func (o *ManagedIdentitiesRequirements) GetDataPlaneOperatorsIdentities() (value []*DataPlaneOperatorIdentityRequirement, ok bool) {
 	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.dataPlaneOperatorsIdentities

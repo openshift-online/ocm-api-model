@@ -26,10 +26,10 @@ import (
 	"github.com/openshift-online/ocm-api-model/clientapi/helpers"
 )
 
-// MarshalDataPlaneOperatorIdentity writes a value of the 'data_plane_operator_identity' type to the given writer.
-func MarshalDataPlaneOperatorIdentity(object *DataPlaneOperatorIdentity, writer io.Writer) error {
+// MarshalControlPlaneOperatorIdentityRequirement writes a value of the 'control_plane_operator_identity_requirement' type to the given writer.
+func MarshalControlPlaneOperatorIdentityRequirement(object *ControlPlaneOperatorIdentityRequirement, writer io.Writer) error {
 	stream := helpers.NewStream(writer)
-	WriteDataPlaneOperatorIdentity(object, stream)
+	WriteControlPlaneOperatorIdentityRequirement(object, stream)
 	err := stream.Flush()
 	if err != nil {
 		return err
@@ -37,8 +37,8 @@ func MarshalDataPlaneOperatorIdentity(object *DataPlaneOperatorIdentity, writer 
 	return stream.Error
 }
 
-// WriteDataPlaneOperatorIdentity writes a value of the 'data_plane_operator_identity' type to the given stream.
-func WriteDataPlaneOperatorIdentity(object *DataPlaneOperatorIdentity, stream *jsoniter.Stream) {
+// WriteControlPlaneOperatorIdentityRequirement writes a value of the 'control_plane_operator_identity_requirement' type to the given stream.
+func WriteControlPlaneOperatorIdentityRequirement(object *ControlPlaneOperatorIdentityRequirement, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
@@ -84,35 +84,26 @@ func WriteDataPlaneOperatorIdentity(object *DataPlaneOperatorIdentity, stream *j
 			stream.WriteMore()
 		}
 		stream.WriteObjectField("role_definitions")
-		WriteRoleDefinitionList(object.roleDefinitions, stream)
-		count++
-	}
-	present_ = object.bitmap_&32 != 0 && object.serviceAccounts != nil
-	if present_ {
-		if count > 0 {
-			stream.WriteMore()
-		}
-		stream.WriteObjectField("service_accounts")
-		WriteIdentityServiceAccountList(object.serviceAccounts, stream)
+		WriteRoleDefinitionOperatorIdentityRequirementList(object.roleDefinitions, stream)
 	}
 	stream.WriteObjectEnd()
 }
 
-// UnmarshalDataPlaneOperatorIdentity reads a value of the 'data_plane_operator_identity' type from the given
+// UnmarshalControlPlaneOperatorIdentityRequirement reads a value of the 'control_plane_operator_identity_requirement' type from the given
 // source, which can be an slice of bytes, a string or a reader.
-func UnmarshalDataPlaneOperatorIdentity(source interface{}) (object *DataPlaneOperatorIdentity, err error) {
+func UnmarshalControlPlaneOperatorIdentityRequirement(source interface{}) (object *ControlPlaneOperatorIdentityRequirement, err error) {
 	iterator, err := helpers.NewIterator(source)
 	if err != nil {
 		return
 	}
-	object = ReadDataPlaneOperatorIdentity(iterator)
+	object = ReadControlPlaneOperatorIdentityRequirement(iterator)
 	err = iterator.Error
 	return
 }
 
-// ReadDataPlaneOperatorIdentity reads a value of the 'data_plane_operator_identity' type from the given iterator.
-func ReadDataPlaneOperatorIdentity(iterator *jsoniter.Iterator) *DataPlaneOperatorIdentity {
-	object := &DataPlaneOperatorIdentity{}
+// ReadControlPlaneOperatorIdentityRequirement reads a value of the 'control_plane_operator_identity_requirement' type from the given iterator.
+func ReadControlPlaneOperatorIdentityRequirement(iterator *jsoniter.Iterator) *ControlPlaneOperatorIdentityRequirement {
+	object := &ControlPlaneOperatorIdentityRequirement{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -136,13 +127,9 @@ func ReadDataPlaneOperatorIdentity(iterator *jsoniter.Iterator) *DataPlaneOperat
 			object.required = value
 			object.bitmap_ |= 8
 		case "role_definitions":
-			value := ReadRoleDefinitionList(iterator)
+			value := ReadRoleDefinitionOperatorIdentityRequirementList(iterator)
 			object.roleDefinitions = value
 			object.bitmap_ |= 16
-		case "service_accounts":
-			value := ReadIdentityServiceAccountList(iterator)
-			object.serviceAccounts = value
-			object.bitmap_ |= 32
 		default:
 			iterator.ReadAny()
 		}

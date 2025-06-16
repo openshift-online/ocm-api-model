@@ -26,13 +26,13 @@ limitations under the License.
 // set of required permissions assigned to them which also have to be returned to the end users.
 class ManagedIdentitiesRequirements {
   // The control plane operators managed identities requirements
-  ControlPlaneOperatorsIdentities []ControlPlaneOperatorIdentity
-  // The data plane operators managed identities requires
-  DataPlaneOperatorsIdentities []DataPlaneOperatorIdentity
+  ControlPlaneOperatorsIdentities []ControlPlaneOperatorIdentityRequirement
+  // The data plane operators managed identities requirements
+  DataPlaneOperatorsIdentities []DataPlaneOperatorIdentityRequirement
 }
 
-struct ControlPlaneOperatorIdentity {
-  // Indicates the whether the identity is always required or not.
+struct ControlPlaneOperatorIdentityRequirement {
+  // Indicates whether the identity is always required or not.
   // "always" means that the identity is always required
   // "on_enablement" means that the identity is only required when a functionality 
   // that leverages the operator is enabled. 
@@ -55,11 +55,11 @@ struct ControlPlaneOperatorIdentity {
   MinOpenShiftVersion String   
 
   // A list of roles that are required by the operator 
-  RoleDefinitions []RoleDefinition
+  RoleDefinitions []RoleDefinitionOperatorIdentityRequirement
 }
 
-struct DataPlaneOperatorIdentity {
-   // Indicates the whether the identity is always required or not
+struct DataPlaneOperatorIdentityRequirement {
+   // Indicates whether the identity is always required or not
    // "always" means that the identity is always required
    // "on_enablement" means that the identity is only required when a functionality 
    // that leverages the operator is enabled.
@@ -87,20 +87,20 @@ struct DataPlaneOperatorIdentity {
    // There must be at least a single service account specified.
    // This information is needed to federate a managed identity to a k8s subject.
    // There should be no duplicated "name:namespace" entries within this field. 
-   ServiceAccounts []IdentityServiceAccount
+   ServiceAccounts []K8sServiceAccountOperatorIdentityRequirement
 
    // A list of roles that are required by the operator 
-   RoleDefinitions []RoleDefinition
+   RoleDefinitions []RoleDefinitionOperatorIdentityRequirement
 }
 
-struct IdentityServiceAccount {
+struct K8sServiceAccountOperatorIdentityRequirement {
   // The name of the service account to be leveraged by the operator
   Name String
-  // The namespace of the service account to be leverage by the operator
+  // The namespace of the service account to be leveraged by the operator
   Namespace String
 }
 
-struct RoleDefinition {
+struct RoleDefinitionOperatorIdentityRequirement {
   // The official name of the Role defined in resource_id. 
   // It is purely a friendly/descriptive name.
   Name String

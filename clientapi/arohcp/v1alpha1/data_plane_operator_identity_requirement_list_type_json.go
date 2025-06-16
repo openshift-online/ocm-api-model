@@ -26,11 +26,11 @@ import (
 	"github.com/openshift-online/ocm-api-model/clientapi/helpers"
 )
 
-// MarshalControlPlaneOperatorIdentityList writes a list of values of the 'control_plane_operator_identity' type to
+// MarshalDataPlaneOperatorIdentityRequirementList writes a list of values of the 'data_plane_operator_identity_requirement' type to
 // the given writer.
-func MarshalControlPlaneOperatorIdentityList(list []*ControlPlaneOperatorIdentity, writer io.Writer) error {
+func MarshalDataPlaneOperatorIdentityRequirementList(list []*DataPlaneOperatorIdentityRequirement, writer io.Writer) error {
 	stream := helpers.NewStream(writer)
-	WriteControlPlaneOperatorIdentityList(list, stream)
+	WriteDataPlaneOperatorIdentityRequirementList(list, stream)
 	err := stream.Flush()
 	if err != nil {
 		return err
@@ -38,37 +38,37 @@ func MarshalControlPlaneOperatorIdentityList(list []*ControlPlaneOperatorIdentit
 	return stream.Error
 }
 
-// WriteControlPlaneOperatorIdentityList writes a list of value of the 'control_plane_operator_identity' type to
+// WriteDataPlaneOperatorIdentityRequirementList writes a list of value of the 'data_plane_operator_identity_requirement' type to
 // the given stream.
-func WriteControlPlaneOperatorIdentityList(list []*ControlPlaneOperatorIdentity, stream *jsoniter.Stream) {
+func WriteDataPlaneOperatorIdentityRequirementList(list []*DataPlaneOperatorIdentityRequirement, stream *jsoniter.Stream) {
 	stream.WriteArrayStart()
 	for i, value := range list {
 		if i > 0 {
 			stream.WriteMore()
 		}
-		WriteControlPlaneOperatorIdentity(value, stream)
+		WriteDataPlaneOperatorIdentityRequirement(value, stream)
 	}
 	stream.WriteArrayEnd()
 }
 
-// UnmarshalControlPlaneOperatorIdentityList reads a list of values of the 'control_plane_operator_identity' type
+// UnmarshalDataPlaneOperatorIdentityRequirementList reads a list of values of the 'data_plane_operator_identity_requirement' type
 // from the given source, which can be a slice of bytes, a string or a reader.
-func UnmarshalControlPlaneOperatorIdentityList(source interface{}) (items []*ControlPlaneOperatorIdentity, err error) {
+func UnmarshalDataPlaneOperatorIdentityRequirementList(source interface{}) (items []*DataPlaneOperatorIdentityRequirement, err error) {
 	iterator, err := helpers.NewIterator(source)
 	if err != nil {
 		return
 	}
-	items = ReadControlPlaneOperatorIdentityList(iterator)
+	items = ReadDataPlaneOperatorIdentityRequirementList(iterator)
 	err = iterator.Error
 	return
 }
 
-// ReadControlPlaneOperatorIdentityList reads list of values of the ”control_plane_operator_identity' type from
+// ReadDataPlaneOperatorIdentityRequirementList reads list of values of the ”data_plane_operator_identity_requirement' type from
 // the given iterator.
-func ReadControlPlaneOperatorIdentityList(iterator *jsoniter.Iterator) []*ControlPlaneOperatorIdentity {
-	list := []*ControlPlaneOperatorIdentity{}
+func ReadDataPlaneOperatorIdentityRequirementList(iterator *jsoniter.Iterator) []*DataPlaneOperatorIdentityRequirement {
+	list := []*DataPlaneOperatorIdentityRequirement{}
 	for iterator.ReadArray() {
-		item := ReadControlPlaneOperatorIdentity(iterator)
+		item := ReadDataPlaneOperatorIdentityRequirement(iterator)
 		list = append(list, item)
 	}
 	return list

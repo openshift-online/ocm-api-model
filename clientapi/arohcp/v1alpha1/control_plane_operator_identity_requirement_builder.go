@@ -19,64 +19,64 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// ControlPlaneOperatorIdentityBuilder contains the data and logic needed to build 'control_plane_operator_identity' objects.
-type ControlPlaneOperatorIdentityBuilder struct {
+// ControlPlaneOperatorIdentityRequirementBuilder contains the data and logic needed to build 'control_plane_operator_identity_requirement' objects.
+type ControlPlaneOperatorIdentityRequirementBuilder struct {
 	bitmap_             uint32
 	maxOpenShiftVersion string
 	minOpenShiftVersion string
 	operatorName        string
 	required            string
-	roleDefinitions     []*RoleDefinitionBuilder
+	roleDefinitions     []*RoleDefinitionOperatorIdentityRequirementBuilder
 }
 
-// NewControlPlaneOperatorIdentity creates a new builder of 'control_plane_operator_identity' objects.
-func NewControlPlaneOperatorIdentity() *ControlPlaneOperatorIdentityBuilder {
-	return &ControlPlaneOperatorIdentityBuilder{}
+// NewControlPlaneOperatorIdentityRequirement creates a new builder of 'control_plane_operator_identity_requirement' objects.
+func NewControlPlaneOperatorIdentityRequirement() *ControlPlaneOperatorIdentityRequirementBuilder {
+	return &ControlPlaneOperatorIdentityRequirementBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
-func (b *ControlPlaneOperatorIdentityBuilder) Empty() bool {
+func (b *ControlPlaneOperatorIdentityRequirementBuilder) Empty() bool {
 	return b == nil || b.bitmap_ == 0
 }
 
 // MaxOpenShiftVersion sets the value of the 'max_open_shift_version' attribute to the given value.
-func (b *ControlPlaneOperatorIdentityBuilder) MaxOpenShiftVersion(value string) *ControlPlaneOperatorIdentityBuilder {
+func (b *ControlPlaneOperatorIdentityRequirementBuilder) MaxOpenShiftVersion(value string) *ControlPlaneOperatorIdentityRequirementBuilder {
 	b.maxOpenShiftVersion = value
 	b.bitmap_ |= 1
 	return b
 }
 
 // MinOpenShiftVersion sets the value of the 'min_open_shift_version' attribute to the given value.
-func (b *ControlPlaneOperatorIdentityBuilder) MinOpenShiftVersion(value string) *ControlPlaneOperatorIdentityBuilder {
+func (b *ControlPlaneOperatorIdentityRequirementBuilder) MinOpenShiftVersion(value string) *ControlPlaneOperatorIdentityRequirementBuilder {
 	b.minOpenShiftVersion = value
 	b.bitmap_ |= 2
 	return b
 }
 
 // OperatorName sets the value of the 'operator_name' attribute to the given value.
-func (b *ControlPlaneOperatorIdentityBuilder) OperatorName(value string) *ControlPlaneOperatorIdentityBuilder {
+func (b *ControlPlaneOperatorIdentityRequirementBuilder) OperatorName(value string) *ControlPlaneOperatorIdentityRequirementBuilder {
 	b.operatorName = value
 	b.bitmap_ |= 4
 	return b
 }
 
 // Required sets the value of the 'required' attribute to the given value.
-func (b *ControlPlaneOperatorIdentityBuilder) Required(value string) *ControlPlaneOperatorIdentityBuilder {
+func (b *ControlPlaneOperatorIdentityRequirementBuilder) Required(value string) *ControlPlaneOperatorIdentityRequirementBuilder {
 	b.required = value
 	b.bitmap_ |= 8
 	return b
 }
 
 // RoleDefinitions sets the value of the 'role_definitions' attribute to the given values.
-func (b *ControlPlaneOperatorIdentityBuilder) RoleDefinitions(values ...*RoleDefinitionBuilder) *ControlPlaneOperatorIdentityBuilder {
-	b.roleDefinitions = make([]*RoleDefinitionBuilder, len(values))
+func (b *ControlPlaneOperatorIdentityRequirementBuilder) RoleDefinitions(values ...*RoleDefinitionOperatorIdentityRequirementBuilder) *ControlPlaneOperatorIdentityRequirementBuilder {
+	b.roleDefinitions = make([]*RoleDefinitionOperatorIdentityRequirementBuilder, len(values))
 	copy(b.roleDefinitions, values)
 	b.bitmap_ |= 16
 	return b
 }
 
 // Copy copies the attributes of the given object into this builder, discarding any previous values.
-func (b *ControlPlaneOperatorIdentityBuilder) Copy(object *ControlPlaneOperatorIdentity) *ControlPlaneOperatorIdentityBuilder {
+func (b *ControlPlaneOperatorIdentityRequirementBuilder) Copy(object *ControlPlaneOperatorIdentityRequirement) *ControlPlaneOperatorIdentityRequirementBuilder {
 	if object == nil {
 		return b
 	}
@@ -86,9 +86,9 @@ func (b *ControlPlaneOperatorIdentityBuilder) Copy(object *ControlPlaneOperatorI
 	b.operatorName = object.operatorName
 	b.required = object.required
 	if object.roleDefinitions != nil {
-		b.roleDefinitions = make([]*RoleDefinitionBuilder, len(object.roleDefinitions))
+		b.roleDefinitions = make([]*RoleDefinitionOperatorIdentityRequirementBuilder, len(object.roleDefinitions))
 		for i, v := range object.roleDefinitions {
-			b.roleDefinitions[i] = NewRoleDefinition().Copy(v)
+			b.roleDefinitions[i] = NewRoleDefinitionOperatorIdentityRequirement().Copy(v)
 		}
 	} else {
 		b.roleDefinitions = nil
@@ -96,16 +96,16 @@ func (b *ControlPlaneOperatorIdentityBuilder) Copy(object *ControlPlaneOperatorI
 	return b
 }
 
-// Build creates a 'control_plane_operator_identity' object using the configuration stored in the builder.
-func (b *ControlPlaneOperatorIdentityBuilder) Build() (object *ControlPlaneOperatorIdentity, err error) {
-	object = new(ControlPlaneOperatorIdentity)
+// Build creates a 'control_plane_operator_identity_requirement' object using the configuration stored in the builder.
+func (b *ControlPlaneOperatorIdentityRequirementBuilder) Build() (object *ControlPlaneOperatorIdentityRequirement, err error) {
+	object = new(ControlPlaneOperatorIdentityRequirement)
 	object.bitmap_ = b.bitmap_
 	object.maxOpenShiftVersion = b.maxOpenShiftVersion
 	object.minOpenShiftVersion = b.minOpenShiftVersion
 	object.operatorName = b.operatorName
 	object.required = b.required
 	if b.roleDefinitions != nil {
-		object.roleDefinitions = make([]*RoleDefinition, len(b.roleDefinitions))
+		object.roleDefinitions = make([]*RoleDefinitionOperatorIdentityRequirement, len(b.roleDefinitions))
 		for i, v := range b.roleDefinitions {
 			object.roleDefinitions[i], err = v.Build()
 			if err != nil {

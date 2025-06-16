@@ -19,39 +19,39 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// RoleDefinitionBuilder contains the data and logic needed to build 'role_definition' objects.
-type RoleDefinitionBuilder struct {
+// RoleDefinitionOperatorIdentityRequirementBuilder contains the data and logic needed to build 'role_definition_operator_identity_requirement' objects.
+type RoleDefinitionOperatorIdentityRequirementBuilder struct {
 	bitmap_    uint32
 	name       string
 	resourceId string
 }
 
-// NewRoleDefinition creates a new builder of 'role_definition' objects.
-func NewRoleDefinition() *RoleDefinitionBuilder {
-	return &RoleDefinitionBuilder{}
+// NewRoleDefinitionOperatorIdentityRequirement creates a new builder of 'role_definition_operator_identity_requirement' objects.
+func NewRoleDefinitionOperatorIdentityRequirement() *RoleDefinitionOperatorIdentityRequirementBuilder {
+	return &RoleDefinitionOperatorIdentityRequirementBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
-func (b *RoleDefinitionBuilder) Empty() bool {
+func (b *RoleDefinitionOperatorIdentityRequirementBuilder) Empty() bool {
 	return b == nil || b.bitmap_ == 0
 }
 
 // Name sets the value of the 'name' attribute to the given value.
-func (b *RoleDefinitionBuilder) Name(value string) *RoleDefinitionBuilder {
+func (b *RoleDefinitionOperatorIdentityRequirementBuilder) Name(value string) *RoleDefinitionOperatorIdentityRequirementBuilder {
 	b.name = value
 	b.bitmap_ |= 1
 	return b
 }
 
 // ResourceId sets the value of the 'resource_id' attribute to the given value.
-func (b *RoleDefinitionBuilder) ResourceId(value string) *RoleDefinitionBuilder {
+func (b *RoleDefinitionOperatorIdentityRequirementBuilder) ResourceId(value string) *RoleDefinitionOperatorIdentityRequirementBuilder {
 	b.resourceId = value
 	b.bitmap_ |= 2
 	return b
 }
 
 // Copy copies the attributes of the given object into this builder, discarding any previous values.
-func (b *RoleDefinitionBuilder) Copy(object *RoleDefinition) *RoleDefinitionBuilder {
+func (b *RoleDefinitionOperatorIdentityRequirementBuilder) Copy(object *RoleDefinitionOperatorIdentityRequirement) *RoleDefinitionOperatorIdentityRequirementBuilder {
 	if object == nil {
 		return b
 	}
@@ -61,9 +61,9 @@ func (b *RoleDefinitionBuilder) Copy(object *RoleDefinition) *RoleDefinitionBuil
 	return b
 }
 
-// Build creates a 'role_definition' object using the configuration stored in the builder.
-func (b *RoleDefinitionBuilder) Build() (object *RoleDefinition, err error) {
-	object = new(RoleDefinition)
+// Build creates a 'role_definition_operator_identity_requirement' object using the configuration stored in the builder.
+func (b *RoleDefinitionOperatorIdentityRequirementBuilder) Build() (object *RoleDefinitionOperatorIdentityRequirement, err error) {
+	object = new(RoleDefinitionOperatorIdentityRequirement)
 	object.bitmap_ = b.bitmap_
 	object.name = b.name
 	object.resourceId = b.resourceId
