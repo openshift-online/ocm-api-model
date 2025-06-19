@@ -24,13 +24,13 @@ resource ManagedIdentitiesRequirements {
 		// the OpenShift version respectively.
 		// When supplied, the returned response will include all the control plane 
 		// and data plane operators requirements for the given version. 
-		// If not supplied, the OpenShift version constraint won't be taken onto account 
+		// If not supplied, the OpenShift version constraint won't be taken into account 
 		// when returning the managed identities requirements.
 		in Version String
 
 		// Get the managed identities requirements depending on when they are required.
 		// The query parameter is optional, it needs to be either ("always" or "on_enablement"). 
-		// When not supplied, this enablement constraint won't be taken onto account.
+		// When not supplied, this enablement constraint won't be taken into account.
 		// When supplied and among the accepted values, the query parameter will be used to return all managed identities requirements
 		// that matches the value given in the query parameter.
 		// When supplied but the value is invalid, an error is going to be returned.

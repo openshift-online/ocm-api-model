@@ -71,7 +71,7 @@ func WriteManagedIdentitiesRequirements(object *ManagedIdentitiesRequirements, s
 			stream.WriteMore()
 		}
 		stream.WriteObjectField("control_plane_operators_identities")
-		WriteControlPlaneOperatorIdentityList(object.controlPlaneOperatorsIdentities, stream)
+		WriteControlPlaneOperatorIdentityRequirementList(object.controlPlaneOperatorsIdentities, stream)
 		count++
 	}
 	present_ = object.bitmap_&16 != 0 && object.dataPlaneOperatorsIdentities != nil
@@ -80,7 +80,7 @@ func WriteManagedIdentitiesRequirements(object *ManagedIdentitiesRequirements, s
 			stream.WriteMore()
 		}
 		stream.WriteObjectField("data_plane_operators_identities")
-		WriteDataPlaneOperatorIdentityList(object.dataPlaneOperatorsIdentities, stream)
+		WriteDataPlaneOperatorIdentityRequirementList(object.dataPlaneOperatorsIdentities, stream)
 	}
 	stream.WriteObjectEnd()
 }
@@ -118,11 +118,11 @@ func ReadManagedIdentitiesRequirements(iterator *jsoniter.Iterator) *ManagedIden
 			object.href = iterator.ReadString()
 			object.bitmap_ |= 4
 		case "control_plane_operators_identities":
-			value := ReadControlPlaneOperatorIdentityList(iterator)
+			value := ReadControlPlaneOperatorIdentityRequirementList(iterator)
 			object.controlPlaneOperatorsIdentities = value
 			object.bitmap_ |= 8
 		case "data_plane_operators_identities":
-			value := ReadDataPlaneOperatorIdentityList(iterator)
+			value := ReadDataPlaneOperatorIdentityRequirementList(iterator)
 			object.dataPlaneOperatorsIdentities = value
 			object.bitmap_ |= 16
 		default:

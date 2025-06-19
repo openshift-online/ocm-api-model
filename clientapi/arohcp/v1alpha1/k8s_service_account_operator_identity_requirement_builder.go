@@ -19,39 +19,39 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// IdentityServiceAccountBuilder contains the data and logic needed to build 'identity_service_account' objects.
-type IdentityServiceAccountBuilder struct {
+// K8sServiceAccountOperatorIdentityRequirementBuilder contains the data and logic needed to build 'K8s_service_account_operator_identity_requirement' objects.
+type K8sServiceAccountOperatorIdentityRequirementBuilder struct {
 	bitmap_   uint32
 	name      string
 	namespace string
 }
 
-// NewIdentityServiceAccount creates a new builder of 'identity_service_account' objects.
-func NewIdentityServiceAccount() *IdentityServiceAccountBuilder {
-	return &IdentityServiceAccountBuilder{}
+// NewK8sServiceAccountOperatorIdentityRequirement creates a new builder of 'K8s_service_account_operator_identity_requirement' objects.
+func NewK8sServiceAccountOperatorIdentityRequirement() *K8sServiceAccountOperatorIdentityRequirementBuilder {
+	return &K8sServiceAccountOperatorIdentityRequirementBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
-func (b *IdentityServiceAccountBuilder) Empty() bool {
+func (b *K8sServiceAccountOperatorIdentityRequirementBuilder) Empty() bool {
 	return b == nil || b.bitmap_ == 0
 }
 
 // Name sets the value of the 'name' attribute to the given value.
-func (b *IdentityServiceAccountBuilder) Name(value string) *IdentityServiceAccountBuilder {
+func (b *K8sServiceAccountOperatorIdentityRequirementBuilder) Name(value string) *K8sServiceAccountOperatorIdentityRequirementBuilder {
 	b.name = value
 	b.bitmap_ |= 1
 	return b
 }
 
 // Namespace sets the value of the 'namespace' attribute to the given value.
-func (b *IdentityServiceAccountBuilder) Namespace(value string) *IdentityServiceAccountBuilder {
+func (b *K8sServiceAccountOperatorIdentityRequirementBuilder) Namespace(value string) *K8sServiceAccountOperatorIdentityRequirementBuilder {
 	b.namespace = value
 	b.bitmap_ |= 2
 	return b
 }
 
 // Copy copies the attributes of the given object into this builder, discarding any previous values.
-func (b *IdentityServiceAccountBuilder) Copy(object *IdentityServiceAccount) *IdentityServiceAccountBuilder {
+func (b *K8sServiceAccountOperatorIdentityRequirementBuilder) Copy(object *K8sServiceAccountOperatorIdentityRequirement) *K8sServiceAccountOperatorIdentityRequirementBuilder {
 	if object == nil {
 		return b
 	}
@@ -61,9 +61,9 @@ func (b *IdentityServiceAccountBuilder) Copy(object *IdentityServiceAccount) *Id
 	return b
 }
 
-// Build creates a 'identity_service_account' object using the configuration stored in the builder.
-func (b *IdentityServiceAccountBuilder) Build() (object *IdentityServiceAccount, err error) {
-	object = new(IdentityServiceAccount)
+// Build creates a 'K8s_service_account_operator_identity_requirement' object using the configuration stored in the builder.
+func (b *K8sServiceAccountOperatorIdentityRequirementBuilder) Build() (object *K8sServiceAccountOperatorIdentityRequirement, err error) {
+	object = new(K8sServiceAccountOperatorIdentityRequirement)
 	object.bitmap_ = b.bitmap_
 	object.name = b.name
 	object.namespace = b.namespace

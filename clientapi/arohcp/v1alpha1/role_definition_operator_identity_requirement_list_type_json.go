@@ -26,11 +26,11 @@ import (
 	"github.com/openshift-online/ocm-api-model/clientapi/helpers"
 )
 
-// MarshalIdentityServiceAccountList writes a list of values of the 'identity_service_account' type to
+// MarshalRoleDefinitionOperatorIdentityRequirementList writes a list of values of the 'role_definition_operator_identity_requirement' type to
 // the given writer.
-func MarshalIdentityServiceAccountList(list []*IdentityServiceAccount, writer io.Writer) error {
+func MarshalRoleDefinitionOperatorIdentityRequirementList(list []*RoleDefinitionOperatorIdentityRequirement, writer io.Writer) error {
 	stream := helpers.NewStream(writer)
-	WriteIdentityServiceAccountList(list, stream)
+	WriteRoleDefinitionOperatorIdentityRequirementList(list, stream)
 	err := stream.Flush()
 	if err != nil {
 		return err
@@ -38,37 +38,37 @@ func MarshalIdentityServiceAccountList(list []*IdentityServiceAccount, writer io
 	return stream.Error
 }
 
-// WriteIdentityServiceAccountList writes a list of value of the 'identity_service_account' type to
+// WriteRoleDefinitionOperatorIdentityRequirementList writes a list of value of the 'role_definition_operator_identity_requirement' type to
 // the given stream.
-func WriteIdentityServiceAccountList(list []*IdentityServiceAccount, stream *jsoniter.Stream) {
+func WriteRoleDefinitionOperatorIdentityRequirementList(list []*RoleDefinitionOperatorIdentityRequirement, stream *jsoniter.Stream) {
 	stream.WriteArrayStart()
 	for i, value := range list {
 		if i > 0 {
 			stream.WriteMore()
 		}
-		WriteIdentityServiceAccount(value, stream)
+		WriteRoleDefinitionOperatorIdentityRequirement(value, stream)
 	}
 	stream.WriteArrayEnd()
 }
 
-// UnmarshalIdentityServiceAccountList reads a list of values of the 'identity_service_account' type
+// UnmarshalRoleDefinitionOperatorIdentityRequirementList reads a list of values of the 'role_definition_operator_identity_requirement' type
 // from the given source, which can be a slice of bytes, a string or a reader.
-func UnmarshalIdentityServiceAccountList(source interface{}) (items []*IdentityServiceAccount, err error) {
+func UnmarshalRoleDefinitionOperatorIdentityRequirementList(source interface{}) (items []*RoleDefinitionOperatorIdentityRequirement, err error) {
 	iterator, err := helpers.NewIterator(source)
 	if err != nil {
 		return
 	}
-	items = ReadIdentityServiceAccountList(iterator)
+	items = ReadRoleDefinitionOperatorIdentityRequirementList(iterator)
 	err = iterator.Error
 	return
 }
 
-// ReadIdentityServiceAccountList reads list of values of the ”identity_service_account' type from
+// ReadRoleDefinitionOperatorIdentityRequirementList reads list of values of the ”role_definition_operator_identity_requirement' type from
 // the given iterator.
-func ReadIdentityServiceAccountList(iterator *jsoniter.Iterator) []*IdentityServiceAccount {
-	list := []*IdentityServiceAccount{}
+func ReadRoleDefinitionOperatorIdentityRequirementList(iterator *jsoniter.Iterator) []*RoleDefinitionOperatorIdentityRequirement {
+	list := []*RoleDefinitionOperatorIdentityRequirement{}
 	for iterator.ReadArray() {
-		item := ReadIdentityServiceAccount(iterator)
+		item := ReadRoleDefinitionOperatorIdentityRequirement(iterator)
 		list = append(list, item)
 	}
 	return list

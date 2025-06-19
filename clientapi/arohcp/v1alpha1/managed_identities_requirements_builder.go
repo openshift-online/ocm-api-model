@@ -35,8 +35,8 @@ type ManagedIdentitiesRequirementsBuilder struct {
 	bitmap_                         uint32
 	id                              string
 	href                            string
-	controlPlaneOperatorsIdentities []*ControlPlaneOperatorIdentityBuilder
-	dataPlaneOperatorsIdentities    []*DataPlaneOperatorIdentityBuilder
+	controlPlaneOperatorsIdentities []*ControlPlaneOperatorIdentityRequirementBuilder
+	dataPlaneOperatorsIdentities    []*DataPlaneOperatorIdentityRequirementBuilder
 }
 
 // NewManagedIdentitiesRequirements creates a new builder of 'managed_identities_requirements' objects.
@@ -70,16 +70,16 @@ func (b *ManagedIdentitiesRequirementsBuilder) Empty() bool {
 }
 
 // ControlPlaneOperatorsIdentities sets the value of the 'control_plane_operators_identities' attribute to the given values.
-func (b *ManagedIdentitiesRequirementsBuilder) ControlPlaneOperatorsIdentities(values ...*ControlPlaneOperatorIdentityBuilder) *ManagedIdentitiesRequirementsBuilder {
-	b.controlPlaneOperatorsIdentities = make([]*ControlPlaneOperatorIdentityBuilder, len(values))
+func (b *ManagedIdentitiesRequirementsBuilder) ControlPlaneOperatorsIdentities(values ...*ControlPlaneOperatorIdentityRequirementBuilder) *ManagedIdentitiesRequirementsBuilder {
+	b.controlPlaneOperatorsIdentities = make([]*ControlPlaneOperatorIdentityRequirementBuilder, len(values))
 	copy(b.controlPlaneOperatorsIdentities, values)
 	b.bitmap_ |= 8
 	return b
 }
 
 // DataPlaneOperatorsIdentities sets the value of the 'data_plane_operators_identities' attribute to the given values.
-func (b *ManagedIdentitiesRequirementsBuilder) DataPlaneOperatorsIdentities(values ...*DataPlaneOperatorIdentityBuilder) *ManagedIdentitiesRequirementsBuilder {
-	b.dataPlaneOperatorsIdentities = make([]*DataPlaneOperatorIdentityBuilder, len(values))
+func (b *ManagedIdentitiesRequirementsBuilder) DataPlaneOperatorsIdentities(values ...*DataPlaneOperatorIdentityRequirementBuilder) *ManagedIdentitiesRequirementsBuilder {
+	b.dataPlaneOperatorsIdentities = make([]*DataPlaneOperatorIdentityRequirementBuilder, len(values))
 	copy(b.dataPlaneOperatorsIdentities, values)
 	b.bitmap_ |= 16
 	return b
@@ -94,17 +94,17 @@ func (b *ManagedIdentitiesRequirementsBuilder) Copy(object *ManagedIdentitiesReq
 	b.id = object.id
 	b.href = object.href
 	if object.controlPlaneOperatorsIdentities != nil {
-		b.controlPlaneOperatorsIdentities = make([]*ControlPlaneOperatorIdentityBuilder, len(object.controlPlaneOperatorsIdentities))
+		b.controlPlaneOperatorsIdentities = make([]*ControlPlaneOperatorIdentityRequirementBuilder, len(object.controlPlaneOperatorsIdentities))
 		for i, v := range object.controlPlaneOperatorsIdentities {
-			b.controlPlaneOperatorsIdentities[i] = NewControlPlaneOperatorIdentity().Copy(v)
+			b.controlPlaneOperatorsIdentities[i] = NewControlPlaneOperatorIdentityRequirement().Copy(v)
 		}
 	} else {
 		b.controlPlaneOperatorsIdentities = nil
 	}
 	if object.dataPlaneOperatorsIdentities != nil {
-		b.dataPlaneOperatorsIdentities = make([]*DataPlaneOperatorIdentityBuilder, len(object.dataPlaneOperatorsIdentities))
+		b.dataPlaneOperatorsIdentities = make([]*DataPlaneOperatorIdentityRequirementBuilder, len(object.dataPlaneOperatorsIdentities))
 		for i, v := range object.dataPlaneOperatorsIdentities {
-			b.dataPlaneOperatorsIdentities[i] = NewDataPlaneOperatorIdentity().Copy(v)
+			b.dataPlaneOperatorsIdentities[i] = NewDataPlaneOperatorIdentityRequirement().Copy(v)
 		}
 	} else {
 		b.dataPlaneOperatorsIdentities = nil
@@ -119,7 +119,7 @@ func (b *ManagedIdentitiesRequirementsBuilder) Build() (object *ManagedIdentitie
 	object.href = b.href
 	object.bitmap_ = b.bitmap_
 	if b.controlPlaneOperatorsIdentities != nil {
-		object.controlPlaneOperatorsIdentities = make([]*ControlPlaneOperatorIdentity, len(b.controlPlaneOperatorsIdentities))
+		object.controlPlaneOperatorsIdentities = make([]*ControlPlaneOperatorIdentityRequirement, len(b.controlPlaneOperatorsIdentities))
 		for i, v := range b.controlPlaneOperatorsIdentities {
 			object.controlPlaneOperatorsIdentities[i], err = v.Build()
 			if err != nil {
@@ -128,7 +128,7 @@ func (b *ManagedIdentitiesRequirementsBuilder) Build() (object *ManagedIdentitie
 		}
 	}
 	if b.dataPlaneOperatorsIdentities != nil {
-		object.dataPlaneOperatorsIdentities = make([]*DataPlaneOperatorIdentity, len(b.dataPlaneOperatorsIdentities))
+		object.dataPlaneOperatorsIdentities = make([]*DataPlaneOperatorIdentityRequirement, len(b.dataPlaneOperatorsIdentities))
 		for i, v := range b.dataPlaneOperatorsIdentities {
 			object.dataPlaneOperatorsIdentities[i], err = v.Build()
 			if err != nil {

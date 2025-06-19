@@ -26,11 +26,11 @@ import (
 	"github.com/openshift-online/ocm-api-model/clientapi/helpers"
 )
 
-// MarshalRoleDefinitionList writes a list of values of the 'role_definition' type to
+// MarshalControlPlaneOperatorIdentityRequirementList writes a list of values of the 'control_plane_operator_identity_requirement' type to
 // the given writer.
-func MarshalRoleDefinitionList(list []*RoleDefinition, writer io.Writer) error {
+func MarshalControlPlaneOperatorIdentityRequirementList(list []*ControlPlaneOperatorIdentityRequirement, writer io.Writer) error {
 	stream := helpers.NewStream(writer)
-	WriteRoleDefinitionList(list, stream)
+	WriteControlPlaneOperatorIdentityRequirementList(list, stream)
 	err := stream.Flush()
 	if err != nil {
 		return err
@@ -38,37 +38,37 @@ func MarshalRoleDefinitionList(list []*RoleDefinition, writer io.Writer) error {
 	return stream.Error
 }
 
-// WriteRoleDefinitionList writes a list of value of the 'role_definition' type to
+// WriteControlPlaneOperatorIdentityRequirementList writes a list of value of the 'control_plane_operator_identity_requirement' type to
 // the given stream.
-func WriteRoleDefinitionList(list []*RoleDefinition, stream *jsoniter.Stream) {
+func WriteControlPlaneOperatorIdentityRequirementList(list []*ControlPlaneOperatorIdentityRequirement, stream *jsoniter.Stream) {
 	stream.WriteArrayStart()
 	for i, value := range list {
 		if i > 0 {
 			stream.WriteMore()
 		}
-		WriteRoleDefinition(value, stream)
+		WriteControlPlaneOperatorIdentityRequirement(value, stream)
 	}
 	stream.WriteArrayEnd()
 }
 
-// UnmarshalRoleDefinitionList reads a list of values of the 'role_definition' type
+// UnmarshalControlPlaneOperatorIdentityRequirementList reads a list of values of the 'control_plane_operator_identity_requirement' type
 // from the given source, which can be a slice of bytes, a string or a reader.
-func UnmarshalRoleDefinitionList(source interface{}) (items []*RoleDefinition, err error) {
+func UnmarshalControlPlaneOperatorIdentityRequirementList(source interface{}) (items []*ControlPlaneOperatorIdentityRequirement, err error) {
 	iterator, err := helpers.NewIterator(source)
 	if err != nil {
 		return
 	}
-	items = ReadRoleDefinitionList(iterator)
+	items = ReadControlPlaneOperatorIdentityRequirementList(iterator)
 	err = iterator.Error
 	return
 }
 
-// ReadRoleDefinitionList reads list of values of the ”role_definition' type from
+// ReadControlPlaneOperatorIdentityRequirementList reads list of values of the ”control_plane_operator_identity_requirement' type from
 // the given iterator.
-func ReadRoleDefinitionList(iterator *jsoniter.Iterator) []*RoleDefinition {
-	list := []*RoleDefinition{}
+func ReadControlPlaneOperatorIdentityRequirementList(iterator *jsoniter.Iterator) []*ControlPlaneOperatorIdentityRequirement {
+	list := []*ControlPlaneOperatorIdentityRequirement{}
 	for iterator.ReadArray() {
-		item := ReadRoleDefinition(iterator)
+		item := ReadControlPlaneOperatorIdentityRequirement(iterator)
 		list = append(list, item)
 	}
 	return list

@@ -19,15 +19,15 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// RoleDefinition represents the values of the 'role_definition' type.
-type RoleDefinition struct {
+// RoleDefinitionOperatorIdentityRequirement represents the values of the 'role_definition_operator_identity_requirement' type.
+type RoleDefinitionOperatorIdentityRequirement struct {
 	bitmap_    uint32
 	name       string
 	resourceId string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
-func (o *RoleDefinition) Empty() bool {
+func (o *RoleDefinitionOperatorIdentityRequirement) Empty() bool {
 	return o == nil || o.bitmap_ == 0
 }
 
@@ -36,7 +36,7 @@ func (o *RoleDefinition) Empty() bool {
 //
 // The official name of the Role defined in resource_id.
 // It is purely a friendly/descriptive name.
-func (o *RoleDefinition) Name() string {
+func (o *RoleDefinitionOperatorIdentityRequirement) Name() string {
 	if o != nil && o.bitmap_&1 != 0 {
 		return o.name
 	}
@@ -48,7 +48,7 @@ func (o *RoleDefinition) Name() string {
 //
 // The official name of the Role defined in resource_id.
 // It is purely a friendly/descriptive name.
-func (o *RoleDefinition) GetName() (value string, ok bool) {
+func (o *RoleDefinitionOperatorIdentityRequirement) GetName() (value string, ok bool) {
 	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.name
@@ -61,7 +61,7 @@ func (o *RoleDefinition) GetName() (value string, ok bool) {
 //
 // A string representing the Resource ID of an Azure Role Definition.
 // The role definition indicates what permissions are needed by the operator
-func (o *RoleDefinition) ResourceId() string {
+func (o *RoleDefinitionOperatorIdentityRequirement) ResourceId() string {
 	if o != nil && o.bitmap_&2 != 0 {
 		return o.resourceId
 	}
@@ -73,7 +73,7 @@ func (o *RoleDefinition) ResourceId() string {
 //
 // A string representing the Resource ID of an Azure Role Definition.
 // The role definition indicates what permissions are needed by the operator
-func (o *RoleDefinition) GetResourceId() (value string, ok bool) {
+func (o *RoleDefinitionOperatorIdentityRequirement) GetResourceId() (value string, ok bool) {
 	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.resourceId
@@ -81,27 +81,27 @@ func (o *RoleDefinition) GetResourceId() (value string, ok bool) {
 	return
 }
 
-// RoleDefinitionListKind is the name of the type used to represent list of objects of
-// type 'role_definition'.
-const RoleDefinitionListKind = "RoleDefinitionList"
+// RoleDefinitionOperatorIdentityRequirementListKind is the name of the type used to represent list of objects of
+// type 'role_definition_operator_identity_requirement'.
+const RoleDefinitionOperatorIdentityRequirementListKind = "RoleDefinitionOperatorIdentityRequirementList"
 
-// RoleDefinitionListLinkKind is the name of the type used to represent links to list
-// of objects of type 'role_definition'.
-const RoleDefinitionListLinkKind = "RoleDefinitionListLink"
+// RoleDefinitionOperatorIdentityRequirementListLinkKind is the name of the type used to represent links to list
+// of objects of type 'role_definition_operator_identity_requirement'.
+const RoleDefinitionOperatorIdentityRequirementListLinkKind = "RoleDefinitionOperatorIdentityRequirementListLink"
 
-// RoleDefinitionNilKind is the name of the type used to nil lists of objects of
-// type 'role_definition'.
-const RoleDefinitionListNilKind = "RoleDefinitionListNil"
+// RoleDefinitionOperatorIdentityRequirementNilKind is the name of the type used to nil lists of objects of
+// type 'role_definition_operator_identity_requirement'.
+const RoleDefinitionOperatorIdentityRequirementListNilKind = "RoleDefinitionOperatorIdentityRequirementListNil"
 
-// RoleDefinitionList is a list of values of the 'role_definition' type.
-type RoleDefinitionList struct {
+// RoleDefinitionOperatorIdentityRequirementList is a list of values of the 'role_definition_operator_identity_requirement' type.
+type RoleDefinitionOperatorIdentityRequirementList struct {
 	href  string
 	link  bool
-	items []*RoleDefinition
+	items []*RoleDefinitionOperatorIdentityRequirement
 }
 
 // Len returns the length of the list.
-func (l *RoleDefinitionList) Len() int {
+func (l *RoleDefinitionOperatorIdentityRequirementList) Len() int {
 	if l == nil {
 		return 0
 	}
@@ -109,22 +109,22 @@ func (l *RoleDefinitionList) Len() int {
 }
 
 // Items sets the items of the list.
-func (l *RoleDefinitionList) SetLink(link bool) {
+func (l *RoleDefinitionOperatorIdentityRequirementList) SetLink(link bool) {
 	l.link = link
 }
 
 // Items sets the items of the list.
-func (l *RoleDefinitionList) SetHREF(href string) {
+func (l *RoleDefinitionOperatorIdentityRequirementList) SetHREF(href string) {
 	l.href = href
 }
 
 // Items sets the items of the list.
-func (l *RoleDefinitionList) SetItems(items []*RoleDefinition) {
+func (l *RoleDefinitionOperatorIdentityRequirementList) SetItems(items []*RoleDefinitionOperatorIdentityRequirement) {
 	l.items = items
 }
 
 // Items returns the items of the list.
-func (l *RoleDefinitionList) Items() []*RoleDefinition {
+func (l *RoleDefinitionOperatorIdentityRequirementList) Items() []*RoleDefinitionOperatorIdentityRequirement {
 	if l == nil {
 		return nil
 	}
@@ -132,13 +132,13 @@ func (l *RoleDefinitionList) Items() []*RoleDefinition {
 }
 
 // Empty returns true if the list is empty.
-func (l *RoleDefinitionList) Empty() bool {
+func (l *RoleDefinitionOperatorIdentityRequirementList) Empty() bool {
 	return l == nil || len(l.items) == 0
 }
 
 // Get returns the item of the list with the given index. If there is no item with
 // that index it returns nil.
-func (l *RoleDefinitionList) Get(i int) *RoleDefinition {
+func (l *RoleDefinitionOperatorIdentityRequirementList) Get(i int) *RoleDefinitionOperatorIdentityRequirement {
 	if l == nil || i < 0 || i >= len(l.items) {
 		return nil
 	}
@@ -151,12 +151,12 @@ func (l *RoleDefinitionList) Get(i int) *RoleDefinition {
 //
 // If you don't need to modify the returned slice consider using the Each or Range
 // functions, as they don't need to allocate a new slice.
-func (l *RoleDefinitionList) Slice() []*RoleDefinition {
-	var slice []*RoleDefinition
+func (l *RoleDefinitionOperatorIdentityRequirementList) Slice() []*RoleDefinitionOperatorIdentityRequirement {
+	var slice []*RoleDefinitionOperatorIdentityRequirement
 	if l == nil {
-		slice = make([]*RoleDefinition, 0)
+		slice = make([]*RoleDefinitionOperatorIdentityRequirement, 0)
 	} else {
-		slice = make([]*RoleDefinition, len(l.items))
+		slice = make([]*RoleDefinitionOperatorIdentityRequirement, len(l.items))
 		copy(slice, l.items)
 	}
 	return slice
@@ -165,7 +165,7 @@ func (l *RoleDefinitionList) Slice() []*RoleDefinition {
 // Each runs the given function for each item of the list, in order. If the function
 // returns false the iteration stops, otherwise it continues till all the elements
 // of the list have been processed.
-func (l *RoleDefinitionList) Each(f func(item *RoleDefinition) bool) {
+func (l *RoleDefinitionOperatorIdentityRequirementList) Each(f func(item *RoleDefinitionOperatorIdentityRequirement) bool) {
 	if l == nil {
 		return
 	}
@@ -179,7 +179,7 @@ func (l *RoleDefinitionList) Each(f func(item *RoleDefinition) bool) {
 // Range runs the given function for each index and item of the list, in order. If
 // the function returns false the iteration stops, otherwise it continues till all
 // the elements of the list have been processed.
-func (l *RoleDefinitionList) Range(f func(index int, item *RoleDefinition) bool) {
+func (l *RoleDefinitionOperatorIdentityRequirementList) Range(f func(index int, item *RoleDefinitionOperatorIdentityRequirement) bool) {
 	if l == nil {
 		return
 	}

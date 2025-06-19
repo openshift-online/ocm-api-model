@@ -26,10 +26,10 @@ import (
 	"github.com/openshift-online/ocm-api-model/clientapi/helpers"
 )
 
-// MarshalIdentityServiceAccount writes a value of the 'identity_service_account' type to the given writer.
-func MarshalIdentityServiceAccount(object *IdentityServiceAccount, writer io.Writer) error {
+// MarshalRoleDefinitionOperatorIdentityRequirement writes a value of the 'role_definition_operator_identity_requirement' type to the given writer.
+func MarshalRoleDefinitionOperatorIdentityRequirement(object *RoleDefinitionOperatorIdentityRequirement, writer io.Writer) error {
 	stream := helpers.NewStream(writer)
-	WriteIdentityServiceAccount(object, stream)
+	WriteRoleDefinitionOperatorIdentityRequirement(object, stream)
 	err := stream.Flush()
 	if err != nil {
 		return err
@@ -37,8 +37,8 @@ func MarshalIdentityServiceAccount(object *IdentityServiceAccount, writer io.Wri
 	return stream.Error
 }
 
-// WriteIdentityServiceAccount writes a value of the 'identity_service_account' type to the given stream.
-func WriteIdentityServiceAccount(object *IdentityServiceAccount, stream *jsoniter.Stream) {
+// WriteRoleDefinitionOperatorIdentityRequirement writes a value of the 'role_definition_operator_identity_requirement' type to the given stream.
+func WriteRoleDefinitionOperatorIdentityRequirement(object *RoleDefinitionOperatorIdentityRequirement, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
@@ -56,27 +56,27 @@ func WriteIdentityServiceAccount(object *IdentityServiceAccount, stream *jsonite
 		if count > 0 {
 			stream.WriteMore()
 		}
-		stream.WriteObjectField("namespace")
-		stream.WriteString(object.namespace)
+		stream.WriteObjectField("resource_id")
+		stream.WriteString(object.resourceId)
 	}
 	stream.WriteObjectEnd()
 }
 
-// UnmarshalIdentityServiceAccount reads a value of the 'identity_service_account' type from the given
+// UnmarshalRoleDefinitionOperatorIdentityRequirement reads a value of the 'role_definition_operator_identity_requirement' type from the given
 // source, which can be an slice of bytes, a string or a reader.
-func UnmarshalIdentityServiceAccount(source interface{}) (object *IdentityServiceAccount, err error) {
+func UnmarshalRoleDefinitionOperatorIdentityRequirement(source interface{}) (object *RoleDefinitionOperatorIdentityRequirement, err error) {
 	iterator, err := helpers.NewIterator(source)
 	if err != nil {
 		return
 	}
-	object = ReadIdentityServiceAccount(iterator)
+	object = ReadRoleDefinitionOperatorIdentityRequirement(iterator)
 	err = iterator.Error
 	return
 }
 
-// ReadIdentityServiceAccount reads a value of the 'identity_service_account' type from the given iterator.
-func ReadIdentityServiceAccount(iterator *jsoniter.Iterator) *IdentityServiceAccount {
-	object := &IdentityServiceAccount{}
+// ReadRoleDefinitionOperatorIdentityRequirement reads a value of the 'role_definition_operator_identity_requirement' type from the given iterator.
+func ReadRoleDefinitionOperatorIdentityRequirement(iterator *jsoniter.Iterator) *RoleDefinitionOperatorIdentityRequirement {
+	object := &RoleDefinitionOperatorIdentityRequirement{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -87,9 +87,9 @@ func ReadIdentityServiceAccount(iterator *jsoniter.Iterator) *IdentityServiceAcc
 			value := iterator.ReadString()
 			object.name = value
 			object.bitmap_ |= 1
-		case "namespace":
+		case "resource_id":
 			value := iterator.ReadString()
-			object.namespace = value
+			object.resourceId = value
 			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
