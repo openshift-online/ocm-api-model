@@ -25,6 +25,9 @@ class ExternalAuth {
 
     // The rules on how to transform information from an ID token into a cluster identity.
     Claim ExternalAuthClaim
+
+    // The status describes the current state of the external authentication provider.
+    Status ExternalAuthStatus
 }
 
 // Representation of a token issuer used in an external authentication.

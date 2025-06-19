@@ -421,7 +421,7 @@ func (b *ClusterBuilder) ExternalID(value string) *ClusterBuilder {
 
 // ExternalAuthConfig sets the value of the 'external_auth_config' attribute to the given value.
 //
-// ExternalAuthConfig configuration
+// Represents an external authentication configuration
 func (b *ClusterBuilder) ExternalAuthConfig(value *ExternalAuthConfigBuilder) *ClusterBuilder {
 	b.externalAuthConfig = value
 	if value != nil {
