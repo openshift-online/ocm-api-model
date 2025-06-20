@@ -14,11 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Config for AWS provision shards
-struct AWSShard {
-	// ECR repository URLs of the provision shard
-	ECRRepositoryURLs []String
+// Backup configuration for AWS clusters
+struct AWSBackupConfig {
+    // ID of the AWS Disaster Recovery (DR) account
+    AccountID           string
 
-	// Backup configurations per Management Cluster ID
-	BackupConfigs [String]AWSBackupConfig
+    // ARN of the role used by the CS Trusted Account to gain access to the Disaster Recovery (DR) account
+    RoleArn             string
+
+    // ARN of the identity provider created in the Disaster Recovery (DR) account for the Management Cluster
+    IdentityProviderArn string
+
+    // Name of the S3 bucket used to save the backup
+    S3Bucket            string
 }

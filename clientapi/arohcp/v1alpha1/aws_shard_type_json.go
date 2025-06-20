@@ -21,6 +21,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 
 import (
 	"io"
+	"sort"
 
 	jsoniter "github.com/json-iterator/go"
 	"github.com/openshift-online/ocm-api-model/clientapi/helpers"
@@ -49,6 +50,35 @@ func WriteAWSShard(object *AWSShard, stream *jsoniter.Stream) {
 		}
 		stream.WriteObjectField("ecr_repository_urls")
 		WriteStringList(object.ecrRepositoryURLs, stream)
+		count++
+	}
+	present_ = object.bitmap_&2 != 0 && object.backupConfigs != nil
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
+		stream.WriteObjectField("backup_configs")
+		if object.backupConfigs != nil {
+			stream.WriteObjectStart()
+			keys := make([]string, len(object.backupConfigs))
+			i := 0
+			for key := range object.backupConfigs {
+				keys[i] = key
+				i++
+			}
+			sort.Strings(keys)
+			for i, key := range keys {
+				if i > 0 {
+					stream.WriteMore()
+				}
+				item := object.backupConfigs[key]
+				stream.WriteObjectField(key)
+				WriteAWSBackupConfig(item, stream)
+			}
+			stream.WriteObjectEnd()
+		} else {
+			stream.WriteNil()
+		}
 	}
 	stream.WriteObjectEnd()
 }
@@ -78,6 +108,18 @@ func ReadAWSShard(iterator *jsoniter.Iterator) *AWSShard {
 			value := ReadStringList(iterator)
 			object.ecrRepositoryURLs = value
 			object.bitmap_ |= 1
+		case "backup_configs":
+			value := map[string]*AWSBackupConfig{}
+			for {
+				key := iterator.ReadObject()
+				if key == "" {
+					break
+				}
+				item := ReadAWSBackupConfig(iterator)
+				value[key] = item
+			}
+			object.backupConfigs = value
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}
