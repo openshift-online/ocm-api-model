@@ -27,7 +27,8 @@ resource Cluster {
 	}
 
 	// Deletes the cluster.
-	method Delete {
+	@go(name="Delete")
+	method AsyncDelete {
 		// Dry run flag is used to check if the operation can be completed, but won't delete.
 		in DryRun Boolean = false
 
