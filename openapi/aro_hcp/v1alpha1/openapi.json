@@ -216,41 +216,6 @@
           }
         }
       },
-      "get": {
-        "description": "Retrieves the details of the cluster.",
-        "parameters": [
-          {
-            "name": "cluster_id",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Cluster"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
       "patch": {
         "description": "Updates the cluster.",
         "parameters": [
@@ -272,6 +237,41 @@
             }
           }
         },
+        "responses": {
+          "202": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cluster"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the details of the cluster.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success.",
@@ -2179,6 +2179,7 @@
           "resuming",
           "uninstalling",
           "unknown",
+          "updating",
           "validating",
           "waiting"
         ]

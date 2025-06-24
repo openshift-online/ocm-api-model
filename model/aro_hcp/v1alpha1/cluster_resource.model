@@ -22,7 +22,8 @@ resource Cluster {
 	}
 
 	// Updates the cluster.
-	method Update {
+	@go(name="Update")
+	method AsyncUpdate {
 		in out Body Cluster
 	}
 
