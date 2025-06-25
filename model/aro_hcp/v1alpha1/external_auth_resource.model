@@ -22,11 +22,13 @@ resource ExternalAuth {
     }
 
     // Updates the external authentication provider.
-    method Update {
+    @go(name="Update")
+    method AsyncUpdate {
         in out Body ExternalAuth
     }
 
     // Deletes the external authentication provider.
-    method Delete {
+    @go(name="Delete")
+    method AsyncDelete {
     }
 }
