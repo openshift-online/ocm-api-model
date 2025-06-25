@@ -39,7 +39,8 @@ struct TokenIssuer {
 	// Audiences is an array of audiences that the token was issued for.
 	// Valid tokens must include at least one of these values in their
 	// "aud" claim.
-	// Must be set to exactly one value.
+	// Must have at least one audience and a maximum of ten.
+	// Any clients defined for this external authentication must have their id included here.
     Audiences []String
 
 	// Certificate bundle to use to validate server certificates for the configured URL.

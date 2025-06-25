@@ -18748,7 +18748,7 @@
             "type": "string"
           },
           "audiences": {
-            "description": "Audiences is an array of audiences that the token was issued for.\nValid tokens must include at least one of these values in their\n\"aud\" claim.\nMust be set to exactly one value.",
+            "description": "Audiences is an array of audiences that the token was issued for.\nValid tokens must include at least one of these values in their\n\"aud\" claim.\nMust have at least one audience and a maximum of ten.\nAny clients defined for this external authentication must have their id included here.",
             "type": "array",
             "items": {
               "type": "string"

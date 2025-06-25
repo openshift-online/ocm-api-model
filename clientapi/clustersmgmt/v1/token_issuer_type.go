@@ -86,7 +86,8 @@ func (o *TokenIssuer) GetURL() (value string, ok bool) {
 // Audiences is an array of audiences that the token was issued for.
 // Valid tokens must include at least one of these values in their
 // "aud" claim.
-// Must be set to exactly one value.
+// Must have at least one audience and a maximum of ten.
+// Any clients defined for this external authentication must have their id included here.
 func (o *TokenIssuer) Audiences() []string {
 	if o != nil && o.bitmap_&4 != 0 {
 		return o.audiences
@@ -100,7 +101,8 @@ func (o *TokenIssuer) Audiences() []string {
 // Audiences is an array of audiences that the token was issued for.
 // Valid tokens must include at least one of these values in their
 // "aud" claim.
-// Must be set to exactly one value.
+// Must have at least one audience and a maximum of ten.
+// Any clients defined for this external authentication must have their id included here.
 func (o *TokenIssuer) GetAudiences() (value []string, ok bool) {
 	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
