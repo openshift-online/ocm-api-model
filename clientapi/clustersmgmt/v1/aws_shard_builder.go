@@ -25,6 +25,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 type AWSShardBuilder struct {
 	bitmap_           uint32
 	ecrRepositoryURLs []string
+	backupConfigs     map[string]*AWSBackupConfigBuilder
 }
 
 // NewAWSShard creates a new builder of 'AWS_shard' objects.
@@ -45,6 +46,17 @@ func (b *AWSShardBuilder) ECRRepositoryURLs(values ...string) *AWSShardBuilder {
 	return b
 }
 
+// BackupConfigs sets the value of the 'backup_configs' attribute to the given value.
+func (b *AWSShardBuilder) BackupConfigs(value map[string]*AWSBackupConfigBuilder) *AWSShardBuilder {
+	b.backupConfigs = value
+	if value != nil {
+		b.bitmap_ |= 2
+	} else {
+		b.bitmap_ &^= 2
+	}
+	return b
+}
+
 // Copy copies the attributes of the given object into this builder, discarding any previous values.
 func (b *AWSShardBuilder) Copy(object *AWSShard) *AWSShardBuilder {
 	if object == nil {
@@ -57,6 +69,14 @@ func (b *AWSShardBuilder) Copy(object *AWSShard) *AWSShardBuilder {
 	} else {
 		b.ecrRepositoryURLs = nil
 	}
+	if len(object.backupConfigs) > 0 {
+		b.backupConfigs = map[string]*AWSBackupConfigBuilder{}
+		for k, v := range object.backupConfigs {
+			b.backupConfigs[k] = NewAWSBackupConfig().Copy(v)
+		}
+	} else {
+		b.backupConfigs = nil
+	}
 	return b
 }
 
@@ -67,6 +87,15 @@ func (b *AWSShardBuilder) Build() (object *AWSShard, err error) {
 	if b.ecrRepositoryURLs != nil {
 		object.ecrRepositoryURLs = make([]string, len(b.ecrRepositoryURLs))
 		copy(object.ecrRepositoryURLs, b.ecrRepositoryURLs)
+	}
+	if b.backupConfigs != nil {
+		object.backupConfigs = make(map[string]*AWSBackupConfig)
+		for k, v := range b.backupConfigs {
+			object.backupConfigs[k], err = v.Build()
+			if err != nil {
+				return
+			}
+		}
 	}
 	return
 }
