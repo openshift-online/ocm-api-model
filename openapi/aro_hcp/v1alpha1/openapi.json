@@ -2691,10 +2691,22 @@
             }
           },
           "secret": {
-            "description": "The secret of the OIDC client from the OIDC provider.",
+            "description": "The secret of the OIDC client from the OIDC provider.\nThe client is considered 'public' if no secret is specified. Otherwise, it is considered\nas a 'confidential' client.\nThis can only be used for an external authentication provider belonging to a ROSA HCP cluster.",
             "type": "string"
+          },
+          "type": {
+            "description": "Determines the OIDC provider client type.\n\nThis is required to be defined for clients of an external authentication provider belonging to an ARO HCP cluster.\n\nFor clients belonging to a ROSA HCP cluster, this is read-only. The value of this property will be determined by the \n'secret' property in the client configuration. \n   - If the 'secret' property is set, the type of the client is 'confidential.\n   - If the 'secret' property is not set, the type of the client is 'public.",
+            "$ref": "#/components/schemas/ExternalAuthClientType"
           }
         }
+      },
+      "ExternalAuthClientType": {
+        "description": "Representation of the possible values of an external authentication client's type",
+        "type": "string",
+        "enum": [
+          "confidential",
+          "public"
+        ]
       },
       "ExternalAuthConfig": {
         "description": "Represents an external authentication configuration",

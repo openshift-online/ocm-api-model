@@ -58,10 +58,23 @@ struct ExternalAuthClientConfig {
     ID String
 
     // The secret of the OIDC client from the OIDC provider.
+    // The client is considered 'public' if no secret is specified. Otherwise, it is considered
+    // as a 'confidential' client.
+    // This can only be used for an external authentication provider belonging to a ROSA HCP cluster.
     Secret String
 
     // ExtraScopes is an optional set of scopes to request tokens with.
     ExtraScopes []String
+
+    // Determines the OIDC provider client type.
+    // 
+    // This is required to be defined for clients of an external authentication provider belonging to an ARO HCP cluster.
+    // 
+    // For clients belonging to a ROSA HCP cluster, this is read-only. The value of this property will be determined by the 
+    // 'secret' property in the client configuration. 
+    //    - If the 'secret' property is set, the type of the client is 'confidential.
+    //    - If the 'secret' property is not set, the type of the client is 'public.
+    Type ExternalAuthClientType
 }
 
 // The reference of a component that will consume the client configuration.
@@ -131,3 +144,20 @@ struct TokenClaimValidationRule {
     RequiredValue String
 }
 
+// Representation of the possible values of an external authentication client's type
+enum ExternalAuthClientType {
+    // Indicates that the client is confidential.
+    // 
+    // Confidential clients must provide a client secret.
+    // For external authentication provider belonging to a ROSA HCP cluster, the secret should be provided
+    // in the 'secret' property of the client configuration.
+    // For those belonging to an ARO HCP cluster, the secret should be provided within the cluster itself.
+    @json(name="confidential")
+    Confidential
+
+    // Indicates that the client is public
+    //
+    // Public clients must not provide a client secret
+    @json(name="public")
+    Public
+}
