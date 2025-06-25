@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.420 Jun 25 2025
+- Add `AWSBackupConfig` type
+- Add `BackupConfigs` to `AWSShard`
+
 ## 0.0.419 Jun 05 2025
 - Add `LogType` to `NotificationDetailsRequest`
 
