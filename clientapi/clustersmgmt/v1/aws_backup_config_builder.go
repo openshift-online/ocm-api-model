@@ -25,7 +25,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 type AWSBackupConfigBuilder struct {
 	bitmap_             uint32
 	s3Bucket            string
-	accountID           string
+	accountId           string
 	identityProviderArn string
 	roleArn             string
 }
@@ -47,9 +47,9 @@ func (b *AWSBackupConfigBuilder) S3Bucket(value string) *AWSBackupConfigBuilder 
 	return b
 }
 
-// AccountID sets the value of the 'account_ID' attribute to the given value.
-func (b *AWSBackupConfigBuilder) AccountID(value string) *AWSBackupConfigBuilder {
-	b.accountID = value
+// AccountId sets the value of the 'account_id' attribute to the given value.
+func (b *AWSBackupConfigBuilder) AccountId(value string) *AWSBackupConfigBuilder {
+	b.accountId = value
 	b.bitmap_ |= 2
 	return b
 }
@@ -75,7 +75,7 @@ func (b *AWSBackupConfigBuilder) Copy(object *AWSBackupConfig) *AWSBackupConfigB
 	}
 	b.bitmap_ = object.bitmap_
 	b.s3Bucket = object.s3Bucket
-	b.accountID = object.accountID
+	b.accountId = object.accountId
 	b.identityProviderArn = object.identityProviderArn
 	b.roleArn = object.roleArn
 	return b
@@ -86,7 +86,7 @@ func (b *AWSBackupConfigBuilder) Build() (object *AWSBackupConfig, err error) {
 	object = new(AWSBackupConfig)
 	object.bitmap_ = b.bitmap_
 	object.s3Bucket = b.s3Bucket
-	object.accountID = b.accountID
+	object.accountId = b.accountId
 	object.identityProviderArn = b.identityProviderArn
 	object.roleArn = b.roleArn
 	return

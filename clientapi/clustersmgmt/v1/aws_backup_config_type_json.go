@@ -57,7 +57,7 @@ func WriteAWSBackupConfig(object *AWSBackupConfig, stream *jsoniter.Stream) {
 			stream.WriteMore()
 		}
 		stream.WriteObjectField("account_id")
-		stream.WriteString(object.accountID)
+		stream.WriteString(object.accountId)
 		count++
 	}
 	present_ = object.bitmap_&4 != 0
@@ -107,7 +107,7 @@ func ReadAWSBackupConfig(iterator *jsoniter.Iterator) *AWSBackupConfig {
 			object.bitmap_ |= 1
 		case "account_id":
 			value := iterator.ReadString()
-			object.accountID = value
+			object.accountId = value
 			object.bitmap_ |= 2
 		case "identity_provider_arn":
 			value := iterator.ReadString()

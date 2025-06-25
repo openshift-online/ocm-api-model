@@ -25,7 +25,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 type AWSBackupConfig struct {
 	bitmap_             uint32
 	s3Bucket            string
-	accountID           string
+	accountId           string
 	identityProviderArn string
 	roleArn             string
 }
@@ -58,25 +58,25 @@ func (o *AWSBackupConfig) GetS3Bucket() (value string, ok bool) {
 	return
 }
 
-// AccountID returns the value of the 'account_ID' attribute, or
+// AccountId returns the value of the 'account_id' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
 // ID of the AWS Disaster Recovery (DR) account
-func (o *AWSBackupConfig) AccountID() string {
+func (o *AWSBackupConfig) AccountId() string {
 	if o != nil && o.bitmap_&2 != 0 {
-		return o.accountID
+		return o.accountId
 	}
 	return ""
 }
 
-// GetAccountID returns the value of the 'account_ID' attribute and
+// GetAccountId returns the value of the 'account_id' attribute and
 // a flag indicating if the attribute has a value.
 //
 // ID of the AWS Disaster Recovery (DR) account
-func (o *AWSBackupConfig) GetAccountID() (value string, ok bool) {
+func (o *AWSBackupConfig) GetAccountId() (value string, ok bool) {
 	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
-		value = o.accountID
+		value = o.accountId
 	}
 	return
 }

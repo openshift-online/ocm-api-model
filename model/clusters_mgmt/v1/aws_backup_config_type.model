@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2024 Red Hat, Inc.
+Copyright (c) 2025 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ limitations under the License.
 // Backup configuration for AWS clusters
 struct AWSBackupConfig {
     // ID of the AWS Disaster Recovery (DR) account
-    AccountID           string
+    AccountId           string
 
     // ARN of the role used by the CS Trusted Account to gain access to the Disaster Recovery (DR) account
     RoleArn             string
