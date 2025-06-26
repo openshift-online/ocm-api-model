@@ -69,6 +69,7 @@ verify-clientapi: metamodel goimports-install
 	$(eval TMPDIR := $(shell mktemp -d))
 	cp clientapi/go.mod $(TMPDIR)
 	cp clientapi/go.sum $(TMPDIR)
+	cp clientapi/LICENSE.txt $(TMPDIR)
 	cp -r clientapi/dependencymagnet $(TMPDIR)
 	./metamodel_generator/metamodel generate go \
 		--model=model \
