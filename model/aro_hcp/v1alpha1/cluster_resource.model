@@ -49,4 +49,8 @@ resource Cluster {
 	locator NodePools {
 		target NodePools
 	}
+
+	locator BreakGlassCredentials {
+		target BreakGlassCredentials
+	}
 }
