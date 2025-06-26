@@ -29,6 +29,7 @@ type ExternalAuthClientConfigBuilder struct {
 	component   *ClientComponentBuilder
 	extraScopes []string
 	secret      string
+	type_       ExternalAuthClientType
 }
 
 // NewExternalAuthClientConfig creates a new builder of 'external_auth_client_config' objects.
@@ -76,6 +77,15 @@ func (b *ExternalAuthClientConfigBuilder) Secret(value string) *ExternalAuthClie
 	return b
 }
 
+// Type sets the value of the 'type' attribute to the given value.
+//
+// Representation of the possible values of an external authentication client's type
+func (b *ExternalAuthClientConfigBuilder) Type(value ExternalAuthClientType) *ExternalAuthClientConfigBuilder {
+	b.type_ = value
+	b.bitmap_ |= 16
+	return b
+}
+
 // Copy copies the attributes of the given object into this builder, discarding any previous values.
 func (b *ExternalAuthClientConfigBuilder) Copy(object *ExternalAuthClientConfig) *ExternalAuthClientConfigBuilder {
 	if object == nil {
@@ -95,6 +105,7 @@ func (b *ExternalAuthClientConfigBuilder) Copy(object *ExternalAuthClientConfig)
 		b.extraScopes = nil
 	}
 	b.secret = object.secret
+	b.type_ = object.type_
 	return b
 }
 
@@ -114,5 +125,6 @@ func (b *ExternalAuthClientConfigBuilder) Build() (object *ExternalAuthClientCon
 		copy(object.extraScopes, b.extraScopes)
 	}
 	object.secret = b.secret
+	object.type_ = b.type_
 	return
 }

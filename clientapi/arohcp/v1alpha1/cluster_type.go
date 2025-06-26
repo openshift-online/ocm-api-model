@@ -795,7 +795,10 @@ func (o *Cluster) GetExternalID() (value string, ok bool) {
 // ExternalAuthConfig returns the value of the 'external_auth_config' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
-// External authentication configuration
+// External authentication configuration.
+//
+// For ROSA HCP, if this is not specified, external authentication configuration will be disabled by default
+// For ARO HCP, if this is not specified, external authentication configuration will be enabled by default
 func (o *Cluster) ExternalAuthConfig() *ExternalAuthConfig {
 	if o != nil && o.bitmap_&268435456 != 0 {
 		return o.externalAuthConfig
@@ -806,7 +809,10 @@ func (o *Cluster) ExternalAuthConfig() *ExternalAuthConfig {
 // GetExternalAuthConfig returns the value of the 'external_auth_config' attribute and
 // a flag indicating if the attribute has a value.
 //
-// External authentication configuration
+// External authentication configuration.
+//
+// For ROSA HCP, if this is not specified, external authentication configuration will be disabled by default
+// For ARO HCP, if this is not specified, external authentication configuration will be enabled by default
 func (o *Cluster) GetExternalAuthConfig() (value *ExternalAuthConfig, ok bool) {
 	ok = o != nil && o.bitmap_&268435456 != 0
 	if ok {

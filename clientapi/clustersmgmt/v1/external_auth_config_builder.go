@@ -21,10 +21,13 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // ExternalAuthConfigBuilder contains the data and logic needed to build 'external_auth_config' objects.
 //
-// ExternalAuthConfig configuration
+// Represents an external authentication configuration
 type ExternalAuthConfigBuilder struct {
 	bitmap_       uint32
+	id            string
+	href          string
 	externalAuths *ExternalAuthListBuilder
+	state         ExternalAuthConfigState
 	enabled       bool
 }
 
@@ -33,22 +36,51 @@ func NewExternalAuthConfig() *ExternalAuthConfigBuilder {
 	return &ExternalAuthConfigBuilder{}
 }
 
+// Link sets the flag that indicates if this is a link.
+func (b *ExternalAuthConfigBuilder) Link(value bool) *ExternalAuthConfigBuilder {
+	b.bitmap_ |= 1
+	return b
+}
+
+// ID sets the identifier of the object.
+func (b *ExternalAuthConfigBuilder) ID(value string) *ExternalAuthConfigBuilder {
+	b.id = value
+	b.bitmap_ |= 2
+	return b
+}
+
+// HREF sets the link to the object.
+func (b *ExternalAuthConfigBuilder) HREF(value string) *ExternalAuthConfigBuilder {
+	b.href = value
+	b.bitmap_ |= 4
+	return b
+}
+
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ExternalAuthConfigBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *ExternalAuthConfigBuilder) Enabled(value bool) *ExternalAuthConfigBuilder {
 	b.enabled = value
-	b.bitmap_ |= 1
+	b.bitmap_ |= 8
 	return b
 }
 
 // ExternalAuths sets the value of the 'external_auths' attribute to the given values.
 func (b *ExternalAuthConfigBuilder) ExternalAuths(value *ExternalAuthListBuilder) *ExternalAuthConfigBuilder {
 	b.externalAuths = value
-	b.bitmap_ |= 2
+	b.bitmap_ |= 16
+	return b
+}
+
+// State sets the value of the 'state' attribute to the given value.
+//
+// Representation of the possible values for the state field of an external authentication configuration
+func (b *ExternalAuthConfigBuilder) State(value ExternalAuthConfigState) *ExternalAuthConfigBuilder {
+	b.state = value
+	b.bitmap_ |= 32
 	return b
 }
 
@@ -58,18 +90,23 @@ func (b *ExternalAuthConfigBuilder) Copy(object *ExternalAuthConfig) *ExternalAu
 		return b
 	}
 	b.bitmap_ = object.bitmap_
+	b.id = object.id
+	b.href = object.href
 	b.enabled = object.enabled
 	if object.externalAuths != nil {
 		b.externalAuths = NewExternalAuthList().Copy(object.externalAuths)
 	} else {
 		b.externalAuths = nil
 	}
+	b.state = object.state
 	return b
 }
 
 // Build creates a 'external_auth_config' object using the configuration stored in the builder.
 func (b *ExternalAuthConfigBuilder) Build() (object *ExternalAuthConfig, err error) {
 	object = new(ExternalAuthConfig)
+	object.id = b.id
+	object.href = b.href
 	object.bitmap_ = b.bitmap_
 	object.enabled = b.enabled
 	if b.externalAuths != nil {
@@ -78,5 +115,6 @@ func (b *ExternalAuthConfigBuilder) Build() (object *ExternalAuthConfig, err err
 			return
 		}
 	}
+	object.state = b.state
 	return
 }
