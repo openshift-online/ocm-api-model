@@ -31,6 +31,10 @@ enum ClusterState {
 	// The cluster is ready to use.
 	Ready
 
+	// The cluster is being updated.
+	// This state is currently used only by aro hcp clusters.
+	Updating
+
 	// The cluster is being uninstalled.
 	Uninstalling
 
