@@ -6,19 +6,9 @@
 
 # to be significantly reduced once top-level architects decide API review shape
 approvers:
-- ahitacat
-- ciaranRoche
-- davidleerh
-- gdbranco
-- lucasponce
-- machi1990
-- miguelsorianod
-- oriAdler
-- renan-campos
+- crizzo71
+- tzvatot
 - vkareh
-- zgalor
-- cristianoveiga
-- macgregor
 reviewers:
 - ahitacat
 - ciaranRoche
