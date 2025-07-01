@@ -23,9 +23,10 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Information about the API of a cluster.
 type ClusterAPI struct {
-	bitmap_   uint32
-	url       string
-	listening ListeningMethod
+	bitmap_           uint32
+	url               string
+	allowedCIDRBlocks []string
+	listening         ListeningMethod
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
@@ -56,12 +57,39 @@ func (o *ClusterAPI) GetURL() (value string, ok bool) {
 	return
 }
 
+// AllowedCIDRBlocks returns the value of the 'allowed_CIDR_blocks' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// The CIDR blocks (An IPV4 address range in the format `<ipv4_address>/<network_mask>`) that are allowed for the Kubernetes API server. Currently, only supported for ARO-HCP based clusters.
+// The maximum number of CIDR blocks supported is 500. The CIDR blocks should be non-overlapping and valid.
+// If the field is left empty (alternatively, an empty array provided) all traffic is allowed to the Kubernetes API Server.
+func (o *ClusterAPI) AllowedCIDRBlocks() []string {
+	if o != nil && o.bitmap_&2 != 0 {
+		return o.allowedCIDRBlocks
+	}
+	return nil
+}
+
+// GetAllowedCIDRBlocks returns the value of the 'allowed_CIDR_blocks' attribute and
+// a flag indicating if the attribute has a value.
+//
+// The CIDR blocks (An IPV4 address range in the format `<ipv4_address>/<network_mask>`) that are allowed for the Kubernetes API server. Currently, only supported for ARO-HCP based clusters.
+// The maximum number of CIDR blocks supported is 500. The CIDR blocks should be non-overlapping and valid.
+// If the field is left empty (alternatively, an empty array provided) all traffic is allowed to the Kubernetes API Server.
+func (o *ClusterAPI) GetAllowedCIDRBlocks() (value []string, ok bool) {
+	ok = o != nil && o.bitmap_&2 != 0
+	if ok {
+		value = o.allowedCIDRBlocks
+	}
+	return
+}
+
 // Listening returns the value of the 'listening' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
 // The listening method of the API server.
 func (o *ClusterAPI) Listening() ListeningMethod {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.listening
 	}
 	return ListeningMethod("")
@@ -72,7 +100,7 @@ func (o *ClusterAPI) Listening() ListeningMethod {
 //
 // The listening method of the API server.
 func (o *ClusterAPI) GetListening() (value ListeningMethod, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.listening
 	}

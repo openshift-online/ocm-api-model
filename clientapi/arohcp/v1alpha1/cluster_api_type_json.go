@@ -51,7 +51,16 @@ func WriteClusterAPI(object *ClusterAPI, stream *jsoniter.Stream) {
 		stream.WriteString(object.url)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = object.bitmap_&2 != 0 && object.allowedCIDRBlocks != nil
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
+		stream.WriteObjectField("allowed_cidr_blocks")
+		WriteStringList(object.allowedCIDRBlocks, stream)
+		count++
+	}
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,11 +96,15 @@ func ReadClusterAPI(iterator *jsoniter.Iterator) *ClusterAPI {
 			value := iterator.ReadString()
 			object.url = value
 			object.bitmap_ |= 1
+		case "allowed_cidr_blocks":
+			value := ReadStringList(iterator)
+			object.allowedCIDRBlocks = value
+			object.bitmap_ |= 2
 		case "listening":
 			text := iterator.ReadString()
 			value := ListeningMethod(text)
 			object.listening = value
-			object.bitmap_ |= 2
+			object.bitmap_ |= 4
 		default:
 			iterator.ReadAny()
 		}
