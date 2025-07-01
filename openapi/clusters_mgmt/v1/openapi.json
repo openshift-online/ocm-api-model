@@ -15680,6 +15680,13 @@
             "description": "The URL of the API server of the cluster.",
             "type": "string"
           },
+          "allowed_cidr_blocks": {
+            "description": "The CIDR blocks that are whitelisted for the API server. Currently, only supported for ARO-HCP.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "listening": {
             "description": "The listening method of the API server.",
             "$ref": "#/components/schemas/ListeningMethod"
