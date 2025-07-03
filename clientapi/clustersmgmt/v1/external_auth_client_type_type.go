@@ -28,7 +28,7 @@ const (
 	// Confidential clients must provide a client secret.
 	// For external authentication provider belonging to a ROSA HCP cluster, the secret should be provided
 	// in the 'secret' property of the client configuration.
-	// For those belonging to an ARO HCP cluster, the secret should be provided within the cluster itself.
+	// For those belonging to an ARO-HCP cluster, the secret should be provided within the cluster itself.
 	ExternalAuthClientTypeConfidential ExternalAuthClientType = "confidential"
 	// Indicates that the client is public
 	//

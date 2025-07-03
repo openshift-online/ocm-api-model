@@ -174,6 +174,7 @@ func (o *ExternalAuth) GetIssuer() (value *TokenIssuer, ok bool) {
 // the zero value of the type if the attribute doesn't have a value.
 //
 // The status describes the current state of the external authentication provider.
+// This is read-only.
 func (o *ExternalAuth) Status() *ExternalAuthStatus {
 	if o != nil && o.bitmap_&64 != 0 {
 		return o.status
@@ -185,6 +186,7 @@ func (o *ExternalAuth) Status() *ExternalAuthStatus {
 // a flag indicating if the attribute has a value.
 //
 // The status describes the current state of the external authentication provider.
+// This is read-only.
 func (o *ExternalAuth) GetStatus() (value *ExternalAuthStatus, ok bool) {
 	ok = o != nil && o.bitmap_&64 != 0
 	if ok {

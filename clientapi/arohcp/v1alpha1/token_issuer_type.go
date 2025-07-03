@@ -61,6 +61,8 @@ func (o *TokenIssuer) GetCA() (value string, ok bool) {
 // the zero value of the type if the attribute doesn't have a value.
 //
 // URL is the serving URL of the token issuer.
+// It must be a valid url and use the 'https' scheme.
+// This is required.
 func (o *TokenIssuer) URL() string {
 	if o != nil && o.bitmap_&2 != 0 {
 		return o.url
@@ -72,6 +74,8 @@ func (o *TokenIssuer) URL() string {
 // a flag indicating if the attribute has a value.
 //
 // URL is the serving URL of the token issuer.
+// It must be a valid url and use the 'https' scheme.
+// This is required.
 func (o *TokenIssuer) GetURL() (value string, ok bool) {
 	ok = o != nil && o.bitmap_&2 != 0
 	if ok {

@@ -41,6 +41,8 @@ func (o *ExternalAuthClientConfig) Empty() bool {
 // the zero value of the type if the attribute doesn't have a value.
 //
 // The identifier of the OIDC client from the OIDC provider.
+// This is required.
+// Must be at least one character length.
 func (o *ExternalAuthClientConfig) ID() string {
 	if o != nil && o.bitmap_&1 != 0 {
 		return o.id
@@ -52,6 +54,8 @@ func (o *ExternalAuthClientConfig) ID() string {
 // a flag indicating if the attribute has a value.
 //
 // The identifier of the OIDC client from the OIDC provider.
+// This is required.
+// Must be at least one character length.
 func (o *ExternalAuthClientConfig) GetID() (value string, ok bool) {
 	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
@@ -140,7 +144,7 @@ func (o *ExternalAuthClientConfig) GetSecret() (value string, ok bool) {
 //
 // Determines the OIDC provider client type.
 //
-// This is required to be defined for clients of an external authentication provider belonging to an ARO HCP cluster.
+// This is required to be defined for clients of an external authentication provider belonging to an ARO-HCP cluster.
 //
 // For clients belonging to a ROSA HCP cluster, this is read-only. The value of this property will be determined by the
 // 'secret' property in the client configuration.
@@ -158,7 +162,7 @@ func (o *ExternalAuthClientConfig) Type() ExternalAuthClientType {
 //
 // Determines the OIDC provider client type.
 //
-// This is required to be defined for clients of an external authentication provider belonging to an ARO HCP cluster.
+// This is required to be defined for clients of an external authentication provider belonging to an ARO-HCP cluster.
 //
 // For clients belonging to a ROSA HCP cluster, this is read-only. The value of this property will be determined by the
 // 'secret' property in the client configuration.

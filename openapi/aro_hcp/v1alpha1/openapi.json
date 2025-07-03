@@ -2651,7 +2651,7 @@
             "$ref": "#/components/schemas/TokenIssuer"
           },
           "status": {
-            "description": "The status describes the current state of the external authentication provider.",
+            "description": "The status describes the current state of the external authentication provider.\nThis is read-only.",
             "$ref": "#/components/schemas/ExternalAuthStatus"
           }
         }
@@ -2676,7 +2676,7 @@
         "description": "ExternalAuthClientConfig contains configuration for the platform's clients that\nneed to request tokens from the issuer.",
         "properties": {
           "id": {
-            "description": "The identifier of the OIDC client from the OIDC provider.",
+            "description": "The identifier of the OIDC client from the OIDC provider.\nThis is required.\nMust be at least one character length.",
             "type": "string"
           },
           "component": {
@@ -2695,7 +2695,7 @@
             "type": "string"
           },
           "type": {
-            "description": "Determines the OIDC provider client type.\n\nThis is required to be defined for clients of an external authentication provider belonging to an ARO HCP cluster.\n\nFor clients belonging to a ROSA HCP cluster, this is read-only. The value of this property will be determined by the \n'secret' property in the client configuration. \n   - If the 'secret' property is set, the type of the client is 'confidential.\n   - If the 'secret' property is not set, the type of the client is 'public.",
+            "description": "Determines the OIDC provider client type.\n\nThis is required to be defined for clients of an external authentication provider belonging to an ARO-HCP cluster.\n\nFor clients belonging to a ROSA HCP cluster, this is read-only. The value of this property will be determined by the \n'secret' property in the client configuration. \n   - If the 'secret' property is set, the type of the client is 'confidential.\n   - If the 'secret' property is not set, the type of the client is 'public.",
             "$ref": "#/components/schemas/ExternalAuthClientType"
           }
         }
@@ -3780,7 +3780,7 @@
             "type": "string"
           },
           "url": {
-            "description": "URL is the serving URL of the token issuer.",
+            "description": "URL is the serving URL of the token issuer.\nIt must be a valid url and use the 'https' scheme.\nThis is required.",
             "type": "string"
           },
           "audiences": {
@@ -3804,7 +3804,7 @@
             "type": "string"
           },
           "prefix_policy": {
-            "description": "PrefixPolicy specifies how a prefix should apply.\n\nBy default, claims other than `email` will be prefixed with the issuer URL to\nprevent naming clashes with other plugins.\n\nSet to \"NoPrefix\" to disable prefixing.",
+            "description": "PrefixPolicy specifies how a prefix should apply.\n\nBy default, claims other than `email` will be prefixed with the issuer URL to\nprevent naming clashes with other plugins.\n\nSet to \"NoPrefix\" to disable prefixing.\n\nIf a prefix is defined, this will be set to 'Prefix' by default.",
             "type": "string"
           }
         }
