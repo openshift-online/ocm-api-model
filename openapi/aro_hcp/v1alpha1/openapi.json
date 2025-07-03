@@ -1489,6 +1489,10 @@
       "Azure": {
         "description": "Microsoft Azure settings of a cluster.",
         "properties": {
+          "etcd_encryption": {
+            "description": "Etcd encryption configuration.\nIf not specified, etcd data is encrypted with platform managed keys.\nCurrently etcd data encryption is only supported with customer managed keys.\nCreating a cluster with platform managed keys will result in a failure creating the cluster.",
+            "$ref": "#/components/schemas/AzureEtcdEncryption"
+          },
           "managed_resource_group_name": {
             "description": "The desired name of the Azure Resource Group where the Azure Resources related\nto the cluster are created. It must not previously exist. The Azure Resource\nGroup is created with the given value, within the Azure Subscription\n`subscription_id` of the cluster.\n`managed_resource_group_name` cannot be equal to the value of `managed_resource_group`.\n`managed_resource_group_name` is located in the same Azure location as the\ncluster's region.\nNot to be confused with `resource_group_name`, which is the Azure Resource Group Name\nwhere the own Azure Resource associated to the cluster resides.\nRequired during creation.\nImmutable.",
             "type": "string"
@@ -1549,6 +1553,67 @@
         "properties": {
           "resource_id": {
             "description": "The Azure Resource ID of the Azure User-Assigned Managed\nIdentity. The managed identity represented must exist before\ncreating the cluster.\nThe Azure Resource Group Name specified as part of the Resource ID\nmust belong to the Azure Subscription specified in `.azure.subscription_id`,\nand in the same Azure location as the cluster's region.\nThe Azure Resource Group Name specified as part of the Resource ID\nmust be a different Resource Group Name than the one specified in\n`.azure.managed_resource_group_name`.\nThe Azure Resource Group Name specified as part of the Resource ID\ncan be the same, or a different one than the one specified in\n`.azure.resource_group_name`.\nRequired during creation.\nImmutable.",
+            "type": "string"
+          }
+        }
+      },
+      "AzureEtcdDataEncryption": {
+        "description": "Contains the necessary attributes to support data encryption for Azure based clusters.",
+        "properties": {
+          "customer_managed": {
+            "description": "Customer Managed encryption keys configuration.\nRequired when key_management_mode is \"customer_managed\".",
+            "$ref": "#/components/schemas/AzureEtcdDataEncryptionCustomerManaged"
+          },
+          "key_management_mode": {
+            "description": "The key management strategy used for the encryption key that encrypts the etcd data.\nAccepted values are: \"customer_managed\", \"platform_managed\".\nBy default, \"platform_managed\" is used.\nCurrently only \"customer_managed\" mode is supported.",
+            "type": "string"
+          }
+        }
+      },
+      "AzureEtcdDataEncryptionCustomerManaged": {
+        "description": "Contains the necessary attributes to support etcd data encryption with customer managed keys\nfor Azure based clusters.",
+        "properties": {
+          "encryption_type": {
+            "description": "The encryption type used.\nAccepted values are: \"kms\".\nBy default, \"kms\" is used.",
+            "type": "string"
+          },
+          "kms": {
+            "description": "The KMS encryption configuration.\nRequired when encryption_type is \"kms\".",
+            "$ref": "#/components/schemas/AzureKmsEncryption"
+          }
+        }
+      },
+      "AzureEtcdEncryption": {
+        "description": "Contains the necessary attributes to support etcd encryption for Azure based clusters.",
+        "properties": {
+          "data_encryption": {
+            "description": "etcd data encryption settings.\nIf not specified, etcd data is encrypted with platform managed keys.",
+            "$ref": "#/components/schemas/AzureEtcdDataEncryption"
+          }
+        }
+      },
+      "AzureKmsEncryption": {
+        "description": "Contains the necessary attributes to support KMS encryption for Azure based clusters.",
+        "properties": {
+          "active_key": {
+            "description": "The details of the active key\nRequired during creation.",
+            "$ref": "#/components/schemas/AzureKmsKey"
+          }
+        }
+      },
+      "AzureKmsKey": {
+        "description": "Contains the necessary attributes to support KMS encryption key for Azure based clusters",
+        "properties": {
+          "key_name": {
+            "description": "key_name is the name of the Azure Key Vault Key\nRequired during creation.",
+            "type": "string"
+          },
+          "key_vault_name": {
+            "description": "key_vault_name is the name of the Azure Key Vault that contains the encryption key\nRequired during creation.",
+            "type": "string"
+          },
+          "key_version": {
+            "description": "key_version is the version of the Azure Key Vault key\nRequired during creation.",
             "type": "string"
           }
         }
