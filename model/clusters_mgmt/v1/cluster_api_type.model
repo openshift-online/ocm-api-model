@@ -20,4 +20,6 @@ struct ClusterAPI {
 	URL String
 	// The listening method of the API server.
 	Listening ListeningMethod
+	// The CIDR blocks that are whitelisted for the API server. Currently, only supported for ARO-HCP.
+	AllowedCIDRBlocks []String
 }
