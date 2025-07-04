@@ -29,6 +29,7 @@ type ExternalAuthClientConfig struct {
 	component   *ClientComponent
 	extraScopes []string
 	secret      string
+	type_       ExternalAuthClientType
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
@@ -40,6 +41,8 @@ func (o *ExternalAuthClientConfig) Empty() bool {
 // the zero value of the type if the attribute doesn't have a value.
 //
 // The identifier of the OIDC client from the OIDC provider.
+// This is required.
+// Must be at least one character length.
 func (o *ExternalAuthClientConfig) ID() string {
 	if o != nil && o.bitmap_&1 != 0 {
 		return o.id
@@ -51,6 +54,8 @@ func (o *ExternalAuthClientConfig) ID() string {
 // a flag indicating if the attribute has a value.
 //
 // The identifier of the OIDC client from the OIDC provider.
+// This is required.
+// Must be at least one character length.
 func (o *ExternalAuthClientConfig) GetID() (value string, ok bool) {
 	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
@@ -109,6 +114,9 @@ func (o *ExternalAuthClientConfig) GetExtraScopes() (value []string, ok bool) {
 // the zero value of the type if the attribute doesn't have a value.
 //
 // The secret of the OIDC client from the OIDC provider.
+// The client is considered 'public' if no secret is specified. Otherwise, it is considered
+// as a 'confidential' client.
+// This can only be used for an external authentication provider belonging to a ROSA HCP cluster.
 func (o *ExternalAuthClientConfig) Secret() string {
 	if o != nil && o.bitmap_&8 != 0 {
 		return o.secret
@@ -120,10 +128,50 @@ func (o *ExternalAuthClientConfig) Secret() string {
 // a flag indicating if the attribute has a value.
 //
 // The secret of the OIDC client from the OIDC provider.
+// The client is considered 'public' if no secret is specified. Otherwise, it is considered
+// as a 'confidential' client.
+// This can only be used for an external authentication provider belonging to a ROSA HCP cluster.
 func (o *ExternalAuthClientConfig) GetSecret() (value string, ok bool) {
 	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.secret
+	}
+	return
+}
+
+// Type returns the value of the 'type' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// Determines the OIDC provider client type.
+//
+// This is required to be defined for clients of an external authentication provider belonging to an ARO-HCP cluster.
+//
+// For clients belonging to a ROSA HCP cluster, this is read-only. The value of this property will be determined by the
+// 'secret' property in the client configuration.
+//   - If the 'secret' property is set, the type of the client is 'confidential.
+//   - If the 'secret' property is not set, the type of the client is 'public.
+func (o *ExternalAuthClientConfig) Type() ExternalAuthClientType {
+	if o != nil && o.bitmap_&16 != 0 {
+		return o.type_
+	}
+	return ExternalAuthClientType("")
+}
+
+// GetType returns the value of the 'type' attribute and
+// a flag indicating if the attribute has a value.
+//
+// Determines the OIDC provider client type.
+//
+// This is required to be defined for clients of an external authentication provider belonging to an ARO-HCP cluster.
+//
+// For clients belonging to a ROSA HCP cluster, this is read-only. The value of this property will be determined by the
+// 'secret' property in the client configuration.
+//   - If the 'secret' property is set, the type of the client is 'confidential.
+//   - If the 'secret' property is not set, the type of the client is 'public.
+func (o *ExternalAuthClientConfig) GetType() (value ExternalAuthClientType, ok bool) {
+	ok = o != nil && o.bitmap_&16 != 0
+	if ok {
+		value = o.type_
 	}
 	return
 }

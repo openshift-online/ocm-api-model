@@ -41,6 +41,7 @@ type ExternalAuth struct {
 	claim   *ExternalAuthClaim
 	clients []*ExternalAuthClientConfig
 	issuer  *TokenIssuer
+	status  *ExternalAuthStatus
 }
 
 // Kind returns the name of the type of the object.
@@ -165,6 +166,31 @@ func (o *ExternalAuth) GetIssuer() (value *TokenIssuer, ok bool) {
 	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.issuer
+	}
+	return
+}
+
+// Status returns the value of the 'status' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// The status describes the current state of the external authentication provider.
+// This is read-only.
+func (o *ExternalAuth) Status() *ExternalAuthStatus {
+	if o != nil && o.bitmap_&64 != 0 {
+		return o.status
+	}
+	return nil
+}
+
+// GetStatus returns the value of the 'status' attribute and
+// a flag indicating if the attribute has a value.
+//
+// The status describes the current state of the external authentication provider.
+// This is read-only.
+func (o *ExternalAuth) GetStatus() (value *ExternalAuthStatus, ok bool) {
+	ok = o != nil && o.bitmap_&64 != 0
+	if ok {
+		value = o.status
 	}
 	return
 }

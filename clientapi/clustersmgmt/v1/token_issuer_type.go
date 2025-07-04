@@ -61,6 +61,8 @@ func (o *TokenIssuer) GetCA() (value string, ok bool) {
 // the zero value of the type if the attribute doesn't have a value.
 //
 // URL is the serving URL of the token issuer.
+// It must be a valid url and use the 'https' scheme.
+// This is required.
 func (o *TokenIssuer) URL() string {
 	if o != nil && o.bitmap_&2 != 0 {
 		return o.url
@@ -72,6 +74,8 @@ func (o *TokenIssuer) URL() string {
 // a flag indicating if the attribute has a value.
 //
 // URL is the serving URL of the token issuer.
+// It must be a valid url and use the 'https' scheme.
+// This is required.
 func (o *TokenIssuer) GetURL() (value string, ok bool) {
 	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
@@ -86,7 +90,8 @@ func (o *TokenIssuer) GetURL() (value string, ok bool) {
 // Audiences is an array of audiences that the token was issued for.
 // Valid tokens must include at least one of these values in their
 // "aud" claim.
-// Must be set to exactly one value.
+// Must have at least one audience and a maximum of ten.
+// Any clients defined for this external authentication must have their id included here.
 func (o *TokenIssuer) Audiences() []string {
 	if o != nil && o.bitmap_&4 != 0 {
 		return o.audiences
@@ -100,7 +105,8 @@ func (o *TokenIssuer) Audiences() []string {
 // Audiences is an array of audiences that the token was issued for.
 // Valid tokens must include at least one of these values in their
 // "aud" claim.
-// Must be set to exactly one value.
+// Must have at least one audience and a maximum of ten.
+// Any clients defined for this external authentication must have their id included here.
 func (o *TokenIssuer) GetAudiences() (value []string, ok bool) {
 	ok = o != nil && o.bitmap_&4 != 0
 	if ok {

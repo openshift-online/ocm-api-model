@@ -89,6 +89,8 @@ func (o *UsernameClaim) GetPrefix() (value string, ok bool) {
 // prevent naming clashes with other plugins.
 //
 // Set to "NoPrefix" to disable prefixing.
+//
+// If a prefix is defined, this will be set to 'Prefix' by default.
 func (o *UsernameClaim) PrefixPolicy() string {
 	if o != nil && o.bitmap_&4 != 0 {
 		return o.prefixPolicy
@@ -105,6 +107,8 @@ func (o *UsernameClaim) PrefixPolicy() string {
 // prevent naming clashes with other plugins.
 //
 // Set to "NoPrefix" to disable prefixing.
+//
+// If a prefix is defined, this will be set to 'Prefix' by default.
 func (o *UsernameClaim) GetPrefixPolicy() (value string, ok bool) {
 	ok = o != nil && o.bitmap_&4 != 0
 	if ok {

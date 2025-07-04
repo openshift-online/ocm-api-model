@@ -76,6 +76,15 @@ func WriteExternalAuthClientConfig(object *ExternalAuthClientConfig, stream *jso
 		}
 		stream.WriteObjectField("secret")
 		stream.WriteString(object.secret)
+		count++
+	}
+	present_ = object.bitmap_&16 != 0
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
+		stream.WriteObjectField("type")
+		stream.WriteString(string(object.type_))
 	}
 	stream.WriteObjectEnd()
 }
@@ -117,6 +126,11 @@ func ReadExternalAuthClientConfig(iterator *jsoniter.Iterator) *ExternalAuthClie
 			value := iterator.ReadString()
 			object.secret = value
 			object.bitmap_ |= 8
+		case "type":
+			text := iterator.ReadString()
+			value := ExternalAuthClientType(text)
+			object.type_ = value
+			object.bitmap_ |= 16
 		default:
 			iterator.ReadAny()
 		}
