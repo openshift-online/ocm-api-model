@@ -24,6 +24,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 // Microsoft Azure settings of a cluster.
 type AzureBuilder struct {
 	bitmap_                        uint32
+	etcdEncryption                 *AzureEtcdEncryptionBuilder
 	managedResourceGroupName       string
 	networkSecurityGroupResourceID string
 	nodesOutboundConnectivity      *AzureNodesOutboundConnectivityBuilder
@@ -45,17 +46,30 @@ func (b *AzureBuilder) Empty() bool {
 	return b == nil || b.bitmap_ == 0
 }
 
+// EtcdEncryption sets the value of the 'etcd_encryption' attribute to the given value.
+//
+// Contains the necessary attributes to support etcd encryption for Azure based clusters.
+func (b *AzureBuilder) EtcdEncryption(value *AzureEtcdEncryptionBuilder) *AzureBuilder {
+	b.etcdEncryption = value
+	if value != nil {
+		b.bitmap_ |= 1
+	} else {
+		b.bitmap_ &^= 1
+	}
+	return b
+}
+
 // ManagedResourceGroupName sets the value of the 'managed_resource_group_name' attribute to the given value.
 func (b *AzureBuilder) ManagedResourceGroupName(value string) *AzureBuilder {
 	b.managedResourceGroupName = value
-	b.bitmap_ |= 1
+	b.bitmap_ |= 2
 	return b
 }
 
 // NetworkSecurityGroupResourceID sets the value of the 'network_security_group_resource_ID' attribute to the given value.
 func (b *AzureBuilder) NetworkSecurityGroupResourceID(value string) *AzureBuilder {
 	b.networkSecurityGroupResourceID = value
-	b.bitmap_ |= 2
+	b.bitmap_ |= 4
 	return b
 }
 
@@ -65,9 +79,9 @@ func (b *AzureBuilder) NetworkSecurityGroupResourceID(value string) *AzureBuilde
 func (b *AzureBuilder) NodesOutboundConnectivity(value *AzureNodesOutboundConnectivityBuilder) *AzureBuilder {
 	b.nodesOutboundConnectivity = value
 	if value != nil {
-		b.bitmap_ |= 4
+		b.bitmap_ |= 8
 	} else {
-		b.bitmap_ &^= 4
+		b.bitmap_ &^= 8
 	}
 	return b
 }
@@ -79,9 +93,9 @@ func (b *AzureBuilder) NodesOutboundConnectivity(value *AzureNodesOutboundConnec
 func (b *AzureBuilder) OperatorsAuthentication(value *AzureOperatorsAuthenticationBuilder) *AzureBuilder {
 	b.operatorsAuthentication = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.bitmap_ |= 16
 	} else {
-		b.bitmap_ &^= 8
+		b.bitmap_ &^= 16
 	}
 	return b
 }
@@ -89,35 +103,35 @@ func (b *AzureBuilder) OperatorsAuthentication(value *AzureOperatorsAuthenticati
 // ResourceGroupName sets the value of the 'resource_group_name' attribute to the given value.
 func (b *AzureBuilder) ResourceGroupName(value string) *AzureBuilder {
 	b.resourceGroupName = value
-	b.bitmap_ |= 16
+	b.bitmap_ |= 32
 	return b
 }
 
 // ResourceName sets the value of the 'resource_name' attribute to the given value.
 func (b *AzureBuilder) ResourceName(value string) *AzureBuilder {
 	b.resourceName = value
-	b.bitmap_ |= 32
+	b.bitmap_ |= 64
 	return b
 }
 
 // SubnetResourceID sets the value of the 'subnet_resource_ID' attribute to the given value.
 func (b *AzureBuilder) SubnetResourceID(value string) *AzureBuilder {
 	b.subnetResourceID = value
-	b.bitmap_ |= 64
+	b.bitmap_ |= 128
 	return b
 }
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *AzureBuilder) SubscriptionID(value string) *AzureBuilder {
 	b.subscriptionID = value
-	b.bitmap_ |= 128
+	b.bitmap_ |= 256
 	return b
 }
 
 // TenantID sets the value of the 'tenant_ID' attribute to the given value.
 func (b *AzureBuilder) TenantID(value string) *AzureBuilder {
 	b.tenantID = value
-	b.bitmap_ |= 256
+	b.bitmap_ |= 512
 	return b
 }
 
@@ -127,6 +141,11 @@ func (b *AzureBuilder) Copy(object *Azure) *AzureBuilder {
 		return b
 	}
 	b.bitmap_ = object.bitmap_
+	if object.etcdEncryption != nil {
+		b.etcdEncryption = NewAzureEtcdEncryption().Copy(object.etcdEncryption)
+	} else {
+		b.etcdEncryption = nil
+	}
 	b.managedResourceGroupName = object.managedResourceGroupName
 	b.networkSecurityGroupResourceID = object.networkSecurityGroupResourceID
 	if object.nodesOutboundConnectivity != nil {
@@ -151,6 +170,12 @@ func (b *AzureBuilder) Copy(object *Azure) *AzureBuilder {
 func (b *AzureBuilder) Build() (object *Azure, err error) {
 	object = new(Azure)
 	object.bitmap_ = b.bitmap_
+	if b.etcdEncryption != nil {
+		object.etcdEncryption, err = b.etcdEncryption.Build()
+		if err != nil {
+			return
+		}
+	}
 	object.managedResourceGroupName = b.managedResourceGroupName
 	object.networkSecurityGroupResourceID = b.networkSecurityGroupResourceID
 	if b.nodesOutboundConnectivity != nil {

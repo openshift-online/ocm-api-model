@@ -106,4 +106,10 @@ struct Azure {
 	// configuration of the Cluster's Node Pool's Nodes is performed.
 	// By default this is configured as Azure Load Balancer. This value is immutable.
 	NodesOutboundConnectivity AzureNodesOutboundConnectivity
+
+	// Etcd encryption configuration.
+	// If not specified, etcd data is encrypted with platform managed keys.
+	// Currently etcd data encryption is only supported with customer managed keys.
+	// Creating a cluster with platform managed keys will result in a failure creating the cluster.
+	EtcdEncryption AzureEtcdEncryption
 }
