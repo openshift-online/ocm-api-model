@@ -2294,6 +2294,10 @@
               "$ref": "#/components/schemas/IdentityProvider"
             }
           },
+          "image_registry": {
+            "description": "Image registry configuration.\nFor non ARO-HCP clusters, it is readonly and always enabled",
+            "$ref": "#/components/schemas/ClusterImageRegistry"
+          },
           "inflight_checks": {
             "description": "List of inflight checks on this cluster.",
             "type": "array",
@@ -2469,6 +2473,15 @@
           "unhealthy",
           "unknown"
         ]
+      },
+      "ClusterImageRegistry": {
+        "description": "ClusterImageRegistry represents the configuration for the cluster's internal image registry.",
+        "properties": {
+          "state": {
+            "description": "State indicates whether the image registry is enabled.\nUnless explicitly set, the image registry is enabled by default.\nThis setting is immutable and cannot be changed after the cluster is created.\nValid values: \"enabled\", \"disabled\".",
+            "type": "string"
+          }
+        }
       },
       "ClusterNodes": {
         "description": "Counts of different classes of nodes inside a cluster.",
