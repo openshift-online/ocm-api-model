@@ -1166,6 +1166,9 @@ func (o *Cluster) GetManagedService() (value *ManagedService, ok bool) {
 // Flag indicating if the cluster should be created with nodes in
 // different availability zones or all the nodes in a single one
 // randomly selected.
+// For ARO-HCP Clusters, this attribute is unused, and the control plane
+// is deployed in multiple availability zones when the Azure region where
+// it is deployed supports multiple availability zones.
 func (o *Cluster) MultiAZ() bool {
 	if o != nil && o.bitmap_&17592186044416 != 0 {
 		return o.multiAZ
@@ -1179,6 +1182,9 @@ func (o *Cluster) MultiAZ() bool {
 // Flag indicating if the cluster should be created with nodes in
 // different availability zones or all the nodes in a single one
 // randomly selected.
+// For ARO-HCP Clusters, this attribute is unused, and the control plane
+// is deployed in multiple availability zones when the Azure region where
+// it is deployed supports multiple availability zones.
 func (o *Cluster) GetMultiAZ() (value bool, ok bool) {
 	ok = o != nil && o.bitmap_&17592186044416 != 0
 	if ok {
