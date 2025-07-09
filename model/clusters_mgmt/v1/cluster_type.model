@@ -213,6 +213,7 @@ class Cluster {
 
 	// Indicates whether that etcd is encrypted or not.
 	// This is set only during cluster creation.
+	// For ARO-HCP Clusters, this is a readonly attribute, always set to true.
 	EtcdEncryption Boolean
 
 	// Billing model for cluster resources.

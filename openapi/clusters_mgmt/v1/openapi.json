@@ -15562,7 +15562,7 @@
             "type": "string"
           },
           "etcd_encryption": {
-            "description": "Indicates whether that etcd is encrypted or not.\nThis is set only during cluster creation.",
+            "description": "Indicates whether that etcd is encrypted or not.\nThis is set only during cluster creation.\nFor ARO-HCP Clusters, this is a readonly attribute, always set to true.",
             "type": "boolean"
           },
           "expiration_timestamp": {
