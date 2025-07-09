@@ -2337,7 +2337,7 @@
             "$ref": "#/components/schemas/ManagedService"
           },
           "multi_az": {
-            "description": "Flag indicating if the cluster should be created with nodes in\ndifferent availability zones or all the nodes in a single one\nrandomly selected.",
+            "description": "Flag indicating if the cluster should be created with nodes in\ndifferent availability zones or all the nodes in a single one\nrandomly selected.\nFor ARO-HCP Clusters, this attribute is unused, and the control plane\nis deployed in multiple availability zones when the Azure region where\nit is deployed supports multiple availability zones.",
             "type": "boolean"
           },
           "multi_arch_enabled": {
