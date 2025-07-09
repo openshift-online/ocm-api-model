@@ -26,6 +26,7 @@ type AWSNodePoolBuilder struct {
 	href                       string
 	additionalSecurityGroupIds []string
 	availabilityZoneTypes      map[string]string
+	capacityReservation        *AWSCapacityReservationBuilder
 	ec2MetadataHttpTokens      Ec2MetadataHttpTokens
 	instanceProfile            string
 	instanceType               string
@@ -37,7 +38,7 @@ type AWSNodePoolBuilder struct {
 // NewAWSNodePool creates a new builder of 'AWS_node_pool' objects.
 func NewAWSNodePool() *AWSNodePoolBuilder {
 	return &AWSNodePoolBuilder{
-		fieldSet_: make([]bool, 11),
+		fieldSet_: make([]bool, 12),
 	}
 }
 
@@ -94,26 +95,39 @@ func (b *AWSNodePoolBuilder) AvailabilityZoneTypes(value map[string]string) *AWS
 	return b
 }
 
+// CapacityReservation sets the value of the 'capacity_reservation' attribute to the given value.
+//
+// AWS Capacity Reservation specification.
+func (b *AWSNodePoolBuilder) CapacityReservation(value *AWSCapacityReservationBuilder) *AWSNodePoolBuilder {
+	b.capacityReservation = value
+	if value != nil {
+		b.fieldSet_[5] = true
+	} else {
+		b.fieldSet_[5] = false
+	}
+	return b
+}
+
 // Ec2MetadataHttpTokens sets the value of the 'ec_2_metadata_http_tokens' attribute to the given value.
 //
 // Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances
 func (b *AWSNodePoolBuilder) Ec2MetadataHttpTokens(value Ec2MetadataHttpTokens) *AWSNodePoolBuilder {
 	b.ec2MetadataHttpTokens = value
-	b.fieldSet_[5] = true
+	b.fieldSet_[6] = true
 	return b
 }
 
 // InstanceProfile sets the value of the 'instance_profile' attribute to the given value.
 func (b *AWSNodePoolBuilder) InstanceProfile(value string) *AWSNodePoolBuilder {
 	b.instanceProfile = value
-	b.fieldSet_[6] = true
+	b.fieldSet_[7] = true
 	return b
 }
 
 // InstanceType sets the value of the 'instance_type' attribute to the given value.
 func (b *AWSNodePoolBuilder) InstanceType(value string) *AWSNodePoolBuilder {
 	b.instanceType = value
-	b.fieldSet_[7] = true
+	b.fieldSet_[8] = true
 	return b
 }
 
@@ -123,9 +137,9 @@ func (b *AWSNodePoolBuilder) InstanceType(value string) *AWSNodePoolBuilder {
 func (b *AWSNodePoolBuilder) RootVolume(value *AWSVolumeBuilder) *AWSNodePoolBuilder {
 	b.rootVolume = value
 	if value != nil {
-		b.fieldSet_[8] = true
+		b.fieldSet_[9] = true
 	} else {
-		b.fieldSet_[8] = false
+		b.fieldSet_[9] = false
 	}
 	return b
 }
@@ -134,9 +148,9 @@ func (b *AWSNodePoolBuilder) RootVolume(value *AWSVolumeBuilder) *AWSNodePoolBui
 func (b *AWSNodePoolBuilder) SubnetOutposts(value map[string]string) *AWSNodePoolBuilder {
 	b.subnetOutposts = value
 	if value != nil {
-		b.fieldSet_[9] = true
+		b.fieldSet_[10] = true
 	} else {
-		b.fieldSet_[9] = false
+		b.fieldSet_[10] = false
 	}
 	return b
 }
@@ -145,9 +159,9 @@ func (b *AWSNodePoolBuilder) SubnetOutposts(value map[string]string) *AWSNodePoo
 func (b *AWSNodePoolBuilder) Tags(value map[string]string) *AWSNodePoolBuilder {
 	b.tags = value
 	if value != nil {
-		b.fieldSet_[10] = true
+		b.fieldSet_[11] = true
 	} else {
-		b.fieldSet_[10] = false
+		b.fieldSet_[11] = false
 	}
 	return b
 }
@@ -176,6 +190,11 @@ func (b *AWSNodePoolBuilder) Copy(object *AWSNodePool) *AWSNodePoolBuilder {
 		}
 	} else {
 		b.availabilityZoneTypes = nil
+	}
+	if object.capacityReservation != nil {
+		b.capacityReservation = NewAWSCapacityReservation().Copy(object.capacityReservation)
+	} else {
+		b.capacityReservation = nil
 	}
 	b.ec2MetadataHttpTokens = object.ec2MetadataHttpTokens
 	b.instanceProfile = object.instanceProfile
@@ -221,6 +240,12 @@ func (b *AWSNodePoolBuilder) Build() (object *AWSNodePool, err error) {
 		object.availabilityZoneTypes = make(map[string]string)
 		for k, v := range b.availabilityZoneTypes {
 			object.availabilityZoneTypes[k] = v
+		}
+	}
+	if b.capacityReservation != nil {
+		object.capacityReservation, err = b.capacityReservation.Build()
+		if err != nil {
+			return
 		}
 	}
 	object.ec2MetadataHttpTokens = b.ec2MetadataHttpTokens
