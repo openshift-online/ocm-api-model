@@ -27,6 +27,7 @@ type AWSBackupConfigBuilder struct {
 	s3Bucket            string
 	accountId           string
 	identityProviderArn string
+	managementCluster   string
 	roleArn             string
 }
 
@@ -61,10 +62,17 @@ func (b *AWSBackupConfigBuilder) IdentityProviderArn(value string) *AWSBackupCon
 	return b
 }
 
+// ManagementCluster sets the value of the 'management_cluster' attribute to the given value.
+func (b *AWSBackupConfigBuilder) ManagementCluster(value string) *AWSBackupConfigBuilder {
+	b.managementCluster = value
+	b.bitmap_ |= 8
+	return b
+}
+
 // RoleArn sets the value of the 'role_arn' attribute to the given value.
 func (b *AWSBackupConfigBuilder) RoleArn(value string) *AWSBackupConfigBuilder {
 	b.roleArn = value
-	b.bitmap_ |= 8
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -77,6 +85,7 @@ func (b *AWSBackupConfigBuilder) Copy(object *AWSBackupConfig) *AWSBackupConfigB
 	b.s3Bucket = object.s3Bucket
 	b.accountId = object.accountId
 	b.identityProviderArn = object.identityProviderArn
+	b.managementCluster = object.managementCluster
 	b.roleArn = object.roleArn
 	return b
 }
@@ -88,6 +97,7 @@ func (b *AWSBackupConfigBuilder) Build() (object *AWSBackupConfig, err error) {
 	object.s3Bucket = b.s3Bucket
 	object.accountId = b.accountId
 	object.identityProviderArn = b.identityProviderArn
+	object.managementCluster = b.managementCluster
 	object.roleArn = b.roleArn
 	return
 }

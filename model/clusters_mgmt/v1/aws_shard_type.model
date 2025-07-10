@@ -19,6 +19,6 @@ struct AWSShard {
 	// ECR repository URLs of the provision shard
 	ECRRepositoryURLs []String
 
-	// Backup configurations per Management Cluster ID
-	BackupConfigs [String]AWSBackupConfig
+	// Backup configurations for the provision shard
+	BackupConfigs []AWSBackupConfig
 }

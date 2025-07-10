@@ -27,6 +27,7 @@ type AWSBackupConfig struct {
 	s3Bucket            string
 	accountId           string
 	identityProviderArn string
+	managementCluster   string
 	roleArn             string
 }
 
@@ -104,12 +105,35 @@ func (o *AWSBackupConfig) GetIdentityProviderArn() (value string, ok bool) {
 	return
 }
 
+// ManagementCluster returns the value of the 'management_cluster' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// Name of the management cluster the backup config refers to
+func (o *AWSBackupConfig) ManagementCluster() string {
+	if o != nil && o.bitmap_&8 != 0 {
+		return o.managementCluster
+	}
+	return ""
+}
+
+// GetManagementCluster returns the value of the 'management_cluster' attribute and
+// a flag indicating if the attribute has a value.
+//
+// Name of the management cluster the backup config refers to
+func (o *AWSBackupConfig) GetManagementCluster() (value string, ok bool) {
+	ok = o != nil && o.bitmap_&8 != 0
+	if ok {
+		value = o.managementCluster
+	}
+	return
+}
+
 // RoleArn returns the value of the 'role_arn' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
 // ARN of the role used by the CS Trusted Account to gain access to the Disaster Recovery (DR) account
 func (o *AWSBackupConfig) RoleArn() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.roleArn
 	}
 	return ""
@@ -120,7 +144,7 @@ func (o *AWSBackupConfig) RoleArn() string {
 //
 // ARN of the role used by the CS Trusted Account to gain access to the Disaster Recovery (DR) account
 func (o *AWSBackupConfig) GetRoleArn() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.roleArn
 	}

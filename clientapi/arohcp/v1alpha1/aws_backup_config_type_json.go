@@ -74,6 +74,15 @@ func WriteAWSBackupConfig(object *AWSBackupConfig, stream *jsoniter.Stream) {
 		if count > 0 {
 			stream.WriteMore()
 		}
+		stream.WriteObjectField("management_cluster")
+		stream.WriteString(object.managementCluster)
+		count++
+	}
+	present_ = object.bitmap_&16 != 0
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
 		stream.WriteObjectField("role_arn")
 		stream.WriteString(object.roleArn)
 	}
@@ -113,10 +122,14 @@ func ReadAWSBackupConfig(iterator *jsoniter.Iterator) *AWSBackupConfig {
 			value := iterator.ReadString()
 			object.identityProviderArn = value
 			object.bitmap_ |= 4
+		case "management_cluster":
+			value := iterator.ReadString()
+			object.managementCluster = value
+			object.bitmap_ |= 8
 		case "role_arn":
 			value := iterator.ReadString()
 			object.roleArn = value
-			object.bitmap_ |= 8
+			object.bitmap_ |= 16
 		default:
 			iterator.ReadAny()
 		}
