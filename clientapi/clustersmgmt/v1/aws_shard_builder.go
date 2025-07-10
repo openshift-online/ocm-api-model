@@ -25,7 +25,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 type AWSShardBuilder struct {
 	bitmap_           uint32
 	ecrRepositoryURLs []string
-	backupConfigs     map[string]*AWSBackupConfigBuilder
+	backupConfigs     []*AWSBackupConfigBuilder
 }
 
 // NewAWSShard creates a new builder of 'AWS_shard' objects.
@@ -46,14 +46,11 @@ func (b *AWSShardBuilder) ECRRepositoryURLs(values ...string) *AWSShardBuilder {
 	return b
 }
 
-// BackupConfigs sets the value of the 'backup_configs' attribute to the given value.
-func (b *AWSShardBuilder) BackupConfigs(value map[string]*AWSBackupConfigBuilder) *AWSShardBuilder {
-	b.backupConfigs = value
-	if value != nil {
-		b.bitmap_ |= 2
-	} else {
-		b.bitmap_ &^= 2
-	}
+// BackupConfigs sets the value of the 'backup_configs' attribute to the given values.
+func (b *AWSShardBuilder) BackupConfigs(values ...*AWSBackupConfigBuilder) *AWSShardBuilder {
+	b.backupConfigs = make([]*AWSBackupConfigBuilder, len(values))
+	copy(b.backupConfigs, values)
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -69,10 +66,10 @@ func (b *AWSShardBuilder) Copy(object *AWSShard) *AWSShardBuilder {
 	} else {
 		b.ecrRepositoryURLs = nil
 	}
-	if len(object.backupConfigs) > 0 {
-		b.backupConfigs = map[string]*AWSBackupConfigBuilder{}
-		for k, v := range object.backupConfigs {
-			b.backupConfigs[k] = NewAWSBackupConfig().Copy(v)
+	if object.backupConfigs != nil {
+		b.backupConfigs = make([]*AWSBackupConfigBuilder, len(object.backupConfigs))
+		for i, v := range object.backupConfigs {
+			b.backupConfigs[i] = NewAWSBackupConfig().Copy(v)
 		}
 	} else {
 		b.backupConfigs = nil
@@ -89,9 +86,9 @@ func (b *AWSShardBuilder) Build() (object *AWSShard, err error) {
 		copy(object.ecrRepositoryURLs, b.ecrRepositoryURLs)
 	}
 	if b.backupConfigs != nil {
-		object.backupConfigs = make(map[string]*AWSBackupConfig)
-		for k, v := range b.backupConfigs {
-			object.backupConfigs[k], err = v.Build()
+		object.backupConfigs = make([]*AWSBackupConfig, len(b.backupConfigs))
+		for i, v := range b.backupConfigs {
+			object.backupConfigs[i], err = v.Build()
 			if err != nil {
 				return
 			}

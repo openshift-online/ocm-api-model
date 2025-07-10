@@ -1395,6 +1395,10 @@
             "description": "ARN of the identity provider created in the Disaster Recovery (DR) account for the Management Cluster",
             "type": "string"
           },
+          "management_cluster": {
+            "description": "Name of the management cluster the backup config refers to",
+            "type": "string"
+          },
           "role_arn": {
             "description": "ARN of the role used by the CS Trusted Account to gain access to the Disaster Recovery (DR) account",
             "type": "string"
@@ -1473,9 +1477,9 @@
             }
           },
           "backup_configs": {
-            "description": "Backup configurations per Management Cluster ID",
-            "type": "object",
-            "additionalProperties": {
+            "description": "Backup configurations for the provision shard",
+            "type": "array",
+            "items": {
               "$ref": "#/components/schemas/AWSBackupConfig"
             }
           }

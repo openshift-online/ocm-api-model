@@ -27,4 +27,7 @@ struct AWSBackupConfig {
 
     // Name of the S3 bucket used to save the backup
     S3Bucket            string
+
+    // Name of the management cluster the backup config refers to
+    ManagementCluster String
 }
