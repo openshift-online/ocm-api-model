@@ -92,6 +92,15 @@ func WriteAzureNodePool(object *AzureNodePool, stream *jsoniter.Stream) {
 		if count > 0 {
 			stream.WriteMore()
 		}
+		stream.WriteObjectField("os_disk_sse_encryption_set_resource_id")
+		stream.WriteString(object.osDiskSseEncryptionSetResourceId)
+		count++
+	}
+	present_ = object.bitmap_&64 != 0
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
 		stream.WriteObjectField("resource_name")
 		stream.WriteString(object.resourceName)
 	}
@@ -139,10 +148,14 @@ func ReadAzureNodePool(iterator *jsoniter.Iterator) *AzureNodePool {
 			value := iterator.ReadBool()
 			object.ephemeralOSDiskEnabled = value
 			object.bitmap_ |= 16
+		case "os_disk_sse_encryption_set_resource_id":
+			value := iterator.ReadString()
+			object.osDiskSseEncryptionSetResourceId = value
+			object.bitmap_ |= 32
 		case "resource_name":
 			value := iterator.ReadString()
 			object.resourceName = value
-			object.bitmap_ |= 32
+			object.bitmap_ |= 64
 		default:
 			iterator.ReadAny()
 		}

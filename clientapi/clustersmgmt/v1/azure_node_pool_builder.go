@@ -23,13 +23,14 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Representation of azure node pool specific parameters.
 type AzureNodePoolBuilder struct {
-	bitmap_                  uint32
-	osDiskSizeGibibytes      int
-	osDiskStorageAccountType string
-	vmSize                   string
-	encryptionAtHost         *AzureNodePoolEncryptionAtHostBuilder
-	resourceName             string
-	ephemeralOSDiskEnabled   bool
+	bitmap_                          uint32
+	osDiskSizeGibibytes              int
+	osDiskStorageAccountType         string
+	vmSize                           string
+	encryptionAtHost                 *AzureNodePoolEncryptionAtHostBuilder
+	osDiskSseEncryptionSetResourceId string
+	resourceName                     string
+	ephemeralOSDiskEnabled           bool
 }
 
 // NewAzureNodePool creates a new builder of 'azure_node_pool' objects.
@@ -84,10 +85,17 @@ func (b *AzureNodePoolBuilder) EphemeralOSDiskEnabled(value bool) *AzureNodePool
 	return b
 }
 
+// OsDiskSseEncryptionSetResourceId sets the value of the 'os_disk_sse_encryption_set_resource_id' attribute to the given value.
+func (b *AzureNodePoolBuilder) OsDiskSseEncryptionSetResourceId(value string) *AzureNodePoolBuilder {
+	b.osDiskSseEncryptionSetResourceId = value
+	b.bitmap_ |= 32
+	return b
+}
+
 // ResourceName sets the value of the 'resource_name' attribute to the given value.
 func (b *AzureNodePoolBuilder) ResourceName(value string) *AzureNodePoolBuilder {
 	b.resourceName = value
-	b.bitmap_ |= 32
+	b.bitmap_ |= 64
 	return b
 }
 
@@ -106,6 +114,7 @@ func (b *AzureNodePoolBuilder) Copy(object *AzureNodePool) *AzureNodePoolBuilder
 		b.encryptionAtHost = nil
 	}
 	b.ephemeralOSDiskEnabled = object.ephemeralOSDiskEnabled
+	b.osDiskSseEncryptionSetResourceId = object.osDiskSseEncryptionSetResourceId
 	b.resourceName = object.resourceName
 	return b
 }
@@ -124,6 +133,7 @@ func (b *AzureNodePoolBuilder) Build() (object *AzureNodePool, err error) {
 		}
 	}
 	object.ephemeralOSDiskEnabled = b.ephemeralOSDiskEnabled
+	object.osDiskSseEncryptionSetResourceId = b.osDiskSseEncryptionSetResourceId
 	object.resourceName = b.resourceName
 	return
 }
