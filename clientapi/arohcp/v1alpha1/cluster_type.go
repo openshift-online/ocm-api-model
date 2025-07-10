@@ -719,6 +719,7 @@ func (o *Cluster) GetDomainPrefix() (value string, ok bool) {
 //
 // Indicates whether that etcd is encrypted or not.
 // This is set only during cluster creation.
+// For ARO-HCP Clusters, this is a readonly attribute, always set to true.
 func (o *Cluster) EtcdEncryption() bool {
 	if o != nil && o.bitmap_&33554432 != 0 {
 		return o.etcdEncryption
@@ -731,6 +732,7 @@ func (o *Cluster) EtcdEncryption() bool {
 //
 // Indicates whether that etcd is encrypted or not.
 // This is set only during cluster creation.
+// For ARO-HCP Clusters, this is a readonly attribute, always set to true.
 func (o *Cluster) GetEtcdEncryption() (value bool, ok bool) {
 	ok = o != nil && o.bitmap_&33554432 != 0
 	if ok {
