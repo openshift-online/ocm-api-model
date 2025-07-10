@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.421 Jul 10 2025
+- added `ManagementCluster` field to `AWSBackupConfig` type and changed `BackupConfigs` field from map to list in `AWSShard`
+
 ## 0.0.420 Jun 25 2025
 - Add `AWSBackupConfig` type
 - Add `BackupConfigs` to `AWSShard`
