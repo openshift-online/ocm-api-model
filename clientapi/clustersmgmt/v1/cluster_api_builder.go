@@ -23,9 +23,10 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Information about the API of a cluster.
 type ClusterAPIBuilder struct {
-	bitmap_   uint32
-	url       string
-	listening ListeningMethod
+	bitmap_           uint32
+	url               string
+	allowedCIDRBlocks []string
+	listening         ListeningMethod
 }
 
 // NewClusterAPI creates a new builder of 'cluster_API' objects.
@@ -45,12 +46,20 @@ func (b *ClusterAPIBuilder) URL(value string) *ClusterAPIBuilder {
 	return b
 }
 
+// AllowedCIDRBlocks sets the value of the 'allowed_CIDR_blocks' attribute to the given values.
+func (b *ClusterAPIBuilder) AllowedCIDRBlocks(values ...string) *ClusterAPIBuilder {
+	b.allowedCIDRBlocks = make([]string, len(values))
+	copy(b.allowedCIDRBlocks, values)
+	b.bitmap_ |= 2
+	return b
+}
+
 // Listening sets the value of the 'listening' attribute to the given value.
 //
 // Cluster components listening method.
 func (b *ClusterAPIBuilder) Listening(value ListeningMethod) *ClusterAPIBuilder {
 	b.listening = value
-	b.bitmap_ |= 2
+	b.bitmap_ |= 4
 	return b
 }
 
@@ -61,6 +70,12 @@ func (b *ClusterAPIBuilder) Copy(object *ClusterAPI) *ClusterAPIBuilder {
 	}
 	b.bitmap_ = object.bitmap_
 	b.url = object.url
+	if object.allowedCIDRBlocks != nil {
+		b.allowedCIDRBlocks = make([]string, len(object.allowedCIDRBlocks))
+		copy(b.allowedCIDRBlocks, object.allowedCIDRBlocks)
+	} else {
+		b.allowedCIDRBlocks = nil
+	}
 	b.listening = object.listening
 	return b
 }
@@ -70,6 +85,10 @@ func (b *ClusterAPIBuilder) Build() (object *ClusterAPI, err error) {
 	object = new(ClusterAPI)
 	object.bitmap_ = b.bitmap_
 	object.url = b.url
+	if b.allowedCIDRBlocks != nil {
+		object.allowedCIDRBlocks = make([]string, len(b.allowedCIDRBlocks))
+		copy(object.allowedCIDRBlocks, b.allowedCIDRBlocks)
+	}
 	object.listening = b.listening
 	return
 }

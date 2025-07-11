@@ -2439,6 +2439,13 @@
             "description": "The URL of the API server of the cluster.",
             "type": "string"
           },
+          "allowed_cidr_blocks": {
+            "description": "The CIDR blocks (An IPV4 address range in the format `<ipv4_address>/<network_mask>`) that are allowed for the Kubernetes API server. Currently, only supported for ARO-HCP based clusters.\nThe maximum number of CIDR blocks supported is 500. The CIDR blocks should be non-overlapping and valid.\nIf the field is left empty (alternatively, an empty array provided) all traffic is allowed to the Kubernetes API Server.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "listening": {
             "description": "The listening method of the API server.",
             "$ref": "#/components/schemas/ListeningMethod"
