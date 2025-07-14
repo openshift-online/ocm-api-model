@@ -82,7 +82,6 @@ type ClusterBuilder struct {
 	azure                             *AzureBuilder
 	billingModel                      BillingModel
 	byoOidc                           *ByoOidcBuilder
-	capabilities                      *ClusterCapabilitiesBuilder
 	cloudProvider                     *v1.CloudProviderBuilder
 	console                           *ClusterConsoleBuilder
 	creationTimestamp                 time.Time
@@ -134,7 +133,7 @@ type ClusterBuilder struct {
 // NewCluster creates a new builder of 'cluster' objects.
 func NewCluster() *ClusterBuilder {
 	return &ClusterBuilder{
-		fieldSet_: make([]bool, 64),
+		fieldSet_: make([]bool, 63),
 	}
 }
 
@@ -338,26 +337,15 @@ func (b *ClusterBuilder) ByoOidc(value *ByoOidcBuilder) *ClusterBuilder {
 	return b
 }
 
-// Capabilities sets the value of the 'capabilities' attribute to the given value.
-func (b *ClusterBuilder) Capabilities(value *ClusterCapabilitiesBuilder) *ClusterBuilder {
-	b.capabilities = value
-	if value != nil {
-		b.fieldSet_[18] = true
-	} else {
-		b.fieldSet_[18] = false
-	}
-	return b
-}
-
 // CloudProvider sets the value of the 'cloud_provider' attribute to the given value.
 //
 // Cloud provider.
 func (b *ClusterBuilder) CloudProvider(value *v1.CloudProviderBuilder) *ClusterBuilder {
 	b.cloudProvider = value
 	if value != nil {
-		b.fieldSet_[19] = true
+		b.fieldSet_[18] = true
 	} else {
-		b.fieldSet_[19] = false
+		b.fieldSet_[18] = false
 	}
 	return b
 }
@@ -368,9 +356,9 @@ func (b *ClusterBuilder) CloudProvider(value *v1.CloudProviderBuilder) *ClusterB
 func (b *ClusterBuilder) Console(value *ClusterConsoleBuilder) *ClusterBuilder {
 	b.console = value
 	if value != nil {
-		b.fieldSet_[20] = true
+		b.fieldSet_[19] = true
 	} else {
-		b.fieldSet_[20] = false
+		b.fieldSet_[19] = false
 	}
 	return b
 }
@@ -378,7 +366,7 @@ func (b *ClusterBuilder) Console(value *ClusterConsoleBuilder) *ClusterBuilder {
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *ClusterBuilder) CreationTimestamp(value time.Time) *ClusterBuilder {
 	b.creationTimestamp = value
-	b.fieldSet_[21] = true
+	b.fieldSet_[20] = true
 	return b
 }
 
@@ -388,9 +376,9 @@ func (b *ClusterBuilder) CreationTimestamp(value time.Time) *ClusterBuilder {
 func (b *ClusterBuilder) DeleteProtection(value *DeleteProtectionBuilder) *ClusterBuilder {
 	b.deleteProtection = value
 	if value != nil {
-		b.fieldSet_[22] = true
+		b.fieldSet_[21] = true
 	} else {
-		b.fieldSet_[22] = false
+		b.fieldSet_[21] = false
 	}
 	return b
 }
@@ -398,35 +386,35 @@ func (b *ClusterBuilder) DeleteProtection(value *DeleteProtectionBuilder) *Clust
 // DisableUserWorkloadMonitoring sets the value of the 'disable_user_workload_monitoring' attribute to the given value.
 func (b *ClusterBuilder) DisableUserWorkloadMonitoring(value bool) *ClusterBuilder {
 	b.disableUserWorkloadMonitoring = value
-	b.fieldSet_[23] = true
+	b.fieldSet_[22] = true
 	return b
 }
 
 // DomainPrefix sets the value of the 'domain_prefix' attribute to the given value.
 func (b *ClusterBuilder) DomainPrefix(value string) *ClusterBuilder {
 	b.domainPrefix = value
-	b.fieldSet_[24] = true
+	b.fieldSet_[23] = true
 	return b
 }
 
 // EtcdEncryption sets the value of the 'etcd_encryption' attribute to the given value.
 func (b *ClusterBuilder) EtcdEncryption(value bool) *ClusterBuilder {
 	b.etcdEncryption = value
-	b.fieldSet_[25] = true
+	b.fieldSet_[24] = true
 	return b
 }
 
 // ExpirationTimestamp sets the value of the 'expiration_timestamp' attribute to the given value.
 func (b *ClusterBuilder) ExpirationTimestamp(value time.Time) *ClusterBuilder {
 	b.expirationTimestamp = value
-	b.fieldSet_[26] = true
+	b.fieldSet_[25] = true
 	return b
 }
 
 // ExternalID sets the value of the 'external_ID' attribute to the given value.
 func (b *ClusterBuilder) ExternalID(value string) *ClusterBuilder {
 	b.externalID = value
-	b.fieldSet_[27] = true
+	b.fieldSet_[26] = true
 	return b
 }
 
@@ -436,9 +424,9 @@ func (b *ClusterBuilder) ExternalID(value string) *ClusterBuilder {
 func (b *ClusterBuilder) ExternalAuthConfig(value *ExternalAuthConfigBuilder) *ClusterBuilder {
 	b.externalAuthConfig = value
 	if value != nil {
-		b.fieldSet_[28] = true
+		b.fieldSet_[27] = true
 	} else {
-		b.fieldSet_[28] = false
+		b.fieldSet_[27] = false
 	}
 	return b
 }
@@ -449,9 +437,9 @@ func (b *ClusterBuilder) ExternalAuthConfig(value *ExternalAuthConfigBuilder) *C
 func (b *ClusterBuilder) ExternalConfiguration(value *ExternalConfigurationBuilder) *ClusterBuilder {
 	b.externalConfiguration = value
 	if value != nil {
-		b.fieldSet_[29] = true
+		b.fieldSet_[28] = true
 	} else {
-		b.fieldSet_[29] = false
+		b.fieldSet_[28] = false
 	}
 	return b
 }
@@ -463,9 +451,9 @@ func (b *ClusterBuilder) ExternalConfiguration(value *ExternalConfigurationBuild
 func (b *ClusterBuilder) Flavour(value *v1.FlavourBuilder) *ClusterBuilder {
 	b.flavour = value
 	if value != nil {
-		b.fieldSet_[30] = true
+		b.fieldSet_[29] = true
 	} else {
-		b.fieldSet_[30] = false
+		b.fieldSet_[29] = false
 	}
 	return b
 }
@@ -473,7 +461,7 @@ func (b *ClusterBuilder) Flavour(value *v1.FlavourBuilder) *ClusterBuilder {
 // Groups sets the value of the 'groups' attribute to the given values.
 func (b *ClusterBuilder) Groups(value *v1.GroupListBuilder) *ClusterBuilder {
 	b.groups = value
-	b.fieldSet_[31] = true
+	b.fieldSet_[30] = true
 	return b
 }
 
@@ -482,7 +470,7 @@ func (b *ClusterBuilder) Groups(value *v1.GroupListBuilder) *ClusterBuilder {
 // ClusterHealthState indicates the health of a cluster.
 func (b *ClusterBuilder) HealthState(value ClusterHealthState) *ClusterBuilder {
 	b.healthState = value
-	b.fieldSet_[32] = true
+	b.fieldSet_[31] = true
 	return b
 }
 
@@ -492,9 +480,9 @@ func (b *ClusterBuilder) HealthState(value ClusterHealthState) *ClusterBuilder {
 func (b *ClusterBuilder) Htpasswd(value *HTPasswdIdentityProviderBuilder) *ClusterBuilder {
 	b.htpasswd = value
 	if value != nil {
-		b.fieldSet_[33] = true
+		b.fieldSet_[32] = true
 	} else {
-		b.fieldSet_[33] = false
+		b.fieldSet_[32] = false
 	}
 	return b
 }
@@ -505,9 +493,9 @@ func (b *ClusterBuilder) Htpasswd(value *HTPasswdIdentityProviderBuilder) *Clust
 func (b *ClusterBuilder) Hypershift(value *HypershiftBuilder) *ClusterBuilder {
 	b.hypershift = value
 	if value != nil {
-		b.fieldSet_[34] = true
+		b.fieldSet_[33] = true
 	} else {
-		b.fieldSet_[34] = false
+		b.fieldSet_[33] = false
 	}
 	return b
 }
@@ -515,7 +503,7 @@ func (b *ClusterBuilder) Hypershift(value *HypershiftBuilder) *ClusterBuilder {
 // IdentityProviders sets the value of the 'identity_providers' attribute to the given values.
 func (b *ClusterBuilder) IdentityProviders(value *v1.IdentityProviderListBuilder) *ClusterBuilder {
 	b.identityProviders = value
-	b.fieldSet_[35] = true
+	b.fieldSet_[34] = true
 	return b
 }
 
@@ -525,9 +513,9 @@ func (b *ClusterBuilder) IdentityProviders(value *v1.IdentityProviderListBuilder
 func (b *ClusterBuilder) ImageRegistry(value *ClusterImageRegistryBuilder) *ClusterBuilder {
 	b.imageRegistry = value
 	if value != nil {
-		b.fieldSet_[36] = true
+		b.fieldSet_[35] = true
 	} else {
-		b.fieldSet_[36] = false
+		b.fieldSet_[35] = false
 	}
 	return b
 }
@@ -535,21 +523,21 @@ func (b *ClusterBuilder) ImageRegistry(value *ClusterImageRegistryBuilder) *Clus
 // InflightChecks sets the value of the 'inflight_checks' attribute to the given values.
 func (b *ClusterBuilder) InflightChecks(value *InflightCheckListBuilder) *ClusterBuilder {
 	b.inflightChecks = value
-	b.fieldSet_[37] = true
+	b.fieldSet_[36] = true
 	return b
 }
 
 // InfraID sets the value of the 'infra_ID' attribute to the given value.
 func (b *ClusterBuilder) InfraID(value string) *ClusterBuilder {
 	b.infraID = value
-	b.fieldSet_[38] = true
+	b.fieldSet_[37] = true
 	return b
 }
 
 // Ingresses sets the value of the 'ingresses' attribute to the given values.
 func (b *ClusterBuilder) Ingresses(value *v1.IngressListBuilder) *ClusterBuilder {
 	b.ingresses = value
-	b.fieldSet_[39] = true
+	b.fieldSet_[38] = true
 	return b
 }
 
@@ -560,9 +548,9 @@ func (b *ClusterBuilder) Ingresses(value *v1.IngressListBuilder) *ClusterBuilder
 func (b *ClusterBuilder) KubeletConfig(value *KubeletConfigBuilder) *ClusterBuilder {
 	b.kubeletConfig = value
 	if value != nil {
-		b.fieldSet_[40] = true
+		b.fieldSet_[39] = true
 	} else {
-		b.fieldSet_[40] = false
+		b.fieldSet_[39] = false
 	}
 	return b
 }
@@ -570,21 +558,21 @@ func (b *ClusterBuilder) KubeletConfig(value *KubeletConfigBuilder) *ClusterBuil
 // LoadBalancerQuota sets the value of the 'load_balancer_quota' attribute to the given value.
 func (b *ClusterBuilder) LoadBalancerQuota(value int) *ClusterBuilder {
 	b.loadBalancerQuota = value
-	b.fieldSet_[41] = true
+	b.fieldSet_[40] = true
 	return b
 }
 
 // MachinePools sets the value of the 'machine_pools' attribute to the given values.
 func (b *ClusterBuilder) MachinePools(value *v1.MachinePoolListBuilder) *ClusterBuilder {
 	b.machinePools = value
-	b.fieldSet_[42] = true
+	b.fieldSet_[41] = true
 	return b
 }
 
 // Managed sets the value of the 'managed' attribute to the given value.
 func (b *ClusterBuilder) Managed(value bool) *ClusterBuilder {
 	b.managed = value
-	b.fieldSet_[43] = true
+	b.fieldSet_[42] = true
 	return b
 }
 
@@ -594,9 +582,9 @@ func (b *ClusterBuilder) Managed(value bool) *ClusterBuilder {
 func (b *ClusterBuilder) ManagedService(value *ManagedServiceBuilder) *ClusterBuilder {
 	b.managedService = value
 	if value != nil {
-		b.fieldSet_[44] = true
+		b.fieldSet_[43] = true
 	} else {
-		b.fieldSet_[44] = false
+		b.fieldSet_[43] = false
 	}
 	return b
 }
@@ -604,21 +592,21 @@ func (b *ClusterBuilder) ManagedService(value *ManagedServiceBuilder) *ClusterBu
 // MultiAZ sets the value of the 'multi_AZ' attribute to the given value.
 func (b *ClusterBuilder) MultiAZ(value bool) *ClusterBuilder {
 	b.multiAZ = value
-	b.fieldSet_[45] = true
+	b.fieldSet_[44] = true
 	return b
 }
 
 // MultiArchEnabled sets the value of the 'multi_arch_enabled' attribute to the given value.
 func (b *ClusterBuilder) MultiArchEnabled(value bool) *ClusterBuilder {
 	b.multiArchEnabled = value
-	b.fieldSet_[46] = true
+	b.fieldSet_[45] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ClusterBuilder) Name(value string) *ClusterBuilder {
 	b.name = value
-	b.fieldSet_[47] = true
+	b.fieldSet_[46] = true
 	return b
 }
 
@@ -628,9 +616,9 @@ func (b *ClusterBuilder) Name(value string) *ClusterBuilder {
 func (b *ClusterBuilder) Network(value *NetworkBuilder) *ClusterBuilder {
 	b.network = value
 	if value != nil {
-		b.fieldSet_[48] = true
+		b.fieldSet_[47] = true
 	} else {
-		b.fieldSet_[48] = false
+		b.fieldSet_[47] = false
 	}
 	return b
 }
@@ -658,9 +646,9 @@ func (b *ClusterBuilder) Network(value *NetworkBuilder) *ClusterBuilder {
 func (b *ClusterBuilder) NodeDrainGracePeriod(value *ValueBuilder) *ClusterBuilder {
 	b.nodeDrainGracePeriod = value
 	if value != nil {
-		b.fieldSet_[49] = true
+		b.fieldSet_[48] = true
 	} else {
-		b.fieldSet_[49] = false
+		b.fieldSet_[48] = false
 	}
 	return b
 }
@@ -668,7 +656,7 @@ func (b *ClusterBuilder) NodeDrainGracePeriod(value *ValueBuilder) *ClusterBuild
 // NodePools sets the value of the 'node_pools' attribute to the given values.
 func (b *ClusterBuilder) NodePools(value *NodePoolListBuilder) *ClusterBuilder {
 	b.nodePools = value
-	b.fieldSet_[50] = true
+	b.fieldSet_[49] = true
 	return b
 }
 
@@ -678,9 +666,9 @@ func (b *ClusterBuilder) NodePools(value *NodePoolListBuilder) *ClusterBuilder {
 func (b *ClusterBuilder) Nodes(value *ClusterNodesBuilder) *ClusterBuilder {
 	b.nodes = value
 	if value != nil {
-		b.fieldSet_[51] = true
+		b.fieldSet_[50] = true
 	} else {
-		b.fieldSet_[51] = false
+		b.fieldSet_[50] = false
 	}
 	return b
 }
@@ -688,7 +676,7 @@ func (b *ClusterBuilder) Nodes(value *ClusterNodesBuilder) *ClusterBuilder {
 // OpenshiftVersion sets the value of the 'openshift_version' attribute to the given value.
 func (b *ClusterBuilder) OpenshiftVersion(value string) *ClusterBuilder {
 	b.openshiftVersion = value
-	b.fieldSet_[52] = true
+	b.fieldSet_[51] = true
 	return b
 }
 
@@ -698,9 +686,9 @@ func (b *ClusterBuilder) OpenshiftVersion(value string) *ClusterBuilder {
 func (b *ClusterBuilder) Product(value *v1.ProductBuilder) *ClusterBuilder {
 	b.product = value
 	if value != nil {
-		b.fieldSet_[53] = true
+		b.fieldSet_[52] = true
 	} else {
-		b.fieldSet_[53] = false
+		b.fieldSet_[52] = false
 	}
 	return b
 }
@@ -709,9 +697,9 @@ func (b *ClusterBuilder) Product(value *v1.ProductBuilder) *ClusterBuilder {
 func (b *ClusterBuilder) Properties(value map[string]string) *ClusterBuilder {
 	b.properties = value
 	if value != nil {
-		b.fieldSet_[54] = true
+		b.fieldSet_[53] = true
 	} else {
-		b.fieldSet_[54] = false
+		b.fieldSet_[53] = false
 	}
 	return b
 }
@@ -722,9 +710,9 @@ func (b *ClusterBuilder) Properties(value map[string]string) *ClusterBuilder {
 func (b *ClusterBuilder) ProvisionShard(value *ProvisionShardBuilder) *ClusterBuilder {
 	b.provisionShard = value
 	if value != nil {
-		b.fieldSet_[55] = true
+		b.fieldSet_[54] = true
 	} else {
-		b.fieldSet_[55] = false
+		b.fieldSet_[54] = false
 	}
 	return b
 }
@@ -735,9 +723,9 @@ func (b *ClusterBuilder) ProvisionShard(value *ProvisionShardBuilder) *ClusterBu
 func (b *ClusterBuilder) Proxy(value *ProxyBuilder) *ClusterBuilder {
 	b.proxy = value
 	if value != nil {
-		b.fieldSet_[56] = true
+		b.fieldSet_[55] = true
 	} else {
-		b.fieldSet_[56] = false
+		b.fieldSet_[55] = false
 	}
 	return b
 }
@@ -748,9 +736,9 @@ func (b *ClusterBuilder) Proxy(value *ProxyBuilder) *ClusterBuilder {
 func (b *ClusterBuilder) Region(value *v1.CloudRegionBuilder) *ClusterBuilder {
 	b.region = value
 	if value != nil {
-		b.fieldSet_[57] = true
+		b.fieldSet_[56] = true
 	} else {
-		b.fieldSet_[57] = false
+		b.fieldSet_[56] = false
 	}
 	return b
 }
@@ -777,9 +765,9 @@ func (b *ClusterBuilder) Region(value *v1.CloudRegionBuilder) *ClusterBuilder {
 func (b *ClusterBuilder) RegistryConfig(value *ClusterRegistryConfigBuilder) *ClusterBuilder {
 	b.registryConfig = value
 	if value != nil {
-		b.fieldSet_[58] = true
+		b.fieldSet_[57] = true
 	} else {
-		b.fieldSet_[58] = false
+		b.fieldSet_[57] = false
 	}
 	return b
 }
@@ -789,7 +777,7 @@ func (b *ClusterBuilder) RegistryConfig(value *ClusterRegistryConfigBuilder) *Cl
 // Overall state of a cluster.
 func (b *ClusterBuilder) State(value ClusterState) *ClusterBuilder {
 	b.state = value
-	b.fieldSet_[59] = true
+	b.fieldSet_[58] = true
 	return b
 }
 
@@ -799,9 +787,9 @@ func (b *ClusterBuilder) State(value ClusterState) *ClusterBuilder {
 func (b *ClusterBuilder) Status(value *ClusterStatusBuilder) *ClusterBuilder {
 	b.status = value
 	if value != nil {
-		b.fieldSet_[60] = true
+		b.fieldSet_[59] = true
 	} else {
-		b.fieldSet_[60] = false
+		b.fieldSet_[59] = false
 	}
 	return b
 }
@@ -829,9 +817,9 @@ func (b *ClusterBuilder) Status(value *ClusterStatusBuilder) *ClusterBuilder {
 func (b *ClusterBuilder) StorageQuota(value *ValueBuilder) *ClusterBuilder {
 	b.storageQuota = value
 	if value != nil {
-		b.fieldSet_[61] = true
+		b.fieldSet_[60] = true
 	} else {
-		b.fieldSet_[61] = false
+		b.fieldSet_[60] = false
 	}
 	return b
 }
@@ -842,9 +830,9 @@ func (b *ClusterBuilder) StorageQuota(value *ValueBuilder) *ClusterBuilder {
 func (b *ClusterBuilder) Subscription(value *v1.SubscriptionBuilder) *ClusterBuilder {
 	b.subscription = value
 	if value != nil {
-		b.fieldSet_[62] = true
+		b.fieldSet_[61] = true
 	} else {
-		b.fieldSet_[62] = false
+		b.fieldSet_[61] = false
 	}
 	return b
 }
@@ -855,9 +843,9 @@ func (b *ClusterBuilder) Subscription(value *v1.SubscriptionBuilder) *ClusterBui
 func (b *ClusterBuilder) Version(value *VersionBuilder) *ClusterBuilder {
 	b.version = value
 	if value != nil {
-		b.fieldSet_[63] = true
+		b.fieldSet_[62] = true
 	} else {
-		b.fieldSet_[63] = false
+		b.fieldSet_[62] = false
 	}
 	return b
 }
@@ -935,11 +923,6 @@ func (b *ClusterBuilder) Copy(object *Cluster) *ClusterBuilder {
 		b.byoOidc = NewByoOidc().Copy(object.byoOidc)
 	} else {
 		b.byoOidc = nil
-	}
-	if object.capabilities != nil {
-		b.capabilities = NewClusterCapabilities().Copy(object.capabilities)
-	} else {
-		b.capabilities = nil
 	}
 	if object.cloudProvider != nil {
 		b.cloudProvider = v1.NewCloudProvider().Copy(object.cloudProvider)
@@ -1192,12 +1175,6 @@ func (b *ClusterBuilder) Build() (object *Cluster, err error) {
 	object.billingModel = b.billingModel
 	if b.byoOidc != nil {
 		object.byoOidc, err = b.byoOidc.Build()
-		if err != nil {
-			return
-		}
-	}
-	if b.capabilities != nil {
-		object.capabilities, err = b.capabilities.Build()
 		if err != nil {
 			return
 		}
