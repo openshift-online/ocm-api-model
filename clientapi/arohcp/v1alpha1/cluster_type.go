@@ -988,7 +988,8 @@ func (o *Cluster) GetIdentityProviders() (value *v1.IdentityProviderList, ok boo
 // ImageRegistry returns the value of the 'image_registry' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
-// Image registry configuration.
+// The OpenShift Image Registry configuration
+// It provides an internal, integrated container image registry to locally manage images.
 // For non ARO-HCP clusters, it is readonly and always enabled
 func (o *Cluster) ImageRegistry() *ClusterImageRegistry {
 	if o != nil && o.bitmap_&68719476736 != 0 {
@@ -1000,7 +1001,8 @@ func (o *Cluster) ImageRegistry() *ClusterImageRegistry {
 // GetImageRegistry returns the value of the 'image_registry' attribute and
 // a flag indicating if the attribute has a value.
 //
-// Image registry configuration.
+// The OpenShift Image Registry configuration
+// It provides an internal, integrated container image registry to locally manage images.
 // For non ARO-HCP clusters, it is readonly and always enabled
 func (o *Cluster) GetImageRegistry() (value *ClusterImageRegistry, ok bool) {
 	ok = o != nil && o.bitmap_&68719476736 != 0
@@ -1522,7 +1524,7 @@ func (o *Cluster) GetRegion() (value *v1.CloudRegion, ok bool) {
 // RegistryConfig returns the value of the 'registry_config' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
-// Registry configuration for the cluster
+// External registry configuration for the cluster
 func (o *Cluster) RegistryConfig() *ClusterRegistryConfig {
 	if o != nil && o.bitmap_&288230376151711744 != 0 {
 		return o.registryConfig
@@ -1533,7 +1535,7 @@ func (o *Cluster) RegistryConfig() *ClusterRegistryConfig {
 // GetRegistryConfig returns the value of the 'registry_config' attribute and
 // a flag indicating if the attribute has a value.
 //
-// Registry configuration for the cluster
+// External registry configuration for the cluster
 func (o *Cluster) GetRegistryConfig() (value *ClusterRegistryConfig, ok bool) {
 	ok = o != nil && o.bitmap_&288230376151711744 != 0
 	if ok {
