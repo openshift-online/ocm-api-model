@@ -15646,7 +15646,7 @@
             }
           },
           "image_registry": {
-            "description": "Image registry configuration.\nFor non ARO-HCP clusters, it is readonly and always enabled",
+            "description": "The OpenShift Image Registry configuration\nIt provides an internal, integrated container image registry to locally manage images.\nFor non ARO-HCP clusters, it is readonly and always enabled",
             "$ref": "#/components/schemas/ClusterImageRegistry"
           },
           "inflight_checks": {
@@ -15750,7 +15750,7 @@
             "$ref": "#/components/schemas/CloudRegion"
           },
           "registry_config": {
-            "description": "Registry configuration for the cluster",
+            "description": "External registry configuration for the cluster",
             "$ref": "#/components/schemas/ClusterRegistryConfig"
           },
           "state": {
