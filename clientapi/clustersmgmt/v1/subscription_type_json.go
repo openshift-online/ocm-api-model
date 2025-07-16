@@ -42,13 +42,13 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(SubscriptionLinkKind)
 	} else {
 		stream.WriteString(SubscriptionKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -80,7 +80,9 @@ func UnmarshalSubscription(source interface{}) (object *Subscription, err error)
 
 // ReadSubscription reads a value of the 'subscription' type from the given iterator.
 func ReadSubscription(iterator *jsoniter.Iterator) *Subscription {
-	object := &Subscription{}
+	object := &Subscription{
+		fieldSet_: make([]bool, 3),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -90,14 +92,14 @@ func ReadSubscription(iterator *jsoniter.Iterator) *Subscription {
 		case "kind":
 			value := iterator.ReadString()
 			if value == SubscriptionLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		default:
 			iterator.ReadAny()
 		}

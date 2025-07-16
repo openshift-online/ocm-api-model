@@ -43,7 +43,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -52,7 +52,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.kmsKeyArn)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.sts != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.sts != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -61,7 +61,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		WriteSTS(object.sts, stream)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -70,7 +70,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.accessKeyID)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -79,7 +79,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.accountID)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0 && object.additionalAllowedPrincipals != nil
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.additionalAllowedPrincipals != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -88,7 +88,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		WriteStringList(object.additionalAllowedPrincipals, stream)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0 && object.additionalComputeSecurityGroupIds != nil
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.additionalComputeSecurityGroupIds != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -97,7 +97,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		WriteStringList(object.additionalComputeSecurityGroupIds, stream)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0 && object.additionalControlPlaneSecurityGroupIds != nil
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.additionalControlPlaneSecurityGroupIds != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -106,7 +106,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		WriteStringList(object.additionalControlPlaneSecurityGroupIds, stream)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0 && object.additionalInfraSecurityGroupIds != nil
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7] && object.additionalInfraSecurityGroupIds != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -115,7 +115,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		WriteStringList(object.additionalInfraSecurityGroupIds, stream)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0 && object.auditLog != nil
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8] && object.auditLog != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -124,7 +124,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		WriteAuditLog(object.auditLog, stream)
 		count++
 	}
-	present_ = object.bitmap_&512 != 0
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -133,7 +133,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.billingAccountID)
 		count++
 	}
-	present_ = object.bitmap_&1024 != 0
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -142,7 +142,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.ec2MetadataHttpTokens))
 		count++
 	}
-	present_ = object.bitmap_&2048 != 0 && object.etcdEncryption != nil
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11] && object.etcdEncryption != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -151,7 +151,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		WriteAwsEtcdEncryption(object.etcdEncryption, stream)
 		count++
 	}
-	present_ = object.bitmap_&4096 != 0
+	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -160,7 +160,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.hcpInternalCommunicationHostedZoneId)
 		count++
 	}
-	present_ = object.bitmap_&8192 != 0
+	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -169,7 +169,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.privateHostedZoneID)
 		count++
 	}
-	present_ = object.bitmap_&16384 != 0
+	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -178,7 +178,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.privateHostedZoneRoleARN)
 		count++
 	}
-	present_ = object.bitmap_&32768 != 0
+	present_ = len(object.fieldSet_) > 15 && object.fieldSet_[15]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -187,7 +187,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteBool(object.privateLink)
 		count++
 	}
-	present_ = object.bitmap_&65536 != 0 && object.privateLinkConfiguration != nil
+	present_ = len(object.fieldSet_) > 16 && object.fieldSet_[16] && object.privateLinkConfiguration != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -196,7 +196,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		WritePrivateLinkClusterConfiguration(object.privateLinkConfiguration, stream)
 		count++
 	}
-	present_ = object.bitmap_&131072 != 0
+	present_ = len(object.fieldSet_) > 17 && object.fieldSet_[17]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -205,7 +205,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.secretAccessKey)
 		count++
 	}
-	present_ = object.bitmap_&262144 != 0 && object.subnetIDs != nil
+	present_ = len(object.fieldSet_) > 18 && object.fieldSet_[18] && object.subnetIDs != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -214,7 +214,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		WriteStringList(object.subnetIDs, stream)
 		count++
 	}
-	present_ = object.bitmap_&524288 != 0 && object.tags != nil
+	present_ = len(object.fieldSet_) > 19 && object.fieldSet_[19] && object.tags != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -243,7 +243,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = object.bitmap_&1048576 != 0
+	present_ = len(object.fieldSet_) > 20 && object.fieldSet_[20]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -268,7 +268,9 @@ func UnmarshalAWS(source interface{}) (object *AWS, err error) {
 
 // ReadAWS reads a value of the 'AWS' type from the given iterator.
 func ReadAWS(iterator *jsoniter.Iterator) *AWS {
-	object := &AWS{}
+	object := &AWS{
+		fieldSet_: make([]bool, 21),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -278,80 +280,80 @@ func ReadAWS(iterator *jsoniter.Iterator) *AWS {
 		case "kms_key_arn":
 			value := iterator.ReadString()
 			object.kmsKeyArn = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "sts":
 			value := ReadSTS(iterator)
 			object.sts = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "access_key_id":
 			value := iterator.ReadString()
 			object.accessKeyID = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "account_id":
 			value := iterator.ReadString()
 			object.accountID = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "additional_allowed_principals":
 			value := ReadStringList(iterator)
 			object.additionalAllowedPrincipals = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "additional_compute_security_group_ids":
 			value := ReadStringList(iterator)
 			object.additionalComputeSecurityGroupIds = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "additional_control_plane_security_group_ids":
 			value := ReadStringList(iterator)
 			object.additionalControlPlaneSecurityGroupIds = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "additional_infra_security_group_ids":
 			value := ReadStringList(iterator)
 			object.additionalInfraSecurityGroupIds = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "audit_log":
 			value := ReadAuditLog(iterator)
 			object.auditLog = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		case "billing_account_id":
 			value := iterator.ReadString()
 			object.billingAccountID = value
-			object.bitmap_ |= 512
+			object.fieldSet_[9] = true
 		case "ec2_metadata_http_tokens":
 			text := iterator.ReadString()
 			value := Ec2MetadataHttpTokens(text)
 			object.ec2MetadataHttpTokens = value
-			object.bitmap_ |= 1024
+			object.fieldSet_[10] = true
 		case "etcd_encryption":
 			value := ReadAwsEtcdEncryption(iterator)
 			object.etcdEncryption = value
-			object.bitmap_ |= 2048
+			object.fieldSet_[11] = true
 		case "hcp_internal_communication_hosted_zone_id":
 			value := iterator.ReadString()
 			object.hcpInternalCommunicationHostedZoneId = value
-			object.bitmap_ |= 4096
+			object.fieldSet_[12] = true
 		case "private_hosted_zone_id":
 			value := iterator.ReadString()
 			object.privateHostedZoneID = value
-			object.bitmap_ |= 8192
+			object.fieldSet_[13] = true
 		case "private_hosted_zone_role_arn":
 			value := iterator.ReadString()
 			object.privateHostedZoneRoleARN = value
-			object.bitmap_ |= 16384
+			object.fieldSet_[14] = true
 		case "private_link":
 			value := iterator.ReadBool()
 			object.privateLink = value
-			object.bitmap_ |= 32768
+			object.fieldSet_[15] = true
 		case "private_link_configuration":
 			value := ReadPrivateLinkClusterConfiguration(iterator)
 			object.privateLinkConfiguration = value
-			object.bitmap_ |= 65536
+			object.fieldSet_[16] = true
 		case "secret_access_key":
 			value := iterator.ReadString()
 			object.secretAccessKey = value
-			object.bitmap_ |= 131072
+			object.fieldSet_[17] = true
 		case "subnet_ids":
 			value := ReadStringList(iterator)
 			object.subnetIDs = value
-			object.bitmap_ |= 262144
+			object.fieldSet_[18] = true
 		case "tags":
 			value := map[string]string{}
 			for {
@@ -363,11 +365,11 @@ func ReadAWS(iterator *jsoniter.Iterator) *AWS {
 				value[key] = item
 			}
 			object.tags = value
-			object.bitmap_ |= 524288
+			object.fieldSet_[19] = true
 		case "vpc_endpoint_role_arn":
 			value := iterator.ReadString()
 			object.vpcEndpointRoleArn = value
-			object.bitmap_ |= 1048576
+			object.fieldSet_[20] = true
 		default:
 			iterator.ReadAny()
 		}

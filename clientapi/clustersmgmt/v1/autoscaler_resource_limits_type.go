@@ -21,7 +21,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // AutoscalerResourceLimits represents the values of the 'autoscaler_resource_limits' type.
 type AutoscalerResourceLimits struct {
-	bitmap_       uint32
+	fieldSet_     []bool
 	gpus          []*AutoscalerResourceLimitsGPULimit
 	cores         *ResourceRange
 	maxNodesTotal int
@@ -30,7 +30,15 @@ type AutoscalerResourceLimits struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AutoscalerResourceLimits) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // GPUS returns the value of the 'GPUS' attribute, or
@@ -39,7 +47,7 @@ func (o *AutoscalerResourceLimits) Empty() bool {
 // Minimum and maximum number of different GPUs in cluster, in the format <gpu_type>:<min>:<max>.
 // Cluster autoscaler will not scale the cluster beyond these numbers. Can be passed multiple times.
 func (o *AutoscalerResourceLimits) GPUS() []*AutoscalerResourceLimitsGPULimit {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.gpus
 	}
 	return nil
@@ -51,7 +59,7 @@ func (o *AutoscalerResourceLimits) GPUS() []*AutoscalerResourceLimitsGPULimit {
 // Minimum and maximum number of different GPUs in cluster, in the format <gpu_type>:<min>:<max>.
 // Cluster autoscaler will not scale the cluster beyond these numbers. Can be passed multiple times.
 func (o *AutoscalerResourceLimits) GetGPUS() (value []*AutoscalerResourceLimitsGPULimit, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.gpus
 	}
@@ -64,7 +72,7 @@ func (o *AutoscalerResourceLimits) GetGPUS() (value []*AutoscalerResourceLimitsG
 // Minimum and maximum number of cores in cluster, in the format <min>:<max>.
 // Cluster autoscaler will not scale the cluster beyond these numbers.
 func (o *AutoscalerResourceLimits) Cores() *ResourceRange {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.cores
 	}
 	return nil
@@ -76,7 +84,7 @@ func (o *AutoscalerResourceLimits) Cores() *ResourceRange {
 // Minimum and maximum number of cores in cluster, in the format <min>:<max>.
 // Cluster autoscaler will not scale the cluster beyond these numbers.
 func (o *AutoscalerResourceLimits) GetCores() (value *ResourceRange, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.cores
 	}
@@ -89,7 +97,7 @@ func (o *AutoscalerResourceLimits) GetCores() (value *ResourceRange, ok bool) {
 // Maximum number of nodes in all node groups.
 // Cluster autoscaler will not grow the cluster beyond this number.
 func (o *AutoscalerResourceLimits) MaxNodesTotal() int {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.maxNodesTotal
 	}
 	return 0
@@ -101,7 +109,7 @@ func (o *AutoscalerResourceLimits) MaxNodesTotal() int {
 // Maximum number of nodes in all node groups.
 // Cluster autoscaler will not grow the cluster beyond this number.
 func (o *AutoscalerResourceLimits) GetMaxNodesTotal() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.maxNodesTotal
 	}
@@ -114,7 +122,7 @@ func (o *AutoscalerResourceLimits) GetMaxNodesTotal() (value int, ok bool) {
 // Minimum and maximum number of gigabytes of memory in cluster, in the format <min>:<max>.
 // Cluster autoscaler will not scale the cluster beyond these numbers.
 func (o *AutoscalerResourceLimits) Memory() *ResourceRange {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.memory
 	}
 	return nil
@@ -126,7 +134,7 @@ func (o *AutoscalerResourceLimits) Memory() *ResourceRange {
 // Minimum and maximum number of gigabytes of memory in cluster, in the format <min>:<max>.
 // Cluster autoscaler will not scale the cluster beyond these numbers.
 func (o *AutoscalerResourceLimits) GetMemory() (value *ResourceRange, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.memory
 	}

@@ -19,29 +19,37 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AlertsInfoBuilder contains the data and logic needed to build 'alerts_info' objects.
-//
 // Provides information about the alerts firing on the cluster.
 type AlertsInfoBuilder struct {
-	bitmap_ uint32
-	alerts  []*AlertInfoBuilder
+	fieldSet_ []bool
+	alerts    []*AlertInfoBuilder
 }
 
 // NewAlertsInfo creates a new builder of 'alerts_info' objects.
 func NewAlertsInfo() *AlertsInfoBuilder {
-	return &AlertsInfoBuilder{}
+	return &AlertsInfoBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AlertsInfoBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Alerts sets the value of the 'alerts' attribute to the given values.
 func (b *AlertsInfoBuilder) Alerts(values ...*AlertInfoBuilder) *AlertsInfoBuilder {
 	b.alerts = make([]*AlertInfoBuilder, len(values))
 	copy(b.alerts, values)
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -50,7 +58,10 @@ func (b *AlertsInfoBuilder) Copy(object *AlertsInfo) *AlertsInfoBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.alerts != nil {
 		b.alerts = make([]*AlertInfoBuilder, len(object.alerts))
 		for i, v := range object.alerts {
@@ -65,7 +76,10 @@ func (b *AlertsInfoBuilder) Copy(object *AlertsInfo) *AlertsInfoBuilder {
 // Build creates a 'alerts_info' object using the configuration stored in the builder.
 func (b *AlertsInfoBuilder) Build() (object *AlertsInfo, err error) {
 	object = new(AlertsInfo)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.alerts != nil {
 		object.alerts = make([]*AlertInfo, len(b.alerts))
 		for i, v := range b.alerts {

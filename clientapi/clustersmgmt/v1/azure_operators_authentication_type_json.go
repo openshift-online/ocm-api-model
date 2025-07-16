@@ -42,7 +42,7 @@ func WriteAzureOperatorsAuthentication(object *AzureOperatorsAuthentication, str
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.managedIdentities != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.managedIdentities != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,9 @@ func UnmarshalAzureOperatorsAuthentication(source interface{}) (object *AzureOpe
 
 // ReadAzureOperatorsAuthentication reads a value of the 'azure_operators_authentication' type from the given iterator.
 func ReadAzureOperatorsAuthentication(iterator *jsoniter.Iterator) *AzureOperatorsAuthentication {
-	object := &AzureOperatorsAuthentication{}
+	object := &AzureOperatorsAuthentication{
+		fieldSet_: make([]bool, 1),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -77,7 +79,7 @@ func ReadAzureOperatorsAuthentication(iterator *jsoniter.Iterator) *AzureOperato
 		case "managed_identities":
 			value := ReadAzureOperatorsAuthenticationManagedIdentities(iterator)
 			object.managedIdentities = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

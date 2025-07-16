@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
-// AddonInstallationBillingBuilder contains the data and logic needed to build 'addon_installation_billing' objects.
-//
 // Representation of an add-on installation billing.
 type AddonInstallationBillingBuilder struct {
-	bitmap_                   uint32
+	fieldSet_                 []bool
 	billingMarketplaceAccount string
 	billingModel              BillingModel
 	href                      string
@@ -33,18 +31,28 @@ type AddonInstallationBillingBuilder struct {
 
 // NewAddonInstallationBilling creates a new builder of 'addon_installation_billing' objects.
 func NewAddonInstallationBilling() *AddonInstallationBillingBuilder {
-	return &AddonInstallationBillingBuilder{}
+	return &AddonInstallationBillingBuilder{
+		fieldSet_: make([]bool, 5),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddonInstallationBillingBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // BillingMarketplaceAccount sets the value of the 'billing_marketplace_account' attribute to the given value.
 func (b *AddonInstallationBillingBuilder) BillingMarketplaceAccount(value string) *AddonInstallationBillingBuilder {
 	b.billingMarketplaceAccount = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -53,28 +61,28 @@ func (b *AddonInstallationBillingBuilder) BillingMarketplaceAccount(value string
 // Representation of an billing model field.
 func (b *AddonInstallationBillingBuilder) BillingModel(value BillingModel) *AddonInstallationBillingBuilder {
 	b.billingModel = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // Href sets the value of the 'href' attribute to the given value.
 func (b *AddonInstallationBillingBuilder) Href(value string) *AddonInstallationBillingBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Id sets the value of the 'id' attribute to the given value.
 func (b *AddonInstallationBillingBuilder) Id(value string) *AddonInstallationBillingBuilder {
 	b.id = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Kind sets the value of the 'kind' attribute to the given value.
 func (b *AddonInstallationBillingBuilder) Kind(value string) *AddonInstallationBillingBuilder {
 	b.kind = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -83,7 +91,10 @@ func (b *AddonInstallationBillingBuilder) Copy(object *AddonInstallationBilling)
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.billingMarketplaceAccount = object.billingMarketplaceAccount
 	b.billingModel = object.billingModel
 	b.href = object.href
@@ -95,7 +106,10 @@ func (b *AddonInstallationBillingBuilder) Copy(object *AddonInstallationBilling)
 // Build creates a 'addon_installation_billing' object using the configuration stored in the builder.
 func (b *AddonInstallationBillingBuilder) Build() (object *AddonInstallationBilling, err error) {
 	object = new(AddonInstallationBilling)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.billingMarketplaceAccount = b.billingMarketplaceAccount
 	object.billingModel = b.billingModel
 	object.href = b.href

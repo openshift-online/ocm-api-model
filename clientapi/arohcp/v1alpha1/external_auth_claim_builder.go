@@ -19,23 +19,31 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// ExternalAuthClaimBuilder contains the data and logic needed to build 'external_auth_claim' objects.
-//
 // The claims and validation rules used in the configuration of the external authentication.
 type ExternalAuthClaimBuilder struct {
-	bitmap_         uint32
+	fieldSet_       []bool
 	mappings        *TokenClaimMappingsBuilder
 	validationRules []*TokenClaimValidationRuleBuilder
 }
 
 // NewExternalAuthClaim creates a new builder of 'external_auth_claim' objects.
 func NewExternalAuthClaim() *ExternalAuthClaimBuilder {
-	return &ExternalAuthClaimBuilder{}
+	return &ExternalAuthClaimBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ExternalAuthClaimBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Mappings sets the value of the 'mappings' attribute to the given value.
@@ -44,9 +52,9 @@ func (b *ExternalAuthClaimBuilder) Empty() bool {
 func (b *ExternalAuthClaimBuilder) Mappings(value *TokenClaimMappingsBuilder) *ExternalAuthClaimBuilder {
 	b.mappings = value
 	if value != nil {
-		b.bitmap_ |= 1
+		b.fieldSet_[0] = true
 	} else {
-		b.bitmap_ &^= 1
+		b.fieldSet_[0] = false
 	}
 	return b
 }
@@ -55,7 +63,7 @@ func (b *ExternalAuthClaimBuilder) Mappings(value *TokenClaimMappingsBuilder) *E
 func (b *ExternalAuthClaimBuilder) ValidationRules(values ...*TokenClaimValidationRuleBuilder) *ExternalAuthClaimBuilder {
 	b.validationRules = make([]*TokenClaimValidationRuleBuilder, len(values))
 	copy(b.validationRules, values)
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -64,7 +72,10 @@ func (b *ExternalAuthClaimBuilder) Copy(object *ExternalAuthClaim) *ExternalAuth
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.mappings != nil {
 		b.mappings = NewTokenClaimMappings().Copy(object.mappings)
 	} else {
@@ -84,7 +95,10 @@ func (b *ExternalAuthClaimBuilder) Copy(object *ExternalAuthClaim) *ExternalAuth
 // Build creates a 'external_auth_claim' object using the configuration stored in the builder.
 func (b *ExternalAuthClaimBuilder) Build() (object *ExternalAuthClaim, err error) {
 	object = new(ExternalAuthClaim)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.mappings != nil {
 		object.mappings, err = b.mappings.Build()
 		if err != nil {

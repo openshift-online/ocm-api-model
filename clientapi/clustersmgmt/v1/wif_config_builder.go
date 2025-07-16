@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// WifConfigBuilder contains the data and logic needed to build 'wif_config' objects.
-//
 // Definition of an wif_config resource.
 type WifConfigBuilder struct {
-	bitmap_      uint32
+	fieldSet_    []bool
 	id           string
 	href         string
 	displayName  string
@@ -34,38 +32,49 @@ type WifConfigBuilder struct {
 
 // NewWifConfig creates a new builder of 'wif_config' objects.
 func NewWifConfig() *WifConfigBuilder {
-	return &WifConfigBuilder{}
+	return &WifConfigBuilder{
+		fieldSet_: make([]bool, 7),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *WifConfigBuilder) Link(value bool) *WifConfigBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *WifConfigBuilder) ID(value string) *WifConfigBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *WifConfigBuilder) HREF(value string) *WifConfigBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *WifConfigBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // DisplayName sets the value of the 'display_name' attribute to the given value.
 func (b *WifConfigBuilder) DisplayName(value string) *WifConfigBuilder {
 	b.displayName = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -73,9 +82,9 @@ func (b *WifConfigBuilder) DisplayName(value string) *WifConfigBuilder {
 func (b *WifConfigBuilder) Gcp(value *WifGcpBuilder) *WifConfigBuilder {
 	b.gcp = value
 	if value != nil {
-		b.bitmap_ |= 16
+		b.fieldSet_[4] = true
 	} else {
-		b.bitmap_ &^= 16
+		b.fieldSet_[4] = false
 	}
 	return b
 }
@@ -86,9 +95,9 @@ func (b *WifConfigBuilder) Gcp(value *WifGcpBuilder) *WifConfigBuilder {
 func (b *WifConfigBuilder) Organization(value *OrganizationLinkBuilder) *WifConfigBuilder {
 	b.organization = value
 	if value != nil {
-		b.bitmap_ |= 32
+		b.fieldSet_[5] = true
 	} else {
-		b.bitmap_ &^= 32
+		b.fieldSet_[5] = false
 	}
 	return b
 }
@@ -97,7 +106,7 @@ func (b *WifConfigBuilder) Organization(value *OrganizationLinkBuilder) *WifConf
 func (b *WifConfigBuilder) WifTemplates(values ...string) *WifConfigBuilder {
 	b.wifTemplates = make([]string, len(values))
 	copy(b.wifTemplates, values)
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -106,7 +115,10 @@ func (b *WifConfigBuilder) Copy(object *WifConfig) *WifConfigBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.displayName = object.displayName
@@ -134,7 +146,10 @@ func (b *WifConfigBuilder) Build() (object *WifConfig, err error) {
 	object = new(WifConfig)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.displayName = b.displayName
 	if b.gcp != nil {
 		object.gcp, err = b.gcp.Build()

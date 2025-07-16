@@ -42,7 +42,7 @@ func WriteOrganizationLink(object *OrganizationLink, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteOrganizationLink(object *OrganizationLink, stream *jsoniter.Stream) {
 		stream.WriteString(object.href)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,9 @@ func UnmarshalOrganizationLink(source interface{}) (object *OrganizationLink, er
 
 // ReadOrganizationLink reads a value of the 'organization_link' type from the given iterator.
 func ReadOrganizationLink(iterator *jsoniter.Iterator) *OrganizationLink {
-	object := &OrganizationLink{}
+	object := &OrganizationLink{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -86,11 +88,11 @@ func ReadOrganizationLink(iterator *jsoniter.Iterator) *OrganizationLink {
 		case "href":
 			value := iterator.ReadString()
 			object.href = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

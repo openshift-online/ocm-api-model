@@ -21,19 +21,27 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 
 // PullSecretsRequest represents the values of the 'pull_secrets_request' type.
 type PullSecretsRequest struct {
-	bitmap_            uint32
+	fieldSet_          []bool
 	externalResourceId string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *PullSecretsRequest) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ExternalResourceId returns the value of the 'external_resource_id' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *PullSecretsRequest) ExternalResourceId() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.externalResourceId
 	}
 	return ""
@@ -42,7 +50,7 @@ func (o *PullSecretsRequest) ExternalResourceId() string {
 // GetExternalResourceId returns the value of the 'external_resource_id' attribute and
 // a flag indicating if the attribute has a value.
 func (o *PullSecretsRequest) GetExternalResourceId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.externalResourceId
 	}

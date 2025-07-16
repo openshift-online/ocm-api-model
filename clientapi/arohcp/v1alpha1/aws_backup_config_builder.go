@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// AWSBackupConfigBuilder contains the data and logic needed to build 'AWS_backup_config' objects.
-//
 // Backup configuration for AWS clusters
 type AWSBackupConfigBuilder struct {
-	bitmap_             uint32
+	fieldSet_           []bool
 	s3Bucket            string
 	accountId           string
 	identityProviderArn string
@@ -33,46 +31,56 @@ type AWSBackupConfigBuilder struct {
 
 // NewAWSBackupConfig creates a new builder of 'AWS_backup_config' objects.
 func NewAWSBackupConfig() *AWSBackupConfigBuilder {
-	return &AWSBackupConfigBuilder{}
+	return &AWSBackupConfigBuilder{
+		fieldSet_: make([]bool, 5),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AWSBackupConfigBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // S3Bucket sets the value of the 'S3_bucket' attribute to the given value.
 func (b *AWSBackupConfigBuilder) S3Bucket(value string) *AWSBackupConfigBuilder {
 	b.s3Bucket = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // AccountId sets the value of the 'account_id' attribute to the given value.
 func (b *AWSBackupConfigBuilder) AccountId(value string) *AWSBackupConfigBuilder {
 	b.accountId = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // IdentityProviderArn sets the value of the 'identity_provider_arn' attribute to the given value.
 func (b *AWSBackupConfigBuilder) IdentityProviderArn(value string) *AWSBackupConfigBuilder {
 	b.identityProviderArn = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // ManagementCluster sets the value of the 'management_cluster' attribute to the given value.
 func (b *AWSBackupConfigBuilder) ManagementCluster(value string) *AWSBackupConfigBuilder {
 	b.managementCluster = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // RoleArn sets the value of the 'role_arn' attribute to the given value.
 func (b *AWSBackupConfigBuilder) RoleArn(value string) *AWSBackupConfigBuilder {
 	b.roleArn = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -81,7 +89,10 @@ func (b *AWSBackupConfigBuilder) Copy(object *AWSBackupConfig) *AWSBackupConfigB
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.s3Bucket = object.s3Bucket
 	b.accountId = object.accountId
 	b.identityProviderArn = object.identityProviderArn
@@ -93,7 +104,10 @@ func (b *AWSBackupConfigBuilder) Copy(object *AWSBackupConfig) *AWSBackupConfigB
 // Build creates a 'AWS_backup_config' object using the configuration stored in the builder.
 func (b *AWSBackupConfigBuilder) Build() (object *AWSBackupConfig, err error) {
 	object = new(AWSBackupConfig)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.s3Bucket = b.s3Bucket
 	object.accountId = b.accountId
 	object.identityProviderArn = b.identityProviderArn

@@ -23,14 +23,22 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // The claims and validation rules used in the configuration of the external authentication.
 type ExternalAuthClaim struct {
-	bitmap_         uint32
+	fieldSet_       []bool
 	mappings        *TokenClaimMappings
 	validationRules []*TokenClaimValidationRule
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ExternalAuthClaim) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Mappings returns the value of the 'mappings' attribute, or
@@ -38,7 +46,7 @@ func (o *ExternalAuthClaim) Empty() bool {
 //
 // Mapping describes rules on how to transform information from an ID token into a cluster identity.
 func (o *ExternalAuthClaim) Mappings() *TokenClaimMappings {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.mappings
 	}
 	return nil
@@ -49,7 +57,7 @@ func (o *ExternalAuthClaim) Mappings() *TokenClaimMappings {
 //
 // Mapping describes rules on how to transform information from an ID token into a cluster identity.
 func (o *ExternalAuthClaim) GetMappings() (value *TokenClaimMappings, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.mappings
 	}
@@ -61,7 +69,7 @@ func (o *ExternalAuthClaim) GetMappings() (value *TokenClaimMappings, ok bool) {
 //
 // ValidationRules are rules that are applied to validate token claims to authenticate users.
 func (o *ExternalAuthClaim) ValidationRules() []*TokenClaimValidationRule {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.validationRules
 	}
 	return nil
@@ -72,7 +80,7 @@ func (o *ExternalAuthClaim) ValidationRules() []*TokenClaimValidationRule {
 //
 // ValidationRules are rules that are applied to validate token claims to authenticate users.
 func (o *ExternalAuthClaim) GetValidationRules() (value []*TokenClaimValidationRule, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.validationRules
 	}

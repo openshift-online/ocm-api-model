@@ -42,13 +42,13 @@ func WriteAddOnVersion(object *AddOnVersion, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(AddOnVersionLinkKind)
 	} else {
 		stream.WriteString(AddOnVersionKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteAddOnVersion(object *AddOnVersion, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteAddOnVersion(object *AddOnVersion, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0 && object.additionalCatalogSources != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.additionalCatalogSources != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteAddOnVersion(object *AddOnVersion, stream *jsoniter.Stream) {
 		WriteAdditionalCatalogSourceList(object.additionalCatalogSources, stream)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0 && object.availableUpgrades != nil
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.availableUpgrades != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteAddOnVersion(object *AddOnVersion, stream *jsoniter.Stream) {
 		WriteStringList(object.availableUpgrades, stream)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -92,7 +92,7 @@ func WriteAddOnVersion(object *AddOnVersion, stream *jsoniter.Stream) {
 		stream.WriteString(object.channel)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0 && object.config != nil
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.config != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -101,7 +101,7 @@ func WriteAddOnVersion(object *AddOnVersion, stream *jsoniter.Stream) {
 		WriteAddOnConfig(object.config, stream)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -110,7 +110,7 @@ func WriteAddOnVersion(object *AddOnVersion, stream *jsoniter.Stream) {
 		stream.WriteBool(object.enabled)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -119,7 +119,7 @@ func WriteAddOnVersion(object *AddOnVersion, stream *jsoniter.Stream) {
 		stream.WriteString(object.packageImage)
 		count++
 	}
-	present_ = object.bitmap_&512 != 0 && object.parameters != nil
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9] && object.parameters != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -131,7 +131,7 @@ func WriteAddOnVersion(object *AddOnVersion, stream *jsoniter.Stream) {
 		stream.WriteObjectEnd()
 		count++
 	}
-	present_ = object.bitmap_&1024 != 0
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -140,7 +140,7 @@ func WriteAddOnVersion(object *AddOnVersion, stream *jsoniter.Stream) {
 		stream.WriteString(object.pullSecretName)
 		count++
 	}
-	present_ = object.bitmap_&2048 != 0 && object.requirements != nil
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11] && object.requirements != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -149,7 +149,7 @@ func WriteAddOnVersion(object *AddOnVersion, stream *jsoniter.Stream) {
 		WriteAddOnRequirementList(object.requirements, stream)
 		count++
 	}
-	present_ = object.bitmap_&4096 != 0
+	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -158,7 +158,7 @@ func WriteAddOnVersion(object *AddOnVersion, stream *jsoniter.Stream) {
 		stream.WriteString(object.sourceImage)
 		count++
 	}
-	present_ = object.bitmap_&8192 != 0 && object.subOperators != nil
+	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13] && object.subOperators != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -183,7 +183,9 @@ func UnmarshalAddOnVersion(source interface{}) (object *AddOnVersion, err error)
 
 // ReadAddOnVersion reads a value of the 'add_on_version' type from the given iterator.
 func ReadAddOnVersion(iterator *jsoniter.Iterator) *AddOnVersion {
-	object := &AddOnVersion{}
+	object := &AddOnVersion{
+		fieldSet_: make([]bool, 14),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -193,38 +195,38 @@ func ReadAddOnVersion(iterator *jsoniter.Iterator) *AddOnVersion {
 		case "kind":
 			value := iterator.ReadString()
 			if value == AddOnVersionLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "additional_catalog_sources":
 			value := ReadAdditionalCatalogSourceList(iterator)
 			object.additionalCatalogSources = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "available_upgrades":
 			value := ReadStringList(iterator)
 			object.availableUpgrades = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "channel":
 			value := iterator.ReadString()
 			object.channel = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "config":
 			value := ReadAddOnConfig(iterator)
 			object.config = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "package_image":
 			value := iterator.ReadString()
 			object.packageImage = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		case "parameters":
 			value := &AddOnParameterList{}
 			for {
@@ -245,23 +247,23 @@ func ReadAddOnVersion(iterator *jsoniter.Iterator) *AddOnVersion {
 				}
 			}
 			object.parameters = value
-			object.bitmap_ |= 512
+			object.fieldSet_[9] = true
 		case "pull_secret_name":
 			value := iterator.ReadString()
 			object.pullSecretName = value
-			object.bitmap_ |= 1024
+			object.fieldSet_[10] = true
 		case "requirements":
 			value := ReadAddOnRequirementList(iterator)
 			object.requirements = value
-			object.bitmap_ |= 2048
+			object.fieldSet_[11] = true
 		case "source_image":
 			value := iterator.ReadString()
 			object.sourceImage = value
-			object.bitmap_ |= 4096
+			object.fieldSet_[12] = true
 		case "sub_operators":
 			value := ReadAddOnSubOperatorList(iterator)
 			object.subOperators = value
-			object.bitmap_ |= 8192
+			object.fieldSet_[13] = true
 		default:
 			iterator.ReadAny()
 		}

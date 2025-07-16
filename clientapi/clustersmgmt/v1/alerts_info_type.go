@@ -23,19 +23,27 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Provides information about the alerts firing on the cluster.
 type AlertsInfo struct {
-	bitmap_ uint32
-	alerts  []*AlertInfo
+	fieldSet_ []bool
+	alerts    []*AlertInfo
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AlertsInfo) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Alerts returns the value of the 'alerts' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *AlertsInfo) Alerts() []*AlertInfo {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.alerts
 	}
 	return nil
@@ -44,7 +52,7 @@ func (o *AlertsInfo) Alerts() []*AlertInfo {
 // GetAlerts returns the value of the 'alerts' attribute and
 // a flag indicating if the attribute has a value.
 func (o *AlertsInfo) GetAlerts() (value []*AlertInfo, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.alerts
 	}

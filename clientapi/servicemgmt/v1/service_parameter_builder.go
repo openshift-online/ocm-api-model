@@ -19,34 +19,43 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 
-// ServiceParameterBuilder contains the data and logic needed to build 'service_parameter' objects.
 type ServiceParameterBuilder struct {
-	bitmap_ uint32
-	id      string
-	value   string
+	fieldSet_ []bool
+	id        string
+	value     string
 }
 
 // NewServiceParameter creates a new builder of 'service_parameter' objects.
 func NewServiceParameter() *ServiceParameterBuilder {
-	return &ServiceParameterBuilder{}
+	return &ServiceParameterBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ServiceParameterBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *ServiceParameterBuilder) ID(value string) *ServiceParameterBuilder {
 	b.id = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *ServiceParameterBuilder) Value(value string) *ServiceParameterBuilder {
 	b.value = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -55,7 +64,10 @@ func (b *ServiceParameterBuilder) Copy(object *ServiceParameter) *ServiceParamet
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.value = object.value
 	return b
@@ -64,7 +76,10 @@ func (b *ServiceParameterBuilder) Copy(object *ServiceParameter) *ServiceParamet
 // Build creates a 'service_parameter' object using the configuration stored in the builder.
 func (b *ServiceParameterBuilder) Build() (object *ServiceParameter, err error) {
 	object = new(ServiceParameter)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.id = b.id
 	object.value = b.value
 	return

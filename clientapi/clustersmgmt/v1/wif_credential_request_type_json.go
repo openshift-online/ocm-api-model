@@ -42,7 +42,7 @@ func WriteWifCredentialRequest(object *WifCredentialRequest, stream *jsoniter.St
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.secretRef != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.secretRef != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteWifCredentialRequest(object *WifCredentialRequest, stream *jsoniter.St
 		WriteWifSecretRef(object.secretRef, stream)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.serviceAccountNames != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.serviceAccountNames != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,9 @@ func UnmarshalWifCredentialRequest(source interface{}) (object *WifCredentialReq
 
 // ReadWifCredentialRequest reads a value of the 'wif_credential_request' type from the given iterator.
 func ReadWifCredentialRequest(iterator *jsoniter.Iterator) *WifCredentialRequest {
-	object := &WifCredentialRequest{}
+	object := &WifCredentialRequest{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -86,11 +88,11 @@ func ReadWifCredentialRequest(iterator *jsoniter.Iterator) *WifCredentialRequest
 		case "secret_ref":
 			value := ReadWifSecretRef(iterator)
 			object.secretRef = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "service_account_names":
 			value := ReadStringList(iterator)
 			object.serviceAccountNames = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

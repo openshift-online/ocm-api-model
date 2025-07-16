@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// SyncsetBuilder contains the data and logic needed to build 'syncset' objects.
-//
 // Representation of a syncset.
 type SyncsetBuilder struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	id        string
 	href      string
 	resources []interface{}
@@ -31,39 +29,50 @@ type SyncsetBuilder struct {
 
 // NewSyncset creates a new builder of 'syncset' objects.
 func NewSyncset() *SyncsetBuilder {
-	return &SyncsetBuilder{}
+	return &SyncsetBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *SyncsetBuilder) Link(value bool) *SyncsetBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *SyncsetBuilder) ID(value string) *SyncsetBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *SyncsetBuilder) HREF(value string) *SyncsetBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SyncsetBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Resources sets the value of the 'resources' attribute to the given values.
 func (b *SyncsetBuilder) Resources(values ...interface{}) *SyncsetBuilder {
 	b.resources = make([]interface{}, len(values))
 	copy(b.resources, values)
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -72,7 +81,10 @@ func (b *SyncsetBuilder) Copy(object *Syncset) *SyncsetBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.resources != nil {
@@ -89,7 +101,10 @@ func (b *SyncsetBuilder) Build() (object *Syncset, err error) {
 	object = new(Syncset)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.resources != nil {
 		object.resources = make([]interface{}, len(b.resources))
 		copy(object.resources, b.resources)

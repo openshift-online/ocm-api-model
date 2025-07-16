@@ -23,17 +23,25 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Representation of an add-on requirement.
 type AddOnRequirement struct {
-	bitmap_  uint32
-	id       string
-	data     map[string]interface{}
-	resource string
-	status   *AddOnRequirementStatus
-	enabled  bool
+	fieldSet_ []bool
+	id        string
+	data      map[string]interface{}
+	resource  string
+	status    *AddOnRequirementStatus
+	enabled   bool
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddOnRequirement) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ID returns the value of the 'ID' attribute, or
@@ -41,7 +49,7 @@ func (o *AddOnRequirement) Empty() bool {
 //
 // ID of the add-on requirement.
 func (o *AddOnRequirement) ID() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.id
 	}
 	return ""
@@ -52,7 +60,7 @@ func (o *AddOnRequirement) ID() string {
 //
 // ID of the add-on requirement.
 func (o *AddOnRequirement) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.id
 	}
@@ -64,7 +72,7 @@ func (o *AddOnRequirement) GetID() (value string, ok bool) {
 //
 // Data for the add-on requirement.
 func (o *AddOnRequirement) Data() map[string]interface{} {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.data
 	}
 	return nil
@@ -75,7 +83,7 @@ func (o *AddOnRequirement) Data() map[string]interface{} {
 //
 // Data for the add-on requirement.
 func (o *AddOnRequirement) GetData() (value map[string]interface{}, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.data
 	}
@@ -87,7 +95,7 @@ func (o *AddOnRequirement) GetData() (value map[string]interface{}, ok bool) {
 //
 // Indicates if this requirement is enabled for the add-on.
 func (o *AddOnRequirement) Enabled() bool {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.enabled
 	}
 	return false
@@ -98,7 +106,7 @@ func (o *AddOnRequirement) Enabled() bool {
 //
 // Indicates if this requirement is enabled for the add-on.
 func (o *AddOnRequirement) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.enabled
 	}
@@ -110,7 +118,7 @@ func (o *AddOnRequirement) GetEnabled() (value bool, ok bool) {
 //
 // Type of resource of the add-on requirement.
 func (o *AddOnRequirement) Resource() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.resource
 	}
 	return ""
@@ -121,7 +129,7 @@ func (o *AddOnRequirement) Resource() string {
 //
 // Type of resource of the add-on requirement.
 func (o *AddOnRequirement) GetResource() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.resource
 	}
@@ -133,7 +141,7 @@ func (o *AddOnRequirement) GetResource() (value string, ok bool) {
 //
 // Optional cluster specific status for the add-on.
 func (o *AddOnRequirement) Status() *AddOnRequirementStatus {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.status
 	}
 	return nil
@@ -144,7 +152,7 @@ func (o *AddOnRequirement) Status() *AddOnRequirementStatus {
 //
 // Optional cluster specific status for the add-on.
 func (o *AddOnRequirement) GetStatus() (value *AddOnRequirementStatus, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.status
 	}

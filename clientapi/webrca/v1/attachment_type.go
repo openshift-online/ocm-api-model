@@ -39,7 +39,7 @@ const AttachmentNilKind = "AttachmentNil"
 //
 // Definition of a Web RCA attachment.
 type Attachment struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	id          string
 	href        string
 	contentType string
@@ -57,7 +57,7 @@ func (o *Attachment) Kind() string {
 	if o == nil {
 		return AttachmentNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return AttachmentLinkKind
 	}
 	return AttachmentKind
@@ -65,12 +65,12 @@ func (o *Attachment) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Attachment) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *Attachment) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -79,7 +79,7 @@ func (o *Attachment) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Attachment) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -88,7 +88,7 @@ func (o *Attachment) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Attachment) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -97,7 +97,7 @@ func (o *Attachment) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Attachment) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -106,13 +106,23 @@ func (o *Attachment) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Attachment) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // ContentType returns the value of the 'content_type' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Attachment) ContentType() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.contentType
 	}
 	return ""
@@ -121,7 +131,7 @@ func (o *Attachment) ContentType() string {
 // GetContentType returns the value of the 'content_type' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Attachment) GetContentType() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.contentType
 	}
@@ -133,7 +143,7 @@ func (o *Attachment) GetContentType() (value string, ok bool) {
 //
 // Object creation timestamp.
 func (o *Attachment) CreatedAt() time.Time {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -144,7 +154,7 @@ func (o *Attachment) CreatedAt() time.Time {
 //
 // Object creation timestamp.
 func (o *Attachment) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.createdAt
 	}
@@ -154,7 +164,7 @@ func (o *Attachment) GetCreatedAt() (value time.Time, ok bool) {
 // Creator returns the value of the 'creator' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Attachment) Creator() *User {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.creator
 	}
 	return nil
@@ -163,7 +173,7 @@ func (o *Attachment) Creator() *User {
 // GetCreator returns the value of the 'creator' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Attachment) GetCreator() (value *User, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.creator
 	}
@@ -175,7 +185,7 @@ func (o *Attachment) GetCreator() (value *User, ok bool) {
 //
 // Object deletion timestamp.
 func (o *Attachment) DeletedAt() time.Time {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.deletedAt
 	}
 	return time.Time{}
@@ -186,7 +196,7 @@ func (o *Attachment) DeletedAt() time.Time {
 //
 // Object deletion timestamp.
 func (o *Attachment) GetDeletedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.deletedAt
 	}
@@ -196,7 +206,7 @@ func (o *Attachment) GetDeletedAt() (value time.Time, ok bool) {
 // Event returns the value of the 'event' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Attachment) Event() *Event {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.event
 	}
 	return nil
@@ -205,7 +215,7 @@ func (o *Attachment) Event() *Event {
 // GetEvent returns the value of the 'event' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Attachment) GetEvent() (value *Event, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.event
 	}
@@ -215,7 +225,7 @@ func (o *Attachment) GetEvent() (value *Event, ok bool) {
 // FileSize returns the value of the 'file_size' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Attachment) FileSize() int {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.fileSize
 	}
 	return 0
@@ -224,7 +234,7 @@ func (o *Attachment) FileSize() int {
 // GetFileSize returns the value of the 'file_size' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Attachment) GetFileSize() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.fileSize
 	}
@@ -234,7 +244,7 @@ func (o *Attachment) GetFileSize() (value int, ok bool) {
 // Name returns the value of the 'name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Attachment) Name() string {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.name
 	}
 	return ""
@@ -243,7 +253,7 @@ func (o *Attachment) Name() string {
 // GetName returns the value of the 'name' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Attachment) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.name
 	}
@@ -255,7 +265,7 @@ func (o *Attachment) GetName() (value string, ok bool) {
 //
 // Object modification timestamp.
 func (o *Attachment) UpdatedAt() time.Time {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -266,7 +276,7 @@ func (o *Attachment) UpdatedAt() time.Time {
 //
 // Object modification timestamp.
 func (o *Attachment) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.updatedAt
 	}

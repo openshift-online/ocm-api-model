@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// LimitedSupportReasonBuilder contains the data and logic needed to build 'limited_support_reason' objects.
-//
 // A reason that a cluster is in limited support.
 type LimitedSupportReasonBuilder struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	id                string
 	href              string
 	creationTimestamp time.Time
@@ -40,52 +38,63 @@ type LimitedSupportReasonBuilder struct {
 
 // NewLimitedSupportReason creates a new builder of 'limited_support_reason' objects.
 func NewLimitedSupportReason() *LimitedSupportReasonBuilder {
-	return &LimitedSupportReasonBuilder{}
+	return &LimitedSupportReasonBuilder{
+		fieldSet_: make([]bool, 9),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *LimitedSupportReasonBuilder) Link(value bool) *LimitedSupportReasonBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *LimitedSupportReasonBuilder) ID(value string) *LimitedSupportReasonBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *LimitedSupportReasonBuilder) HREF(value string) *LimitedSupportReasonBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *LimitedSupportReasonBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *LimitedSupportReasonBuilder) CreationTimestamp(value time.Time) *LimitedSupportReasonBuilder {
 	b.creationTimestamp = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Details sets the value of the 'details' attribute to the given value.
 func (b *LimitedSupportReasonBuilder) Details(value string) *LimitedSupportReasonBuilder {
 	b.details = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // DetectionType sets the value of the 'detection_type' attribute to the given value.
 func (b *LimitedSupportReasonBuilder) DetectionType(value DetectionType) *LimitedSupportReasonBuilder {
 	b.detectionType = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -95,9 +104,9 @@ func (b *LimitedSupportReasonBuilder) DetectionType(value DetectionType) *Limite
 func (b *LimitedSupportReasonBuilder) Override(value *LimitedSupportReasonOverrideBuilder) *LimitedSupportReasonBuilder {
 	b.override = value
 	if value != nil {
-		b.bitmap_ |= 64
+		b.fieldSet_[6] = true
 	} else {
-		b.bitmap_ &^= 64
+		b.fieldSet_[6] = false
 	}
 	return b
 }
@@ -105,7 +114,7 @@ func (b *LimitedSupportReasonBuilder) Override(value *LimitedSupportReasonOverri
 // Summary sets the value of the 'summary' attribute to the given value.
 func (b *LimitedSupportReasonBuilder) Summary(value string) *LimitedSupportReasonBuilder {
 	b.summary = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
@@ -115,9 +124,9 @@ func (b *LimitedSupportReasonBuilder) Summary(value string) *LimitedSupportReaso
 func (b *LimitedSupportReasonBuilder) Template(value *LimitedSupportReasonTemplateBuilder) *LimitedSupportReasonBuilder {
 	b.template = value
 	if value != nil {
-		b.bitmap_ |= 256
+		b.fieldSet_[8] = true
 	} else {
-		b.bitmap_ &^= 256
+		b.fieldSet_[8] = false
 	}
 	return b
 }
@@ -127,7 +136,10 @@ func (b *LimitedSupportReasonBuilder) Copy(object *LimitedSupportReason) *Limite
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.creationTimestamp = object.creationTimestamp
@@ -152,7 +164,10 @@ func (b *LimitedSupportReasonBuilder) Build() (object *LimitedSupportReason, err
 	object = new(LimitedSupportReason)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.creationTimestamp = b.creationTimestamp
 	object.details = b.details
 	object.detectionType = b.detectionType

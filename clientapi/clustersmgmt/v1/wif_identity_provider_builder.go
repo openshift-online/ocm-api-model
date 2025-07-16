@@ -19,9 +19,8 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// WifIdentityProviderBuilder contains the data and logic needed to build 'wif_identity_provider' objects.
 type WifIdentityProviderBuilder struct {
-	bitmap_            uint32
+	fieldSet_          []bool
 	allowedAudiences   []string
 	identityProviderId string
 	issuerUrl          string
@@ -30,40 +29,50 @@ type WifIdentityProviderBuilder struct {
 
 // NewWifIdentityProvider creates a new builder of 'wif_identity_provider' objects.
 func NewWifIdentityProvider() *WifIdentityProviderBuilder {
-	return &WifIdentityProviderBuilder{}
+	return &WifIdentityProviderBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *WifIdentityProviderBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AllowedAudiences sets the value of the 'allowed_audiences' attribute to the given values.
 func (b *WifIdentityProviderBuilder) AllowedAudiences(values ...string) *WifIdentityProviderBuilder {
 	b.allowedAudiences = make([]string, len(values))
 	copy(b.allowedAudiences, values)
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // IdentityProviderId sets the value of the 'identity_provider_id' attribute to the given value.
 func (b *WifIdentityProviderBuilder) IdentityProviderId(value string) *WifIdentityProviderBuilder {
 	b.identityProviderId = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // IssuerUrl sets the value of the 'issuer_url' attribute to the given value.
 func (b *WifIdentityProviderBuilder) IssuerUrl(value string) *WifIdentityProviderBuilder {
 	b.issuerUrl = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Jwks sets the value of the 'jwks' attribute to the given value.
 func (b *WifIdentityProviderBuilder) Jwks(value string) *WifIdentityProviderBuilder {
 	b.jwks = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -72,7 +81,10 @@ func (b *WifIdentityProviderBuilder) Copy(object *WifIdentityProvider) *WifIdent
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.allowedAudiences != nil {
 		b.allowedAudiences = make([]string, len(object.allowedAudiences))
 		copy(b.allowedAudiences, object.allowedAudiences)
@@ -88,7 +100,10 @@ func (b *WifIdentityProviderBuilder) Copy(object *WifIdentityProvider) *WifIdent
 // Build creates a 'wif_identity_provider' object using the configuration stored in the builder.
 func (b *WifIdentityProviderBuilder) Build() (object *WifIdentityProvider, err error) {
 	object = new(WifIdentityProvider)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.allowedAudiences != nil {
 		object.allowedAudiences = make([]string, len(b.allowedAudiences))
 		copy(object.allowedAudiences, b.allowedAudiences)

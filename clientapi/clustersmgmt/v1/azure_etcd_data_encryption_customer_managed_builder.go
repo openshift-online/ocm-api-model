@@ -19,30 +19,38 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AzureEtcdDataEncryptionCustomerManagedBuilder contains the data and logic needed to build 'azure_etcd_data_encryption_customer_managed' objects.
-//
 // Contains the necessary attributes to support etcd data encryption with customer managed keys
 // for Azure based clusters.
 type AzureEtcdDataEncryptionCustomerManagedBuilder struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	encryptionType string
 	kms            *AzureKmsEncryptionBuilder
 }
 
 // NewAzureEtcdDataEncryptionCustomerManaged creates a new builder of 'azure_etcd_data_encryption_customer_managed' objects.
 func NewAzureEtcdDataEncryptionCustomerManaged() *AzureEtcdDataEncryptionCustomerManagedBuilder {
-	return &AzureEtcdDataEncryptionCustomerManagedBuilder{}
+	return &AzureEtcdDataEncryptionCustomerManagedBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AzureEtcdDataEncryptionCustomerManagedBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // EncryptionType sets the value of the 'encryption_type' attribute to the given value.
 func (b *AzureEtcdDataEncryptionCustomerManagedBuilder) EncryptionType(value string) *AzureEtcdDataEncryptionCustomerManagedBuilder {
 	b.encryptionType = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -52,9 +60,9 @@ func (b *AzureEtcdDataEncryptionCustomerManagedBuilder) EncryptionType(value str
 func (b *AzureEtcdDataEncryptionCustomerManagedBuilder) Kms(value *AzureKmsEncryptionBuilder) *AzureEtcdDataEncryptionCustomerManagedBuilder {
 	b.kms = value
 	if value != nil {
-		b.bitmap_ |= 2
+		b.fieldSet_[1] = true
 	} else {
-		b.bitmap_ &^= 2
+		b.fieldSet_[1] = false
 	}
 	return b
 }
@@ -64,7 +72,10 @@ func (b *AzureEtcdDataEncryptionCustomerManagedBuilder) Copy(object *AzureEtcdDa
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.encryptionType = object.encryptionType
 	if object.kms != nil {
 		b.kms = NewAzureKmsEncryption().Copy(object.kms)
@@ -77,7 +88,10 @@ func (b *AzureEtcdDataEncryptionCustomerManagedBuilder) Copy(object *AzureEtcdDa
 // Build creates a 'azure_etcd_data_encryption_customer_managed' object using the configuration stored in the builder.
 func (b *AzureEtcdDataEncryptionCustomerManagedBuilder) Build() (object *AzureEtcdDataEncryptionCustomerManaged, err error) {
 	object = new(AzureEtcdDataEncryptionCustomerManaged)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.encryptionType = b.encryptionType
 	if b.kms != nil {
 		object.kms, err = b.kms.Build()

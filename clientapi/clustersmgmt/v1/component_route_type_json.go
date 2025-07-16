@@ -42,13 +42,13 @@ func WriteComponentRoute(object *ComponentRoute, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(ComponentRouteLinkKind)
 	} else {
 		stream.WriteString(ComponentRouteKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteComponentRoute(object *ComponentRoute, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteComponentRoute(object *ComponentRoute, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteComponentRoute(object *ComponentRoute, stream *jsoniter.Stream) {
 		stream.WriteString(object.hostname)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -99,7 +99,9 @@ func UnmarshalComponentRoute(source interface{}) (object *ComponentRoute, err er
 
 // ReadComponentRoute reads a value of the 'component_route' type from the given iterator.
 func ReadComponentRoute(iterator *jsoniter.Iterator) *ComponentRoute {
-	object := &ComponentRoute{}
+	object := &ComponentRoute{
+		fieldSet_: make([]bool, 5),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -109,22 +111,22 @@ func ReadComponentRoute(iterator *jsoniter.Iterator) *ComponentRoute {
 		case "kind":
 			value := iterator.ReadString()
 			if value == ComponentRouteLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "hostname":
 			value := iterator.ReadString()
 			object.hostname = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "tls_secret_ref":
 			value := iterator.ReadString()
 			object.tlsSecretRef = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		default:
 			iterator.ReadAny()
 		}

@@ -24,14 +24,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 // Contains the necessary attributes to support etcd data encryption with customer managed keys
 // for Azure based clusters.
 type AzureEtcdDataEncryptionCustomerManaged struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	encryptionType string
 	kms            *AzureKmsEncryption
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AzureEtcdDataEncryptionCustomerManaged) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // EncryptionType returns the value of the 'encryption_type' attribute, or
@@ -41,7 +49,7 @@ func (o *AzureEtcdDataEncryptionCustomerManaged) Empty() bool {
 // Accepted values are: "kms".
 // By default, "kms" is used.
 func (o *AzureEtcdDataEncryptionCustomerManaged) EncryptionType() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.encryptionType
 	}
 	return ""
@@ -54,7 +62,7 @@ func (o *AzureEtcdDataEncryptionCustomerManaged) EncryptionType() string {
 // Accepted values are: "kms".
 // By default, "kms" is used.
 func (o *AzureEtcdDataEncryptionCustomerManaged) GetEncryptionType() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.encryptionType
 	}
@@ -67,7 +75,7 @@ func (o *AzureEtcdDataEncryptionCustomerManaged) GetEncryptionType() (value stri
 // The KMS encryption configuration.
 // Required when encryption_type is "kms".
 func (o *AzureEtcdDataEncryptionCustomerManaged) Kms() *AzureKmsEncryption {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.kms
 	}
 	return nil
@@ -79,7 +87,7 @@ func (o *AzureEtcdDataEncryptionCustomerManaged) Kms() *AzureKmsEncryption {
 // The KMS encryption configuration.
 // Required when encryption_type is "kms".
 func (o *AzureEtcdDataEncryptionCustomerManaged) GetKms() (value *AzureKmsEncryption, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.kms
 	}

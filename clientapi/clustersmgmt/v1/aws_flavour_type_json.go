@@ -42,7 +42,7 @@ func WriteAWSFlavour(object *AWSFlavour, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAWSFlavour(object *AWSFlavour, stream *jsoniter.Stream) {
 		stream.WriteString(object.computeInstanceType)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteAWSFlavour(object *AWSFlavour, stream *jsoniter.Stream) {
 		stream.WriteString(object.infraInstanceType)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0 && object.infraVolume != nil
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.infraVolume != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteAWSFlavour(object *AWSFlavour, stream *jsoniter.Stream) {
 		WriteAWSVolume(object.infraVolume, stream)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteAWSFlavour(object *AWSFlavour, stream *jsoniter.Stream) {
 		stream.WriteString(object.masterInstanceType)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0 && object.masterVolume != nil
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.masterVolume != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteAWSFlavour(object *AWSFlavour, stream *jsoniter.Stream) {
 		WriteAWSVolume(object.masterVolume, stream)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0 && object.workerVolume != nil
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.workerVolume != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -112,7 +112,9 @@ func UnmarshalAWSFlavour(source interface{}) (object *AWSFlavour, err error) {
 
 // ReadAWSFlavour reads a value of the 'AWS_flavour' type from the given iterator.
 func ReadAWSFlavour(iterator *jsoniter.Iterator) *AWSFlavour {
-	object := &AWSFlavour{}
+	object := &AWSFlavour{
+		fieldSet_: make([]bool, 6),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -122,27 +124,27 @@ func ReadAWSFlavour(iterator *jsoniter.Iterator) *AWSFlavour {
 		case "compute_instance_type":
 			value := iterator.ReadString()
 			object.computeInstanceType = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "infra_instance_type":
 			value := iterator.ReadString()
 			object.infraInstanceType = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "infra_volume":
 			value := ReadAWSVolume(iterator)
 			object.infraVolume = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "master_instance_type":
 			value := iterator.ReadString()
 			object.masterInstanceType = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "master_volume":
 			value := ReadAWSVolume(iterator)
 			object.masterVolume = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "worker_volume":
 			value := ReadAWSVolume(iterator)
 			object.workerVolume = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		default:
 			iterator.ReadAny()
 		}

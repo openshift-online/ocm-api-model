@@ -42,13 +42,13 @@ func WritePrivateLinkPrincipals(object *PrivateLinkPrincipals, stream *jsoniter.
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(PrivateLinkPrincipalsLinkKind)
 	} else {
 		stream.WriteString(PrivateLinkPrincipalsKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WritePrivateLinkPrincipals(object *PrivateLinkPrincipals, stream *jsoniter.
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WritePrivateLinkPrincipals(object *PrivateLinkPrincipals, stream *jsoniter.
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0 && object.principals != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.principals != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -90,7 +90,9 @@ func UnmarshalPrivateLinkPrincipals(source interface{}) (object *PrivateLinkPrin
 
 // ReadPrivateLinkPrincipals reads a value of the 'private_link_principals' type from the given iterator.
 func ReadPrivateLinkPrincipals(iterator *jsoniter.Iterator) *PrivateLinkPrincipals {
-	object := &PrivateLinkPrincipals{}
+	object := &PrivateLinkPrincipals{
+		fieldSet_: make([]bool, 4),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -100,18 +102,18 @@ func ReadPrivateLinkPrincipals(iterator *jsoniter.Iterator) *PrivateLinkPrincipa
 		case "kind":
 			value := iterator.ReadString()
 			if value == PrivateLinkPrincipalsLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "principals":
 			value := ReadPrivateLinkPrincipalList(iterator)
 			object.principals = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		default:
 			iterator.ReadAny()
 		}

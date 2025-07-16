@@ -19,49 +19,59 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// SummaryDashboardBuilder contains the data and logic needed to build 'summary_dashboard' objects.
 type SummaryDashboardBuilder struct {
-	bitmap_ uint32
-	id      string
-	href    string
-	metrics []*SummaryMetricsBuilder
+	fieldSet_ []bool
+	id        string
+	href      string
+	metrics   []*SummaryMetricsBuilder
 }
 
 // NewSummaryDashboard creates a new builder of 'summary_dashboard' objects.
 func NewSummaryDashboard() *SummaryDashboardBuilder {
-	return &SummaryDashboardBuilder{}
+	return &SummaryDashboardBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *SummaryDashboardBuilder) Link(value bool) *SummaryDashboardBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *SummaryDashboardBuilder) ID(value string) *SummaryDashboardBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *SummaryDashboardBuilder) HREF(value string) *SummaryDashboardBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SummaryDashboardBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Metrics sets the value of the 'metrics' attribute to the given values.
 func (b *SummaryDashboardBuilder) Metrics(values ...*SummaryMetricsBuilder) *SummaryDashboardBuilder {
 	b.metrics = make([]*SummaryMetricsBuilder, len(values))
 	copy(b.metrics, values)
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -70,7 +80,10 @@ func (b *SummaryDashboardBuilder) Copy(object *SummaryDashboard) *SummaryDashboa
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.metrics != nil {
@@ -89,7 +102,10 @@ func (b *SummaryDashboardBuilder) Build() (object *SummaryDashboard, err error) 
 	object = new(SummaryDashboard)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.metrics != nil {
 		object.metrics = make([]*SummaryMetrics, len(b.metrics))
 		for i, v := range b.metrics {

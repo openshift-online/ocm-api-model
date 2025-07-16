@@ -24,7 +24,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 // Represents the information associated to an Azure User-Assigned
 // Managed Identity belonging to the Control Plane of the cluster.
 type AzureControlPlaneManagedIdentity struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	clientID    string
 	principalID string
 	resourceID  string
@@ -32,7 +32,15 @@ type AzureControlPlaneManagedIdentity struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AzureControlPlaneManagedIdentity) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ClientID returns the value of the 'client_ID' attribute, or
@@ -41,7 +49,7 @@ func (o *AzureControlPlaneManagedIdentity) Empty() bool {
 // The Client ID associated to the Azure User-Assigned Managed Identity.
 // Readonly.
 func (o *AzureControlPlaneManagedIdentity) ClientID() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.clientID
 	}
 	return ""
@@ -53,7 +61,7 @@ func (o *AzureControlPlaneManagedIdentity) ClientID() string {
 // The Client ID associated to the Azure User-Assigned Managed Identity.
 // Readonly.
 func (o *AzureControlPlaneManagedIdentity) GetClientID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.clientID
 	}
@@ -66,7 +74,7 @@ func (o *AzureControlPlaneManagedIdentity) GetClientID() (value string, ok bool)
 // The Principal ID associated to the Azure User-Assigned Identity.
 // Readonly.
 func (o *AzureControlPlaneManagedIdentity) PrincipalID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.principalID
 	}
 	return ""
@@ -78,7 +86,7 @@ func (o *AzureControlPlaneManagedIdentity) PrincipalID() string {
 // The Principal ID associated to the Azure User-Assigned Identity.
 // Readonly.
 func (o *AzureControlPlaneManagedIdentity) GetPrincipalID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.principalID
 	}
@@ -103,7 +111,7 @@ func (o *AzureControlPlaneManagedIdentity) GetPrincipalID() (value string, ok bo
 // Required during creation.
 // Immutable.
 func (o *AzureControlPlaneManagedIdentity) ResourceID() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.resourceID
 	}
 	return ""
@@ -127,7 +135,7 @@ func (o *AzureControlPlaneManagedIdentity) ResourceID() string {
 // Required during creation.
 // Immutable.
 func (o *AzureControlPlaneManagedIdentity) GetResourceID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.resourceID
 	}

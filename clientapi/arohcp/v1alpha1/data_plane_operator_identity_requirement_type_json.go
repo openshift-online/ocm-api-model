@@ -42,7 +42,7 @@ func WriteDataPlaneOperatorIdentityRequirement(object *DataPlaneOperatorIdentity
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteDataPlaneOperatorIdentityRequirement(object *DataPlaneOperatorIdentity
 		stream.WriteString(object.maxOpenShiftVersion)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteDataPlaneOperatorIdentityRequirement(object *DataPlaneOperatorIdentity
 		stream.WriteString(object.minOpenShiftVersion)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteDataPlaneOperatorIdentityRequirement(object *DataPlaneOperatorIdentity
 		stream.WriteString(object.operatorName)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteDataPlaneOperatorIdentityRequirement(object *DataPlaneOperatorIdentity
 		stream.WriteString(object.required)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0 && object.roleDefinitions != nil
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.roleDefinitions != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteDataPlaneOperatorIdentityRequirement(object *DataPlaneOperatorIdentity
 		WriteRoleDefinitionOperatorIdentityRequirementList(object.roleDefinitions, stream)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0 && object.serviceAccounts != nil
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.serviceAccounts != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -112,7 +112,9 @@ func UnmarshalDataPlaneOperatorIdentityRequirement(source interface{}) (object *
 
 // ReadDataPlaneOperatorIdentityRequirement reads a value of the 'data_plane_operator_identity_requirement' type from the given iterator.
 func ReadDataPlaneOperatorIdentityRequirement(iterator *jsoniter.Iterator) *DataPlaneOperatorIdentityRequirement {
-	object := &DataPlaneOperatorIdentityRequirement{}
+	object := &DataPlaneOperatorIdentityRequirement{
+		fieldSet_: make([]bool, 6),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -122,27 +124,27 @@ func ReadDataPlaneOperatorIdentityRequirement(iterator *jsoniter.Iterator) *Data
 		case "max_openshift_version":
 			value := iterator.ReadString()
 			object.maxOpenShiftVersion = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "min_openshift_version":
 			value := iterator.ReadString()
 			object.minOpenShiftVersion = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "operator_name":
 			value := iterator.ReadString()
 			object.operatorName = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "required":
 			value := iterator.ReadString()
 			object.required = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "role_definitions":
 			value := ReadRoleDefinitionOperatorIdentityRequirementList(iterator)
 			object.roleDefinitions = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "service_accounts":
 			value := ReadK8sServiceAccountOperatorIdentityRequirementList(iterator)
 			object.serviceAccounts = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		default:
 			iterator.ReadAny()
 		}

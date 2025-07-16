@@ -19,29 +19,37 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// AzureNodePoolEncryptionAtHostBuilder contains the data and logic needed to build 'azure_node_pool_encryption_at_host' objects.
-//
 // AzureNodePoolEncryptionAtHost defines the encryption setting for Encryption At Host.
 // If not specified, Encryption at Host is not enabled.
 type AzureNodePoolEncryptionAtHostBuilder struct {
-	bitmap_ uint32
-	state   string
+	fieldSet_ []bool
+	state     string
 }
 
 // NewAzureNodePoolEncryptionAtHost creates a new builder of 'azure_node_pool_encryption_at_host' objects.
 func NewAzureNodePoolEncryptionAtHost() *AzureNodePoolEncryptionAtHostBuilder {
-	return &AzureNodePoolEncryptionAtHostBuilder{}
+	return &AzureNodePoolEncryptionAtHostBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AzureNodePoolEncryptionAtHostBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // State sets the value of the 'state' attribute to the given value.
 func (b *AzureNodePoolEncryptionAtHostBuilder) State(value string) *AzureNodePoolEncryptionAtHostBuilder {
 	b.state = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -50,7 +58,10 @@ func (b *AzureNodePoolEncryptionAtHostBuilder) Copy(object *AzureNodePoolEncrypt
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.state = object.state
 	return b
 }
@@ -58,7 +69,10 @@ func (b *AzureNodePoolEncryptionAtHostBuilder) Copy(object *AzureNodePoolEncrypt
 // Build creates a 'azure_node_pool_encryption_at_host' object using the configuration stored in the builder.
 func (b *AzureNodePoolEncryptionAtHostBuilder) Build() (object *AzureNodePoolEncryptionAtHost, err error) {
 	object = new(AzureNodePoolEncryptionAtHost)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.state = b.state
 	return
 }

@@ -23,14 +23,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Representation of a trackable event.
 type Event struct {
-	bitmap_ uint32
-	body    map[string]string
-	key     string
+	fieldSet_ []bool
+	body      map[string]string
+	key       string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Event) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Body returns the value of the 'body' attribute, or
@@ -38,7 +46,7 @@ func (o *Event) Empty() bool {
 //
 // Body of the event to track the details of the tracking event as Key value pair
 func (o *Event) Body() map[string]string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.body
 	}
 	return nil
@@ -49,7 +57,7 @@ func (o *Event) Body() map[string]string {
 //
 // Body of the event to track the details of the tracking event as Key value pair
 func (o *Event) GetBody() (value map[string]string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.body
 	}
@@ -63,7 +71,7 @@ func (o *Event) GetBody() (value map[string]string, ok bool) {
 // uppercase letter followed by alphanumeric characters or
 // underscores. The entire key needs to be smaller than 64 characters.
 func (o *Event) Key() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.key
 	}
 	return ""
@@ -76,7 +84,7 @@ func (o *Event) Key() string {
 // uppercase letter followed by alphanumeric characters or
 // underscores. The entire key needs to be smaller than 64 characters.
 func (o *Event) GetKey() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.key
 	}

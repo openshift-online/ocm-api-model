@@ -21,7 +21,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // WifIdentityProvider represents the values of the 'wif_identity_provider' type.
 type WifIdentityProvider struct {
-	bitmap_            uint32
+	fieldSet_          []bool
 	allowedAudiences   []string
 	identityProviderId string
 	issuerUrl          string
@@ -30,13 +30,21 @@ type WifIdentityProvider struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *WifIdentityProvider) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AllowedAudiences returns the value of the 'allowed_audiences' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifIdentityProvider) AllowedAudiences() []string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.allowedAudiences
 	}
 	return nil
@@ -45,7 +53,7 @@ func (o *WifIdentityProvider) AllowedAudiences() []string {
 // GetAllowedAudiences returns the value of the 'allowed_audiences' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifIdentityProvider) GetAllowedAudiences() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.allowedAudiences
 	}
@@ -55,7 +63,7 @@ func (o *WifIdentityProvider) GetAllowedAudiences() (value []string, ok bool) {
 // IdentityProviderId returns the value of the 'identity_provider_id' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifIdentityProvider) IdentityProviderId() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.identityProviderId
 	}
 	return ""
@@ -64,7 +72,7 @@ func (o *WifIdentityProvider) IdentityProviderId() string {
 // GetIdentityProviderId returns the value of the 'identity_provider_id' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifIdentityProvider) GetIdentityProviderId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.identityProviderId
 	}
@@ -74,7 +82,7 @@ func (o *WifIdentityProvider) GetIdentityProviderId() (value string, ok bool) {
 // IssuerUrl returns the value of the 'issuer_url' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifIdentityProvider) IssuerUrl() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.issuerUrl
 	}
 	return ""
@@ -83,7 +91,7 @@ func (o *WifIdentityProvider) IssuerUrl() string {
 // GetIssuerUrl returns the value of the 'issuer_url' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifIdentityProvider) GetIssuerUrl() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.issuerUrl
 	}
@@ -93,7 +101,7 @@ func (o *WifIdentityProvider) GetIssuerUrl() (value string, ok bool) {
 // Jwks returns the value of the 'jwks' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifIdentityProvider) Jwks() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.jwks
 	}
 	return ""
@@ -102,7 +110,7 @@ func (o *WifIdentityProvider) Jwks() string {
 // GetJwks returns the value of the 'jwks' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifIdentityProvider) GetJwks() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.jwks
 	}

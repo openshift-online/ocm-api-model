@@ -19,9 +19,8 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// WifRoleBuilder contains the data and logic needed to build 'wif_role' objects.
 type WifRoleBuilder struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	permissions []string
 	roleId      string
 	predefined  bool
@@ -29,33 +28,43 @@ type WifRoleBuilder struct {
 
 // NewWifRole creates a new builder of 'wif_role' objects.
 func NewWifRole() *WifRoleBuilder {
-	return &WifRoleBuilder{}
+	return &WifRoleBuilder{
+		fieldSet_: make([]bool, 3),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *WifRoleBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Permissions sets the value of the 'permissions' attribute to the given values.
 func (b *WifRoleBuilder) Permissions(values ...string) *WifRoleBuilder {
 	b.permissions = make([]string, len(values))
 	copy(b.permissions, values)
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Predefined sets the value of the 'predefined' attribute to the given value.
 func (b *WifRoleBuilder) Predefined(value bool) *WifRoleBuilder {
 	b.predefined = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // RoleId sets the value of the 'role_id' attribute to the given value.
 func (b *WifRoleBuilder) RoleId(value string) *WifRoleBuilder {
 	b.roleId = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -64,7 +73,10 @@ func (b *WifRoleBuilder) Copy(object *WifRole) *WifRoleBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.permissions != nil {
 		b.permissions = make([]string, len(object.permissions))
 		copy(b.permissions, object.permissions)
@@ -79,7 +91,10 @@ func (b *WifRoleBuilder) Copy(object *WifRole) *WifRoleBuilder {
 // Build creates a 'wif_role' object using the configuration stored in the builder.
 func (b *WifRoleBuilder) Build() (object *WifRole, err error) {
 	object = new(WifRole)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.permissions != nil {
 		object.permissions = make([]string, len(b.permissions))
 		copy(object.permissions, b.permissions)

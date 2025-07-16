@@ -23,9 +23,8 @@ import (
 	time "time"
 )
 
-// ClusterOperatorInfoBuilder contains the data and logic needed to build 'cluster_operator_info' objects.
 type ClusterOperatorInfoBuilder struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	condition ClusterOperatorState
 	name      string
 	reason    string
@@ -35,12 +34,22 @@ type ClusterOperatorInfoBuilder struct {
 
 // NewClusterOperatorInfo creates a new builder of 'cluster_operator_info' objects.
 func NewClusterOperatorInfo() *ClusterOperatorInfoBuilder {
-	return &ClusterOperatorInfoBuilder{}
+	return &ClusterOperatorInfoBuilder{
+		fieldSet_: make([]bool, 5),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterOperatorInfoBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Condition sets the value of the 'condition' attribute to the given value.
@@ -48,35 +57,35 @@ func (b *ClusterOperatorInfoBuilder) Empty() bool {
 // Overall state of a cluster operator.
 func (b *ClusterOperatorInfoBuilder) Condition(value ClusterOperatorState) *ClusterOperatorInfoBuilder {
 	b.condition = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ClusterOperatorInfoBuilder) Name(value string) *ClusterOperatorInfoBuilder {
 	b.name = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // Reason sets the value of the 'reason' attribute to the given value.
 func (b *ClusterOperatorInfoBuilder) Reason(value string) *ClusterOperatorInfoBuilder {
 	b.reason = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Time sets the value of the 'time' attribute to the given value.
 func (b *ClusterOperatorInfoBuilder) Time(value time.Time) *ClusterOperatorInfoBuilder {
 	b.time = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Version sets the value of the 'version' attribute to the given value.
 func (b *ClusterOperatorInfoBuilder) Version(value string) *ClusterOperatorInfoBuilder {
 	b.version = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -85,7 +94,10 @@ func (b *ClusterOperatorInfoBuilder) Copy(object *ClusterOperatorInfo) *ClusterO
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.condition = object.condition
 	b.name = object.name
 	b.reason = object.reason
@@ -97,7 +109,10 @@ func (b *ClusterOperatorInfoBuilder) Copy(object *ClusterOperatorInfo) *ClusterO
 // Build creates a 'cluster_operator_info' object using the configuration stored in the builder.
 func (b *ClusterOperatorInfoBuilder) Build() (object *ClusterOperatorInfo, err error) {
 	object = new(ClusterOperatorInfo)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.condition = b.condition
 	object.name = b.name
 	object.reason = b.reason

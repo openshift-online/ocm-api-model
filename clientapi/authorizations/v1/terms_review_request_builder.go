@@ -19,12 +19,10 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
-// TermsReviewRequestBuilder contains the data and logic needed to build 'terms_review_request' objects.
-//
 // Representation of Red Hat's Terms and Conditions for using OpenShift Dedicated and Amazon Red Hat OpenShift [Terms]
 // review requests.
 type TermsReviewRequestBuilder struct {
-	bitmap_            uint32
+	fieldSet_          []bool
 	accountUsername    string
 	eventCode          string
 	siteCode           string
@@ -33,39 +31,49 @@ type TermsReviewRequestBuilder struct {
 
 // NewTermsReviewRequest creates a new builder of 'terms_review_request' objects.
 func NewTermsReviewRequest() *TermsReviewRequestBuilder {
-	return &TermsReviewRequestBuilder{}
+	return &TermsReviewRequestBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *TermsReviewRequestBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *TermsReviewRequestBuilder) AccountUsername(value string) *TermsReviewRequestBuilder {
 	b.accountUsername = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // CheckOptionalTerms sets the value of the 'check_optional_terms' attribute to the given value.
 func (b *TermsReviewRequestBuilder) CheckOptionalTerms(value bool) *TermsReviewRequestBuilder {
 	b.checkOptionalTerms = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // EventCode sets the value of the 'event_code' attribute to the given value.
 func (b *TermsReviewRequestBuilder) EventCode(value string) *TermsReviewRequestBuilder {
 	b.eventCode = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // SiteCode sets the value of the 'site_code' attribute to the given value.
 func (b *TermsReviewRequestBuilder) SiteCode(value string) *TermsReviewRequestBuilder {
 	b.siteCode = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -74,7 +82,10 @@ func (b *TermsReviewRequestBuilder) Copy(object *TermsReviewRequest) *TermsRevie
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.accountUsername = object.accountUsername
 	b.checkOptionalTerms = object.checkOptionalTerms
 	b.eventCode = object.eventCode
@@ -85,7 +96,10 @@ func (b *TermsReviewRequestBuilder) Copy(object *TermsReviewRequest) *TermsRevie
 // Build creates a 'terms_review_request' object using the configuration stored in the builder.
 func (b *TermsReviewRequestBuilder) Build() (object *TermsReviewRequest, err error) {
 	object = new(TermsReviewRequest)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.accountUsername = b.accountUsername
 	object.checkOptionalTerms = b.checkOptionalTerms
 	object.eventCode = b.eventCode

@@ -39,7 +39,7 @@ const PendingDeleteClusterNilKind = "PendingDeleteClusterNil"
 //
 // Represents a pending delete entry for a specific cluster.
 type PendingDeleteCluster struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	id                string
 	href              string
 	cluster           *Cluster
@@ -52,7 +52,7 @@ func (o *PendingDeleteCluster) Kind() string {
 	if o == nil {
 		return PendingDeleteClusterNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return PendingDeleteClusterLinkKind
 	}
 	return PendingDeleteClusterKind
@@ -60,12 +60,12 @@ func (o *PendingDeleteCluster) Kind() string {
 
 // Link returns true if this is a link.
 func (o *PendingDeleteCluster) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *PendingDeleteCluster) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -74,7 +74,7 @@ func (o *PendingDeleteCluster) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *PendingDeleteCluster) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -83,7 +83,7 @@ func (o *PendingDeleteCluster) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *PendingDeleteCluster) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -92,7 +92,7 @@ func (o *PendingDeleteCluster) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *PendingDeleteCluster) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -101,7 +101,17 @@ func (o *PendingDeleteCluster) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *PendingDeleteCluster) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // BestEffort returns the value of the 'best_effort' attribute, or
@@ -109,7 +119,7 @@ func (o *PendingDeleteCluster) Empty() bool {
 //
 // Flag indicating if the cluster deletion should be best-effort mode or not.
 func (o *PendingDeleteCluster) BestEffort() bool {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.bestEffort
 	}
 	return false
@@ -120,7 +130,7 @@ func (o *PendingDeleteCluster) BestEffort() bool {
 //
 // Flag indicating if the cluster deletion should be best-effort mode or not.
 func (o *PendingDeleteCluster) GetBestEffort() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.bestEffort
 	}
@@ -132,7 +142,7 @@ func (o *PendingDeleteCluster) GetBestEffort() (value bool, ok bool) {
 //
 // Cluster is the details of the cluster that is pending deletion.
 func (o *PendingDeleteCluster) Cluster() *Cluster {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.cluster
 	}
 	return nil
@@ -143,7 +153,7 @@ func (o *PendingDeleteCluster) Cluster() *Cluster {
 //
 // Cluster is the details of the cluster that is pending deletion.
 func (o *PendingDeleteCluster) GetCluster() (value *Cluster, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.cluster
 	}
@@ -156,7 +166,7 @@ func (o *PendingDeleteCluster) GetCluster() (value *Cluster, ok bool) {
 // Date and time when the cluster was initially created, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *PendingDeleteCluster) CreationTimestamp() time.Time {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.creationTimestamp
 	}
 	return time.Time{}
@@ -168,7 +178,7 @@ func (o *PendingDeleteCluster) CreationTimestamp() time.Time {
 // Date and time when the cluster was initially created, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *PendingDeleteCluster) GetCreationTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.creationTimestamp
 	}

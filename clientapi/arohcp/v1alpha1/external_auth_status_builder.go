@@ -19,29 +19,37 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// ExternalAuthStatusBuilder contains the data and logic needed to build 'external_auth_status' objects.
-//
 // Representation of the status of an external authentication provider.
 type ExternalAuthStatusBuilder struct {
-	bitmap_ uint32
-	message string
-	state   *ExternalAuthStateBuilder
+	fieldSet_ []bool
+	message   string
+	state     *ExternalAuthStateBuilder
 }
 
 // NewExternalAuthStatus creates a new builder of 'external_auth_status' objects.
 func NewExternalAuthStatus() *ExternalAuthStatusBuilder {
-	return &ExternalAuthStatusBuilder{}
+	return &ExternalAuthStatusBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ExternalAuthStatusBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Message sets the value of the 'message' attribute to the given value.
 func (b *ExternalAuthStatusBuilder) Message(value string) *ExternalAuthStatusBuilder {
 	b.message = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -51,9 +59,9 @@ func (b *ExternalAuthStatusBuilder) Message(value string) *ExternalAuthStatusBui
 func (b *ExternalAuthStatusBuilder) State(value *ExternalAuthStateBuilder) *ExternalAuthStatusBuilder {
 	b.state = value
 	if value != nil {
-		b.bitmap_ |= 2
+		b.fieldSet_[1] = true
 	} else {
-		b.bitmap_ &^= 2
+		b.fieldSet_[1] = false
 	}
 	return b
 }
@@ -63,7 +71,10 @@ func (b *ExternalAuthStatusBuilder) Copy(object *ExternalAuthStatus) *ExternalAu
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.message = object.message
 	if object.state != nil {
 		b.state = NewExternalAuthState().Copy(object.state)
@@ -76,7 +87,10 @@ func (b *ExternalAuthStatusBuilder) Copy(object *ExternalAuthStatus) *ExternalAu
 // Build creates a 'external_auth_status' object using the configuration stored in the builder.
 func (b *ExternalAuthStatusBuilder) Build() (object *ExternalAuthStatus, err error) {
 	object = new(ExternalAuthStatus)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.message = b.message
 	if b.state != nil {
 		object.state, err = b.state.Build()

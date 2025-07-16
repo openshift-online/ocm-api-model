@@ -23,14 +23,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // The claim mappings defined for users and groups.
 type TokenClaimMappings struct {
-	bitmap_  uint32
-	groups   *GroupsClaim
-	userName *UsernameClaim
+	fieldSet_ []bool
+	groups    *GroupsClaim
+	userName  *UsernameClaim
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *TokenClaimMappings) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Groups returns the value of the 'groups' attribute, or
@@ -38,7 +46,7 @@ func (o *TokenClaimMappings) Empty() bool {
 //
 // Groups is a name of the claim that should be used to construct groups for the cluster identity.
 func (o *TokenClaimMappings) Groups() *GroupsClaim {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.groups
 	}
 	return nil
@@ -49,7 +57,7 @@ func (o *TokenClaimMappings) Groups() *GroupsClaim {
 //
 // Groups is a name of the claim that should be used to construct groups for the cluster identity.
 func (o *TokenClaimMappings) GetGroups() (value *GroupsClaim, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.groups
 	}
@@ -61,7 +69,7 @@ func (o *TokenClaimMappings) GetGroups() (value *GroupsClaim, ok bool) {
 //
 // Username is a name of the claim that should be used to construct usernames for the cluster identity.
 func (o *TokenClaimMappings) UserName() *UsernameClaim {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.userName
 	}
 	return nil
@@ -72,7 +80,7 @@ func (o *TokenClaimMappings) UserName() *UsernameClaim {
 //
 // Username is a name of the claim that should be used to construct usernames for the cluster identity.
 func (o *TokenClaimMappings) GetUserName() (value *UsernameClaim, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.userName
 	}

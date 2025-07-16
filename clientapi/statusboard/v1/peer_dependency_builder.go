@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// PeerDependencyBuilder contains the data and logic needed to build 'peer_dependency' objects.
-//
 // Definition of a Status Board peer dependency.
 type PeerDependencyBuilder struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	id        string
 	href      string
 	createdAt time.Time
@@ -40,52 +38,63 @@ type PeerDependencyBuilder struct {
 
 // NewPeerDependency creates a new builder of 'peer_dependency' objects.
 func NewPeerDependency() *PeerDependencyBuilder {
-	return &PeerDependencyBuilder{}
+	return &PeerDependencyBuilder{
+		fieldSet_: make([]bool, 9),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *PeerDependencyBuilder) Link(value bool) *PeerDependencyBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *PeerDependencyBuilder) ID(value string) *PeerDependencyBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *PeerDependencyBuilder) HREF(value string) *PeerDependencyBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *PeerDependencyBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *PeerDependencyBuilder) CreatedAt(value time.Time) *PeerDependencyBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Metadata sets the value of the 'metadata' attribute to the given value.
 func (b *PeerDependencyBuilder) Metadata(value interface{}) *PeerDependencyBuilder {
 	b.metadata = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *PeerDependencyBuilder) Name(value string) *PeerDependencyBuilder {
 	b.name = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -93,7 +102,7 @@ func (b *PeerDependencyBuilder) Name(value string) *PeerDependencyBuilder {
 func (b *PeerDependencyBuilder) Owners(values ...*OwnerBuilder) *PeerDependencyBuilder {
 	b.owners = make([]*OwnerBuilder, len(values))
 	copy(b.owners, values)
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -101,14 +110,14 @@ func (b *PeerDependencyBuilder) Owners(values ...*OwnerBuilder) *PeerDependencyB
 func (b *PeerDependencyBuilder) Services(values ...*ServiceBuilder) *PeerDependencyBuilder {
 	b.services = make([]*ServiceBuilder, len(values))
 	copy(b.services, values)
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *PeerDependencyBuilder) UpdatedAt(value time.Time) *PeerDependencyBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
@@ -117,7 +126,10 @@ func (b *PeerDependencyBuilder) Copy(object *PeerDependency) *PeerDependencyBuil
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.createdAt = object.createdAt
@@ -148,7 +160,10 @@ func (b *PeerDependencyBuilder) Build() (object *PeerDependency, err error) {
 	object = new(PeerDependency)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.createdAt = b.createdAt
 	object.metadata = b.metadata
 	object.name = b.name

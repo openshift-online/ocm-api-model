@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
-// ResourceReviewRequestBuilder contains the data and logic needed to build 'resource_review_request' objects.
-//
 // Request to perform a resource access review.
 type ResourceReviewRequestBuilder struct {
-	bitmap_                     uint32
+	fieldSet_                   []bool
 	accountUsername             string
 	action                      string
 	excludeSubscriptionStatuses []SubscriptionStatus
@@ -33,25 +31,35 @@ type ResourceReviewRequestBuilder struct {
 
 // NewResourceReviewRequest creates a new builder of 'resource_review_request' objects.
 func NewResourceReviewRequest() *ResourceReviewRequestBuilder {
-	return &ResourceReviewRequestBuilder{}
+	return &ResourceReviewRequestBuilder{
+		fieldSet_: make([]bool, 5),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ResourceReviewRequestBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *ResourceReviewRequestBuilder) AccountUsername(value string) *ResourceReviewRequestBuilder {
 	b.accountUsername = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Action sets the value of the 'action' attribute to the given value.
 func (b *ResourceReviewRequestBuilder) Action(value string) *ResourceReviewRequestBuilder {
 	b.action = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -59,21 +67,21 @@ func (b *ResourceReviewRequestBuilder) Action(value string) *ResourceReviewReque
 func (b *ResourceReviewRequestBuilder) ExcludeSubscriptionStatuses(values ...SubscriptionStatus) *ResourceReviewRequestBuilder {
 	b.excludeSubscriptionStatuses = make([]SubscriptionStatus, len(values))
 	copy(b.excludeSubscriptionStatuses, values)
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // ReduceClusterList sets the value of the 'reduce_cluster_list' attribute to the given value.
 func (b *ResourceReviewRequestBuilder) ReduceClusterList(value bool) *ResourceReviewRequestBuilder {
 	b.reduceClusterList = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *ResourceReviewRequestBuilder) ResourceType(value string) *ResourceReviewRequestBuilder {
 	b.resourceType = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -82,7 +90,10 @@ func (b *ResourceReviewRequestBuilder) Copy(object *ResourceReviewRequest) *Reso
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.accountUsername = object.accountUsername
 	b.action = object.action
 	if object.excludeSubscriptionStatuses != nil {
@@ -99,7 +110,10 @@ func (b *ResourceReviewRequestBuilder) Copy(object *ResourceReviewRequest) *Reso
 // Build creates a 'resource_review_request' object using the configuration stored in the builder.
 func (b *ResourceReviewRequestBuilder) Build() (object *ResourceReviewRequest, err error) {
 	object = new(ResourceReviewRequest)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.accountUsername = b.accountUsername
 	object.action = b.action
 	if b.excludeSubscriptionStatuses != nil {

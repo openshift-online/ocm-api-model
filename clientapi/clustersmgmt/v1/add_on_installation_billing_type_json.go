@@ -42,13 +42,13 @@ func WriteAddOnInstallationBilling(object *AddOnInstallationBilling, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(AddOnInstallationBillingLinkKind)
 	} else {
 		stream.WriteString(AddOnInstallationBillingKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteAddOnInstallationBilling(object *AddOnInstallationBilling, stream *jso
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteAddOnInstallationBilling(object *AddOnInstallationBilling, stream *jso
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteAddOnInstallationBilling(object *AddOnInstallationBilling, stream *jso
 		stream.WriteString(object.billingMarketplaceAccount)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -99,7 +99,9 @@ func UnmarshalAddOnInstallationBilling(source interface{}) (object *AddOnInstall
 
 // ReadAddOnInstallationBilling reads a value of the 'add_on_installation_billing' type from the given iterator.
 func ReadAddOnInstallationBilling(iterator *jsoniter.Iterator) *AddOnInstallationBilling {
-	object := &AddOnInstallationBilling{}
+	object := &AddOnInstallationBilling{
+		fieldSet_: make([]bool, 5),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -109,23 +111,23 @@ func ReadAddOnInstallationBilling(iterator *jsoniter.Iterator) *AddOnInstallatio
 		case "kind":
 			value := iterator.ReadString()
 			if value == AddOnInstallationBillingLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "billing_marketplace_account":
 			value := iterator.ReadString()
 			object.billingMarketplaceAccount = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "billing_model":
 			text := iterator.ReadString()
 			value := BillingModel(text)
 			object.billingModel = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		default:
 			iterator.ReadAny()
 		}

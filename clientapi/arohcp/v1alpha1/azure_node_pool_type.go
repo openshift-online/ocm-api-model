@@ -23,7 +23,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Representation of azure node pool specific parameters.
 type AzureNodePool struct {
-	bitmap_                          uint32
+	fieldSet_                        []bool
 	osDiskSizeGibibytes              int
 	osDiskStorageAccountType         string
 	vmSize                           string
@@ -35,7 +35,15 @@ type AzureNodePool struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AzureNodePool) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // OSDiskSizeGibibytes returns the value of the 'OS_disk_size_gibibytes' attribute, or
@@ -46,7 +54,7 @@ func (o *AzureNodePool) Empty() bool {
 // is the number of bytes x 1024^3.
 // If not specified, OS disk size is 30 GiB.
 func (o *AzureNodePool) OSDiskSizeGibibytes() int {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.osDiskSizeGibibytes
 	}
 	return 0
@@ -60,7 +68,7 @@ func (o *AzureNodePool) OSDiskSizeGibibytes() int {
 // is the number of bytes x 1024^3.
 // If not specified, OS disk size is 30 GiB.
 func (o *AzureNodePool) GetOSDiskSizeGibibytes() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.osDiskSizeGibibytes
 	}
@@ -79,7 +87,7 @@ func (o *AzureNodePool) GetOSDiskSizeGibibytes() (value int, ok bool) {
 //
 // If not specified, `Premium_LRS` is used.
 func (o *AzureNodePool) OSDiskStorageAccountType() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.osDiskStorageAccountType
 	}
 	return ""
@@ -97,7 +105,7 @@ func (o *AzureNodePool) OSDiskStorageAccountType() string {
 //
 // If not specified, `Premium_LRS` is used.
 func (o *AzureNodePool) GetOSDiskStorageAccountType() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.osDiskStorageAccountType
 	}
@@ -113,7 +121,7 @@ func (o *AzureNodePool) GetOSDiskStorageAccountType() (value string, ok bool) {
 // of the parent Cluster.
 // Required during creation.
 func (o *AzureNodePool) VMSize() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.vmSize
 	}
 	return ""
@@ -128,7 +136,7 @@ func (o *AzureNodePool) VMSize() string {
 // of the parent Cluster.
 // Required during creation.
 func (o *AzureNodePool) GetVMSize() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.vmSize
 	}
@@ -144,7 +152,7 @@ func (o *AzureNodePool) GetVMSize() (value string, ok bool) {
 // If not specified, Encryption at Host is not enabled.
 // Immutable.
 func (o *AzureNodePool) EncryptionAtHost() *AzureNodePoolEncryptionAtHost {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.encryptionAtHost
 	}
 	return nil
@@ -159,7 +167,7 @@ func (o *AzureNodePool) EncryptionAtHost() *AzureNodePoolEncryptionAtHost {
 // If not specified, Encryption at Host is not enabled.
 // Immutable.
 func (o *AzureNodePool) GetEncryptionAtHost() (value *AzureNodePoolEncryptionAtHost, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.encryptionAtHost
 	}
@@ -172,7 +180,7 @@ func (o *AzureNodePool) GetEncryptionAtHost() (value *AzureNodePoolEncryptionAtH
 // Enables Ephemeral OS Disks for the Nodes in the Node Pool.
 // If not specified, no Ephemeral OS Disks are used.
 func (o *AzureNodePool) EphemeralOSDiskEnabled() bool {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.ephemeralOSDiskEnabled
 	}
 	return false
@@ -184,7 +192,7 @@ func (o *AzureNodePool) EphemeralOSDiskEnabled() bool {
 // Enables Ephemeral OS Disks for the Nodes in the Node Pool.
 // If not specified, no Ephemeral OS Disks are used.
 func (o *AzureNodePool) GetEphemeralOSDiskEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.ephemeralOSDiskEnabled
 	}
@@ -206,7 +214,7 @@ func (o *AzureNodePool) GetEphemeralOSDiskEnabled() (value bool, ok bool) {
 // If not specified, Server-Side Encryption (SSE) on the OS Disks of the Nodes of the Node Pool
 // is performed with platform managed keys.
 func (o *AzureNodePool) OsDiskSseEncryptionSetResourceId() string {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.osDiskSseEncryptionSetResourceId
 	}
 	return ""
@@ -227,7 +235,7 @@ func (o *AzureNodePool) OsDiskSseEncryptionSetResourceId() string {
 // If not specified, Server-Side Encryption (SSE) on the OS Disks of the Nodes of the Node Pool
 // is performed with platform managed keys.
 func (o *AzureNodePool) GetOsDiskSseEncryptionSetResourceId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.osDiskSseEncryptionSetResourceId
 	}
@@ -249,7 +257,7 @@ func (o *AzureNodePool) GetOsDiskSseEncryptionSetResourceId() (value string, ok 
 // Required during creation.
 // Immutable.
 func (o *AzureNodePool) ResourceName() string {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.resourceName
 	}
 	return ""
@@ -270,7 +278,7 @@ func (o *AzureNodePool) ResourceName() string {
 // Required during creation.
 // Immutable.
 func (o *AzureNodePool) GetResourceName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.resourceName
 	}

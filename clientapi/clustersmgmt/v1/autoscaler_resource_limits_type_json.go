@@ -42,7 +42,7 @@ func WriteAutoscalerResourceLimits(object *AutoscalerResourceLimits, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.gpus != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.gpus != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAutoscalerResourceLimits(object *AutoscalerResourceLimits, stream *jso
 		WriteAutoscalerResourceLimitsGPULimitList(object.gpus, stream)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.cores != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.cores != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteAutoscalerResourceLimits(object *AutoscalerResourceLimits, stream *jso
 		WriteResourceRange(object.cores, stream)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteAutoscalerResourceLimits(object *AutoscalerResourceLimits, stream *jso
 		stream.WriteInt(object.maxNodesTotal)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0 && object.memory != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.memory != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,7 +94,9 @@ func UnmarshalAutoscalerResourceLimits(source interface{}) (object *AutoscalerRe
 
 // ReadAutoscalerResourceLimits reads a value of the 'autoscaler_resource_limits' type from the given iterator.
 func ReadAutoscalerResourceLimits(iterator *jsoniter.Iterator) *AutoscalerResourceLimits {
-	object := &AutoscalerResourceLimits{}
+	object := &AutoscalerResourceLimits{
+		fieldSet_: make([]bool, 4),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -104,19 +106,19 @@ func ReadAutoscalerResourceLimits(iterator *jsoniter.Iterator) *AutoscalerResour
 		case "gpus":
 			value := ReadAutoscalerResourceLimitsGPULimitList(iterator)
 			object.gpus = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "cores":
 			value := ReadResourceRange(iterator)
 			object.cores = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "max_nodes_total":
 			value := iterator.ReadInt()
 			object.maxNodesTotal = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "memory":
 			value := ReadResourceRange(iterator)
 			object.memory = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		default:
 			iterator.ReadAny()
 		}

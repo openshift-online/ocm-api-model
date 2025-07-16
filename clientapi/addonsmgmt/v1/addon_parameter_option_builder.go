@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
-// AddonParameterOptionBuilder contains the data and logic needed to build 'addon_parameter_option' objects.
-//
 // Representation of an addon parameter option.
 type AddonParameterOptionBuilder struct {
-	bitmap_      uint32
+	fieldSet_    []bool
 	name         string
 	rank         int
 	requirements []*AddonRequirementBuilder
@@ -32,25 +30,35 @@ type AddonParameterOptionBuilder struct {
 
 // NewAddonParameterOption creates a new builder of 'addon_parameter_option' objects.
 func NewAddonParameterOption() *AddonParameterOptionBuilder {
-	return &AddonParameterOptionBuilder{}
+	return &AddonParameterOptionBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddonParameterOptionBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AddonParameterOptionBuilder) Name(value string) *AddonParameterOptionBuilder {
 	b.name = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Rank sets the value of the 'rank' attribute to the given value.
 func (b *AddonParameterOptionBuilder) Rank(value int) *AddonParameterOptionBuilder {
 	b.rank = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -58,14 +66,14 @@ func (b *AddonParameterOptionBuilder) Rank(value int) *AddonParameterOptionBuild
 func (b *AddonParameterOptionBuilder) Requirements(values ...*AddonRequirementBuilder) *AddonParameterOptionBuilder {
 	b.requirements = make([]*AddonRequirementBuilder, len(values))
 	copy(b.requirements, values)
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *AddonParameterOptionBuilder) Value(value string) *AddonParameterOptionBuilder {
 	b.value = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -74,7 +82,10 @@ func (b *AddonParameterOptionBuilder) Copy(object *AddonParameterOption) *AddonP
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.name = object.name
 	b.rank = object.rank
 	if object.requirements != nil {
@@ -92,7 +103,10 @@ func (b *AddonParameterOptionBuilder) Copy(object *AddonParameterOption) *AddonP
 // Build creates a 'addon_parameter_option' object using the configuration stored in the builder.
 func (b *AddonParameterOptionBuilder) Build() (object *AddonParameterOption, err error) {
 	object = new(AddonParameterOption)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.name = b.name
 	object.rank = b.rank
 	if b.requirements != nil {

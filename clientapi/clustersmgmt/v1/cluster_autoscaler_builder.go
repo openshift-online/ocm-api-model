@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// ClusterAutoscalerBuilder contains the data and logic needed to build 'cluster_autoscaler' objects.
-//
 // Cluster-wide autoscaling configuration.
 type ClusterAutoscalerBuilder struct {
-	bitmap_                     uint32
+	fieldSet_                   []bool
 	id                          string
 	href                        string
 	balancingIgnoredLabels      []string
@@ -40,38 +38,49 @@ type ClusterAutoscalerBuilder struct {
 
 // NewClusterAutoscaler creates a new builder of 'cluster_autoscaler' objects.
 func NewClusterAutoscaler() *ClusterAutoscalerBuilder {
-	return &ClusterAutoscalerBuilder{}
+	return &ClusterAutoscalerBuilder{
+		fieldSet_: make([]bool, 13),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ClusterAutoscalerBuilder) Link(value bool) *ClusterAutoscalerBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ClusterAutoscalerBuilder) ID(value string) *ClusterAutoscalerBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ClusterAutoscalerBuilder) HREF(value string) *ClusterAutoscalerBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterAutoscalerBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // BalanceSimilarNodeGroups sets the value of the 'balance_similar_node_groups' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) BalanceSimilarNodeGroups(value bool) *ClusterAutoscalerBuilder {
 	b.balanceSimilarNodeGroups = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -79,42 +88,42 @@ func (b *ClusterAutoscalerBuilder) BalanceSimilarNodeGroups(value bool) *Cluster
 func (b *ClusterAutoscalerBuilder) BalancingIgnoredLabels(values ...string) *ClusterAutoscalerBuilder {
 	b.balancingIgnoredLabels = make([]string, len(values))
 	copy(b.balancingIgnoredLabels, values)
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // IgnoreDaemonsetsUtilization sets the value of the 'ignore_daemonsets_utilization' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) IgnoreDaemonsetsUtilization(value bool) *ClusterAutoscalerBuilder {
 	b.ignoreDaemonsetsUtilization = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // LogVerbosity sets the value of the 'log_verbosity' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) LogVerbosity(value int) *ClusterAutoscalerBuilder {
 	b.logVerbosity = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // MaxNodeProvisionTime sets the value of the 'max_node_provision_time' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) MaxNodeProvisionTime(value string) *ClusterAutoscalerBuilder {
 	b.maxNodeProvisionTime = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // MaxPodGracePeriod sets the value of the 'max_pod_grace_period' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) MaxPodGracePeriod(value int) *ClusterAutoscalerBuilder {
 	b.maxPodGracePeriod = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // PodPriorityThreshold sets the value of the 'pod_priority_threshold' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) PodPriorityThreshold(value int) *ClusterAutoscalerBuilder {
 	b.podPriorityThreshold = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
@@ -122,9 +131,9 @@ func (b *ClusterAutoscalerBuilder) PodPriorityThreshold(value int) *ClusterAutos
 func (b *ClusterAutoscalerBuilder) ResourceLimits(value *AutoscalerResourceLimitsBuilder) *ClusterAutoscalerBuilder {
 	b.resourceLimits = value
 	if value != nil {
-		b.bitmap_ |= 1024
+		b.fieldSet_[10] = true
 	} else {
-		b.bitmap_ &^= 1024
+		b.fieldSet_[10] = false
 	}
 	return b
 }
@@ -133,9 +142,9 @@ func (b *ClusterAutoscalerBuilder) ResourceLimits(value *AutoscalerResourceLimit
 func (b *ClusterAutoscalerBuilder) ScaleDown(value *AutoscalerScaleDownConfigBuilder) *ClusterAutoscalerBuilder {
 	b.scaleDown = value
 	if value != nil {
-		b.bitmap_ |= 2048
+		b.fieldSet_[11] = true
 	} else {
-		b.bitmap_ &^= 2048
+		b.fieldSet_[11] = false
 	}
 	return b
 }
@@ -143,7 +152,7 @@ func (b *ClusterAutoscalerBuilder) ScaleDown(value *AutoscalerScaleDownConfigBui
 // SkipNodesWithLocalStorage sets the value of the 'skip_nodes_with_local_storage' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) SkipNodesWithLocalStorage(value bool) *ClusterAutoscalerBuilder {
 	b.skipNodesWithLocalStorage = value
-	b.bitmap_ |= 4096
+	b.fieldSet_[12] = true
 	return b
 }
 
@@ -152,7 +161,10 @@ func (b *ClusterAutoscalerBuilder) Copy(object *ClusterAutoscaler) *ClusterAutos
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.balanceSimilarNodeGroups = object.balanceSimilarNodeGroups
@@ -186,7 +198,10 @@ func (b *ClusterAutoscalerBuilder) Build() (object *ClusterAutoscaler, err error
 	object = new(ClusterAutoscaler)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.balanceSimilarNodeGroups = b.balanceSimilarNodeGroups
 	if b.balancingIgnoredLabels != nil {
 		object.balancingIgnoredLabels = make([]string, len(b.balancingIgnoredLabels))

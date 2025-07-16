@@ -35,7 +35,7 @@ const AddonVersionNilKind = "AddonVersionNil"
 //
 // Representation of an addon version.
 type AddonVersion struct {
-	bitmap_                  uint32
+	fieldSet_                []bool
 	id                       string
 	href                     string
 	additionalCatalogSources []*AdditionalCatalogSource
@@ -59,7 +59,7 @@ func (o *AddonVersion) Kind() string {
 	if o == nil {
 		return AddonVersionNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return AddonVersionLinkKind
 	}
 	return AddonVersionKind
@@ -67,12 +67,12 @@ func (o *AddonVersion) Kind() string {
 
 // Link returns true if this is a link.
 func (o *AddonVersion) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *AddonVersion) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -81,7 +81,7 @@ func (o *AddonVersion) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *AddonVersion) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -90,7 +90,7 @@ func (o *AddonVersion) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *AddonVersion) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -99,7 +99,7 @@ func (o *AddonVersion) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *AddonVersion) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -108,7 +108,17 @@ func (o *AddonVersion) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddonVersion) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // AdditionalCatalogSources returns the value of the 'additional_catalog_sources' attribute, or
@@ -116,7 +126,7 @@ func (o *AddonVersion) Empty() bool {
 //
 // Additional catalog sources associated with this addon version
 func (o *AddonVersion) AdditionalCatalogSources() []*AdditionalCatalogSource {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.additionalCatalogSources
 	}
 	return nil
@@ -127,7 +137,7 @@ func (o *AddonVersion) AdditionalCatalogSources() []*AdditionalCatalogSource {
 //
 // Additional catalog sources associated with this addon version
 func (o *AddonVersion) GetAdditionalCatalogSources() (value []*AdditionalCatalogSource, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.additionalCatalogSources
 	}
@@ -139,7 +149,7 @@ func (o *AddonVersion) GetAdditionalCatalogSources() (value []*AdditionalCatalog
 //
 // AvailableUpgrades is the list of versions this version can be upgraded to.
 func (o *AddonVersion) AvailableUpgrades() []string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.availableUpgrades
 	}
 	return nil
@@ -150,7 +160,7 @@ func (o *AddonVersion) AvailableUpgrades() []string {
 //
 // AvailableUpgrades is the list of versions this version can be upgraded to.
 func (o *AddonVersion) GetAvailableUpgrades() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.availableUpgrades
 	}
@@ -162,7 +172,7 @@ func (o *AddonVersion) GetAvailableUpgrades() (value []string, ok bool) {
 //
 // The specific addon catalog source channel of packages
 func (o *AddonVersion) Channel() string {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.channel
 	}
 	return ""
@@ -173,7 +183,7 @@ func (o *AddonVersion) Channel() string {
 //
 // The specific addon catalog source channel of packages
 func (o *AddonVersion) GetChannel() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.channel
 	}
@@ -185,7 +195,7 @@ func (o *AddonVersion) GetChannel() (value string, ok bool) {
 //
 // Additional configs to be used by the addon once its installed in the cluster.
 func (o *AddonVersion) Config() *AddonConfig {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.config
 	}
 	return nil
@@ -196,7 +206,7 @@ func (o *AddonVersion) Config() *AddonConfig {
 //
 // Additional configs to be used by the addon once its installed in the cluster.
 func (o *AddonVersion) GetConfig() (value *AddonConfig, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.config
 	}
@@ -208,7 +218,7 @@ func (o *AddonVersion) GetConfig() (value *AddonConfig, ok bool) {
 //
 // Indicates if this addon version can be added to clusters.
 func (o *AddonVersion) Enabled() bool {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.enabled
 	}
 	return false
@@ -219,7 +229,7 @@ func (o *AddonVersion) Enabled() bool {
 //
 // Indicates if this addon version can be added to clusters.
 func (o *AddonVersion) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.enabled
 	}
@@ -231,7 +241,7 @@ func (o *AddonVersion) GetEnabled() (value bool, ok bool) {
 //
 // Configuration parameters to be injected in the ServiceMonitor used for federation.
 func (o *AddonVersion) MetricsFederation() *MetricsFederation {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.metricsFederation
 	}
 	return nil
@@ -242,7 +252,7 @@ func (o *AddonVersion) MetricsFederation() *MetricsFederation {
 //
 // Configuration parameters to be injected in the ServiceMonitor used for federation.
 func (o *AddonVersion) GetMetricsFederation() (value *MetricsFederation, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.metricsFederation
 	}
@@ -254,7 +264,7 @@ func (o *AddonVersion) GetMetricsFederation() (value *MetricsFederation, ok bool
 //
 // Configuration parameters which will determine the underlying configuration of the MonitoringStack CR.
 func (o *AddonVersion) MonitoringStack() *MonitoringStack {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.monitoringStack
 	}
 	return nil
@@ -265,7 +275,7 @@ func (o *AddonVersion) MonitoringStack() *MonitoringStack {
 //
 // Configuration parameters which will determine the underlying configuration of the MonitoringStack CR.
 func (o *AddonVersion) GetMonitoringStack() (value *MonitoringStack, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.monitoringStack
 	}
@@ -277,7 +287,7 @@ func (o *AddonVersion) GetMonitoringStack() (value *MonitoringStack, ok bool) {
 //
 // The url for the package image
 func (o *AddonVersion) PackageImage() string {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.packageImage
 	}
 	return ""
@@ -288,7 +298,7 @@ func (o *AddonVersion) PackageImage() string {
 //
 // The url for the package image
 func (o *AddonVersion) GetPackageImage() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.packageImage
 	}
@@ -300,7 +310,7 @@ func (o *AddonVersion) GetPackageImage() (value string, ok bool) {
 //
 // List of parameters for this addon version.
 func (o *AddonVersion) Parameters() *AddonParameters {
-	if o != nil && o.bitmap_&2048 != 0 {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.parameters
 	}
 	return nil
@@ -311,7 +321,7 @@ func (o *AddonVersion) Parameters() *AddonParameters {
 //
 // List of parameters for this addon version.
 func (o *AddonVersion) GetParameters() (value *AddonParameters, ok bool) {
-	ok = o != nil && o.bitmap_&2048 != 0
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.parameters
 	}
@@ -323,7 +333,7 @@ func (o *AddonVersion) GetParameters() (value *AddonParameters, ok bool) {
 //
 // The pull secret name used for this addon version.
 func (o *AddonVersion) PullSecretName() string {
-	if o != nil && o.bitmap_&4096 != 0 {
+	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
 		return o.pullSecretName
 	}
 	return ""
@@ -334,7 +344,7 @@ func (o *AddonVersion) PullSecretName() string {
 //
 // The pull secret name used for this addon version.
 func (o *AddonVersion) GetPullSecretName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4096 != 0
+	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
 	if ok {
 		value = o.pullSecretName
 	}
@@ -346,7 +356,7 @@ func (o *AddonVersion) GetPullSecretName() (value string, ok bool) {
 //
 // List of requirements for this addon version.
 func (o *AddonVersion) Requirements() []*AddonRequirement {
-	if o != nil && o.bitmap_&8192 != 0 {
+	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
 		return o.requirements
 	}
 	return nil
@@ -357,7 +367,7 @@ func (o *AddonVersion) Requirements() []*AddonRequirement {
 //
 // List of requirements for this addon version.
 func (o *AddonVersion) GetRequirements() (value []*AddonRequirement, ok bool) {
-	ok = o != nil && o.bitmap_&8192 != 0
+	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
 	if ok {
 		value = o.requirements
 	}
@@ -369,7 +379,7 @@ func (o *AddonVersion) GetRequirements() (value []*AddonRequirement, ok bool) {
 //
 // The catalog source image for this addon version.
 func (o *AddonVersion) SourceImage() string {
-	if o != nil && o.bitmap_&16384 != 0 {
+	if o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14] {
 		return o.sourceImage
 	}
 	return ""
@@ -380,7 +390,7 @@ func (o *AddonVersion) SourceImage() string {
 //
 // The catalog source image for this addon version.
 func (o *AddonVersion) GetSourceImage() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16384 != 0
+	ok = o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14]
 	if ok {
 		value = o.sourceImage
 	}
@@ -392,7 +402,7 @@ func (o *AddonVersion) GetSourceImage() (value string, ok bool) {
 //
 // List of sub operators for this addon version.
 func (o *AddonVersion) SubOperators() []*AddonSubOperator {
-	if o != nil && o.bitmap_&32768 != 0 {
+	if o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15] {
 		return o.subOperators
 	}
 	return nil
@@ -403,7 +413,7 @@ func (o *AddonVersion) SubOperators() []*AddonSubOperator {
 //
 // List of sub operators for this addon version.
 func (o *AddonVersion) GetSubOperators() (value []*AddonSubOperator, ok bool) {
-	ok = o != nil && o.bitmap_&32768 != 0
+	ok = o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15]
 	if ok {
 		value = o.subOperators
 	}
@@ -415,7 +425,7 @@ func (o *AddonVersion) GetSubOperators() (value []*AddonSubOperator, ok bool) {
 //
 // Indicates if upgrade plans have been created for this addon version
 func (o *AddonVersion) UpgradePlansCreated() bool {
-	if o != nil && o.bitmap_&65536 != 0 {
+	if o != nil && len(o.fieldSet_) > 16 && o.fieldSet_[16] {
 		return o.upgradePlansCreated
 	}
 	return false
@@ -426,7 +436,7 @@ func (o *AddonVersion) UpgradePlansCreated() bool {
 //
 // Indicates if upgrade plans have been created for this addon version
 func (o *AddonVersion) GetUpgradePlansCreated() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&65536 != 0
+	ok = o != nil && len(o.fieldSet_) > 16 && o.fieldSet_[16]
 	if ok {
 		value = o.upgradePlansCreated
 	}

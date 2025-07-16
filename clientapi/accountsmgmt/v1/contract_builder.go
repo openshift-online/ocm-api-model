@@ -23,9 +23,8 @@ import (
 	time "time"
 )
 
-// ContractBuilder contains the data and logic needed to build 'contract' objects.
 type ContractBuilder struct {
-	bitmap_    uint32
+	fieldSet_  []bool
 	dimensions []*ContractDimensionBuilder
 	endDate    time.Time
 	startDate  time.Time
@@ -33,33 +32,43 @@ type ContractBuilder struct {
 
 // NewContract creates a new builder of 'contract' objects.
 func NewContract() *ContractBuilder {
-	return &ContractBuilder{}
+	return &ContractBuilder{
+		fieldSet_: make([]bool, 3),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ContractBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Dimensions sets the value of the 'dimensions' attribute to the given values.
 func (b *ContractBuilder) Dimensions(values ...*ContractDimensionBuilder) *ContractBuilder {
 	b.dimensions = make([]*ContractDimensionBuilder, len(values))
 	copy(b.dimensions, values)
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // EndDate sets the value of the 'end_date' attribute to the given value.
 func (b *ContractBuilder) EndDate(value time.Time) *ContractBuilder {
 	b.endDate = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // StartDate sets the value of the 'start_date' attribute to the given value.
 func (b *ContractBuilder) StartDate(value time.Time) *ContractBuilder {
 	b.startDate = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -68,7 +77,10 @@ func (b *ContractBuilder) Copy(object *Contract) *ContractBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.dimensions != nil {
 		b.dimensions = make([]*ContractDimensionBuilder, len(object.dimensions))
 		for i, v := range object.dimensions {
@@ -85,7 +97,10 @@ func (b *ContractBuilder) Copy(object *Contract) *ContractBuilder {
 // Build creates a 'contract' object using the configuration stored in the builder.
 func (b *ContractBuilder) Build() (object *Contract, err error) {
 	object = new(Contract)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.dimensions != nil {
 		object.dimensions = make([]*ContractDimension, len(b.dimensions))
 		for i, v := range b.dimensions {

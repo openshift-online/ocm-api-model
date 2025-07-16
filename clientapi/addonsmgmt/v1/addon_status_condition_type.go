@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 //
 // Representation of an addon status condition type.
 type AddonStatusCondition struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	message     string
 	reason      string
 	statusType  AddonStatusConditionType
@@ -32,7 +32,15 @@ type AddonStatusCondition struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddonStatusCondition) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Message returns the value of the 'message' attribute, or
@@ -40,7 +48,7 @@ func (o *AddonStatusCondition) Empty() bool {
 //
 // Message for the condition
 func (o *AddonStatusCondition) Message() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.message
 	}
 	return ""
@@ -51,7 +59,7 @@ func (o *AddonStatusCondition) Message() string {
 //
 // Message for the condition
 func (o *AddonStatusCondition) GetMessage() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.message
 	}
@@ -63,7 +71,7 @@ func (o *AddonStatusCondition) GetMessage() (value string, ok bool) {
 //
 // Reason for the condition
 func (o *AddonStatusCondition) Reason() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.reason
 	}
 	return ""
@@ -74,7 +82,7 @@ func (o *AddonStatusCondition) Reason() string {
 //
 // Reason for the condition
 func (o *AddonStatusCondition) GetReason() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.reason
 	}
@@ -86,7 +94,7 @@ func (o *AddonStatusCondition) GetReason() (value string, ok bool) {
 //
 // Type of the reported addon status condition
 func (o *AddonStatusCondition) StatusType() AddonStatusConditionType {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.statusType
 	}
 	return AddonStatusConditionType("")
@@ -97,7 +105,7 @@ func (o *AddonStatusCondition) StatusType() AddonStatusConditionType {
 //
 // Type of the reported addon status condition
 func (o *AddonStatusCondition) GetStatusType() (value AddonStatusConditionType, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.statusType
 	}
@@ -109,7 +117,7 @@ func (o *AddonStatusCondition) GetStatusType() (value AddonStatusConditionType, 
 //
 // Value of the reported addon status condition
 func (o *AddonStatusCondition) StatusValue() AddonStatusConditionValue {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.statusValue
 	}
 	return AddonStatusConditionValue("")
@@ -120,7 +128,7 @@ func (o *AddonStatusCondition) StatusValue() AddonStatusConditionValue {
 //
 // Value of the reported addon status condition
 func (o *AddonStatusCondition) GetStatusValue() (value AddonStatusConditionValue, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.statusValue
 	}

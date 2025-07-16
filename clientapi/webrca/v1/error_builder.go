@@ -19,58 +19,67 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/webrca/v1
 
-// ErrorBuilder contains the data and logic needed to build 'error' objects.
-//
 // Definition of a Web RCA error.
 type ErrorBuilder struct {
-	bitmap_ uint32
-	id      string
-	href    string
-	code    string
-	reason  string
+	fieldSet_ []bool
+	id        string
+	href      string
+	code      string
+	reason    string
 }
 
 // NewError creates a new builder of 'error' objects.
 func NewError() *ErrorBuilder {
-	return &ErrorBuilder{}
+	return &ErrorBuilder{
+		fieldSet_: make([]bool, 5),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ErrorBuilder) Link(value bool) *ErrorBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ErrorBuilder) ID(value string) *ErrorBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ErrorBuilder) HREF(value string) *ErrorBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ErrorBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Code sets the value of the 'code' attribute to the given value.
 func (b *ErrorBuilder) Code(value string) *ErrorBuilder {
 	b.code = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Reason sets the value of the 'reason' attribute to the given value.
 func (b *ErrorBuilder) Reason(value string) *ErrorBuilder {
 	b.reason = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -79,7 +88,10 @@ func (b *ErrorBuilder) Copy(object *Error) *ErrorBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.code = object.code
@@ -92,7 +104,10 @@ func (b *ErrorBuilder) Build() (object *Error, err error) {
 	object = new(Error)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.code = b.code
 	object.reason = b.reason
 	return

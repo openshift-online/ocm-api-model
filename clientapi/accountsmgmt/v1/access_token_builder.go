@@ -19,29 +19,38 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// AccessTokenBuilder contains the data and logic needed to build 'access_token' objects.
 type AccessTokenBuilder struct {
-	bitmap_ uint32
-	auths   map[string]*AccessTokenAuthBuilder
+	fieldSet_ []bool
+	auths     map[string]*AccessTokenAuthBuilder
 }
 
 // NewAccessToken creates a new builder of 'access_token' objects.
 func NewAccessToken() *AccessTokenBuilder {
-	return &AccessTokenBuilder{}
+	return &AccessTokenBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AccessTokenBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Auths sets the value of the 'auths' attribute to the given value.
 func (b *AccessTokenBuilder) Auths(value map[string]*AccessTokenAuthBuilder) *AccessTokenBuilder {
 	b.auths = value
 	if value != nil {
-		b.bitmap_ |= 1
+		b.fieldSet_[0] = true
 	} else {
-		b.bitmap_ &^= 1
+		b.fieldSet_[0] = false
 	}
 	return b
 }
@@ -51,7 +60,10 @@ func (b *AccessTokenBuilder) Copy(object *AccessToken) *AccessTokenBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if len(object.auths) > 0 {
 		b.auths = map[string]*AccessTokenAuthBuilder{}
 		for k, v := range object.auths {
@@ -66,7 +78,10 @@ func (b *AccessTokenBuilder) Copy(object *AccessToken) *AccessTokenBuilder {
 // Build creates a 'access_token' object using the configuration stored in the builder.
 func (b *AccessTokenBuilder) Build() (object *AccessToken, err error) {
 	object = new(AccessToken)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.auths != nil {
 		object.auths = make(map[string]*AccessTokenAuth)
 		for k, v := range b.auths {

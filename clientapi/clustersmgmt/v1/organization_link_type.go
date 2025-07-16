@@ -23,14 +23,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Definition of an organization link.
 type OrganizationLink struct {
-	bitmap_ uint32
-	href    string
-	id      string
+	fieldSet_ []bool
+	href      string
+	id        string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *OrganizationLink) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // HREF returns the value of the 'HREF' attribute, or
@@ -38,7 +46,7 @@ func (o *OrganizationLink) Empty() bool {
 //
 // HREF for the Organization, filled in response.
 func (o *OrganizationLink) HREF() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.href
 	}
 	return ""
@@ -49,7 +57,7 @@ func (o *OrganizationLink) HREF() string {
 //
 // HREF for the Organization, filled in response.
 func (o *OrganizationLink) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.href
 	}
@@ -61,7 +69,7 @@ func (o *OrganizationLink) GetHREF() (value string, ok bool) {
 //
 // The organization's ID.
 func (o *OrganizationLink) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -72,7 +80,7 @@ func (o *OrganizationLink) ID() string {
 //
 // The organization's ID.
 func (o *OrganizationLink) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}

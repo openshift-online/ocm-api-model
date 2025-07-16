@@ -21,14 +21,22 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 
 // RoleDefinitionOperatorIdentityRequirement represents the values of the 'role_definition_operator_identity_requirement' type.
 type RoleDefinitionOperatorIdentityRequirement struct {
-	bitmap_    uint32
+	fieldSet_  []bool
 	name       string
 	resourceId string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *RoleDefinitionOperatorIdentityRequirement) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Name returns the value of the 'name' attribute, or
@@ -37,7 +45,7 @@ func (o *RoleDefinitionOperatorIdentityRequirement) Empty() bool {
 // The official name of the Role defined in resource_id.
 // It is purely a friendly/descriptive name.
 func (o *RoleDefinitionOperatorIdentityRequirement) Name() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.name
 	}
 	return ""
@@ -49,7 +57,7 @@ func (o *RoleDefinitionOperatorIdentityRequirement) Name() string {
 // The official name of the Role defined in resource_id.
 // It is purely a friendly/descriptive name.
 func (o *RoleDefinitionOperatorIdentityRequirement) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.name
 	}
@@ -62,7 +70,7 @@ func (o *RoleDefinitionOperatorIdentityRequirement) GetName() (value string, ok 
 // A string representing the Resource ID of an Azure Role Definition.
 // The role definition indicates what permissions are needed by the operator
 func (o *RoleDefinitionOperatorIdentityRequirement) ResourceId() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.resourceId
 	}
 	return ""
@@ -74,7 +82,7 @@ func (o *RoleDefinitionOperatorIdentityRequirement) ResourceId() string {
 // A string representing the Resource ID of an Azure Role Definition.
 // The role definition indicates what permissions are needed by the operator
 func (o *RoleDefinitionOperatorIdentityRequirement) GetResourceId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.resourceId
 	}

@@ -23,13 +23,21 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Contains the necessary attributes to support role-based authentication on AWS.
 type ManagedService struct {
-	bitmap_ uint32
-	enabled bool
+	fieldSet_ []bool
+	enabled   bool
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ManagedService) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Enabled returns the value of the 'enabled' attribute, or
@@ -39,7 +47,7 @@ func (o *ManagedService) Empty() bool {
 // This should only be set by the "Managed Service" service.
 // clusters with this set can only be modified by the "Managed Service" service.
 func (o *ManagedService) Enabled() bool {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.enabled
 	}
 	return false
@@ -52,7 +60,7 @@ func (o *ManagedService) Enabled() bool {
 // This should only be set by the "Managed Service" service.
 // clusters with this set can only be modified by the "Managed Service" service.
 func (o *ManagedService) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.enabled
 	}

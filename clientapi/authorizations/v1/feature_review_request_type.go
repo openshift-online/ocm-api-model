@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations
 //
 // Representation of a feature review
 type FeatureReviewRequest struct {
-	bitmap_         uint32
+	fieldSet_       []bool
 	accountUsername string
 	clusterId       string
 	feature         string
@@ -32,7 +32,15 @@ type FeatureReviewRequest struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *FeatureReviewRequest) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AccountUsername returns the value of the 'account_username' attribute, or
@@ -40,7 +48,7 @@ func (o *FeatureReviewRequest) Empty() bool {
 //
 // Defines the username of the account of which access is being reviewed
 func (o *FeatureReviewRequest) AccountUsername() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.accountUsername
 	}
 	return ""
@@ -51,7 +59,7 @@ func (o *FeatureReviewRequest) AccountUsername() string {
 //
 // Defines the username of the account of which access is being reviewed
 func (o *FeatureReviewRequest) GetAccountUsername() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.accountUsername
 	}
@@ -63,7 +71,7 @@ func (o *FeatureReviewRequest) GetAccountUsername() (value string, ok bool) {
 //
 // Defines the cluster id which access is being reviewed
 func (o *FeatureReviewRequest) ClusterId() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.clusterId
 	}
 	return ""
@@ -74,7 +82,7 @@ func (o *FeatureReviewRequest) ClusterId() string {
 //
 // Defines the cluster id which access is being reviewed
 func (o *FeatureReviewRequest) GetClusterId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.clusterId
 	}
@@ -86,7 +94,7 @@ func (o *FeatureReviewRequest) GetClusterId() (value string, ok bool) {
 //
 // Indicates the feature which can be toggled
 func (o *FeatureReviewRequest) Feature() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.feature
 	}
 	return ""
@@ -97,7 +105,7 @@ func (o *FeatureReviewRequest) Feature() string {
 //
 // Indicates the feature which can be toggled
 func (o *FeatureReviewRequest) GetFeature() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.feature
 	}
@@ -109,7 +117,7 @@ func (o *FeatureReviewRequest) GetFeature() (value string, ok bool) {
 //
 // Defines the organisation id of the account of which access is being reviewed
 func (o *FeatureReviewRequest) OrganizationId() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.organizationId
 	}
 	return ""
@@ -120,7 +128,7 @@ func (o *FeatureReviewRequest) OrganizationId() string {
 //
 // Defines the organisation id of the account of which access is being reviewed
 func (o *FeatureReviewRequest) GetOrganizationId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.organizationId
 	}

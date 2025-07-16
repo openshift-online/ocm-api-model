@@ -42,7 +42,7 @@ func WriteAzureEtcdDataEncryptionCustomerManaged(object *AzureEtcdDataEncryption
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAzureEtcdDataEncryptionCustomerManaged(object *AzureEtcdDataEncryption
 		stream.WriteString(object.encryptionType)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.kms != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.kms != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,9 @@ func UnmarshalAzureEtcdDataEncryptionCustomerManaged(source interface{}) (object
 
 // ReadAzureEtcdDataEncryptionCustomerManaged reads a value of the 'azure_etcd_data_encryption_customer_managed' type from the given iterator.
 func ReadAzureEtcdDataEncryptionCustomerManaged(iterator *jsoniter.Iterator) *AzureEtcdDataEncryptionCustomerManaged {
-	object := &AzureEtcdDataEncryptionCustomerManaged{}
+	object := &AzureEtcdDataEncryptionCustomerManaged{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -86,11 +88,11 @@ func ReadAzureEtcdDataEncryptionCustomerManaged(iterator *jsoniter.Iterator) *Az
 		case "encryption_type":
 			value := iterator.ReadString()
 			object.encryptionType = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "kms":
 			value := ReadAzureKmsEncryption(iterator)
 			object.kms = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

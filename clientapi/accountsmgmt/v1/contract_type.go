@@ -25,7 +25,7 @@ import (
 
 // Contract represents the values of the 'contract' type.
 type Contract struct {
-	bitmap_    uint32
+	fieldSet_  []bool
 	dimensions []*ContractDimension
 	endDate    time.Time
 	startDate  time.Time
@@ -33,13 +33,21 @@ type Contract struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Contract) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Dimensions returns the value of the 'dimensions' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Contract) Dimensions() []*ContractDimension {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.dimensions
 	}
 	return nil
@@ -48,7 +56,7 @@ func (o *Contract) Dimensions() []*ContractDimension {
 // GetDimensions returns the value of the 'dimensions' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Contract) GetDimensions() (value []*ContractDimension, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.dimensions
 	}
@@ -58,7 +66,7 @@ func (o *Contract) GetDimensions() (value []*ContractDimension, ok bool) {
 // EndDate returns the value of the 'end_date' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Contract) EndDate() time.Time {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.endDate
 	}
 	return time.Time{}
@@ -67,7 +75,7 @@ func (o *Contract) EndDate() time.Time {
 // GetEndDate returns the value of the 'end_date' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Contract) GetEndDate() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.endDate
 	}
@@ -77,7 +85,7 @@ func (o *Contract) GetEndDate() (value time.Time, ok bool) {
 // StartDate returns the value of the 'start_date' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Contract) StartDate() time.Time {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.startDate
 	}
 	return time.Time{}
@@ -86,7 +94,7 @@ func (o *Contract) StartDate() time.Time {
 // GetStartDate returns the value of the 'start_date' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Contract) GetStartDate() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.startDate
 	}

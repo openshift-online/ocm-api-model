@@ -35,7 +35,7 @@ const NodePoolNilKind = "NodePoolNil"
 //
 // Representation of a node pool in a cluster.
 type NodePool struct {
-	bitmap_              uint32
+	fieldSet_            []bool
 	id                   string
 	href                 string
 	awsNodePool          *AWSNodePool
@@ -60,7 +60,7 @@ func (o *NodePool) Kind() string {
 	if o == nil {
 		return NodePoolNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return NodePoolLinkKind
 	}
 	return NodePoolKind
@@ -68,12 +68,12 @@ func (o *NodePool) Kind() string {
 
 // Link returns true if this is a link.
 func (o *NodePool) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *NodePool) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -82,7 +82,7 @@ func (o *NodePool) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *NodePool) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -91,7 +91,7 @@ func (o *NodePool) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *NodePool) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -100,7 +100,7 @@ func (o *NodePool) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *NodePool) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -109,7 +109,17 @@ func (o *NodePool) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *NodePool) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // AWSNodePool returns the value of the 'AWS_node_pool' attribute, or
@@ -117,7 +127,7 @@ func (o *NodePool) Empty() bool {
 //
 // AWS specific parameters (Optional).
 func (o *NodePool) AWSNodePool() *AWSNodePool {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.awsNodePool
 	}
 	return nil
@@ -128,7 +138,7 @@ func (o *NodePool) AWSNodePool() *AWSNodePool {
 //
 // AWS specific parameters (Optional).
 func (o *NodePool) GetAWSNodePool() (value *AWSNodePool, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.awsNodePool
 	}
@@ -140,7 +150,7 @@ func (o *NodePool) GetAWSNodePool() (value *AWSNodePool, ok bool) {
 //
 // Specifies whether health checks should be enabled for machines in the NodePool.
 func (o *NodePool) AutoRepair() bool {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.autoRepair
 	}
 	return false
@@ -151,7 +161,7 @@ func (o *NodePool) AutoRepair() bool {
 //
 // Specifies whether health checks should be enabled for machines in the NodePool.
 func (o *NodePool) GetAutoRepair() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.autoRepair
 	}
@@ -164,7 +174,7 @@ func (o *NodePool) GetAutoRepair() (value bool, ok bool) {
 // Details for auto-scaling the machine pool.
 // Replicas and autoscaling cannot be used together.
 func (o *NodePool) Autoscaling() *NodePoolAutoscaling {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.autoscaling
 	}
 	return nil
@@ -176,7 +186,7 @@ func (o *NodePool) Autoscaling() *NodePoolAutoscaling {
 // Details for auto-scaling the machine pool.
 // Replicas and autoscaling cannot be used together.
 func (o *NodePool) GetAutoscaling() (value *NodePoolAutoscaling, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.autoscaling
 	}
@@ -188,7 +198,7 @@ func (o *NodePool) GetAutoscaling() (value *NodePoolAutoscaling, ok bool) {
 //
 // The availability zone upon which the node is created.
 func (o *NodePool) AvailabilityZone() string {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.availabilityZone
 	}
 	return ""
@@ -199,7 +209,7 @@ func (o *NodePool) AvailabilityZone() string {
 //
 // The availability zone upon which the node is created.
 func (o *NodePool) GetAvailabilityZone() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.availabilityZone
 	}
@@ -211,7 +221,7 @@ func (o *NodePool) GetAvailabilityZone() (value string, ok bool) {
 //
 // Azure specific parameters.
 func (o *NodePool) AzureNodePool() *AzureNodePool {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.azureNodePool
 	}
 	return nil
@@ -222,7 +232,7 @@ func (o *NodePool) AzureNodePool() *AzureNodePool {
 //
 // Azure specific parameters.
 func (o *NodePool) GetAzureNodePool() (value *AzureNodePool, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.azureNodePool
 	}
@@ -234,7 +244,7 @@ func (o *NodePool) GetAzureNodePool() (value *AzureNodePool, ok bool) {
 //
 // The names of the KubeletConfigs for this node pool.
 func (o *NodePool) KubeletConfigs() []string {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.kubeletConfigs
 	}
 	return nil
@@ -245,7 +255,7 @@ func (o *NodePool) KubeletConfigs() []string {
 //
 // The names of the KubeletConfigs for this node pool.
 func (o *NodePool) GetKubeletConfigs() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.kubeletConfigs
 	}
@@ -257,7 +267,7 @@ func (o *NodePool) GetKubeletConfigs() (value []string, ok bool) {
 //
 // The labels set on the Nodes created.
 func (o *NodePool) Labels() map[string]string {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.labels
 	}
 	return nil
@@ -268,7 +278,7 @@ func (o *NodePool) Labels() map[string]string {
 //
 // The labels set on the Nodes created.
 func (o *NodePool) GetLabels() (value map[string]string, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.labels
 	}
@@ -280,7 +290,7 @@ func (o *NodePool) GetLabels() (value map[string]string, ok bool) {
 //
 // Management parameters (Optional).
 func (o *NodePool) ManagementUpgrade() *NodePoolManagementUpgrade {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.managementUpgrade
 	}
 	return nil
@@ -291,7 +301,7 @@ func (o *NodePool) ManagementUpgrade() *NodePoolManagementUpgrade {
 //
 // Management parameters (Optional).
 func (o *NodePool) GetManagementUpgrade() (value *NodePoolManagementUpgrade, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.managementUpgrade
 	}
@@ -303,7 +313,7 @@ func (o *NodePool) GetManagementUpgrade() (value *NodePoolManagementUpgrade, ok 
 //
 // Time to wait for a NodePool to drain when it is upgraded or replaced before it is forcibly removed.
 func (o *NodePool) NodeDrainGracePeriod() *Value {
-	if o != nil && o.bitmap_&2048 != 0 {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.nodeDrainGracePeriod
 	}
 	return nil
@@ -314,7 +324,7 @@ func (o *NodePool) NodeDrainGracePeriod() *Value {
 //
 // Time to wait for a NodePool to drain when it is upgraded or replaced before it is forcibly removed.
 func (o *NodePool) GetNodeDrainGracePeriod() (value *Value, ok bool) {
-	ok = o != nil && o.bitmap_&2048 != 0
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.nodeDrainGracePeriod
 	}
@@ -327,7 +337,7 @@ func (o *NodePool) GetNodeDrainGracePeriod() (value *Value, ok bool) {
 // The number of Machines (and Nodes) to create.
 // Replicas and autoscaling cannot be used together.
 func (o *NodePool) Replicas() int {
-	if o != nil && o.bitmap_&4096 != 0 {
+	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
 		return o.replicas
 	}
 	return 0
@@ -339,7 +349,7 @@ func (o *NodePool) Replicas() int {
 // The number of Machines (and Nodes) to create.
 // Replicas and autoscaling cannot be used together.
 func (o *NodePool) GetReplicas() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&4096 != 0
+	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
 	if ok {
 		value = o.replicas
 	}
@@ -351,7 +361,7 @@ func (o *NodePool) GetReplicas() (value int, ok bool) {
 //
 // NodePool status.
 func (o *NodePool) Status() *NodePoolStatus {
-	if o != nil && o.bitmap_&8192 != 0 {
+	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
 		return o.status
 	}
 	return nil
@@ -362,7 +372,7 @@ func (o *NodePool) Status() *NodePoolStatus {
 //
 // NodePool status.
 func (o *NodePool) GetStatus() (value *NodePoolStatus, ok bool) {
-	ok = o != nil && o.bitmap_&8192 != 0
+	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
 	if ok {
 		value = o.status
 	}
@@ -374,7 +384,7 @@ func (o *NodePool) GetStatus() (value *NodePoolStatus, ok bool) {
 //
 // The subnet upon which the nodes are created.
 func (o *NodePool) Subnet() string {
-	if o != nil && o.bitmap_&16384 != 0 {
+	if o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14] {
 		return o.subnet
 	}
 	return ""
@@ -385,7 +395,7 @@ func (o *NodePool) Subnet() string {
 //
 // The subnet upon which the nodes are created.
 func (o *NodePool) GetSubnet() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16384 != 0
+	ok = o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14]
 	if ok {
 		value = o.subnet
 	}
@@ -397,7 +407,7 @@ func (o *NodePool) GetSubnet() (value string, ok bool) {
 //
 // The taints set on the Nodes created.
 func (o *NodePool) Taints() []*Taint {
-	if o != nil && o.bitmap_&32768 != 0 {
+	if o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15] {
 		return o.taints
 	}
 	return nil
@@ -408,7 +418,7 @@ func (o *NodePool) Taints() []*Taint {
 //
 // The taints set on the Nodes created.
 func (o *NodePool) GetTaints() (value []*Taint, ok bool) {
-	ok = o != nil && o.bitmap_&32768 != 0
+	ok = o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15]
 	if ok {
 		value = o.taints
 	}
@@ -420,7 +430,7 @@ func (o *NodePool) GetTaints() (value []*Taint, ok bool) {
 //
 // The names of the tuning configs for this node pool.
 func (o *NodePool) TuningConfigs() []string {
-	if o != nil && o.bitmap_&65536 != 0 {
+	if o != nil && len(o.fieldSet_) > 16 && o.fieldSet_[16] {
 		return o.tuningConfigs
 	}
 	return nil
@@ -431,7 +441,7 @@ func (o *NodePool) TuningConfigs() []string {
 //
 // The names of the tuning configs for this node pool.
 func (o *NodePool) GetTuningConfigs() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&65536 != 0
+	ok = o != nil && len(o.fieldSet_) > 16 && o.fieldSet_[16]
 	if ok {
 		value = o.tuningConfigs
 	}
@@ -443,7 +453,7 @@ func (o *NodePool) GetTuningConfigs() (value []string, ok bool) {
 //
 // Version of the node pool.
 func (o *NodePool) Version() *Version {
-	if o != nil && o.bitmap_&131072 != 0 {
+	if o != nil && len(o.fieldSet_) > 17 && o.fieldSet_[17] {
 		return o.version
 	}
 	return nil
@@ -454,7 +464,7 @@ func (o *NodePool) Version() *Version {
 //
 // Version of the node pool.
 func (o *NodePool) GetVersion() (value *Version, ok bool) {
-	ok = o != nil && o.bitmap_&131072 != 0
+	ok = o != nil && len(o.fieldSet_) > 17 && o.fieldSet_[17]
 	if ok {
 		value = o.version
 	}

@@ -35,7 +35,7 @@ const NodePoolAutoscalingNilKind = "NodePoolAutoscalingNil"
 //
 // Representation of a autoscaling in a node pool.
 type NodePoolAutoscaling struct {
-	bitmap_    uint32
+	fieldSet_  []bool
 	id         string
 	href       string
 	maxReplica int
@@ -47,7 +47,7 @@ func (o *NodePoolAutoscaling) Kind() string {
 	if o == nil {
 		return NodePoolAutoscalingNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return NodePoolAutoscalingLinkKind
 	}
 	return NodePoolAutoscalingKind
@@ -55,12 +55,12 @@ func (o *NodePoolAutoscaling) Kind() string {
 
 // Link returns true if this is a link.
 func (o *NodePoolAutoscaling) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *NodePoolAutoscaling) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -69,7 +69,7 @@ func (o *NodePoolAutoscaling) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *NodePoolAutoscaling) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -78,7 +78,7 @@ func (o *NodePoolAutoscaling) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *NodePoolAutoscaling) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -87,7 +87,7 @@ func (o *NodePoolAutoscaling) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *NodePoolAutoscaling) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -96,7 +96,17 @@ func (o *NodePoolAutoscaling) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *NodePoolAutoscaling) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // MaxReplica returns the value of the 'max_replica' attribute, or
@@ -104,7 +114,7 @@ func (o *NodePoolAutoscaling) Empty() bool {
 //
 // The maximum number of replicas for the node pool.
 func (o *NodePoolAutoscaling) MaxReplica() int {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.maxReplica
 	}
 	return 0
@@ -115,7 +125,7 @@ func (o *NodePoolAutoscaling) MaxReplica() int {
 //
 // The maximum number of replicas for the node pool.
 func (o *NodePoolAutoscaling) GetMaxReplica() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.maxReplica
 	}
@@ -127,7 +137,7 @@ func (o *NodePoolAutoscaling) GetMaxReplica() (value int, ok bool) {
 //
 // The minimum number of replicas for the node pool.
 func (o *NodePoolAutoscaling) MinReplica() int {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.minReplica
 	}
 	return 0
@@ -138,7 +148,7 @@ func (o *NodePoolAutoscaling) MinReplica() int {
 //
 // The minimum number of replicas for the node pool.
 func (o *NodePoolAutoscaling) GetMinReplica() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.minReplica
 	}

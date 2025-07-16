@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 
-// ClusterBuilder contains the data and logic needed to build 'cluster' objects.
-//
 // This represents the parameters needed by Managed Service to create a cluster.
 type ClusterBuilder struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	api         *ClusterAPIBuilder
 	aws         *AWSBuilder
 	displayName string
@@ -40,12 +38,22 @@ type ClusterBuilder struct {
 
 // NewCluster creates a new builder of 'cluster' objects.
 func NewCluster() *ClusterBuilder {
-	return &ClusterBuilder{}
+	return &ClusterBuilder{
+		fieldSet_: make([]bool, 12),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // API sets the value of the 'API' attribute to the given value.
@@ -54,9 +62,9 @@ func (b *ClusterBuilder) Empty() bool {
 func (b *ClusterBuilder) API(value *ClusterAPIBuilder) *ClusterBuilder {
 	b.api = value
 	if value != nil {
-		b.bitmap_ |= 1
+		b.fieldSet_[0] = true
 	} else {
-		b.bitmap_ &^= 1
+		b.fieldSet_[0] = false
 	}
 	return b
 }
@@ -67,9 +75,9 @@ func (b *ClusterBuilder) API(value *ClusterAPIBuilder) *ClusterBuilder {
 func (b *ClusterBuilder) AWS(value *AWSBuilder) *ClusterBuilder {
 	b.aws = value
 	if value != nil {
-		b.bitmap_ |= 2
+		b.fieldSet_[1] = true
 	} else {
-		b.bitmap_ &^= 2
+		b.fieldSet_[1] = false
 	}
 	return b
 }
@@ -77,35 +85,35 @@ func (b *ClusterBuilder) AWS(value *AWSBuilder) *ClusterBuilder {
 // DisplayName sets the value of the 'display_name' attribute to the given value.
 func (b *ClusterBuilder) DisplayName(value string) *ClusterBuilder {
 	b.displayName = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Href sets the value of the 'href' attribute to the given value.
 func (b *ClusterBuilder) Href(value string) *ClusterBuilder {
 	b.href = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Id sets the value of the 'id' attribute to the given value.
 func (b *ClusterBuilder) Id(value string) *ClusterBuilder {
 	b.id = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // MultiAZ sets the value of the 'multi_AZ' attribute to the given value.
 func (b *ClusterBuilder) MultiAZ(value bool) *ClusterBuilder {
 	b.multiAZ = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ClusterBuilder) Name(value string) *ClusterBuilder {
 	b.name = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -115,9 +123,9 @@ func (b *ClusterBuilder) Name(value string) *ClusterBuilder {
 func (b *ClusterBuilder) Network(value *NetworkBuilder) *ClusterBuilder {
 	b.network = value
 	if value != nil {
-		b.bitmap_ |= 128
+		b.fieldSet_[7] = true
 	} else {
-		b.bitmap_ &^= 128
+		b.fieldSet_[7] = false
 	}
 	return b
 }
@@ -126,9 +134,9 @@ func (b *ClusterBuilder) Network(value *NetworkBuilder) *ClusterBuilder {
 func (b *ClusterBuilder) Nodes(value *ClusterNodesBuilder) *ClusterBuilder {
 	b.nodes = value
 	if value != nil {
-		b.bitmap_ |= 256
+		b.fieldSet_[8] = true
 	} else {
-		b.bitmap_ &^= 256
+		b.fieldSet_[8] = false
 	}
 	return b
 }
@@ -137,9 +145,9 @@ func (b *ClusterBuilder) Nodes(value *ClusterNodesBuilder) *ClusterBuilder {
 func (b *ClusterBuilder) Properties(value map[string]string) *ClusterBuilder {
 	b.properties = value
 	if value != nil {
-		b.bitmap_ |= 512
+		b.fieldSet_[9] = true
 	} else {
-		b.bitmap_ &^= 512
+		b.fieldSet_[9] = false
 	}
 	return b
 }
@@ -150,9 +158,9 @@ func (b *ClusterBuilder) Properties(value map[string]string) *ClusterBuilder {
 func (b *ClusterBuilder) Region(value *CloudRegionBuilder) *ClusterBuilder {
 	b.region = value
 	if value != nil {
-		b.bitmap_ |= 1024
+		b.fieldSet_[10] = true
 	} else {
-		b.bitmap_ &^= 1024
+		b.fieldSet_[10] = false
 	}
 	return b
 }
@@ -160,7 +168,7 @@ func (b *ClusterBuilder) Region(value *CloudRegionBuilder) *ClusterBuilder {
 // State sets the value of the 'state' attribute to the given value.
 func (b *ClusterBuilder) State(value string) *ClusterBuilder {
 	b.state = value
-	b.bitmap_ |= 2048
+	b.fieldSet_[11] = true
 	return b
 }
 
@@ -169,7 +177,10 @@ func (b *ClusterBuilder) Copy(object *Cluster) *ClusterBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.api != nil {
 		b.api = NewClusterAPI().Copy(object.api)
 	} else {
@@ -215,7 +226,10 @@ func (b *ClusterBuilder) Copy(object *Cluster) *ClusterBuilder {
 // Build creates a 'cluster' object using the configuration stored in the builder.
 func (b *ClusterBuilder) Build() (object *Cluster, err error) {
 	object = new(Cluster)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.api != nil {
 		object.api, err = b.api.Build()
 		if err != nil {

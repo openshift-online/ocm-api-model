@@ -23,14 +23,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Contains the necessary attributes to fetch an OIDC Configuration thumbprint
 type OidcThumbprintInput struct {
-	bitmap_      uint32
+	fieldSet_    []bool
 	clusterId    string
 	oidcConfigId string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *OidcThumbprintInput) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ClusterId returns the value of the 'cluster_id' attribute, or
@@ -38,7 +46,7 @@ func (o *OidcThumbprintInput) Empty() bool {
 //
 // ClusterId is the for the cluster used, exclusive from OidcConfigId.
 func (o *OidcThumbprintInput) ClusterId() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.clusterId
 	}
 	return ""
@@ -49,7 +57,7 @@ func (o *OidcThumbprintInput) ClusterId() string {
 //
 // ClusterId is the for the cluster used, exclusive from OidcConfigId.
 func (o *OidcThumbprintInput) GetClusterId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.clusterId
 	}
@@ -61,7 +69,7 @@ func (o *OidcThumbprintInput) GetClusterId() (value string, ok bool) {
 //
 // OidcConfigId is the ID for the oidc config used, exclusive from ClusterId.
 func (o *OidcThumbprintInput) OidcConfigId() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.oidcConfigId
 	}
 	return ""
@@ -72,7 +80,7 @@ func (o *OidcThumbprintInput) OidcConfigId() string {
 //
 // OidcConfigId is the ID for the oidc config used, exclusive from ClusterId.
 func (o *OidcThumbprintInput) GetOidcConfigId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.oidcConfigId
 	}

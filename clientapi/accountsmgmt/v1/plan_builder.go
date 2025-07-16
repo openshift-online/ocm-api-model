@@ -19,64 +19,74 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// PlanBuilder contains the data and logic needed to build 'plan' objects.
 type PlanBuilder struct {
-	bitmap_  uint32
-	id       string
-	href     string
-	category string
-	name     string
-	type_    string
+	fieldSet_ []bool
+	id        string
+	href      string
+	category  string
+	name      string
+	type_     string
 }
 
 // NewPlan creates a new builder of 'plan' objects.
 func NewPlan() *PlanBuilder {
-	return &PlanBuilder{}
+	return &PlanBuilder{
+		fieldSet_: make([]bool, 6),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *PlanBuilder) Link(value bool) *PlanBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *PlanBuilder) ID(value string) *PlanBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *PlanBuilder) HREF(value string) *PlanBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *PlanBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Category sets the value of the 'category' attribute to the given value.
 func (b *PlanBuilder) Category(value string) *PlanBuilder {
 	b.category = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *PlanBuilder) Name(value string) *PlanBuilder {
 	b.name = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *PlanBuilder) Type(value string) *PlanBuilder {
 	b.type_ = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -85,7 +95,10 @@ func (b *PlanBuilder) Copy(object *Plan) *PlanBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.category = object.category
@@ -99,7 +112,10 @@ func (b *PlanBuilder) Build() (object *Plan, err error) {
 	object = new(Plan)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.category = b.category
 	object.name = b.name
 	object.type_ = b.type_

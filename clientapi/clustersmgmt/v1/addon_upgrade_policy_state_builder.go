@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AddonUpgradePolicyStateBuilder contains the data and logic needed to build 'addon_upgrade_policy_state' objects.
-//
 // Representation of an addon upgrade policy state that that is set for a cluster.
 type AddonUpgradePolicyStateBuilder struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	id          string
 	href        string
 	description string
@@ -32,38 +30,49 @@ type AddonUpgradePolicyStateBuilder struct {
 
 // NewAddonUpgradePolicyState creates a new builder of 'addon_upgrade_policy_state' objects.
 func NewAddonUpgradePolicyState() *AddonUpgradePolicyStateBuilder {
-	return &AddonUpgradePolicyStateBuilder{}
+	return &AddonUpgradePolicyStateBuilder{
+		fieldSet_: make([]bool, 5),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddonUpgradePolicyStateBuilder) Link(value bool) *AddonUpgradePolicyStateBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddonUpgradePolicyStateBuilder) ID(value string) *AddonUpgradePolicyStateBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AddonUpgradePolicyStateBuilder) HREF(value string) *AddonUpgradePolicyStateBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddonUpgradePolicyStateBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *AddonUpgradePolicyStateBuilder) Description(value string) *AddonUpgradePolicyStateBuilder {
 	b.description = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -72,7 +81,7 @@ func (b *AddonUpgradePolicyStateBuilder) Description(value string) *AddonUpgrade
 // Overall state of a cluster upgrade policy.
 func (b *AddonUpgradePolicyStateBuilder) Value(value UpgradePolicyStateValue) *AddonUpgradePolicyStateBuilder {
 	b.value = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -81,7 +90,10 @@ func (b *AddonUpgradePolicyStateBuilder) Copy(object *AddonUpgradePolicyState) *
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.description = object.description
@@ -94,7 +106,10 @@ func (b *AddonUpgradePolicyStateBuilder) Build() (object *AddonUpgradePolicyStat
 	object = new(AddonUpgradePolicyState)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.description = b.description
 	object.value = b.value
 	return

@@ -43,13 +43,13 @@ func WriteAWSMachinePool(object *AWSMachinePool, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(AWSMachinePoolLinkKind)
 	} else {
 		stream.WriteString(AWSMachinePoolKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteAWSMachinePool(object *AWSMachinePool, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteAWSMachinePool(object *AWSMachinePool, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0 && object.additionalSecurityGroupIds != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.additionalSecurityGroupIds != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteAWSMachinePool(object *AWSMachinePool, stream *jsoniter.Stream) {
 		WriteStringList(object.additionalSecurityGroupIds, stream)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0 && object.availabilityZoneTypes != nil
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.availabilityZoneTypes != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -104,7 +104,7 @@ func WriteAWSMachinePool(object *AWSMachinePool, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = object.bitmap_&32 != 0 && object.spotMarketOptions != nil
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.spotMarketOptions != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -113,7 +113,7 @@ func WriteAWSMachinePool(object *AWSMachinePool, stream *jsoniter.Stream) {
 		WriteAWSSpotMarketOptions(object.spotMarketOptions, stream)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0 && object.subnetOutposts != nil
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.subnetOutposts != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -142,7 +142,7 @@ func WriteAWSMachinePool(object *AWSMachinePool, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = object.bitmap_&128 != 0 && object.tags != nil
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7] && object.tags != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -187,7 +187,9 @@ func UnmarshalAWSMachinePool(source interface{}) (object *AWSMachinePool, err er
 
 // ReadAWSMachinePool reads a value of the 'AWS_machine_pool' type from the given iterator.
 func ReadAWSMachinePool(iterator *jsoniter.Iterator) *AWSMachinePool {
-	object := &AWSMachinePool{}
+	object := &AWSMachinePool{
+		fieldSet_: make([]bool, 8),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -197,18 +199,18 @@ func ReadAWSMachinePool(iterator *jsoniter.Iterator) *AWSMachinePool {
 		case "kind":
 			value := iterator.ReadString()
 			if value == AWSMachinePoolLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "additional_security_group_ids":
 			value := ReadStringList(iterator)
 			object.additionalSecurityGroupIds = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "availability_zone_types":
 			value := map[string]string{}
 			for {
@@ -220,11 +222,11 @@ func ReadAWSMachinePool(iterator *jsoniter.Iterator) *AWSMachinePool {
 				value[key] = item
 			}
 			object.availabilityZoneTypes = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "spot_market_options":
 			value := ReadAWSSpotMarketOptions(iterator)
 			object.spotMarketOptions = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "subnet_outposts":
 			value := map[string]string{}
 			for {
@@ -236,7 +238,7 @@ func ReadAWSMachinePool(iterator *jsoniter.Iterator) *AWSMachinePool {
 				value[key] = item
 			}
 			object.subnetOutposts = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "tags":
 			value := map[string]string{}
 			for {
@@ -248,7 +250,7 @@ func ReadAWSMachinePool(iterator *jsoniter.Iterator) *AWSMachinePool {
 				value[key] = item
 			}
 			object.tags = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		default:
 			iterator.ReadAny()
 		}

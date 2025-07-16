@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Contains the necessary attributes to support oidc configuration thumbprint operations such as fetching/creation of a thumbprint
 type OidcThumbprint struct {
-	bitmap_      uint32
+	fieldSet_    []bool
 	href         string
 	clusterId    string
 	kind         string
@@ -33,7 +33,15 @@ type OidcThumbprint struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *OidcThumbprint) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // HREF returns the value of the 'HREF' attribute, or
@@ -41,7 +49,7 @@ func (o *OidcThumbprint) Empty() bool {
 //
 // HREF for the oidc config thumbprint, filled in response.
 func (o *OidcThumbprint) HREF() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.href
 	}
 	return ""
@@ -52,7 +60,7 @@ func (o *OidcThumbprint) HREF() string {
 //
 // HREF for the oidc config thumbprint, filled in response.
 func (o *OidcThumbprint) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.href
 	}
@@ -64,7 +72,7 @@ func (o *OidcThumbprint) GetHREF() (value string, ok bool) {
 //
 // ClusterId is the for the cluster used, filled in response.
 func (o *OidcThumbprint) ClusterId() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.clusterId
 	}
 	return ""
@@ -75,7 +83,7 @@ func (o *OidcThumbprint) ClusterId() string {
 //
 // ClusterId is the for the cluster used, filled in response.
 func (o *OidcThumbprint) GetClusterId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.clusterId
 	}
@@ -87,7 +95,7 @@ func (o *OidcThumbprint) GetClusterId() (value string, ok bool) {
 //
 // Kind is the resource type, filled in response.
 func (o *OidcThumbprint) Kind() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.kind
 	}
 	return ""
@@ -98,7 +106,7 @@ func (o *OidcThumbprint) Kind() string {
 //
 // Kind is the resource type, filled in response.
 func (o *OidcThumbprint) GetKind() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.kind
 	}
@@ -110,7 +118,7 @@ func (o *OidcThumbprint) GetKind() (value string, ok bool) {
 //
 // OidcConfigId is the ID for the oidc config used, filled in response.
 func (o *OidcThumbprint) OidcConfigId() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.oidcConfigId
 	}
 	return ""
@@ -121,7 +129,7 @@ func (o *OidcThumbprint) OidcConfigId() string {
 //
 // OidcConfigId is the ID for the oidc config used, filled in response.
 func (o *OidcThumbprint) GetOidcConfigId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.oidcConfigId
 	}
@@ -133,7 +141,7 @@ func (o *OidcThumbprint) GetOidcConfigId() (value string, ok bool) {
 //
 // Thumbprint is the thumbprint itself, filled in response.
 func (o *OidcThumbprint) Thumbprint() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.thumbprint
 	}
 	return ""
@@ -144,7 +152,7 @@ func (o *OidcThumbprint) Thumbprint() string {
 //
 // Thumbprint is the thumbprint itself, filled in response.
 func (o *OidcThumbprint) GetThumbprint() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.thumbprint
 	}

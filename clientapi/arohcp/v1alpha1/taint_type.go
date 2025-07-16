@@ -23,15 +23,23 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Representation of a Taint set on a MachinePool in a cluster.
 type Taint struct {
-	bitmap_ uint32
-	effect  string
-	key     string
-	value   string
+	fieldSet_ []bool
+	effect    string
+	key       string
+	value     string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Taint) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Effect returns the value of the 'effect' attribute, or
@@ -39,7 +47,7 @@ func (o *Taint) Empty() bool {
 //
 // The effect on the node for the pods matching the taint, i.e: NoSchedule, NoExecute, PreferNoSchedule.
 func (o *Taint) Effect() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.effect
 	}
 	return ""
@@ -50,7 +58,7 @@ func (o *Taint) Effect() string {
 //
 // The effect on the node for the pods matching the taint, i.e: NoSchedule, NoExecute, PreferNoSchedule.
 func (o *Taint) GetEffect() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.effect
 	}
@@ -62,7 +70,7 @@ func (o *Taint) GetEffect() (value string, ok bool) {
 //
 // The key for the taint
 func (o *Taint) Key() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.key
 	}
 	return ""
@@ -73,7 +81,7 @@ func (o *Taint) Key() string {
 //
 // The key for the taint
 func (o *Taint) GetKey() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.key
 	}
@@ -85,7 +93,7 @@ func (o *Taint) GetKey() (value string, ok bool) {
 //
 // The value for the taint.
 func (o *Taint) Value() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.value
 	}
 	return ""
@@ -96,7 +104,7 @@ func (o *Taint) Value() string {
 //
 // The value for the taint.
 func (o *Taint) GetValue() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.value
 	}

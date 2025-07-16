@@ -23,9 +23,8 @@ import (
 	time "time"
 )
 
-// ResourceQuotaBuilder contains the data and logic needed to build 'resource_quota' objects.
 type ResourceQuotaBuilder struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	id             string
 	href           string
 	sku            string
@@ -38,73 +37,84 @@ type ResourceQuotaBuilder struct {
 
 // NewResourceQuota creates a new builder of 'resource_quota' objects.
 func NewResourceQuota() *ResourceQuotaBuilder {
-	return &ResourceQuotaBuilder{}
+	return &ResourceQuotaBuilder{
+		fieldSet_: make([]bool, 9),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ResourceQuotaBuilder) Link(value bool) *ResourceQuotaBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ResourceQuotaBuilder) ID(value string) *ResourceQuotaBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ResourceQuotaBuilder) HREF(value string) *ResourceQuotaBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ResourceQuotaBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // SKU sets the value of the 'SKU' attribute to the given value.
 func (b *ResourceQuotaBuilder) SKU(value string) *ResourceQuotaBuilder {
 	b.sku = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ResourceQuotaBuilder) CreatedAt(value time.Time) *ResourceQuotaBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *ResourceQuotaBuilder) OrganizationID(value string) *ResourceQuotaBuilder {
 	b.organizationID = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // SkuCount sets the value of the 'sku_count' attribute to the given value.
 func (b *ResourceQuotaBuilder) SkuCount(value int) *ResourceQuotaBuilder {
 	b.skuCount = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *ResourceQuotaBuilder) Type(value string) *ResourceQuotaBuilder {
 	b.type_ = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ResourceQuotaBuilder) UpdatedAt(value time.Time) *ResourceQuotaBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
@@ -113,7 +123,10 @@ func (b *ResourceQuotaBuilder) Copy(object *ResourceQuota) *ResourceQuotaBuilder
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.sku = object.sku
@@ -130,7 +143,10 @@ func (b *ResourceQuotaBuilder) Build() (object *ResourceQuota, err error) {
 	object = new(ResourceQuota)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.sku = b.sku
 	object.createdAt = b.createdAt
 	object.organizationID = b.organizationID

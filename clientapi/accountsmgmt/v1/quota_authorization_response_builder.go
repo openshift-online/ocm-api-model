@@ -19,9 +19,8 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// QuotaAuthorizationResponseBuilder contains the data and logic needed to build 'quota_authorization_response' objects.
 type QuotaAuthorizationResponseBuilder struct {
-	bitmap_         uint32
+	fieldSet_       []bool
 	excessResources []*ReservedResourceBuilder
 	subscription    *SubscriptionBuilder
 	allowed         bool
@@ -29,18 +28,28 @@ type QuotaAuthorizationResponseBuilder struct {
 
 // NewQuotaAuthorizationResponse creates a new builder of 'quota_authorization_response' objects.
 func NewQuotaAuthorizationResponse() *QuotaAuthorizationResponseBuilder {
-	return &QuotaAuthorizationResponseBuilder{}
+	return &QuotaAuthorizationResponseBuilder{
+		fieldSet_: make([]bool, 3),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *QuotaAuthorizationResponseBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Allowed sets the value of the 'allowed' attribute to the given value.
 func (b *QuotaAuthorizationResponseBuilder) Allowed(value bool) *QuotaAuthorizationResponseBuilder {
 	b.allowed = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -48,7 +57,7 @@ func (b *QuotaAuthorizationResponseBuilder) Allowed(value bool) *QuotaAuthorizat
 func (b *QuotaAuthorizationResponseBuilder) ExcessResources(values ...*ReservedResourceBuilder) *QuotaAuthorizationResponseBuilder {
 	b.excessResources = make([]*ReservedResourceBuilder, len(values))
 	copy(b.excessResources, values)
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -56,9 +65,9 @@ func (b *QuotaAuthorizationResponseBuilder) ExcessResources(values ...*ReservedR
 func (b *QuotaAuthorizationResponseBuilder) Subscription(value *SubscriptionBuilder) *QuotaAuthorizationResponseBuilder {
 	b.subscription = value
 	if value != nil {
-		b.bitmap_ |= 4
+		b.fieldSet_[2] = true
 	} else {
-		b.bitmap_ &^= 4
+		b.fieldSet_[2] = false
 	}
 	return b
 }
@@ -68,7 +77,10 @@ func (b *QuotaAuthorizationResponseBuilder) Copy(object *QuotaAuthorizationRespo
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.allowed = object.allowed
 	if object.excessResources != nil {
 		b.excessResources = make([]*ReservedResourceBuilder, len(object.excessResources))
@@ -89,7 +101,10 @@ func (b *QuotaAuthorizationResponseBuilder) Copy(object *QuotaAuthorizationRespo
 // Build creates a 'quota_authorization_response' object using the configuration stored in the builder.
 func (b *QuotaAuthorizationResponseBuilder) Build() (object *QuotaAuthorizationResponse, err error) {
 	object = new(QuotaAuthorizationResponse)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.allowed = b.allowed
 	if b.excessResources != nil {
 		object.excessResources = make([]*ReservedResource, len(b.excessResources))

@@ -19,50 +19,59 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// EncryptionKeyBuilder contains the data and logic needed to build 'encryption_key' objects.
-//
 // Description of a cloud provider encryption key.
 type EncryptionKeyBuilder struct {
-	bitmap_ uint32
-	id      string
-	href    string
-	name    string
+	fieldSet_ []bool
+	id        string
+	href      string
+	name      string
 }
 
 // NewEncryptionKey creates a new builder of 'encryption_key' objects.
 func NewEncryptionKey() *EncryptionKeyBuilder {
-	return &EncryptionKeyBuilder{}
+	return &EncryptionKeyBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *EncryptionKeyBuilder) Link(value bool) *EncryptionKeyBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *EncryptionKeyBuilder) ID(value string) *EncryptionKeyBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *EncryptionKeyBuilder) HREF(value string) *EncryptionKeyBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *EncryptionKeyBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *EncryptionKeyBuilder) Name(value string) *EncryptionKeyBuilder {
 	b.name = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -71,7 +80,10 @@ func (b *EncryptionKeyBuilder) Copy(object *EncryptionKey) *EncryptionKeyBuilder
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.name = object.name
@@ -83,7 +95,10 @@ func (b *EncryptionKeyBuilder) Build() (object *EncryptionKey, err error) {
 	object = new(EncryptionKey)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.name = b.name
 	return
 }

@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// NodePoolBuilder contains the data and logic needed to build 'node_pool' objects.
-//
 // Representation of a node pool in a cluster.
 type NodePoolBuilder struct {
-	bitmap_              uint32
+	fieldSet_            []bool
 	id                   string
 	href                 string
 	awsNodePool          *AWSNodePoolBuilder
@@ -45,32 +43,43 @@ type NodePoolBuilder struct {
 
 // NewNodePool creates a new builder of 'node_pool' objects.
 func NewNodePool() *NodePoolBuilder {
-	return &NodePoolBuilder{}
+	return &NodePoolBuilder{
+		fieldSet_: make([]bool, 18),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *NodePoolBuilder) Link(value bool) *NodePoolBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *NodePoolBuilder) ID(value string) *NodePoolBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *NodePoolBuilder) HREF(value string) *NodePoolBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *NodePoolBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // AWSNodePool sets the value of the 'AWS_node_pool' attribute to the given value.
@@ -79,9 +88,9 @@ func (b *NodePoolBuilder) Empty() bool {
 func (b *NodePoolBuilder) AWSNodePool(value *AWSNodePoolBuilder) *NodePoolBuilder {
 	b.awsNodePool = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -89,7 +98,7 @@ func (b *NodePoolBuilder) AWSNodePool(value *AWSNodePoolBuilder) *NodePoolBuilde
 // AutoRepair sets the value of the 'auto_repair' attribute to the given value.
 func (b *NodePoolBuilder) AutoRepair(value bool) *NodePoolBuilder {
 	b.autoRepair = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -99,9 +108,9 @@ func (b *NodePoolBuilder) AutoRepair(value bool) *NodePoolBuilder {
 func (b *NodePoolBuilder) Autoscaling(value *NodePoolAutoscalingBuilder) *NodePoolBuilder {
 	b.autoscaling = value
 	if value != nil {
-		b.bitmap_ |= 32
+		b.fieldSet_[5] = true
 	} else {
-		b.bitmap_ &^= 32
+		b.fieldSet_[5] = false
 	}
 	return b
 }
@@ -109,7 +118,7 @@ func (b *NodePoolBuilder) Autoscaling(value *NodePoolAutoscalingBuilder) *NodePo
 // AvailabilityZone sets the value of the 'availability_zone' attribute to the given value.
 func (b *NodePoolBuilder) AvailabilityZone(value string) *NodePoolBuilder {
 	b.availabilityZone = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -119,9 +128,9 @@ func (b *NodePoolBuilder) AvailabilityZone(value string) *NodePoolBuilder {
 func (b *NodePoolBuilder) AzureNodePool(value *AzureNodePoolBuilder) *NodePoolBuilder {
 	b.azureNodePool = value
 	if value != nil {
-		b.bitmap_ |= 128
+		b.fieldSet_[7] = true
 	} else {
-		b.bitmap_ &^= 128
+		b.fieldSet_[7] = false
 	}
 	return b
 }
@@ -130,7 +139,7 @@ func (b *NodePoolBuilder) AzureNodePool(value *AzureNodePoolBuilder) *NodePoolBu
 func (b *NodePoolBuilder) KubeletConfigs(values ...string) *NodePoolBuilder {
 	b.kubeletConfigs = make([]string, len(values))
 	copy(b.kubeletConfigs, values)
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
@@ -138,9 +147,9 @@ func (b *NodePoolBuilder) KubeletConfigs(values ...string) *NodePoolBuilder {
 func (b *NodePoolBuilder) Labels(value map[string]string) *NodePoolBuilder {
 	b.labels = value
 	if value != nil {
-		b.bitmap_ |= 512
+		b.fieldSet_[9] = true
 	} else {
-		b.bitmap_ &^= 512
+		b.fieldSet_[9] = false
 	}
 	return b
 }
@@ -151,9 +160,9 @@ func (b *NodePoolBuilder) Labels(value map[string]string) *NodePoolBuilder {
 func (b *NodePoolBuilder) ManagementUpgrade(value *NodePoolManagementUpgradeBuilder) *NodePoolBuilder {
 	b.managementUpgrade = value
 	if value != nil {
-		b.bitmap_ |= 1024
+		b.fieldSet_[10] = true
 	} else {
-		b.bitmap_ &^= 1024
+		b.fieldSet_[10] = false
 	}
 	return b
 }
@@ -181,9 +190,9 @@ func (b *NodePoolBuilder) ManagementUpgrade(value *NodePoolManagementUpgradeBuil
 func (b *NodePoolBuilder) NodeDrainGracePeriod(value *ValueBuilder) *NodePoolBuilder {
 	b.nodeDrainGracePeriod = value
 	if value != nil {
-		b.bitmap_ |= 2048
+		b.fieldSet_[11] = true
 	} else {
-		b.bitmap_ &^= 2048
+		b.fieldSet_[11] = false
 	}
 	return b
 }
@@ -191,7 +200,7 @@ func (b *NodePoolBuilder) NodeDrainGracePeriod(value *ValueBuilder) *NodePoolBui
 // Replicas sets the value of the 'replicas' attribute to the given value.
 func (b *NodePoolBuilder) Replicas(value int) *NodePoolBuilder {
 	b.replicas = value
-	b.bitmap_ |= 4096
+	b.fieldSet_[12] = true
 	return b
 }
 
@@ -201,9 +210,9 @@ func (b *NodePoolBuilder) Replicas(value int) *NodePoolBuilder {
 func (b *NodePoolBuilder) Status(value *NodePoolStatusBuilder) *NodePoolBuilder {
 	b.status = value
 	if value != nil {
-		b.bitmap_ |= 8192
+		b.fieldSet_[13] = true
 	} else {
-		b.bitmap_ &^= 8192
+		b.fieldSet_[13] = false
 	}
 	return b
 }
@@ -211,7 +220,7 @@ func (b *NodePoolBuilder) Status(value *NodePoolStatusBuilder) *NodePoolBuilder 
 // Subnet sets the value of the 'subnet' attribute to the given value.
 func (b *NodePoolBuilder) Subnet(value string) *NodePoolBuilder {
 	b.subnet = value
-	b.bitmap_ |= 16384
+	b.fieldSet_[14] = true
 	return b
 }
 
@@ -219,7 +228,7 @@ func (b *NodePoolBuilder) Subnet(value string) *NodePoolBuilder {
 func (b *NodePoolBuilder) Taints(values ...*TaintBuilder) *NodePoolBuilder {
 	b.taints = make([]*TaintBuilder, len(values))
 	copy(b.taints, values)
-	b.bitmap_ |= 32768
+	b.fieldSet_[15] = true
 	return b
 }
 
@@ -227,7 +236,7 @@ func (b *NodePoolBuilder) Taints(values ...*TaintBuilder) *NodePoolBuilder {
 func (b *NodePoolBuilder) TuningConfigs(values ...string) *NodePoolBuilder {
 	b.tuningConfigs = make([]string, len(values))
 	copy(b.tuningConfigs, values)
-	b.bitmap_ |= 65536
+	b.fieldSet_[16] = true
 	return b
 }
 
@@ -237,9 +246,9 @@ func (b *NodePoolBuilder) TuningConfigs(values ...string) *NodePoolBuilder {
 func (b *NodePoolBuilder) Version(value *VersionBuilder) *NodePoolBuilder {
 	b.version = value
 	if value != nil {
-		b.bitmap_ |= 131072
+		b.fieldSet_[17] = true
 	} else {
-		b.bitmap_ &^= 131072
+		b.fieldSet_[17] = false
 	}
 	return b
 }
@@ -249,7 +258,10 @@ func (b *NodePoolBuilder) Copy(object *NodePool) *NodePoolBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.awsNodePool != nil {
@@ -327,7 +339,10 @@ func (b *NodePoolBuilder) Build() (object *NodePool, err error) {
 	object = new(NodePool)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.awsNodePool != nil {
 		object.awsNodePool, err = b.awsNodePool.Build()
 		if err != nil {

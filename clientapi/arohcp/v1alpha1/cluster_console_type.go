@@ -23,13 +23,21 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Information about the console of a cluster.
 type ClusterConsole struct {
-	bitmap_ uint32
-	url     string
+	fieldSet_ []bool
+	url       string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterConsole) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // URL returns the value of the 'URL' attribute, or
@@ -37,7 +45,7 @@ func (o *ClusterConsole) Empty() bool {
 //
 // The URL of the console of the cluster.
 func (o *ClusterConsole) URL() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.url
 	}
 	return ""
@@ -48,7 +56,7 @@ func (o *ClusterConsole) URL() string {
 //
 // The URL of the console of the cluster.
 func (o *ClusterConsole) GetURL() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.url
 	}

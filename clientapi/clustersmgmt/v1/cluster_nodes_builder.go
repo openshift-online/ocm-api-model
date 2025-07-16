@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// ClusterNodesBuilder contains the data and logic needed to build 'cluster_nodes' objects.
-//
 // Counts of different classes of nodes inside a cluster.
 type ClusterNodesBuilder struct {
-	bitmap_              uint32
+	fieldSet_            []bool
 	autoscaleCompute     *MachinePoolAutoscalingBuilder
 	availabilityZones    []string
 	compute              int
@@ -40,12 +38,22 @@ type ClusterNodesBuilder struct {
 
 // NewClusterNodes creates a new builder of 'cluster_nodes' objects.
 func NewClusterNodes() *ClusterNodesBuilder {
-	return &ClusterNodesBuilder{}
+	return &ClusterNodesBuilder{
+		fieldSet_: make([]bool, 12),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterNodesBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AutoscaleCompute sets the value of the 'autoscale_compute' attribute to the given value.
@@ -54,9 +62,9 @@ func (b *ClusterNodesBuilder) Empty() bool {
 func (b *ClusterNodesBuilder) AutoscaleCompute(value *MachinePoolAutoscalingBuilder) *ClusterNodesBuilder {
 	b.autoscaleCompute = value
 	if value != nil {
-		b.bitmap_ |= 1
+		b.fieldSet_[0] = true
 	} else {
-		b.bitmap_ &^= 1
+		b.fieldSet_[0] = false
 	}
 	return b
 }
@@ -65,14 +73,14 @@ func (b *ClusterNodesBuilder) AutoscaleCompute(value *MachinePoolAutoscalingBuil
 func (b *ClusterNodesBuilder) AvailabilityZones(values ...string) *ClusterNodesBuilder {
 	b.availabilityZones = make([]string, len(values))
 	copy(b.availabilityZones, values)
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // Compute sets the value of the 'compute' attribute to the given value.
 func (b *ClusterNodesBuilder) Compute(value int) *ClusterNodesBuilder {
 	b.compute = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -80,9 +88,9 @@ func (b *ClusterNodesBuilder) Compute(value int) *ClusterNodesBuilder {
 func (b *ClusterNodesBuilder) ComputeLabels(value map[string]string) *ClusterNodesBuilder {
 	b.computeLabels = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -93,9 +101,9 @@ func (b *ClusterNodesBuilder) ComputeLabels(value map[string]string) *ClusterNod
 func (b *ClusterNodesBuilder) ComputeMachineType(value *MachineTypeBuilder) *ClusterNodesBuilder {
 	b.computeMachineType = value
 	if value != nil {
-		b.bitmap_ |= 16
+		b.fieldSet_[4] = true
 	} else {
-		b.bitmap_ &^= 16
+		b.fieldSet_[4] = false
 	}
 	return b
 }
@@ -106,9 +114,9 @@ func (b *ClusterNodesBuilder) ComputeMachineType(value *MachineTypeBuilder) *Clu
 func (b *ClusterNodesBuilder) ComputeRootVolume(value *RootVolumeBuilder) *ClusterNodesBuilder {
 	b.computeRootVolume = value
 	if value != nil {
-		b.bitmap_ |= 32
+		b.fieldSet_[5] = true
 	} else {
-		b.bitmap_ &^= 32
+		b.fieldSet_[5] = false
 	}
 	return b
 }
@@ -116,7 +124,7 @@ func (b *ClusterNodesBuilder) ComputeRootVolume(value *RootVolumeBuilder) *Clust
 // Infra sets the value of the 'infra' attribute to the given value.
 func (b *ClusterNodesBuilder) Infra(value int) *ClusterNodesBuilder {
 	b.infra = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -126,9 +134,9 @@ func (b *ClusterNodesBuilder) Infra(value int) *ClusterNodesBuilder {
 func (b *ClusterNodesBuilder) InfraMachineType(value *MachineTypeBuilder) *ClusterNodesBuilder {
 	b.infraMachineType = value
 	if value != nil {
-		b.bitmap_ |= 128
+		b.fieldSet_[7] = true
 	} else {
-		b.bitmap_ &^= 128
+		b.fieldSet_[7] = false
 	}
 	return b
 }
@@ -136,7 +144,7 @@ func (b *ClusterNodesBuilder) InfraMachineType(value *MachineTypeBuilder) *Clust
 // Master sets the value of the 'master' attribute to the given value.
 func (b *ClusterNodesBuilder) Master(value int) *ClusterNodesBuilder {
 	b.master = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
@@ -146,9 +154,9 @@ func (b *ClusterNodesBuilder) Master(value int) *ClusterNodesBuilder {
 func (b *ClusterNodesBuilder) MasterMachineType(value *MachineTypeBuilder) *ClusterNodesBuilder {
 	b.masterMachineType = value
 	if value != nil {
-		b.bitmap_ |= 512
+		b.fieldSet_[9] = true
 	} else {
-		b.bitmap_ &^= 512
+		b.fieldSet_[9] = false
 	}
 	return b
 }
@@ -157,14 +165,14 @@ func (b *ClusterNodesBuilder) MasterMachineType(value *MachineTypeBuilder) *Clus
 func (b *ClusterNodesBuilder) SecurityGroupFilters(values ...*MachinePoolSecurityGroupFilterBuilder) *ClusterNodesBuilder {
 	b.securityGroupFilters = make([]*MachinePoolSecurityGroupFilterBuilder, len(values))
 	copy(b.securityGroupFilters, values)
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
 // Total sets the value of the 'total' attribute to the given value.
 func (b *ClusterNodesBuilder) Total(value int) *ClusterNodesBuilder {
 	b.total = value
-	b.bitmap_ |= 2048
+	b.fieldSet_[11] = true
 	return b
 }
 
@@ -173,7 +181,10 @@ func (b *ClusterNodesBuilder) Copy(object *ClusterNodes) *ClusterNodesBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.autoscaleCompute != nil {
 		b.autoscaleCompute = NewMachinePoolAutoscaling().Copy(object.autoscaleCompute)
 	} else {
@@ -231,7 +242,10 @@ func (b *ClusterNodesBuilder) Copy(object *ClusterNodes) *ClusterNodesBuilder {
 // Build creates a 'cluster_nodes' object using the configuration stored in the builder.
 func (b *ClusterNodesBuilder) Build() (object *ClusterNodes, err error) {
 	object = new(ClusterNodes)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.autoscaleCompute != nil {
 		object.autoscaleCompute, err = b.autoscaleCompute.Build()
 		if err != nil {

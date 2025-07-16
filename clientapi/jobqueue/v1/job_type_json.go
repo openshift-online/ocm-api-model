@@ -43,13 +43,13 @@ func WriteJob(object *Job, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(JobLinkKind)
 	} else {
 		stream.WriteString(JobKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteJob(object *Job, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteJob(object *Job, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteJob(object *Job, stream *jsoniter.Stream) {
 		stream.WriteString((object.abandonedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteJob(object *Job, stream *jsoniter.Stream) {
 		stream.WriteString(object.arguments)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteJob(object *Job, stream *jsoniter.Stream) {
 		stream.WriteInt(object.attempts)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteJob(object *Job, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteJob(object *Job, stream *jsoniter.Stream) {
 		stream.WriteString(object.receiptId)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -136,7 +136,9 @@ func UnmarshalJob(source interface{}) (object *Job, err error) {
 
 // ReadJob reads a value of the 'job' type from the given iterator.
 func ReadJob(iterator *jsoniter.Iterator) *Job {
-	object := &Job{}
+	object := &Job{
+		fieldSet_: make([]bool, 9),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -146,14 +148,14 @@ func ReadJob(iterator *jsoniter.Iterator) *Job {
 		case "kind":
 			value := iterator.ReadString()
 			if value == JobLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "abandoned_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -161,15 +163,15 @@ func ReadJob(iterator *jsoniter.Iterator) *Job {
 				iterator.ReportError("", err.Error())
 			}
 			object.abandonedAt = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "arguments":
 			value := iterator.ReadString()
 			object.arguments = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "attempts":
 			value := iterator.ReadInt()
 			object.attempts = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -177,11 +179,11 @@ func ReadJob(iterator *jsoniter.Iterator) *Job {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "receipt_id":
 			value := iterator.ReadString()
 			object.receiptId = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -189,7 +191,7 @@ func ReadJob(iterator *jsoniter.Iterator) *Job {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		default:
 			iterator.ReadAny()
 		}

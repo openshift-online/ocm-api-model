@@ -42,7 +42,7 @@ func WriteAdditionalCatalogSource(object *AdditionalCatalogSource, stream *jsoni
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAdditionalCatalogSource(object *AdditionalCatalogSource, stream *jsoni
 		stream.WriteString(object.id)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteAdditionalCatalogSource(object *AdditionalCatalogSource, stream *jsoni
 		stream.WriteBool(object.enabled)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteAdditionalCatalogSource(object *AdditionalCatalogSource, stream *jsoni
 		stream.WriteString(object.image)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,7 +94,9 @@ func UnmarshalAdditionalCatalogSource(source interface{}) (object *AdditionalCat
 
 // ReadAdditionalCatalogSource reads a value of the 'additional_catalog_source' type from the given iterator.
 func ReadAdditionalCatalogSource(iterator *jsoniter.Iterator) *AdditionalCatalogSource {
-	object := &AdditionalCatalogSource{}
+	object := &AdditionalCatalogSource{
+		fieldSet_: make([]bool, 4),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -104,19 +106,19 @@ func ReadAdditionalCatalogSource(iterator *jsoniter.Iterator) *AdditionalCatalog
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "image":
 			value := iterator.ReadString()
 			object.image = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		default:
 			iterator.ReadAny()
 		}

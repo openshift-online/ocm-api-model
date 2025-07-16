@@ -42,7 +42,7 @@ func WriteRegistryLocation(object *RegistryLocation, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteRegistryLocation(object *RegistryLocation, stream *jsoniter.Stream) {
 		stream.WriteString(object.domainName)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,9 @@ func UnmarshalRegistryLocation(source interface{}) (object *RegistryLocation, er
 
 // ReadRegistryLocation reads a value of the 'registry_location' type from the given iterator.
 func ReadRegistryLocation(iterator *jsoniter.Iterator) *RegistryLocation {
-	object := &RegistryLocation{}
+	object := &RegistryLocation{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -86,11 +88,11 @@ func ReadRegistryLocation(iterator *jsoniter.Iterator) *RegistryLocation {
 		case "domain_name":
 			value := iterator.ReadString()
 			object.domainName = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "insecure":
 			value := iterator.ReadBool()
 			object.insecure = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

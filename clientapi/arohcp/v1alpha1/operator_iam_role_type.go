@@ -23,7 +23,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Contains the necessary attributes to allow each operator to access the necessary AWS resources
 type OperatorIAMRole struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	id             string
 	name           string
 	namespace      string
@@ -33,7 +33,15 @@ type OperatorIAMRole struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *OperatorIAMRole) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ID returns the value of the 'ID' attribute, or
@@ -41,7 +49,7 @@ func (o *OperatorIAMRole) Empty() bool {
 //
 // Randomly-generated ID to identify the operator role
 func (o *OperatorIAMRole) ID() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.id
 	}
 	return ""
@@ -52,7 +60,7 @@ func (o *OperatorIAMRole) ID() string {
 //
 // Randomly-generated ID to identify the operator role
 func (o *OperatorIAMRole) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.id
 	}
@@ -64,7 +72,7 @@ func (o *OperatorIAMRole) GetID() (value string, ok bool) {
 //
 // Name of the credentials secret used to access cloud resources
 func (o *OperatorIAMRole) Name() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.name
 	}
 	return ""
@@ -75,7 +83,7 @@ func (o *OperatorIAMRole) Name() string {
 //
 // Name of the credentials secret used to access cloud resources
 func (o *OperatorIAMRole) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.name
 	}
@@ -87,7 +95,7 @@ func (o *OperatorIAMRole) GetName() (value string, ok bool) {
 //
 // Namespace where the credentials secret lives in the cluster
 func (o *OperatorIAMRole) Namespace() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.namespace
 	}
 	return ""
@@ -98,7 +106,7 @@ func (o *OperatorIAMRole) Namespace() string {
 //
 // Namespace where the credentials secret lives in the cluster
 func (o *OperatorIAMRole) GetNamespace() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.namespace
 	}
@@ -110,7 +118,7 @@ func (o *OperatorIAMRole) GetNamespace() (value string, ok bool) {
 //
 // Role to assume when accessing AWS resources
 func (o *OperatorIAMRole) RoleARN() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.roleARN
 	}
 	return ""
@@ -121,7 +129,7 @@ func (o *OperatorIAMRole) RoleARN() string {
 //
 // Role to assume when accessing AWS resources
 func (o *OperatorIAMRole) GetRoleARN() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.roleARN
 	}
@@ -133,7 +141,7 @@ func (o *OperatorIAMRole) GetRoleARN() (value string, ok bool) {
 //
 // Service account name to use when authenticating
 func (o *OperatorIAMRole) ServiceAccount() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.serviceAccount
 	}
 	return ""
@@ -144,7 +152,7 @@ func (o *OperatorIAMRole) ServiceAccount() string {
 //
 // Service account name to use when authenticating
 func (o *OperatorIAMRole) GetServiceAccount() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.serviceAccount
 	}

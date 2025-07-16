@@ -23,9 +23,8 @@ import (
 	time "time"
 )
 
-// ReservedResourceBuilder contains the data and logic needed to build 'reserved_resource' objects.
 type ReservedResourceBuilder struct {
-	bitmap_                   uint32
+	fieldSet_                 []bool
 	availabilityZoneType      string
 	billingMarketplaceAccount string
 	billingModel              BillingModel
@@ -40,32 +39,42 @@ type ReservedResourceBuilder struct {
 
 // NewReservedResource creates a new builder of 'reserved_resource' objects.
 func NewReservedResource() *ReservedResourceBuilder {
-	return &ReservedResourceBuilder{}
+	return &ReservedResourceBuilder{
+		fieldSet_: make([]bool, 10),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ReservedResourceBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // BYOC sets the value of the 'BYOC' attribute to the given value.
 func (b *ReservedResourceBuilder) BYOC(value bool) *ReservedResourceBuilder {
 	b.byoc = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // AvailabilityZoneType sets the value of the 'availability_zone_type' attribute to the given value.
 func (b *ReservedResourceBuilder) AvailabilityZoneType(value string) *ReservedResourceBuilder {
 	b.availabilityZoneType = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // BillingMarketplaceAccount sets the value of the 'billing_marketplace_account' attribute to the given value.
 func (b *ReservedResourceBuilder) BillingMarketplaceAccount(value string) *ReservedResourceBuilder {
 	b.billingMarketplaceAccount = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -74,49 +83,49 @@ func (b *ReservedResourceBuilder) BillingMarketplaceAccount(value string) *Reser
 // Billing model for subscripiton and reserved_resource resources.
 func (b *ReservedResourceBuilder) BillingModel(value BillingModel) *ReservedResourceBuilder {
 	b.billingModel = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Count sets the value of the 'count' attribute to the given value.
 func (b *ReservedResourceBuilder) Count(value int) *ReservedResourceBuilder {
 	b.count = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ReservedResourceBuilder) CreatedAt(value time.Time) *ReservedResourceBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // ResourceName sets the value of the 'resource_name' attribute to the given value.
 func (b *ReservedResourceBuilder) ResourceName(value string) *ReservedResourceBuilder {
 	b.resourceName = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *ReservedResourceBuilder) ResourceType(value string) *ReservedResourceBuilder {
 	b.resourceType = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // Scope sets the value of the 'scope' attribute to the given value.
 func (b *ReservedResourceBuilder) Scope(value string) *ReservedResourceBuilder {
 	b.scope = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ReservedResourceBuilder) UpdatedAt(value time.Time) *ReservedResourceBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
@@ -125,7 +134,10 @@ func (b *ReservedResourceBuilder) Copy(object *ReservedResource) *ReservedResour
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.byoc = object.byoc
 	b.availabilityZoneType = object.availabilityZoneType
 	b.billingMarketplaceAccount = object.billingMarketplaceAccount
@@ -142,7 +154,10 @@ func (b *ReservedResourceBuilder) Copy(object *ReservedResource) *ReservedResour
 // Build creates a 'reserved_resource' object using the configuration stored in the builder.
 func (b *ReservedResourceBuilder) Build() (object *ReservedResource, err error) {
 	object = new(ReservedResource)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.byoc = b.byoc
 	object.availabilityZoneType = b.availabilityZoneType
 	object.billingMarketplaceAccount = b.billingMarketplaceAccount

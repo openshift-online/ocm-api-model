@@ -25,7 +25,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 // needed to perform Operators authentication based on Azure User-Assigned
 // Managed Identities
 type AzureOperatorsAuthenticationManagedIdentities struct {
-	bitmap_                                uint32
+	fieldSet_                              []bool
 	controlPlaneOperatorsManagedIdentities map[string]*AzureControlPlaneManagedIdentity
 	dataPlaneOperatorsManagedIdentities    map[string]*AzureDataPlaneManagedIdentity
 	managedIdentitiesDataPlaneIdentityUrl  string
@@ -34,7 +34,15 @@ type AzureOperatorsAuthenticationManagedIdentities struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AzureOperatorsAuthenticationManagedIdentities) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ControlPlaneOperatorsManagedIdentities returns the value of the 'control_plane_operators_managed_identities' attribute, or
@@ -45,7 +53,7 @@ func (o *AzureOperatorsAuthenticationManagedIdentities) Empty() bool {
 // identities is dependent on the Cluster's OpenShift version.
 // Immutable
 func (o *AzureOperatorsAuthenticationManagedIdentities) ControlPlaneOperatorsManagedIdentities() map[string]*AzureControlPlaneManagedIdentity {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.controlPlaneOperatorsManagedIdentities
 	}
 	return nil
@@ -59,7 +67,7 @@ func (o *AzureOperatorsAuthenticationManagedIdentities) ControlPlaneOperatorsMan
 // identities is dependent on the Cluster's OpenShift version.
 // Immutable
 func (o *AzureOperatorsAuthenticationManagedIdentities) GetControlPlaneOperatorsManagedIdentities() (value map[string]*AzureControlPlaneManagedIdentity, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.controlPlaneOperatorsManagedIdentities
 	}
@@ -74,7 +82,7 @@ func (o *AzureOperatorsAuthenticationManagedIdentities) GetControlPlaneOperators
 // identities is dependent on the Cluster's OpenShift version.
 // Immutable.
 func (o *AzureOperatorsAuthenticationManagedIdentities) DataPlaneOperatorsManagedIdentities() map[string]*AzureDataPlaneManagedIdentity {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.dataPlaneOperatorsManagedIdentities
 	}
 	return nil
@@ -88,7 +96,7 @@ func (o *AzureOperatorsAuthenticationManagedIdentities) DataPlaneOperatorsManage
 // identities is dependent on the Cluster's OpenShift version.
 // Immutable.
 func (o *AzureOperatorsAuthenticationManagedIdentities) GetDataPlaneOperatorsManagedIdentities() (value map[string]*AzureDataPlaneManagedIdentity, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.dataPlaneOperatorsManagedIdentities
 	}
@@ -104,7 +112,7 @@ func (o *AzureOperatorsAuthenticationManagedIdentities) GetDataPlaneOperatorsMan
 // Required during creation.
 // Immutable.
 func (o *AzureOperatorsAuthenticationManagedIdentities) ManagedIdentitiesDataPlaneIdentityUrl() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.managedIdentitiesDataPlaneIdentityUrl
 	}
 	return ""
@@ -119,7 +127,7 @@ func (o *AzureOperatorsAuthenticationManagedIdentities) ManagedIdentitiesDataPla
 // Required during creation.
 // Immutable.
 func (o *AzureOperatorsAuthenticationManagedIdentities) GetManagedIdentitiesDataPlaneIdentityUrl() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.managedIdentitiesDataPlaneIdentityUrl
 	}
@@ -140,7 +148,7 @@ func (o *AzureOperatorsAuthenticationManagedIdentities) GetManagedIdentitiesData
 // Required during creation.
 // Immutable.
 func (o *AzureOperatorsAuthenticationManagedIdentities) ServiceManagedIdentity() *AzureServiceManagedIdentity {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.serviceManagedIdentity
 	}
 	return nil
@@ -160,7 +168,7 @@ func (o *AzureOperatorsAuthenticationManagedIdentities) ServiceManagedIdentity()
 // Required during creation.
 // Immutable.
 func (o *AzureOperatorsAuthenticationManagedIdentities) GetServiceManagedIdentity() (value *AzureServiceManagedIdentity, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.serviceManagedIdentity
 	}

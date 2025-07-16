@@ -42,7 +42,7 @@ func WriteAddonSubOperator(object *AddonSubOperator, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.addon != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.addon != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAddonSubOperator(object *AddonSubOperator, stream *jsoniter.Stream) {
 		WriteAddon(object.addon, stream)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteAddonSubOperator(object *AddonSubOperator, stream *jsoniter.Stream) {
 		stream.WriteBool(object.enabled)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteAddonSubOperator(object *AddonSubOperator, stream *jsoniter.Stream) {
 		stream.WriteString(object.operatorName)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,7 +94,9 @@ func UnmarshalAddonSubOperator(source interface{}) (object *AddonSubOperator, er
 
 // ReadAddonSubOperator reads a value of the 'addon_sub_operator' type from the given iterator.
 func ReadAddonSubOperator(iterator *jsoniter.Iterator) *AddonSubOperator {
-	object := &AddonSubOperator{}
+	object := &AddonSubOperator{
+		fieldSet_: make([]bool, 4),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -104,19 +106,19 @@ func ReadAddonSubOperator(iterator *jsoniter.Iterator) *AddonSubOperator {
 		case "addon":
 			value := ReadAddon(iterator)
 			object.addon = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "operator_name":
 			value := iterator.ReadString()
 			object.operatorName = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "operator_namespace":
 			value := iterator.ReadString()
 			object.operatorNamespace = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		default:
 			iterator.ReadAny()
 		}

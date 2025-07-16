@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// SubnetworkBuilder contains the data and logic needed to build 'subnetwork' objects.
-//
 // AWS subnetwork object to be used while installing a cluster
 type SubnetworkBuilder struct {
-	bitmap_          uint32
+	fieldSet_        []bool
 	cidrBlock        string
 	availabilityZone string
 	name             string
@@ -34,53 +32,63 @@ type SubnetworkBuilder struct {
 
 // NewSubnetwork creates a new builder of 'subnetwork' objects.
 func NewSubnetwork() *SubnetworkBuilder {
-	return &SubnetworkBuilder{}
+	return &SubnetworkBuilder{
+		fieldSet_: make([]bool, 6),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SubnetworkBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // CIDRBlock sets the value of the 'CIDR_block' attribute to the given value.
 func (b *SubnetworkBuilder) CIDRBlock(value string) *SubnetworkBuilder {
 	b.cidrBlock = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // AvailabilityZone sets the value of the 'availability_zone' attribute to the given value.
 func (b *SubnetworkBuilder) AvailabilityZone(value string) *SubnetworkBuilder {
 	b.availabilityZone = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *SubnetworkBuilder) Name(value string) *SubnetworkBuilder {
 	b.name = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Public sets the value of the 'public' attribute to the given value.
 func (b *SubnetworkBuilder) Public(value bool) *SubnetworkBuilder {
 	b.public = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // RedHatManaged sets the value of the 'red_hat_managed' attribute to the given value.
 func (b *SubnetworkBuilder) RedHatManaged(value bool) *SubnetworkBuilder {
 	b.redHatManaged = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // SubnetID sets the value of the 'subnet_ID' attribute to the given value.
 func (b *SubnetworkBuilder) SubnetID(value string) *SubnetworkBuilder {
 	b.subnetID = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -89,7 +97,10 @@ func (b *SubnetworkBuilder) Copy(object *Subnetwork) *SubnetworkBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.cidrBlock = object.cidrBlock
 	b.availabilityZone = object.availabilityZone
 	b.name = object.name
@@ -102,7 +113,10 @@ func (b *SubnetworkBuilder) Copy(object *Subnetwork) *SubnetworkBuilder {
 // Build creates a 'subnetwork' object using the configuration stored in the builder.
 func (b *SubnetworkBuilder) Build() (object *Subnetwork, err error) {
 	object = new(Subnetwork)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.cidrBlock = b.cidrBlock
 	object.availabilityZone = b.availabilityZone
 	object.name = b.name

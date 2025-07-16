@@ -33,11 +33,11 @@ const PermissionNilKind = "PermissionNil"
 
 // Permission represents the values of the 'permission' type.
 type Permission struct {
-	bitmap_  uint32
-	id       string
-	href     string
-	action   Action
-	resource string
+	fieldSet_ []bool
+	id        string
+	href      string
+	action    Action
+	resource  string
 }
 
 // Kind returns the name of the type of the object.
@@ -45,7 +45,7 @@ func (o *Permission) Kind() string {
 	if o == nil {
 		return PermissionNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return PermissionLinkKind
 	}
 	return PermissionKind
@@ -53,12 +53,12 @@ func (o *Permission) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Permission) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *Permission) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -67,7 +67,7 @@ func (o *Permission) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Permission) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -76,7 +76,7 @@ func (o *Permission) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Permission) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -85,7 +85,7 @@ func (o *Permission) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Permission) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -94,13 +94,23 @@ func (o *Permission) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Permission) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Action returns the value of the 'action' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Permission) Action() Action {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.action
 	}
 	return Action("")
@@ -109,7 +119,7 @@ func (o *Permission) Action() Action {
 // GetAction returns the value of the 'action' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Permission) GetAction() (value Action, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.action
 	}
@@ -119,7 +129,7 @@ func (o *Permission) GetAction() (value Action, ok bool) {
 // Resource returns the value of the 'resource' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Permission) Resource() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.resource
 	}
 	return ""
@@ -128,7 +138,7 @@ func (o *Permission) Resource() string {
 // GetResource returns the value of the 'resource' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Permission) GetResource() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.resource
 	}

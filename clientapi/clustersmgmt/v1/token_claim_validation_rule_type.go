@@ -23,14 +23,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // The rule that is applied to validate token claims to authenticate users.
 type TokenClaimValidationRule struct {
-	bitmap_       uint32
+	fieldSet_     []bool
 	claim         string
 	requiredValue string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *TokenClaimValidationRule) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Claim returns the value of the 'claim' attribute, or
@@ -38,7 +46,7 @@ func (o *TokenClaimValidationRule) Empty() bool {
 //
 // Claim is a name of a required claim.
 func (o *TokenClaimValidationRule) Claim() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.claim
 	}
 	return ""
@@ -49,7 +57,7 @@ func (o *TokenClaimValidationRule) Claim() string {
 //
 // Claim is a name of a required claim.
 func (o *TokenClaimValidationRule) GetClaim() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.claim
 	}
@@ -61,7 +69,7 @@ func (o *TokenClaimValidationRule) GetClaim() (value string, ok bool) {
 //
 // RequiredValue is the required value for the claim.
 func (o *TokenClaimValidationRule) RequiredValue() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.requiredValue
 	}
 	return ""
@@ -72,7 +80,7 @@ func (o *TokenClaimValidationRule) RequiredValue() string {
 //
 // RequiredValue is the required value for the claim.
 func (o *TokenClaimValidationRule) GetRequiredValue() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.requiredValue
 	}

@@ -35,7 +35,7 @@ const GenericNotifyDetailsResponseNilKind = "GenericNotifyDetailsResponseNil"
 //
 // class that defines notify details response in general.
 type GenericNotifyDetailsResponse struct {
-	bitmap_    uint32
+	fieldSet_  []bool
 	id         string
 	href       string
 	associates []string
@@ -48,7 +48,7 @@ func (o *GenericNotifyDetailsResponse) Kind() string {
 	if o == nil {
 		return GenericNotifyDetailsResponseNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return GenericNotifyDetailsResponseLinkKind
 	}
 	return GenericNotifyDetailsResponseKind
@@ -56,12 +56,12 @@ func (o *GenericNotifyDetailsResponse) Kind() string {
 
 // Link returns true if this is a link.
 func (o *GenericNotifyDetailsResponse) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *GenericNotifyDetailsResponse) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -70,7 +70,7 @@ func (o *GenericNotifyDetailsResponse) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *GenericNotifyDetailsResponse) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -79,7 +79,7 @@ func (o *GenericNotifyDetailsResponse) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *GenericNotifyDetailsResponse) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -88,7 +88,7 @@ func (o *GenericNotifyDetailsResponse) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *GenericNotifyDetailsResponse) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -97,7 +97,17 @@ func (o *GenericNotifyDetailsResponse) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *GenericNotifyDetailsResponse) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Associates returns the value of the 'associates' attribute, or
@@ -105,7 +115,7 @@ func (o *GenericNotifyDetailsResponse) Empty() bool {
 //
 // Retrieved List of associates email address.
 func (o *GenericNotifyDetailsResponse) Associates() []string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.associates
 	}
 	return nil
@@ -116,7 +126,7 @@ func (o *GenericNotifyDetailsResponse) Associates() []string {
 //
 // Retrieved List of associates email address.
 func (o *GenericNotifyDetailsResponse) GetAssociates() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.associates
 	}
@@ -128,7 +138,7 @@ func (o *GenericNotifyDetailsResponse) GetAssociates() (value []string, ok bool)
 //
 // Retrieved list of additional notify details parameters key-value.
 func (o *GenericNotifyDetailsResponse) Items() []*NotificationDetailsResponse {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.items
 	}
 	return nil
@@ -139,7 +149,7 @@ func (o *GenericNotifyDetailsResponse) Items() []*NotificationDetailsResponse {
 //
 // Retrieved list of additional notify details parameters key-value.
 func (o *GenericNotifyDetailsResponse) GetItems() (value []*NotificationDetailsResponse, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.items
 	}
@@ -151,7 +161,7 @@ func (o *GenericNotifyDetailsResponse) GetItems() (value []*NotificationDetailsR
 //
 // Retrieved List of recipients username.
 func (o *GenericNotifyDetailsResponse) Recipients() []string {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.recipients
 	}
 	return nil
@@ -162,7 +172,7 @@ func (o *GenericNotifyDetailsResponse) Recipients() []string {
 //
 // Retrieved List of recipients username.
 func (o *GenericNotifyDetailsResponse) GetRecipients() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.recipients
 	}

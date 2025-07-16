@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// NodePoolAutoscalingBuilder contains the data and logic needed to build 'node_pool_autoscaling' objects.
-//
 // Representation of a autoscaling in a node pool.
 type NodePoolAutoscalingBuilder struct {
-	bitmap_    uint32
+	fieldSet_  []bool
 	id         string
 	href       string
 	maxReplica int
@@ -32,45 +30,56 @@ type NodePoolAutoscalingBuilder struct {
 
 // NewNodePoolAutoscaling creates a new builder of 'node_pool_autoscaling' objects.
 func NewNodePoolAutoscaling() *NodePoolAutoscalingBuilder {
-	return &NodePoolAutoscalingBuilder{}
+	return &NodePoolAutoscalingBuilder{
+		fieldSet_: make([]bool, 5),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *NodePoolAutoscalingBuilder) Link(value bool) *NodePoolAutoscalingBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *NodePoolAutoscalingBuilder) ID(value string) *NodePoolAutoscalingBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *NodePoolAutoscalingBuilder) HREF(value string) *NodePoolAutoscalingBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *NodePoolAutoscalingBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // MaxReplica sets the value of the 'max_replica' attribute to the given value.
 func (b *NodePoolAutoscalingBuilder) MaxReplica(value int) *NodePoolAutoscalingBuilder {
 	b.maxReplica = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // MinReplica sets the value of the 'min_replica' attribute to the given value.
 func (b *NodePoolAutoscalingBuilder) MinReplica(value int) *NodePoolAutoscalingBuilder {
 	b.minReplica = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -79,7 +88,10 @@ func (b *NodePoolAutoscalingBuilder) Copy(object *NodePoolAutoscaling) *NodePool
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.maxReplica = object.maxReplica
@@ -92,7 +104,10 @@ func (b *NodePoolAutoscalingBuilder) Build() (object *NodePoolAutoscaling, err e
 	object = new(NodePoolAutoscaling)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.maxReplica = b.maxReplica
 	object.minReplica = b.minReplica
 	return

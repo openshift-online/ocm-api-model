@@ -39,12 +39,12 @@ const AMIOverrideNilKind = "AMIOverrideNil"
 //
 // AMIOverride specifies what Amazon Machine Image should be used for a particular product and region.
 type AMIOverride struct {
-	bitmap_ uint32
-	id      string
-	href    string
-	ami     string
-	product *v1.Product
-	region  *v1.CloudRegion
+	fieldSet_ []bool
+	id        string
+	href      string
+	ami       string
+	product   *v1.Product
+	region    *v1.CloudRegion
 }
 
 // Kind returns the name of the type of the object.
@@ -52,7 +52,7 @@ func (o *AMIOverride) Kind() string {
 	if o == nil {
 		return AMIOverrideNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return AMIOverrideLinkKind
 	}
 	return AMIOverrideKind
@@ -60,12 +60,12 @@ func (o *AMIOverride) Kind() string {
 
 // Link returns true if this is a link.
 func (o *AMIOverride) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *AMIOverride) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -74,7 +74,7 @@ func (o *AMIOverride) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *AMIOverride) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -83,7 +83,7 @@ func (o *AMIOverride) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *AMIOverride) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -92,7 +92,7 @@ func (o *AMIOverride) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *AMIOverride) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -101,7 +101,17 @@ func (o *AMIOverride) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AMIOverride) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // AMI returns the value of the 'AMI' attribute, or
@@ -109,7 +119,7 @@ func (o *AMIOverride) Empty() bool {
 //
 // AMI is the id of the Amazon Machine Image.
 func (o *AMIOverride) AMI() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.ami
 	}
 	return ""
@@ -120,7 +130,7 @@ func (o *AMIOverride) AMI() string {
 //
 // AMI is the id of the Amazon Machine Image.
 func (o *AMIOverride) GetAMI() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.ami
 	}
@@ -132,7 +142,7 @@ func (o *AMIOverride) GetAMI() (value string, ok bool) {
 //
 // Link to the product type.
 func (o *AMIOverride) Product() *v1.Product {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.product
 	}
 	return nil
@@ -143,7 +153,7 @@ func (o *AMIOverride) Product() *v1.Product {
 //
 // Link to the product type.
 func (o *AMIOverride) GetProduct() (value *v1.Product, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.product
 	}
@@ -155,7 +165,7 @@ func (o *AMIOverride) GetProduct() (value *v1.Product, ok bool) {
 //
 // Link to the cloud provider region.
 func (o *AMIOverride) Region() *v1.CloudRegion {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.region
 	}
 	return nil
@@ -166,7 +176,7 @@ func (o *AMIOverride) Region() *v1.CloudRegion {
 //
 // Link to the cloud provider region.
 func (o *AMIOverride) GetRegion() (value *v1.CloudRegion, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.region
 	}

@@ -24,7 +24,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations
 // Representation of Red Hat's Terms and Conditions for using OpenShift Dedicated and Amazon Red Hat OpenShift [Terms]
 // review response.
 type TermsReviewResponse struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	accountId      string
 	organizationID string
 	redirectUrl    string
@@ -34,7 +34,15 @@ type TermsReviewResponse struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *TermsReviewResponse) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AccountId returns the value of the 'account_id' attribute, or
@@ -42,7 +50,7 @@ func (o *TermsReviewResponse) Empty() bool {
 //
 // Account ID of requesting user.
 func (o *TermsReviewResponse) AccountId() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.accountId
 	}
 	return ""
@@ -53,7 +61,7 @@ func (o *TermsReviewResponse) AccountId() string {
 //
 // Account ID of requesting user.
 func (o *TermsReviewResponse) GetAccountId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.accountId
 	}
@@ -65,7 +73,7 @@ func (o *TermsReviewResponse) GetAccountId() (value string, ok bool) {
 //
 // Indicates which Organization the user belongs to.
 func (o *TermsReviewResponse) OrganizationID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.organizationID
 	}
 	return ""
@@ -76,7 +84,7 @@ func (o *TermsReviewResponse) OrganizationID() string {
 //
 // Indicates which Organization the user belongs to.
 func (o *TermsReviewResponse) GetOrganizationID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.organizationID
 	}
@@ -89,7 +97,7 @@ func (o *TermsReviewResponse) GetOrganizationID() (value string, ok bool) {
 // Optional URL to Red Hat's Terms and Conditions Application if the user has either required or available Terms
 // needs to acknowledge.
 func (o *TermsReviewResponse) RedirectUrl() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.redirectUrl
 	}
 	return ""
@@ -101,7 +109,7 @@ func (o *TermsReviewResponse) RedirectUrl() string {
 // Optional URL to Red Hat's Terms and Conditions Application if the user has either required or available Terms
 // needs to acknowledge.
 func (o *TermsReviewResponse) GetRedirectUrl() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.redirectUrl
 	}
@@ -113,7 +121,7 @@ func (o *TermsReviewResponse) GetRedirectUrl() (value string, ok bool) {
 //
 // Defines whether Terms are available.
 func (o *TermsReviewResponse) TermsAvailable() bool {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.termsAvailable
 	}
 	return false
@@ -124,7 +132,7 @@ func (o *TermsReviewResponse) TermsAvailable() bool {
 //
 // Defines whether Terms are available.
 func (o *TermsReviewResponse) GetTermsAvailable() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.termsAvailable
 	}
@@ -136,7 +144,7 @@ func (o *TermsReviewResponse) GetTermsAvailable() (value bool, ok bool) {
 //
 // Defines whether user is required to accept Terms before using OpenShift Dedicated and Amazon Red Hat OpenShift.
 func (o *TermsReviewResponse) TermsRequired() bool {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.termsRequired
 	}
 	return false
@@ -147,7 +155,7 @@ func (o *TermsReviewResponse) TermsRequired() bool {
 //
 // Defines whether user is required to accept Terms before using OpenShift Dedicated and Amazon Red Hat OpenShift.
 func (o *TermsReviewResponse) GetTermsRequired() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.termsRequired
 	}

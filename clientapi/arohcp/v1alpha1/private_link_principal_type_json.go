@@ -42,13 +42,13 @@ func WritePrivateLinkPrincipal(object *PrivateLinkPrincipal, stream *jsoniter.St
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(PrivateLinkPrincipalLinkKind)
 	} else {
 		stream.WriteString(PrivateLinkPrincipalKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WritePrivateLinkPrincipal(object *PrivateLinkPrincipal, stream *jsoniter.St
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WritePrivateLinkPrincipal(object *PrivateLinkPrincipal, stream *jsoniter.St
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -90,7 +90,9 @@ func UnmarshalPrivateLinkPrincipal(source interface{}) (object *PrivateLinkPrinc
 
 // ReadPrivateLinkPrincipal reads a value of the 'private_link_principal' type from the given iterator.
 func ReadPrivateLinkPrincipal(iterator *jsoniter.Iterator) *PrivateLinkPrincipal {
-	object := &PrivateLinkPrincipal{}
+	object := &PrivateLinkPrincipal{
+		fieldSet_: make([]bool, 4),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -100,18 +102,18 @@ func ReadPrivateLinkPrincipal(iterator *jsoniter.Iterator) *PrivateLinkPrincipal
 		case "kind":
 			value := iterator.ReadString()
 			if value == PrivateLinkPrincipalLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "principal":
 			value := iterator.ReadString()
 			object.principal = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		default:
 			iterator.ReadAny()
 		}

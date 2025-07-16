@@ -42,7 +42,7 @@ func WriteClusterOperatorsInfo(object *ClusterOperatorsInfo, stream *jsoniter.St
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.operators != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.operators != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,9 @@ func UnmarshalClusterOperatorsInfo(source interface{}) (object *ClusterOperators
 
 // ReadClusterOperatorsInfo reads a value of the 'cluster_operators_info' type from the given iterator.
 func ReadClusterOperatorsInfo(iterator *jsoniter.Iterator) *ClusterOperatorsInfo {
-	object := &ClusterOperatorsInfo{}
+	object := &ClusterOperatorsInfo{
+		fieldSet_: make([]bool, 1),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -77,7 +79,7 @@ func ReadClusterOperatorsInfo(iterator *jsoniter.Iterator) *ClusterOperatorsInfo
 		case "operators":
 			value := ReadClusterOperatorInfoList(iterator)
 			object.operators = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

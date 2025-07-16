@@ -42,7 +42,7 @@ func WritePrivateLinkConfiguration(object *PrivateLinkConfiguration, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.principals != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.principals != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,9 @@ func UnmarshalPrivateLinkConfiguration(source interface{}) (object *PrivateLinkC
 
 // ReadPrivateLinkConfiguration reads a value of the 'private_link_configuration' type from the given iterator.
 func ReadPrivateLinkConfiguration(iterator *jsoniter.Iterator) *PrivateLinkConfiguration {
-	object := &PrivateLinkConfiguration{}
+	object := &PrivateLinkConfiguration{
+		fieldSet_: make([]bool, 1),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -77,7 +79,7 @@ func ReadPrivateLinkConfiguration(iterator *jsoniter.Iterator) *PrivateLinkConfi
 		case "principals":
 			value := ReadPrivateLinkPrincipals(iterator)
 			object.principals = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

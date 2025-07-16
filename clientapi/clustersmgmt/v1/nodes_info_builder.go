@@ -19,29 +19,37 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// NodesInfoBuilder contains the data and logic needed to build 'nodes_info' objects.
-//
 // Provides information about the nodes in the cluster.
 type NodesInfoBuilder struct {
-	bitmap_ uint32
-	nodes   []*NodeInfoBuilder
+	fieldSet_ []bool
+	nodes     []*NodeInfoBuilder
 }
 
 // NewNodesInfo creates a new builder of 'nodes_info' objects.
 func NewNodesInfo() *NodesInfoBuilder {
-	return &NodesInfoBuilder{}
+	return &NodesInfoBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *NodesInfoBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Nodes sets the value of the 'nodes' attribute to the given values.
 func (b *NodesInfoBuilder) Nodes(values ...*NodeInfoBuilder) *NodesInfoBuilder {
 	b.nodes = make([]*NodeInfoBuilder, len(values))
 	copy(b.nodes, values)
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -50,7 +58,10 @@ func (b *NodesInfoBuilder) Copy(object *NodesInfo) *NodesInfoBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.nodes != nil {
 		b.nodes = make([]*NodeInfoBuilder, len(object.nodes))
 		for i, v := range object.nodes {
@@ -65,7 +76,10 @@ func (b *NodesInfoBuilder) Copy(object *NodesInfo) *NodesInfoBuilder {
 // Build creates a 'nodes_info' object using the configuration stored in the builder.
 func (b *NodesInfoBuilder) Build() (object *NodesInfo, err error) {
 	object = new(NodesInfo)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.nodes != nil {
 		object.nodes = make([]*NodeInfo, len(b.nodes))
 		for i, v := range b.nodes {

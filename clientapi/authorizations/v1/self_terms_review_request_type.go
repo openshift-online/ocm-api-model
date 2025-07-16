@@ -24,14 +24,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations
 // Representation of Red Hat's Terms and Conditions for using OpenShift Dedicated and Amazon Red Hat OpenShift [Terms]
 // review requests.
 type SelfTermsReviewRequest struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	eventCode string
 	siteCode  string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *SelfTermsReviewRequest) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // EventCode returns the value of the 'event_code' attribute, or
@@ -39,7 +47,7 @@ func (o *SelfTermsReviewRequest) Empty() bool {
 //
 // Defines the event code of the terms being checked
 func (o *SelfTermsReviewRequest) EventCode() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.eventCode
 	}
 	return ""
@@ -50,7 +58,7 @@ func (o *SelfTermsReviewRequest) EventCode() string {
 //
 // Defines the event code of the terms being checked
 func (o *SelfTermsReviewRequest) GetEventCode() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.eventCode
 	}
@@ -62,7 +70,7 @@ func (o *SelfTermsReviewRequest) GetEventCode() (value string, ok bool) {
 //
 // Defines the site code of the terms being checked
 func (o *SelfTermsReviewRequest) SiteCode() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.siteCode
 	}
 	return ""
@@ -73,7 +81,7 @@ func (o *SelfTermsReviewRequest) SiteCode() string {
 //
 // Defines the site code of the terms being checked
 func (o *SelfTermsReviewRequest) GetSiteCode() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.siteCode
 	}

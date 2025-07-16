@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
-// FeatureReviewRequestBuilder contains the data and logic needed to build 'feature_review_request' objects.
-//
 // Representation of a feature review
 type FeatureReviewRequestBuilder struct {
-	bitmap_         uint32
+	fieldSet_       []bool
 	accountUsername string
 	clusterId       string
 	feature         string
@@ -32,39 +30,49 @@ type FeatureReviewRequestBuilder struct {
 
 // NewFeatureReviewRequest creates a new builder of 'feature_review_request' objects.
 func NewFeatureReviewRequest() *FeatureReviewRequestBuilder {
-	return &FeatureReviewRequestBuilder{}
+	return &FeatureReviewRequestBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *FeatureReviewRequestBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *FeatureReviewRequestBuilder) AccountUsername(value string) *FeatureReviewRequestBuilder {
 	b.accountUsername = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *FeatureReviewRequestBuilder) ClusterId(value string) *FeatureReviewRequestBuilder {
 	b.clusterId = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // Feature sets the value of the 'feature' attribute to the given value.
 func (b *FeatureReviewRequestBuilder) Feature(value string) *FeatureReviewRequestBuilder {
 	b.feature = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // OrganizationId sets the value of the 'organization_id' attribute to the given value.
 func (b *FeatureReviewRequestBuilder) OrganizationId(value string) *FeatureReviewRequestBuilder {
 	b.organizationId = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -73,7 +81,10 @@ func (b *FeatureReviewRequestBuilder) Copy(object *FeatureReviewRequest) *Featur
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.accountUsername = object.accountUsername
 	b.clusterId = object.clusterId
 	b.feature = object.feature
@@ -84,7 +95,10 @@ func (b *FeatureReviewRequestBuilder) Copy(object *FeatureReviewRequest) *Featur
 // Build creates a 'feature_review_request' object using the configuration stored in the builder.
 func (b *FeatureReviewRequestBuilder) Build() (object *FeatureReviewRequest, err error) {
 	object = new(FeatureReviewRequest)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.accountUsername = b.accountUsername
 	object.clusterId = b.clusterId
 	object.feature = b.feature

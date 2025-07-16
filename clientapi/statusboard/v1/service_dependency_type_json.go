@@ -43,13 +43,13 @@ func WriteServiceDependency(object *ServiceDependency, stream *jsoniter.Stream) 
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(ServiceDependencyLinkKind)
 	} else {
 		stream.WriteString(ServiceDependencyKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteServiceDependency(object *ServiceDependency, stream *jsoniter.Stream) 
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteServiceDependency(object *ServiceDependency, stream *jsoniter.Stream) 
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0 && object.childService != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.childService != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteServiceDependency(object *ServiceDependency, stream *jsoniter.Stream) 
 		WriteService(object.childService, stream)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteServiceDependency(object *ServiceDependency, stream *jsoniter.Stream) 
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteServiceDependency(object *ServiceDependency, stream *jsoniter.Stream) 
 		stream.WriteVal(object.metadata)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteServiceDependency(object *ServiceDependency, stream *jsoniter.Stream) 
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0 && object.owners != nil
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7] && object.owners != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteServiceDependency(object *ServiceDependency, stream *jsoniter.Stream) 
 		WriteOwnerList(object.owners, stream)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0 && object.parentService != nil
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8] && object.parentService != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -120,7 +120,7 @@ func WriteServiceDependency(object *ServiceDependency, stream *jsoniter.Stream) 
 		WriteService(object.parentService, stream)
 		count++
 	}
-	present_ = object.bitmap_&512 != 0
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -129,7 +129,7 @@ func WriteServiceDependency(object *ServiceDependency, stream *jsoniter.Stream) 
 		stream.WriteString(object.type_)
 		count++
 	}
-	present_ = object.bitmap_&1024 != 0
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -154,7 +154,9 @@ func UnmarshalServiceDependency(source interface{}) (object *ServiceDependency, 
 
 // ReadServiceDependency reads a value of the 'service_dependency' type from the given iterator.
 func ReadServiceDependency(iterator *jsoniter.Iterator) *ServiceDependency {
-	object := &ServiceDependency{}
+	object := &ServiceDependency{
+		fieldSet_: make([]bool, 11),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -164,18 +166,18 @@ func ReadServiceDependency(iterator *jsoniter.Iterator) *ServiceDependency {
 		case "kind":
 			value := iterator.ReadString()
 			if value == ServiceDependencyLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "child_service":
 			value := ReadService(iterator)
 			object.childService = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -183,28 +185,28 @@ func ReadServiceDependency(iterator *jsoniter.Iterator) *ServiceDependency {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "metadata":
 			var value interface{}
 			iterator.ReadVal(&value)
 			object.metadata = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "owners":
 			value := ReadOwnerList(iterator)
 			object.owners = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "parent_service":
 			value := ReadService(iterator)
 			object.parentService = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		case "type":
 			value := iterator.ReadString()
 			object.type_ = value
-			object.bitmap_ |= 512
+			object.fieldSet_[9] = true
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -212,7 +214,7 @@ func ReadServiceDependency(iterator *jsoniter.Iterator) *ServiceDependency {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.bitmap_ |= 1024
+			object.fieldSet_[10] = true
 		default:
 			iterator.ReadAny()
 		}

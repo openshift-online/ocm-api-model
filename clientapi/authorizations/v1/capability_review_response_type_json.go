@@ -42,7 +42,7 @@ func WriteCapabilityReviewResponse(object *CapabilityReviewResponse, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,9 @@ func UnmarshalCapabilityReviewResponse(source interface{}) (object *CapabilityRe
 
 // ReadCapabilityReviewResponse reads a value of the 'capability_review_response' type from the given iterator.
 func ReadCapabilityReviewResponse(iterator *jsoniter.Iterator) *CapabilityReviewResponse {
-	object := &CapabilityReviewResponse{}
+	object := &CapabilityReviewResponse{
+		fieldSet_: make([]bool, 1),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -77,7 +79,7 @@ func ReadCapabilityReviewResponse(iterator *jsoniter.Iterator) *CapabilityReview
 		case "result":
 			value := iterator.ReadString()
 			object.result = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

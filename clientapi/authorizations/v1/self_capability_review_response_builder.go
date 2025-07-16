@@ -19,28 +19,36 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
-// SelfCapabilityReviewResponseBuilder contains the data and logic needed to build 'self_capability_review_response' objects.
-//
 // Representation of a capability review response.
 type SelfCapabilityReviewResponseBuilder struct {
-	bitmap_ uint32
-	result  string
+	fieldSet_ []bool
+	result    string
 }
 
 // NewSelfCapabilityReviewResponse creates a new builder of 'self_capability_review_response' objects.
 func NewSelfCapabilityReviewResponse() *SelfCapabilityReviewResponseBuilder {
-	return &SelfCapabilityReviewResponseBuilder{}
+	return &SelfCapabilityReviewResponseBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SelfCapabilityReviewResponseBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Result sets the value of the 'result' attribute to the given value.
 func (b *SelfCapabilityReviewResponseBuilder) Result(value string) *SelfCapabilityReviewResponseBuilder {
 	b.result = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -49,7 +57,10 @@ func (b *SelfCapabilityReviewResponseBuilder) Copy(object *SelfCapabilityReviewR
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.result = object.result
 	return b
 }
@@ -57,7 +68,10 @@ func (b *SelfCapabilityReviewResponseBuilder) Copy(object *SelfCapabilityReviewR
 // Build creates a 'self_capability_review_response' object using the configuration stored in the builder.
 func (b *SelfCapabilityReviewResponseBuilder) Build() (object *SelfCapabilityReviewResponse, err error) {
 	object = new(SelfCapabilityReviewResponse)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.result = b.result
 	return
 }

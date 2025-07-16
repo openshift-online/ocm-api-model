@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accesstransparency/v1
 
-// AccessRequestPostRequestBuilder contains the data and logic needed to build 'access_request_post_request' objects.
-//
 // Representation of an access request post request.
 type AccessRequestPostRequestBuilder struct {
-	bitmap_               uint32
+	fieldSet_             []bool
 	clusterId             string
 	deadline              string
 	duration              string
@@ -35,60 +33,70 @@ type AccessRequestPostRequestBuilder struct {
 
 // NewAccessRequestPostRequest creates a new builder of 'access_request_post_request' objects.
 func NewAccessRequestPostRequest() *AccessRequestPostRequestBuilder {
-	return &AccessRequestPostRequestBuilder{}
+	return &AccessRequestPostRequestBuilder{
+		fieldSet_: make([]bool, 7),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AccessRequestPostRequestBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) ClusterId(value string) *AccessRequestPostRequestBuilder {
 	b.clusterId = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Deadline sets the value of the 'deadline' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) Deadline(value string) *AccessRequestPostRequestBuilder {
 	b.deadline = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // Duration sets the value of the 'duration' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) Duration(value string) *AccessRequestPostRequestBuilder {
 	b.duration = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // InternalSupportCaseId sets the value of the 'internal_support_case_id' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) InternalSupportCaseId(value string) *AccessRequestPostRequestBuilder {
 	b.internalSupportCaseId = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Justification sets the value of the 'justification' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) Justification(value string) *AccessRequestPostRequestBuilder {
 	b.justification = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // SubscriptionId sets the value of the 'subscription_id' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) SubscriptionId(value string) *AccessRequestPostRequestBuilder {
 	b.subscriptionId = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // SupportCaseId sets the value of the 'support_case_id' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) SupportCaseId(value string) *AccessRequestPostRequestBuilder {
 	b.supportCaseId = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -97,7 +105,10 @@ func (b *AccessRequestPostRequestBuilder) Copy(object *AccessRequestPostRequest)
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.clusterId = object.clusterId
 	b.deadline = object.deadline
 	b.duration = object.duration
@@ -111,7 +122,10 @@ func (b *AccessRequestPostRequestBuilder) Copy(object *AccessRequestPostRequest)
 // Build creates a 'access_request_post_request' object using the configuration stored in the builder.
 func (b *AccessRequestPostRequestBuilder) Build() (object *AccessRequestPostRequest, err error) {
 	object = new(AccessRequestPostRequest)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.clusterId = b.clusterId
 	object.deadline = b.deadline
 	object.duration = b.duration

@@ -42,7 +42,7 @@ func WriteProxy(object *Proxy, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteProxy(object *Proxy, stream *jsoniter.Stream) {
 		stream.WriteString(object.httpProxy)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteProxy(object *Proxy, stream *jsoniter.Stream) {
 		stream.WriteString(object.httpsProxy)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,7 +85,9 @@ func UnmarshalProxy(source interface{}) (object *Proxy, err error) {
 
 // ReadProxy reads a value of the 'proxy' type from the given iterator.
 func ReadProxy(iterator *jsoniter.Iterator) *Proxy {
-	object := &Proxy{}
+	object := &Proxy{
+		fieldSet_: make([]bool, 3),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -95,15 +97,15 @@ func ReadProxy(iterator *jsoniter.Iterator) *Proxy {
 		case "http_proxy":
 			value := iterator.ReadString()
 			object.httpProxy = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "https_proxy":
 			value := iterator.ReadString()
 			object.httpsProxy = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "no_proxy":
 			value := iterator.ReadString()
 			object.noProxy = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		default:
 			iterator.ReadAny()
 		}

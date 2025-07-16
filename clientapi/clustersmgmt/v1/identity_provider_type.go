@@ -35,7 +35,7 @@ const IdentityProviderNilKind = "IdentityProviderNil"
 //
 // Representation of an identity provider.
 type IdentityProvider struct {
-	bitmap_       uint32
+	fieldSet_     []bool
 	id            string
 	href          string
 	ldap          *LDAPIdentityProvider
@@ -56,7 +56,7 @@ func (o *IdentityProvider) Kind() string {
 	if o == nil {
 		return IdentityProviderNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return IdentityProviderLinkKind
 	}
 	return IdentityProviderKind
@@ -64,12 +64,12 @@ func (o *IdentityProvider) Kind() string {
 
 // Link returns true if this is a link.
 func (o *IdentityProvider) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *IdentityProvider) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -78,7 +78,7 @@ func (o *IdentityProvider) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *IdentityProvider) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -87,7 +87,7 @@ func (o *IdentityProvider) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *IdentityProvider) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -96,7 +96,7 @@ func (o *IdentityProvider) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *IdentityProvider) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -105,7 +105,17 @@ func (o *IdentityProvider) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *IdentityProvider) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // LDAP returns the value of the 'LDAP' attribute, or
@@ -113,7 +123,7 @@ func (o *IdentityProvider) Empty() bool {
 //
 // Details for `ldap` identity providers.
 func (o *IdentityProvider) LDAP() *LDAPIdentityProvider {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.ldap
 	}
 	return nil
@@ -124,7 +134,7 @@ func (o *IdentityProvider) LDAP() *LDAPIdentityProvider {
 //
 // Details for `ldap` identity providers.
 func (o *IdentityProvider) GetLDAP() (value *LDAPIdentityProvider, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.ldap
 	}
@@ -137,7 +147,7 @@ func (o *IdentityProvider) GetLDAP() (value *LDAPIdentityProvider, ok bool) {
 // When `true` unauthenticated token requests from non-web clients (like the CLI) are sent a
 // `WWW-Authenticate` challenge header for this provider.
 func (o *IdentityProvider) Challenge() bool {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.challenge
 	}
 	return false
@@ -149,7 +159,7 @@ func (o *IdentityProvider) Challenge() bool {
 // When `true` unauthenticated token requests from non-web clients (like the CLI) are sent a
 // `WWW-Authenticate` challenge header for this provider.
 func (o *IdentityProvider) GetChallenge() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.challenge
 	}
@@ -161,7 +171,7 @@ func (o *IdentityProvider) GetChallenge() (value bool, ok bool) {
 //
 // Details for `github` identity providers.
 func (o *IdentityProvider) Github() *GithubIdentityProvider {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.github
 	}
 	return nil
@@ -172,7 +182,7 @@ func (o *IdentityProvider) Github() *GithubIdentityProvider {
 //
 // Details for `github` identity providers.
 func (o *IdentityProvider) GetGithub() (value *GithubIdentityProvider, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.github
 	}
@@ -184,7 +194,7 @@ func (o *IdentityProvider) GetGithub() (value *GithubIdentityProvider, ok bool) 
 //
 // Details for `gitlab` identity providers.
 func (o *IdentityProvider) Gitlab() *GitlabIdentityProvider {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.gitlab
 	}
 	return nil
@@ -195,7 +205,7 @@ func (o *IdentityProvider) Gitlab() *GitlabIdentityProvider {
 //
 // Details for `gitlab` identity providers.
 func (o *IdentityProvider) GetGitlab() (value *GitlabIdentityProvider, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.gitlab
 	}
@@ -207,7 +217,7 @@ func (o *IdentityProvider) GetGitlab() (value *GitlabIdentityProvider, ok bool) 
 //
 // Details for `google` identity providers.
 func (o *IdentityProvider) Google() *GoogleIdentityProvider {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.google
 	}
 	return nil
@@ -218,7 +228,7 @@ func (o *IdentityProvider) Google() *GoogleIdentityProvider {
 //
 // Details for `google` identity providers.
 func (o *IdentityProvider) GetGoogle() (value *GoogleIdentityProvider, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.google
 	}
@@ -230,7 +240,7 @@ func (o *IdentityProvider) GetGoogle() (value *GoogleIdentityProvider, ok bool) 
 //
 // Details for `htpasswd` identity providers.
 func (o *IdentityProvider) Htpasswd() *HTPasswdIdentityProvider {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.htpasswd
 	}
 	return nil
@@ -241,7 +251,7 @@ func (o *IdentityProvider) Htpasswd() *HTPasswdIdentityProvider {
 //
 // Details for `htpasswd` identity providers.
 func (o *IdentityProvider) GetHtpasswd() (value *HTPasswdIdentityProvider, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.htpasswd
 	}
@@ -254,7 +264,7 @@ func (o *IdentityProvider) GetHtpasswd() (value *HTPasswdIdentityProvider, ok bo
 // When `true` unauthenticated token requests from web clients (like the web console) are
 // redirected to the authorize URL to log in.
 func (o *IdentityProvider) Login() bool {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.login
 	}
 	return false
@@ -266,7 +276,7 @@ func (o *IdentityProvider) Login() bool {
 // When `true` unauthenticated token requests from web clients (like the web console) are
 // redirected to the authorize URL to log in.
 func (o *IdentityProvider) GetLogin() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.login
 	}
@@ -279,7 +289,7 @@ func (o *IdentityProvider) GetLogin() (value bool, ok bool) {
 // Controls how mappings are established between this provider's identities and user
 // objects.
 func (o *IdentityProvider) MappingMethod() IdentityProviderMappingMethod {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.mappingMethod
 	}
 	return IdentityProviderMappingMethod("")
@@ -291,7 +301,7 @@ func (o *IdentityProvider) MappingMethod() IdentityProviderMappingMethod {
 // Controls how mappings are established between this provider's identities and user
 // objects.
 func (o *IdentityProvider) GetMappingMethod() (value IdentityProviderMappingMethod, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.mappingMethod
 	}
@@ -303,7 +313,7 @@ func (o *IdentityProvider) GetMappingMethod() (value IdentityProviderMappingMeth
 //
 // The name of the identity provider.
 func (o *IdentityProvider) Name() string {
-	if o != nil && o.bitmap_&2048 != 0 {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.name
 	}
 	return ""
@@ -314,7 +324,7 @@ func (o *IdentityProvider) Name() string {
 //
 // The name of the identity provider.
 func (o *IdentityProvider) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2048 != 0
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.name
 	}
@@ -326,7 +336,7 @@ func (o *IdentityProvider) GetName() (value string, ok bool) {
 //
 // Details for `openid` identity providers.
 func (o *IdentityProvider) OpenID() *OpenIDIdentityProvider {
-	if o != nil && o.bitmap_&4096 != 0 {
+	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
 		return o.openID
 	}
 	return nil
@@ -337,7 +347,7 @@ func (o *IdentityProvider) OpenID() *OpenIDIdentityProvider {
 //
 // Details for `openid` identity providers.
 func (o *IdentityProvider) GetOpenID() (value *OpenIDIdentityProvider, ok bool) {
-	ok = o != nil && o.bitmap_&4096 != 0
+	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
 	if ok {
 		value = o.openID
 	}
@@ -351,7 +361,7 @@ func (o *IdentityProvider) GetOpenID() (value *OpenIDIdentityProvider, ok bool) 
 // value. For example, if the type is `github` then only the `github` attribute will be
 // populated.
 func (o *IdentityProvider) Type() IdentityProviderType {
-	if o != nil && o.bitmap_&8192 != 0 {
+	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
 		return o.type_
 	}
 	return IdentityProviderType("")
@@ -364,7 +374,7 @@ func (o *IdentityProvider) Type() IdentityProviderType {
 // value. For example, if the type is `github` then only the `github` attribute will be
 // populated.
 func (o *IdentityProvider) GetType() (value IdentityProviderType, ok bool) {
-	ok = o != nil && o.bitmap_&8192 != 0
+	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
 	if ok {
 		value = o.type_
 	}

@@ -19,9 +19,8 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// DataPlaneOperatorIdentityRequirementBuilder contains the data and logic needed to build 'data_plane_operator_identity_requirement' objects.
 type DataPlaneOperatorIdentityRequirementBuilder struct {
-	bitmap_             uint32
+	fieldSet_           []bool
 	maxOpenShiftVersion string
 	minOpenShiftVersion string
 	operatorName        string
@@ -32,39 +31,49 @@ type DataPlaneOperatorIdentityRequirementBuilder struct {
 
 // NewDataPlaneOperatorIdentityRequirement creates a new builder of 'data_plane_operator_identity_requirement' objects.
 func NewDataPlaneOperatorIdentityRequirement() *DataPlaneOperatorIdentityRequirementBuilder {
-	return &DataPlaneOperatorIdentityRequirementBuilder{}
+	return &DataPlaneOperatorIdentityRequirementBuilder{
+		fieldSet_: make([]bool, 6),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *DataPlaneOperatorIdentityRequirementBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // MaxOpenShiftVersion sets the value of the 'max_open_shift_version' attribute to the given value.
 func (b *DataPlaneOperatorIdentityRequirementBuilder) MaxOpenShiftVersion(value string) *DataPlaneOperatorIdentityRequirementBuilder {
 	b.maxOpenShiftVersion = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // MinOpenShiftVersion sets the value of the 'min_open_shift_version' attribute to the given value.
 func (b *DataPlaneOperatorIdentityRequirementBuilder) MinOpenShiftVersion(value string) *DataPlaneOperatorIdentityRequirementBuilder {
 	b.minOpenShiftVersion = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // OperatorName sets the value of the 'operator_name' attribute to the given value.
 func (b *DataPlaneOperatorIdentityRequirementBuilder) OperatorName(value string) *DataPlaneOperatorIdentityRequirementBuilder {
 	b.operatorName = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Required sets the value of the 'required' attribute to the given value.
 func (b *DataPlaneOperatorIdentityRequirementBuilder) Required(value string) *DataPlaneOperatorIdentityRequirementBuilder {
 	b.required = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -72,7 +81,7 @@ func (b *DataPlaneOperatorIdentityRequirementBuilder) Required(value string) *Da
 func (b *DataPlaneOperatorIdentityRequirementBuilder) RoleDefinitions(values ...*RoleDefinitionOperatorIdentityRequirementBuilder) *DataPlaneOperatorIdentityRequirementBuilder {
 	b.roleDefinitions = make([]*RoleDefinitionOperatorIdentityRequirementBuilder, len(values))
 	copy(b.roleDefinitions, values)
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -80,7 +89,7 @@ func (b *DataPlaneOperatorIdentityRequirementBuilder) RoleDefinitions(values ...
 func (b *DataPlaneOperatorIdentityRequirementBuilder) ServiceAccounts(values ...*K8sServiceAccountOperatorIdentityRequirementBuilder) *DataPlaneOperatorIdentityRequirementBuilder {
 	b.serviceAccounts = make([]*K8sServiceAccountOperatorIdentityRequirementBuilder, len(values))
 	copy(b.serviceAccounts, values)
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -89,7 +98,10 @@ func (b *DataPlaneOperatorIdentityRequirementBuilder) Copy(object *DataPlaneOper
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.maxOpenShiftVersion = object.maxOpenShiftVersion
 	b.minOpenShiftVersion = object.minOpenShiftVersion
 	b.operatorName = object.operatorName
@@ -116,7 +128,10 @@ func (b *DataPlaneOperatorIdentityRequirementBuilder) Copy(object *DataPlaneOper
 // Build creates a 'data_plane_operator_identity_requirement' object using the configuration stored in the builder.
 func (b *DataPlaneOperatorIdentityRequirementBuilder) Build() (object *DataPlaneOperatorIdentityRequirement, err error) {
 	object = new(DataPlaneOperatorIdentityRequirement)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.maxOpenShiftVersion = b.maxOpenShiftVersion
 	object.minOpenShiftVersion = b.minOpenShiftVersion
 	object.operatorName = b.operatorName

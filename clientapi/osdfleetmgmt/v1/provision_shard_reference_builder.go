@@ -19,36 +19,44 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/osdfleetmgmt/v1
 
-// ProvisionShardReferenceBuilder contains the data and logic needed to build 'provision_shard_reference' objects.
-//
 // Provision Shard Reference of the cluster.
 type ProvisionShardReferenceBuilder struct {
-	bitmap_ uint32
-	href    string
-	id      string
+	fieldSet_ []bool
+	href      string
+	id        string
 }
 
 // NewProvisionShardReference creates a new builder of 'provision_shard_reference' objects.
 func NewProvisionShardReference() *ProvisionShardReferenceBuilder {
-	return &ProvisionShardReferenceBuilder{}
+	return &ProvisionShardReferenceBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ProvisionShardReferenceBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Href sets the value of the 'href' attribute to the given value.
 func (b *ProvisionShardReferenceBuilder) Href(value string) *ProvisionShardReferenceBuilder {
 	b.href = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Id sets the value of the 'id' attribute to the given value.
 func (b *ProvisionShardReferenceBuilder) Id(value string) *ProvisionShardReferenceBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -57,7 +65,10 @@ func (b *ProvisionShardReferenceBuilder) Copy(object *ProvisionShardReference) *
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.href = object.href
 	b.id = object.id
 	return b
@@ -66,7 +77,10 @@ func (b *ProvisionShardReferenceBuilder) Copy(object *ProvisionShardReference) *
 // Build creates a 'provision_shard_reference' object using the configuration stored in the builder.
 func (b *ProvisionShardReferenceBuilder) Build() (object *ProvisionShardReference, err error) {
 	object = new(ProvisionShardReference)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.href = b.href
 	object.id = b.id
 	return

@@ -42,7 +42,7 @@ func WriteAccessRequestPostRequest(object *AccessRequestPostRequest, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAccessRequestPostRequest(object *AccessRequestPostRequest, stream *jso
 		stream.WriteString(object.clusterId)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteAccessRequestPostRequest(object *AccessRequestPostRequest, stream *jso
 		stream.WriteString(object.deadline)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteAccessRequestPostRequest(object *AccessRequestPostRequest, stream *jso
 		stream.WriteString(object.duration)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteAccessRequestPostRequest(object *AccessRequestPostRequest, stream *jso
 		stream.WriteString(object.internalSupportCaseId)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteAccessRequestPostRequest(object *AccessRequestPostRequest, stream *jso
 		stream.WriteString(object.justification)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -96,7 +96,7 @@ func WriteAccessRequestPostRequest(object *AccessRequestPostRequest, stream *jso
 		stream.WriteString(object.subscriptionId)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -121,7 +121,9 @@ func UnmarshalAccessRequestPostRequest(source interface{}) (object *AccessReques
 
 // ReadAccessRequestPostRequest reads a value of the 'access_request_post_request' type from the given iterator.
 func ReadAccessRequestPostRequest(iterator *jsoniter.Iterator) *AccessRequestPostRequest {
-	object := &AccessRequestPostRequest{}
+	object := &AccessRequestPostRequest{
+		fieldSet_: make([]bool, 7),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -131,31 +133,31 @@ func ReadAccessRequestPostRequest(iterator *jsoniter.Iterator) *AccessRequestPos
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterId = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "deadline":
 			value := iterator.ReadString()
 			object.deadline = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "duration":
 			value := iterator.ReadString()
 			object.duration = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "internal_support_case_id":
 			value := iterator.ReadString()
 			object.internalSupportCaseId = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "justification":
 			value := iterator.ReadString()
 			object.justification = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "subscription_id":
 			value := iterator.ReadString()
 			object.subscriptionId = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "support_case_id":
 			value := iterator.ReadString()
 			object.supportCaseId = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		default:
 			iterator.ReadAny()
 		}

@@ -19,26 +19,35 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/osdfleetmgmt/v1
 
-// ManagementClusterRequestPayloadBuilder contains the data and logic needed to build 'management_cluster_request_payload' objects.
 type ManagementClusterRequestPayloadBuilder struct {
-	bitmap_                                                                    uint32
+	fieldSet_                                                                  []bool
 	service_cluster_idService_cluster_idService_cluster_idService_cluster_idId string
 }
 
 // NewManagementClusterRequestPayload creates a new builder of 'management_cluster_request_payload' objects.
 func NewManagementClusterRequestPayload() *ManagementClusterRequestPayloadBuilder {
-	return &ManagementClusterRequestPayloadBuilder{}
+	return &ManagementClusterRequestPayloadBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ManagementClusterRequestPayloadBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Service_cluster_idService_cluster_idService_cluster_idService_cluster_idId sets the value of the 'service_cluster_id_service_cluster_id_service_cluster_id_service_cluster_id_id' attribute to the given value.
 func (b *ManagementClusterRequestPayloadBuilder) Service_cluster_idService_cluster_idService_cluster_idService_cluster_idId(value string) *ManagementClusterRequestPayloadBuilder {
 	b.service_cluster_idService_cluster_idService_cluster_idService_cluster_idId = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -47,7 +56,10 @@ func (b *ManagementClusterRequestPayloadBuilder) Copy(object *ManagementClusterR
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.service_cluster_idService_cluster_idService_cluster_idService_cluster_idId = object.service_cluster_idService_cluster_idService_cluster_idService_cluster_idId
 	return b
 }
@@ -55,7 +67,10 @@ func (b *ManagementClusterRequestPayloadBuilder) Copy(object *ManagementClusterR
 // Build creates a 'management_cluster_request_payload' object using the configuration stored in the builder.
 func (b *ManagementClusterRequestPayloadBuilder) Build() (object *ManagementClusterRequestPayload, err error) {
 	object = new(ManagementClusterRequestPayload)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.service_cluster_idService_cluster_idService_cluster_idService_cluster_idId = b.service_cluster_idService_cluster_idService_cluster_idService_cluster_idId
 	return
 }

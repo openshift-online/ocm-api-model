@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations
 //
 // Representation of an access review performed against oneself
 type SelfAccessReviewRequest struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	action         string
 	clusterID      string
 	clusterUUID    string
@@ -34,7 +34,15 @@ type SelfAccessReviewRequest struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *SelfAccessReviewRequest) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Action returns the value of the 'action' attribute, or
@@ -42,7 +50,7 @@ func (o *SelfAccessReviewRequest) Empty() bool {
 //
 // Indicates the action, one of: [get,list,create,delete,update]
 func (o *SelfAccessReviewRequest) Action() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.action
 	}
 	return ""
@@ -53,7 +61,7 @@ func (o *SelfAccessReviewRequest) Action() string {
 //
 // Indicates the action, one of: [get,list,create,delete,update]
 func (o *SelfAccessReviewRequest) GetAction() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.action
 	}
@@ -65,7 +73,7 @@ func (o *SelfAccessReviewRequest) GetAction() (value string, ok bool) {
 //
 // Indicates which Cluster (internal id) the resource type belongs to
 func (o *SelfAccessReviewRequest) ClusterID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.clusterID
 	}
 	return ""
@@ -76,7 +84,7 @@ func (o *SelfAccessReviewRequest) ClusterID() string {
 //
 // Indicates which Cluster (internal id) the resource type belongs to
 func (o *SelfAccessReviewRequest) GetClusterID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.clusterID
 	}
@@ -88,7 +96,7 @@ func (o *SelfAccessReviewRequest) GetClusterID() (value string, ok bool) {
 //
 // Indicates which Cluster (external id) the resource type belongs to
 func (o *SelfAccessReviewRequest) ClusterUUID() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.clusterUUID
 	}
 	return ""
@@ -99,7 +107,7 @@ func (o *SelfAccessReviewRequest) ClusterUUID() string {
 //
 // Indicates which Cluster (external id) the resource type belongs to
 func (o *SelfAccessReviewRequest) GetClusterUUID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.clusterUUID
 	}
@@ -111,7 +119,7 @@ func (o *SelfAccessReviewRequest) GetClusterUUID() (value string, ok bool) {
 //
 // Indicates which Organization the resource type belongs to
 func (o *SelfAccessReviewRequest) OrganizationID() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.organizationID
 	}
 	return ""
@@ -122,7 +130,7 @@ func (o *SelfAccessReviewRequest) OrganizationID() string {
 //
 // Indicates which Organization the resource type belongs to
 func (o *SelfAccessReviewRequest) GetOrganizationID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.organizationID
 	}
@@ -135,7 +143,7 @@ func (o *SelfAccessReviewRequest) GetOrganizationID() (value string, ok bool) {
 // Indicates the type of the resource an action would be taken on.
 // See uhc-account-manager/openapi/openapi.yaml for a list of possible values
 func (o *SelfAccessReviewRequest) ResourceType() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.resourceType
 	}
 	return ""
@@ -147,7 +155,7 @@ func (o *SelfAccessReviewRequest) ResourceType() string {
 // Indicates the type of the resource an action would be taken on.
 // See uhc-account-manager/openapi/openapi.yaml for a list of possible values
 func (o *SelfAccessReviewRequest) GetResourceType() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.resourceType
 	}
@@ -159,7 +167,7 @@ func (o *SelfAccessReviewRequest) GetResourceType() (value string, ok bool) {
 //
 // Indicates which Subscription the resource type belongs to
 func (o *SelfAccessReviewRequest) SubscriptionID() string {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.subscriptionID
 	}
 	return ""
@@ -170,7 +178,7 @@ func (o *SelfAccessReviewRequest) SubscriptionID() string {
 //
 // Indicates which Subscription the resource type belongs to
 func (o *SelfAccessReviewRequest) GetSubscriptionID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.subscriptionID
 	}

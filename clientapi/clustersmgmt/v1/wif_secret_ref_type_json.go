@@ -42,7 +42,7 @@ func WriteWifSecretRef(object *WifSecretRef, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteWifSecretRef(object *WifSecretRef, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,9 @@ func UnmarshalWifSecretRef(source interface{}) (object *WifSecretRef, err error)
 
 // ReadWifSecretRef reads a value of the 'wif_secret_ref' type from the given iterator.
 func ReadWifSecretRef(iterator *jsoniter.Iterator) *WifSecretRef {
-	object := &WifSecretRef{}
+	object := &WifSecretRef{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -86,11 +88,11 @@ func ReadWifSecretRef(iterator *jsoniter.Iterator) *WifSecretRef {
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "namespace":
 			value := iterator.ReadString()
 			object.namespace = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

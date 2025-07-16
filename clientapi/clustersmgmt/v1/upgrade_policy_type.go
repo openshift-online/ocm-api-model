@@ -39,7 +39,7 @@ const UpgradePolicyNilKind = "UpgradePolicyNil"
 //
 // Representation of an upgrade policy that can be set for a cluster.
 type UpgradePolicy struct {
-	bitmap_                    uint32
+	fieldSet_                  []bool
 	id                         string
 	href                       string
 	clusterID                  string
@@ -56,7 +56,7 @@ func (o *UpgradePolicy) Kind() string {
 	if o == nil {
 		return UpgradePolicyNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return UpgradePolicyLinkKind
 	}
 	return UpgradePolicyKind
@@ -64,12 +64,12 @@ func (o *UpgradePolicy) Kind() string {
 
 // Link returns true if this is a link.
 func (o *UpgradePolicy) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *UpgradePolicy) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -78,7 +78,7 @@ func (o *UpgradePolicy) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *UpgradePolicy) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -87,7 +87,7 @@ func (o *UpgradePolicy) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *UpgradePolicy) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -96,7 +96,7 @@ func (o *UpgradePolicy) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *UpgradePolicy) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -105,7 +105,17 @@ func (o *UpgradePolicy) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *UpgradePolicy) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // ClusterID returns the value of the 'cluster_ID' attribute, or
@@ -113,7 +123,7 @@ func (o *UpgradePolicy) Empty() bool {
 //
 // Cluster ID this upgrade policy is defined for.
 func (o *UpgradePolicy) ClusterID() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.clusterID
 	}
 	return ""
@@ -124,7 +134,7 @@ func (o *UpgradePolicy) ClusterID() string {
 //
 // Cluster ID this upgrade policy is defined for.
 func (o *UpgradePolicy) GetClusterID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.clusterID
 	}
@@ -136,7 +146,7 @@ func (o *UpgradePolicy) GetClusterID() (value string, ok bool) {
 //
 // Indicates if minor version upgrades are allowed for automatic upgrades (for manual it's always allowed).
 func (o *UpgradePolicy) EnableMinorVersionUpgrades() bool {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.enableMinorVersionUpgrades
 	}
 	return false
@@ -147,7 +157,7 @@ func (o *UpgradePolicy) EnableMinorVersionUpgrades() bool {
 //
 // Indicates if minor version upgrades are allowed for automatic upgrades (for manual it's always allowed).
 func (o *UpgradePolicy) GetEnableMinorVersionUpgrades() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.enableMinorVersionUpgrades
 	}
@@ -159,7 +169,7 @@ func (o *UpgradePolicy) GetEnableMinorVersionUpgrades() (value bool, ok bool) {
 //
 // Next time the upgrade should run.
 func (o *UpgradePolicy) NextRun() time.Time {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.nextRun
 	}
 	return time.Time{}
@@ -170,7 +180,7 @@ func (o *UpgradePolicy) NextRun() time.Time {
 //
 // Next time the upgrade should run.
 func (o *UpgradePolicy) GetNextRun() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.nextRun
 	}
@@ -182,7 +192,7 @@ func (o *UpgradePolicy) GetNextRun() (value time.Time, ok bool) {
 //
 // Schedule cron expression that defines automatic upgrade scheduling.
 func (o *UpgradePolicy) Schedule() string {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.schedule
 	}
 	return ""
@@ -193,7 +203,7 @@ func (o *UpgradePolicy) Schedule() string {
 //
 // Schedule cron expression that defines automatic upgrade scheduling.
 func (o *UpgradePolicy) GetSchedule() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.schedule
 	}
@@ -205,7 +215,7 @@ func (o *UpgradePolicy) GetSchedule() (value string, ok bool) {
 //
 // Schedule type of the upgrade.
 func (o *UpgradePolicy) ScheduleType() ScheduleType {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.scheduleType
 	}
 	return ScheduleType("")
@@ -216,7 +226,7 @@ func (o *UpgradePolicy) ScheduleType() ScheduleType {
 //
 // Schedule type of the upgrade.
 func (o *UpgradePolicy) GetScheduleType() (value ScheduleType, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.scheduleType
 	}
@@ -228,7 +238,7 @@ func (o *UpgradePolicy) GetScheduleType() (value ScheduleType, ok bool) {
 //
 // Upgrade type specify the type of the upgrade.
 func (o *UpgradePolicy) UpgradeType() UpgradeType {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.upgradeType
 	}
 	return UpgradeType("")
@@ -239,7 +249,7 @@ func (o *UpgradePolicy) UpgradeType() UpgradeType {
 //
 // Upgrade type specify the type of the upgrade.
 func (o *UpgradePolicy) GetUpgradeType() (value UpgradeType, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.upgradeType
 	}
@@ -251,7 +261,7 @@ func (o *UpgradePolicy) GetUpgradeType() (value UpgradeType, ok bool) {
 //
 // Version is the desired upgrade version.
 func (o *UpgradePolicy) Version() string {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.version
 	}
 	return ""
@@ -262,7 +272,7 @@ func (o *UpgradePolicy) Version() string {
 //
 // Version is the desired upgrade version.
 func (o *UpgradePolicy) GetVersion() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.version
 	}

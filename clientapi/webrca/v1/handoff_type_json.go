@@ -43,13 +43,13 @@ func WriteHandoff(object *Handoff, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(HandoffLinkKind)
 	} else {
 		stream.WriteString(HandoffKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteHandoff(object *Handoff, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteHandoff(object *Handoff, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteHandoff(object *Handoff, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteHandoff(object *Handoff, stream *jsoniter.Stream) {
 		stream.WriteString((object.deletedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&32 != 0 && object.handoffFrom != nil
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.handoffFrom != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteHandoff(object *Handoff, stream *jsoniter.Stream) {
 		WriteUser(object.handoffFrom, stream)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0 && object.handoffTo != nil
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.handoffTo != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteHandoff(object *Handoff, stream *jsoniter.Stream) {
 		WriteUser(object.handoffTo, stream)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteHandoff(object *Handoff, stream *jsoniter.Stream) {
 		stream.WriteString(object.handoffType)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -136,7 +136,9 @@ func UnmarshalHandoff(source interface{}) (object *Handoff, err error) {
 
 // ReadHandoff reads a value of the 'handoff' type from the given iterator.
 func ReadHandoff(iterator *jsoniter.Iterator) *Handoff {
-	object := &Handoff{}
+	object := &Handoff{
+		fieldSet_: make([]bool, 9),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -146,14 +148,14 @@ func ReadHandoff(iterator *jsoniter.Iterator) *Handoff {
 		case "kind":
 			value := iterator.ReadString()
 			if value == HandoffLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -161,7 +163,7 @@ func ReadHandoff(iterator *jsoniter.Iterator) *Handoff {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "deleted_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -169,19 +171,19 @@ func ReadHandoff(iterator *jsoniter.Iterator) *Handoff {
 				iterator.ReportError("", err.Error())
 			}
 			object.deletedAt = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "handoff_from":
 			value := ReadUser(iterator)
 			object.handoffFrom = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "handoff_to":
 			value := ReadUser(iterator)
 			object.handoffTo = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "handoff_type":
 			value := iterator.ReadString()
 			object.handoffType = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -189,7 +191,7 @@ func ReadHandoff(iterator *jsoniter.Iterator) *Handoff {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		default:
 			iterator.ReadAny()
 		}

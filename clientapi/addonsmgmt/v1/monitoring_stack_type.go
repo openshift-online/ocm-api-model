@@ -23,14 +23,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 //
 // Representation of Monitoring Stack
 type MonitoringStack struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	resources *MonitoringStackResources
 	enabled   bool
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *MonitoringStack) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Enabled returns the value of the 'enabled' attribute, or
@@ -38,7 +46,7 @@ func (o *MonitoringStack) Empty() bool {
 //
 // Indicates if the monitoring stack can be added to clusters for the addon.
 func (o *MonitoringStack) Enabled() bool {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.enabled
 	}
 	return false
@@ -49,7 +57,7 @@ func (o *MonitoringStack) Enabled() bool {
 //
 // Indicates if the monitoring stack can be added to clusters for the addon.
 func (o *MonitoringStack) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.enabled
 	}
@@ -61,7 +69,7 @@ func (o *MonitoringStack) GetEnabled() (value bool, ok bool) {
 //
 // Indicates the resources for the monitoring stack
 func (o *MonitoringStack) Resources() *MonitoringStackResources {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.resources
 	}
 	return nil
@@ -72,7 +80,7 @@ func (o *MonitoringStack) Resources() *MonitoringStackResources {
 //
 // Indicates the resources for the monitoring stack
 func (o *MonitoringStack) GetResources() (value *MonitoringStackResources, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.resources
 	}

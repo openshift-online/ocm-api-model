@@ -19,13 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// RegistrySourcesBuilder contains the data and logic needed to build 'registry_sources' objects.
-//
 // RegistrySources contains configuration that determines how the container runtime should treat individual
 // registries when accessing images for builds and pods. For instance, whether or not to allow insecure access.
 // It does not contain configuration for the internal cluster registry.
 type RegistrySourcesBuilder struct {
-	bitmap_            uint32
+	fieldSet_          []bool
 	allowedRegistries  []string
 	blockedRegistries  []string
 	insecureRegistries []string
@@ -33,19 +31,29 @@ type RegistrySourcesBuilder struct {
 
 // NewRegistrySources creates a new builder of 'registry_sources' objects.
 func NewRegistrySources() *RegistrySourcesBuilder {
-	return &RegistrySourcesBuilder{}
+	return &RegistrySourcesBuilder{
+		fieldSet_: make([]bool, 3),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *RegistrySourcesBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AllowedRegistries sets the value of the 'allowed_registries' attribute to the given values.
 func (b *RegistrySourcesBuilder) AllowedRegistries(values ...string) *RegistrySourcesBuilder {
 	b.allowedRegistries = make([]string, len(values))
 	copy(b.allowedRegistries, values)
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -53,7 +61,7 @@ func (b *RegistrySourcesBuilder) AllowedRegistries(values ...string) *RegistrySo
 func (b *RegistrySourcesBuilder) BlockedRegistries(values ...string) *RegistrySourcesBuilder {
 	b.blockedRegistries = make([]string, len(values))
 	copy(b.blockedRegistries, values)
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -61,7 +69,7 @@ func (b *RegistrySourcesBuilder) BlockedRegistries(values ...string) *RegistrySo
 func (b *RegistrySourcesBuilder) InsecureRegistries(values ...string) *RegistrySourcesBuilder {
 	b.insecureRegistries = make([]string, len(values))
 	copy(b.insecureRegistries, values)
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -70,7 +78,10 @@ func (b *RegistrySourcesBuilder) Copy(object *RegistrySources) *RegistrySourcesB
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.allowedRegistries != nil {
 		b.allowedRegistries = make([]string, len(object.allowedRegistries))
 		copy(b.allowedRegistries, object.allowedRegistries)
@@ -95,7 +106,10 @@ func (b *RegistrySourcesBuilder) Copy(object *RegistrySources) *RegistrySourcesB
 // Build creates a 'registry_sources' object using the configuration stored in the builder.
 func (b *RegistrySourcesBuilder) Build() (object *RegistrySources, err error) {
 	object = new(RegistrySources)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.allowedRegistries != nil {
 		object.allowedRegistries = make([]string, len(b.allowedRegistries))
 		copy(object.allowedRegistries, b.allowedRegistries)

@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 
-// AWSBuilder contains the data and logic needed to build 'AWS' objects.
-//
 // _Amazon Web Services_ specific settings of a cluster.
 type AWSBuilder struct {
-	bitmap_         uint32
+	fieldSet_       []bool
 	sts             *STSBuilder
 	accessKeyID     string
 	accountID       string
@@ -35,12 +33,22 @@ type AWSBuilder struct {
 
 // NewAWS creates a new builder of 'AWS' objects.
 func NewAWS() *AWSBuilder {
-	return &AWSBuilder{}
+	return &AWSBuilder{
+		fieldSet_: make([]bool, 7),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AWSBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // STS sets the value of the 'STS' attribute to the given value.
@@ -49,9 +57,9 @@ func (b *AWSBuilder) Empty() bool {
 func (b *AWSBuilder) STS(value *STSBuilder) *AWSBuilder {
 	b.sts = value
 	if value != nil {
-		b.bitmap_ |= 1
+		b.fieldSet_[0] = true
 	} else {
-		b.bitmap_ &^= 1
+		b.fieldSet_[0] = false
 	}
 	return b
 }
@@ -59,28 +67,28 @@ func (b *AWSBuilder) STS(value *STSBuilder) *AWSBuilder {
 // AccessKeyID sets the value of the 'access_key_ID' attribute to the given value.
 func (b *AWSBuilder) AccessKeyID(value string) *AWSBuilder {
 	b.accessKeyID = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // AccountID sets the value of the 'account_ID' attribute to the given value.
 func (b *AWSBuilder) AccountID(value string) *AWSBuilder {
 	b.accountID = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // PrivateLink sets the value of the 'private_link' attribute to the given value.
 func (b *AWSBuilder) PrivateLink(value bool) *AWSBuilder {
 	b.privateLink = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // SecretAccessKey sets the value of the 'secret_access_key' attribute to the given value.
 func (b *AWSBuilder) SecretAccessKey(value string) *AWSBuilder {
 	b.secretAccessKey = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -88,7 +96,7 @@ func (b *AWSBuilder) SecretAccessKey(value string) *AWSBuilder {
 func (b *AWSBuilder) SubnetIDs(values ...string) *AWSBuilder {
 	b.subnetIDs = make([]string, len(values))
 	copy(b.subnetIDs, values)
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -96,9 +104,9 @@ func (b *AWSBuilder) SubnetIDs(values ...string) *AWSBuilder {
 func (b *AWSBuilder) Tags(value map[string]string) *AWSBuilder {
 	b.tags = value
 	if value != nil {
-		b.bitmap_ |= 64
+		b.fieldSet_[6] = true
 	} else {
-		b.bitmap_ &^= 64
+		b.fieldSet_[6] = false
 	}
 	return b
 }
@@ -108,7 +116,10 @@ func (b *AWSBuilder) Copy(object *AWS) *AWSBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.sts != nil {
 		b.sts = NewSTS().Copy(object.sts)
 	} else {
@@ -138,7 +149,10 @@ func (b *AWSBuilder) Copy(object *AWS) *AWSBuilder {
 // Build creates a 'AWS' object using the configuration stored in the builder.
 func (b *AWSBuilder) Build() (object *AWS, err error) {
 	object = new(AWS)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.sts != nil {
 		object.sts, err = b.sts.Build()
 		if err != nil {

@@ -23,19 +23,27 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations
 //
 // Representation of a capability review response.
 type SelfCapabilityReviewResponse struct {
-	bitmap_ uint32
-	result  string
+	fieldSet_ []bool
+	result    string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *SelfCapabilityReviewResponse) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Result returns the value of the 'result' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *SelfCapabilityReviewResponse) Result() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.result
 	}
 	return ""
@@ -44,7 +52,7 @@ func (o *SelfCapabilityReviewResponse) Result() string {
 // GetResult returns the value of the 'result' attribute and
 // a flag indicating if the attribute has a value.
 func (o *SelfCapabilityReviewResponse) GetResult() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.result
 	}

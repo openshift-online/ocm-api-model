@@ -19,29 +19,37 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// NodeInfoBuilder contains the data and logic needed to build 'node_info' objects.
-//
 // Provides information about a node from specific type in the cluster.
 type NodeInfoBuilder struct {
-	bitmap_ uint32
-	amount  int
-	type_   NodeType
+	fieldSet_ []bool
+	amount    int
+	type_     NodeType
 }
 
 // NewNodeInfo creates a new builder of 'node_info' objects.
 func NewNodeInfo() *NodeInfoBuilder {
-	return &NodeInfoBuilder{}
+	return &NodeInfoBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *NodeInfoBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Amount sets the value of the 'amount' attribute to the given value.
 func (b *NodeInfoBuilder) Amount(value int) *NodeInfoBuilder {
 	b.amount = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -50,7 +58,7 @@ func (b *NodeInfoBuilder) Amount(value int) *NodeInfoBuilder {
 // Type of node received via telemetry.
 func (b *NodeInfoBuilder) Type(value NodeType) *NodeInfoBuilder {
 	b.type_ = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -59,7 +67,10 @@ func (b *NodeInfoBuilder) Copy(object *NodeInfo) *NodeInfoBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.amount = object.amount
 	b.type_ = object.type_
 	return b
@@ -68,7 +79,10 @@ func (b *NodeInfoBuilder) Copy(object *NodeInfo) *NodeInfoBuilder {
 // Build creates a 'node_info' object using the configuration stored in the builder.
 func (b *NodeInfoBuilder) Build() (object *NodeInfo, err error) {
 	object = new(NodeInfo)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.amount = b.amount
 	object.type_ = b.type_
 	return

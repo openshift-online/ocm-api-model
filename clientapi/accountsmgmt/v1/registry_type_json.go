@@ -43,13 +43,13 @@ func WriteRegistry(object *Registry, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(RegistryLinkKind)
 	} else {
 		stream.WriteString(RegistryKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteRegistry(object *Registry, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteRegistry(object *Registry, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteRegistry(object *Registry, stream *jsoniter.Stream) {
 		stream.WriteString(object.url)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteRegistry(object *Registry, stream *jsoniter.Stream) {
 		stream.WriteBool(object.cloudAlias)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteRegistry(object *Registry, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteRegistry(object *Registry, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteRegistry(object *Registry, stream *jsoniter.Stream) {
 		stream.WriteString(object.orgName)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -120,7 +120,7 @@ func WriteRegistry(object *Registry, stream *jsoniter.Stream) {
 		stream.WriteString(object.teamName)
 		count++
 	}
-	present_ = object.bitmap_&512 != 0
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -129,7 +129,7 @@ func WriteRegistry(object *Registry, stream *jsoniter.Stream) {
 		stream.WriteString(object.type_)
 		count++
 	}
-	present_ = object.bitmap_&1024 != 0
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -154,7 +154,9 @@ func UnmarshalRegistry(source interface{}) (object *Registry, err error) {
 
 // ReadRegistry reads a value of the 'registry' type from the given iterator.
 func ReadRegistry(iterator *jsoniter.Iterator) *Registry {
-	object := &Registry{}
+	object := &Registry{
+		fieldSet_: make([]bool, 11),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -164,22 +166,22 @@ func ReadRegistry(iterator *jsoniter.Iterator) *Registry {
 		case "kind":
 			value := iterator.ReadString()
 			if value == RegistryLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "url":
 			value := iterator.ReadString()
 			object.url = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "cloud_alias":
 			value := iterator.ReadBool()
 			object.cloudAlias = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -187,23 +189,23 @@ func ReadRegistry(iterator *jsoniter.Iterator) *Registry {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "org_name":
 			value := iterator.ReadString()
 			object.orgName = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "team_name":
 			value := iterator.ReadString()
 			object.teamName = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		case "type":
 			value := iterator.ReadString()
 			object.type_ = value
-			object.bitmap_ |= 512
+			object.fieldSet_[9] = true
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -211,7 +213,7 @@ func ReadRegistry(iterator *jsoniter.Iterator) *Registry {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.bitmap_ |= 1024
+			object.fieldSet_[10] = true
 		default:
 			iterator.ReadAny()
 		}

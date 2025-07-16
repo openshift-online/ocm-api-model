@@ -42,7 +42,7 @@ func WriteMachinePoolSecurityGroupFilter(object *MachinePoolSecurityGroupFilter,
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteMachinePoolSecurityGroupFilter(object *MachinePoolSecurityGroupFilter,
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,9 @@ func UnmarshalMachinePoolSecurityGroupFilter(source interface{}) (object *Machin
 
 // ReadMachinePoolSecurityGroupFilter reads a value of the 'machine_pool_security_group_filter' type from the given iterator.
 func ReadMachinePoolSecurityGroupFilter(iterator *jsoniter.Iterator) *MachinePoolSecurityGroupFilter {
-	object := &MachinePoolSecurityGroupFilter{}
+	object := &MachinePoolSecurityGroupFilter{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -86,11 +88,11 @@ func ReadMachinePoolSecurityGroupFilter(iterator *jsoniter.Iterator) *MachinePoo
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "value":
 			value := iterator.ReadString()
 			object.value = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

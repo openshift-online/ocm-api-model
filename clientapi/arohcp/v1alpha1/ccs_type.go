@@ -33,7 +33,7 @@ const CCSNilKind = "CCSNil"
 
 // CCS represents the values of the 'CCS' type.
 type CCS struct {
-	bitmap_          uint32
+	fieldSet_        []bool
 	id               string
 	href             string
 	disableSCPChecks bool
@@ -45,7 +45,7 @@ func (o *CCS) Kind() string {
 	if o == nil {
 		return CCSNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return CCSLinkKind
 	}
 	return CCSKind
@@ -53,12 +53,12 @@ func (o *CCS) Kind() string {
 
 // Link returns true if this is a link.
 func (o *CCS) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *CCS) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -67,7 +67,7 @@ func (o *CCS) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *CCS) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -76,7 +76,7 @@ func (o *CCS) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *CCS) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -85,7 +85,7 @@ func (o *CCS) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *CCS) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -94,7 +94,17 @@ func (o *CCS) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *CCS) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // DisableSCPChecks returns the value of the 'disable_SCP_checks' attribute, or
@@ -103,7 +113,7 @@ func (o *CCS) Empty() bool {
 // Indicates if cloud permissions checks are disabled,
 // when attempting installation of the cluster.
 func (o *CCS) DisableSCPChecks() bool {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.disableSCPChecks
 	}
 	return false
@@ -115,7 +125,7 @@ func (o *CCS) DisableSCPChecks() bool {
 // Indicates if cloud permissions checks are disabled,
 // when attempting installation of the cluster.
 func (o *CCS) GetDisableSCPChecks() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.disableSCPChecks
 	}
@@ -127,7 +137,7 @@ func (o *CCS) GetDisableSCPChecks() (value bool, ok bool) {
 //
 // Indicates if Customer Cloud Subscription is enabled on the cluster.
 func (o *CCS) Enabled() bool {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.enabled
 	}
 	return false
@@ -138,7 +148,7 @@ func (o *CCS) Enabled() bool {
 //
 // Indicates if Customer Cloud Subscription is enabled on the cluster.
 func (o *CCS) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.enabled
 	}

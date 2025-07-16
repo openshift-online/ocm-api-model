@@ -43,13 +43,13 @@ func WriteFollowUp(object *FollowUp, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(FollowUpLinkKind)
 	} else {
 		stream.WriteString(FollowUpKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteFollowUp(object *FollowUp, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteFollowUp(object *FollowUp, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteFollowUp(object *FollowUp, stream *jsoniter.Stream) {
 		stream.WriteBool(object.archived)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteFollowUp(object *FollowUp, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteFollowUp(object *FollowUp, stream *jsoniter.Stream) {
 		stream.WriteString((object.deletedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteFollowUp(object *FollowUp, stream *jsoniter.Stream) {
 		stream.WriteBool(object.done)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteFollowUp(object *FollowUp, stream *jsoniter.Stream) {
 		stream.WriteString(object.followUpType)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0 && object.incident != nil
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8] && object.incident != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -120,7 +120,7 @@ func WriteFollowUp(object *FollowUp, stream *jsoniter.Stream) {
 		WriteIncident(object.incident, stream)
 		count++
 	}
-	present_ = object.bitmap_&512 != 0
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -129,7 +129,7 @@ func WriteFollowUp(object *FollowUp, stream *jsoniter.Stream) {
 		stream.WriteString(object.owner)
 		count++
 	}
-	present_ = object.bitmap_&1024 != 0
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -138,7 +138,7 @@ func WriteFollowUp(object *FollowUp, stream *jsoniter.Stream) {
 		stream.WriteString(object.priority)
 		count++
 	}
-	present_ = object.bitmap_&2048 != 0
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -147,7 +147,7 @@ func WriteFollowUp(object *FollowUp, stream *jsoniter.Stream) {
 		stream.WriteString(object.status)
 		count++
 	}
-	present_ = object.bitmap_&4096 != 0
+	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -156,7 +156,7 @@ func WriteFollowUp(object *FollowUp, stream *jsoniter.Stream) {
 		stream.WriteString(object.title)
 		count++
 	}
-	present_ = object.bitmap_&8192 != 0
+	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -165,7 +165,7 @@ func WriteFollowUp(object *FollowUp, stream *jsoniter.Stream) {
 		stream.WriteString((object.updatedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&16384 != 0
+	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -174,7 +174,7 @@ func WriteFollowUp(object *FollowUp, stream *jsoniter.Stream) {
 		stream.WriteString(object.url)
 		count++
 	}
-	present_ = object.bitmap_&32768 != 0
+	present_ = len(object.fieldSet_) > 15 && object.fieldSet_[15]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -199,7 +199,9 @@ func UnmarshalFollowUp(source interface{}) (object *FollowUp, err error) {
 
 // ReadFollowUp reads a value of the 'follow_up' type from the given iterator.
 func ReadFollowUp(iterator *jsoniter.Iterator) *FollowUp {
-	object := &FollowUp{}
+	object := &FollowUp{
+		fieldSet_: make([]bool, 16),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -209,18 +211,18 @@ func ReadFollowUp(iterator *jsoniter.Iterator) *FollowUp {
 		case "kind":
 			value := iterator.ReadString()
 			if value == FollowUpLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "archived":
 			value := iterator.ReadBool()
 			object.archived = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -228,7 +230,7 @@ func ReadFollowUp(iterator *jsoniter.Iterator) *FollowUp {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "deleted_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -236,35 +238,35 @@ func ReadFollowUp(iterator *jsoniter.Iterator) *FollowUp {
 				iterator.ReportError("", err.Error())
 			}
 			object.deletedAt = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "done":
 			value := iterator.ReadBool()
 			object.done = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "follow_up_type":
 			value := iterator.ReadString()
 			object.followUpType = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "incident":
 			value := ReadIncident(iterator)
 			object.incident = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		case "owner":
 			value := iterator.ReadString()
 			object.owner = value
-			object.bitmap_ |= 512
+			object.fieldSet_[9] = true
 		case "priority":
 			value := iterator.ReadString()
 			object.priority = value
-			object.bitmap_ |= 1024
+			object.fieldSet_[10] = true
 		case "status":
 			value := iterator.ReadString()
 			object.status = value
-			object.bitmap_ |= 2048
+			object.fieldSet_[11] = true
 		case "title":
 			value := iterator.ReadString()
 			object.title = value
-			object.bitmap_ |= 4096
+			object.fieldSet_[12] = true
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -272,11 +274,11 @@ func ReadFollowUp(iterator *jsoniter.Iterator) *FollowUp {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.bitmap_ |= 8192
+			object.fieldSet_[13] = true
 		case "url":
 			value := iterator.ReadString()
 			object.url = value
-			object.bitmap_ |= 16384
+			object.fieldSet_[14] = true
 		case "worked_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -284,7 +286,7 @@ func ReadFollowUp(iterator *jsoniter.Iterator) *FollowUp {
 				iterator.ReportError("", err.Error())
 			}
 			object.workedAt = value
-			object.bitmap_ |= 32768
+			object.fieldSet_[15] = true
 		default:
 			iterator.ReadAny()
 		}

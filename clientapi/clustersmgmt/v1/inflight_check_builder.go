@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// InflightCheckBuilder contains the data and logic needed to build 'inflight_check' objects.
-//
 // Representation of check running before the cluster is provisioned.
 type InflightCheckBuilder struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	id        string
 	href      string
 	details   interface{}
@@ -40,66 +38,77 @@ type InflightCheckBuilder struct {
 
 // NewInflightCheck creates a new builder of 'inflight_check' objects.
 func NewInflightCheck() *InflightCheckBuilder {
-	return &InflightCheckBuilder{}
+	return &InflightCheckBuilder{
+		fieldSet_: make([]bool, 9),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *InflightCheckBuilder) Link(value bool) *InflightCheckBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *InflightCheckBuilder) ID(value string) *InflightCheckBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *InflightCheckBuilder) HREF(value string) *InflightCheckBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *InflightCheckBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Details sets the value of the 'details' attribute to the given value.
 func (b *InflightCheckBuilder) Details(value interface{}) *InflightCheckBuilder {
 	b.details = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // EndedAt sets the value of the 'ended_at' attribute to the given value.
 func (b *InflightCheckBuilder) EndedAt(value time.Time) *InflightCheckBuilder {
 	b.endedAt = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *InflightCheckBuilder) Name(value string) *InflightCheckBuilder {
 	b.name = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // Restarts sets the value of the 'restarts' attribute to the given value.
 func (b *InflightCheckBuilder) Restarts(value int) *InflightCheckBuilder {
 	b.restarts = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // StartedAt sets the value of the 'started_at' attribute to the given value.
 func (b *InflightCheckBuilder) StartedAt(value time.Time) *InflightCheckBuilder {
 	b.startedAt = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
@@ -108,7 +117,7 @@ func (b *InflightCheckBuilder) StartedAt(value time.Time) *InflightCheckBuilder 
 // State of an inflight check.
 func (b *InflightCheckBuilder) State(value InflightCheckState) *InflightCheckBuilder {
 	b.state = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
@@ -117,7 +126,10 @@ func (b *InflightCheckBuilder) Copy(object *InflightCheck) *InflightCheckBuilder
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.details = object.details
@@ -134,7 +146,10 @@ func (b *InflightCheckBuilder) Build() (object *InflightCheck, err error) {
 	object = new(InflightCheck)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.details = b.details
 	object.endedAt = b.endedAt
 	object.name = b.name

@@ -42,7 +42,7 @@ func WriteGCPEncryptionKey(object *GCPEncryptionKey, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteGCPEncryptionKey(object *GCPEncryptionKey, stream *jsoniter.Stream) {
 		stream.WriteString(object.kmsKeyServiceAccount)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteGCPEncryptionKey(object *GCPEncryptionKey, stream *jsoniter.Stream) {
 		stream.WriteString(object.keyLocation)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteGCPEncryptionKey(object *GCPEncryptionKey, stream *jsoniter.Stream) {
 		stream.WriteString(object.keyName)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,7 +94,9 @@ func UnmarshalGCPEncryptionKey(source interface{}) (object *GCPEncryptionKey, er
 
 // ReadGCPEncryptionKey reads a value of the 'GCP_encryption_key' type from the given iterator.
 func ReadGCPEncryptionKey(iterator *jsoniter.Iterator) *GCPEncryptionKey {
-	object := &GCPEncryptionKey{}
+	object := &GCPEncryptionKey{
+		fieldSet_: make([]bool, 4),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -104,19 +106,19 @@ func ReadGCPEncryptionKey(iterator *jsoniter.Iterator) *GCPEncryptionKey {
 		case "kms_key_service_account":
 			value := iterator.ReadString()
 			object.kmsKeyServiceAccount = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "key_location":
 			value := iterator.ReadString()
 			object.keyLocation = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "key_name":
 			value := iterator.ReadString()
 			object.keyName = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "key_ring":
 			value := iterator.ReadString()
 			object.keyRing = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		default:
 			iterator.ReadAny()
 		}

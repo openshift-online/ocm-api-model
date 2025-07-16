@@ -42,7 +42,7 @@ func WriteNotificationDetailsRequest(object *NotificationDetailsRequest, stream 
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteNotificationDetailsRequest(object *NotificationDetailsRequest, stream 
 		stream.WriteString(object.bccAddress)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteNotificationDetailsRequest(object *NotificationDetailsRequest, stream 
 		stream.WriteString(object.clusterID)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteNotificationDetailsRequest(object *NotificationDetailsRequest, stream 
 		stream.WriteString(object.clusterUUID)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteNotificationDetailsRequest(object *NotificationDetailsRequest, stream 
 		stream.WriteBool(object.includeRedHatAssociates)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteNotificationDetailsRequest(object *NotificationDetailsRequest, stream 
 		stream.WriteBool(object.internalOnly)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -96,7 +96,7 @@ func WriteNotificationDetailsRequest(object *NotificationDetailsRequest, stream 
 		stream.WriteString(object.logType)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -105,7 +105,7 @@ func WriteNotificationDetailsRequest(object *NotificationDetailsRequest, stream 
 		stream.WriteString(object.subject)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -130,7 +130,9 @@ func UnmarshalNotificationDetailsRequest(source interface{}) (object *Notificati
 
 // ReadNotificationDetailsRequest reads a value of the 'notification_details_request' type from the given iterator.
 func ReadNotificationDetailsRequest(iterator *jsoniter.Iterator) *NotificationDetailsRequest {
-	object := &NotificationDetailsRequest{}
+	object := &NotificationDetailsRequest{
+		fieldSet_: make([]bool, 8),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -140,35 +142,35 @@ func ReadNotificationDetailsRequest(iterator *jsoniter.Iterator) *NotificationDe
 		case "bcc_address":
 			value := iterator.ReadString()
 			object.bccAddress = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterID = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "cluster_uuid":
 			value := iterator.ReadString()
 			object.clusterUUID = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "include_red_hat_associates":
 			value := iterator.ReadBool()
 			object.includeRedHatAssociates = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "internal_only":
 			value := iterator.ReadBool()
 			object.internalOnly = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "log_type":
 			value := iterator.ReadString()
 			object.logType = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "subject":
 			value := iterator.ReadString()
 			object.subject = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "subscription_id":
 			value := iterator.ReadString()
 			object.subscriptionID = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		default:
 			iterator.ReadAny()
 		}

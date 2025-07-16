@@ -42,7 +42,7 @@ func WriteGithubIdentityProvider(object *GithubIdentityProvider, stream *jsonite
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteGithubIdentityProvider(object *GithubIdentityProvider, stream *jsonite
 		stream.WriteString(object.ca)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteGithubIdentityProvider(object *GithubIdentityProvider, stream *jsonite
 		stream.WriteString(object.clientID)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteGithubIdentityProvider(object *GithubIdentityProvider, stream *jsonite
 		stream.WriteString(object.clientSecret)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteGithubIdentityProvider(object *GithubIdentityProvider, stream *jsonite
 		stream.WriteString(object.hostname)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0 && object.organizations != nil
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.organizations != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteGithubIdentityProvider(object *GithubIdentityProvider, stream *jsonite
 		WriteStringList(object.organizations, stream)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0 && object.teams != nil
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.teams != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -112,7 +112,9 @@ func UnmarshalGithubIdentityProvider(source interface{}) (object *GithubIdentity
 
 // ReadGithubIdentityProvider reads a value of the 'github_identity_provider' type from the given iterator.
 func ReadGithubIdentityProvider(iterator *jsoniter.Iterator) *GithubIdentityProvider {
-	object := &GithubIdentityProvider{}
+	object := &GithubIdentityProvider{
+		fieldSet_: make([]bool, 6),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -122,27 +124,27 @@ func ReadGithubIdentityProvider(iterator *jsoniter.Iterator) *GithubIdentityProv
 		case "ca":
 			value := iterator.ReadString()
 			object.ca = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "client_id":
 			value := iterator.ReadString()
 			object.clientID = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "client_secret":
 			value := iterator.ReadString()
 			object.clientSecret = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "hostname":
 			value := iterator.ReadString()
 			object.hostname = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "organizations":
 			value := ReadStringList(iterator)
 			object.organizations = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "teams":
 			value := ReadStringList(iterator)
 			object.teams = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		default:
 			iterator.ReadAny()
 		}

@@ -42,7 +42,7 @@ func WriteNetworkVerification(object *NetworkVerification, stream *jsoniter.Stre
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.cloudProviderData != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.cloudProviderData != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteNetworkVerification(object *NetworkVerification, stream *jsoniter.Stre
 		WriteCloudProviderData(object.cloudProviderData, stream)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteNetworkVerification(object *NetworkVerification, stream *jsoniter.Stre
 		stream.WriteString(object.clusterId)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0 && object.items != nil
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.items != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteNetworkVerification(object *NetworkVerification, stream *jsoniter.Stre
 		WriteSubnetNetworkVerificationList(object.items, stream)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteNetworkVerification(object *NetworkVerification, stream *jsoniter.Stre
 		stream.WriteString(string(object.platform))
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -103,7 +103,9 @@ func UnmarshalNetworkVerification(source interface{}) (object *NetworkVerificati
 
 // ReadNetworkVerification reads a value of the 'network_verification' type from the given iterator.
 func ReadNetworkVerification(iterator *jsoniter.Iterator) *NetworkVerification {
-	object := &NetworkVerification{}
+	object := &NetworkVerification{
+		fieldSet_: make([]bool, 5),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -113,24 +115,24 @@ func ReadNetworkVerification(iterator *jsoniter.Iterator) *NetworkVerification {
 		case "cloud_provider_data":
 			value := ReadCloudProviderData(iterator)
 			object.cloudProviderData = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterId = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "items":
 			value := ReadSubnetNetworkVerificationList(iterator)
 			object.items = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "platform":
 			text := iterator.ReadString()
 			value := Platform(text)
 			object.platform = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "total":
 			value := iterator.ReadInt()
 			object.total = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		default:
 			iterator.ReadAny()
 		}

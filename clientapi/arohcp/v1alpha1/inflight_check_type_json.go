@@ -43,13 +43,13 @@ func WriteInflightCheck(object *InflightCheck, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(InflightCheckLinkKind)
 	} else {
 		stream.WriteString(InflightCheckKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteInflightCheck(object *InflightCheck, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteInflightCheck(object *InflightCheck, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteInflightCheck(object *InflightCheck, stream *jsoniter.Stream) {
 		stream.WriteVal(object.details)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteInflightCheck(object *InflightCheck, stream *jsoniter.Stream) {
 		stream.WriteString((object.endedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteInflightCheck(object *InflightCheck, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteInflightCheck(object *InflightCheck, stream *jsoniter.Stream) {
 		stream.WriteInt(object.restarts)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteInflightCheck(object *InflightCheck, stream *jsoniter.Stream) {
 		stream.WriteString((object.startedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&256 != 0
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -136,7 +136,9 @@ func UnmarshalInflightCheck(source interface{}) (object *InflightCheck, err erro
 
 // ReadInflightCheck reads a value of the 'inflight_check' type from the given iterator.
 func ReadInflightCheck(iterator *jsoniter.Iterator) *InflightCheck {
-	object := &InflightCheck{}
+	object := &InflightCheck{
+		fieldSet_: make([]bool, 9),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -146,19 +148,19 @@ func ReadInflightCheck(iterator *jsoniter.Iterator) *InflightCheck {
 		case "kind":
 			value := iterator.ReadString()
 			if value == InflightCheckLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "details":
 			var value interface{}
 			iterator.ReadVal(&value)
 			object.details = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "ended_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -166,15 +168,15 @@ func ReadInflightCheck(iterator *jsoniter.Iterator) *InflightCheck {
 				iterator.ReportError("", err.Error())
 			}
 			object.endedAt = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "restarts":
 			value := iterator.ReadInt()
 			object.restarts = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "started_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -182,12 +184,12 @@ func ReadInflightCheck(iterator *jsoniter.Iterator) *InflightCheck {
 				iterator.ReportError("", err.Error())
 			}
 			object.startedAt = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "state":
 			text := iterator.ReadString()
 			value := InflightCheckState(text)
 			object.state = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		default:
 			iterator.ReadAny()
 		}

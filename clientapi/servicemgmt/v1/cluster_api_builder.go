@@ -19,22 +19,30 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 
-// ClusterAPIBuilder contains the data and logic needed to build 'cluster_API' objects.
-//
 // Information about the API of a cluster.
 type ClusterAPIBuilder struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	listening ListeningMethod
 }
 
 // NewClusterAPI creates a new builder of 'cluster_API' objects.
 func NewClusterAPI() *ClusterAPIBuilder {
-	return &ClusterAPIBuilder{}
+	return &ClusterAPIBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterAPIBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Listening sets the value of the 'listening' attribute to the given value.
@@ -42,7 +50,7 @@ func (b *ClusterAPIBuilder) Empty() bool {
 // Cluster components listening method.
 func (b *ClusterAPIBuilder) Listening(value ListeningMethod) *ClusterAPIBuilder {
 	b.listening = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -51,7 +59,10 @@ func (b *ClusterAPIBuilder) Copy(object *ClusterAPI) *ClusterAPIBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.listening = object.listening
 	return b
 }
@@ -59,7 +70,10 @@ func (b *ClusterAPIBuilder) Copy(object *ClusterAPI) *ClusterAPIBuilder {
 // Build creates a 'cluster_API' object using the configuration stored in the builder.
 func (b *ClusterAPIBuilder) Build() (object *ClusterAPI, err error) {
 	object = new(ClusterAPI)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.listening = b.listening
 	return
 }

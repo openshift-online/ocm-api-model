@@ -23,13 +23,21 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Holds settings for an GCP storage volume.
 type GCPVolume struct {
-	bitmap_ uint32
-	size    int
+	fieldSet_ []bool
+	size      int
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *GCPVolume) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Size returns the value of the 'size' attribute, or
@@ -37,7 +45,7 @@ func (o *GCPVolume) Empty() bool {
 //
 // Volume size in Gib.
 func (o *GCPVolume) Size() int {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.size
 	}
 	return 0
@@ -48,7 +56,7 @@ func (o *GCPVolume) Size() int {
 //
 // Volume size in Gib.
 func (o *GCPVolume) GetSize() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.size
 	}

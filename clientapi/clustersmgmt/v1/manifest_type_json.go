@@ -43,13 +43,13 @@ func WriteManifest(object *Manifest, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(ManifestLinkKind)
 	} else {
 		stream.WriteString(ManifestKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteManifest(object *Manifest, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteManifest(object *Manifest, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteManifest(object *Manifest, stream *jsoniter.Stream) {
 		stream.WriteString((object.creationTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteManifest(object *Manifest, stream *jsoniter.Stream) {
 		stream.WriteVal(object.liveResource)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteManifest(object *Manifest, stream *jsoniter.Stream) {
 		stream.WriteVal(object.spec)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteManifest(object *Manifest, stream *jsoniter.Stream) {
 		stream.WriteString((object.updatedTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&128 != 0 && object.workloads != nil
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7] && object.workloads != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -127,7 +127,9 @@ func UnmarshalManifest(source interface{}) (object *Manifest, err error) {
 
 // ReadManifest reads a value of the 'manifest' type from the given iterator.
 func ReadManifest(iterator *jsoniter.Iterator) *Manifest {
-	object := &Manifest{}
+	object := &Manifest{
+		fieldSet_: make([]bool, 8),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -137,14 +139,14 @@ func ReadManifest(iterator *jsoniter.Iterator) *Manifest {
 		case "kind":
 			value := iterator.ReadString()
 			if value == ManifestLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "creation_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -152,17 +154,17 @@ func ReadManifest(iterator *jsoniter.Iterator) *Manifest {
 				iterator.ReportError("", err.Error())
 			}
 			object.creationTimestamp = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "live_resource":
 			var value interface{}
 			iterator.ReadVal(&value)
 			object.liveResource = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "spec":
 			var value interface{}
 			iterator.ReadVal(&value)
 			object.spec = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "updated_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -170,11 +172,11 @@ func ReadManifest(iterator *jsoniter.Iterator) *Manifest {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedTimestamp = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "workloads":
 			value := ReadInterfaceList(iterator)
 			object.workloads = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		default:
 			iterator.ReadAny()
 		}

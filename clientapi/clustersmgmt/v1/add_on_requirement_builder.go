@@ -19,32 +19,40 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AddOnRequirementBuilder contains the data and logic needed to build 'add_on_requirement' objects.
-//
 // Representation of an add-on requirement.
 type AddOnRequirementBuilder struct {
-	bitmap_  uint32
-	id       string
-	data     map[string]interface{}
-	resource string
-	status   *AddOnRequirementStatusBuilder
-	enabled  bool
+	fieldSet_ []bool
+	id        string
+	data      map[string]interface{}
+	resource  string
+	status    *AddOnRequirementStatusBuilder
+	enabled   bool
 }
 
 // NewAddOnRequirement creates a new builder of 'add_on_requirement' objects.
 func NewAddOnRequirement() *AddOnRequirementBuilder {
-	return &AddOnRequirementBuilder{}
+	return &AddOnRequirementBuilder{
+		fieldSet_: make([]bool, 5),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddOnRequirementBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *AddOnRequirementBuilder) ID(value string) *AddOnRequirementBuilder {
 	b.id = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -52,9 +60,9 @@ func (b *AddOnRequirementBuilder) ID(value string) *AddOnRequirementBuilder {
 func (b *AddOnRequirementBuilder) Data(value map[string]interface{}) *AddOnRequirementBuilder {
 	b.data = value
 	if value != nil {
-		b.bitmap_ |= 2
+		b.fieldSet_[1] = true
 	} else {
-		b.bitmap_ &^= 2
+		b.fieldSet_[1] = false
 	}
 	return b
 }
@@ -62,14 +70,14 @@ func (b *AddOnRequirementBuilder) Data(value map[string]interface{}) *AddOnRequi
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddOnRequirementBuilder) Enabled(value bool) *AddOnRequirementBuilder {
 	b.enabled = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Resource sets the value of the 'resource' attribute to the given value.
 func (b *AddOnRequirementBuilder) Resource(value string) *AddOnRequirementBuilder {
 	b.resource = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -79,9 +87,9 @@ func (b *AddOnRequirementBuilder) Resource(value string) *AddOnRequirementBuilde
 func (b *AddOnRequirementBuilder) Status(value *AddOnRequirementStatusBuilder) *AddOnRequirementBuilder {
 	b.status = value
 	if value != nil {
-		b.bitmap_ |= 16
+		b.fieldSet_[4] = true
 	} else {
-		b.bitmap_ &^= 16
+		b.fieldSet_[4] = false
 	}
 	return b
 }
@@ -91,7 +99,10 @@ func (b *AddOnRequirementBuilder) Copy(object *AddOnRequirement) *AddOnRequireme
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	if len(object.data) > 0 {
 		b.data = map[string]interface{}{}
@@ -114,7 +125,10 @@ func (b *AddOnRequirementBuilder) Copy(object *AddOnRequirement) *AddOnRequireme
 // Build creates a 'add_on_requirement' object using the configuration stored in the builder.
 func (b *AddOnRequirementBuilder) Build() (object *AddOnRequirement, err error) {
 	object = new(AddOnRequirement)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.id = b.id
 	if b.data != nil {
 		object.data = make(map[string]interface{})

@@ -33,7 +33,7 @@ const SupportCaseRequestNilKind = "SupportCaseRequestNil"
 
 // SupportCaseRequest represents the values of the 'support_case_request' type.
 type SupportCaseRequest struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	id             string
 	href           string
 	clusterId      string
@@ -50,7 +50,7 @@ func (o *SupportCaseRequest) Kind() string {
 	if o == nil {
 		return SupportCaseRequestNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return SupportCaseRequestLinkKind
 	}
 	return SupportCaseRequestKind
@@ -58,12 +58,12 @@ func (o *SupportCaseRequest) Kind() string {
 
 // Link returns true if this is a link.
 func (o *SupportCaseRequest) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *SupportCaseRequest) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -72,7 +72,7 @@ func (o *SupportCaseRequest) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *SupportCaseRequest) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -81,7 +81,7 @@ func (o *SupportCaseRequest) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *SupportCaseRequest) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -90,7 +90,7 @@ func (o *SupportCaseRequest) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *SupportCaseRequest) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -99,7 +99,17 @@ func (o *SupportCaseRequest) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *SupportCaseRequest) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // ClusterId returns the value of the 'cluster_id' attribute, or
@@ -107,7 +117,7 @@ func (o *SupportCaseRequest) Empty() bool {
 //
 // (optional) cluster id of the cluster on which we create the support case for.
 func (o *SupportCaseRequest) ClusterId() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.clusterId
 	}
 	return ""
@@ -118,7 +128,7 @@ func (o *SupportCaseRequest) ClusterId() string {
 //
 // (optional) cluster id of the cluster on which we create the support case for.
 func (o *SupportCaseRequest) GetClusterId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.clusterId
 	}
@@ -130,7 +140,7 @@ func (o *SupportCaseRequest) GetClusterId() (value string, ok bool) {
 //
 // (optional) cluster uuid of the cluster on which we create the support case for.
 func (o *SupportCaseRequest) ClusterUuid() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.clusterUuid
 	}
 	return ""
@@ -141,7 +151,7 @@ func (o *SupportCaseRequest) ClusterUuid() string {
 //
 // (optional) cluster uuid of the cluster on which we create the support case for.
 func (o *SupportCaseRequest) GetClusterUuid() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.clusterUuid
 	}
@@ -153,7 +163,7 @@ func (o *SupportCaseRequest) GetClusterUuid() (value string, ok bool) {
 //
 // Support case desciption.
 func (o *SupportCaseRequest) Description() string {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.description
 	}
 	return ""
@@ -164,7 +174,7 @@ func (o *SupportCaseRequest) Description() string {
 //
 // Support case desciption.
 func (o *SupportCaseRequest) GetDescription() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.description
 	}
@@ -176,7 +186,7 @@ func (o *SupportCaseRequest) GetDescription() (value string, ok bool) {
 //
 // (optional) event stream id for the support case so we could track it.
 func (o *SupportCaseRequest) EventStreamId() string {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.eventStreamId
 	}
 	return ""
@@ -187,7 +197,7 @@ func (o *SupportCaseRequest) EventStreamId() string {
 //
 // (optional) event stream id for the support case so we could track it.
 func (o *SupportCaseRequest) GetEventStreamId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.eventStreamId
 	}
@@ -199,7 +209,7 @@ func (o *SupportCaseRequest) GetEventStreamId() (value string, ok bool) {
 //
 // Support case severity.
 func (o *SupportCaseRequest) Severity() string {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.severity
 	}
 	return ""
@@ -210,7 +220,7 @@ func (o *SupportCaseRequest) Severity() string {
 //
 // Support case severity.
 func (o *SupportCaseRequest) GetSeverity() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.severity
 	}
@@ -222,7 +232,7 @@ func (o *SupportCaseRequest) GetSeverity() (value string, ok bool) {
 //
 // (optional) subscription id of the subscription on which we create the support case for.
 func (o *SupportCaseRequest) SubscriptionId() string {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.subscriptionId
 	}
 	return ""
@@ -233,7 +243,7 @@ func (o *SupportCaseRequest) SubscriptionId() string {
 //
 // (optional) subscription id of the subscription on which we create the support case for.
 func (o *SupportCaseRequest) GetSubscriptionId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.subscriptionId
 	}
@@ -245,7 +255,7 @@ func (o *SupportCaseRequest) GetSubscriptionId() (value string, ok bool) {
 //
 // Support case title.
 func (o *SupportCaseRequest) Summary() string {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.summary
 	}
 	return ""
@@ -256,7 +266,7 @@ func (o *SupportCaseRequest) Summary() string {
 //
 // Support case title.
 func (o *SupportCaseRequest) GetSummary() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.summary
 	}

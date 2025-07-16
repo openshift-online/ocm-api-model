@@ -39,7 +39,7 @@ const ManifestNilKind = "ManifestNil"
 //
 // Representation of a manifestwork.
 type Manifest struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	id                string
 	href              string
 	creationTimestamp time.Time
@@ -54,7 +54,7 @@ func (o *Manifest) Kind() string {
 	if o == nil {
 		return ManifestNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return ManifestLinkKind
 	}
 	return ManifestKind
@@ -62,12 +62,12 @@ func (o *Manifest) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Manifest) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *Manifest) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -76,7 +76,7 @@ func (o *Manifest) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Manifest) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -85,7 +85,7 @@ func (o *Manifest) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Manifest) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -94,7 +94,7 @@ func (o *Manifest) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Manifest) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -103,7 +103,17 @@ func (o *Manifest) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Manifest) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // CreationTimestamp returns the value of the 'creation_timestamp' attribute, or
@@ -111,7 +121,7 @@ func (o *Manifest) Empty() bool {
 //
 // Date and time when the manifest got created in OCM database.
 func (o *Manifest) CreationTimestamp() time.Time {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.creationTimestamp
 	}
 	return time.Time{}
@@ -122,7 +132,7 @@ func (o *Manifest) CreationTimestamp() time.Time {
 //
 // Date and time when the manifest got created in OCM database.
 func (o *Manifest) GetCreationTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.creationTimestamp
 	}
@@ -134,7 +144,7 @@ func (o *Manifest) GetCreationTimestamp() (value time.Time, ok bool) {
 //
 // Transient value to represent the underlying live resource.
 func (o *Manifest) LiveResource() interface{} {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.liveResource
 	}
 	return nil
@@ -145,7 +155,7 @@ func (o *Manifest) LiveResource() interface{} {
 //
 // Transient value to represent the underlying live resource.
 func (o *Manifest) GetLiveResource() (value interface{}, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.liveResource
 	}
@@ -158,7 +168,7 @@ func (o *Manifest) GetLiveResource() (value interface{}, ok bool) {
 // Spec of Manifest Work object from open cluster management
 // For more info please check https://open-cluster-management.io/concepts/manifestwork.
 func (o *Manifest) Spec() interface{} {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.spec
 	}
 	return nil
@@ -170,7 +180,7 @@ func (o *Manifest) Spec() interface{} {
 // Spec of Manifest Work object from open cluster management
 // For more info please check https://open-cluster-management.io/concepts/manifestwork.
 func (o *Manifest) GetSpec() (value interface{}, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.spec
 	}
@@ -182,7 +192,7 @@ func (o *Manifest) GetSpec() (value interface{}, ok bool) {
 //
 // Date and time when the manifest got updated in OCM database.
 func (o *Manifest) UpdatedTimestamp() time.Time {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.updatedTimestamp
 	}
 	return time.Time{}
@@ -193,7 +203,7 @@ func (o *Manifest) UpdatedTimestamp() time.Time {
 //
 // Date and time when the manifest got updated in OCM database.
 func (o *Manifest) GetUpdatedTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.updatedTimestamp
 	}
@@ -205,7 +215,7 @@ func (o *Manifest) GetUpdatedTimestamp() (value time.Time, ok bool) {
 //
 // List of k8s objects to deploy on a hosted cluster.
 func (o *Manifest) Workloads() []interface{} {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.workloads
 	}
 	return nil
@@ -216,7 +226,7 @@ func (o *Manifest) Workloads() []interface{} {
 //
 // List of k8s objects to deploy on a hosted cluster.
 func (o *Manifest) GetWorkloads() (value []interface{}, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.workloads
 	}

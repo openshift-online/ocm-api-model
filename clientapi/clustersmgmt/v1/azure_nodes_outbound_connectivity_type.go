@@ -23,13 +23,21 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // The configuration of the node outbound connectivity
 type AzureNodesOutboundConnectivity struct {
-	bitmap_      uint32
+	fieldSet_    []bool
 	outboundType string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AzureNodesOutboundConnectivity) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // OutboundType returns the value of the 'outbound_type' attribute, or
@@ -39,7 +47,7 @@ func (o *AzureNodesOutboundConnectivity) Empty() bool {
 // The default and only accepted value is 'load_balancer'.
 // This value is immutable.
 func (o *AzureNodesOutboundConnectivity) OutboundType() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.outboundType
 	}
 	return ""
@@ -52,7 +60,7 @@ func (o *AzureNodesOutboundConnectivity) OutboundType() string {
 // The default and only accepted value is 'load_balancer'.
 // This value is immutable.
 func (o *AzureNodesOutboundConnectivity) GetOutboundType() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.outboundType
 	}

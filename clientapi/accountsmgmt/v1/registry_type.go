@@ -37,7 +37,7 @@ const RegistryNilKind = "RegistryNil"
 
 // Registry represents the values of the 'registry' type.
 type Registry struct {
-	bitmap_    uint32
+	fieldSet_  []bool
 	id         string
 	href       string
 	url        string
@@ -55,7 +55,7 @@ func (o *Registry) Kind() string {
 	if o == nil {
 		return RegistryNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return RegistryLinkKind
 	}
 	return RegistryKind
@@ -63,12 +63,12 @@ func (o *Registry) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Registry) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *Registry) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -77,7 +77,7 @@ func (o *Registry) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Registry) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -86,7 +86,7 @@ func (o *Registry) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Registry) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -95,7 +95,7 @@ func (o *Registry) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Registry) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -104,13 +104,23 @@ func (o *Registry) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Registry) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // URL returns the value of the 'URL' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Registry) URL() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.url
 	}
 	return ""
@@ -119,7 +129,7 @@ func (o *Registry) URL() string {
 // GetURL returns the value of the 'URL' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Registry) GetURL() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.url
 	}
@@ -129,7 +139,7 @@ func (o *Registry) GetURL() (value string, ok bool) {
 // CloudAlias returns the value of the 'cloud_alias' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Registry) CloudAlias() bool {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.cloudAlias
 	}
 	return false
@@ -138,7 +148,7 @@ func (o *Registry) CloudAlias() bool {
 // GetCloudAlias returns the value of the 'cloud_alias' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Registry) GetCloudAlias() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.cloudAlias
 	}
@@ -148,7 +158,7 @@ func (o *Registry) GetCloudAlias() (value bool, ok bool) {
 // CreatedAt returns the value of the 'created_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Registry) CreatedAt() time.Time {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -157,7 +167,7 @@ func (o *Registry) CreatedAt() time.Time {
 // GetCreatedAt returns the value of the 'created_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Registry) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.createdAt
 	}
@@ -167,7 +177,7 @@ func (o *Registry) GetCreatedAt() (value time.Time, ok bool) {
 // Name returns the value of the 'name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Registry) Name() string {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.name
 	}
 	return ""
@@ -176,7 +186,7 @@ func (o *Registry) Name() string {
 // GetName returns the value of the 'name' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Registry) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.name
 	}
@@ -186,7 +196,7 @@ func (o *Registry) GetName() (value string, ok bool) {
 // OrgName returns the value of the 'org_name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Registry) OrgName() string {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.orgName
 	}
 	return ""
@@ -195,7 +205,7 @@ func (o *Registry) OrgName() string {
 // GetOrgName returns the value of the 'org_name' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Registry) GetOrgName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.orgName
 	}
@@ -205,7 +215,7 @@ func (o *Registry) GetOrgName() (value string, ok bool) {
 // TeamName returns the value of the 'team_name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Registry) TeamName() string {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.teamName
 	}
 	return ""
@@ -214,7 +224,7 @@ func (o *Registry) TeamName() string {
 // GetTeamName returns the value of the 'team_name' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Registry) GetTeamName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.teamName
 	}
@@ -224,7 +234,7 @@ func (o *Registry) GetTeamName() (value string, ok bool) {
 // Type returns the value of the 'type' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Registry) Type() string {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.type_
 	}
 	return ""
@@ -233,7 +243,7 @@ func (o *Registry) Type() string {
 // GetType returns the value of the 'type' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Registry) GetType() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.type_
 	}
@@ -243,7 +253,7 @@ func (o *Registry) GetType() (value string, ok bool) {
 // UpdatedAt returns the value of the 'updated_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Registry) UpdatedAt() time.Time {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -252,7 +262,7 @@ func (o *Registry) UpdatedAt() time.Time {
 // GetUpdatedAt returns the value of the 'updated_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Registry) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.updatedAt
 	}

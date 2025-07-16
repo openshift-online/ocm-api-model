@@ -19,42 +19,51 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// RolePolicyBuilder contains the data and logic needed to build 'role_policy' objects.
 type RolePolicyBuilder struct {
-	bitmap_ uint32
-	arn     string
-	name    string
-	type_   string
+	fieldSet_ []bool
+	arn       string
+	name      string
+	type_     string
 }
 
 // NewRolePolicy creates a new builder of 'role_policy' objects.
 func NewRolePolicy() *RolePolicyBuilder {
-	return &RolePolicyBuilder{}
+	return &RolePolicyBuilder{
+		fieldSet_: make([]bool, 3),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *RolePolicyBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Arn sets the value of the 'arn' attribute to the given value.
 func (b *RolePolicyBuilder) Arn(value string) *RolePolicyBuilder {
 	b.arn = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *RolePolicyBuilder) Name(value string) *RolePolicyBuilder {
 	b.name = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *RolePolicyBuilder) Type(value string) *RolePolicyBuilder {
 	b.type_ = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -63,7 +72,10 @@ func (b *RolePolicyBuilder) Copy(object *RolePolicy) *RolePolicyBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.arn = object.arn
 	b.name = object.name
 	b.type_ = object.type_
@@ -73,7 +85,10 @@ func (b *RolePolicyBuilder) Copy(object *RolePolicy) *RolePolicyBuilder {
 // Build creates a 'role_policy' object using the configuration stored in the builder.
 func (b *RolePolicyBuilder) Build() (object *RolePolicy, err error) {
 	object = new(RolePolicy)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.arn = b.arn
 	object.name = b.name
 	object.type_ = b.type_

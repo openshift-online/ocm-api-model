@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Description of a cloud provider virtual private cloud.
 type CloudVPC struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	awsSecurityGroups []*SecurityGroup
 	awsSubnets        []*Subnetwork
 	cidrBlock         string
@@ -35,7 +35,15 @@ type CloudVPC struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *CloudVPC) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AWSSecurityGroups returns the value of the 'AWS_security_groups' attribute, or
@@ -43,7 +51,7 @@ func (o *CloudVPC) Empty() bool {
 //
 // List of AWS security groups with details.
 func (o *CloudVPC) AWSSecurityGroups() []*SecurityGroup {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.awsSecurityGroups
 	}
 	return nil
@@ -54,7 +62,7 @@ func (o *CloudVPC) AWSSecurityGroups() []*SecurityGroup {
 //
 // List of AWS security groups with details.
 func (o *CloudVPC) GetAWSSecurityGroups() (value []*SecurityGroup, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.awsSecurityGroups
 	}
@@ -66,7 +74,7 @@ func (o *CloudVPC) GetAWSSecurityGroups() (value []*SecurityGroup, ok bool) {
 //
 // List of AWS subnetworks with details.
 func (o *CloudVPC) AWSSubnets() []*Subnetwork {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.awsSubnets
 	}
 	return nil
@@ -77,7 +85,7 @@ func (o *CloudVPC) AWSSubnets() []*Subnetwork {
 //
 // List of AWS subnetworks with details.
 func (o *CloudVPC) GetAWSSubnets() (value []*Subnetwork, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.awsSubnets
 	}
@@ -89,7 +97,7 @@ func (o *CloudVPC) GetAWSSubnets() (value []*Subnetwork, ok bool) {
 //
 // CIDR block of the virtual private cloud.
 func (o *CloudVPC) CIDRBlock() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.cidrBlock
 	}
 	return ""
@@ -100,7 +108,7 @@ func (o *CloudVPC) CIDRBlock() string {
 //
 // CIDR block of the virtual private cloud.
 func (o *CloudVPC) GetCIDRBlock() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.cidrBlock
 	}
@@ -112,7 +120,7 @@ func (o *CloudVPC) GetCIDRBlock() (value string, ok bool) {
 //
 // ID of virtual private cloud.
 func (o *CloudVPC) ID() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.id
 	}
 	return ""
@@ -123,7 +131,7 @@ func (o *CloudVPC) ID() string {
 //
 // ID of virtual private cloud.
 func (o *CloudVPC) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.id
 	}
@@ -135,7 +143,7 @@ func (o *CloudVPC) GetID() (value string, ok bool) {
 //
 // Name of virtual private cloud according to its `Name` tag on AWS.
 func (o *CloudVPC) Name() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.name
 	}
 	return ""
@@ -146,7 +154,7 @@ func (o *CloudVPC) Name() string {
 //
 // Name of virtual private cloud according to its `Name` tag on AWS.
 func (o *CloudVPC) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.name
 	}
@@ -158,7 +166,7 @@ func (o *CloudVPC) GetName() (value string, ok bool) {
 //
 // If the resource is RH managed.
 func (o *CloudVPC) RedHatManaged() bool {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.redHatManaged
 	}
 	return false
@@ -169,7 +177,7 @@ func (o *CloudVPC) RedHatManaged() bool {
 //
 // If the resource is RH managed.
 func (o *CloudVPC) GetRedHatManaged() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.redHatManaged
 	}
@@ -181,7 +189,7 @@ func (o *CloudVPC) GetRedHatManaged() (value bool, ok bool) {
 //
 // List of subnets used by the virtual private cloud.
 func (o *CloudVPC) Subnets() []string {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.subnets
 	}
 	return nil
@@ -192,7 +200,7 @@ func (o *CloudVPC) Subnets() []string {
 //
 // List of subnets used by the virtual private cloud.
 func (o *CloudVPC) GetSubnets() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.subnets
 	}

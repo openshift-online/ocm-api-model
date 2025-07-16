@@ -19,30 +19,39 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AutoscalerResourceLimitsGPULimitBuilder contains the data and logic needed to build 'autoscaler_resource_limits_GPU_limit' objects.
 type AutoscalerResourceLimitsGPULimitBuilder struct {
-	bitmap_ uint32
-	range_  *ResourceRangeBuilder
-	type_   string
+	fieldSet_ []bool
+	range_    *ResourceRangeBuilder
+	type_     string
 }
 
 // NewAutoscalerResourceLimitsGPULimit creates a new builder of 'autoscaler_resource_limits_GPU_limit' objects.
 func NewAutoscalerResourceLimitsGPULimit() *AutoscalerResourceLimitsGPULimitBuilder {
-	return &AutoscalerResourceLimitsGPULimitBuilder{}
+	return &AutoscalerResourceLimitsGPULimitBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AutoscalerResourceLimitsGPULimitBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Range sets the value of the 'range' attribute to the given value.
 func (b *AutoscalerResourceLimitsGPULimitBuilder) Range(value *ResourceRangeBuilder) *AutoscalerResourceLimitsGPULimitBuilder {
 	b.range_ = value
 	if value != nil {
-		b.bitmap_ |= 1
+		b.fieldSet_[0] = true
 	} else {
-		b.bitmap_ &^= 1
+		b.fieldSet_[0] = false
 	}
 	return b
 }
@@ -50,7 +59,7 @@ func (b *AutoscalerResourceLimitsGPULimitBuilder) Range(value *ResourceRangeBuil
 // Type sets the value of the 'type' attribute to the given value.
 func (b *AutoscalerResourceLimitsGPULimitBuilder) Type(value string) *AutoscalerResourceLimitsGPULimitBuilder {
 	b.type_ = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -59,7 +68,10 @@ func (b *AutoscalerResourceLimitsGPULimitBuilder) Copy(object *AutoscalerResourc
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.range_ != nil {
 		b.range_ = NewResourceRange().Copy(object.range_)
 	} else {
@@ -72,7 +84,10 @@ func (b *AutoscalerResourceLimitsGPULimitBuilder) Copy(object *AutoscalerResourc
 // Build creates a 'autoscaler_resource_limits_GPU_limit' object using the configuration stored in the builder.
 func (b *AutoscalerResourceLimitsGPULimitBuilder) Build() (object *AutoscalerResourceLimitsGPULimit, err error) {
 	object = new(AutoscalerResourceLimitsGPULimit)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.range_ != nil {
 		object.range_, err = b.range_.Build()
 		if err != nil {

@@ -19,66 +19,75 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// SkuRuleBuilder contains the data and logic needed to build 'sku_rule' objects.
-//
 // Identifies sku rule
 type SkuRuleBuilder struct {
-	bitmap_ uint32
-	id      string
-	href    string
-	allowed int
-	quotaId string
-	sku     string
+	fieldSet_ []bool
+	id        string
+	href      string
+	allowed   int
+	quotaId   string
+	sku       string
 }
 
 // NewSkuRule creates a new builder of 'sku_rule' objects.
 func NewSkuRule() *SkuRuleBuilder {
-	return &SkuRuleBuilder{}
+	return &SkuRuleBuilder{
+		fieldSet_: make([]bool, 6),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *SkuRuleBuilder) Link(value bool) *SkuRuleBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *SkuRuleBuilder) ID(value string) *SkuRuleBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *SkuRuleBuilder) HREF(value string) *SkuRuleBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SkuRuleBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Allowed sets the value of the 'allowed' attribute to the given value.
 func (b *SkuRuleBuilder) Allowed(value int) *SkuRuleBuilder {
 	b.allowed = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // QuotaId sets the value of the 'quota_id' attribute to the given value.
 func (b *SkuRuleBuilder) QuotaId(value string) *SkuRuleBuilder {
 	b.quotaId = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // Sku sets the value of the 'sku' attribute to the given value.
 func (b *SkuRuleBuilder) Sku(value string) *SkuRuleBuilder {
 	b.sku = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -87,7 +96,10 @@ func (b *SkuRuleBuilder) Copy(object *SkuRule) *SkuRuleBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.allowed = object.allowed
@@ -101,7 +113,10 @@ func (b *SkuRuleBuilder) Build() (object *SkuRule, err error) {
 	object = new(SkuRule)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.allowed = b.allowed
 	object.quotaId = b.quotaId
 	object.sku = b.sku

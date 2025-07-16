@@ -23,14 +23,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Provides information about a node from specific type in the cluster.
 type NodeInfo struct {
-	bitmap_ uint32
-	amount  int
-	type_   NodeType
+	fieldSet_ []bool
+	amount    int
+	type_     NodeType
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *NodeInfo) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Amount returns the value of the 'amount' attribute, or
@@ -38,7 +46,7 @@ func (o *NodeInfo) Empty() bool {
 //
 // The amount of the nodes from this type.
 func (o *NodeInfo) Amount() int {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.amount
 	}
 	return 0
@@ -49,7 +57,7 @@ func (o *NodeInfo) Amount() int {
 //
 // The amount of the nodes from this type.
 func (o *NodeInfo) GetAmount() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.amount
 	}
@@ -61,7 +69,7 @@ func (o *NodeInfo) GetAmount() (value int, ok bool) {
 //
 // The Node type.
 func (o *NodeInfo) Type() NodeType {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.type_
 	}
 	return NodeType("")
@@ -72,7 +80,7 @@ func (o *NodeInfo) Type() NodeType {
 //
 // The Node type.
 func (o *NodeInfo) GetType() (value NodeType, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.type_
 	}

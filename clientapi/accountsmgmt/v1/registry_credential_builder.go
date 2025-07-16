@@ -23,9 +23,8 @@ import (
 	time "time"
 )
 
-// RegistryCredentialBuilder contains the data and logic needed to build 'registry_credential' objects.
 type RegistryCredentialBuilder struct {
-	bitmap_            uint32
+	fieldSet_          []bool
 	id                 string
 	href               string
 	account            *AccountBuilder
@@ -39,41 +38,52 @@ type RegistryCredentialBuilder struct {
 
 // NewRegistryCredential creates a new builder of 'registry_credential' objects.
 func NewRegistryCredential() *RegistryCredentialBuilder {
-	return &RegistryCredentialBuilder{}
+	return &RegistryCredentialBuilder{
+		fieldSet_: make([]bool, 10),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *RegistryCredentialBuilder) Link(value bool) *RegistryCredentialBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *RegistryCredentialBuilder) ID(value string) *RegistryCredentialBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *RegistryCredentialBuilder) HREF(value string) *RegistryCredentialBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *RegistryCredentialBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Account sets the value of the 'account' attribute to the given value.
 func (b *RegistryCredentialBuilder) Account(value *AccountBuilder) *RegistryCredentialBuilder {
 	b.account = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -81,14 +91,14 @@ func (b *RegistryCredentialBuilder) Account(value *AccountBuilder) *RegistryCred
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *RegistryCredentialBuilder) CreatedAt(value time.Time) *RegistryCredentialBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // ExternalResourceID sets the value of the 'external_resource_ID' attribute to the given value.
 func (b *RegistryCredentialBuilder) ExternalResourceID(value string) *RegistryCredentialBuilder {
 	b.externalResourceID = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -96,9 +106,9 @@ func (b *RegistryCredentialBuilder) ExternalResourceID(value string) *RegistryCr
 func (b *RegistryCredentialBuilder) Registry(value *RegistryBuilder) *RegistryCredentialBuilder {
 	b.registry = value
 	if value != nil {
-		b.bitmap_ |= 64
+		b.fieldSet_[6] = true
 	} else {
-		b.bitmap_ &^= 64
+		b.fieldSet_[6] = false
 	}
 	return b
 }
@@ -106,21 +116,21 @@ func (b *RegistryCredentialBuilder) Registry(value *RegistryBuilder) *RegistryCr
 // Token sets the value of the 'token' attribute to the given value.
 func (b *RegistryCredentialBuilder) Token(value string) *RegistryCredentialBuilder {
 	b.token = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *RegistryCredentialBuilder) UpdatedAt(value time.Time) *RegistryCredentialBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // Username sets the value of the 'username' attribute to the given value.
 func (b *RegistryCredentialBuilder) Username(value string) *RegistryCredentialBuilder {
 	b.username = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
@@ -129,7 +139,10 @@ func (b *RegistryCredentialBuilder) Copy(object *RegistryCredential) *RegistryCr
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.account != nil {
@@ -155,7 +168,10 @@ func (b *RegistryCredentialBuilder) Build() (object *RegistryCredential, err err
 	object = new(RegistryCredential)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.account != nil {
 		object.account, err = b.account.Build()
 		if err != nil {

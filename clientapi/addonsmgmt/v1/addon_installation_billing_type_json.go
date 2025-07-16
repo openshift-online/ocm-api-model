@@ -42,7 +42,7 @@ func WriteAddonInstallationBilling(object *AddonInstallationBilling, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAddonInstallationBilling(object *AddonInstallationBilling, stream *jso
 		stream.WriteString(object.billingMarketplaceAccount)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteAddonInstallationBilling(object *AddonInstallationBilling, stream *jso
 		stream.WriteString(string(object.billingModel))
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteAddonInstallationBilling(object *AddonInstallationBilling, stream *jso
 		stream.WriteString(object.href)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteAddonInstallationBilling(object *AddonInstallationBilling, stream *jso
 		stream.WriteString(object.id)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -103,7 +103,9 @@ func UnmarshalAddonInstallationBilling(source interface{}) (object *AddonInstall
 
 // ReadAddonInstallationBilling reads a value of the 'addon_installation_billing' type from the given iterator.
 func ReadAddonInstallationBilling(iterator *jsoniter.Iterator) *AddonInstallationBilling {
-	object := &AddonInstallationBilling{}
+	object := &AddonInstallationBilling{
+		fieldSet_: make([]bool, 5),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -113,24 +115,24 @@ func ReadAddonInstallationBilling(iterator *jsoniter.Iterator) *AddonInstallatio
 		case "billing_marketplace_account":
 			value := iterator.ReadString()
 			object.billingMarketplaceAccount = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "billing_model":
 			text := iterator.ReadString()
 			value := BillingModel(text)
 			object.billingModel = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			value := iterator.ReadString()
 			object.href = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "kind":
 			value := iterator.ReadString()
 			object.kind = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		default:
 			iterator.ReadAny()
 		}

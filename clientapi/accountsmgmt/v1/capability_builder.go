@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// CapabilityBuilder contains the data and logic needed to build 'capability' objects.
-//
 // Capability model that represents internal labels with a key that matches a set list defined in AMS (defined in pkg/api/capability_types.go).
 type CapabilityBuilder struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	name      string
 	value     string
 	inherited bool
@@ -31,32 +29,42 @@ type CapabilityBuilder struct {
 
 // NewCapability creates a new builder of 'capability' objects.
 func NewCapability() *CapabilityBuilder {
-	return &CapabilityBuilder{}
+	return &CapabilityBuilder{
+		fieldSet_: make([]bool, 3),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *CapabilityBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Inherited sets the value of the 'inherited' attribute to the given value.
 func (b *CapabilityBuilder) Inherited(value bool) *CapabilityBuilder {
 	b.inherited = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *CapabilityBuilder) Name(value string) *CapabilityBuilder {
 	b.name = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *CapabilityBuilder) Value(value string) *CapabilityBuilder {
 	b.value = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -65,7 +73,10 @@ func (b *CapabilityBuilder) Copy(object *Capability) *CapabilityBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.inherited = object.inherited
 	b.name = object.name
 	b.value = object.value
@@ -75,7 +86,10 @@ func (b *CapabilityBuilder) Copy(object *Capability) *CapabilityBuilder {
 // Build creates a 'capability' object using the configuration stored in the builder.
 func (b *CapabilityBuilder) Build() (object *Capability, err error) {
 	object = new(Capability)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.inherited = b.inherited
 	object.name = b.name
 	object.value = b.value

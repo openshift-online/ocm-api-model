@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Details for `github` identity providers.
 type GithubIdentityProvider struct {
-	bitmap_       uint32
+	fieldSet_     []bool
 	ca            string
 	clientID      string
 	clientSecret  string
@@ -34,7 +34,15 @@ type GithubIdentityProvider struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *GithubIdentityProvider) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // CA returns the value of the 'CA' attribute, or
@@ -42,7 +50,7 @@ func (o *GithubIdentityProvider) Empty() bool {
 //
 // Optional trusted certificate authority bundle to use when making requests tot he server.
 func (o *GithubIdentityProvider) CA() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.ca
 	}
 	return ""
@@ -53,7 +61,7 @@ func (o *GithubIdentityProvider) CA() string {
 //
 // Optional trusted certificate authority bundle to use when making requests tot he server.
 func (o *GithubIdentityProvider) GetCA() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.ca
 	}
@@ -65,7 +73,7 @@ func (o *GithubIdentityProvider) GetCA() (value string, ok bool) {
 //
 // Client identifier of a registered _GitHub_ OAuth application.
 func (o *GithubIdentityProvider) ClientID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.clientID
 	}
 	return ""
@@ -76,7 +84,7 @@ func (o *GithubIdentityProvider) ClientID() string {
 //
 // Client identifier of a registered _GitHub_ OAuth application.
 func (o *GithubIdentityProvider) GetClientID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.clientID
 	}
@@ -88,7 +96,7 @@ func (o *GithubIdentityProvider) GetClientID() (value string, ok bool) {
 //
 // Client secret of a registered _GitHub_ OAuth application.
 func (o *GithubIdentityProvider) ClientSecret() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.clientSecret
 	}
 	return ""
@@ -99,7 +107,7 @@ func (o *GithubIdentityProvider) ClientSecret() string {
 //
 // Client secret of a registered _GitHub_ OAuth application.
 func (o *GithubIdentityProvider) GetClientSecret() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.clientSecret
 	}
@@ -115,7 +123,7 @@ func (o *GithubIdentityProvider) GetClientSecret() (value string, ok bool) {
 //
 // For plain _GitHub_ omit this parameter.
 func (o *GithubIdentityProvider) Hostname() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.hostname
 	}
 	return ""
@@ -130,7 +138,7 @@ func (o *GithubIdentityProvider) Hostname() string {
 //
 // For plain _GitHub_ omit this parameter.
 func (o *GithubIdentityProvider) GetHostname() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.hostname
 	}
@@ -142,7 +150,7 @@ func (o *GithubIdentityProvider) GetHostname() (value string, ok bool) {
 //
 // Optional list of organizations. Cannot be used in combination with the Teams field.
 func (o *GithubIdentityProvider) Organizations() []string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.organizations
 	}
 	return nil
@@ -153,7 +161,7 @@ func (o *GithubIdentityProvider) Organizations() []string {
 //
 // Optional list of organizations. Cannot be used in combination with the Teams field.
 func (o *GithubIdentityProvider) GetOrganizations() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.organizations
 	}
@@ -165,7 +173,7 @@ func (o *GithubIdentityProvider) GetOrganizations() (value []string, ok bool) {
 //
 // Optional list of teams. Cannot be used in combination with the Organizations field.
 func (o *GithubIdentityProvider) Teams() []string {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.teams
 	}
 	return nil
@@ -176,7 +184,7 @@ func (o *GithubIdentityProvider) Teams() []string {
 //
 // Optional list of teams. Cannot be used in combination with the Organizations field.
 func (o *GithubIdentityProvider) GetTeams() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.teams
 	}

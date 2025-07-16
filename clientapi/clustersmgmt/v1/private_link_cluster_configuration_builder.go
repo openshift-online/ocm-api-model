@@ -19,29 +19,37 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// PrivateLinkClusterConfigurationBuilder contains the data and logic needed to build 'private_link_cluster_configuration' objects.
-//
 // Manages the configuration for the Private Links.
 type PrivateLinkClusterConfigurationBuilder struct {
-	bitmap_    uint32
+	fieldSet_  []bool
 	principals []*PrivateLinkPrincipalBuilder
 }
 
 // NewPrivateLinkClusterConfiguration creates a new builder of 'private_link_cluster_configuration' objects.
 func NewPrivateLinkClusterConfiguration() *PrivateLinkClusterConfigurationBuilder {
-	return &PrivateLinkClusterConfigurationBuilder{}
+	return &PrivateLinkClusterConfigurationBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *PrivateLinkClusterConfigurationBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Principals sets the value of the 'principals' attribute to the given values.
 func (b *PrivateLinkClusterConfigurationBuilder) Principals(values ...*PrivateLinkPrincipalBuilder) *PrivateLinkClusterConfigurationBuilder {
 	b.principals = make([]*PrivateLinkPrincipalBuilder, len(values))
 	copy(b.principals, values)
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -50,7 +58,10 @@ func (b *PrivateLinkClusterConfigurationBuilder) Copy(object *PrivateLinkCluster
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.principals != nil {
 		b.principals = make([]*PrivateLinkPrincipalBuilder, len(object.principals))
 		for i, v := range object.principals {
@@ -65,7 +76,10 @@ func (b *PrivateLinkClusterConfigurationBuilder) Copy(object *PrivateLinkCluster
 // Build creates a 'private_link_cluster_configuration' object using the configuration stored in the builder.
 func (b *PrivateLinkClusterConfigurationBuilder) Build() (object *PrivateLinkClusterConfiguration, err error) {
 	object = new(PrivateLinkClusterConfiguration)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.principals != nil {
 		object.principals = make([]*PrivateLinkPrincipal, len(b.principals))
 		for i, v := range b.principals {

@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 //
 // Representation of an addon parameter option.
 type AddonParameterOption struct {
-	bitmap_      uint32
+	fieldSet_    []bool
 	name         string
 	rank         int
 	requirements []*AddonRequirement
@@ -32,7 +32,15 @@ type AddonParameterOption struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddonParameterOption) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Name returns the value of the 'name' attribute, or
@@ -40,7 +48,7 @@ func (o *AddonParameterOption) Empty() bool {
 //
 // Name of the addon parameter option.
 func (o *AddonParameterOption) Name() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.name
 	}
 	return ""
@@ -51,7 +59,7 @@ func (o *AddonParameterOption) Name() string {
 //
 // Name of the addon parameter option.
 func (o *AddonParameterOption) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.name
 	}
@@ -63,7 +71,7 @@ func (o *AddonParameterOption) GetName() (value string, ok bool) {
 //
 // Rank of option to be used in cases where editable direction should be restricted.
 func (o *AddonParameterOption) Rank() int {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.rank
 	}
 	return 0
@@ -74,7 +82,7 @@ func (o *AddonParameterOption) Rank() int {
 //
 // Rank of option to be used in cases where editable direction should be restricted.
 func (o *AddonParameterOption) GetRank() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.rank
 	}
@@ -86,7 +94,7 @@ func (o *AddonParameterOption) GetRank() (value int, ok bool) {
 //
 // List of addon requirements for this parameter option.
 func (o *AddonParameterOption) Requirements() []*AddonRequirement {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.requirements
 	}
 	return nil
@@ -97,7 +105,7 @@ func (o *AddonParameterOption) Requirements() []*AddonRequirement {
 //
 // List of addon requirements for this parameter option.
 func (o *AddonParameterOption) GetRequirements() (value []*AddonRequirement, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.requirements
 	}
@@ -109,7 +117,7 @@ func (o *AddonParameterOption) GetRequirements() (value []*AddonRequirement, ok 
 //
 // Value of the addon parameter option.
 func (o *AddonParameterOption) Value() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.value
 	}
 	return ""
@@ -120,7 +128,7 @@ func (o *AddonParameterOption) Value() string {
 //
 // Value of the addon parameter option.
 func (o *AddonParameterOption) GetValue() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.value
 	}

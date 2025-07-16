@@ -42,13 +42,13 @@ func WriteNodePoolAutoscaling(object *NodePoolAutoscaling, stream *jsoniter.Stre
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(NodePoolAutoscalingLinkKind)
 	} else {
 		stream.WriteString(NodePoolAutoscalingKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteNodePoolAutoscaling(object *NodePoolAutoscaling, stream *jsoniter.Stre
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteNodePoolAutoscaling(object *NodePoolAutoscaling, stream *jsoniter.Stre
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteNodePoolAutoscaling(object *NodePoolAutoscaling, stream *jsoniter.Stre
 		stream.WriteInt(object.maxReplica)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -99,7 +99,9 @@ func UnmarshalNodePoolAutoscaling(source interface{}) (object *NodePoolAutoscali
 
 // ReadNodePoolAutoscaling reads a value of the 'node_pool_autoscaling' type from the given iterator.
 func ReadNodePoolAutoscaling(iterator *jsoniter.Iterator) *NodePoolAutoscaling {
-	object := &NodePoolAutoscaling{}
+	object := &NodePoolAutoscaling{
+		fieldSet_: make([]bool, 5),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -109,22 +111,22 @@ func ReadNodePoolAutoscaling(iterator *jsoniter.Iterator) *NodePoolAutoscaling {
 		case "kind":
 			value := iterator.ReadString()
 			if value == NodePoolAutoscalingLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "max_replica":
 			value := iterator.ReadInt()
 			object.maxReplica = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "min_replica":
 			value := iterator.ReadInt()
 			object.minReplica = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		default:
 			iterator.ReadAny()
 		}

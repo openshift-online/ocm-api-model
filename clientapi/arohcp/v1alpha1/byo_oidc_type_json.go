@@ -42,7 +42,7 @@ func WriteByoOidc(object *ByoOidc, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,9 @@ func UnmarshalByoOidc(source interface{}) (object *ByoOidc, err error) {
 
 // ReadByoOidc reads a value of the 'byo_oidc' type from the given iterator.
 func ReadByoOidc(iterator *jsoniter.Iterator) *ByoOidc {
-	object := &ByoOidc{}
+	object := &ByoOidc{
+		fieldSet_: make([]bool, 1),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -77,7 +79,7 @@ func ReadByoOidc(iterator *jsoniter.Iterator) *ByoOidc {
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

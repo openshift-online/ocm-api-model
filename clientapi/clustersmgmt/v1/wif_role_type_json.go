@@ -42,7 +42,7 @@ func WriteWifRole(object *WifRole, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.permissions != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.permissions != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteWifRole(object *WifRole, stream *jsoniter.Stream) {
 		WriteStringList(object.permissions, stream)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteWifRole(object *WifRole, stream *jsoniter.Stream) {
 		stream.WriteBool(object.predefined)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,7 +85,9 @@ func UnmarshalWifRole(source interface{}) (object *WifRole, err error) {
 
 // ReadWifRole reads a value of the 'wif_role' type from the given iterator.
 func ReadWifRole(iterator *jsoniter.Iterator) *WifRole {
-	object := &WifRole{}
+	object := &WifRole{
+		fieldSet_: make([]bool, 3),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -95,15 +97,15 @@ func ReadWifRole(iterator *jsoniter.Iterator) *WifRole {
 		case "permissions":
 			value := ReadStringList(iterator)
 			object.permissions = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "predefined":
 			value := iterator.ReadBool()
 			object.predefined = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "role_id":
 			value := iterator.ReadString()
 			object.roleId = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		default:
 			iterator.ReadAny()
 		}

@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations
 //
 // Request to perform a resource access review.
 type ResourceReviewRequest struct {
-	bitmap_                     uint32
+	fieldSet_                   []bool
 	accountUsername             string
 	action                      string
 	excludeSubscriptionStatuses []SubscriptionStatus
@@ -33,7 +33,15 @@ type ResourceReviewRequest struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ResourceReviewRequest) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AccountUsername returns the value of the 'account_username' attribute, or
@@ -41,7 +49,7 @@ func (o *ResourceReviewRequest) Empty() bool {
 //
 // Name of the account that is trying to access the resource.
 func (o *ResourceReviewRequest) AccountUsername() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.accountUsername
 	}
 	return ""
@@ -52,7 +60,7 @@ func (o *ResourceReviewRequest) AccountUsername() string {
 //
 // Name of the account that is trying to access the resource.
 func (o *ResourceReviewRequest) GetAccountUsername() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.accountUsername
 	}
@@ -64,7 +72,7 @@ func (o *ResourceReviewRequest) GetAccountUsername() (value string, ok bool) {
 //
 // Action that will be performed on the resource.
 func (o *ResourceReviewRequest) Action() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.action
 	}
 	return ""
@@ -75,7 +83,7 @@ func (o *ResourceReviewRequest) Action() string {
 //
 // Action that will be performed on the resource.
 func (o *ResourceReviewRequest) GetAction() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.action
 	}
@@ -87,7 +95,7 @@ func (o *ResourceReviewRequest) GetAction() (value string, ok bool) {
 //
 // Subscriptions with these statuses will be excluded from results.
 func (o *ResourceReviewRequest) ExcludeSubscriptionStatuses() []SubscriptionStatus {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.excludeSubscriptionStatuses
 	}
 	return nil
@@ -98,7 +106,7 @@ func (o *ResourceReviewRequest) ExcludeSubscriptionStatuses() []SubscriptionStat
 //
 // Subscriptions with these statuses will be excluded from results.
 func (o *ResourceReviewRequest) GetExcludeSubscriptionStatuses() (value []SubscriptionStatus, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.excludeSubscriptionStatuses
 	}
@@ -111,7 +119,7 @@ func (o *ResourceReviewRequest) GetExcludeSubscriptionStatuses() (value []Subscr
 // If true, in the case when all subscriptions in organization are permitted, response will *not* include
 // these subscriptions' ID, but organization only.
 func (o *ResourceReviewRequest) ReduceClusterList() bool {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.reduceClusterList
 	}
 	return false
@@ -123,7 +131,7 @@ func (o *ResourceReviewRequest) ReduceClusterList() bool {
 // If true, in the case when all subscriptions in organization are permitted, response will *not* include
 // these subscriptions' ID, but organization only.
 func (o *ResourceReviewRequest) GetReduceClusterList() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.reduceClusterList
 	}
@@ -135,7 +143,7 @@ func (o *ResourceReviewRequest) GetReduceClusterList() (value bool, ok bool) {
 //
 // Type of resource.
 func (o *ResourceReviewRequest) ResourceType() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.resourceType
 	}
 	return ""
@@ -146,7 +154,7 @@ func (o *ResourceReviewRequest) ResourceType() string {
 //
 // Type of resource.
 func (o *ResourceReviewRequest) GetResourceType() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.resourceType
 	}

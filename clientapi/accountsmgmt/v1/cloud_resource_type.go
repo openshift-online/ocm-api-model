@@ -37,7 +37,7 @@ const CloudResourceNilKind = "CloudResourceNil"
 
 // CloudResource represents the values of the 'cloud_resource' type.
 type CloudResource struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	id             string
 	href           string
 	category       string
@@ -60,7 +60,7 @@ func (o *CloudResource) Kind() string {
 	if o == nil {
 		return CloudResourceNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return CloudResourceLinkKind
 	}
 	return CloudResourceKind
@@ -68,12 +68,12 @@ func (o *CloudResource) Kind() string {
 
 // Link returns true if this is a link.
 func (o *CloudResource) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *CloudResource) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -82,7 +82,7 @@ func (o *CloudResource) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *CloudResource) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -91,7 +91,7 @@ func (o *CloudResource) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *CloudResource) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -100,7 +100,7 @@ func (o *CloudResource) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *CloudResource) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -109,13 +109,23 @@ func (o *CloudResource) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *CloudResource) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Active returns the value of the 'active' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *CloudResource) Active() bool {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.active
 	}
 	return false
@@ -124,7 +134,7 @@ func (o *CloudResource) Active() bool {
 // GetActive returns the value of the 'active' attribute and
 // a flag indicating if the attribute has a value.
 func (o *CloudResource) GetActive() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.active
 	}
@@ -134,7 +144,7 @@ func (o *CloudResource) GetActive() (value bool, ok bool) {
 // Category returns the value of the 'category' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *CloudResource) Category() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.category
 	}
 	return ""
@@ -143,7 +153,7 @@ func (o *CloudResource) Category() string {
 // GetCategory returns the value of the 'category' attribute and
 // a flag indicating if the attribute has a value.
 func (o *CloudResource) GetCategory() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.category
 	}
@@ -153,7 +163,7 @@ func (o *CloudResource) GetCategory() (value string, ok bool) {
 // CategoryPretty returns the value of the 'category_pretty' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *CloudResource) CategoryPretty() string {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.categoryPretty
 	}
 	return ""
@@ -162,7 +172,7 @@ func (o *CloudResource) CategoryPretty() string {
 // GetCategoryPretty returns the value of the 'category_pretty' attribute and
 // a flag indicating if the attribute has a value.
 func (o *CloudResource) GetCategoryPretty() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.categoryPretty
 	}
@@ -172,7 +182,7 @@ func (o *CloudResource) GetCategoryPretty() (value string, ok bool) {
 // CloudProvider returns the value of the 'cloud_provider' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *CloudResource) CloudProvider() string {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.cloudProvider
 	}
 	return ""
@@ -181,7 +191,7 @@ func (o *CloudResource) CloudProvider() string {
 // GetCloudProvider returns the value of the 'cloud_provider' attribute and
 // a flag indicating if the attribute has a value.
 func (o *CloudResource) GetCloudProvider() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.cloudProvider
 	}
@@ -191,7 +201,7 @@ func (o *CloudResource) GetCloudProvider() (value string, ok bool) {
 // CpuCores returns the value of the 'cpu_cores' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *CloudResource) CpuCores() int {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.cpuCores
 	}
 	return 0
@@ -200,7 +210,7 @@ func (o *CloudResource) CpuCores() int {
 // GetCpuCores returns the value of the 'cpu_cores' attribute and
 // a flag indicating if the attribute has a value.
 func (o *CloudResource) GetCpuCores() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.cpuCores
 	}
@@ -210,7 +220,7 @@ func (o *CloudResource) GetCpuCores() (value int, ok bool) {
 // CreatedAt returns the value of the 'created_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *CloudResource) CreatedAt() time.Time {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -219,7 +229,7 @@ func (o *CloudResource) CreatedAt() time.Time {
 // GetCreatedAt returns the value of the 'created_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *CloudResource) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.createdAt
 	}
@@ -229,7 +239,7 @@ func (o *CloudResource) GetCreatedAt() (value time.Time, ok bool) {
 // GenericName returns the value of the 'generic_name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *CloudResource) GenericName() string {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.genericName
 	}
 	return ""
@@ -238,7 +248,7 @@ func (o *CloudResource) GenericName() string {
 // GetGenericName returns the value of the 'generic_name' attribute and
 // a flag indicating if the attribute has a value.
 func (o *CloudResource) GetGenericName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.genericName
 	}
@@ -248,7 +258,7 @@ func (o *CloudResource) GetGenericName() (value string, ok bool) {
 // Memory returns the value of the 'memory' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *CloudResource) Memory() int {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.memory
 	}
 	return 0
@@ -257,7 +267,7 @@ func (o *CloudResource) Memory() int {
 // GetMemory returns the value of the 'memory' attribute and
 // a flag indicating if the attribute has a value.
 func (o *CloudResource) GetMemory() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.memory
 	}
@@ -267,7 +277,7 @@ func (o *CloudResource) GetMemory() (value int, ok bool) {
 // MemoryPretty returns the value of the 'memory_pretty' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *CloudResource) MemoryPretty() string {
-	if o != nil && o.bitmap_&2048 != 0 {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.memoryPretty
 	}
 	return ""
@@ -276,7 +286,7 @@ func (o *CloudResource) MemoryPretty() string {
 // GetMemoryPretty returns the value of the 'memory_pretty' attribute and
 // a flag indicating if the attribute has a value.
 func (o *CloudResource) GetMemoryPretty() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2048 != 0
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.memoryPretty
 	}
@@ -286,7 +296,7 @@ func (o *CloudResource) GetMemoryPretty() (value string, ok bool) {
 // NamePretty returns the value of the 'name_pretty' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *CloudResource) NamePretty() string {
-	if o != nil && o.bitmap_&4096 != 0 {
+	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
 		return o.namePretty
 	}
 	return ""
@@ -295,7 +305,7 @@ func (o *CloudResource) NamePretty() string {
 // GetNamePretty returns the value of the 'name_pretty' attribute and
 // a flag indicating if the attribute has a value.
 func (o *CloudResource) GetNamePretty() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4096 != 0
+	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
 	if ok {
 		value = o.namePretty
 	}
@@ -305,7 +315,7 @@ func (o *CloudResource) GetNamePretty() (value string, ok bool) {
 // ResourceType returns the value of the 'resource_type' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *CloudResource) ResourceType() string {
-	if o != nil && o.bitmap_&8192 != 0 {
+	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
 		return o.resourceType
 	}
 	return ""
@@ -314,7 +324,7 @@ func (o *CloudResource) ResourceType() string {
 // GetResourceType returns the value of the 'resource_type' attribute and
 // a flag indicating if the attribute has a value.
 func (o *CloudResource) GetResourceType() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8192 != 0
+	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
 	if ok {
 		value = o.resourceType
 	}
@@ -324,7 +334,7 @@ func (o *CloudResource) GetResourceType() (value string, ok bool) {
 // SizePretty returns the value of the 'size_pretty' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *CloudResource) SizePretty() string {
-	if o != nil && o.bitmap_&16384 != 0 {
+	if o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14] {
 		return o.sizePretty
 	}
 	return ""
@@ -333,7 +343,7 @@ func (o *CloudResource) SizePretty() string {
 // GetSizePretty returns the value of the 'size_pretty' attribute and
 // a flag indicating if the attribute has a value.
 func (o *CloudResource) GetSizePretty() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16384 != 0
+	ok = o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14]
 	if ok {
 		value = o.sizePretty
 	}
@@ -343,7 +353,7 @@ func (o *CloudResource) GetSizePretty() (value string, ok bool) {
 // UpdatedAt returns the value of the 'updated_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *CloudResource) UpdatedAt() time.Time {
-	if o != nil && o.bitmap_&32768 != 0 {
+	if o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15] {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -352,7 +362,7 @@ func (o *CloudResource) UpdatedAt() time.Time {
 // GetUpdatedAt returns the value of the 'updated_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *CloudResource) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&32768 != 0
+	ok = o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15]
 	if ok {
 		value = o.updatedAt
 	}

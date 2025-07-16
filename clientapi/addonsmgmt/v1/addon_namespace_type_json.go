@@ -43,7 +43,7 @@ func WriteAddonNamespace(object *AddonNamespace, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.annotations != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.annotations != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -72,7 +72,7 @@ func WriteAddonNamespace(object *AddonNamespace, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -81,7 +81,7 @@ func WriteAddonNamespace(object *AddonNamespace, stream *jsoniter.Stream) {
 		stream.WriteBool(object.enabled)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0 && object.labels != nil
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.labels != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -110,7 +110,7 @@ func WriteAddonNamespace(object *AddonNamespace, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -135,7 +135,9 @@ func UnmarshalAddonNamespace(source interface{}) (object *AddonNamespace, err er
 
 // ReadAddonNamespace reads a value of the 'addon_namespace' type from the given iterator.
 func ReadAddonNamespace(iterator *jsoniter.Iterator) *AddonNamespace {
-	object := &AddonNamespace{}
+	object := &AddonNamespace{
+		fieldSet_: make([]bool, 4),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -153,11 +155,11 @@ func ReadAddonNamespace(iterator *jsoniter.Iterator) *AddonNamespace {
 				value[key] = item
 			}
 			object.annotations = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "labels":
 			value := map[string]string{}
 			for {
@@ -169,11 +171,11 @@ func ReadAddonNamespace(iterator *jsoniter.Iterator) *AddonNamespace {
 				value[key] = item
 			}
 			object.labels = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		default:
 			iterator.ReadAny()
 		}

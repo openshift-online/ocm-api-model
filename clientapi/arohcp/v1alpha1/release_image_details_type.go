@@ -21,14 +21,22 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 
 // ReleaseImageDetails represents the values of the 'release_image_details' type.
 type ReleaseImageDetails struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	availableUpgrades []string
 	releaseImage      string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ReleaseImageDetails) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AvailableUpgrades returns the value of the 'available_upgrades' attribute, or
@@ -36,7 +44,7 @@ func (o *ReleaseImageDetails) Empty() bool {
 //
 // AvailableUpgrades is the list of versions this version can be upgraded to.
 func (o *ReleaseImageDetails) AvailableUpgrades() []string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.availableUpgrades
 	}
 	return nil
@@ -47,7 +55,7 @@ func (o *ReleaseImageDetails) AvailableUpgrades() []string {
 //
 // AvailableUpgrades is the list of versions this version can be upgraded to.
 func (o *ReleaseImageDetails) GetAvailableUpgrades() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.availableUpgrades
 	}
@@ -59,7 +67,7 @@ func (o *ReleaseImageDetails) GetAvailableUpgrades() (value []string, ok bool) {
 //
 // ReleaseImage contains the URI of Openshift release image.
 func (o *ReleaseImageDetails) ReleaseImage() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.releaseImage
 	}
 	return ""
@@ -70,7 +78,7 @@ func (o *ReleaseImageDetails) ReleaseImage() string {
 //
 // ReleaseImage contains the URI of Openshift release image.
 func (o *ReleaseImageDetails) GetReleaseImage() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.releaseImage
 	}

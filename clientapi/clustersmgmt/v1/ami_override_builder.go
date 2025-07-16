@@ -19,52 +19,61 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AMIOverrideBuilder contains the data and logic needed to build 'AMI_override' objects.
-//
 // AMIOverride specifies what Amazon Machine Image should be used for a particular product and region.
 type AMIOverrideBuilder struct {
-	bitmap_ uint32
-	id      string
-	href    string
-	ami     string
-	product *ProductBuilder
-	region  *CloudRegionBuilder
+	fieldSet_ []bool
+	id        string
+	href      string
+	ami       string
+	product   *ProductBuilder
+	region    *CloudRegionBuilder
 }
 
 // NewAMIOverride creates a new builder of 'AMI_override' objects.
 func NewAMIOverride() *AMIOverrideBuilder {
-	return &AMIOverrideBuilder{}
+	return &AMIOverrideBuilder{
+		fieldSet_: make([]bool, 6),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AMIOverrideBuilder) Link(value bool) *AMIOverrideBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AMIOverrideBuilder) ID(value string) *AMIOverrideBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AMIOverrideBuilder) HREF(value string) *AMIOverrideBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AMIOverrideBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // AMI sets the value of the 'AMI' attribute to the given value.
 func (b *AMIOverrideBuilder) AMI(value string) *AMIOverrideBuilder {
 	b.ami = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -74,9 +83,9 @@ func (b *AMIOverrideBuilder) AMI(value string) *AMIOverrideBuilder {
 func (b *AMIOverrideBuilder) Product(value *ProductBuilder) *AMIOverrideBuilder {
 	b.product = value
 	if value != nil {
-		b.bitmap_ |= 16
+		b.fieldSet_[4] = true
 	} else {
-		b.bitmap_ &^= 16
+		b.fieldSet_[4] = false
 	}
 	return b
 }
@@ -87,9 +96,9 @@ func (b *AMIOverrideBuilder) Product(value *ProductBuilder) *AMIOverrideBuilder 
 func (b *AMIOverrideBuilder) Region(value *CloudRegionBuilder) *AMIOverrideBuilder {
 	b.region = value
 	if value != nil {
-		b.bitmap_ |= 32
+		b.fieldSet_[5] = true
 	} else {
-		b.bitmap_ &^= 32
+		b.fieldSet_[5] = false
 	}
 	return b
 }
@@ -99,7 +108,10 @@ func (b *AMIOverrideBuilder) Copy(object *AMIOverride) *AMIOverrideBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.ami = object.ami
@@ -121,7 +133,10 @@ func (b *AMIOverrideBuilder) Build() (object *AMIOverride, err error) {
 	object = new(AMIOverride)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.ami = b.ami
 	if b.product != nil {
 		object.product, err = b.product.Build()

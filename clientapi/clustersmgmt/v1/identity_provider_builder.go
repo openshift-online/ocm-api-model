@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// IdentityProviderBuilder contains the data and logic needed to build 'identity_provider' objects.
-//
 // Representation of an identity provider.
 type IdentityProviderBuilder struct {
-	bitmap_       uint32
+	fieldSet_     []bool
 	id            string
 	href          string
 	ldap          *LDAPIdentityProviderBuilder
@@ -41,32 +39,43 @@ type IdentityProviderBuilder struct {
 
 // NewIdentityProvider creates a new builder of 'identity_provider' objects.
 func NewIdentityProvider() *IdentityProviderBuilder {
-	return &IdentityProviderBuilder{}
+	return &IdentityProviderBuilder{
+		fieldSet_: make([]bool, 14),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *IdentityProviderBuilder) Link(value bool) *IdentityProviderBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *IdentityProviderBuilder) ID(value string) *IdentityProviderBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *IdentityProviderBuilder) HREF(value string) *IdentityProviderBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *IdentityProviderBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // LDAP sets the value of the 'LDAP' attribute to the given value.
@@ -75,9 +84,9 @@ func (b *IdentityProviderBuilder) Empty() bool {
 func (b *IdentityProviderBuilder) LDAP(value *LDAPIdentityProviderBuilder) *IdentityProviderBuilder {
 	b.ldap = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -85,7 +94,7 @@ func (b *IdentityProviderBuilder) LDAP(value *LDAPIdentityProviderBuilder) *Iden
 // Challenge sets the value of the 'challenge' attribute to the given value.
 func (b *IdentityProviderBuilder) Challenge(value bool) *IdentityProviderBuilder {
 	b.challenge = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -95,9 +104,9 @@ func (b *IdentityProviderBuilder) Challenge(value bool) *IdentityProviderBuilder
 func (b *IdentityProviderBuilder) Github(value *GithubIdentityProviderBuilder) *IdentityProviderBuilder {
 	b.github = value
 	if value != nil {
-		b.bitmap_ |= 32
+		b.fieldSet_[5] = true
 	} else {
-		b.bitmap_ &^= 32
+		b.fieldSet_[5] = false
 	}
 	return b
 }
@@ -108,9 +117,9 @@ func (b *IdentityProviderBuilder) Github(value *GithubIdentityProviderBuilder) *
 func (b *IdentityProviderBuilder) Gitlab(value *GitlabIdentityProviderBuilder) *IdentityProviderBuilder {
 	b.gitlab = value
 	if value != nil {
-		b.bitmap_ |= 64
+		b.fieldSet_[6] = true
 	} else {
-		b.bitmap_ &^= 64
+		b.fieldSet_[6] = false
 	}
 	return b
 }
@@ -121,9 +130,9 @@ func (b *IdentityProviderBuilder) Gitlab(value *GitlabIdentityProviderBuilder) *
 func (b *IdentityProviderBuilder) Google(value *GoogleIdentityProviderBuilder) *IdentityProviderBuilder {
 	b.google = value
 	if value != nil {
-		b.bitmap_ |= 128
+		b.fieldSet_[7] = true
 	} else {
-		b.bitmap_ &^= 128
+		b.fieldSet_[7] = false
 	}
 	return b
 }
@@ -134,9 +143,9 @@ func (b *IdentityProviderBuilder) Google(value *GoogleIdentityProviderBuilder) *
 func (b *IdentityProviderBuilder) Htpasswd(value *HTPasswdIdentityProviderBuilder) *IdentityProviderBuilder {
 	b.htpasswd = value
 	if value != nil {
-		b.bitmap_ |= 256
+		b.fieldSet_[8] = true
 	} else {
-		b.bitmap_ &^= 256
+		b.fieldSet_[8] = false
 	}
 	return b
 }
@@ -144,7 +153,7 @@ func (b *IdentityProviderBuilder) Htpasswd(value *HTPasswdIdentityProviderBuilde
 // Login sets the value of the 'login' attribute to the given value.
 func (b *IdentityProviderBuilder) Login(value bool) *IdentityProviderBuilder {
 	b.login = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
@@ -153,14 +162,14 @@ func (b *IdentityProviderBuilder) Login(value bool) *IdentityProviderBuilder {
 // Controls how mappings are established between provider identities and user objects.
 func (b *IdentityProviderBuilder) MappingMethod(value IdentityProviderMappingMethod) *IdentityProviderBuilder {
 	b.mappingMethod = value
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *IdentityProviderBuilder) Name(value string) *IdentityProviderBuilder {
 	b.name = value
-	b.bitmap_ |= 2048
+	b.fieldSet_[11] = true
 	return b
 }
 
@@ -170,9 +179,9 @@ func (b *IdentityProviderBuilder) Name(value string) *IdentityProviderBuilder {
 func (b *IdentityProviderBuilder) OpenID(value *OpenIDIdentityProviderBuilder) *IdentityProviderBuilder {
 	b.openID = value
 	if value != nil {
-		b.bitmap_ |= 4096
+		b.fieldSet_[12] = true
 	} else {
-		b.bitmap_ &^= 4096
+		b.fieldSet_[12] = false
 	}
 	return b
 }
@@ -182,7 +191,7 @@ func (b *IdentityProviderBuilder) OpenID(value *OpenIDIdentityProviderBuilder) *
 // Type of identity provider.
 func (b *IdentityProviderBuilder) Type(value IdentityProviderType) *IdentityProviderBuilder {
 	b.type_ = value
-	b.bitmap_ |= 8192
+	b.fieldSet_[13] = true
 	return b
 }
 
@@ -191,7 +200,10 @@ func (b *IdentityProviderBuilder) Copy(object *IdentityProvider) *IdentityProvid
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.ldap != nil {
@@ -237,7 +249,10 @@ func (b *IdentityProviderBuilder) Build() (object *IdentityProvider, err error) 
 	object = new(IdentityProvider)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.ldap != nil {
 		object.ldap, err = b.ldap.Build()
 		if err != nil {

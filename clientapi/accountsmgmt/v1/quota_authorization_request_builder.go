@@ -19,9 +19,8 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// QuotaAuthorizationRequestBuilder contains the data and logic needed to build 'quota_authorization_request' objects.
 type QuotaAuthorizationRequestBuilder struct {
-	bitmap_          uint32
+	fieldSet_        []bool
 	accountUsername  string
 	availabilityZone string
 	displayName      string
@@ -34,60 +33,70 @@ type QuotaAuthorizationRequestBuilder struct {
 
 // NewQuotaAuthorizationRequest creates a new builder of 'quota_authorization_request' objects.
 func NewQuotaAuthorizationRequest() *QuotaAuthorizationRequestBuilder {
-	return &QuotaAuthorizationRequestBuilder{}
+	return &QuotaAuthorizationRequestBuilder{
+		fieldSet_: make([]bool, 8),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *QuotaAuthorizationRequestBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *QuotaAuthorizationRequestBuilder) AccountUsername(value string) *QuotaAuthorizationRequestBuilder {
 	b.accountUsername = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // AvailabilityZone sets the value of the 'availability_zone' attribute to the given value.
 func (b *QuotaAuthorizationRequestBuilder) AvailabilityZone(value string) *QuotaAuthorizationRequestBuilder {
 	b.availabilityZone = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // DisplayName sets the value of the 'display_name' attribute to the given value.
 func (b *QuotaAuthorizationRequestBuilder) DisplayName(value string) *QuotaAuthorizationRequestBuilder {
 	b.displayName = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // ProductID sets the value of the 'product_ID' attribute to the given value.
 func (b *QuotaAuthorizationRequestBuilder) ProductID(value string) *QuotaAuthorizationRequestBuilder {
 	b.productID = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // ProductCategory sets the value of the 'product_category' attribute to the given value.
 func (b *QuotaAuthorizationRequestBuilder) ProductCategory(value string) *QuotaAuthorizationRequestBuilder {
 	b.productCategory = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // QuotaVersion sets the value of the 'quota_version' attribute to the given value.
 func (b *QuotaAuthorizationRequestBuilder) QuotaVersion(value string) *QuotaAuthorizationRequestBuilder {
 	b.quotaVersion = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // Reserve sets the value of the 'reserve' attribute to the given value.
 func (b *QuotaAuthorizationRequestBuilder) Reserve(value bool) *QuotaAuthorizationRequestBuilder {
 	b.reserve = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -95,7 +104,7 @@ func (b *QuotaAuthorizationRequestBuilder) Reserve(value bool) *QuotaAuthorizati
 func (b *QuotaAuthorizationRequestBuilder) Resources(values ...*ReservedResourceBuilder) *QuotaAuthorizationRequestBuilder {
 	b.resources = make([]*ReservedResourceBuilder, len(values))
 	copy(b.resources, values)
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
@@ -104,7 +113,10 @@ func (b *QuotaAuthorizationRequestBuilder) Copy(object *QuotaAuthorizationReques
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.accountUsername = object.accountUsername
 	b.availabilityZone = object.availabilityZone
 	b.displayName = object.displayName
@@ -126,7 +138,10 @@ func (b *QuotaAuthorizationRequestBuilder) Copy(object *QuotaAuthorizationReques
 // Build creates a 'quota_authorization_request' object using the configuration stored in the builder.
 func (b *QuotaAuthorizationRequestBuilder) Build() (object *QuotaAuthorizationRequest, err error) {
 	object = new(QuotaAuthorizationRequest)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.accountUsername = b.accountUsername
 	object.availabilityZone = b.availabilityZone
 	object.displayName = b.displayName

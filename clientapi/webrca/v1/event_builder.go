@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// EventBuilder contains the data and logic needed to build 'event' objects.
-//
 // Definition of a Web RCA event.
 type EventBuilder struct {
-	bitmap_              uint32
+	fieldSet_            []bool
 	id                   string
 	href                 string
 	createdAt            time.Time
@@ -47,38 +45,49 @@ type EventBuilder struct {
 
 // NewEvent creates a new builder of 'event' objects.
 func NewEvent() *EventBuilder {
-	return &EventBuilder{}
+	return &EventBuilder{
+		fieldSet_: make([]bool, 16),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *EventBuilder) Link(value bool) *EventBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *EventBuilder) ID(value string) *EventBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *EventBuilder) HREF(value string) *EventBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *EventBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *EventBuilder) CreatedAt(value time.Time) *EventBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -88,9 +97,9 @@ func (b *EventBuilder) CreatedAt(value time.Time) *EventBuilder {
 func (b *EventBuilder) Creator(value *UserBuilder) *EventBuilder {
 	b.creator = value
 	if value != nil {
-		b.bitmap_ |= 16
+		b.fieldSet_[4] = true
 	} else {
-		b.bitmap_ &^= 16
+		b.fieldSet_[4] = false
 	}
 	return b
 }
@@ -98,7 +107,7 @@ func (b *EventBuilder) Creator(value *UserBuilder) *EventBuilder {
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *EventBuilder) DeletedAt(value time.Time) *EventBuilder {
 	b.deletedAt = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -108,9 +117,9 @@ func (b *EventBuilder) DeletedAt(value time.Time) *EventBuilder {
 func (b *EventBuilder) Escalation(value *EscalationBuilder) *EventBuilder {
 	b.escalation = value
 	if value != nil {
-		b.bitmap_ |= 64
+		b.fieldSet_[6] = true
 	} else {
-		b.bitmap_ &^= 64
+		b.fieldSet_[6] = false
 	}
 	return b
 }
@@ -118,14 +127,14 @@ func (b *EventBuilder) Escalation(value *EscalationBuilder) *EventBuilder {
 // EventType sets the value of the 'event_type' attribute to the given value.
 func (b *EventBuilder) EventType(value string) *EventBuilder {
 	b.eventType = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // ExternalReferenceUrl sets the value of the 'external_reference_url' attribute to the given value.
 func (b *EventBuilder) ExternalReferenceUrl(value string) *EventBuilder {
 	b.externalReferenceUrl = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
@@ -135,9 +144,9 @@ func (b *EventBuilder) ExternalReferenceUrl(value string) *EventBuilder {
 func (b *EventBuilder) FollowUp(value *FollowUpBuilder) *EventBuilder {
 	b.followUp = value
 	if value != nil {
-		b.bitmap_ |= 512
+		b.fieldSet_[9] = true
 	} else {
-		b.bitmap_ &^= 512
+		b.fieldSet_[9] = false
 	}
 	return b
 }
@@ -148,9 +157,9 @@ func (b *EventBuilder) FollowUp(value *FollowUpBuilder) *EventBuilder {
 func (b *EventBuilder) FollowUpChange(value *FollowUpChangeBuilder) *EventBuilder {
 	b.followUpChange = value
 	if value != nil {
-		b.bitmap_ |= 1024
+		b.fieldSet_[10] = true
 	} else {
-		b.bitmap_ &^= 1024
+		b.fieldSet_[10] = false
 	}
 	return b
 }
@@ -161,9 +170,9 @@ func (b *EventBuilder) FollowUpChange(value *FollowUpChangeBuilder) *EventBuilde
 func (b *EventBuilder) Handoff(value *HandoffBuilder) *EventBuilder {
 	b.handoff = value
 	if value != nil {
-		b.bitmap_ |= 2048
+		b.fieldSet_[11] = true
 	} else {
-		b.bitmap_ &^= 2048
+		b.fieldSet_[11] = false
 	}
 	return b
 }
@@ -174,9 +183,9 @@ func (b *EventBuilder) Handoff(value *HandoffBuilder) *EventBuilder {
 func (b *EventBuilder) Incident(value *IncidentBuilder) *EventBuilder {
 	b.incident = value
 	if value != nil {
-		b.bitmap_ |= 4096
+		b.fieldSet_[12] = true
 	} else {
-		b.bitmap_ &^= 4096
+		b.fieldSet_[12] = false
 	}
 	return b
 }
@@ -184,7 +193,7 @@ func (b *EventBuilder) Incident(value *IncidentBuilder) *EventBuilder {
 // Note sets the value of the 'note' attribute to the given value.
 func (b *EventBuilder) Note(value string) *EventBuilder {
 	b.note = value
-	b.bitmap_ |= 8192
+	b.fieldSet_[13] = true
 	return b
 }
 
@@ -194,9 +203,9 @@ func (b *EventBuilder) Note(value string) *EventBuilder {
 func (b *EventBuilder) StatusChange(value *StatusChangeBuilder) *EventBuilder {
 	b.statusChange = value
 	if value != nil {
-		b.bitmap_ |= 16384
+		b.fieldSet_[14] = true
 	} else {
-		b.bitmap_ &^= 16384
+		b.fieldSet_[14] = false
 	}
 	return b
 }
@@ -204,7 +213,7 @@ func (b *EventBuilder) StatusChange(value *StatusChangeBuilder) *EventBuilder {
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *EventBuilder) UpdatedAt(value time.Time) *EventBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 32768
+	b.fieldSet_[15] = true
 	return b
 }
 
@@ -213,7 +222,10 @@ func (b *EventBuilder) Copy(object *Event) *EventBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.createdAt = object.createdAt
@@ -265,7 +277,10 @@ func (b *EventBuilder) Build() (object *Event, err error) {
 	object = new(Event)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.createdAt = b.createdAt
 	if b.creator != nil {
 		object.creator, err = b.creator.Build()

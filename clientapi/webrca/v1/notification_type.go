@@ -39,7 +39,7 @@ const NotificationNilKind = "NotificationNil"
 //
 // Definition of a Web RCA notification.
 type Notification struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	id        string
 	href      string
 	createdAt time.Time
@@ -56,7 +56,7 @@ func (o *Notification) Kind() string {
 	if o == nil {
 		return NotificationNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return NotificationLinkKind
 	}
 	return NotificationKind
@@ -64,12 +64,12 @@ func (o *Notification) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Notification) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *Notification) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -78,7 +78,7 @@ func (o *Notification) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Notification) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -87,7 +87,7 @@ func (o *Notification) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Notification) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -96,7 +96,7 @@ func (o *Notification) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Notification) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -105,13 +105,23 @@ func (o *Notification) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Notification) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Checked returns the value of the 'checked' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Notification) Checked() bool {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.checked
 	}
 	return false
@@ -120,7 +130,7 @@ func (o *Notification) Checked() bool {
 // GetChecked returns the value of the 'checked' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Notification) GetChecked() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.checked
 	}
@@ -132,7 +142,7 @@ func (o *Notification) GetChecked() (value bool, ok bool) {
 //
 // Object creation timestamp.
 func (o *Notification) CreatedAt() time.Time {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -143,7 +153,7 @@ func (o *Notification) CreatedAt() time.Time {
 //
 // Object creation timestamp.
 func (o *Notification) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.createdAt
 	}
@@ -155,7 +165,7 @@ func (o *Notification) GetCreatedAt() (value time.Time, ok bool) {
 //
 // Object deletion timestamp.
 func (o *Notification) DeletedAt() time.Time {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.deletedAt
 	}
 	return time.Time{}
@@ -166,7 +176,7 @@ func (o *Notification) DeletedAt() time.Time {
 //
 // Object deletion timestamp.
 func (o *Notification) GetDeletedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.deletedAt
 	}
@@ -176,7 +186,7 @@ func (o *Notification) GetDeletedAt() (value time.Time, ok bool) {
 // Incident returns the value of the 'incident' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Notification) Incident() *Incident {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.incident
 	}
 	return nil
@@ -185,7 +195,7 @@ func (o *Notification) Incident() *Incident {
 // GetIncident returns the value of the 'incident' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Notification) GetIncident() (value *Incident, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.incident
 	}
@@ -195,7 +205,7 @@ func (o *Notification) GetIncident() (value *Incident, ok bool) {
 // Name returns the value of the 'name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Notification) Name() string {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.name
 	}
 	return ""
@@ -204,7 +214,7 @@ func (o *Notification) Name() string {
 // GetName returns the value of the 'name' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Notification) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.name
 	}
@@ -214,7 +224,7 @@ func (o *Notification) GetName() (value string, ok bool) {
 // Rank returns the value of the 'rank' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Notification) Rank() int {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.rank
 	}
 	return 0
@@ -223,7 +233,7 @@ func (o *Notification) Rank() int {
 // GetRank returns the value of the 'rank' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Notification) GetRank() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.rank
 	}
@@ -235,7 +245,7 @@ func (o *Notification) GetRank() (value int, ok bool) {
 //
 // Object modification timestamp.
 func (o *Notification) UpdatedAt() time.Time {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -246,7 +256,7 @@ func (o *Notification) UpdatedAt() time.Time {
 //
 // Object modification timestamp.
 func (o *Notification) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.updatedAt
 	}

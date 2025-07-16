@@ -42,7 +42,7 @@ func WriteTokenAuthorizationResponse(object *TokenAuthorizationResponse, stream 
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.account != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.account != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,9 @@ func UnmarshalTokenAuthorizationResponse(source interface{}) (object *TokenAutho
 
 // ReadTokenAuthorizationResponse reads a value of the 'token_authorization_response' type from the given iterator.
 func ReadTokenAuthorizationResponse(iterator *jsoniter.Iterator) *TokenAuthorizationResponse {
-	object := &TokenAuthorizationResponse{}
+	object := &TokenAuthorizationResponse{
+		fieldSet_: make([]bool, 1),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -77,7 +79,7 @@ func ReadTokenAuthorizationResponse(iterator *jsoniter.Iterator) *TokenAuthoriza
 		case "account":
 			value := ReadAccount(iterator)
 			object.account = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

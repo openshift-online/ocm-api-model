@@ -23,9 +23,8 @@ import (
 	time "time"
 )
 
-// AccountBuilder contains the data and logic needed to build 'account' objects.
 type AccountBuilder struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	id             string
 	href           string
 	banCode        string
@@ -47,52 +46,63 @@ type AccountBuilder struct {
 
 // NewAccount creates a new builder of 'account' objects.
 func NewAccount() *AccountBuilder {
-	return &AccountBuilder{}
+	return &AccountBuilder{
+		fieldSet_: make([]bool, 18),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AccountBuilder) Link(value bool) *AccountBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AccountBuilder) ID(value string) *AccountBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AccountBuilder) HREF(value string) *AccountBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AccountBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // BanCode sets the value of the 'ban_code' attribute to the given value.
 func (b *AccountBuilder) BanCode(value string) *AccountBuilder {
 	b.banCode = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // BanDescription sets the value of the 'ban_description' attribute to the given value.
 func (b *AccountBuilder) BanDescription(value string) *AccountBuilder {
 	b.banDescription = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // Banned sets the value of the 'banned' attribute to the given value.
 func (b *AccountBuilder) Banned(value bool) *AccountBuilder {
 	b.banned = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -100,28 +110,28 @@ func (b *AccountBuilder) Banned(value bool) *AccountBuilder {
 func (b *AccountBuilder) Capabilities(values ...*CapabilityBuilder) *AccountBuilder {
 	b.capabilities = make([]*CapabilityBuilder, len(values))
 	copy(b.capabilities, values)
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *AccountBuilder) CreatedAt(value time.Time) *AccountBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // Email sets the value of the 'email' attribute to the given value.
 func (b *AccountBuilder) Email(value string) *AccountBuilder {
 	b.email = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // FirstName sets the value of the 'first_name' attribute to the given value.
 func (b *AccountBuilder) FirstName(value string) *AccountBuilder {
 	b.firstName = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
@@ -129,14 +139,14 @@ func (b *AccountBuilder) FirstName(value string) *AccountBuilder {
 func (b *AccountBuilder) Labels(values ...*LabelBuilder) *AccountBuilder {
 	b.labels = make([]*LabelBuilder, len(values))
 	copy(b.labels, values)
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
 // LastName sets the value of the 'last_name' attribute to the given value.
 func (b *AccountBuilder) LastName(value string) *AccountBuilder {
 	b.lastName = value
-	b.bitmap_ |= 2048
+	b.fieldSet_[11] = true
 	return b
 }
 
@@ -144,9 +154,9 @@ func (b *AccountBuilder) LastName(value string) *AccountBuilder {
 func (b *AccountBuilder) Organization(value *OrganizationBuilder) *AccountBuilder {
 	b.organization = value
 	if value != nil {
-		b.bitmap_ |= 4096
+		b.fieldSet_[12] = true
 	} else {
-		b.bitmap_ &^= 4096
+		b.fieldSet_[12] = false
 	}
 	return b
 }
@@ -154,35 +164,35 @@ func (b *AccountBuilder) Organization(value *OrganizationBuilder) *AccountBuilde
 // RhitAccountID sets the value of the 'rhit_account_ID' attribute to the given value.
 func (b *AccountBuilder) RhitAccountID(value string) *AccountBuilder {
 	b.rhitAccountID = value
-	b.bitmap_ |= 8192
+	b.fieldSet_[13] = true
 	return b
 }
 
 // RhitWebUserId sets the value of the 'rhit_web_user_id' attribute to the given value.
 func (b *AccountBuilder) RhitWebUserId(value string) *AccountBuilder {
 	b.rhitWebUserId = value
-	b.bitmap_ |= 16384
+	b.fieldSet_[14] = true
 	return b
 }
 
 // ServiceAccount sets the value of the 'service_account' attribute to the given value.
 func (b *AccountBuilder) ServiceAccount(value bool) *AccountBuilder {
 	b.serviceAccount = value
-	b.bitmap_ |= 32768
+	b.fieldSet_[15] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *AccountBuilder) UpdatedAt(value time.Time) *AccountBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 65536
+	b.fieldSet_[16] = true
 	return b
 }
 
 // Username sets the value of the 'username' attribute to the given value.
 func (b *AccountBuilder) Username(value string) *AccountBuilder {
 	b.username = value
-	b.bitmap_ |= 131072
+	b.fieldSet_[17] = true
 	return b
 }
 
@@ -191,7 +201,10 @@ func (b *AccountBuilder) Copy(object *Account) *AccountBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.banCode = object.banCode
@@ -235,7 +248,10 @@ func (b *AccountBuilder) Build() (object *Account, err error) {
 	object = new(Account)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.banCode = b.banCode
 	object.banDescription = b.banDescription
 	object.banned = b.banned

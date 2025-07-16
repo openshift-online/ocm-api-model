@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Representation of an addon secret propagation
 type AddOnSecretPropagation struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	id                string
 	destinationSecret string
 	sourceSecret      string
@@ -32,7 +32,15 @@ type AddOnSecretPropagation struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddOnSecretPropagation) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ID returns the value of the 'ID' attribute, or
@@ -40,7 +48,7 @@ func (o *AddOnSecretPropagation) Empty() bool {
 //
 // ID of the secret propagation
 func (o *AddOnSecretPropagation) ID() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.id
 	}
 	return ""
@@ -51,7 +59,7 @@ func (o *AddOnSecretPropagation) ID() string {
 //
 // ID of the secret propagation
 func (o *AddOnSecretPropagation) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.id
 	}
@@ -63,7 +71,7 @@ func (o *AddOnSecretPropagation) GetID() (value string, ok bool) {
 //
 // DestinationSecret is location of the secret to be added
 func (o *AddOnSecretPropagation) DestinationSecret() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.destinationSecret
 	}
 	return ""
@@ -74,7 +82,7 @@ func (o *AddOnSecretPropagation) DestinationSecret() string {
 //
 // DestinationSecret is location of the secret to be added
 func (o *AddOnSecretPropagation) GetDestinationSecret() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.destinationSecret
 	}
@@ -86,7 +94,7 @@ func (o *AddOnSecretPropagation) GetDestinationSecret() (value string, ok bool) 
 //
 // Indicates is this secret propagation is enabled for the addon
 func (o *AddOnSecretPropagation) Enabled() bool {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.enabled
 	}
 	return false
@@ -97,7 +105,7 @@ func (o *AddOnSecretPropagation) Enabled() bool {
 //
 // Indicates is this secret propagation is enabled for the addon
 func (o *AddOnSecretPropagation) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.enabled
 	}
@@ -109,7 +117,7 @@ func (o *AddOnSecretPropagation) GetEnabled() (value bool, ok bool) {
 //
 // SourceSecret is location of the source secret
 func (o *AddOnSecretPropagation) SourceSecret() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.sourceSecret
 	}
 	return ""
@@ -120,7 +128,7 @@ func (o *AddOnSecretPropagation) SourceSecret() string {
 //
 // SourceSecret is location of the source secret
 func (o *AddOnSecretPropagation) GetSourceSecret() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.sourceSecret
 	}

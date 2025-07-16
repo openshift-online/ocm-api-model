@@ -42,7 +42,7 @@ func WriteProvisionShardReference(object *ProvisionShardReference, stream *jsoni
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteProvisionShardReference(object *ProvisionShardReference, stream *jsoni
 		stream.WriteString(object.href)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,9 @@ func UnmarshalProvisionShardReference(source interface{}) (object *ProvisionShar
 
 // ReadProvisionShardReference reads a value of the 'provision_shard_reference' type from the given iterator.
 func ReadProvisionShardReference(iterator *jsoniter.Iterator) *ProvisionShardReference {
-	object := &ProvisionShardReference{}
+	object := &ProvisionShardReference{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -86,11 +88,11 @@ func ReadProvisionShardReference(iterator *jsoniter.Iterator) *ProvisionShardRef
 		case "href":
 			value := iterator.ReadString()
 			object.href = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

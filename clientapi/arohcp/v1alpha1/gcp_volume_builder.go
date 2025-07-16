@@ -19,28 +19,36 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// GCPVolumeBuilder contains the data and logic needed to build 'GCP_volume' objects.
-//
 // Holds settings for an GCP storage volume.
 type GCPVolumeBuilder struct {
-	bitmap_ uint32
-	size    int
+	fieldSet_ []bool
+	size      int
 }
 
 // NewGCPVolume creates a new builder of 'GCP_volume' objects.
 func NewGCPVolume() *GCPVolumeBuilder {
-	return &GCPVolumeBuilder{}
+	return &GCPVolumeBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GCPVolumeBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Size sets the value of the 'size' attribute to the given value.
 func (b *GCPVolumeBuilder) Size(value int) *GCPVolumeBuilder {
 	b.size = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -49,7 +57,10 @@ func (b *GCPVolumeBuilder) Copy(object *GCPVolume) *GCPVolumeBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.size = object.size
 	return b
 }
@@ -57,7 +68,10 @@ func (b *GCPVolumeBuilder) Copy(object *GCPVolume) *GCPVolumeBuilder {
 // Build creates a 'GCP_volume' object using the configuration stored in the builder.
 func (b *GCPVolumeBuilder) Build() (object *GCPVolume, err error) {
 	object = new(GCPVolume)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.size = b.size
 	return
 }

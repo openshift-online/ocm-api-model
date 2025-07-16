@@ -35,7 +35,7 @@ const WifConfigNilKind = "WifConfigNil"
 //
 // Definition of an wif_config resource.
 type WifConfig struct {
-	bitmap_      uint32
+	fieldSet_    []bool
 	id           string
 	href         string
 	displayName  string
@@ -49,7 +49,7 @@ func (o *WifConfig) Kind() string {
 	if o == nil {
 		return WifConfigNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return WifConfigLinkKind
 	}
 	return WifConfigKind
@@ -57,12 +57,12 @@ func (o *WifConfig) Kind() string {
 
 // Link returns true if this is a link.
 func (o *WifConfig) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *WifConfig) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -71,7 +71,7 @@ func (o *WifConfig) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *WifConfig) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -80,7 +80,7 @@ func (o *WifConfig) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *WifConfig) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -89,7 +89,7 @@ func (o *WifConfig) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *WifConfig) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -98,7 +98,17 @@ func (o *WifConfig) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *WifConfig) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // DisplayName returns the value of the 'display_name' attribute, or
@@ -106,7 +116,7 @@ func (o *WifConfig) Empty() bool {
 //
 // The name OCM clients will display for this wif_config.
 func (o *WifConfig) DisplayName() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.displayName
 	}
 	return ""
@@ -117,7 +127,7 @@ func (o *WifConfig) DisplayName() string {
 //
 // The name OCM clients will display for this wif_config.
 func (o *WifConfig) GetDisplayName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.displayName
 	}
@@ -129,7 +139,7 @@ func (o *WifConfig) GetDisplayName() (value string, ok bool) {
 //
 // Holds GCP related data.
 func (o *WifConfig) Gcp() *WifGcp {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.gcp
 	}
 	return nil
@@ -140,7 +150,7 @@ func (o *WifConfig) Gcp() *WifGcp {
 //
 // Holds GCP related data.
 func (o *WifConfig) GetGcp() (value *WifGcp, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.gcp
 	}
@@ -152,7 +162,7 @@ func (o *WifConfig) GetGcp() (value *WifGcp, ok bool) {
 //
 // The OCM organization that this wif_config resource belongs to.
 func (o *WifConfig) Organization() *OrganizationLink {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.organization
 	}
 	return nil
@@ -163,7 +173,7 @@ func (o *WifConfig) Organization() *OrganizationLink {
 //
 // The OCM organization that this wif_config resource belongs to.
 func (o *WifConfig) GetOrganization() (value *OrganizationLink, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.organization
 	}
@@ -175,7 +185,7 @@ func (o *WifConfig) GetOrganization() (value *OrganizationLink, ok bool) {
 //
 // Wif template(s) used to configure IAM resources
 func (o *WifConfig) WifTemplates() []string {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.wifTemplates
 	}
 	return nil
@@ -186,7 +196,7 @@ func (o *WifConfig) WifTemplates() []string {
 //
 // Wif template(s) used to configure IAM resources
 func (o *WifConfig) GetWifTemplates() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.wifTemplates
 	}

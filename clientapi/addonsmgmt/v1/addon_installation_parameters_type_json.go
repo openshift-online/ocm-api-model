@@ -42,7 +42,7 @@ func WriteAddonInstallationParameters(object *AddonInstallationParameters, strea
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.items != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.items != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,9 @@ func UnmarshalAddonInstallationParameters(source interface{}) (object *AddonInst
 
 // ReadAddonInstallationParameters reads a value of the 'addon_installation_parameters' type from the given iterator.
 func ReadAddonInstallationParameters(iterator *jsoniter.Iterator) *AddonInstallationParameters {
-	object := &AddonInstallationParameters{}
+	object := &AddonInstallationParameters{
+		fieldSet_: make([]bool, 1),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -77,7 +79,7 @@ func ReadAddonInstallationParameters(iterator *jsoniter.Iterator) *AddonInstalla
 		case "items":
 			value := ReadAddonInstallationParameterList(iterator)
 			object.items = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

@@ -2,7 +2,7 @@ module github.com/openshift-online/ocm-api-model/metamodel_generator
 
 go 1.23.0
 
-require github.com/openshift-online/ocm-api-metamodel v0.0.69
+require github.com/openshift-online/ocm-api-metamodel v0.0.70
 
 require (
 	github.com/antlr/antlr4/runtime/Go/antlr v0.0.0-20211106181442-e4c1a74c66bd // indirect

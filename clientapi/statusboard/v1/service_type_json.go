@@ -43,13 +43,13 @@ func WriteService(object *Service, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(ServiceLinkKind)
 	} else {
 		stream.WriteString(ServiceKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteService(object *Service, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteService(object *Service, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0 && object.application != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.application != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteService(object *Service, stream *jsoniter.Stream) {
 		WriteApplication(object.application, stream)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteService(object *Service, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteService(object *Service, stream *jsoniter.Stream) {
 		stream.WriteString(object.currentStatus)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteService(object *Service, stream *jsoniter.Stream) {
 		stream.WriteString(object.fullname)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteService(object *Service, stream *jsoniter.Stream) {
 		stream.WriteString((object.lastPingAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&256 != 0
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -120,7 +120,7 @@ func WriteService(object *Service, stream *jsoniter.Stream) {
 		stream.WriteVal(object.metadata)
 		count++
 	}
-	present_ = object.bitmap_&512 != 0
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -129,7 +129,7 @@ func WriteService(object *Service, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = object.bitmap_&1024 != 0 && object.owners != nil
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10] && object.owners != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -138,7 +138,7 @@ func WriteService(object *Service, stream *jsoniter.Stream) {
 		WriteOwnerList(object.owners, stream)
 		count++
 	}
-	present_ = object.bitmap_&2048 != 0
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -147,7 +147,7 @@ func WriteService(object *Service, stream *jsoniter.Stream) {
 		stream.WriteBool(object.private)
 		count++
 	}
-	present_ = object.bitmap_&4096 != 0
+	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -156,7 +156,7 @@ func WriteService(object *Service, stream *jsoniter.Stream) {
 		stream.WriteString(object.serviceEndpoint)
 		count++
 	}
-	present_ = object.bitmap_&8192 != 0
+	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -165,7 +165,7 @@ func WriteService(object *Service, stream *jsoniter.Stream) {
 		stream.WriteString(object.statusType)
 		count++
 	}
-	present_ = object.bitmap_&16384 != 0
+	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -174,7 +174,7 @@ func WriteService(object *Service, stream *jsoniter.Stream) {
 		stream.WriteString((object.statusUpdatedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&32768 != 0
+	present_ = len(object.fieldSet_) > 15 && object.fieldSet_[15]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -183,7 +183,7 @@ func WriteService(object *Service, stream *jsoniter.Stream) {
 		stream.WriteString(object.token)
 		count++
 	}
-	present_ = object.bitmap_&65536 != 0
+	present_ = len(object.fieldSet_) > 16 && object.fieldSet_[16]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -208,7 +208,9 @@ func UnmarshalService(source interface{}) (object *Service, err error) {
 
 // ReadService reads a value of the 'service' type from the given iterator.
 func ReadService(iterator *jsoniter.Iterator) *Service {
-	object := &Service{}
+	object := &Service{
+		fieldSet_: make([]bool, 17),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -218,18 +220,18 @@ func ReadService(iterator *jsoniter.Iterator) *Service {
 		case "kind":
 			value := iterator.ReadString()
 			if value == ServiceLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "application":
 			value := ReadApplication(iterator)
 			object.application = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -237,15 +239,15 @@ func ReadService(iterator *jsoniter.Iterator) *Service {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "current_status":
 			value := iterator.ReadString()
 			object.currentStatus = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "fullname":
 			value := iterator.ReadString()
 			object.fullname = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "last_ping_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -253,32 +255,32 @@ func ReadService(iterator *jsoniter.Iterator) *Service {
 				iterator.ReportError("", err.Error())
 			}
 			object.lastPingAt = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "metadata":
 			var value interface{}
 			iterator.ReadVal(&value)
 			object.metadata = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.bitmap_ |= 512
+			object.fieldSet_[9] = true
 		case "owners":
 			value := ReadOwnerList(iterator)
 			object.owners = value
-			object.bitmap_ |= 1024
+			object.fieldSet_[10] = true
 		case "private":
 			value := iterator.ReadBool()
 			object.private = value
-			object.bitmap_ |= 2048
+			object.fieldSet_[11] = true
 		case "service_endpoint":
 			value := iterator.ReadString()
 			object.serviceEndpoint = value
-			object.bitmap_ |= 4096
+			object.fieldSet_[12] = true
 		case "status_type":
 			value := iterator.ReadString()
 			object.statusType = value
-			object.bitmap_ |= 8192
+			object.fieldSet_[13] = true
 		case "status_updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -286,11 +288,11 @@ func ReadService(iterator *jsoniter.Iterator) *Service {
 				iterator.ReportError("", err.Error())
 			}
 			object.statusUpdatedAt = value
-			object.bitmap_ |= 16384
+			object.fieldSet_[14] = true
 		case "token":
 			value := iterator.ReadString()
 			object.token = value
-			object.bitmap_ |= 32768
+			object.fieldSet_[15] = true
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -298,7 +300,7 @@ func ReadService(iterator *jsoniter.Iterator) *Service {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.bitmap_ |= 65536
+			object.fieldSet_[16] = true
 		default:
 			iterator.ReadAny()
 		}

@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// GCPEncryptionKeyBuilder contains the data and logic needed to build 'GCP_encryption_key' objects.
-//
 // GCP Encryption Key for CCS clusters.
 type GCPEncryptionKeyBuilder struct {
-	bitmap_              uint32
+	fieldSet_            []bool
 	kmsKeyServiceAccount string
 	keyLocation          string
 	keyName              string
@@ -32,39 +30,49 @@ type GCPEncryptionKeyBuilder struct {
 
 // NewGCPEncryptionKey creates a new builder of 'GCP_encryption_key' objects.
 func NewGCPEncryptionKey() *GCPEncryptionKeyBuilder {
-	return &GCPEncryptionKeyBuilder{}
+	return &GCPEncryptionKeyBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GCPEncryptionKeyBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // KMSKeyServiceAccount sets the value of the 'KMS_key_service_account' attribute to the given value.
 func (b *GCPEncryptionKeyBuilder) KMSKeyServiceAccount(value string) *GCPEncryptionKeyBuilder {
 	b.kmsKeyServiceAccount = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // KeyLocation sets the value of the 'key_location' attribute to the given value.
 func (b *GCPEncryptionKeyBuilder) KeyLocation(value string) *GCPEncryptionKeyBuilder {
 	b.keyLocation = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // KeyName sets the value of the 'key_name' attribute to the given value.
 func (b *GCPEncryptionKeyBuilder) KeyName(value string) *GCPEncryptionKeyBuilder {
 	b.keyName = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // KeyRing sets the value of the 'key_ring' attribute to the given value.
 func (b *GCPEncryptionKeyBuilder) KeyRing(value string) *GCPEncryptionKeyBuilder {
 	b.keyRing = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -73,7 +81,10 @@ func (b *GCPEncryptionKeyBuilder) Copy(object *GCPEncryptionKey) *GCPEncryptionK
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.kmsKeyServiceAccount = object.kmsKeyServiceAccount
 	b.keyLocation = object.keyLocation
 	b.keyName = object.keyName
@@ -84,7 +95,10 @@ func (b *GCPEncryptionKeyBuilder) Copy(object *GCPEncryptionKey) *GCPEncryptionK
 // Build creates a 'GCP_encryption_key' object using the configuration stored in the builder.
 func (b *GCPEncryptionKeyBuilder) Build() (object *GCPEncryptionKey, err error) {
 	object = new(GCPEncryptionKey)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.kmsKeyServiceAccount = b.kmsKeyServiceAccount
 	object.keyLocation = b.keyLocation
 	object.keyName = b.keyName

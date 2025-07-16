@@ -42,7 +42,7 @@ func WriteAddonParameters(object *AddonParameters, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.items != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.items != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,9 @@ func UnmarshalAddonParameters(source interface{}) (object *AddonParameters, err 
 
 // ReadAddonParameters reads a value of the 'addon_parameters' type from the given iterator.
 func ReadAddonParameters(iterator *jsoniter.Iterator) *AddonParameters {
-	object := &AddonParameters{}
+	object := &AddonParameters{
+		fieldSet_: make([]bool, 1),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -77,7 +79,7 @@ func ReadAddonParameters(iterator *jsoniter.Iterator) *AddonParameters {
 		case "items":
 			value := ReadAddonParameterList(iterator)
 			object.items = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

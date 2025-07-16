@@ -21,7 +21,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // WifRole represents the values of the 'wif_role' type.
 type WifRole struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	permissions []string
 	roleId      string
 	predefined  bool
@@ -29,13 +29,21 @@ type WifRole struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *WifRole) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Permissions returns the value of the 'permissions' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifRole) Permissions() []string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.permissions
 	}
 	return nil
@@ -44,7 +52,7 @@ func (o *WifRole) Permissions() []string {
 // GetPermissions returns the value of the 'permissions' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifRole) GetPermissions() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.permissions
 	}
@@ -54,7 +62,7 @@ func (o *WifRole) GetPermissions() (value []string, ok bool) {
 // Predefined returns the value of the 'predefined' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifRole) Predefined() bool {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.predefined
 	}
 	return false
@@ -63,7 +71,7 @@ func (o *WifRole) Predefined() bool {
 // GetPredefined returns the value of the 'predefined' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifRole) GetPredefined() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.predefined
 	}
@@ -73,7 +81,7 @@ func (o *WifRole) GetPredefined() (value bool, ok bool) {
 // RoleId returns the value of the 'role_id' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifRole) RoleId() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.roleId
 	}
 	return ""
@@ -82,7 +90,7 @@ func (o *WifRole) RoleId() string {
 // GetRoleId returns the value of the 'role_id' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifRole) GetRoleId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.roleId
 	}

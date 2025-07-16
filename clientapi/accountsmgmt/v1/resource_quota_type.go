@@ -37,7 +37,7 @@ const ResourceQuotaNilKind = "ResourceQuotaNil"
 
 // ResourceQuota represents the values of the 'resource_quota' type.
 type ResourceQuota struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	id             string
 	href           string
 	sku            string
@@ -53,7 +53,7 @@ func (o *ResourceQuota) Kind() string {
 	if o == nil {
 		return ResourceQuotaNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return ResourceQuotaLinkKind
 	}
 	return ResourceQuotaKind
@@ -61,12 +61,12 @@ func (o *ResourceQuota) Kind() string {
 
 // Link returns true if this is a link.
 func (o *ResourceQuota) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *ResourceQuota) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -75,7 +75,7 @@ func (o *ResourceQuota) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *ResourceQuota) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -84,7 +84,7 @@ func (o *ResourceQuota) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *ResourceQuota) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -93,7 +93,7 @@ func (o *ResourceQuota) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *ResourceQuota) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -102,13 +102,23 @@ func (o *ResourceQuota) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ResourceQuota) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // SKU returns the value of the 'SKU' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ResourceQuota) SKU() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.sku
 	}
 	return ""
@@ -117,7 +127,7 @@ func (o *ResourceQuota) SKU() string {
 // GetSKU returns the value of the 'SKU' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ResourceQuota) GetSKU() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.sku
 	}
@@ -127,7 +137,7 @@ func (o *ResourceQuota) GetSKU() (value string, ok bool) {
 // CreatedAt returns the value of the 'created_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ResourceQuota) CreatedAt() time.Time {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -136,7 +146,7 @@ func (o *ResourceQuota) CreatedAt() time.Time {
 // GetCreatedAt returns the value of the 'created_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ResourceQuota) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.createdAt
 	}
@@ -146,7 +156,7 @@ func (o *ResourceQuota) GetCreatedAt() (value time.Time, ok bool) {
 // OrganizationID returns the value of the 'organization_ID' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ResourceQuota) OrganizationID() string {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.organizationID
 	}
 	return ""
@@ -155,7 +165,7 @@ func (o *ResourceQuota) OrganizationID() string {
 // GetOrganizationID returns the value of the 'organization_ID' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ResourceQuota) GetOrganizationID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.organizationID
 	}
@@ -165,7 +175,7 @@ func (o *ResourceQuota) GetOrganizationID() (value string, ok bool) {
 // SkuCount returns the value of the 'sku_count' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ResourceQuota) SkuCount() int {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.skuCount
 	}
 	return 0
@@ -174,7 +184,7 @@ func (o *ResourceQuota) SkuCount() int {
 // GetSkuCount returns the value of the 'sku_count' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ResourceQuota) GetSkuCount() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.skuCount
 	}
@@ -184,7 +194,7 @@ func (o *ResourceQuota) GetSkuCount() (value int, ok bool) {
 // Type returns the value of the 'type' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ResourceQuota) Type() string {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.type_
 	}
 	return ""
@@ -193,7 +203,7 @@ func (o *ResourceQuota) Type() string {
 // GetType returns the value of the 'type' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ResourceQuota) GetType() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.type_
 	}
@@ -203,7 +213,7 @@ func (o *ResourceQuota) GetType() (value string, ok bool) {
 // UpdatedAt returns the value of the 'updated_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ResourceQuota) UpdatedAt() time.Time {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -212,7 +222,7 @@ func (o *ResourceQuota) UpdatedAt() time.Time {
 // GetUpdatedAt returns the value of the 'updated_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ResourceQuota) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.updatedAt
 	}

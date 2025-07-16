@@ -19,28 +19,36 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 
-// CloudRegionBuilder contains the data and logic needed to build 'cloud_region' objects.
-//
 // Description of a region of a cloud provider.
 type CloudRegionBuilder struct {
-	bitmap_ uint32
-	id      string
+	fieldSet_ []bool
+	id        string
 }
 
 // NewCloudRegion creates a new builder of 'cloud_region' objects.
 func NewCloudRegion() *CloudRegionBuilder {
-	return &CloudRegionBuilder{}
+	return &CloudRegionBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *CloudRegionBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *CloudRegionBuilder) ID(value string) *CloudRegionBuilder {
 	b.id = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -49,7 +57,10 @@ func (b *CloudRegionBuilder) Copy(object *CloudRegion) *CloudRegionBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	return b
 }
@@ -57,7 +68,10 @@ func (b *CloudRegionBuilder) Copy(object *CloudRegion) *CloudRegionBuilder {
 // Build creates a 'cloud_region' object using the configuration stored in the builder.
 func (b *CloudRegionBuilder) Build() (object *CloudRegion, err error) {
 	object = new(CloudRegion)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.id = b.id
 	return
 }

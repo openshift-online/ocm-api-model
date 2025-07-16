@@ -42,13 +42,13 @@ func WriteImageOverrides(object *ImageOverrides, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(ImageOverridesLinkKind)
 	} else {
 		stream.WriteString(ImageOverridesKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteImageOverrides(object *ImageOverrides, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteImageOverrides(object *ImageOverrides, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0 && object.aws != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.aws != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteImageOverrides(object *ImageOverrides, stream *jsoniter.Stream) {
 		WriteAMIOverrideList(object.aws, stream)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0 && object.gcp != nil
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.gcp != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -99,7 +99,9 @@ func UnmarshalImageOverrides(source interface{}) (object *ImageOverrides, err er
 
 // ReadImageOverrides reads a value of the 'image_overrides' type from the given iterator.
 func ReadImageOverrides(iterator *jsoniter.Iterator) *ImageOverrides {
-	object := &ImageOverrides{}
+	object := &ImageOverrides{
+		fieldSet_: make([]bool, 5),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -109,22 +111,22 @@ func ReadImageOverrides(iterator *jsoniter.Iterator) *ImageOverrides {
 		case "kind":
 			value := iterator.ReadString()
 			if value == ImageOverridesLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "aws":
 			value := ReadAMIOverrideList(iterator)
 			object.aws = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "gcp":
 			value := ReadGCPImageOverrideList(iterator)
 			object.gcp = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		default:
 			iterator.ReadAny()
 		}

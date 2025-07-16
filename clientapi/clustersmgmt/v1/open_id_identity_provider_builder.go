@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// OpenIDIdentityProviderBuilder contains the data and logic needed to build 'open_ID_identity_provider' objects.
-//
 // Details for `openid` identity providers.
 type OpenIDIdentityProviderBuilder struct {
-	bitmap_                  uint32
+	fieldSet_                []bool
 	ca                       string
 	claims                   *OpenIDClaimsBuilder
 	clientID                 string
@@ -35,18 +33,28 @@ type OpenIDIdentityProviderBuilder struct {
 
 // NewOpenIDIdentityProvider creates a new builder of 'open_ID_identity_provider' objects.
 func NewOpenIDIdentityProvider() *OpenIDIdentityProviderBuilder {
-	return &OpenIDIdentityProviderBuilder{}
+	return &OpenIDIdentityProviderBuilder{
+		fieldSet_: make([]bool, 7),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *OpenIDIdentityProviderBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // CA sets the value of the 'CA' attribute to the given value.
 func (b *OpenIDIdentityProviderBuilder) CA(value string) *OpenIDIdentityProviderBuilder {
 	b.ca = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -56,9 +64,9 @@ func (b *OpenIDIdentityProviderBuilder) CA(value string) *OpenIDIdentityProvider
 func (b *OpenIDIdentityProviderBuilder) Claims(value *OpenIDClaimsBuilder) *OpenIDIdentityProviderBuilder {
 	b.claims = value
 	if value != nil {
-		b.bitmap_ |= 2
+		b.fieldSet_[1] = true
 	} else {
-		b.bitmap_ &^= 2
+		b.fieldSet_[1] = false
 	}
 	return b
 }
@@ -66,14 +74,14 @@ func (b *OpenIDIdentityProviderBuilder) Claims(value *OpenIDClaimsBuilder) *Open
 // ClientID sets the value of the 'client_ID' attribute to the given value.
 func (b *OpenIDIdentityProviderBuilder) ClientID(value string) *OpenIDIdentityProviderBuilder {
 	b.clientID = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // ClientSecret sets the value of the 'client_secret' attribute to the given value.
 func (b *OpenIDIdentityProviderBuilder) ClientSecret(value string) *OpenIDIdentityProviderBuilder {
 	b.clientSecret = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -81,9 +89,9 @@ func (b *OpenIDIdentityProviderBuilder) ClientSecret(value string) *OpenIDIdenti
 func (b *OpenIDIdentityProviderBuilder) ExtraAuthorizeParameters(value map[string]string) *OpenIDIdentityProviderBuilder {
 	b.extraAuthorizeParameters = value
 	if value != nil {
-		b.bitmap_ |= 16
+		b.fieldSet_[4] = true
 	} else {
-		b.bitmap_ &^= 16
+		b.fieldSet_[4] = false
 	}
 	return b
 }
@@ -92,14 +100,14 @@ func (b *OpenIDIdentityProviderBuilder) ExtraAuthorizeParameters(value map[strin
 func (b *OpenIDIdentityProviderBuilder) ExtraScopes(values ...string) *OpenIDIdentityProviderBuilder {
 	b.extraScopes = make([]string, len(values))
 	copy(b.extraScopes, values)
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // Issuer sets the value of the 'issuer' attribute to the given value.
 func (b *OpenIDIdentityProviderBuilder) Issuer(value string) *OpenIDIdentityProviderBuilder {
 	b.issuer = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -108,7 +116,10 @@ func (b *OpenIDIdentityProviderBuilder) Copy(object *OpenIDIdentityProvider) *Op
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.ca = object.ca
 	if object.claims != nil {
 		b.claims = NewOpenIDClaims().Copy(object.claims)
@@ -138,7 +149,10 @@ func (b *OpenIDIdentityProviderBuilder) Copy(object *OpenIDIdentityProvider) *Op
 // Build creates a 'open_ID_identity_provider' object using the configuration stored in the builder.
 func (b *OpenIDIdentityProviderBuilder) Build() (object *OpenIDIdentityProvider, err error) {
 	object = new(OpenIDIdentityProvider)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.ca = b.ca
 	if b.claims != nil {
 		object.claims, err = b.claims.Build()

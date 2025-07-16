@@ -43,13 +43,13 @@ func WriteAWSNodePool(object *AWSNodePool, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(AWSNodePoolLinkKind)
 	} else {
 		stream.WriteString(AWSNodePoolKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteAWSNodePool(object *AWSNodePool, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteAWSNodePool(object *AWSNodePool, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0 && object.additionalSecurityGroupIds != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.additionalSecurityGroupIds != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteAWSNodePool(object *AWSNodePool, stream *jsoniter.Stream) {
 		WriteStringList(object.additionalSecurityGroupIds, stream)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0 && object.availabilityZoneTypes != nil
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.availabilityZoneTypes != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -104,7 +104,7 @@ func WriteAWSNodePool(object *AWSNodePool, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -113,7 +113,7 @@ func WriteAWSNodePool(object *AWSNodePool, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.ec2MetadataHttpTokens))
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -122,7 +122,7 @@ func WriteAWSNodePool(object *AWSNodePool, stream *jsoniter.Stream) {
 		stream.WriteString(object.instanceProfile)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -131,7 +131,7 @@ func WriteAWSNodePool(object *AWSNodePool, stream *jsoniter.Stream) {
 		stream.WriteString(object.instanceType)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0 && object.rootVolume != nil
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8] && object.rootVolume != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -140,7 +140,7 @@ func WriteAWSNodePool(object *AWSNodePool, stream *jsoniter.Stream) {
 		WriteAWSVolume(object.rootVolume, stream)
 		count++
 	}
-	present_ = object.bitmap_&512 != 0 && object.subnetOutposts != nil
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9] && object.subnetOutposts != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -169,7 +169,7 @@ func WriteAWSNodePool(object *AWSNodePool, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = object.bitmap_&1024 != 0 && object.tags != nil
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10] && object.tags != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -214,7 +214,9 @@ func UnmarshalAWSNodePool(source interface{}) (object *AWSNodePool, err error) {
 
 // ReadAWSNodePool reads a value of the 'AWS_node_pool' type from the given iterator.
 func ReadAWSNodePool(iterator *jsoniter.Iterator) *AWSNodePool {
-	object := &AWSNodePool{}
+	object := &AWSNodePool{
+		fieldSet_: make([]bool, 11),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -224,18 +226,18 @@ func ReadAWSNodePool(iterator *jsoniter.Iterator) *AWSNodePool {
 		case "kind":
 			value := iterator.ReadString()
 			if value == AWSNodePoolLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "additional_security_group_ids":
 			value := ReadStringList(iterator)
 			object.additionalSecurityGroupIds = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "availability_zone_types":
 			value := map[string]string{}
 			for {
@@ -247,24 +249,24 @@ func ReadAWSNodePool(iterator *jsoniter.Iterator) *AWSNodePool {
 				value[key] = item
 			}
 			object.availabilityZoneTypes = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "ec2_metadata_http_tokens":
 			text := iterator.ReadString()
 			value := Ec2MetadataHttpTokens(text)
 			object.ec2MetadataHttpTokens = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "instance_profile":
 			value := iterator.ReadString()
 			object.instanceProfile = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "instance_type":
 			value := iterator.ReadString()
 			object.instanceType = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "root_volume":
 			value := ReadAWSVolume(iterator)
 			object.rootVolume = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		case "subnet_outposts":
 			value := map[string]string{}
 			for {
@@ -276,7 +278,7 @@ func ReadAWSNodePool(iterator *jsoniter.Iterator) *AWSNodePool {
 				value[key] = item
 			}
 			object.subnetOutposts = value
-			object.bitmap_ |= 512
+			object.fieldSet_[9] = true
 		case "tags":
 			value := map[string]string{}
 			for {
@@ -288,7 +290,7 @@ func ReadAWSNodePool(iterator *jsoniter.Iterator) *AWSNodePool {
 				value[key] = item
 			}
 			object.tags = value
-			object.bitmap_ |= 1024
+			object.fieldSet_[10] = true
 		default:
 			iterator.ReadAny()
 		}

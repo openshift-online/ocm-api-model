@@ -42,7 +42,7 @@ func WriteCloudProviderData(object *CloudProviderData, stream *jsoniter.Stream) 
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.aws != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.aws != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteCloudProviderData(object *CloudProviderData, stream *jsoniter.Stream) 
 		WriteAWS(object.aws, stream)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.gcp != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.gcp != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteCloudProviderData(object *CloudProviderData, stream *jsoniter.Stream) 
 		WriteGCP(object.gcp, stream)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0 && object.availabilityZones != nil
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.availabilityZones != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteCloudProviderData(object *CloudProviderData, stream *jsoniter.Stream) 
 		WriteStringList(object.availabilityZones, stream)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteCloudProviderData(object *CloudProviderData, stream *jsoniter.Stream) 
 		stream.WriteString(object.keyLocation)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteCloudProviderData(object *CloudProviderData, stream *jsoniter.Stream) 
 		stream.WriteString(object.keyRingName)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0 && object.region != nil
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.region != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -96,7 +96,7 @@ func WriteCloudProviderData(object *CloudProviderData, stream *jsoniter.Stream) 
 		WriteCloudRegion(object.region, stream)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0 && object.subnets != nil
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.subnets != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -105,7 +105,7 @@ func WriteCloudProviderData(object *CloudProviderData, stream *jsoniter.Stream) 
 		WriteStringList(object.subnets, stream)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0 && object.version != nil
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7] && object.version != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -114,7 +114,7 @@ func WriteCloudProviderData(object *CloudProviderData, stream *jsoniter.Stream) 
 		WriteVersion(object.version, stream)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0 && object.vpcIds != nil
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8] && object.vpcIds != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -139,7 +139,9 @@ func UnmarshalCloudProviderData(source interface{}) (object *CloudProviderData, 
 
 // ReadCloudProviderData reads a value of the 'cloud_provider_data' type from the given iterator.
 func ReadCloudProviderData(iterator *jsoniter.Iterator) *CloudProviderData {
-	object := &CloudProviderData{}
+	object := &CloudProviderData{
+		fieldSet_: make([]bool, 9),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -149,39 +151,39 @@ func ReadCloudProviderData(iterator *jsoniter.Iterator) *CloudProviderData {
 		case "aws":
 			value := ReadAWS(iterator)
 			object.aws = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "gcp":
 			value := ReadGCP(iterator)
 			object.gcp = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "availability_zones":
 			value := ReadStringList(iterator)
 			object.availabilityZones = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "key_location":
 			value := iterator.ReadString()
 			object.keyLocation = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "key_ring_name":
 			value := iterator.ReadString()
 			object.keyRingName = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "region":
 			value := ReadCloudRegion(iterator)
 			object.region = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "subnets":
 			value := ReadStringList(iterator)
 			object.subnets = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "version":
 			value := ReadVersion(iterator)
 			object.version = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "vpc_ids":
 			value := ReadStringList(iterator)
 			object.vpcIds = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		default:
 			iterator.ReadAny()
 		}

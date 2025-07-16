@@ -42,7 +42,7 @@ func WriteWifPool(object *WifPool, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.identityProvider != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.identityProvider != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteWifPool(object *WifPool, stream *jsoniter.Stream) {
 		WriteWifIdentityProvider(object.identityProvider, stream)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteWifPool(object *WifPool, stream *jsoniter.Stream) {
 		stream.WriteString(object.poolId)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,7 +85,9 @@ func UnmarshalWifPool(source interface{}) (object *WifPool, err error) {
 
 // ReadWifPool reads a value of the 'wif_pool' type from the given iterator.
 func ReadWifPool(iterator *jsoniter.Iterator) *WifPool {
-	object := &WifPool{}
+	object := &WifPool{
+		fieldSet_: make([]bool, 3),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -95,15 +97,15 @@ func ReadWifPool(iterator *jsoniter.Iterator) *WifPool {
 		case "identity_provider":
 			value := ReadWifIdentityProvider(iterator)
 			object.identityProvider = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "pool_id":
 			value := iterator.ReadString()
 			object.poolId = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "pool_name":
 			value := iterator.ReadString()
 			object.poolName = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		default:
 			iterator.ReadAny()
 		}

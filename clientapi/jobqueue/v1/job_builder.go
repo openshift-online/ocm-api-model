@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// JobBuilder contains the data and logic needed to build 'job' objects.
-//
 // This struct is a job in a Job Queue.
 type JobBuilder struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	id          string
 	href        string
 	abandonedAt time.Time
@@ -40,73 +38,84 @@ type JobBuilder struct {
 
 // NewJob creates a new builder of 'job' objects.
 func NewJob() *JobBuilder {
-	return &JobBuilder{}
+	return &JobBuilder{
+		fieldSet_: make([]bool, 9),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *JobBuilder) Link(value bool) *JobBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *JobBuilder) ID(value string) *JobBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *JobBuilder) HREF(value string) *JobBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *JobBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // AbandonedAt sets the value of the 'abandoned_at' attribute to the given value.
 func (b *JobBuilder) AbandonedAt(value time.Time) *JobBuilder {
 	b.abandonedAt = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Arguments sets the value of the 'arguments' attribute to the given value.
 func (b *JobBuilder) Arguments(value string) *JobBuilder {
 	b.arguments = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // Attempts sets the value of the 'attempts' attribute to the given value.
 func (b *JobBuilder) Attempts(value int) *JobBuilder {
 	b.attempts = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *JobBuilder) CreatedAt(value time.Time) *JobBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // ReceiptId sets the value of the 'receipt_id' attribute to the given value.
 func (b *JobBuilder) ReceiptId(value string) *JobBuilder {
 	b.receiptId = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *JobBuilder) UpdatedAt(value time.Time) *JobBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
@@ -115,7 +124,10 @@ func (b *JobBuilder) Copy(object *Job) *JobBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.abandonedAt = object.abandonedAt
@@ -132,7 +144,10 @@ func (b *JobBuilder) Build() (object *Job, err error) {
 	object = new(Job)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.abandonedAt = b.abandonedAt
 	object.arguments = b.arguments
 	object.attempts = b.attempts

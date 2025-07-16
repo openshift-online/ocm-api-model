@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AzureKmsKeyBuilder contains the data and logic needed to build 'azure_kms_key' objects.
-//
 // Contains the necessary attributes to support KMS encryption key for Azure based clusters
 type AzureKmsKeyBuilder struct {
-	bitmap_      uint32
+	fieldSet_    []bool
 	keyName      string
 	keyVaultName string
 	keyVersion   string
@@ -31,32 +29,42 @@ type AzureKmsKeyBuilder struct {
 
 // NewAzureKmsKey creates a new builder of 'azure_kms_key' objects.
 func NewAzureKmsKey() *AzureKmsKeyBuilder {
-	return &AzureKmsKeyBuilder{}
+	return &AzureKmsKeyBuilder{
+		fieldSet_: make([]bool, 3),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AzureKmsKeyBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // KeyName sets the value of the 'key_name' attribute to the given value.
 func (b *AzureKmsKeyBuilder) KeyName(value string) *AzureKmsKeyBuilder {
 	b.keyName = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // KeyVaultName sets the value of the 'key_vault_name' attribute to the given value.
 func (b *AzureKmsKeyBuilder) KeyVaultName(value string) *AzureKmsKeyBuilder {
 	b.keyVaultName = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // KeyVersion sets the value of the 'key_version' attribute to the given value.
 func (b *AzureKmsKeyBuilder) KeyVersion(value string) *AzureKmsKeyBuilder {
 	b.keyVersion = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -65,7 +73,10 @@ func (b *AzureKmsKeyBuilder) Copy(object *AzureKmsKey) *AzureKmsKeyBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.keyName = object.keyName
 	b.keyVaultName = object.keyVaultName
 	b.keyVersion = object.keyVersion
@@ -75,7 +86,10 @@ func (b *AzureKmsKeyBuilder) Copy(object *AzureKmsKey) *AzureKmsKeyBuilder {
 // Build creates a 'azure_kms_key' object using the configuration stored in the builder.
 func (b *AzureKmsKeyBuilder) Build() (object *AzureKmsKey, err error) {
 	object = new(AzureKmsKey)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.keyName = b.keyName
 	object.keyVaultName = b.keyVaultName
 	object.keyVersion = b.keyVersion

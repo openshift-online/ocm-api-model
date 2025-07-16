@@ -23,8 +23,6 @@ import (
 	time "time"
 )
 
-// ManagementClusterBuilder contains the data and logic needed to build 'management_cluster' objects.
-//
 // Definition of an _OpenShift_ cluster.
 //
 // The `cloud_provider` attribute is a reference to the cloud provider. When a
@@ -65,7 +63,7 @@ import (
 // attributes are mandatory when creation a cluster with your own Amazon Web
 // Services account.
 type ManagementClusterBuilder struct {
-	bitmap_                    uint32
+	fieldSet_                  []bool
 	id                         string
 	href                       string
 	dns                        *DNSBuilder
@@ -83,32 +81,44 @@ type ManagementClusterBuilder struct {
 
 // NewManagementCluster creates a new builder of 'management_cluster' objects.
 func NewManagementCluster() *ManagementClusterBuilder {
-	return &ManagementClusterBuilder{}
+	return &ManagementClusterBuilder{
+		fieldSet_: make([]bool, 14),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ManagementClusterBuilder) Link(value bool) *ManagementClusterBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ManagementClusterBuilder) ID(value string) *ManagementClusterBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ManagementClusterBuilder) HREF(value string) *ManagementClusterBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ManagementClusterBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // DNS sets the value of the 'DNS' attribute to the given value.
@@ -117,9 +127,9 @@ func (b *ManagementClusterBuilder) Empty() bool {
 func (b *ManagementClusterBuilder) DNS(value *DNSBuilder) *ManagementClusterBuilder {
 	b.dns = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -127,7 +137,7 @@ func (b *ManagementClusterBuilder) DNS(value *DNSBuilder) *ManagementClusterBuil
 // CloudProvider sets the value of the 'cloud_provider' attribute to the given value.
 func (b *ManagementClusterBuilder) CloudProvider(value string) *ManagementClusterBuilder {
 	b.cloudProvider = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -137,9 +147,9 @@ func (b *ManagementClusterBuilder) CloudProvider(value string) *ManagementCluste
 func (b *ManagementClusterBuilder) ClusterManagementReference(value *ClusterManagementReferenceBuilder) *ManagementClusterBuilder {
 	b.clusterManagementReference = value
 	if value != nil {
-		b.bitmap_ |= 32
+		b.fieldSet_[5] = true
 	} else {
-		b.bitmap_ &^= 32
+		b.fieldSet_[5] = false
 	}
 	return b
 }
@@ -147,7 +157,7 @@ func (b *ManagementClusterBuilder) ClusterManagementReference(value *ClusterMana
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *ManagementClusterBuilder) CreationTimestamp(value time.Time) *ManagementClusterBuilder {
 	b.creationTimestamp = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -155,14 +165,14 @@ func (b *ManagementClusterBuilder) CreationTimestamp(value time.Time) *Managemen
 func (b *ManagementClusterBuilder) Labels(values ...*LabelBuilder) *ManagementClusterBuilder {
 	b.labels = make([]*LabelBuilder, len(values))
 	copy(b.labels, values)
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ManagementClusterBuilder) Name(value string) *ManagementClusterBuilder {
 	b.name = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
@@ -172,9 +182,9 @@ func (b *ManagementClusterBuilder) Name(value string) *ManagementClusterBuilder 
 func (b *ManagementClusterBuilder) Parent(value *ManagementClusterParentBuilder) *ManagementClusterBuilder {
 	b.parent = value
 	if value != nil {
-		b.bitmap_ |= 512
+		b.fieldSet_[9] = true
 	} else {
-		b.bitmap_ &^= 512
+		b.fieldSet_[9] = false
 	}
 	return b
 }
@@ -182,28 +192,28 @@ func (b *ManagementClusterBuilder) Parent(value *ManagementClusterParentBuilder)
 // Region sets the value of the 'region' attribute to the given value.
 func (b *ManagementClusterBuilder) Region(value string) *ManagementClusterBuilder {
 	b.region = value
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
 // Sector sets the value of the 'sector' attribute to the given value.
 func (b *ManagementClusterBuilder) Sector(value string) *ManagementClusterBuilder {
 	b.sector = value
-	b.bitmap_ |= 2048
+	b.fieldSet_[11] = true
 	return b
 }
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *ManagementClusterBuilder) Status(value string) *ManagementClusterBuilder {
 	b.status = value
-	b.bitmap_ |= 4096
+	b.fieldSet_[12] = true
 	return b
 }
 
 // UpdateTimestamp sets the value of the 'update_timestamp' attribute to the given value.
 func (b *ManagementClusterBuilder) UpdateTimestamp(value time.Time) *ManagementClusterBuilder {
 	b.updateTimestamp = value
-	b.bitmap_ |= 8192
+	b.fieldSet_[13] = true
 	return b
 }
 
@@ -212,7 +222,10 @@ func (b *ManagementClusterBuilder) Copy(object *ManagementCluster) *ManagementCl
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.dns != nil {
@@ -253,7 +266,10 @@ func (b *ManagementClusterBuilder) Build() (object *ManagementCluster, err error
 	object = new(ManagementCluster)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.dns != nil {
 		object.dns, err = b.dns.Build()
 		if err != nil {

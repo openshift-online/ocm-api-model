@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// EnvironmentBuilder contains the data and logic needed to build 'environment' objects.
-//
 // Description of an environment
 type EnvironmentBuilder struct {
-	bitmap_                   uint32
+	fieldSet_                 []bool
 	backplaneURL              string
 	lastLimitedSupportCheck   time.Time
 	lastUpgradeAvailableCheck time.Time
@@ -36,39 +34,49 @@ type EnvironmentBuilder struct {
 
 // NewEnvironment creates a new builder of 'environment' objects.
 func NewEnvironment() *EnvironmentBuilder {
-	return &EnvironmentBuilder{}
+	return &EnvironmentBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *EnvironmentBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // BackplaneURL sets the value of the 'backplane_URL' attribute to the given value.
 func (b *EnvironmentBuilder) BackplaneURL(value string) *EnvironmentBuilder {
 	b.backplaneURL = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // LastLimitedSupportCheck sets the value of the 'last_limited_support_check' attribute to the given value.
 func (b *EnvironmentBuilder) LastLimitedSupportCheck(value time.Time) *EnvironmentBuilder {
 	b.lastLimitedSupportCheck = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // LastUpgradeAvailableCheck sets the value of the 'last_upgrade_available_check' attribute to the given value.
 func (b *EnvironmentBuilder) LastUpgradeAvailableCheck(value time.Time) *EnvironmentBuilder {
 	b.lastUpgradeAvailableCheck = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *EnvironmentBuilder) Name(value string) *EnvironmentBuilder {
 	b.name = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -77,7 +85,10 @@ func (b *EnvironmentBuilder) Copy(object *Environment) *EnvironmentBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.backplaneURL = object.backplaneURL
 	b.lastLimitedSupportCheck = object.lastLimitedSupportCheck
 	b.lastUpgradeAvailableCheck = object.lastUpgradeAvailableCheck
@@ -88,7 +99,10 @@ func (b *EnvironmentBuilder) Copy(object *Environment) *EnvironmentBuilder {
 // Build creates a 'environment' object using the configuration stored in the builder.
 func (b *EnvironmentBuilder) Build() (object *Environment, err error) {
 	object = new(Environment)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.backplaneURL = b.backplaneURL
 	object.lastLimitedSupportCheck = b.lastLimitedSupportCheck
 	object.lastUpgradeAvailableCheck = b.lastUpgradeAvailableCheck

@@ -27,14 +27,22 @@ import (
 //
 // Representation of the state of an external authentication provider.
 type ExternalAuthState struct {
-	bitmap_              uint32
+	fieldSet_            []bool
 	lastUpdatedTimestamp time.Time
 	value                string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ExternalAuthState) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // LastUpdatedTimestamp returns the value of the 'last_updated_timestamp' attribute, or
@@ -42,7 +50,7 @@ func (o *ExternalAuthState) Empty() bool {
 //
 // The date and time when the external authentication provider state was last updated.
 func (o *ExternalAuthState) LastUpdatedTimestamp() time.Time {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.lastUpdatedTimestamp
 	}
 	return time.Time{}
@@ -53,7 +61,7 @@ func (o *ExternalAuthState) LastUpdatedTimestamp() time.Time {
 //
 // The date and time when the external authentication provider state was last updated.
 func (o *ExternalAuthState) GetLastUpdatedTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.lastUpdatedTimestamp
 	}
@@ -65,7 +73,7 @@ func (o *ExternalAuthState) GetLastUpdatedTimestamp() (value time.Time, ok bool)
 //
 // A string value representing the external authentication provider's current state.
 func (o *ExternalAuthState) Value() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.value
 	}
 	return ""
@@ -76,7 +84,7 @@ func (o *ExternalAuthState) Value() string {
 //
 // A string value representing the external authentication provider's current state.
 func (o *ExternalAuthState) GetValue() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.value
 	}

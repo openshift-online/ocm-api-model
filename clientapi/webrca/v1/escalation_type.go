@@ -39,7 +39,7 @@ const EscalationNilKind = "EscalationNil"
 //
 // Definition of a Web RCA escalation.
 type Escalation struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	id        string
 	href      string
 	createdAt time.Time
@@ -53,7 +53,7 @@ func (o *Escalation) Kind() string {
 	if o == nil {
 		return EscalationNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return EscalationLinkKind
 	}
 	return EscalationKind
@@ -61,12 +61,12 @@ func (o *Escalation) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Escalation) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *Escalation) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -75,7 +75,7 @@ func (o *Escalation) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Escalation) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -84,7 +84,7 @@ func (o *Escalation) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Escalation) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -93,7 +93,7 @@ func (o *Escalation) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Escalation) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -102,7 +102,17 @@ func (o *Escalation) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Escalation) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // CreatedAt returns the value of the 'created_at' attribute, or
@@ -110,7 +120,7 @@ func (o *Escalation) Empty() bool {
 //
 // Object creation timestamp.
 func (o *Escalation) CreatedAt() time.Time {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -121,7 +131,7 @@ func (o *Escalation) CreatedAt() time.Time {
 //
 // Object creation timestamp.
 func (o *Escalation) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.createdAt
 	}
@@ -133,7 +143,7 @@ func (o *Escalation) GetCreatedAt() (value time.Time, ok bool) {
 //
 // Object deletion timestamp.
 func (o *Escalation) DeletedAt() time.Time {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.deletedAt
 	}
 	return time.Time{}
@@ -144,7 +154,7 @@ func (o *Escalation) DeletedAt() time.Time {
 //
 // Object deletion timestamp.
 func (o *Escalation) GetDeletedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.deletedAt
 	}
@@ -156,7 +166,7 @@ func (o *Escalation) GetDeletedAt() (value time.Time, ok bool) {
 //
 // Object modification timestamp.
 func (o *Escalation) UpdatedAt() time.Time {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -167,7 +177,7 @@ func (o *Escalation) UpdatedAt() time.Time {
 //
 // Object modification timestamp.
 func (o *Escalation) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.updatedAt
 	}
@@ -177,7 +187,7 @@ func (o *Escalation) GetUpdatedAt() (value time.Time, ok bool) {
 // User returns the value of the 'user' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Escalation) User() *User {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.user
 	}
 	return nil
@@ -186,7 +196,7 @@ func (o *Escalation) User() *User {
 // GetUser returns the value of the 'user' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Escalation) GetUser() (value *User, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.user
 	}

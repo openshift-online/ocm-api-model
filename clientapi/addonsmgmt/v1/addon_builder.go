@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
-// AddonBuilder contains the data and logic needed to build 'addon' objects.
-//
 // Representation of an addon that can be installed in a cluster.
 type AddonBuilder struct {
-	bitmap_              uint32
+	fieldSet_            []bool
 	id                   string
 	href                 string
 	commonAnnotations    map[string]string
@@ -53,41 +51,52 @@ type AddonBuilder struct {
 
 // NewAddon creates a new builder of 'addon' objects.
 func NewAddon() *AddonBuilder {
-	return &AddonBuilder{}
+	return &AddonBuilder{
+		fieldSet_: make([]bool, 26),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddonBuilder) Link(value bool) *AddonBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddonBuilder) ID(value string) *AddonBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AddonBuilder) HREF(value string) *AddonBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddonBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // CommonAnnotations sets the value of the 'common_annotations' attribute to the given value.
 func (b *AddonBuilder) CommonAnnotations(value map[string]string) *AddonBuilder {
 	b.commonAnnotations = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -96,9 +105,9 @@ func (b *AddonBuilder) CommonAnnotations(value map[string]string) *AddonBuilder 
 func (b *AddonBuilder) CommonLabels(value map[string]string) *AddonBuilder {
 	b.commonLabels = value
 	if value != nil {
-		b.bitmap_ |= 16
+		b.fieldSet_[4] = true
 	} else {
-		b.bitmap_ &^= 16
+		b.fieldSet_[4] = false
 	}
 	return b
 }
@@ -110,9 +119,9 @@ func (b *AddonBuilder) CommonLabels(value map[string]string) *AddonBuilder {
 func (b *AddonBuilder) Config(value *AddonConfigBuilder) *AddonBuilder {
 	b.config = value
 	if value != nil {
-		b.bitmap_ |= 32
+		b.fieldSet_[5] = true
 	} else {
-		b.bitmap_ &^= 32
+		b.fieldSet_[5] = false
 	}
 	return b
 }
@@ -121,49 +130,49 @@ func (b *AddonBuilder) Config(value *AddonConfigBuilder) *AddonBuilder {
 func (b *AddonBuilder) CredentialsRequests(values ...*CredentialRequestBuilder) *AddonBuilder {
 	b.credentialsRequests = make([]*CredentialRequestBuilder, len(values))
 	copy(b.credentialsRequests, values)
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *AddonBuilder) Description(value string) *AddonBuilder {
 	b.description = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // DocsLink sets the value of the 'docs_link' attribute to the given value.
 func (b *AddonBuilder) DocsLink(value string) *AddonBuilder {
 	b.docsLink = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddonBuilder) Enabled(value bool) *AddonBuilder {
 	b.enabled = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
 // HasExternalResources sets the value of the 'has_external_resources' attribute to the given value.
 func (b *AddonBuilder) HasExternalResources(value bool) *AddonBuilder {
 	b.hasExternalResources = value
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
 // Hidden sets the value of the 'hidden' attribute to the given value.
 func (b *AddonBuilder) Hidden(value bool) *AddonBuilder {
 	b.hidden = value
-	b.bitmap_ |= 2048
+	b.fieldSet_[11] = true
 	return b
 }
 
 // Icon sets the value of the 'icon' attribute to the given value.
 func (b *AddonBuilder) Icon(value string) *AddonBuilder {
 	b.icon = value
-	b.bitmap_ |= 4096
+	b.fieldSet_[12] = true
 	return b
 }
 
@@ -172,28 +181,28 @@ func (b *AddonBuilder) Icon(value string) *AddonBuilder {
 // Representation of an addon InstallMode field.
 func (b *AddonBuilder) InstallMode(value AddonInstallMode) *AddonBuilder {
 	b.installMode = value
-	b.bitmap_ |= 8192
+	b.fieldSet_[13] = true
 	return b
 }
 
 // Label sets the value of the 'label' attribute to the given value.
 func (b *AddonBuilder) Label(value string) *AddonBuilder {
 	b.label = value
-	b.bitmap_ |= 16384
+	b.fieldSet_[14] = true
 	return b
 }
 
 // ManagedService sets the value of the 'managed_service' attribute to the given value.
 func (b *AddonBuilder) ManagedService(value bool) *AddonBuilder {
 	b.managedService = value
-	b.bitmap_ |= 32768
+	b.fieldSet_[15] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AddonBuilder) Name(value string) *AddonBuilder {
 	b.name = value
-	b.bitmap_ |= 65536
+	b.fieldSet_[16] = true
 	return b
 }
 
@@ -201,21 +210,21 @@ func (b *AddonBuilder) Name(value string) *AddonBuilder {
 func (b *AddonBuilder) Namespaces(values ...*AddonNamespaceBuilder) *AddonBuilder {
 	b.namespaces = make([]*AddonNamespaceBuilder, len(values))
 	copy(b.namespaces, values)
-	b.bitmap_ |= 131072
+	b.fieldSet_[17] = true
 	return b
 }
 
 // OperatorName sets the value of the 'operator_name' attribute to the given value.
 func (b *AddonBuilder) OperatorName(value string) *AddonBuilder {
 	b.operatorName = value
-	b.bitmap_ |= 262144
+	b.fieldSet_[18] = true
 	return b
 }
 
 // Parameters sets the value of the 'parameters' attribute to the given values.
 func (b *AddonBuilder) Parameters(value *AddonParameterListBuilder) *AddonBuilder {
 	b.parameters = value
-	b.bitmap_ |= 524288
+	b.fieldSet_[19] = true
 	return b
 }
 
@@ -223,21 +232,21 @@ func (b *AddonBuilder) Parameters(value *AddonParameterListBuilder) *AddonBuilde
 func (b *AddonBuilder) Requirements(values ...*AddonRequirementBuilder) *AddonBuilder {
 	b.requirements = make([]*AddonRequirementBuilder, len(values))
 	copy(b.requirements, values)
-	b.bitmap_ |= 1048576
+	b.fieldSet_[20] = true
 	return b
 }
 
 // ResourceCost sets the value of the 'resource_cost' attribute to the given value.
 func (b *AddonBuilder) ResourceCost(value float64) *AddonBuilder {
 	b.resourceCost = value
-	b.bitmap_ |= 2097152
+	b.fieldSet_[21] = true
 	return b
 }
 
 // ResourceName sets the value of the 'resource_name' attribute to the given value.
 func (b *AddonBuilder) ResourceName(value string) *AddonBuilder {
 	b.resourceName = value
-	b.bitmap_ |= 4194304
+	b.fieldSet_[22] = true
 	return b
 }
 
@@ -245,14 +254,14 @@ func (b *AddonBuilder) ResourceName(value string) *AddonBuilder {
 func (b *AddonBuilder) SubOperators(values ...*AddonSubOperatorBuilder) *AddonBuilder {
 	b.subOperators = make([]*AddonSubOperatorBuilder, len(values))
 	copy(b.subOperators, values)
-	b.bitmap_ |= 8388608
+	b.fieldSet_[23] = true
 	return b
 }
 
 // TargetNamespace sets the value of the 'target_namespace' attribute to the given value.
 func (b *AddonBuilder) TargetNamespace(value string) *AddonBuilder {
 	b.targetNamespace = value
-	b.bitmap_ |= 16777216
+	b.fieldSet_[24] = true
 	return b
 }
 
@@ -262,9 +271,9 @@ func (b *AddonBuilder) TargetNamespace(value string) *AddonBuilder {
 func (b *AddonBuilder) Version(value *AddonVersionBuilder) *AddonBuilder {
 	b.version = value
 	if value != nil {
-		b.bitmap_ |= 33554432
+		b.fieldSet_[25] = true
 	} else {
-		b.bitmap_ &^= 33554432
+		b.fieldSet_[25] = false
 	}
 	return b
 }
@@ -274,7 +283,10 @@ func (b *AddonBuilder) Copy(object *Addon) *AddonBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if len(object.commonAnnotations) > 0 {
@@ -362,7 +374,10 @@ func (b *AddonBuilder) Build() (object *Addon, err error) {
 	object = new(Addon)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.commonAnnotations != nil {
 		object.commonAnnotations = make(map[string]string)
 		for k, v := range b.commonAnnotations {

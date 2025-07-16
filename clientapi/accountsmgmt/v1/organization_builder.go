@@ -23,9 +23,8 @@ import (
 	time "time"
 )
 
-// OrganizationBuilder contains the data and logic needed to build 'organization' objects.
 type OrganizationBuilder struct {
-	bitmap_      uint32
+	fieldSet_    []bool
 	id           string
 	href         string
 	capabilities []*CapabilityBuilder
@@ -39,60 +38,71 @@ type OrganizationBuilder struct {
 
 // NewOrganization creates a new builder of 'organization' objects.
 func NewOrganization() *OrganizationBuilder {
-	return &OrganizationBuilder{}
+	return &OrganizationBuilder{
+		fieldSet_: make([]bool, 10),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *OrganizationBuilder) Link(value bool) *OrganizationBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *OrganizationBuilder) ID(value string) *OrganizationBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *OrganizationBuilder) HREF(value string) *OrganizationBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *OrganizationBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Capabilities sets the value of the 'capabilities' attribute to the given values.
 func (b *OrganizationBuilder) Capabilities(values ...*CapabilityBuilder) *OrganizationBuilder {
 	b.capabilities = make([]*CapabilityBuilder, len(values))
 	copy(b.capabilities, values)
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *OrganizationBuilder) CreatedAt(value time.Time) *OrganizationBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // EbsAccountID sets the value of the 'ebs_account_ID' attribute to the given value.
 func (b *OrganizationBuilder) EbsAccountID(value string) *OrganizationBuilder {
 	b.ebsAccountID = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // ExternalID sets the value of the 'external_ID' attribute to the given value.
 func (b *OrganizationBuilder) ExternalID(value string) *OrganizationBuilder {
 	b.externalID = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -100,21 +110,21 @@ func (b *OrganizationBuilder) ExternalID(value string) *OrganizationBuilder {
 func (b *OrganizationBuilder) Labels(values ...*LabelBuilder) *OrganizationBuilder {
 	b.labels = make([]*LabelBuilder, len(values))
 	copy(b.labels, values)
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *OrganizationBuilder) Name(value string) *OrganizationBuilder {
 	b.name = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *OrganizationBuilder) UpdatedAt(value time.Time) *OrganizationBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
@@ -123,7 +133,10 @@ func (b *OrganizationBuilder) Copy(object *Organization) *OrganizationBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.capabilities != nil {
@@ -155,7 +168,10 @@ func (b *OrganizationBuilder) Build() (object *Organization, err error) {
 	object = new(Organization)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.capabilities != nil {
 		object.capabilities = make([]*Capability, len(b.capabilities))
 		for i, v := range b.capabilities {

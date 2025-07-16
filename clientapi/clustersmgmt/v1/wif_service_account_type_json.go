@@ -42,7 +42,7 @@ func WriteWifServiceAccount(object *WifServiceAccount, stream *jsoniter.Stream) 
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteWifServiceAccount(object *WifServiceAccount, stream *jsoniter.Stream) 
 		stream.WriteString(string(object.accessMethod))
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.credentialRequest != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.credentialRequest != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteWifServiceAccount(object *WifServiceAccount, stream *jsoniter.Stream) 
 		WriteWifCredentialRequest(object.credentialRequest, stream)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteWifServiceAccount(object *WifServiceAccount, stream *jsoniter.Stream) 
 		stream.WriteString(object.osdRole)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0 && object.roles != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.roles != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteWifServiceAccount(object *WifServiceAccount, stream *jsoniter.Stream) 
 		WriteWifRoleList(object.roles, stream)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -103,7 +103,9 @@ func UnmarshalWifServiceAccount(source interface{}) (object *WifServiceAccount, 
 
 // ReadWifServiceAccount reads a value of the 'wif_service_account' type from the given iterator.
 func ReadWifServiceAccount(iterator *jsoniter.Iterator) *WifServiceAccount {
-	object := &WifServiceAccount{}
+	object := &WifServiceAccount{
+		fieldSet_: make([]bool, 5),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -114,23 +116,23 @@ func ReadWifServiceAccount(iterator *jsoniter.Iterator) *WifServiceAccount {
 			text := iterator.ReadString()
 			value := WifAccessMethod(text)
 			object.accessMethod = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "credential_request":
 			value := ReadWifCredentialRequest(iterator)
 			object.credentialRequest = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "osd_role":
 			value := iterator.ReadString()
 			object.osdRole = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "roles":
 			value := ReadWifRoleList(iterator)
 			object.roles = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "service_account_id":
 			value := iterator.ReadString()
 			object.serviceAccountId = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		default:
 			iterator.ReadAny()
 		}

@@ -27,7 +27,7 @@ import (
 //
 // Representation of cluster external configuration.
 type ExternalConfiguration struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	labels    *v1.LabelList
 	manifests *v1.ManifestList
 	syncsets  *v1.SyncsetList
@@ -35,7 +35,15 @@ type ExternalConfiguration struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ExternalConfiguration) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Labels returns the value of the 'labels' attribute, or
@@ -43,7 +51,7 @@ func (o *ExternalConfiguration) Empty() bool {
 //
 // list of labels externally configured on the clusterdeployment.
 func (o *ExternalConfiguration) Labels() *v1.LabelList {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.labels
 	}
 	return nil
@@ -54,7 +62,7 @@ func (o *ExternalConfiguration) Labels() *v1.LabelList {
 //
 // list of labels externally configured on the clusterdeployment.
 func (o *ExternalConfiguration) GetLabels() (value *v1.LabelList, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.labels
 	}
@@ -66,7 +74,7 @@ func (o *ExternalConfiguration) GetLabels() (value *v1.LabelList, ok bool) {
 //
 // list of manifest externally configured for a hosted cluster.
 func (o *ExternalConfiguration) Manifests() *v1.ManifestList {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.manifests
 	}
 	return nil
@@ -77,7 +85,7 @@ func (o *ExternalConfiguration) Manifests() *v1.ManifestList {
 //
 // list of manifest externally configured for a hosted cluster.
 func (o *ExternalConfiguration) GetManifests() (value *v1.ManifestList, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.manifests
 	}
@@ -89,7 +97,7 @@ func (o *ExternalConfiguration) GetManifests() (value *v1.ManifestList, ok bool)
 //
 // list of syncsets externally configured on the cluster.
 func (o *ExternalConfiguration) Syncsets() *v1.SyncsetList {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.syncsets
 	}
 	return nil
@@ -100,7 +108,7 @@ func (o *ExternalConfiguration) Syncsets() *v1.SyncsetList {
 //
 // list of syncsets externally configured on the cluster.
 func (o *ExternalConfiguration) GetSyncsets() (value *v1.SyncsetList, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.syncsets
 	}

@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// ApplicationBuilder contains the data and logic needed to build 'application' objects.
-//
 // Definition of a Status Board application.
 type ApplicationBuilder struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	id        string
 	href      string
 	createdAt time.Time
@@ -41,59 +39,70 @@ type ApplicationBuilder struct {
 
 // NewApplication creates a new builder of 'application' objects.
 func NewApplication() *ApplicationBuilder {
-	return &ApplicationBuilder{}
+	return &ApplicationBuilder{
+		fieldSet_: make([]bool, 10),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ApplicationBuilder) Link(value bool) *ApplicationBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ApplicationBuilder) ID(value string) *ApplicationBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ApplicationBuilder) HREF(value string) *ApplicationBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ApplicationBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ApplicationBuilder) CreatedAt(value time.Time) *ApplicationBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Fullname sets the value of the 'fullname' attribute to the given value.
 func (b *ApplicationBuilder) Fullname(value string) *ApplicationBuilder {
 	b.fullname = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // Metadata sets the value of the 'metadata' attribute to the given value.
 func (b *ApplicationBuilder) Metadata(value interface{}) *ApplicationBuilder {
 	b.metadata = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ApplicationBuilder) Name(value string) *ApplicationBuilder {
 	b.name = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -101,7 +110,7 @@ func (b *ApplicationBuilder) Name(value string) *ApplicationBuilder {
 func (b *ApplicationBuilder) Owners(values ...*OwnerBuilder) *ApplicationBuilder {
 	b.owners = make([]*OwnerBuilder, len(values))
 	copy(b.owners, values)
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
@@ -111,9 +120,9 @@ func (b *ApplicationBuilder) Owners(values ...*OwnerBuilder) *ApplicationBuilder
 func (b *ApplicationBuilder) Product(value *ProductBuilder) *ApplicationBuilder {
 	b.product = value
 	if value != nil {
-		b.bitmap_ |= 256
+		b.fieldSet_[8] = true
 	} else {
-		b.bitmap_ &^= 256
+		b.fieldSet_[8] = false
 	}
 	return b
 }
@@ -121,7 +130,7 @@ func (b *ApplicationBuilder) Product(value *ProductBuilder) *ApplicationBuilder 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ApplicationBuilder) UpdatedAt(value time.Time) *ApplicationBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
@@ -130,7 +139,10 @@ func (b *ApplicationBuilder) Copy(object *Application) *ApplicationBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.createdAt = object.createdAt
@@ -159,7 +171,10 @@ func (b *ApplicationBuilder) Build() (object *Application, err error) {
 	object = new(Application)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.createdAt = b.createdAt
 	object.fullname = b.fullname
 	object.metadata = b.metadata

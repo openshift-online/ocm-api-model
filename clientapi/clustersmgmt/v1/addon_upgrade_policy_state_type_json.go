@@ -42,13 +42,13 @@ func WriteAddonUpgradePolicyState(object *AddonUpgradePolicyState, stream *jsoni
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(AddonUpgradePolicyStateLinkKind)
 	} else {
 		stream.WriteString(AddonUpgradePolicyStateKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteAddonUpgradePolicyState(object *AddonUpgradePolicyState, stream *jsoni
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteAddonUpgradePolicyState(object *AddonUpgradePolicyState, stream *jsoni
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteAddonUpgradePolicyState(object *AddonUpgradePolicyState, stream *jsoni
 		stream.WriteString(object.description)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -99,7 +99,9 @@ func UnmarshalAddonUpgradePolicyState(source interface{}) (object *AddonUpgradeP
 
 // ReadAddonUpgradePolicyState reads a value of the 'addon_upgrade_policy_state' type from the given iterator.
 func ReadAddonUpgradePolicyState(iterator *jsoniter.Iterator) *AddonUpgradePolicyState {
-	object := &AddonUpgradePolicyState{}
+	object := &AddonUpgradePolicyState{
+		fieldSet_: make([]bool, 5),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -109,23 +111,23 @@ func ReadAddonUpgradePolicyState(iterator *jsoniter.Iterator) *AddonUpgradePolic
 		case "kind":
 			value := iterator.ReadString()
 			if value == AddonUpgradePolicyStateLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "description":
 			value := iterator.ReadString()
 			object.description = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "value":
 			text := iterator.ReadString()
 			value := UpgradePolicyStateValue(text)
 			object.value = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		default:
 			iterator.ReadAny()
 		}

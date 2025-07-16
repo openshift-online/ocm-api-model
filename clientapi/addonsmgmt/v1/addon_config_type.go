@@ -24,14 +24,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 // Representation of an addon config.
 // The attributes under it are to be used by the addon once its installed in the cluster.
 type AddonConfig struct {
-	bitmap_                   uint32
+	fieldSet_                 []bool
 	addOnEnvironmentVariables []*AddonEnvironmentVariable
 	addOnSecretPropagations   []*AddonSecretPropagation
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddonConfig) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AddOnEnvironmentVariables returns the value of the 'add_on_environment_variables' attribute, or
@@ -39,7 +47,7 @@ func (o *AddonConfig) Empty() bool {
 //
 // List of environment variables for the addon
 func (o *AddonConfig) AddOnEnvironmentVariables() []*AddonEnvironmentVariable {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.addOnEnvironmentVariables
 	}
 	return nil
@@ -50,7 +58,7 @@ func (o *AddonConfig) AddOnEnvironmentVariables() []*AddonEnvironmentVariable {
 //
 // List of environment variables for the addon
 func (o *AddonConfig) GetAddOnEnvironmentVariables() (value []*AddonEnvironmentVariable, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.addOnEnvironmentVariables
 	}
@@ -62,7 +70,7 @@ func (o *AddonConfig) GetAddOnEnvironmentVariables() (value []*AddonEnvironmentV
 //
 // List of secret propagations for the addon
 func (o *AddonConfig) AddOnSecretPropagations() []*AddonSecretPropagation {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.addOnSecretPropagations
 	}
 	return nil
@@ -73,7 +81,7 @@ func (o *AddonConfig) AddOnSecretPropagations() []*AddonSecretPropagation {
 //
 // List of secret propagations for the addon
 func (o *AddonConfig) GetAddOnSecretPropagations() (value []*AddonSecretPropagation, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.addOnSecretPropagations
 	}

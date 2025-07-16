@@ -19,28 +19,36 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// AuditLogBuilder contains the data and logic needed to build 'audit_log' objects.
-//
 // Contains the necessary attributes to support audit log forwarding
 type AuditLogBuilder struct {
-	bitmap_ uint32
-	roleArn string
+	fieldSet_ []bool
+	roleArn   string
 }
 
 // NewAuditLog creates a new builder of 'audit_log' objects.
 func NewAuditLog() *AuditLogBuilder {
-	return &AuditLogBuilder{}
+	return &AuditLogBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AuditLogBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // RoleArn sets the value of the 'role_arn' attribute to the given value.
 func (b *AuditLogBuilder) RoleArn(value string) *AuditLogBuilder {
 	b.roleArn = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -49,7 +57,10 @@ func (b *AuditLogBuilder) Copy(object *AuditLog) *AuditLogBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.roleArn = object.roleArn
 	return b
 }
@@ -57,7 +68,10 @@ func (b *AuditLogBuilder) Copy(object *AuditLog) *AuditLogBuilder {
 // Build creates a 'audit_log' object using the configuration stored in the builder.
 func (b *AuditLogBuilder) Build() (object *AuditLog, err error) {
 	object = new(AuditLog)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.roleArn = b.roleArn
 	return
 }

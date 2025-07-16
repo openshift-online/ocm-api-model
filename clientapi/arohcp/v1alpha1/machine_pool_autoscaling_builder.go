@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// MachinePoolAutoscalingBuilder contains the data and logic needed to build 'machine_pool_autoscaling' objects.
-//
 // Representation of a autoscaling in a machine pool.
 type MachinePoolAutoscalingBuilder struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	id          string
 	href        string
 	maxReplicas int
@@ -32,45 +30,56 @@ type MachinePoolAutoscalingBuilder struct {
 
 // NewMachinePoolAutoscaling creates a new builder of 'machine_pool_autoscaling' objects.
 func NewMachinePoolAutoscaling() *MachinePoolAutoscalingBuilder {
-	return &MachinePoolAutoscalingBuilder{}
+	return &MachinePoolAutoscalingBuilder{
+		fieldSet_: make([]bool, 5),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *MachinePoolAutoscalingBuilder) Link(value bool) *MachinePoolAutoscalingBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *MachinePoolAutoscalingBuilder) ID(value string) *MachinePoolAutoscalingBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *MachinePoolAutoscalingBuilder) HREF(value string) *MachinePoolAutoscalingBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *MachinePoolAutoscalingBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // MaxReplicas sets the value of the 'max_replicas' attribute to the given value.
 func (b *MachinePoolAutoscalingBuilder) MaxReplicas(value int) *MachinePoolAutoscalingBuilder {
 	b.maxReplicas = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // MinReplicas sets the value of the 'min_replicas' attribute to the given value.
 func (b *MachinePoolAutoscalingBuilder) MinReplicas(value int) *MachinePoolAutoscalingBuilder {
 	b.minReplicas = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -79,7 +88,10 @@ func (b *MachinePoolAutoscalingBuilder) Copy(object *MachinePoolAutoscaling) *Ma
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.maxReplicas = object.maxReplicas
@@ -92,7 +104,10 @@ func (b *MachinePoolAutoscalingBuilder) Build() (object *MachinePoolAutoscaling,
 	object = new(MachinePoolAutoscaling)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.maxReplicas = b.maxReplicas
 	object.minReplicas = b.minReplicas
 	return

@@ -35,10 +35,10 @@ const AWSSpotMarketOptionsNilKind = "AWSSpotMarketOptionsNil"
 //
 // Spot market options for AWS machine pool.
 type AWSSpotMarketOptions struct {
-	bitmap_  uint32
-	id       string
-	href     string
-	maxPrice float64
+	fieldSet_ []bool
+	id        string
+	href      string
+	maxPrice  float64
 }
 
 // Kind returns the name of the type of the object.
@@ -46,7 +46,7 @@ func (o *AWSSpotMarketOptions) Kind() string {
 	if o == nil {
 		return AWSSpotMarketOptionsNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return AWSSpotMarketOptionsLinkKind
 	}
 	return AWSSpotMarketOptionsKind
@@ -54,12 +54,12 @@ func (o *AWSSpotMarketOptions) Kind() string {
 
 // Link returns true if this is a link.
 func (o *AWSSpotMarketOptions) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *AWSSpotMarketOptions) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -68,7 +68,7 @@ func (o *AWSSpotMarketOptions) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *AWSSpotMarketOptions) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -77,7 +77,7 @@ func (o *AWSSpotMarketOptions) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *AWSSpotMarketOptions) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -86,7 +86,7 @@ func (o *AWSSpotMarketOptions) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *AWSSpotMarketOptions) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -95,7 +95,17 @@ func (o *AWSSpotMarketOptions) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AWSSpotMarketOptions) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // MaxPrice returns the value of the 'max_price' attribute, or
@@ -104,7 +114,7 @@ func (o *AWSSpotMarketOptions) Empty() bool {
 // The max price for spot instance. Optional.
 // If not set, use the on-demand price.
 func (o *AWSSpotMarketOptions) MaxPrice() float64 {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.maxPrice
 	}
 	return 0.0
@@ -116,7 +126,7 @@ func (o *AWSSpotMarketOptions) MaxPrice() float64 {
 // The max price for spot instance. Optional.
 // If not set, use the on-demand price.
 func (o *AWSSpotMarketOptions) GetMaxPrice() (value float64, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.maxPrice
 	}

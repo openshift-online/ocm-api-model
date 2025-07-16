@@ -35,7 +35,7 @@ const ClusterStatusNilKind = "ClusterStatusNil"
 //
 // Detailed status of a cluster.
 type ClusterStatus struct {
-	bitmap_                   uint32
+	fieldSet_                 []bool
 	id                        string
 	href                      string
 	configurationMode         ClusterConfigurationMode
@@ -54,7 +54,7 @@ func (o *ClusterStatus) Kind() string {
 	if o == nil {
 		return ClusterStatusNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return ClusterStatusLinkKind
 	}
 	return ClusterStatusKind
@@ -62,12 +62,12 @@ func (o *ClusterStatus) Kind() string {
 
 // Link returns true if this is a link.
 func (o *ClusterStatus) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *ClusterStatus) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -76,7 +76,7 @@ func (o *ClusterStatus) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *ClusterStatus) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -85,7 +85,7 @@ func (o *ClusterStatus) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *ClusterStatus) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -94,7 +94,7 @@ func (o *ClusterStatus) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *ClusterStatus) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -103,7 +103,17 @@ func (o *ClusterStatus) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterStatus) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // DNSReady returns the value of the 'DNS_ready' attribute, or
@@ -111,7 +121,7 @@ func (o *ClusterStatus) Empty() bool {
 //
 // DNSReady from Provisioner
 func (o *ClusterStatus) DNSReady() bool {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.dnsReady
 	}
 	return false
@@ -122,7 +132,7 @@ func (o *ClusterStatus) DNSReady() bool {
 //
 // DNSReady from Provisioner
 func (o *ClusterStatus) GetDNSReady() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.dnsReady
 	}
@@ -134,7 +144,7 @@ func (o *ClusterStatus) GetDNSReady() (value bool, ok bool) {
 //
 // OIDCReady from user configuration.
 func (o *ClusterStatus) OIDCReady() bool {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.oidcReady
 	}
 	return false
@@ -145,7 +155,7 @@ func (o *ClusterStatus) OIDCReady() bool {
 //
 // OIDCReady from user configuration.
 func (o *ClusterStatus) GetOIDCReady() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.oidcReady
 	}
@@ -157,7 +167,7 @@ func (o *ClusterStatus) GetOIDCReady() (value bool, ok bool) {
 //
 // Configuration mode
 func (o *ClusterStatus) ConfigurationMode() ClusterConfigurationMode {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.configurationMode
 	}
 	return ClusterConfigurationMode("")
@@ -168,7 +178,7 @@ func (o *ClusterStatus) ConfigurationMode() ClusterConfigurationMode {
 //
 // Configuration mode
 func (o *ClusterStatus) GetConfigurationMode() (value ClusterConfigurationMode, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.configurationMode
 	}
@@ -180,7 +190,7 @@ func (o *ClusterStatus) GetConfigurationMode() (value ClusterConfigurationMode, 
 //
 // Current Replicas available for a Hosted Cluster
 func (o *ClusterStatus) CurrentCompute() int {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.currentCompute
 	}
 	return 0
@@ -191,7 +201,7 @@ func (o *ClusterStatus) CurrentCompute() int {
 //
 // Current Replicas available for a Hosted Cluster
 func (o *ClusterStatus) GetCurrentCompute() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.currentCompute
 	}
@@ -203,7 +213,7 @@ func (o *ClusterStatus) GetCurrentCompute() (value int, ok bool) {
 //
 // Detailed description of the cluster status.
 func (o *ClusterStatus) Description() string {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.description
 	}
 	return ""
@@ -214,7 +224,7 @@ func (o *ClusterStatus) Description() string {
 //
 // Detailed description of the cluster status.
 func (o *ClusterStatus) GetDescription() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.description
 	}
@@ -226,7 +236,7 @@ func (o *ClusterStatus) GetDescription() (value string, ok bool) {
 //
 // Limited Support Reason Count
 func (o *ClusterStatus) LimitedSupportReasonCount() int {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.limitedSupportReasonCount
 	}
 	return 0
@@ -237,7 +247,7 @@ func (o *ClusterStatus) LimitedSupportReasonCount() int {
 //
 // Limited Support Reason Count
 func (o *ClusterStatus) GetLimitedSupportReasonCount() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.limitedSupportReasonCount
 	}
@@ -249,7 +259,7 @@ func (o *ClusterStatus) GetLimitedSupportReasonCount() (value int, ok bool) {
 //
 // Provisioning Error Code
 func (o *ClusterStatus) ProvisionErrorCode() string {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.provisionErrorCode
 	}
 	return ""
@@ -260,7 +270,7 @@ func (o *ClusterStatus) ProvisionErrorCode() string {
 //
 // Provisioning Error Code
 func (o *ClusterStatus) GetProvisionErrorCode() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.provisionErrorCode
 	}
@@ -272,7 +282,7 @@ func (o *ClusterStatus) GetProvisionErrorCode() (value string, ok bool) {
 //
 // Provisioning Error Message
 func (o *ClusterStatus) ProvisionErrorMessage() string {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.provisionErrorMessage
 	}
 	return ""
@@ -283,7 +293,7 @@ func (o *ClusterStatus) ProvisionErrorMessage() string {
 //
 // Provisioning Error Message
 func (o *ClusterStatus) GetProvisionErrorMessage() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.provisionErrorMessage
 	}
@@ -295,7 +305,7 @@ func (o *ClusterStatus) GetProvisionErrorMessage() (value string, ok bool) {
 //
 // The overall state of the cluster.
 func (o *ClusterStatus) State() ClusterState {
-	if o != nil && o.bitmap_&2048 != 0 {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.state
 	}
 	return ClusterState("")
@@ -306,7 +316,7 @@ func (o *ClusterStatus) State() ClusterState {
 //
 // The overall state of the cluster.
 func (o *ClusterStatus) GetState() (value ClusterState, ok bool) {
-	ok = o != nil && o.bitmap_&2048 != 0
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.state
 	}

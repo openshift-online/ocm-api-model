@@ -19,29 +19,37 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// ClusterMigrationStateBuilder contains the data and logic needed to build 'cluster_migration_state' objects.
-//
 // Representation of a cluster migration state.
 type ClusterMigrationStateBuilder struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	description string
 	value       ClusterMigrationStateValue
 }
 
 // NewClusterMigrationState creates a new builder of 'cluster_migration_state' objects.
 func NewClusterMigrationState() *ClusterMigrationStateBuilder {
-	return &ClusterMigrationStateBuilder{}
+	return &ClusterMigrationStateBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterMigrationStateBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *ClusterMigrationStateBuilder) Description(value string) *ClusterMigrationStateBuilder {
 	b.description = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -50,7 +58,7 @@ func (b *ClusterMigrationStateBuilder) Description(value string) *ClusterMigrati
 // The state of the cluster migration.
 func (b *ClusterMigrationStateBuilder) Value(value ClusterMigrationStateValue) *ClusterMigrationStateBuilder {
 	b.value = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -59,7 +67,10 @@ func (b *ClusterMigrationStateBuilder) Copy(object *ClusterMigrationState) *Clus
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.description = object.description
 	b.value = object.value
 	return b
@@ -68,7 +79,10 @@ func (b *ClusterMigrationStateBuilder) Copy(object *ClusterMigrationState) *Clus
 // Build creates a 'cluster_migration_state' object using the configuration stored in the builder.
 func (b *ClusterMigrationStateBuilder) Build() (object *ClusterMigrationState, err error) {
 	object = new(ClusterMigrationState)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.description = b.description
 	object.value = b.value
 	return

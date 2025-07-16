@@ -39,7 +39,7 @@ const ProductTechnologyPreviewNilKind = "ProductTechnologyPreviewNil"
 //
 // Representation of a product technology preview.
 type ProductTechnologyPreview struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	id             string
 	href           string
 	additionalText string
@@ -52,7 +52,7 @@ func (o *ProductTechnologyPreview) Kind() string {
 	if o == nil {
 		return ProductTechnologyPreviewNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return ProductTechnologyPreviewLinkKind
 	}
 	return ProductTechnologyPreviewKind
@@ -60,12 +60,12 @@ func (o *ProductTechnologyPreview) Kind() string {
 
 // Link returns true if this is a link.
 func (o *ProductTechnologyPreview) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *ProductTechnologyPreview) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -74,7 +74,7 @@ func (o *ProductTechnologyPreview) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *ProductTechnologyPreview) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -83,7 +83,7 @@ func (o *ProductTechnologyPreview) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *ProductTechnologyPreview) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -92,7 +92,7 @@ func (o *ProductTechnologyPreview) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *ProductTechnologyPreview) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -101,7 +101,17 @@ func (o *ProductTechnologyPreview) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ProductTechnologyPreview) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // AdditionalText returns the value of the 'additional_text' attribute, or
@@ -109,7 +119,7 @@ func (o *ProductTechnologyPreview) Empty() bool {
 //
 // Message associated with this technology preview.
 func (o *ProductTechnologyPreview) AdditionalText() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.additionalText
 	}
 	return ""
@@ -120,7 +130,7 @@ func (o *ProductTechnologyPreview) AdditionalText() string {
 //
 // Message associated with this technology preview.
 func (o *ProductTechnologyPreview) GetAdditionalText() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.additionalText
 	}
@@ -132,7 +142,7 @@ func (o *ProductTechnologyPreview) GetAdditionalText() (value string, ok bool) {
 //
 // The end date for this technology preview.
 func (o *ProductTechnologyPreview) EndDate() time.Time {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.endDate
 	}
 	return time.Time{}
@@ -143,7 +153,7 @@ func (o *ProductTechnologyPreview) EndDate() time.Time {
 //
 // The end date for this technology preview.
 func (o *ProductTechnologyPreview) GetEndDate() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.endDate
 	}
@@ -155,7 +165,7 @@ func (o *ProductTechnologyPreview) GetEndDate() (value time.Time, ok bool) {
 //
 // The start date for this technology preview.
 func (o *ProductTechnologyPreview) StartDate() time.Time {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.startDate
 	}
 	return time.Time{}
@@ -166,7 +176,7 @@ func (o *ProductTechnologyPreview) StartDate() time.Time {
 //
 // The start date for this technology preview.
 func (o *ProductTechnologyPreview) GetStartDate() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.startDate
 	}

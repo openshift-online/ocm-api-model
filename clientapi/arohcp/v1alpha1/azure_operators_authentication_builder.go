@@ -19,23 +19,31 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// AzureOperatorsAuthenticationBuilder contains the data and logic needed to build 'azure_operators_authentication' objects.
-//
 // The configuration that the operators of the
 // cluster have to authenticate to Azure.
 type AzureOperatorsAuthenticationBuilder struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	managedIdentities *AzureOperatorsAuthenticationManagedIdentitiesBuilder
 }
 
 // NewAzureOperatorsAuthentication creates a new builder of 'azure_operators_authentication' objects.
 func NewAzureOperatorsAuthentication() *AzureOperatorsAuthenticationBuilder {
-	return &AzureOperatorsAuthenticationBuilder{}
+	return &AzureOperatorsAuthenticationBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AzureOperatorsAuthenticationBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ManagedIdentities sets the value of the 'managed_identities' attribute to the given value.
@@ -46,9 +54,9 @@ func (b *AzureOperatorsAuthenticationBuilder) Empty() bool {
 func (b *AzureOperatorsAuthenticationBuilder) ManagedIdentities(value *AzureOperatorsAuthenticationManagedIdentitiesBuilder) *AzureOperatorsAuthenticationBuilder {
 	b.managedIdentities = value
 	if value != nil {
-		b.bitmap_ |= 1
+		b.fieldSet_[0] = true
 	} else {
-		b.bitmap_ &^= 1
+		b.fieldSet_[0] = false
 	}
 	return b
 }
@@ -58,7 +66,10 @@ func (b *AzureOperatorsAuthenticationBuilder) Copy(object *AzureOperatorsAuthent
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.managedIdentities != nil {
 		b.managedIdentities = NewAzureOperatorsAuthenticationManagedIdentities().Copy(object.managedIdentities)
 	} else {
@@ -70,7 +81,10 @@ func (b *AzureOperatorsAuthenticationBuilder) Copy(object *AzureOperatorsAuthent
 // Build creates a 'azure_operators_authentication' object using the configuration stored in the builder.
 func (b *AzureOperatorsAuthenticationBuilder) Build() (object *AzureOperatorsAuthentication, err error) {
 	object = new(AzureOperatorsAuthentication)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.managedIdentities != nil {
 		object.managedIdentities, err = b.managedIdentities.Build()
 		if err != nil {

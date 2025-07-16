@@ -19,29 +19,37 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
-// MonitoringStackBuilder contains the data and logic needed to build 'monitoring_stack' objects.
-//
 // Representation of Monitoring Stack
 type MonitoringStackBuilder struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	resources *MonitoringStackResourcesBuilder
 	enabled   bool
 }
 
 // NewMonitoringStack creates a new builder of 'monitoring_stack' objects.
 func NewMonitoringStack() *MonitoringStackBuilder {
-	return &MonitoringStackBuilder{}
+	return &MonitoringStackBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *MonitoringStackBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *MonitoringStackBuilder) Enabled(value bool) *MonitoringStackBuilder {
 	b.enabled = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -51,9 +59,9 @@ func (b *MonitoringStackBuilder) Enabled(value bool) *MonitoringStackBuilder {
 func (b *MonitoringStackBuilder) Resources(value *MonitoringStackResourcesBuilder) *MonitoringStackBuilder {
 	b.resources = value
 	if value != nil {
-		b.bitmap_ |= 2
+		b.fieldSet_[1] = true
 	} else {
-		b.bitmap_ &^= 2
+		b.fieldSet_[1] = false
 	}
 	return b
 }
@@ -63,7 +71,10 @@ func (b *MonitoringStackBuilder) Copy(object *MonitoringStack) *MonitoringStackB
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.enabled = object.enabled
 	if object.resources != nil {
 		b.resources = NewMonitoringStackResources().Copy(object.resources)
@@ -76,7 +87,10 @@ func (b *MonitoringStackBuilder) Copy(object *MonitoringStack) *MonitoringStackB
 // Build creates a 'monitoring_stack' object using the configuration stored in the builder.
 func (b *MonitoringStackBuilder) Build() (object *MonitoringStack, err error) {
 	object = new(MonitoringStack)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.enabled = b.enabled
 	if b.resources != nil {
 		object.resources, err = b.resources.Build()

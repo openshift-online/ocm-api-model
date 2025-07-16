@@ -43,7 +43,7 @@ func WriteExternalConfiguration(object *ExternalConfiguration, stream *jsoniter.
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.labels != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.labels != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -55,7 +55,7 @@ func WriteExternalConfiguration(object *ExternalConfiguration, stream *jsoniter.
 		stream.WriteObjectEnd()
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.manifests != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.manifests != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,7 @@ func WriteExternalConfiguration(object *ExternalConfiguration, stream *jsoniter.
 		stream.WriteObjectEnd()
 		count++
 	}
-	present_ = object.bitmap_&4 != 0 && object.syncsets != nil
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.syncsets != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -95,7 +95,9 @@ func UnmarshalExternalConfiguration(source interface{}) (object *ExternalConfigu
 
 // ReadExternalConfiguration reads a value of the 'external_configuration' type from the given iterator.
 func ReadExternalConfiguration(iterator *jsoniter.Iterator) *ExternalConfiguration {
-	object := &ExternalConfiguration{}
+	object := &ExternalConfiguration{
+		fieldSet_: make([]bool, 3),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -122,7 +124,7 @@ func ReadExternalConfiguration(iterator *jsoniter.Iterator) *ExternalConfigurati
 				}
 			}
 			object.labels = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "manifests":
 			value := &v1.ManifestList{}
 			for {
@@ -143,7 +145,7 @@ func ReadExternalConfiguration(iterator *jsoniter.Iterator) *ExternalConfigurati
 				}
 			}
 			object.manifests = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "syncsets":
 			value := &v1.SyncsetList{}
 			for {
@@ -164,7 +166,7 @@ func ReadExternalConfiguration(iterator *jsoniter.Iterator) *ExternalConfigurati
 				}
 			}
 			object.syncsets = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		default:
 			iterator.ReadAny()
 		}

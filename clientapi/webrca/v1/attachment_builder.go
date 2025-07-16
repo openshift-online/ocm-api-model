@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// AttachmentBuilder contains the data and logic needed to build 'attachment' objects.
-//
 // Definition of a Web RCA attachment.
 type AttachmentBuilder struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	id          string
 	href        string
 	contentType string
@@ -42,45 +40,56 @@ type AttachmentBuilder struct {
 
 // NewAttachment creates a new builder of 'attachment' objects.
 func NewAttachment() *AttachmentBuilder {
-	return &AttachmentBuilder{}
+	return &AttachmentBuilder{
+		fieldSet_: make([]bool, 11),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AttachmentBuilder) Link(value bool) *AttachmentBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AttachmentBuilder) ID(value string) *AttachmentBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AttachmentBuilder) HREF(value string) *AttachmentBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AttachmentBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // ContentType sets the value of the 'content_type' attribute to the given value.
 func (b *AttachmentBuilder) ContentType(value string) *AttachmentBuilder {
 	b.contentType = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *AttachmentBuilder) CreatedAt(value time.Time) *AttachmentBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -90,9 +99,9 @@ func (b *AttachmentBuilder) CreatedAt(value time.Time) *AttachmentBuilder {
 func (b *AttachmentBuilder) Creator(value *UserBuilder) *AttachmentBuilder {
 	b.creator = value
 	if value != nil {
-		b.bitmap_ |= 32
+		b.fieldSet_[5] = true
 	} else {
-		b.bitmap_ &^= 32
+		b.fieldSet_[5] = false
 	}
 	return b
 }
@@ -100,7 +109,7 @@ func (b *AttachmentBuilder) Creator(value *UserBuilder) *AttachmentBuilder {
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *AttachmentBuilder) DeletedAt(value time.Time) *AttachmentBuilder {
 	b.deletedAt = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -110,9 +119,9 @@ func (b *AttachmentBuilder) DeletedAt(value time.Time) *AttachmentBuilder {
 func (b *AttachmentBuilder) Event(value *EventBuilder) *AttachmentBuilder {
 	b.event = value
 	if value != nil {
-		b.bitmap_ |= 128
+		b.fieldSet_[7] = true
 	} else {
-		b.bitmap_ &^= 128
+		b.fieldSet_[7] = false
 	}
 	return b
 }
@@ -120,21 +129,21 @@ func (b *AttachmentBuilder) Event(value *EventBuilder) *AttachmentBuilder {
 // FileSize sets the value of the 'file_size' attribute to the given value.
 func (b *AttachmentBuilder) FileSize(value int) *AttachmentBuilder {
 	b.fileSize = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AttachmentBuilder) Name(value string) *AttachmentBuilder {
 	b.name = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *AttachmentBuilder) UpdatedAt(value time.Time) *AttachmentBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
@@ -143,7 +152,10 @@ func (b *AttachmentBuilder) Copy(object *Attachment) *AttachmentBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.contentType = object.contentType
@@ -170,7 +182,10 @@ func (b *AttachmentBuilder) Build() (object *Attachment, err error) {
 	object = new(Attachment)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.contentType = b.contentType
 	object.createdAt = b.createdAt
 	if b.creator != nil {

@@ -19,35 +19,44 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// ReleaseImageDetailsBuilder contains the data and logic needed to build 'release_image_details' objects.
 type ReleaseImageDetailsBuilder struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	availableUpgrades []string
 	releaseImage      string
 }
 
 // NewReleaseImageDetails creates a new builder of 'release_image_details' objects.
 func NewReleaseImageDetails() *ReleaseImageDetailsBuilder {
-	return &ReleaseImageDetailsBuilder{}
+	return &ReleaseImageDetailsBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ReleaseImageDetailsBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AvailableUpgrades sets the value of the 'available_upgrades' attribute to the given values.
 func (b *ReleaseImageDetailsBuilder) AvailableUpgrades(values ...string) *ReleaseImageDetailsBuilder {
 	b.availableUpgrades = make([]string, len(values))
 	copy(b.availableUpgrades, values)
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ReleaseImage sets the value of the 'release_image' attribute to the given value.
 func (b *ReleaseImageDetailsBuilder) ReleaseImage(value string) *ReleaseImageDetailsBuilder {
 	b.releaseImage = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -56,7 +65,10 @@ func (b *ReleaseImageDetailsBuilder) Copy(object *ReleaseImageDetails) *ReleaseI
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.availableUpgrades != nil {
 		b.availableUpgrades = make([]string, len(object.availableUpgrades))
 		copy(b.availableUpgrades, object.availableUpgrades)
@@ -70,7 +82,10 @@ func (b *ReleaseImageDetailsBuilder) Copy(object *ReleaseImageDetails) *ReleaseI
 // Build creates a 'release_image_details' object using the configuration stored in the builder.
 func (b *ReleaseImageDetailsBuilder) Build() (object *ReleaseImageDetails, err error) {
 	object = new(ReleaseImageDetails)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.availableUpgrades != nil {
 		object.availableUpgrades = make([]string, len(b.availableUpgrades))
 		copy(object.availableUpgrades, b.availableUpgrades)

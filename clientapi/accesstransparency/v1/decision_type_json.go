@@ -43,13 +43,13 @@ func WriteDecision(object *Decision, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(DecisionLinkKind)
 	} else {
 		stream.WriteString(DecisionKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteDecision(object *Decision, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteDecision(object *Decision, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteDecision(object *Decision, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteDecision(object *Decision, stream *jsoniter.Stream) {
 		stream.WriteString(object.decidedBy)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteDecision(object *Decision, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.decision))
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteDecision(object *Decision, stream *jsoniter.Stream) {
 		stream.WriteString(object.justification)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -127,7 +127,9 @@ func UnmarshalDecision(source interface{}) (object *Decision, err error) {
 
 // ReadDecision reads a value of the 'decision' type from the given iterator.
 func ReadDecision(iterator *jsoniter.Iterator) *Decision {
-	object := &Decision{}
+	object := &Decision{
+		fieldSet_: make([]bool, 8),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -137,14 +139,14 @@ func ReadDecision(iterator *jsoniter.Iterator) *Decision {
 		case "kind":
 			value := iterator.ReadString()
 			if value == DecisionLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -152,20 +154,20 @@ func ReadDecision(iterator *jsoniter.Iterator) *Decision {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "decided_by":
 			value := iterator.ReadString()
 			object.decidedBy = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "decision":
 			text := iterator.ReadString()
 			value := DecisionDecision(text)
 			object.decision = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "justification":
 			value := iterator.ReadString()
 			object.justification = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -173,7 +175,7 @@ func ReadDecision(iterator *jsoniter.Iterator) *Decision {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		default:
 			iterator.ReadAny()
 		}

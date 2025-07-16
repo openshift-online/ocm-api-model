@@ -43,7 +43,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.sts != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.sts != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -52,7 +52,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		WriteSTS(object.sts, stream)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -61,7 +61,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.accessKeyID)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -70,7 +70,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.accountID)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -79,7 +79,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteBool(object.privateLink)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -88,7 +88,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.secretAccessKey)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0 && object.subnetIDs != nil
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.subnetIDs != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -97,7 +97,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		WriteStringList(object.subnetIDs, stream)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0 && object.tags != nil
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.tags != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -142,7 +142,9 @@ func UnmarshalAWS(source interface{}) (object *AWS, err error) {
 
 // ReadAWS reads a value of the 'AWS' type from the given iterator.
 func ReadAWS(iterator *jsoniter.Iterator) *AWS {
-	object := &AWS{}
+	object := &AWS{
+		fieldSet_: make([]bool, 7),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -152,27 +154,27 @@ func ReadAWS(iterator *jsoniter.Iterator) *AWS {
 		case "sts":
 			value := ReadSTS(iterator)
 			object.sts = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "access_key_id":
 			value := iterator.ReadString()
 			object.accessKeyID = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "account_id":
 			value := iterator.ReadString()
 			object.accountID = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "private_link":
 			value := iterator.ReadBool()
 			object.privateLink = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "secret_access_key":
 			value := iterator.ReadString()
 			object.secretAccessKey = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "subnet_ids":
 			value := ReadStringList(iterator)
 			object.subnetIDs = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "tags":
 			value := map[string]string{}
 			for {
@@ -184,7 +186,7 @@ func ReadAWS(iterator *jsoniter.Iterator) *AWS {
 				value[key] = item
 			}
 			object.tags = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		default:
 			iterator.ReadAny()
 		}

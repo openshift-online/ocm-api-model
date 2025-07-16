@@ -23,13 +23,21 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 //
 // representation of addon installation parameter
 type AddonInstallationParameters struct {
-	bitmap_ uint32
-	items   []*AddonInstallationParameter
+	fieldSet_ []bool
+	items     []*AddonInstallationParameter
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddonInstallationParameters) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Items returns the value of the 'items' attribute, or
@@ -37,7 +45,7 @@ func (o *AddonInstallationParameters) Empty() bool {
 //
 // list of addon installation parameters
 func (o *AddonInstallationParameters) Items() []*AddonInstallationParameter {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.items
 	}
 	return nil
@@ -48,7 +56,7 @@ func (o *AddonInstallationParameters) Items() []*AddonInstallationParameter {
 //
 // list of addon installation parameters
 func (o *AddonInstallationParameters) GetItems() (value []*AddonInstallationParameter, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.items
 	}

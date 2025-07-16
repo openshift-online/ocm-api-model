@@ -23,14 +23,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Provides information about a single alert firing on the cluster.
 type AlertInfo struct {
-	bitmap_  uint32
-	name     string
-	severity AlertSeverity
+	fieldSet_ []bool
+	name      string
+	severity  AlertSeverity
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AlertInfo) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Name returns the value of the 'name' attribute, or
@@ -38,7 +46,7 @@ func (o *AlertInfo) Empty() bool {
 //
 // The alert name. Multiple alerts with same name are possible.
 func (o *AlertInfo) Name() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.name
 	}
 	return ""
@@ -49,7 +57,7 @@ func (o *AlertInfo) Name() string {
 //
 // The alert name. Multiple alerts with same name are possible.
 func (o *AlertInfo) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.name
 	}
@@ -61,7 +69,7 @@ func (o *AlertInfo) GetName() (value string, ok bool) {
 //
 // The alert severity.
 func (o *AlertInfo) Severity() AlertSeverity {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.severity
 	}
 	return AlertSeverity("")
@@ -72,7 +80,7 @@ func (o *AlertInfo) Severity() AlertSeverity {
 //
 // The alert severity.
 func (o *AlertInfo) GetSeverity() (value AlertSeverity, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.severity
 	}

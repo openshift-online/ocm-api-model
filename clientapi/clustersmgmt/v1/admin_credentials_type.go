@@ -24,14 +24,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 // Temporary administrator credentials generated during the installation of the
 // cluster.
 type AdminCredentials struct {
-	bitmap_  uint32
-	password string
-	user     string
+	fieldSet_ []bool
+	password  string
+	user      string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AdminCredentials) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Password returns the value of the 'password' attribute, or
@@ -39,7 +47,7 @@ func (o *AdminCredentials) Empty() bool {
 //
 // Cluster administrator password.
 func (o *AdminCredentials) Password() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.password
 	}
 	return ""
@@ -50,7 +58,7 @@ func (o *AdminCredentials) Password() string {
 //
 // Cluster administrator password.
 func (o *AdminCredentials) GetPassword() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.password
 	}
@@ -62,7 +70,7 @@ func (o *AdminCredentials) GetPassword() (value string, ok bool) {
 //
 // Cluster administrator user name.
 func (o *AdminCredentials) User() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.user
 	}
 	return ""
@@ -73,7 +81,7 @@ func (o *AdminCredentials) User() string {
 //
 // Cluster administrator user name.
 func (o *AdminCredentials) GetUser() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.user
 	}

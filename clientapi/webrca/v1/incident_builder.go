@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// IncidentBuilder contains the data and logic needed to build 'incident' objects.
-//
 // Definition of a Web RCA incident.
 type IncidentBuilder struct {
-	bitmap_              uint32
+	fieldSet_            []bool
 	id                   string
 	href                 string
 	createdAt            time.Time
@@ -48,59 +46,70 @@ type IncidentBuilder struct {
 
 // NewIncident creates a new builder of 'incident' objects.
 func NewIncident() *IncidentBuilder {
-	return &IncidentBuilder{}
+	return &IncidentBuilder{
+		fieldSet_: make([]bool, 17),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *IncidentBuilder) Link(value bool) *IncidentBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *IncidentBuilder) ID(value string) *IncidentBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *IncidentBuilder) HREF(value string) *IncidentBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *IncidentBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *IncidentBuilder) CreatedAt(value time.Time) *IncidentBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // CreatorId sets the value of the 'creator_id' attribute to the given value.
 func (b *IncidentBuilder) CreatorId(value string) *IncidentBuilder {
 	b.creatorId = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *IncidentBuilder) DeletedAt(value time.Time) *IncidentBuilder {
 	b.deletedAt = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *IncidentBuilder) Description(value string) *IncidentBuilder {
 	b.description = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -108,70 +117,70 @@ func (b *IncidentBuilder) Description(value string) *IncidentBuilder {
 func (b *IncidentBuilder) ExternalCoordination(values ...string) *IncidentBuilder {
 	b.externalCoordination = make([]string, len(values))
 	copy(b.externalCoordination, values)
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // IncidentId sets the value of the 'incident_id' attribute to the given value.
 func (b *IncidentBuilder) IncidentId(value string) *IncidentBuilder {
 	b.incidentId = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // IncidentType sets the value of the 'incident_type' attribute to the given value.
 func (b *IncidentBuilder) IncidentType(value string) *IncidentBuilder {
 	b.incidentType = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
 // LastUpdated sets the value of the 'last_updated' attribute to the given value.
 func (b *IncidentBuilder) LastUpdated(value time.Time) *IncidentBuilder {
 	b.lastUpdated = value
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
 // PrimaryTeam sets the value of the 'primary_team' attribute to the given value.
 func (b *IncidentBuilder) PrimaryTeam(value string) *IncidentBuilder {
 	b.primaryTeam = value
-	b.bitmap_ |= 2048
+	b.fieldSet_[11] = true
 	return b
 }
 
 // Severity sets the value of the 'severity' attribute to the given value.
 func (b *IncidentBuilder) Severity(value string) *IncidentBuilder {
 	b.severity = value
-	b.bitmap_ |= 4096
+	b.fieldSet_[12] = true
 	return b
 }
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *IncidentBuilder) Status(value string) *IncidentBuilder {
 	b.status = value
-	b.bitmap_ |= 8192
+	b.fieldSet_[13] = true
 	return b
 }
 
 // Summary sets the value of the 'summary' attribute to the given value.
 func (b *IncidentBuilder) Summary(value string) *IncidentBuilder {
 	b.summary = value
-	b.bitmap_ |= 16384
+	b.fieldSet_[14] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *IncidentBuilder) UpdatedAt(value time.Time) *IncidentBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 32768
+	b.fieldSet_[15] = true
 	return b
 }
 
 // WorkedAt sets the value of the 'worked_at' attribute to the given value.
 func (b *IncidentBuilder) WorkedAt(value time.Time) *IncidentBuilder {
 	b.workedAt = value
-	b.bitmap_ |= 65536
+	b.fieldSet_[16] = true
 	return b
 }
 
@@ -180,7 +189,10 @@ func (b *IncidentBuilder) Copy(object *Incident) *IncidentBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.createdAt = object.createdAt
@@ -210,7 +222,10 @@ func (b *IncidentBuilder) Build() (object *Incident, err error) {
 	object = new(Incident)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.createdAt = b.createdAt
 	object.creatorId = b.creatorId
 	object.deletedAt = b.deletedAt

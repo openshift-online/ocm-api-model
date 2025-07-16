@@ -21,14 +21,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // GroupsClaim represents the values of the 'groups_claim' type.
 type GroupsClaim struct {
-	bitmap_ uint32
-	claim   string
-	prefix  string
+	fieldSet_ []bool
+	claim     string
+	prefix    string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *GroupsClaim) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Claim returns the value of the 'claim' attribute, or
@@ -36,7 +44,7 @@ func (o *GroupsClaim) Empty() bool {
 //
 // The claim used in the token.
 func (o *GroupsClaim) Claim() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.claim
 	}
 	return ""
@@ -47,7 +55,7 @@ func (o *GroupsClaim) Claim() string {
 //
 // The claim used in the token.
 func (o *GroupsClaim) GetClaim() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.claim
 	}
@@ -59,7 +67,7 @@ func (o *GroupsClaim) GetClaim() (value string, ok bool) {
 //
 // A prefix contatenated in the claim (Optional).
 func (o *GroupsClaim) Prefix() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.prefix
 	}
 	return ""
@@ -70,7 +78,7 @@ func (o *GroupsClaim) Prefix() string {
 //
 // A prefix contatenated in the claim (Optional).
 func (o *GroupsClaim) GetPrefix() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.prefix
 	}

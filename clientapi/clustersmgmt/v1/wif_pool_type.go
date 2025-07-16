@@ -21,7 +21,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // WifPool represents the values of the 'wif_pool' type.
 type WifPool struct {
-	bitmap_          uint32
+	fieldSet_        []bool
 	identityProvider *WifIdentityProvider
 	poolId           string
 	poolName         string
@@ -29,7 +29,15 @@ type WifPool struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *WifPool) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // IdentityProvider returns the value of the 'identity_provider' attribute, or
@@ -38,7 +46,7 @@ func (o *WifPool) Empty() bool {
 // Identity provider configuration data that will be created as part of the
 // workload identity pool.
 func (o *WifPool) IdentityProvider() *WifIdentityProvider {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.identityProvider
 	}
 	return nil
@@ -50,7 +58,7 @@ func (o *WifPool) IdentityProvider() *WifIdentityProvider {
 // Identity provider configuration data that will be created as part of the
 // workload identity pool.
 func (o *WifPool) GetIdentityProvider() (value *WifIdentityProvider, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.identityProvider
 	}
@@ -62,7 +70,7 @@ func (o *WifPool) GetIdentityProvider() (value *WifIdentityProvider, ok bool) {
 //
 // The Id of the workload identity pool.
 func (o *WifPool) PoolId() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.poolId
 	}
 	return ""
@@ -73,7 +81,7 @@ func (o *WifPool) PoolId() string {
 //
 // The Id of the workload identity pool.
 func (o *WifPool) GetPoolId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.poolId
 	}
@@ -85,7 +93,7 @@ func (o *WifPool) GetPoolId() (value string, ok bool) {
 //
 // The display name of the workload identity pool.
 func (o *WifPool) PoolName() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.poolName
 	}
 	return ""
@@ -96,7 +104,7 @@ func (o *WifPool) PoolName() string {
 //
 // The display name of the workload identity pool.
 func (o *WifPool) GetPoolName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.poolName
 	}

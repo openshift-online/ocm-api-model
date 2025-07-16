@@ -19,8 +19,6 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// ClusterRegistrationBuilder contains the data and logic needed to build 'cluster_registration' objects.
-//
 // Registration of a new cluster to the service.
 //
 // For example, to register a cluster that has been provisioned outside
@@ -42,7 +40,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // ```
 type ClusterRegistrationBuilder struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	consoleUrl     string
 	externalID     string
 	organizationID string
@@ -51,39 +49,49 @@ type ClusterRegistrationBuilder struct {
 
 // NewClusterRegistration creates a new builder of 'cluster_registration' objects.
 func NewClusterRegistration() *ClusterRegistrationBuilder {
-	return &ClusterRegistrationBuilder{}
+	return &ClusterRegistrationBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterRegistrationBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ConsoleUrl sets the value of the 'console_url' attribute to the given value.
 func (b *ClusterRegistrationBuilder) ConsoleUrl(value string) *ClusterRegistrationBuilder {
 	b.consoleUrl = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ExternalID sets the value of the 'external_ID' attribute to the given value.
 func (b *ClusterRegistrationBuilder) ExternalID(value string) *ClusterRegistrationBuilder {
 	b.externalID = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *ClusterRegistrationBuilder) OrganizationID(value string) *ClusterRegistrationBuilder {
 	b.organizationID = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *ClusterRegistrationBuilder) SubscriptionID(value string) *ClusterRegistrationBuilder {
 	b.subscriptionID = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -92,7 +100,10 @@ func (b *ClusterRegistrationBuilder) Copy(object *ClusterRegistration) *ClusterR
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.consoleUrl = object.consoleUrl
 	b.externalID = object.externalID
 	b.organizationID = object.organizationID
@@ -103,7 +114,10 @@ func (b *ClusterRegistrationBuilder) Copy(object *ClusterRegistration) *ClusterR
 // Build creates a 'cluster_registration' object using the configuration stored in the builder.
 func (b *ClusterRegistrationBuilder) Build() (object *ClusterRegistration, err error) {
 	object = new(ClusterRegistration)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.consoleUrl = b.consoleUrl
 	object.externalID = b.externalID
 	object.organizationID = b.organizationID

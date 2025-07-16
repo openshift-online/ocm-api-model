@@ -23,14 +23,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Representation of an credRequest
 type STSCredentialRequest struct {
-	bitmap_  uint32
-	name     string
-	operator *STSOperator
+	fieldSet_ []bool
+	name      string
+	operator  *STSOperator
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *STSCredentialRequest) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Name returns the value of the 'name' attribute, or
@@ -38,7 +46,7 @@ func (o *STSCredentialRequest) Empty() bool {
 //
 // Name of CredRequest
 func (o *STSCredentialRequest) Name() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.name
 	}
 	return ""
@@ -49,7 +57,7 @@ func (o *STSCredentialRequest) Name() string {
 //
 // Name of CredRequest
 func (o *STSCredentialRequest) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.name
 	}
@@ -61,7 +69,7 @@ func (o *STSCredentialRequest) GetName() (value string, ok bool) {
 //
 // Operator Details
 func (o *STSCredentialRequest) Operator() *STSOperator {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.operator
 	}
 	return nil
@@ -72,7 +80,7 @@ func (o *STSCredentialRequest) Operator() *STSOperator {
 //
 // Operator Details
 func (o *STSCredentialRequest) GetOperator() (value *STSOperator, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.operator
 	}

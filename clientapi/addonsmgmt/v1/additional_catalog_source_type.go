@@ -23,16 +23,24 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 //
 // Representation of an addon catalog source object used by addon versions.
 type AdditionalCatalogSource struct {
-	bitmap_ uint32
-	id      string
-	image   string
-	name    string
-	enabled bool
+	fieldSet_ []bool
+	id        string
+	image     string
+	name      string
+	enabled   bool
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AdditionalCatalogSource) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ID returns the value of the 'ID' attribute, or
@@ -40,7 +48,7 @@ func (o *AdditionalCatalogSource) Empty() bool {
 //
 // ID of the additional catalog source
 func (o *AdditionalCatalogSource) ID() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.id
 	}
 	return ""
@@ -51,7 +59,7 @@ func (o *AdditionalCatalogSource) ID() string {
 //
 // ID of the additional catalog source
 func (o *AdditionalCatalogSource) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.id
 	}
@@ -63,7 +71,7 @@ func (o *AdditionalCatalogSource) GetID() (value string, ok bool) {
 //
 // Indicates is this additional catalog source is enabled for the addon
 func (o *AdditionalCatalogSource) Enabled() bool {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.enabled
 	}
 	return false
@@ -74,7 +82,7 @@ func (o *AdditionalCatalogSource) Enabled() bool {
 //
 // Indicates is this additional catalog source is enabled for the addon
 func (o *AdditionalCatalogSource) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.enabled
 	}
@@ -86,7 +94,7 @@ func (o *AdditionalCatalogSource) GetEnabled() (value bool, ok bool) {
 //
 // Image of the additional catalog source.
 func (o *AdditionalCatalogSource) Image() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.image
 	}
 	return ""
@@ -97,7 +105,7 @@ func (o *AdditionalCatalogSource) Image() string {
 //
 // Image of the additional catalog source.
 func (o *AdditionalCatalogSource) GetImage() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.image
 	}
@@ -109,7 +117,7 @@ func (o *AdditionalCatalogSource) GetImage() (value string, ok bool) {
 //
 // Name of the additional catalog source.
 func (o *AdditionalCatalogSource) Name() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.name
 	}
 	return ""
@@ -120,7 +128,7 @@ func (o *AdditionalCatalogSource) Name() string {
 //
 // Name of the additional catalog source.
 func (o *AdditionalCatalogSource) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.name
 	}

@@ -21,22 +21,30 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 
 // ClusterMetricsNodes represents the values of the 'cluster_metrics_nodes' type.
 type ClusterMetricsNodes struct {
-	bitmap_ uint32
-	compute float64
-	infra   float64
-	master  float64
-	total   float64
+	fieldSet_ []bool
+	compute   float64
+	infra     float64
+	master    float64
+	total     float64
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterMetricsNodes) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Compute returns the value of the 'compute' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterMetricsNodes) Compute() float64 {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.compute
 	}
 	return 0.0
@@ -45,7 +53,7 @@ func (o *ClusterMetricsNodes) Compute() float64 {
 // GetCompute returns the value of the 'compute' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterMetricsNodes) GetCompute() (value float64, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.compute
 	}
@@ -55,7 +63,7 @@ func (o *ClusterMetricsNodes) GetCompute() (value float64, ok bool) {
 // Infra returns the value of the 'infra' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterMetricsNodes) Infra() float64 {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.infra
 	}
 	return 0.0
@@ -64,7 +72,7 @@ func (o *ClusterMetricsNodes) Infra() float64 {
 // GetInfra returns the value of the 'infra' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterMetricsNodes) GetInfra() (value float64, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.infra
 	}
@@ -74,7 +82,7 @@ func (o *ClusterMetricsNodes) GetInfra() (value float64, ok bool) {
 // Master returns the value of the 'master' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterMetricsNodes) Master() float64 {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.master
 	}
 	return 0.0
@@ -83,7 +91,7 @@ func (o *ClusterMetricsNodes) Master() float64 {
 // GetMaster returns the value of the 'master' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterMetricsNodes) GetMaster() (value float64, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.master
 	}
@@ -93,7 +101,7 @@ func (o *ClusterMetricsNodes) GetMaster() (value float64, ok bool) {
 // Total returns the value of the 'total' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterMetricsNodes) Total() float64 {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.total
 	}
 	return 0.0
@@ -102,7 +110,7 @@ func (o *ClusterMetricsNodes) Total() float64 {
 // GetTotal returns the value of the 'total' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterMetricsNodes) GetTotal() (value float64, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.total
 	}

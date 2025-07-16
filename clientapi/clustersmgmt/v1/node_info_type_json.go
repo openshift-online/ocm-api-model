@@ -42,7 +42,7 @@ func WriteNodeInfo(object *NodeInfo, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteNodeInfo(object *NodeInfo, stream *jsoniter.Stream) {
 		stream.WriteInt(object.amount)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,9 @@ func UnmarshalNodeInfo(source interface{}) (object *NodeInfo, err error) {
 
 // ReadNodeInfo reads a value of the 'node_info' type from the given iterator.
 func ReadNodeInfo(iterator *jsoniter.Iterator) *NodeInfo {
-	object := &NodeInfo{}
+	object := &NodeInfo{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -86,12 +88,12 @@ func ReadNodeInfo(iterator *jsoniter.Iterator) *NodeInfo {
 		case "amount":
 			value := iterator.ReadInt()
 			object.amount = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "type":
 			text := iterator.ReadString()
 			value := NodeType(text)
 			object.type_ = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

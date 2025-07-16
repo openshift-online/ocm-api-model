@@ -35,7 +35,7 @@ const PrivateLinkPrincipalsNilKind = "PrivateLinkPrincipalsNil"
 //
 // Contains a list of principals for the Private Link.
 type PrivateLinkPrincipals struct {
-	bitmap_    uint32
+	fieldSet_  []bool
 	id         string
 	href       string
 	principals []*PrivateLinkPrincipal
@@ -46,7 +46,7 @@ func (o *PrivateLinkPrincipals) Kind() string {
 	if o == nil {
 		return PrivateLinkPrincipalsNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return PrivateLinkPrincipalsLinkKind
 	}
 	return PrivateLinkPrincipalsKind
@@ -54,12 +54,12 @@ func (o *PrivateLinkPrincipals) Kind() string {
 
 // Link returns true if this is a link.
 func (o *PrivateLinkPrincipals) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *PrivateLinkPrincipals) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -68,7 +68,7 @@ func (o *PrivateLinkPrincipals) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *PrivateLinkPrincipals) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -77,7 +77,7 @@ func (o *PrivateLinkPrincipals) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *PrivateLinkPrincipals) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -86,7 +86,7 @@ func (o *PrivateLinkPrincipals) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *PrivateLinkPrincipals) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -95,7 +95,17 @@ func (o *PrivateLinkPrincipals) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *PrivateLinkPrincipals) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Principals returns the value of the 'principals' attribute, or
@@ -103,7 +113,7 @@ func (o *PrivateLinkPrincipals) Empty() bool {
 //
 // List of additional principals for the Private Link
 func (o *PrivateLinkPrincipals) Principals() []*PrivateLinkPrincipal {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.principals
 	}
 	return nil
@@ -114,7 +124,7 @@ func (o *PrivateLinkPrincipals) Principals() []*PrivateLinkPrincipal {
 //
 // List of additional principals for the Private Link
 func (o *PrivateLinkPrincipals) GetPrincipals() (value []*PrivateLinkPrincipal, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.principals
 	}

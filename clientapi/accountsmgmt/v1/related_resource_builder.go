@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// RelatedResourceBuilder contains the data and logic needed to build 'related_resource' objects.
-//
 // Resource which can be provisioned using the allowed quota.
 type RelatedResourceBuilder struct {
-	bitmap_              uint32
+	fieldSet_            []bool
 	byoc                 string
 	availabilityZoneType string
 	billingModel         string
@@ -36,67 +34,77 @@ type RelatedResourceBuilder struct {
 
 // NewRelatedResource creates a new builder of 'related_resource' objects.
 func NewRelatedResource() *RelatedResourceBuilder {
-	return &RelatedResourceBuilder{}
+	return &RelatedResourceBuilder{
+		fieldSet_: make([]bool, 8),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *RelatedResourceBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // BYOC sets the value of the 'BYOC' attribute to the given value.
 func (b *RelatedResourceBuilder) BYOC(value string) *RelatedResourceBuilder {
 	b.byoc = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // AvailabilityZoneType sets the value of the 'availability_zone_type' attribute to the given value.
 func (b *RelatedResourceBuilder) AvailabilityZoneType(value string) *RelatedResourceBuilder {
 	b.availabilityZoneType = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // BillingModel sets the value of the 'billing_model' attribute to the given value.
 func (b *RelatedResourceBuilder) BillingModel(value string) *RelatedResourceBuilder {
 	b.billingModel = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // CloudProvider sets the value of the 'cloud_provider' attribute to the given value.
 func (b *RelatedResourceBuilder) CloudProvider(value string) *RelatedResourceBuilder {
 	b.cloudProvider = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Cost sets the value of the 'cost' attribute to the given value.
 func (b *RelatedResourceBuilder) Cost(value int) *RelatedResourceBuilder {
 	b.cost = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // Product sets the value of the 'product' attribute to the given value.
 func (b *RelatedResourceBuilder) Product(value string) *RelatedResourceBuilder {
 	b.product = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // ResourceName sets the value of the 'resource_name' attribute to the given value.
 func (b *RelatedResourceBuilder) ResourceName(value string) *RelatedResourceBuilder {
 	b.resourceName = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *RelatedResourceBuilder) ResourceType(value string) *RelatedResourceBuilder {
 	b.resourceType = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
@@ -105,7 +113,10 @@ func (b *RelatedResourceBuilder) Copy(object *RelatedResource) *RelatedResourceB
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.byoc = object.byoc
 	b.availabilityZoneType = object.availabilityZoneType
 	b.billingModel = object.billingModel
@@ -120,7 +131,10 @@ func (b *RelatedResourceBuilder) Copy(object *RelatedResource) *RelatedResourceB
 // Build creates a 'related_resource' object using the configuration stored in the builder.
 func (b *RelatedResourceBuilder) Build() (object *RelatedResource, err error) {
 	object = new(RelatedResource)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.byoc = b.byoc
 	object.availabilityZoneType = b.availabilityZoneType
 	object.billingModel = b.billingModel

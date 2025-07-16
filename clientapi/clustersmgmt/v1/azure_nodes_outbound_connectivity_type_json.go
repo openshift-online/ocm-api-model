@@ -42,7 +42,7 @@ func WriteAzureNodesOutboundConnectivity(object *AzureNodesOutboundConnectivity,
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,9 @@ func UnmarshalAzureNodesOutboundConnectivity(source interface{}) (object *AzureN
 
 // ReadAzureNodesOutboundConnectivity reads a value of the 'azure_nodes_outbound_connectivity' type from the given iterator.
 func ReadAzureNodesOutboundConnectivity(iterator *jsoniter.Iterator) *AzureNodesOutboundConnectivity {
-	object := &AzureNodesOutboundConnectivity{}
+	object := &AzureNodesOutboundConnectivity{
+		fieldSet_: make([]bool, 1),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -77,7 +79,7 @@ func ReadAzureNodesOutboundConnectivity(iterator *jsoniter.Iterator) *AzureNodes
 		case "outbound_type":
 			value := iterator.ReadString()
 			object.outboundType = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

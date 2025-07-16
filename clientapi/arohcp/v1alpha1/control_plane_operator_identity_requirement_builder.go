@@ -19,9 +19,8 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// ControlPlaneOperatorIdentityRequirementBuilder contains the data and logic needed to build 'control_plane_operator_identity_requirement' objects.
 type ControlPlaneOperatorIdentityRequirementBuilder struct {
-	bitmap_             uint32
+	fieldSet_           []bool
 	maxOpenShiftVersion string
 	minOpenShiftVersion string
 	operatorName        string
@@ -31,39 +30,49 @@ type ControlPlaneOperatorIdentityRequirementBuilder struct {
 
 // NewControlPlaneOperatorIdentityRequirement creates a new builder of 'control_plane_operator_identity_requirement' objects.
 func NewControlPlaneOperatorIdentityRequirement() *ControlPlaneOperatorIdentityRequirementBuilder {
-	return &ControlPlaneOperatorIdentityRequirementBuilder{}
+	return &ControlPlaneOperatorIdentityRequirementBuilder{
+		fieldSet_: make([]bool, 5),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // MaxOpenShiftVersion sets the value of the 'max_open_shift_version' attribute to the given value.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) MaxOpenShiftVersion(value string) *ControlPlaneOperatorIdentityRequirementBuilder {
 	b.maxOpenShiftVersion = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // MinOpenShiftVersion sets the value of the 'min_open_shift_version' attribute to the given value.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) MinOpenShiftVersion(value string) *ControlPlaneOperatorIdentityRequirementBuilder {
 	b.minOpenShiftVersion = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // OperatorName sets the value of the 'operator_name' attribute to the given value.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) OperatorName(value string) *ControlPlaneOperatorIdentityRequirementBuilder {
 	b.operatorName = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Required sets the value of the 'required' attribute to the given value.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) Required(value string) *ControlPlaneOperatorIdentityRequirementBuilder {
 	b.required = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -71,7 +80,7 @@ func (b *ControlPlaneOperatorIdentityRequirementBuilder) Required(value string) 
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) RoleDefinitions(values ...*RoleDefinitionOperatorIdentityRequirementBuilder) *ControlPlaneOperatorIdentityRequirementBuilder {
 	b.roleDefinitions = make([]*RoleDefinitionOperatorIdentityRequirementBuilder, len(values))
 	copy(b.roleDefinitions, values)
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -80,7 +89,10 @@ func (b *ControlPlaneOperatorIdentityRequirementBuilder) Copy(object *ControlPla
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.maxOpenShiftVersion = object.maxOpenShiftVersion
 	b.minOpenShiftVersion = object.minOpenShiftVersion
 	b.operatorName = object.operatorName
@@ -99,7 +111,10 @@ func (b *ControlPlaneOperatorIdentityRequirementBuilder) Copy(object *ControlPla
 // Build creates a 'control_plane_operator_identity_requirement' object using the configuration stored in the builder.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) Build() (object *ControlPlaneOperatorIdentityRequirement, err error) {
 	object = new(ControlPlaneOperatorIdentityRequirement)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.maxOpenShiftVersion = b.maxOpenShiftVersion
 	object.minOpenShiftVersion = b.minOpenShiftVersion
 	object.operatorName = b.operatorName

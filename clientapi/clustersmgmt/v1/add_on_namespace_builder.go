@@ -19,9 +19,8 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AddOnNamespaceBuilder contains the data and logic needed to build 'add_on_namespace' objects.
 type AddOnNamespaceBuilder struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	id          string
 	href        string
 	annotations map[string]string
@@ -31,41 +30,52 @@ type AddOnNamespaceBuilder struct {
 
 // NewAddOnNamespace creates a new builder of 'add_on_namespace' objects.
 func NewAddOnNamespace() *AddOnNamespaceBuilder {
-	return &AddOnNamespaceBuilder{}
+	return &AddOnNamespaceBuilder{
+		fieldSet_: make([]bool, 6),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddOnNamespaceBuilder) Link(value bool) *AddOnNamespaceBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddOnNamespaceBuilder) ID(value string) *AddOnNamespaceBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AddOnNamespaceBuilder) HREF(value string) *AddOnNamespaceBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddOnNamespaceBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Annotations sets the value of the 'annotations' attribute to the given value.
 func (b *AddOnNamespaceBuilder) Annotations(value map[string]string) *AddOnNamespaceBuilder {
 	b.annotations = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -74,9 +84,9 @@ func (b *AddOnNamespaceBuilder) Annotations(value map[string]string) *AddOnNames
 func (b *AddOnNamespaceBuilder) Labels(value map[string]string) *AddOnNamespaceBuilder {
 	b.labels = value
 	if value != nil {
-		b.bitmap_ |= 16
+		b.fieldSet_[4] = true
 	} else {
-		b.bitmap_ &^= 16
+		b.fieldSet_[4] = false
 	}
 	return b
 }
@@ -84,7 +94,7 @@ func (b *AddOnNamespaceBuilder) Labels(value map[string]string) *AddOnNamespaceB
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AddOnNamespaceBuilder) Name(value string) *AddOnNamespaceBuilder {
 	b.name = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -93,7 +103,10 @@ func (b *AddOnNamespaceBuilder) Copy(object *AddOnNamespace) *AddOnNamespaceBuil
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if len(object.annotations) > 0 {
@@ -121,7 +134,10 @@ func (b *AddOnNamespaceBuilder) Build() (object *AddOnNamespace, err error) {
 	object = new(AddOnNamespace)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.annotations != nil {
 		object.annotations = make(map[string]string)
 		for k, v := range b.annotations {

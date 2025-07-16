@@ -42,7 +42,7 @@ func WriteQuotaCost(object *QuotaCost, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteQuotaCost(object *QuotaCost, stream *jsoniter.Stream) {
 		stream.WriteInt(object.allowed)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.cloudAccounts != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.cloudAccounts != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteQuotaCost(object *QuotaCost, stream *jsoniter.Stream) {
 		WriteCloudAccountList(object.cloudAccounts, stream)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteQuotaCost(object *QuotaCost, stream *jsoniter.Stream) {
 		stream.WriteInt(object.consumed)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteQuotaCost(object *QuotaCost, stream *jsoniter.Stream) {
 		stream.WriteString(object.organizationID)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteQuotaCost(object *QuotaCost, stream *jsoniter.Stream) {
 		stream.WriteString(object.quotaID)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0 && object.relatedResources != nil
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.relatedResources != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -96,7 +96,7 @@ func WriteQuotaCost(object *QuotaCost, stream *jsoniter.Stream) {
 		WriteRelatedResourceList(object.relatedResources, stream)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -121,7 +121,9 @@ func UnmarshalQuotaCost(source interface{}) (object *QuotaCost, err error) {
 
 // ReadQuotaCost reads a value of the 'quota_cost' type from the given iterator.
 func ReadQuotaCost(iterator *jsoniter.Iterator) *QuotaCost {
-	object := &QuotaCost{}
+	object := &QuotaCost{
+		fieldSet_: make([]bool, 7),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -131,31 +133,31 @@ func ReadQuotaCost(iterator *jsoniter.Iterator) *QuotaCost {
 		case "allowed":
 			value := iterator.ReadInt()
 			object.allowed = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "cloud_accounts":
 			value := ReadCloudAccountList(iterator)
 			object.cloudAccounts = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "consumed":
 			value := iterator.ReadInt()
 			object.consumed = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "organization_id":
 			value := iterator.ReadString()
 			object.organizationID = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "quota_id":
 			value := iterator.ReadString()
 			object.quotaID = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "related_resources":
 			value := ReadRelatedResourceList(iterator)
 			object.relatedResources = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "version":
 			value := iterator.ReadString()
 			object.version = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		default:
 			iterator.ReadAny()
 		}

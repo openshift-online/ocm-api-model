@@ -35,9 +35,9 @@ const SubscriptionNilKind = "SubscriptionNil"
 //
 // Definition of a subscription.
 type Subscription struct {
-	bitmap_ uint32
-	id      string
-	href    string
+	fieldSet_ []bool
+	id        string
+	href      string
 }
 
 // Kind returns the name of the type of the object.
@@ -45,7 +45,7 @@ func (o *Subscription) Kind() string {
 	if o == nil {
 		return SubscriptionNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return SubscriptionLinkKind
 	}
 	return SubscriptionKind
@@ -53,12 +53,12 @@ func (o *Subscription) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Subscription) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *Subscription) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -67,7 +67,7 @@ func (o *Subscription) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Subscription) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -76,7 +76,7 @@ func (o *Subscription) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Subscription) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -85,7 +85,7 @@ func (o *Subscription) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Subscription) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -94,7 +94,17 @@ func (o *Subscription) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Subscription) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // SubscriptionListKind is the name of the type used to represent list of objects of

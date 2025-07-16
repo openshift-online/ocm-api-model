@@ -27,7 +27,7 @@ import (
 //
 // Contains the necessary attributes to support oidc configuration hosting under Red Hat or registering a Customer's byo oidc config.
 type OidcConfig struct {
-	bitmap_             uint32
+	fieldSet_           []bool
 	href                string
 	id                  string
 	creationTimestamp   time.Time
@@ -43,7 +43,15 @@ type OidcConfig struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *OidcConfig) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // HREF returns the value of the 'HREF' attribute, or
@@ -51,7 +59,7 @@ func (o *OidcConfig) Empty() bool {
 //
 // HREF for the oidc config, filled in response.
 func (o *OidcConfig) HREF() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.href
 	}
 	return ""
@@ -62,7 +70,7 @@ func (o *OidcConfig) HREF() string {
 //
 // HREF for the oidc config, filled in response.
 func (o *OidcConfig) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.href
 	}
@@ -74,7 +82,7 @@ func (o *OidcConfig) GetHREF() (value string, ok bool) {
 //
 // ID for the oidc config, filled in response.
 func (o *OidcConfig) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -85,7 +93,7 @@ func (o *OidcConfig) ID() string {
 //
 // ID for the oidc config, filled in response.
 func (o *OidcConfig) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -97,7 +105,7 @@ func (o *OidcConfig) GetID() (value string, ok bool) {
 //
 // Creation timestamp, filled in response.
 func (o *OidcConfig) CreationTimestamp() time.Time {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.creationTimestamp
 	}
 	return time.Time{}
@@ -108,7 +116,7 @@ func (o *OidcConfig) CreationTimestamp() time.Time {
 //
 // Creation timestamp, filled in response.
 func (o *OidcConfig) GetCreationTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.creationTimestamp
 	}
@@ -120,7 +128,7 @@ func (o *OidcConfig) GetCreationTimestamp() (value time.Time, ok bool) {
 //
 // ARN of the AWS role to assume when installing the cluster as to reveal the secret, supplied in request. It is only to be used in Unmanaged Oidc Config.
 func (o *OidcConfig) InstallerRoleArn() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.installerRoleArn
 	}
 	return ""
@@ -131,7 +139,7 @@ func (o *OidcConfig) InstallerRoleArn() string {
 //
 // ARN of the AWS role to assume when installing the cluster as to reveal the secret, supplied in request. It is only to be used in Unmanaged Oidc Config.
 func (o *OidcConfig) GetInstallerRoleArn() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.installerRoleArn
 	}
@@ -143,7 +151,7 @@ func (o *OidcConfig) GetInstallerRoleArn() (value string, ok bool) {
 //
 // Issuer URL, filled in response when Managed and supplied in Unmanaged.
 func (o *OidcConfig) IssuerUrl() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.issuerUrl
 	}
 	return ""
@@ -154,7 +162,7 @@ func (o *OidcConfig) IssuerUrl() string {
 //
 // Issuer URL, filled in response when Managed and supplied in Unmanaged.
 func (o *OidcConfig) GetIssuerUrl() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.issuerUrl
 	}
@@ -166,7 +174,7 @@ func (o *OidcConfig) GetIssuerUrl() (value string, ok bool) {
 //
 // Last update timestamp, filled when patching a valid attribute of this oidc config.
 func (o *OidcConfig) LastUpdateTimestamp() time.Time {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.lastUpdateTimestamp
 	}
 	return time.Time{}
@@ -177,7 +185,7 @@ func (o *OidcConfig) LastUpdateTimestamp() time.Time {
 //
 // Last update timestamp, filled when patching a valid attribute of this oidc config.
 func (o *OidcConfig) GetLastUpdateTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.lastUpdateTimestamp
 	}
@@ -189,7 +197,7 @@ func (o *OidcConfig) GetLastUpdateTimestamp() (value time.Time, ok bool) {
 //
 // Last used timestamp, filled by the latest cluster that used this oidc config.
 func (o *OidcConfig) LastUsedTimestamp() time.Time {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.lastUsedTimestamp
 	}
 	return time.Time{}
@@ -200,7 +208,7 @@ func (o *OidcConfig) LastUsedTimestamp() time.Time {
 //
 // Last used timestamp, filled by the latest cluster that used this oidc config.
 func (o *OidcConfig) GetLastUsedTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.lastUsedTimestamp
 	}
@@ -212,7 +220,7 @@ func (o *OidcConfig) GetLastUsedTimestamp() (value time.Time, ok bool) {
 //
 // Indicates whether it is Managed or Unmanaged (Customer hosted).
 func (o *OidcConfig) Managed() bool {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.managed
 	}
 	return false
@@ -223,7 +231,7 @@ func (o *OidcConfig) Managed() bool {
 //
 // Indicates whether it is Managed or Unmanaged (Customer hosted).
 func (o *OidcConfig) GetManaged() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.managed
 	}
@@ -235,7 +243,7 @@ func (o *OidcConfig) GetManaged() (value bool, ok bool) {
 //
 // Organization ID, filled in response respecting token provided.
 func (o *OidcConfig) OrganizationId() string {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.organizationId
 	}
 	return ""
@@ -246,7 +254,7 @@ func (o *OidcConfig) OrganizationId() string {
 //
 // Organization ID, filled in response respecting token provided.
 func (o *OidcConfig) GetOrganizationId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.organizationId
 	}
@@ -258,7 +266,7 @@ func (o *OidcConfig) GetOrganizationId() (value string, ok bool) {
 //
 // Indicates whether the Oidc Config can be reused.
 func (o *OidcConfig) Reusable() bool {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.reusable
 	}
 	return false
@@ -269,7 +277,7 @@ func (o *OidcConfig) Reusable() bool {
 //
 // Indicates whether the Oidc Config can be reused.
 func (o *OidcConfig) GetReusable() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.reusable
 	}
@@ -281,7 +289,7 @@ func (o *OidcConfig) GetReusable() (value bool, ok bool) {
 //
 // Secrets Manager ARN for the OIDC private key, supplied in request. It is only to be used in Unmanaged Oidc Config.
 func (o *OidcConfig) SecretArn() string {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.secretArn
 	}
 	return ""
@@ -292,7 +300,7 @@ func (o *OidcConfig) SecretArn() string {
 //
 // Secrets Manager ARN for the OIDC private key, supplied in request. It is only to be used in Unmanaged Oidc Config.
 func (o *OidcConfig) GetSecretArn() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.secretArn
 	}

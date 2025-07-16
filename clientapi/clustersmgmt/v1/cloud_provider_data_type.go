@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Description of a cloud provider data used for cloud provider inquiries.
 type CloudProviderData struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	aws               *AWS
 	gcp               *GCP
 	availabilityZones []string
@@ -37,7 +37,15 @@ type CloudProviderData struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *CloudProviderData) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AWS returns the value of the 'AWS' attribute, or
@@ -45,7 +53,7 @@ func (o *CloudProviderData) Empty() bool {
 //
 // Amazon Web Services settings.
 func (o *CloudProviderData) AWS() *AWS {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.aws
 	}
 	return nil
@@ -56,7 +64,7 @@ func (o *CloudProviderData) AWS() *AWS {
 //
 // Amazon Web Services settings.
 func (o *CloudProviderData) GetAWS() (value *AWS, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.aws
 	}
@@ -68,7 +76,7 @@ func (o *CloudProviderData) GetAWS() (value *AWS, ok bool) {
 //
 // Google cloud platform settings.
 func (o *CloudProviderData) GCP() *GCP {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.gcp
 	}
 	return nil
@@ -79,7 +87,7 @@ func (o *CloudProviderData) GCP() *GCP {
 //
 // Google cloud platform settings.
 func (o *CloudProviderData) GetGCP() (value *GCP, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.gcp
 	}
@@ -91,7 +99,7 @@ func (o *CloudProviderData) GetGCP() (value *GCP, ok bool) {
 //
 // Availability zone
 func (o *CloudProviderData) AvailabilityZones() []string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.availabilityZones
 	}
 	return nil
@@ -102,7 +110,7 @@ func (o *CloudProviderData) AvailabilityZones() []string {
 //
 // Availability zone
 func (o *CloudProviderData) GetAvailabilityZones() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.availabilityZones
 	}
@@ -114,7 +122,7 @@ func (o *CloudProviderData) GetAvailabilityZones() (value []string, ok bool) {
 //
 // Key location
 func (o *CloudProviderData) KeyLocation() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.keyLocation
 	}
 	return ""
@@ -125,7 +133,7 @@ func (o *CloudProviderData) KeyLocation() string {
 //
 // Key location
 func (o *CloudProviderData) GetKeyLocation() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.keyLocation
 	}
@@ -137,7 +145,7 @@ func (o *CloudProviderData) GetKeyLocation() (value string, ok bool) {
 //
 // Key ring name
 func (o *CloudProviderData) KeyRingName() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.keyRingName
 	}
 	return ""
@@ -148,7 +156,7 @@ func (o *CloudProviderData) KeyRingName() string {
 //
 // Key ring name
 func (o *CloudProviderData) GetKeyRingName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.keyRingName
 	}
@@ -160,7 +168,7 @@ func (o *CloudProviderData) GetKeyRingName() (value string, ok bool) {
 //
 // Region
 func (o *CloudProviderData) Region() *CloudRegion {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.region
 	}
 	return nil
@@ -171,7 +179,7 @@ func (o *CloudProviderData) Region() *CloudRegion {
 //
 // Region
 func (o *CloudProviderData) GetRegion() (value *CloudRegion, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.region
 	}
@@ -183,7 +191,7 @@ func (o *CloudProviderData) GetRegion() (value *CloudRegion, ok bool) {
 //
 // Subnets
 func (o *CloudProviderData) Subnets() []string {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.subnets
 	}
 	return nil
@@ -194,7 +202,7 @@ func (o *CloudProviderData) Subnets() []string {
 //
 // Subnets
 func (o *CloudProviderData) GetSubnets() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.subnets
 	}
@@ -206,7 +214,7 @@ func (o *CloudProviderData) GetSubnets() (value []string, ok bool) {
 //
 // Openshift version
 func (o *CloudProviderData) Version() *Version {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.version
 	}
 	return nil
@@ -217,7 +225,7 @@ func (o *CloudProviderData) Version() *Version {
 //
 // Openshift version
 func (o *CloudProviderData) GetVersion() (value *Version, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.version
 	}
@@ -229,7 +237,7 @@ func (o *CloudProviderData) GetVersion() (value *Version, ok bool) {
 //
 // VPC ids
 func (o *CloudProviderData) VpcIds() []string {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.vpcIds
 	}
 	return nil
@@ -240,7 +248,7 @@ func (o *CloudProviderData) VpcIds() []string {
 //
 // VPC ids
 func (o *CloudProviderData) GetVpcIds() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.vpcIds
 	}

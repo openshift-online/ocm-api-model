@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // The username claim mapping.
 type UsernameClaim struct {
-	bitmap_      uint32
+	fieldSet_    []bool
 	claim        string
 	prefix       string
 	prefixPolicy string
@@ -31,7 +31,15 @@ type UsernameClaim struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *UsernameClaim) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Claim returns the value of the 'claim' attribute, or
@@ -39,7 +47,7 @@ func (o *UsernameClaim) Empty() bool {
 //
 // The claim used in the token.
 func (o *UsernameClaim) Claim() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.claim
 	}
 	return ""
@@ -50,7 +58,7 @@ func (o *UsernameClaim) Claim() string {
 //
 // The claim used in the token.
 func (o *UsernameClaim) GetClaim() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.claim
 	}
@@ -62,7 +70,7 @@ func (o *UsernameClaim) GetClaim() (value string, ok bool) {
 //
 // A prefix contatenated in the claim (Optional).
 func (o *UsernameClaim) Prefix() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.prefix
 	}
 	return ""
@@ -73,7 +81,7 @@ func (o *UsernameClaim) Prefix() string {
 //
 // A prefix contatenated in the claim (Optional).
 func (o *UsernameClaim) GetPrefix() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.prefix
 	}
@@ -92,7 +100,7 @@ func (o *UsernameClaim) GetPrefix() (value string, ok bool) {
 //
 // If a prefix is defined, this will be set to 'Prefix' by default.
 func (o *UsernameClaim) PrefixPolicy() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.prefixPolicy
 	}
 	return ""
@@ -110,7 +118,7 @@ func (o *UsernameClaim) PrefixPolicy() string {
 //
 // If a prefix is defined, this will be set to 'Prefix' by default.
 func (o *UsernameClaim) GetPrefixPolicy() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.prefixPolicy
 	}

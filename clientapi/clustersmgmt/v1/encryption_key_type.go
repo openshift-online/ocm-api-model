@@ -35,10 +35,10 @@ const EncryptionKeyNilKind = "EncryptionKeyNil"
 //
 // Description of a cloud provider encryption key.
 type EncryptionKey struct {
-	bitmap_ uint32
-	id      string
-	href    string
-	name    string
+	fieldSet_ []bool
+	id        string
+	href      string
+	name      string
 }
 
 // Kind returns the name of the type of the object.
@@ -46,7 +46,7 @@ func (o *EncryptionKey) Kind() string {
 	if o == nil {
 		return EncryptionKeyNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return EncryptionKeyLinkKind
 	}
 	return EncryptionKeyKind
@@ -54,12 +54,12 @@ func (o *EncryptionKey) Kind() string {
 
 // Link returns true if this is a link.
 func (o *EncryptionKey) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *EncryptionKey) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -68,7 +68,7 @@ func (o *EncryptionKey) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *EncryptionKey) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -77,7 +77,7 @@ func (o *EncryptionKey) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *EncryptionKey) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -86,7 +86,7 @@ func (o *EncryptionKey) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *EncryptionKey) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -95,7 +95,17 @@ func (o *EncryptionKey) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *EncryptionKey) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Name returns the value of the 'name' attribute, or
@@ -103,7 +113,7 @@ func (o *EncryptionKey) Empty() bool {
 //
 // Name of the encryption key.
 func (o *EncryptionKey) Name() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.name
 	}
 	return ""
@@ -114,7 +124,7 @@ func (o *EncryptionKey) Name() string {
 //
 // Name of the encryption key.
 func (o *EncryptionKey) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.name
 	}

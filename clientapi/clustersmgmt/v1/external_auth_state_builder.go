@@ -23,36 +23,44 @@ import (
 	time "time"
 )
 
-// ExternalAuthStateBuilder contains the data and logic needed to build 'external_auth_state' objects.
-//
 // Representation of the state of an external authentication provider.
 type ExternalAuthStateBuilder struct {
-	bitmap_              uint32
+	fieldSet_            []bool
 	lastUpdatedTimestamp time.Time
 	value                string
 }
 
 // NewExternalAuthState creates a new builder of 'external_auth_state' objects.
 func NewExternalAuthState() *ExternalAuthStateBuilder {
-	return &ExternalAuthStateBuilder{}
+	return &ExternalAuthStateBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ExternalAuthStateBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // LastUpdatedTimestamp sets the value of the 'last_updated_timestamp' attribute to the given value.
 func (b *ExternalAuthStateBuilder) LastUpdatedTimestamp(value time.Time) *ExternalAuthStateBuilder {
 	b.lastUpdatedTimestamp = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *ExternalAuthStateBuilder) Value(value string) *ExternalAuthStateBuilder {
 	b.value = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -61,7 +69,10 @@ func (b *ExternalAuthStateBuilder) Copy(object *ExternalAuthState) *ExternalAuth
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.lastUpdatedTimestamp = object.lastUpdatedTimestamp
 	b.value = object.value
 	return b
@@ -70,7 +81,10 @@ func (b *ExternalAuthStateBuilder) Copy(object *ExternalAuthState) *ExternalAuth
 // Build creates a 'external_auth_state' object using the configuration stored in the builder.
 func (b *ExternalAuthStateBuilder) Build() (object *ExternalAuthState, err error) {
 	object = new(ExternalAuthState)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.lastUpdatedTimestamp = b.lastUpdatedTimestamp
 	object.value = b.value
 	return

@@ -19,44 +19,52 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// GcpAuthenticationBuilder contains the data and logic needed to build 'gcp_authentication' objects.
-//
 // Google cloud platform authentication method of a cluster.
 type GcpAuthenticationBuilder struct {
-	bitmap_ uint32
-	href    string
-	id      string
-	kind    string
+	fieldSet_ []bool
+	href      string
+	id        string
+	kind      string
 }
 
 // NewGcpAuthentication creates a new builder of 'gcp_authentication' objects.
 func NewGcpAuthentication() *GcpAuthenticationBuilder {
-	return &GcpAuthenticationBuilder{}
+	return &GcpAuthenticationBuilder{
+		fieldSet_: make([]bool, 3),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GcpAuthenticationBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Href sets the value of the 'href' attribute to the given value.
 func (b *GcpAuthenticationBuilder) Href(value string) *GcpAuthenticationBuilder {
 	b.href = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Id sets the value of the 'id' attribute to the given value.
 func (b *GcpAuthenticationBuilder) Id(value string) *GcpAuthenticationBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // Kind sets the value of the 'kind' attribute to the given value.
 func (b *GcpAuthenticationBuilder) Kind(value string) *GcpAuthenticationBuilder {
 	b.kind = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -65,7 +73,10 @@ func (b *GcpAuthenticationBuilder) Copy(object *GcpAuthentication) *GcpAuthentic
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.href = object.href
 	b.id = object.id
 	b.kind = object.kind
@@ -75,7 +86,10 @@ func (b *GcpAuthenticationBuilder) Copy(object *GcpAuthentication) *GcpAuthentic
 // Build creates a 'gcp_authentication' object using the configuration stored in the builder.
 func (b *GcpAuthenticationBuilder) Build() (object *GcpAuthentication, err error) {
 	object = new(GcpAuthentication)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.href = b.href
 	object.id = b.id
 	object.kind = b.kind

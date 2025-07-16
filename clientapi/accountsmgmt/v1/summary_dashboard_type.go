@@ -33,10 +33,10 @@ const SummaryDashboardNilKind = "SummaryDashboardNil"
 
 // SummaryDashboard represents the values of the 'summary_dashboard' type.
 type SummaryDashboard struct {
-	bitmap_ uint32
-	id      string
-	href    string
-	metrics []*SummaryMetrics
+	fieldSet_ []bool
+	id        string
+	href      string
+	metrics   []*SummaryMetrics
 }
 
 // Kind returns the name of the type of the object.
@@ -44,7 +44,7 @@ func (o *SummaryDashboard) Kind() string {
 	if o == nil {
 		return SummaryDashboardNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return SummaryDashboardLinkKind
 	}
 	return SummaryDashboardKind
@@ -52,12 +52,12 @@ func (o *SummaryDashboard) Kind() string {
 
 // Link returns true if this is a link.
 func (o *SummaryDashboard) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *SummaryDashboard) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -66,7 +66,7 @@ func (o *SummaryDashboard) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *SummaryDashboard) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -75,7 +75,7 @@ func (o *SummaryDashboard) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *SummaryDashboard) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -84,7 +84,7 @@ func (o *SummaryDashboard) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *SummaryDashboard) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -93,13 +93,23 @@ func (o *SummaryDashboard) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *SummaryDashboard) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Metrics returns the value of the 'metrics' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *SummaryDashboard) Metrics() []*SummaryMetrics {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.metrics
 	}
 	return nil
@@ -108,7 +118,7 @@ func (o *SummaryDashboard) Metrics() []*SummaryMetrics {
 // GetMetrics returns the value of the 'metrics' attribute and
 // a flag indicating if the attribute has a value.
 func (o *SummaryDashboard) GetMetrics() (value []*SummaryMetrics, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.metrics
 	}

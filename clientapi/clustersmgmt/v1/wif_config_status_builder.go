@@ -19,36 +19,44 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// WifConfigStatusBuilder contains the data and logic needed to build 'wif_config_status' objects.
-//
 // Configuration status of a WifConfig.
 type WifConfigStatusBuilder struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	description string
 	configured  bool
 }
 
 // NewWifConfigStatus creates a new builder of 'wif_config_status' objects.
 func NewWifConfigStatus() *WifConfigStatusBuilder {
-	return &WifConfigStatusBuilder{}
+	return &WifConfigStatusBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *WifConfigStatusBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Configured sets the value of the 'configured' attribute to the given value.
 func (b *WifConfigStatusBuilder) Configured(value bool) *WifConfigStatusBuilder {
 	b.configured = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *WifConfigStatusBuilder) Description(value string) *WifConfigStatusBuilder {
 	b.description = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -57,7 +65,10 @@ func (b *WifConfigStatusBuilder) Copy(object *WifConfigStatus) *WifConfigStatusB
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.configured = object.configured
 	b.description = object.description
 	return b
@@ -66,7 +77,10 @@ func (b *WifConfigStatusBuilder) Copy(object *WifConfigStatus) *WifConfigStatusB
 // Build creates a 'wif_config_status' object using the configuration stored in the builder.
 func (b *WifConfigStatusBuilder) Build() (object *WifConfigStatus, err error) {
 	object = new(WifConfigStatus)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.configured = b.configured
 	object.description = b.description
 	return

@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// UserBuilder contains the data and logic needed to build 'user' objects.
-//
 // Definition of a Web RCA user.
 type UserBuilder struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	id        string
 	href      string
 	createdAt time.Time
@@ -41,80 +39,91 @@ type UserBuilder struct {
 
 // NewUser creates a new builder of 'user' objects.
 func NewUser() *UserBuilder {
-	return &UserBuilder{}
+	return &UserBuilder{
+		fieldSet_: make([]bool, 10),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *UserBuilder) Link(value bool) *UserBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *UserBuilder) ID(value string) *UserBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *UserBuilder) HREF(value string) *UserBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *UserBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *UserBuilder) CreatedAt(value time.Time) *UserBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *UserBuilder) DeletedAt(value time.Time) *UserBuilder {
 	b.deletedAt = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // Email sets the value of the 'email' attribute to the given value.
 func (b *UserBuilder) Email(value string) *UserBuilder {
 	b.email = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // FromAuth sets the value of the 'from_auth' attribute to the given value.
 func (b *UserBuilder) FromAuth(value bool) *UserBuilder {
 	b.fromAuth = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *UserBuilder) Name(value string) *UserBuilder {
 	b.name = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *UserBuilder) UpdatedAt(value time.Time) *UserBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // Username sets the value of the 'username' attribute to the given value.
 func (b *UserBuilder) Username(value string) *UserBuilder {
 	b.username = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
@@ -123,7 +132,10 @@ func (b *UserBuilder) Copy(object *User) *UserBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.createdAt = object.createdAt
@@ -141,7 +153,10 @@ func (b *UserBuilder) Build() (object *User, err error) {
 	object = new(User)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.createdAt = b.createdAt
 	object.deletedAt = b.deletedAt
 	object.email = b.email
