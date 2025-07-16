@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AzureBuilder contains the data and logic needed to build 'azure' objects.
-//
 // Microsoft Azure settings of a cluster.
 type AzureBuilder struct {
-	bitmap_                        uint32
+	fieldSet_                      []bool
 	etcdEncryption                 *AzureEtcdEncryptionBuilder
 	managedResourceGroupName       string
 	networkSecurityGroupResourceID string
@@ -38,12 +36,22 @@ type AzureBuilder struct {
 
 // NewAzure creates a new builder of 'azure' objects.
 func NewAzure() *AzureBuilder {
-	return &AzureBuilder{}
+	return &AzureBuilder{
+		fieldSet_: make([]bool, 10),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AzureBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // EtcdEncryption sets the value of the 'etcd_encryption' attribute to the given value.
@@ -52,9 +60,9 @@ func (b *AzureBuilder) Empty() bool {
 func (b *AzureBuilder) EtcdEncryption(value *AzureEtcdEncryptionBuilder) *AzureBuilder {
 	b.etcdEncryption = value
 	if value != nil {
-		b.bitmap_ |= 1
+		b.fieldSet_[0] = true
 	} else {
-		b.bitmap_ &^= 1
+		b.fieldSet_[0] = false
 	}
 	return b
 }
@@ -62,14 +70,14 @@ func (b *AzureBuilder) EtcdEncryption(value *AzureEtcdEncryptionBuilder) *AzureB
 // ManagedResourceGroupName sets the value of the 'managed_resource_group_name' attribute to the given value.
 func (b *AzureBuilder) ManagedResourceGroupName(value string) *AzureBuilder {
 	b.managedResourceGroupName = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // NetworkSecurityGroupResourceID sets the value of the 'network_security_group_resource_ID' attribute to the given value.
 func (b *AzureBuilder) NetworkSecurityGroupResourceID(value string) *AzureBuilder {
 	b.networkSecurityGroupResourceID = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -79,9 +87,9 @@ func (b *AzureBuilder) NetworkSecurityGroupResourceID(value string) *AzureBuilde
 func (b *AzureBuilder) NodesOutboundConnectivity(value *AzureNodesOutboundConnectivityBuilder) *AzureBuilder {
 	b.nodesOutboundConnectivity = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -93,9 +101,9 @@ func (b *AzureBuilder) NodesOutboundConnectivity(value *AzureNodesOutboundConnec
 func (b *AzureBuilder) OperatorsAuthentication(value *AzureOperatorsAuthenticationBuilder) *AzureBuilder {
 	b.operatorsAuthentication = value
 	if value != nil {
-		b.bitmap_ |= 16
+		b.fieldSet_[4] = true
 	} else {
-		b.bitmap_ &^= 16
+		b.fieldSet_[4] = false
 	}
 	return b
 }
@@ -103,35 +111,35 @@ func (b *AzureBuilder) OperatorsAuthentication(value *AzureOperatorsAuthenticati
 // ResourceGroupName sets the value of the 'resource_group_name' attribute to the given value.
 func (b *AzureBuilder) ResourceGroupName(value string) *AzureBuilder {
 	b.resourceGroupName = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // ResourceName sets the value of the 'resource_name' attribute to the given value.
 func (b *AzureBuilder) ResourceName(value string) *AzureBuilder {
 	b.resourceName = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // SubnetResourceID sets the value of the 'subnet_resource_ID' attribute to the given value.
 func (b *AzureBuilder) SubnetResourceID(value string) *AzureBuilder {
 	b.subnetResourceID = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *AzureBuilder) SubscriptionID(value string) *AzureBuilder {
 	b.subscriptionID = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // TenantID sets the value of the 'tenant_ID' attribute to the given value.
 func (b *AzureBuilder) TenantID(value string) *AzureBuilder {
 	b.tenantID = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
@@ -140,7 +148,10 @@ func (b *AzureBuilder) Copy(object *Azure) *AzureBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.etcdEncryption != nil {
 		b.etcdEncryption = NewAzureEtcdEncryption().Copy(object.etcdEncryption)
 	} else {
@@ -169,7 +180,10 @@ func (b *AzureBuilder) Copy(object *Azure) *AzureBuilder {
 // Build creates a 'azure' object using the configuration stored in the builder.
 func (b *AzureBuilder) Build() (object *Azure, err error) {
 	object = new(Azure)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.etcdEncryption != nil {
 		object.etcdEncryption, err = b.etcdEncryption.Build()
 		if err != nil {

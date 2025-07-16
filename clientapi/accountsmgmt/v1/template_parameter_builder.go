@@ -19,37 +19,45 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// TemplateParameterBuilder contains the data and logic needed to build 'template_parameter' objects.
-//
 // A template parameter is used in an email to replace placeholder content with
 // values specific to the email recipient.
 type TemplateParameterBuilder struct {
-	bitmap_ uint32
-	content string
-	name    string
+	fieldSet_ []bool
+	content   string
+	name      string
 }
 
 // NewTemplateParameter creates a new builder of 'template_parameter' objects.
 func NewTemplateParameter() *TemplateParameterBuilder {
-	return &TemplateParameterBuilder{}
+	return &TemplateParameterBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *TemplateParameterBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Content sets the value of the 'content' attribute to the given value.
 func (b *TemplateParameterBuilder) Content(value string) *TemplateParameterBuilder {
 	b.content = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *TemplateParameterBuilder) Name(value string) *TemplateParameterBuilder {
 	b.name = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -58,7 +66,10 @@ func (b *TemplateParameterBuilder) Copy(object *TemplateParameter) *TemplatePara
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.content = object.content
 	b.name = object.name
 	return b
@@ -67,7 +78,10 @@ func (b *TemplateParameterBuilder) Copy(object *TemplateParameter) *TemplatePara
 // Build creates a 'template_parameter' object using the configuration stored in the builder.
 func (b *TemplateParameterBuilder) Build() (object *TemplateParameter, err error) {
 	object = new(TemplateParameter)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.content = b.content
 	object.name = b.name
 	return

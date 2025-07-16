@@ -23,15 +23,23 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Details for `htpasswd` identity providers.
 type HTPasswdIdentityProvider struct {
-	bitmap_  uint32
-	password string
-	username string
-	users    *HTPasswdUserList
+	fieldSet_ []bool
+	password  string
+	username  string
+	users     *HTPasswdUserList
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *HTPasswdIdentityProvider) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Password returns the value of the 'password' attribute, or
@@ -39,7 +47,7 @@ func (o *HTPasswdIdentityProvider) Empty() bool {
 //
 // Password to be used in the _HTPasswd_ data file.
 func (o *HTPasswdIdentityProvider) Password() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.password
 	}
 	return ""
@@ -50,7 +58,7 @@ func (o *HTPasswdIdentityProvider) Password() string {
 //
 // Password to be used in the _HTPasswd_ data file.
 func (o *HTPasswdIdentityProvider) GetPassword() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.password
 	}
@@ -62,7 +70,7 @@ func (o *HTPasswdIdentityProvider) GetPassword() (value string, ok bool) {
 //
 // Username to be used in the _HTPasswd_ data file.
 func (o *HTPasswdIdentityProvider) Username() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.username
 	}
 	return ""
@@ -73,7 +81,7 @@ func (o *HTPasswdIdentityProvider) Username() string {
 //
 // Username to be used in the _HTPasswd_ data file.
 func (o *HTPasswdIdentityProvider) GetUsername() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.username
 	}
@@ -85,7 +93,7 @@ func (o *HTPasswdIdentityProvider) GetUsername() (value string, ok bool) {
 //
 // Link to the collection of _HTPasswd_ users.
 func (o *HTPasswdIdentityProvider) Users() *HTPasswdUserList {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.users
 	}
 	return nil
@@ -96,7 +104,7 @@ func (o *HTPasswdIdentityProvider) Users() *HTPasswdUserList {
 //
 // Link to the collection of _HTPasswd_ users.
 func (o *HTPasswdIdentityProvider) GetUsers() (value *HTPasswdUserList, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.users
 	}

@@ -23,14 +23,22 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Config for AWS provision shards
 type AWSShard struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	ecrRepositoryURLs []string
 	backupConfigs     []*AWSBackupConfig
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AWSShard) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ECRRepositoryURLs returns the value of the 'ECR_repository_URLs' attribute, or
@@ -38,7 +46,7 @@ func (o *AWSShard) Empty() bool {
 //
 // ECR repository URLs of the provision shard
 func (o *AWSShard) ECRRepositoryURLs() []string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.ecrRepositoryURLs
 	}
 	return nil
@@ -49,7 +57,7 @@ func (o *AWSShard) ECRRepositoryURLs() []string {
 //
 // ECR repository URLs of the provision shard
 func (o *AWSShard) GetECRRepositoryURLs() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.ecrRepositoryURLs
 	}
@@ -61,7 +69,7 @@ func (o *AWSShard) GetECRRepositoryURLs() (value []string, ok bool) {
 //
 // Backup configurations for the provision shard
 func (o *AWSShard) BackupConfigs() []*AWSBackupConfig {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.backupConfigs
 	}
 	return nil
@@ -72,7 +80,7 @@ func (o *AWSShard) BackupConfigs() []*AWSBackupConfig {
 //
 // Backup configurations for the provision shard
 func (o *AWSShard) GetBackupConfigs() (value []*AWSBackupConfig, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.backupConfigs
 	}

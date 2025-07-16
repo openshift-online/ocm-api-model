@@ -19,29 +19,37 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
-// AddonParametersBuilder contains the data and logic needed to build 'addon_parameters' objects.
-//
 // Representation of AddonParameters
 type AddonParametersBuilder struct {
-	bitmap_ uint32
-	items   []*AddonParameterBuilder
+	fieldSet_ []bool
+	items     []*AddonParameterBuilder
 }
 
 // NewAddonParameters creates a new builder of 'addon_parameters' objects.
 func NewAddonParameters() *AddonParametersBuilder {
-	return &AddonParametersBuilder{}
+	return &AddonParametersBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddonParametersBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Items sets the value of the 'items' attribute to the given values.
 func (b *AddonParametersBuilder) Items(values ...*AddonParameterBuilder) *AddonParametersBuilder {
 	b.items = make([]*AddonParameterBuilder, len(values))
 	copy(b.items, values)
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -50,7 +58,10 @@ func (b *AddonParametersBuilder) Copy(object *AddonParameters) *AddonParametersB
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.items != nil {
 		b.items = make([]*AddonParameterBuilder, len(object.items))
 		for i, v := range object.items {
@@ -65,7 +76,10 @@ func (b *AddonParametersBuilder) Copy(object *AddonParameters) *AddonParametersB
 // Build creates a 'addon_parameters' object using the configuration stored in the builder.
 func (b *AddonParametersBuilder) Build() (object *AddonParameters, err error) {
 	object = new(AddonParameters)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.items != nil {
 		object.items = make([]*AddonParameter, len(b.items))
 		for i, v := range b.items {

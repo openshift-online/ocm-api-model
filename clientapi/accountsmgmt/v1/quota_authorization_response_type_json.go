@@ -42,7 +42,7 @@ func WriteQuotaAuthorizationResponse(object *QuotaAuthorizationResponse, stream 
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteQuotaAuthorizationResponse(object *QuotaAuthorizationResponse, stream 
 		stream.WriteBool(object.allowed)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.excessResources != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.excessResources != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteQuotaAuthorizationResponse(object *QuotaAuthorizationResponse, stream 
 		WriteReservedResourceList(object.excessResources, stream)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0 && object.subscription != nil
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.subscription != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,7 +85,9 @@ func UnmarshalQuotaAuthorizationResponse(source interface{}) (object *QuotaAutho
 
 // ReadQuotaAuthorizationResponse reads a value of the 'quota_authorization_response' type from the given iterator.
 func ReadQuotaAuthorizationResponse(iterator *jsoniter.Iterator) *QuotaAuthorizationResponse {
-	object := &QuotaAuthorizationResponse{}
+	object := &QuotaAuthorizationResponse{
+		fieldSet_: make([]bool, 3),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -95,15 +97,15 @@ func ReadQuotaAuthorizationResponse(iterator *jsoniter.Iterator) *QuotaAuthoriza
 		case "allowed":
 			value := iterator.ReadBool()
 			object.allowed = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "excess_resources":
 			value := ReadReservedResourceList(iterator)
 			object.excessResources = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "subscription":
 			value := ReadSubscription(iterator)
 			object.subscription = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		default:
 			iterator.ReadAny()
 		}

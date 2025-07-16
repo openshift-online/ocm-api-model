@@ -23,16 +23,24 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 //
 // Representation of an addon env object.
 type AddonEnvironmentVariable struct {
-	bitmap_ uint32
-	id      string
-	name    string
-	value   string
-	enabled bool
+	fieldSet_ []bool
+	id        string
+	name      string
+	value     string
+	enabled   bool
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddonEnvironmentVariable) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ID returns the value of the 'ID' attribute, or
@@ -40,7 +48,7 @@ func (o *AddonEnvironmentVariable) Empty() bool {
 //
 // ID for the environment variable
 func (o *AddonEnvironmentVariable) ID() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.id
 	}
 	return ""
@@ -51,7 +59,7 @@ func (o *AddonEnvironmentVariable) ID() string {
 //
 // ID for the environment variable
 func (o *AddonEnvironmentVariable) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.id
 	}
@@ -63,7 +71,7 @@ func (o *AddonEnvironmentVariable) GetID() (value string, ok bool) {
 //
 // Indicates is this environment variable is enabled for the addon
 func (o *AddonEnvironmentVariable) Enabled() bool {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.enabled
 	}
 	return false
@@ -74,7 +82,7 @@ func (o *AddonEnvironmentVariable) Enabled() bool {
 //
 // Indicates is this environment variable is enabled for the addon
 func (o *AddonEnvironmentVariable) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.enabled
 	}
@@ -86,7 +94,7 @@ func (o *AddonEnvironmentVariable) GetEnabled() (value bool, ok bool) {
 //
 // Name of the environment variable
 func (o *AddonEnvironmentVariable) Name() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.name
 	}
 	return ""
@@ -97,7 +105,7 @@ func (o *AddonEnvironmentVariable) Name() string {
 //
 // Name of the environment variable
 func (o *AddonEnvironmentVariable) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.name
 	}
@@ -109,7 +117,7 @@ func (o *AddonEnvironmentVariable) GetName() (value string, ok bool) {
 //
 // Value of the environment variable
 func (o *AddonEnvironmentVariable) Value() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.value
 	}
 	return ""
@@ -120,7 +128,7 @@ func (o *AddonEnvironmentVariable) Value() string {
 //
 // Value of the environment variable
 func (o *AddonEnvironmentVariable) GetValue() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.value
 	}

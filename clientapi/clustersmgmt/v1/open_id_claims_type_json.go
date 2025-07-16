@@ -42,7 +42,7 @@ func WriteOpenIDClaims(object *OpenIDClaims, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.email != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.email != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteOpenIDClaims(object *OpenIDClaims, stream *jsoniter.Stream) {
 		WriteStringList(object.email, stream)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.groups != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.groups != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteOpenIDClaims(object *OpenIDClaims, stream *jsoniter.Stream) {
 		WriteStringList(object.groups, stream)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0 && object.name != nil
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.name != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteOpenIDClaims(object *OpenIDClaims, stream *jsoniter.Stream) {
 		WriteStringList(object.name, stream)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0 && object.preferredUsername != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.preferredUsername != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,7 +94,9 @@ func UnmarshalOpenIDClaims(source interface{}) (object *OpenIDClaims, err error)
 
 // ReadOpenIDClaims reads a value of the 'open_ID_claims' type from the given iterator.
 func ReadOpenIDClaims(iterator *jsoniter.Iterator) *OpenIDClaims {
-	object := &OpenIDClaims{}
+	object := &OpenIDClaims{
+		fieldSet_: make([]bool, 4),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -104,19 +106,19 @@ func ReadOpenIDClaims(iterator *jsoniter.Iterator) *OpenIDClaims {
 		case "email":
 			value := ReadStringList(iterator)
 			object.email = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "groups":
 			value := ReadStringList(iterator)
 			object.groups = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "name":
 			value := ReadStringList(iterator)
 			object.name = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "preferred_username":
 			value := ReadStringList(iterator)
 			object.preferredUsername = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		default:
 			iterator.ReadAny()
 		}

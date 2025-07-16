@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// ManagedServiceBuilder contains the data and logic needed to build 'managed_service' objects.
-//
 // Represents data about a running Managed Service.
 type ManagedServiceBuilder struct {
-	bitmap_      uint32
+	fieldSet_    []bool
 	id           string
 	href         string
 	addon        *StatefulObjectBuilder
@@ -43,41 +41,52 @@ type ManagedServiceBuilder struct {
 
 // NewManagedService creates a new builder of 'managed_service' objects.
 func NewManagedService() *ManagedServiceBuilder {
-	return &ManagedServiceBuilder{}
+	return &ManagedServiceBuilder{
+		fieldSet_: make([]bool, 12),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ManagedServiceBuilder) Link(value bool) *ManagedServiceBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ManagedServiceBuilder) ID(value string) *ManagedServiceBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ManagedServiceBuilder) HREF(value string) *ManagedServiceBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ManagedServiceBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Addon sets the value of the 'addon' attribute to the given value.
 func (b *ManagedServiceBuilder) Addon(value *StatefulObjectBuilder) *ManagedServiceBuilder {
 	b.addon = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -88,9 +97,9 @@ func (b *ManagedServiceBuilder) Addon(value *StatefulObjectBuilder) *ManagedServ
 func (b *ManagedServiceBuilder) Cluster(value *ClusterBuilder) *ManagedServiceBuilder {
 	b.cluster = value
 	if value != nil {
-		b.bitmap_ |= 16
+		b.fieldSet_[4] = true
 	} else {
-		b.bitmap_ &^= 16
+		b.fieldSet_[4] = false
 	}
 	return b
 }
@@ -98,14 +107,14 @@ func (b *ManagedServiceBuilder) Cluster(value *ClusterBuilder) *ManagedServiceBu
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ManagedServiceBuilder) CreatedAt(value time.Time) *ManagedServiceBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // ExpiredAt sets the value of the 'expired_at' attribute to the given value.
 func (b *ManagedServiceBuilder) ExpiredAt(value time.Time) *ManagedServiceBuilder {
 	b.expiredAt = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -113,7 +122,7 @@ func (b *ManagedServiceBuilder) ExpiredAt(value time.Time) *ManagedServiceBuilde
 func (b *ManagedServiceBuilder) Parameters(values ...*ServiceParameterBuilder) *ManagedServiceBuilder {
 	b.parameters = make([]*ServiceParameterBuilder, len(values))
 	copy(b.parameters, values)
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
@@ -121,28 +130,28 @@ func (b *ManagedServiceBuilder) Parameters(values ...*ServiceParameterBuilder) *
 func (b *ManagedServiceBuilder) Resources(values ...*StatefulObjectBuilder) *ManagedServiceBuilder {
 	b.resources = make([]*StatefulObjectBuilder, len(values))
 	copy(b.resources, values)
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // Service sets the value of the 'service' attribute to the given value.
 func (b *ManagedServiceBuilder) Service(value string) *ManagedServiceBuilder {
 	b.service = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
 // ServiceState sets the value of the 'service_state' attribute to the given value.
 func (b *ManagedServiceBuilder) ServiceState(value string) *ManagedServiceBuilder {
 	b.serviceState = value
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ManagedServiceBuilder) UpdatedAt(value time.Time) *ManagedServiceBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 2048
+	b.fieldSet_[11] = true
 	return b
 }
 
@@ -151,7 +160,10 @@ func (b *ManagedServiceBuilder) Copy(object *ManagedService) *ManagedServiceBuil
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.addon != nil {
@@ -193,7 +205,10 @@ func (b *ManagedServiceBuilder) Build() (object *ManagedService, err error) {
 	object = new(ManagedService)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.addon != nil {
 		object.addon, err = b.addon.Build()
 		if err != nil {

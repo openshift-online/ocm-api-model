@@ -19,50 +19,59 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// ClusterDeploymentBuilder contains the data and logic needed to build 'cluster_deployment' objects.
-//
 // Representation of a clusterdeployment.
 type ClusterDeploymentBuilder struct {
-	bitmap_ uint32
-	id      string
-	href    string
-	content interface{}
+	fieldSet_ []bool
+	id        string
+	href      string
+	content   interface{}
 }
 
 // NewClusterDeployment creates a new builder of 'cluster_deployment' objects.
 func NewClusterDeployment() *ClusterDeploymentBuilder {
-	return &ClusterDeploymentBuilder{}
+	return &ClusterDeploymentBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ClusterDeploymentBuilder) Link(value bool) *ClusterDeploymentBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ClusterDeploymentBuilder) ID(value string) *ClusterDeploymentBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ClusterDeploymentBuilder) HREF(value string) *ClusterDeploymentBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterDeploymentBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Content sets the value of the 'content' attribute to the given value.
 func (b *ClusterDeploymentBuilder) Content(value interface{}) *ClusterDeploymentBuilder {
 	b.content = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -71,7 +80,10 @@ func (b *ClusterDeploymentBuilder) Copy(object *ClusterDeployment) *ClusterDeplo
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.content = object.content
@@ -83,7 +95,10 @@ func (b *ClusterDeploymentBuilder) Build() (object *ClusterDeployment, err error
 	object = new(ClusterDeployment)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.content = b.content
 	return
 }

@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AddOnParameterBuilder contains the data and logic needed to build 'add_on_parameter' objects.
-//
 // Representation of an add-on parameter.
 type AddOnParameterBuilder struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	id                string
 	href              string
 	addon             *AddOnBuilder
@@ -43,32 +41,43 @@ type AddOnParameterBuilder struct {
 
 // NewAddOnParameter creates a new builder of 'add_on_parameter' objects.
 func NewAddOnParameter() *AddOnParameterBuilder {
-	return &AddOnParameterBuilder{}
+	return &AddOnParameterBuilder{
+		fieldSet_: make([]bool, 16),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddOnParameterBuilder) Link(value bool) *AddOnParameterBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddOnParameterBuilder) ID(value string) *AddOnParameterBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AddOnParameterBuilder) HREF(value string) *AddOnParameterBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddOnParameterBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Addon sets the value of the 'addon' attribute to the given value.
@@ -77,9 +86,9 @@ func (b *AddOnParameterBuilder) Empty() bool {
 func (b *AddOnParameterBuilder) Addon(value *AddOnBuilder) *AddOnParameterBuilder {
 	b.addon = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -88,49 +97,49 @@ func (b *AddOnParameterBuilder) Addon(value *AddOnBuilder) *AddOnParameterBuilde
 func (b *AddOnParameterBuilder) Conditions(values ...*AddOnRequirementBuilder) *AddOnParameterBuilder {
 	b.conditions = make([]*AddOnRequirementBuilder, len(values))
 	copy(b.conditions, values)
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // DefaultValue sets the value of the 'default_value' attribute to the given value.
 func (b *AddOnParameterBuilder) DefaultValue(value string) *AddOnParameterBuilder {
 	b.defaultValue = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *AddOnParameterBuilder) Description(value string) *AddOnParameterBuilder {
 	b.description = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // Editable sets the value of the 'editable' attribute to the given value.
 func (b *AddOnParameterBuilder) Editable(value bool) *AddOnParameterBuilder {
 	b.editable = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // EditableDirection sets the value of the 'editable_direction' attribute to the given value.
 func (b *AddOnParameterBuilder) EditableDirection(value string) *AddOnParameterBuilder {
 	b.editableDirection = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddOnParameterBuilder) Enabled(value bool) *AddOnParameterBuilder {
 	b.enabled = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AddOnParameterBuilder) Name(value string) *AddOnParameterBuilder {
 	b.name = value
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
@@ -138,35 +147,35 @@ func (b *AddOnParameterBuilder) Name(value string) *AddOnParameterBuilder {
 func (b *AddOnParameterBuilder) Options(values ...*AddOnParameterOptionBuilder) *AddOnParameterBuilder {
 	b.options = make([]*AddOnParameterOptionBuilder, len(values))
 	copy(b.options, values)
-	b.bitmap_ |= 2048
+	b.fieldSet_[11] = true
 	return b
 }
 
 // Required sets the value of the 'required' attribute to the given value.
 func (b *AddOnParameterBuilder) Required(value bool) *AddOnParameterBuilder {
 	b.required = value
-	b.bitmap_ |= 4096
+	b.fieldSet_[12] = true
 	return b
 }
 
 // Validation sets the value of the 'validation' attribute to the given value.
 func (b *AddOnParameterBuilder) Validation(value string) *AddOnParameterBuilder {
 	b.validation = value
-	b.bitmap_ |= 8192
+	b.fieldSet_[13] = true
 	return b
 }
 
 // ValidationErrMsg sets the value of the 'validation_err_msg' attribute to the given value.
 func (b *AddOnParameterBuilder) ValidationErrMsg(value string) *AddOnParameterBuilder {
 	b.validationErrMsg = value
-	b.bitmap_ |= 16384
+	b.fieldSet_[14] = true
 	return b
 }
 
 // ValueType sets the value of the 'value_type' attribute to the given value.
 func (b *AddOnParameterBuilder) ValueType(value string) *AddOnParameterBuilder {
 	b.valueType = value
-	b.bitmap_ |= 32768
+	b.fieldSet_[15] = true
 	return b
 }
 
@@ -175,7 +184,10 @@ func (b *AddOnParameterBuilder) Copy(object *AddOnParameter) *AddOnParameterBuil
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.addon != nil {
@@ -217,7 +229,10 @@ func (b *AddOnParameterBuilder) Build() (object *AddOnParameter, err error) {
 	object = new(AddOnParameter)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.addon != nil {
 		object.addon, err = b.addon.Build()
 		if err != nil {

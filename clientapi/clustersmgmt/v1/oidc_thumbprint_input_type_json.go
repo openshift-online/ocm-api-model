@@ -42,7 +42,7 @@ func WriteOidcThumbprintInput(object *OidcThumbprintInput, stream *jsoniter.Stre
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteOidcThumbprintInput(object *OidcThumbprintInput, stream *jsoniter.Stre
 		stream.WriteString(object.clusterId)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,9 @@ func UnmarshalOidcThumbprintInput(source interface{}) (object *OidcThumbprintInp
 
 // ReadOidcThumbprintInput reads a value of the 'oidc_thumbprint_input' type from the given iterator.
 func ReadOidcThumbprintInput(iterator *jsoniter.Iterator) *OidcThumbprintInput {
-	object := &OidcThumbprintInput{}
+	object := &OidcThumbprintInput{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -86,11 +88,11 @@ func ReadOidcThumbprintInput(iterator *jsoniter.Iterator) *OidcThumbprintInput {
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterId = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "oidc_config_id":
 			value := iterator.ReadString()
 			object.oidcConfigId = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

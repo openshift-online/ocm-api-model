@@ -25,7 +25,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 // registries when accessing images for builds and pods. For instance, whether or not to allow insecure access.
 // It does not contain configuration for the internal cluster registry.
 type RegistrySources struct {
-	bitmap_            uint32
+	fieldSet_          []bool
 	allowedRegistries  []string
 	blockedRegistries  []string
 	insecureRegistries []string
@@ -33,7 +33,15 @@ type RegistrySources struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *RegistrySources) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AllowedRegistries returns the value of the 'allowed_registries' attribute, or
@@ -45,7 +53,7 @@ func (o *RegistrySources) Empty() bool {
 // For example: reg1.io/myrepo/myapp:latest. All other registries are blocked.
 // Mutually exclusive with `BlockedRegistries`
 func (o *RegistrySources) AllowedRegistries() []string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.allowedRegistries
 	}
 	return nil
@@ -60,7 +68,7 @@ func (o *RegistrySources) AllowedRegistries() []string {
 // For example: reg1.io/myrepo/myapp:latest. All other registries are blocked.
 // Mutually exclusive with `BlockedRegistries`
 func (o *RegistrySources) GetAllowedRegistries() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.allowedRegistries
 	}
@@ -76,7 +84,7 @@ func (o *RegistrySources) GetAllowedRegistries() (value []string, ok bool) {
 // For example: reg1.io/myrepo/myapp:latest. All other registries are allowed.
 // Mutually exclusive with `AllowedRegistries`
 func (o *RegistrySources) BlockedRegistries() []string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.blockedRegistries
 	}
 	return nil
@@ -91,7 +99,7 @@ func (o *RegistrySources) BlockedRegistries() []string {
 // For example: reg1.io/myrepo/myapp:latest. All other registries are allowed.
 // Mutually exclusive with `AllowedRegistries`
 func (o *RegistrySources) GetBlockedRegistries() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.blockedRegistries
 	}
@@ -106,7 +114,7 @@ func (o *RegistrySources) GetBlockedRegistries() (value []string, ok bool) {
 // For example, *.example.com. You can specify an individual repository within a registry.
 // For example: reg1.io/myrepo/myapp:latest.
 func (o *RegistrySources) InsecureRegistries() []string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.insecureRegistries
 	}
 	return nil
@@ -120,7 +128,7 @@ func (o *RegistrySources) InsecureRegistries() []string {
 // For example, *.example.com. You can specify an individual repository within a registry.
 // For example: reg1.io/myrepo/myapp:latest.
 func (o *RegistrySources) GetInsecureRegistries() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.insecureRegistries
 	}

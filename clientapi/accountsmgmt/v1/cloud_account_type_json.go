@@ -42,7 +42,7 @@ func WriteCloudAccount(object *CloudAccount, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteCloudAccount(object *CloudAccount, stream *jsoniter.Stream) {
 		stream.WriteString(object.cloudAccountID)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteCloudAccount(object *CloudAccount, stream *jsoniter.Stream) {
 		stream.WriteString(object.cloudProviderID)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0 && object.contracts != nil
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.contracts != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,7 +85,9 @@ func UnmarshalCloudAccount(source interface{}) (object *CloudAccount, err error)
 
 // ReadCloudAccount reads a value of the 'cloud_account' type from the given iterator.
 func ReadCloudAccount(iterator *jsoniter.Iterator) *CloudAccount {
-	object := &CloudAccount{}
+	object := &CloudAccount{
+		fieldSet_: make([]bool, 3),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -95,15 +97,15 @@ func ReadCloudAccount(iterator *jsoniter.Iterator) *CloudAccount {
 		case "cloud_account_id":
 			value := iterator.ReadString()
 			object.cloudAccountID = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "cloud_provider_id":
 			value := iterator.ReadString()
 			object.cloudProviderID = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "contracts":
 			value := ReadContractList(iterator)
 			object.contracts = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		default:
 			iterator.ReadAny()
 		}

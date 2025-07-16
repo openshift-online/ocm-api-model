@@ -35,7 +35,7 @@ const AddOnInstallationBillingNilKind = "AddOnInstallationBillingNil"
 //
 // Representation of an add-on installation billing.
 type AddOnInstallationBilling struct {
-	bitmap_                   uint32
+	fieldSet_                 []bool
 	id                        string
 	href                      string
 	billingMarketplaceAccount string
@@ -47,7 +47,7 @@ func (o *AddOnInstallationBilling) Kind() string {
 	if o == nil {
 		return AddOnInstallationBillingNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return AddOnInstallationBillingLinkKind
 	}
 	return AddOnInstallationBillingKind
@@ -55,12 +55,12 @@ func (o *AddOnInstallationBilling) Kind() string {
 
 // Link returns true if this is a link.
 func (o *AddOnInstallationBilling) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *AddOnInstallationBilling) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -69,7 +69,7 @@ func (o *AddOnInstallationBilling) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *AddOnInstallationBilling) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -78,7 +78,7 @@ func (o *AddOnInstallationBilling) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *AddOnInstallationBilling) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -87,7 +87,7 @@ func (o *AddOnInstallationBilling) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *AddOnInstallationBilling) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -96,7 +96,17 @@ func (o *AddOnInstallationBilling) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddOnInstallationBilling) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // BillingMarketplaceAccount returns the value of the 'billing_marketplace_account' attribute, or
@@ -104,7 +114,7 @@ func (o *AddOnInstallationBilling) Empty() bool {
 //
 // Account ID for billing market place
 func (o *AddOnInstallationBilling) BillingMarketplaceAccount() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.billingMarketplaceAccount
 	}
 	return ""
@@ -115,7 +125,7 @@ func (o *AddOnInstallationBilling) BillingMarketplaceAccount() string {
 //
 // Account ID for billing market place
 func (o *AddOnInstallationBilling) GetBillingMarketplaceAccount() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.billingMarketplaceAccount
 	}
@@ -127,7 +137,7 @@ func (o *AddOnInstallationBilling) GetBillingMarketplaceAccount() (value string,
 //
 // Billing Model for addon resources
 func (o *AddOnInstallationBilling) BillingModel() BillingModel {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.billingModel
 	}
 	return BillingModel("")
@@ -138,7 +148,7 @@ func (o *AddOnInstallationBilling) BillingModel() BillingModel {
 //
 // Billing Model for addon resources
 func (o *AddOnInstallationBilling) GetBillingModel() (value BillingModel, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.billingModel
 	}

@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AWSMachinePoolBuilder contains the data and logic needed to build 'AWS_machine_pool' objects.
-//
 // Representation of aws machine pool specific parameters.
 type AWSMachinePoolBuilder struct {
-	bitmap_                    uint32
+	fieldSet_                  []bool
 	id                         string
 	href                       string
 	additionalSecurityGroupIds []string
@@ -35,39 +33,50 @@ type AWSMachinePoolBuilder struct {
 
 // NewAWSMachinePool creates a new builder of 'AWS_machine_pool' objects.
 func NewAWSMachinePool() *AWSMachinePoolBuilder {
-	return &AWSMachinePoolBuilder{}
+	return &AWSMachinePoolBuilder{
+		fieldSet_: make([]bool, 8),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AWSMachinePoolBuilder) Link(value bool) *AWSMachinePoolBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AWSMachinePoolBuilder) ID(value string) *AWSMachinePoolBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AWSMachinePoolBuilder) HREF(value string) *AWSMachinePoolBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AWSMachinePoolBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // AdditionalSecurityGroupIds sets the value of the 'additional_security_group_ids' attribute to the given values.
 func (b *AWSMachinePoolBuilder) AdditionalSecurityGroupIds(values ...string) *AWSMachinePoolBuilder {
 	b.additionalSecurityGroupIds = make([]string, len(values))
 	copy(b.additionalSecurityGroupIds, values)
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -75,9 +84,9 @@ func (b *AWSMachinePoolBuilder) AdditionalSecurityGroupIds(values ...string) *AW
 func (b *AWSMachinePoolBuilder) AvailabilityZoneTypes(value map[string]string) *AWSMachinePoolBuilder {
 	b.availabilityZoneTypes = value
 	if value != nil {
-		b.bitmap_ |= 16
+		b.fieldSet_[4] = true
 	} else {
-		b.bitmap_ &^= 16
+		b.fieldSet_[4] = false
 	}
 	return b
 }
@@ -88,9 +97,9 @@ func (b *AWSMachinePoolBuilder) AvailabilityZoneTypes(value map[string]string) *
 func (b *AWSMachinePoolBuilder) SpotMarketOptions(value *AWSSpotMarketOptionsBuilder) *AWSMachinePoolBuilder {
 	b.spotMarketOptions = value
 	if value != nil {
-		b.bitmap_ |= 32
+		b.fieldSet_[5] = true
 	} else {
-		b.bitmap_ &^= 32
+		b.fieldSet_[5] = false
 	}
 	return b
 }
@@ -99,9 +108,9 @@ func (b *AWSMachinePoolBuilder) SpotMarketOptions(value *AWSSpotMarketOptionsBui
 func (b *AWSMachinePoolBuilder) SubnetOutposts(value map[string]string) *AWSMachinePoolBuilder {
 	b.subnetOutposts = value
 	if value != nil {
-		b.bitmap_ |= 64
+		b.fieldSet_[6] = true
 	} else {
-		b.bitmap_ &^= 64
+		b.fieldSet_[6] = false
 	}
 	return b
 }
@@ -110,9 +119,9 @@ func (b *AWSMachinePoolBuilder) SubnetOutposts(value map[string]string) *AWSMach
 func (b *AWSMachinePoolBuilder) Tags(value map[string]string) *AWSMachinePoolBuilder {
 	b.tags = value
 	if value != nil {
-		b.bitmap_ |= 128
+		b.fieldSet_[7] = true
 	} else {
-		b.bitmap_ &^= 128
+		b.fieldSet_[7] = false
 	}
 	return b
 }
@@ -122,7 +131,10 @@ func (b *AWSMachinePoolBuilder) Copy(object *AWSMachinePool) *AWSMachinePoolBuil
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.additionalSecurityGroupIds != nil {
@@ -168,7 +180,10 @@ func (b *AWSMachinePoolBuilder) Build() (object *AWSMachinePool, err error) {
 	object = new(AWSMachinePool)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.additionalSecurityGroupIds != nil {
 		object.additionalSecurityGroupIds = make([]string, len(b.additionalSecurityGroupIds))
 		copy(object.additionalSecurityGroupIds, b.additionalSecurityGroupIds)

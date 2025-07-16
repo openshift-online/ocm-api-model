@@ -21,7 +21,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 
 // ClusterAuthorizationRequest represents the values of the 'cluster_authorization_request' type.
 type ClusterAuthorizationRequest struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	accountUsername   string
 	availabilityZone  string
 	cloudAccountID    string
@@ -43,13 +43,21 @@ type ClusterAuthorizationRequest struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterAuthorizationRequest) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // BYOC returns the value of the 'BYOC' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) BYOC() bool {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.byoc
 	}
 	return false
@@ -58,7 +66,7 @@ func (o *ClusterAuthorizationRequest) BYOC() bool {
 // GetBYOC returns the value of the 'BYOC' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetBYOC() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.byoc
 	}
@@ -68,7 +76,7 @@ func (o *ClusterAuthorizationRequest) GetBYOC() (value bool, ok bool) {
 // AccountUsername returns the value of the 'account_username' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) AccountUsername() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.accountUsername
 	}
 	return ""
@@ -77,7 +85,7 @@ func (o *ClusterAuthorizationRequest) AccountUsername() string {
 // GetAccountUsername returns the value of the 'account_username' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetAccountUsername() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.accountUsername
 	}
@@ -87,7 +95,7 @@ func (o *ClusterAuthorizationRequest) GetAccountUsername() (value string, ok boo
 // AvailabilityZone returns the value of the 'availability_zone' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) AvailabilityZone() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.availabilityZone
 	}
 	return ""
@@ -96,7 +104,7 @@ func (o *ClusterAuthorizationRequest) AvailabilityZone() string {
 // GetAvailabilityZone returns the value of the 'availability_zone' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetAvailabilityZone() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.availabilityZone
 	}
@@ -106,7 +114,7 @@ func (o *ClusterAuthorizationRequest) GetAvailabilityZone() (value string, ok bo
 // CloudAccountID returns the value of the 'cloud_account_ID' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) CloudAccountID() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.cloudAccountID
 	}
 	return ""
@@ -115,7 +123,7 @@ func (o *ClusterAuthorizationRequest) CloudAccountID() string {
 // GetCloudAccountID returns the value of the 'cloud_account_ID' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetCloudAccountID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.cloudAccountID
 	}
@@ -125,7 +133,7 @@ func (o *ClusterAuthorizationRequest) GetCloudAccountID() (value string, ok bool
 // CloudProviderID returns the value of the 'cloud_provider_ID' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) CloudProviderID() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.cloudProviderID
 	}
 	return ""
@@ -134,7 +142,7 @@ func (o *ClusterAuthorizationRequest) CloudProviderID() string {
 // GetCloudProviderID returns the value of the 'cloud_provider_ID' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetCloudProviderID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.cloudProviderID
 	}
@@ -144,7 +152,7 @@ func (o *ClusterAuthorizationRequest) GetCloudProviderID() (value string, ok boo
 // ClusterID returns the value of the 'cluster_ID' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) ClusterID() string {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.clusterID
 	}
 	return ""
@@ -153,7 +161,7 @@ func (o *ClusterAuthorizationRequest) ClusterID() string {
 // GetClusterID returns the value of the 'cluster_ID' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetClusterID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.clusterID
 	}
@@ -163,7 +171,7 @@ func (o *ClusterAuthorizationRequest) GetClusterID() (value string, ok bool) {
 // Disconnected returns the value of the 'disconnected' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) Disconnected() bool {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.disconnected
 	}
 	return false
@@ -172,7 +180,7 @@ func (o *ClusterAuthorizationRequest) Disconnected() bool {
 // GetDisconnected returns the value of the 'disconnected' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetDisconnected() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.disconnected
 	}
@@ -182,7 +190,7 @@ func (o *ClusterAuthorizationRequest) GetDisconnected() (value bool, ok bool) {
 // DisplayName returns the value of the 'display_name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) DisplayName() string {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.displayName
 	}
 	return ""
@@ -191,7 +199,7 @@ func (o *ClusterAuthorizationRequest) DisplayName() string {
 // GetDisplayName returns the value of the 'display_name' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetDisplayName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.displayName
 	}
@@ -201,7 +209,7 @@ func (o *ClusterAuthorizationRequest) GetDisplayName() (value string, ok bool) {
 // ExternalClusterID returns the value of the 'external_cluster_ID' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) ExternalClusterID() string {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.externalClusterID
 	}
 	return ""
@@ -210,7 +218,7 @@ func (o *ClusterAuthorizationRequest) ExternalClusterID() string {
 // GetExternalClusterID returns the value of the 'external_cluster_ID' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetExternalClusterID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.externalClusterID
 	}
@@ -220,7 +228,7 @@ func (o *ClusterAuthorizationRequest) GetExternalClusterID() (value string, ok b
 // Managed returns the value of the 'managed' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) Managed() bool {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.managed
 	}
 	return false
@@ -229,7 +237,7 @@ func (o *ClusterAuthorizationRequest) Managed() bool {
 // GetManaged returns the value of the 'managed' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetManaged() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.managed
 	}
@@ -239,7 +247,7 @@ func (o *ClusterAuthorizationRequest) GetManaged() (value bool, ok bool) {
 // ProductID returns the value of the 'product_ID' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) ProductID() string {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.productID
 	}
 	return ""
@@ -248,7 +256,7 @@ func (o *ClusterAuthorizationRequest) ProductID() string {
 // GetProductID returns the value of the 'product_ID' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetProductID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.productID
 	}
@@ -258,7 +266,7 @@ func (o *ClusterAuthorizationRequest) GetProductID() (value string, ok bool) {
 // ProductCategory returns the value of the 'product_category' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) ProductCategory() string {
-	if o != nil && o.bitmap_&2048 != 0 {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.productCategory
 	}
 	return ""
@@ -267,7 +275,7 @@ func (o *ClusterAuthorizationRequest) ProductCategory() string {
 // GetProductCategory returns the value of the 'product_category' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetProductCategory() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2048 != 0
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.productCategory
 	}
@@ -277,7 +285,7 @@ func (o *ClusterAuthorizationRequest) GetProductCategory() (value string, ok boo
 // QuotaVersion returns the value of the 'quota_version' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) QuotaVersion() string {
-	if o != nil && o.bitmap_&4096 != 0 {
+	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
 		return o.quotaVersion
 	}
 	return ""
@@ -286,7 +294,7 @@ func (o *ClusterAuthorizationRequest) QuotaVersion() string {
 // GetQuotaVersion returns the value of the 'quota_version' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetQuotaVersion() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4096 != 0
+	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
 	if ok {
 		value = o.quotaVersion
 	}
@@ -296,7 +304,7 @@ func (o *ClusterAuthorizationRequest) GetQuotaVersion() (value string, ok bool) 
 // Reserve returns the value of the 'reserve' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) Reserve() bool {
-	if o != nil && o.bitmap_&8192 != 0 {
+	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
 		return o.reserve
 	}
 	return false
@@ -305,7 +313,7 @@ func (o *ClusterAuthorizationRequest) Reserve() bool {
 // GetReserve returns the value of the 'reserve' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetReserve() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&8192 != 0
+	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
 	if ok {
 		value = o.reserve
 	}
@@ -315,7 +323,7 @@ func (o *ClusterAuthorizationRequest) GetReserve() (value bool, ok bool) {
 // Resources returns the value of the 'resources' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) Resources() []*ReservedResource {
-	if o != nil && o.bitmap_&16384 != 0 {
+	if o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14] {
 		return o.resources
 	}
 	return nil
@@ -324,7 +332,7 @@ func (o *ClusterAuthorizationRequest) Resources() []*ReservedResource {
 // GetResources returns the value of the 'resources' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetResources() (value []*ReservedResource, ok bool) {
-	ok = o != nil && o.bitmap_&16384 != 0
+	ok = o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14]
 	if ok {
 		value = o.resources
 	}
@@ -334,7 +342,7 @@ func (o *ClusterAuthorizationRequest) GetResources() (value []*ReservedResource,
 // RhRegionID returns the value of the 'rh_region_ID' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) RhRegionID() string {
-	if o != nil && o.bitmap_&32768 != 0 {
+	if o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15] {
 		return o.rhRegionID
 	}
 	return ""
@@ -343,7 +351,7 @@ func (o *ClusterAuthorizationRequest) RhRegionID() string {
 // GetRhRegionID returns the value of the 'rh_region_ID' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetRhRegionID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&32768 != 0
+	ok = o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15]
 	if ok {
 		value = o.rhRegionID
 	}
@@ -353,7 +361,7 @@ func (o *ClusterAuthorizationRequest) GetRhRegionID() (value string, ok bool) {
 // Scope returns the value of the 'scope' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAuthorizationRequest) Scope() string {
-	if o != nil && o.bitmap_&65536 != 0 {
+	if o != nil && len(o.fieldSet_) > 16 && o.fieldSet_[16] {
 		return o.scope
 	}
 	return ""
@@ -362,7 +370,7 @@ func (o *ClusterAuthorizationRequest) Scope() string {
 // GetScope returns the value of the 'scope' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAuthorizationRequest) GetScope() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&65536 != 0
+	ok = o != nil && len(o.fieldSet_) > 16 && o.fieldSet_[16]
 	if ok {
 		value = o.scope
 	}

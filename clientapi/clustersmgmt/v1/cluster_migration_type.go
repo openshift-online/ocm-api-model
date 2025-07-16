@@ -39,7 +39,7 @@ const ClusterMigrationNilKind = "ClusterMigrationNil"
 //
 // Representation of a cluster migration.
 type ClusterMigration struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	id                string
 	href              string
 	clusterID         string
@@ -55,7 +55,7 @@ func (o *ClusterMigration) Kind() string {
 	if o == nil {
 		return ClusterMigrationNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return ClusterMigrationLinkKind
 	}
 	return ClusterMigrationKind
@@ -63,12 +63,12 @@ func (o *ClusterMigration) Kind() string {
 
 // Link returns true if this is a link.
 func (o *ClusterMigration) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *ClusterMigration) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -77,7 +77,7 @@ func (o *ClusterMigration) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *ClusterMigration) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -86,7 +86,7 @@ func (o *ClusterMigration) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *ClusterMigration) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -95,7 +95,7 @@ func (o *ClusterMigration) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *ClusterMigration) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -104,7 +104,17 @@ func (o *ClusterMigration) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterMigration) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // ClusterID returns the value of the 'cluster_ID' attribute, or
@@ -112,7 +122,7 @@ func (o *ClusterMigration) Empty() bool {
 //
 // Internal cluster ID.
 func (o *ClusterMigration) ClusterID() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.clusterID
 	}
 	return ""
@@ -123,7 +133,7 @@ func (o *ClusterMigration) ClusterID() string {
 //
 // Internal cluster ID.
 func (o *ClusterMigration) GetClusterID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.clusterID
 	}
@@ -136,7 +146,7 @@ func (o *ClusterMigration) GetClusterID() (value string, ok bool) {
 // Date and time when the cluster migration was initially created, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *ClusterMigration) CreationTimestamp() time.Time {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.creationTimestamp
 	}
 	return time.Time{}
@@ -148,7 +158,7 @@ func (o *ClusterMigration) CreationTimestamp() time.Time {
 // Date and time when the cluster migration was initially created, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *ClusterMigration) GetCreationTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.creationTimestamp
 	}
@@ -160,7 +170,7 @@ func (o *ClusterMigration) GetCreationTimestamp() (value time.Time, ok bool) {
 //
 // Details for `SdnToOvn` cluster migrations.
 func (o *ClusterMigration) SdnToOvn() *SdnToOvnClusterMigration {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.sdnToOvn
 	}
 	return nil
@@ -171,7 +181,7 @@ func (o *ClusterMigration) SdnToOvn() *SdnToOvnClusterMigration {
 //
 // Details for `SdnToOvn` cluster migrations.
 func (o *ClusterMigration) GetSdnToOvn() (value *SdnToOvnClusterMigration, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.sdnToOvn
 	}
@@ -183,7 +193,7 @@ func (o *ClusterMigration) GetSdnToOvn() (value *SdnToOvnClusterMigration, ok bo
 //
 // The state of the cluster migration.
 func (o *ClusterMigration) State() *ClusterMigrationState {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.state
 	}
 	return nil
@@ -194,7 +204,7 @@ func (o *ClusterMigration) State() *ClusterMigrationState {
 //
 // The state of the cluster migration.
 func (o *ClusterMigration) GetState() (value *ClusterMigrationState, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.state
 	}
@@ -208,7 +218,7 @@ func (o *ClusterMigration) GetState() (value *ClusterMigrationState, ok bool) {
 // value. For example, if the type is `sdnToOvn` then only the `SdnToOvn` attribute will be
 // populated.
 func (o *ClusterMigration) Type() ClusterMigrationType {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.type_
 	}
 	return ClusterMigrationType("")
@@ -221,7 +231,7 @@ func (o *ClusterMigration) Type() ClusterMigrationType {
 // value. For example, if the type is `sdnToOvn` then only the `SdnToOvn` attribute will be
 // populated.
 func (o *ClusterMigration) GetType() (value ClusterMigrationType, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.type_
 	}
@@ -234,7 +244,7 @@ func (o *ClusterMigration) GetType() (value ClusterMigrationType, ok bool) {
 // Date and time when the cluster migration was last updated, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *ClusterMigration) UpdatedTimestamp() time.Time {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.updatedTimestamp
 	}
 	return time.Time{}
@@ -246,7 +256,7 @@ func (o *ClusterMigration) UpdatedTimestamp() time.Time {
 // Date and time when the cluster migration was last updated, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *ClusterMigration) GetUpdatedTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.updatedTimestamp
 	}

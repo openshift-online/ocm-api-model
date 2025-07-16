@@ -33,10 +33,10 @@ const FeatureToggleNilKind = "FeatureToggleNil"
 
 // FeatureToggle represents the values of the 'feature_toggle' type.
 type FeatureToggle struct {
-	bitmap_ uint32
-	id      string
-	href    string
-	enabled bool
+	fieldSet_ []bool
+	id        string
+	href      string
+	enabled   bool
 }
 
 // Kind returns the name of the type of the object.
@@ -44,7 +44,7 @@ func (o *FeatureToggle) Kind() string {
 	if o == nil {
 		return FeatureToggleNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return FeatureToggleLinkKind
 	}
 	return FeatureToggleKind
@@ -52,12 +52,12 @@ func (o *FeatureToggle) Kind() string {
 
 // Link returns true if this is a link.
 func (o *FeatureToggle) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *FeatureToggle) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -66,7 +66,7 @@ func (o *FeatureToggle) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *FeatureToggle) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -75,7 +75,7 @@ func (o *FeatureToggle) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *FeatureToggle) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -84,7 +84,7 @@ func (o *FeatureToggle) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *FeatureToggle) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -93,13 +93,23 @@ func (o *FeatureToggle) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *FeatureToggle) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Enabled returns the value of the 'enabled' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *FeatureToggle) Enabled() bool {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.enabled
 	}
 	return false
@@ -108,7 +118,7 @@ func (o *FeatureToggle) Enabled() bool {
 // GetEnabled returns the value of the 'enabled' attribute and
 // a flag indicating if the attribute has a value.
 func (o *FeatureToggle) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.enabled
 	}

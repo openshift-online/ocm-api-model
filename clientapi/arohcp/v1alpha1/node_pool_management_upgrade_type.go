@@ -35,7 +35,7 @@ const NodePoolManagementUpgradeNilKind = "NodePoolManagementUpgradeNil"
 //
 // Representation of node pool management.
 type NodePoolManagementUpgrade struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	id             string
 	href           string
 	maxSurge       string
@@ -48,7 +48,7 @@ func (o *NodePoolManagementUpgrade) Kind() string {
 	if o == nil {
 		return NodePoolManagementUpgradeNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return NodePoolManagementUpgradeLinkKind
 	}
 	return NodePoolManagementUpgradeKind
@@ -56,12 +56,12 @@ func (o *NodePoolManagementUpgrade) Kind() string {
 
 // Link returns true if this is a link.
 func (o *NodePoolManagementUpgrade) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *NodePoolManagementUpgrade) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -70,7 +70,7 @@ func (o *NodePoolManagementUpgrade) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *NodePoolManagementUpgrade) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -79,7 +79,7 @@ func (o *NodePoolManagementUpgrade) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *NodePoolManagementUpgrade) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -88,7 +88,7 @@ func (o *NodePoolManagementUpgrade) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *NodePoolManagementUpgrade) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -97,7 +97,17 @@ func (o *NodePoolManagementUpgrade) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *NodePoolManagementUpgrade) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // MaxSurge returns the value of the 'max_surge' attribute, or
@@ -105,7 +115,7 @@ func (o *NodePoolManagementUpgrade) Empty() bool {
 //
 // Maximum number of nodes in the NodePool of a ROSA HCP cluster that can be scheduled above the desired number of nodes during the upgrade.
 func (o *NodePoolManagementUpgrade) MaxSurge() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.maxSurge
 	}
 	return ""
@@ -116,7 +126,7 @@ func (o *NodePoolManagementUpgrade) MaxSurge() string {
 //
 // Maximum number of nodes in the NodePool of a ROSA HCP cluster that can be scheduled above the desired number of nodes during the upgrade.
 func (o *NodePoolManagementUpgrade) GetMaxSurge() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.maxSurge
 	}
@@ -128,7 +138,7 @@ func (o *NodePoolManagementUpgrade) GetMaxSurge() (value string, ok bool) {
 //
 // Maximum number of nodes in the NodePool of a ROSA HCP cluster that can be unavailable during the upgrade.
 func (o *NodePoolManagementUpgrade) MaxUnavailable() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.maxUnavailable
 	}
 	return ""
@@ -139,7 +149,7 @@ func (o *NodePoolManagementUpgrade) MaxUnavailable() string {
 //
 // Maximum number of nodes in the NodePool of a ROSA HCP cluster that can be unavailable during the upgrade.
 func (o *NodePoolManagementUpgrade) GetMaxUnavailable() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.maxUnavailable
 	}
@@ -151,7 +161,7 @@ func (o *NodePoolManagementUpgrade) GetMaxUnavailable() (value string, ok bool) 
 //
 // Type of strategy for handling upgrades.
 func (o *NodePoolManagementUpgrade) Type() string {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.type_
 	}
 	return ""
@@ -162,7 +172,7 @@ func (o *NodePoolManagementUpgrade) Type() string {
 //
 // Type of strategy for handling upgrades.
 func (o *NodePoolManagementUpgrade) GetType() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.type_
 	}

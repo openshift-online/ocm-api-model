@@ -42,7 +42,7 @@ func WriteMonitoringStackResource(object *MonitoringStackResource, stream *jsoni
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteMonitoringStackResource(object *MonitoringStackResource, stream *jsoni
 		stream.WriteString(object.cpu)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,9 @@ func UnmarshalMonitoringStackResource(source interface{}) (object *MonitoringSta
 
 // ReadMonitoringStackResource reads a value of the 'monitoring_stack_resource' type from the given iterator.
 func ReadMonitoringStackResource(iterator *jsoniter.Iterator) *MonitoringStackResource {
-	object := &MonitoringStackResource{}
+	object := &MonitoringStackResource{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -86,11 +88,11 @@ func ReadMonitoringStackResource(iterator *jsoniter.Iterator) *MonitoringStackRe
 		case "cpu":
 			value := iterator.ReadString()
 			object.cpu = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "memory":
 			value := iterator.ReadString()
 			object.memory = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

@@ -21,20 +21,28 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // ResourceRange represents the values of the 'resource_range' type.
 type ResourceRange struct {
-	bitmap_ uint32
-	max     int
-	min     int
+	fieldSet_ []bool
+	max       int
+	min       int
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ResourceRange) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Max returns the value of the 'max' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ResourceRange) Max() int {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.max
 	}
 	return 0
@@ -43,7 +51,7 @@ func (o *ResourceRange) Max() int {
 // GetMax returns the value of the 'max' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ResourceRange) GetMax() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.max
 	}
@@ -53,7 +61,7 @@ func (o *ResourceRange) GetMax() (value int, ok bool) {
 // Min returns the value of the 'min' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ResourceRange) Min() int {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.min
 	}
 	return 0
@@ -62,7 +70,7 @@ func (o *ResourceRange) Min() int {
 // GetMin returns the value of the 'min' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ResourceRange) GetMin() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.min
 	}

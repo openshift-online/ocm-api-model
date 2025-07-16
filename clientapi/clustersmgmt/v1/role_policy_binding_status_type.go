@@ -21,20 +21,28 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // RolePolicyBindingStatus represents the values of the 'role_policy_binding_status' type.
 type RolePolicyBindingStatus struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	description string
 	value       string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *RolePolicyBindingStatus) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Description returns the value of the 'description' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *RolePolicyBindingStatus) Description() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.description
 	}
 	return ""
@@ -43,7 +51,7 @@ func (o *RolePolicyBindingStatus) Description() string {
 // GetDescription returns the value of the 'description' attribute and
 // a flag indicating if the attribute has a value.
 func (o *RolePolicyBindingStatus) GetDescription() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.description
 	}
@@ -53,7 +61,7 @@ func (o *RolePolicyBindingStatus) GetDescription() (value string, ok bool) {
 // Value returns the value of the 'value' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *RolePolicyBindingStatus) Value() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.value
 	}
 	return ""
@@ -62,7 +70,7 @@ func (o *RolePolicyBindingStatus) Value() string {
 // GetValue returns the value of the 'value' attribute and
 // a flag indicating if the attribute has a value.
 func (o *RolePolicyBindingStatus) GetValue() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.value
 	}

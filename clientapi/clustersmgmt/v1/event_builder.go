@@ -19,32 +19,40 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// EventBuilder contains the data and logic needed to build 'event' objects.
-//
 // Representation of a trackable event.
 type EventBuilder struct {
-	bitmap_ uint32
-	body    map[string]string
-	key     string
+	fieldSet_ []bool
+	body      map[string]string
+	key       string
 }
 
 // NewEvent creates a new builder of 'event' objects.
 func NewEvent() *EventBuilder {
-	return &EventBuilder{}
+	return &EventBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *EventBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Body sets the value of the 'body' attribute to the given value.
 func (b *EventBuilder) Body(value map[string]string) *EventBuilder {
 	b.body = value
 	if value != nil {
-		b.bitmap_ |= 1
+		b.fieldSet_[0] = true
 	} else {
-		b.bitmap_ &^= 1
+		b.fieldSet_[0] = false
 	}
 	return b
 }
@@ -52,7 +60,7 @@ func (b *EventBuilder) Body(value map[string]string) *EventBuilder {
 // Key sets the value of the 'key' attribute to the given value.
 func (b *EventBuilder) Key(value string) *EventBuilder {
 	b.key = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -61,7 +69,10 @@ func (b *EventBuilder) Copy(object *Event) *EventBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if len(object.body) > 0 {
 		b.body = map[string]string{}
 		for k, v := range object.body {
@@ -77,7 +88,10 @@ func (b *EventBuilder) Copy(object *Event) *EventBuilder {
 // Build creates a 'event' object using the configuration stored in the builder.
 func (b *EventBuilder) Build() (object *Event, err error) {
 	object = new(Event)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.body != nil {
 		object.body = make(map[string]string)
 		for k, v := range b.body {

@@ -43,7 +43,7 @@ func WriteAddonRequirement(object *AddonRequirement, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -52,7 +52,7 @@ func WriteAddonRequirement(object *AddonRequirement, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.data != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.data != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -81,7 +81,7 @@ func WriteAddonRequirement(object *AddonRequirement, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -90,7 +90,7 @@ func WriteAddonRequirement(object *AddonRequirement, stream *jsoniter.Stream) {
 		stream.WriteBool(object.enabled)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -99,7 +99,7 @@ func WriteAddonRequirement(object *AddonRequirement, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.resource))
 		count++
 	}
-	present_ = object.bitmap_&16 != 0 && object.status != nil
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.status != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -124,7 +124,9 @@ func UnmarshalAddonRequirement(source interface{}) (object *AddonRequirement, er
 
 // ReadAddonRequirement reads a value of the 'addon_requirement' type from the given iterator.
 func ReadAddonRequirement(iterator *jsoniter.Iterator) *AddonRequirement {
-	object := &AddonRequirement{}
+	object := &AddonRequirement{
+		fieldSet_: make([]bool, 5),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -134,7 +136,7 @@ func ReadAddonRequirement(iterator *jsoniter.Iterator) *AddonRequirement {
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "data":
 			value := map[string]interface{}{}
 			for {
@@ -147,20 +149,20 @@ func ReadAddonRequirement(iterator *jsoniter.Iterator) *AddonRequirement {
 				value[key] = item
 			}
 			object.data = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "resource":
 			text := iterator.ReadString()
 			value := AddonRequirementResource(text)
 			object.resource = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "status":
 			value := ReadAddonRequirementStatus(iterator)
 			object.status = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		default:
 			iterator.ReadAny()
 		}

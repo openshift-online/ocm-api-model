@@ -19,28 +19,36 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// FlavourNodesBuilder contains the data and logic needed to build 'flavour_nodes' objects.
-//
 // Counts of different classes of nodes inside a flavour.
 type FlavourNodesBuilder struct {
-	bitmap_ uint32
-	master  int
+	fieldSet_ []bool
+	master    int
 }
 
 // NewFlavourNodes creates a new builder of 'flavour_nodes' objects.
 func NewFlavourNodes() *FlavourNodesBuilder {
-	return &FlavourNodesBuilder{}
+	return &FlavourNodesBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *FlavourNodesBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Master sets the value of the 'master' attribute to the given value.
 func (b *FlavourNodesBuilder) Master(value int) *FlavourNodesBuilder {
 	b.master = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -49,7 +57,10 @@ func (b *FlavourNodesBuilder) Copy(object *FlavourNodes) *FlavourNodesBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.master = object.master
 	return b
 }
@@ -57,7 +68,10 @@ func (b *FlavourNodesBuilder) Copy(object *FlavourNodes) *FlavourNodesBuilder {
 // Build creates a 'flavour_nodes' object using the configuration stored in the builder.
 func (b *FlavourNodesBuilder) Build() (object *FlavourNodes, err error) {
 	object = new(FlavourNodes)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.master = b.master
 	return
 }

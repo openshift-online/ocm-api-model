@@ -43,7 +43,7 @@ func WriteEvent(object *Event, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.body != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.body != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -72,7 +72,7 @@ func WriteEvent(object *Event, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -97,7 +97,9 @@ func UnmarshalEvent(source interface{}) (object *Event, err error) {
 
 // ReadEvent reads a value of the 'event' type from the given iterator.
 func ReadEvent(iterator *jsoniter.Iterator) *Event {
-	object := &Event{}
+	object := &Event{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -115,11 +117,11 @@ func ReadEvent(iterator *jsoniter.Iterator) *Event {
 				value[key] = item
 			}
 			object.body = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "key":
 			value := iterator.ReadString()
 			object.key = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

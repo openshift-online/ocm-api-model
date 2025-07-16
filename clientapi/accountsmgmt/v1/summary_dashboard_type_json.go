@@ -42,13 +42,13 @@ func WriteSummaryDashboard(object *SummaryDashboard, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(SummaryDashboardLinkKind)
 	} else {
 		stream.WriteString(SummaryDashboardKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteSummaryDashboard(object *SummaryDashboard, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteSummaryDashboard(object *SummaryDashboard, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0 && object.metrics != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.metrics != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -90,7 +90,9 @@ func UnmarshalSummaryDashboard(source interface{}) (object *SummaryDashboard, er
 
 // ReadSummaryDashboard reads a value of the 'summary_dashboard' type from the given iterator.
 func ReadSummaryDashboard(iterator *jsoniter.Iterator) *SummaryDashboard {
-	object := &SummaryDashboard{}
+	object := &SummaryDashboard{
+		fieldSet_: make([]bool, 4),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -100,18 +102,18 @@ func ReadSummaryDashboard(iterator *jsoniter.Iterator) *SummaryDashboard {
 		case "kind":
 			value := iterator.ReadString()
 			if value == SummaryDashboardLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "metrics":
 			value := ReadSummaryMetricsList(iterator)
 			object.metrics = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		default:
 			iterator.ReadAny()
 		}

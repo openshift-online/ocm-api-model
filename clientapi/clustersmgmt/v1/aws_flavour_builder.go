@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AWSFlavourBuilder contains the data and logic needed to build 'AWS_flavour' objects.
-//
 // Specification for different classes of nodes inside a flavour.
 type AWSFlavourBuilder struct {
-	bitmap_             uint32
+	fieldSet_           []bool
 	computeInstanceType string
 	infraInstanceType   string
 	infraVolume         *AWSVolumeBuilder
@@ -34,25 +32,35 @@ type AWSFlavourBuilder struct {
 
 // NewAWSFlavour creates a new builder of 'AWS_flavour' objects.
 func NewAWSFlavour() *AWSFlavourBuilder {
-	return &AWSFlavourBuilder{}
+	return &AWSFlavourBuilder{
+		fieldSet_: make([]bool, 6),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AWSFlavourBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ComputeInstanceType sets the value of the 'compute_instance_type' attribute to the given value.
 func (b *AWSFlavourBuilder) ComputeInstanceType(value string) *AWSFlavourBuilder {
 	b.computeInstanceType = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // InfraInstanceType sets the value of the 'infra_instance_type' attribute to the given value.
 func (b *AWSFlavourBuilder) InfraInstanceType(value string) *AWSFlavourBuilder {
 	b.infraInstanceType = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -62,9 +70,9 @@ func (b *AWSFlavourBuilder) InfraInstanceType(value string) *AWSFlavourBuilder {
 func (b *AWSFlavourBuilder) InfraVolume(value *AWSVolumeBuilder) *AWSFlavourBuilder {
 	b.infraVolume = value
 	if value != nil {
-		b.bitmap_ |= 4
+		b.fieldSet_[2] = true
 	} else {
-		b.bitmap_ &^= 4
+		b.fieldSet_[2] = false
 	}
 	return b
 }
@@ -72,7 +80,7 @@ func (b *AWSFlavourBuilder) InfraVolume(value *AWSVolumeBuilder) *AWSFlavourBuil
 // MasterInstanceType sets the value of the 'master_instance_type' attribute to the given value.
 func (b *AWSFlavourBuilder) MasterInstanceType(value string) *AWSFlavourBuilder {
 	b.masterInstanceType = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -82,9 +90,9 @@ func (b *AWSFlavourBuilder) MasterInstanceType(value string) *AWSFlavourBuilder 
 func (b *AWSFlavourBuilder) MasterVolume(value *AWSVolumeBuilder) *AWSFlavourBuilder {
 	b.masterVolume = value
 	if value != nil {
-		b.bitmap_ |= 16
+		b.fieldSet_[4] = true
 	} else {
-		b.bitmap_ &^= 16
+		b.fieldSet_[4] = false
 	}
 	return b
 }
@@ -95,9 +103,9 @@ func (b *AWSFlavourBuilder) MasterVolume(value *AWSVolumeBuilder) *AWSFlavourBui
 func (b *AWSFlavourBuilder) WorkerVolume(value *AWSVolumeBuilder) *AWSFlavourBuilder {
 	b.workerVolume = value
 	if value != nil {
-		b.bitmap_ |= 32
+		b.fieldSet_[5] = true
 	} else {
-		b.bitmap_ &^= 32
+		b.fieldSet_[5] = false
 	}
 	return b
 }
@@ -107,7 +115,10 @@ func (b *AWSFlavourBuilder) Copy(object *AWSFlavour) *AWSFlavourBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.computeInstanceType = object.computeInstanceType
 	b.infraInstanceType = object.infraInstanceType
 	if object.infraVolume != nil {
@@ -132,7 +143,10 @@ func (b *AWSFlavourBuilder) Copy(object *AWSFlavour) *AWSFlavourBuilder {
 // Build creates a 'AWS_flavour' object using the configuration stored in the builder.
 func (b *AWSFlavourBuilder) Build() (object *AWSFlavour, err error) {
 	object = new(AWSFlavour)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.computeInstanceType = b.computeInstanceType
 	object.infraInstanceType = b.infraInstanceType
 	if b.infraVolume != nil {

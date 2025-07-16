@@ -21,14 +21,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 
 // DefaultCapability represents the values of the 'default_capability' type.
 type DefaultCapability struct {
-	bitmap_ uint32
-	name    string
-	value   string
+	fieldSet_ []bool
+	name      string
+	value     string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *DefaultCapability) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Name returns the value of the 'name' attribute, or
@@ -36,7 +44,7 @@ func (o *DefaultCapability) Empty() bool {
 //
 // Name of the default capability (the key).
 func (o *DefaultCapability) Name() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.name
 	}
 	return ""
@@ -47,7 +55,7 @@ func (o *DefaultCapability) Name() string {
 //
 // Name of the default capability (the key).
 func (o *DefaultCapability) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.name
 	}
@@ -59,7 +67,7 @@ func (o *DefaultCapability) GetName() (value string, ok bool) {
 //
 // Value of the default capability.
 func (o *DefaultCapability) Value() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.value
 	}
 	return ""
@@ -70,7 +78,7 @@ func (o *DefaultCapability) Value() string {
 //
 // Value of the default capability.
 func (o *DefaultCapability) GetValue() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.value
 	}

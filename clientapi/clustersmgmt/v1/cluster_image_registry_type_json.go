@@ -42,7 +42,7 @@ func WriteClusterImageRegistry(object *ClusterImageRegistry, stream *jsoniter.St
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,9 @@ func UnmarshalClusterImageRegistry(source interface{}) (object *ClusterImageRegi
 
 // ReadClusterImageRegistry reads a value of the 'cluster_image_registry' type from the given iterator.
 func ReadClusterImageRegistry(iterator *jsoniter.Iterator) *ClusterImageRegistry {
-	object := &ClusterImageRegistry{}
+	object := &ClusterImageRegistry{
+		fieldSet_: make([]bool, 1),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -77,7 +79,7 @@ func ReadClusterImageRegistry(iterator *jsoniter.Iterator) *ClusterImageRegistry
 		case "state":
 			value := iterator.ReadString()
 			object.state = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

@@ -42,7 +42,7 @@ func WriteAlertInfo(object *AlertInfo, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAlertInfo(object *AlertInfo, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,9 @@ func UnmarshalAlertInfo(source interface{}) (object *AlertInfo, err error) {
 
 // ReadAlertInfo reads a value of the 'alert_info' type from the given iterator.
 func ReadAlertInfo(iterator *jsoniter.Iterator) *AlertInfo {
-	object := &AlertInfo{}
+	object := &AlertInfo{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -86,12 +88,12 @@ func ReadAlertInfo(iterator *jsoniter.Iterator) *AlertInfo {
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "severity":
 			text := iterator.ReadString()
 			value := AlertSeverity(text)
 			object.severity = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

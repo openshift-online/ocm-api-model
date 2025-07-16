@@ -19,9 +19,8 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AutoscalerScaleDownConfigBuilder contains the data and logic needed to build 'autoscaler_scale_down_config' objects.
 type AutoscalerScaleDownConfigBuilder struct {
-	bitmap_              uint32
+	fieldSet_            []bool
 	delayAfterAdd        string
 	delayAfterDelete     string
 	delayAfterFailure    string
@@ -32,53 +31,63 @@ type AutoscalerScaleDownConfigBuilder struct {
 
 // NewAutoscalerScaleDownConfig creates a new builder of 'autoscaler_scale_down_config' objects.
 func NewAutoscalerScaleDownConfig() *AutoscalerScaleDownConfigBuilder {
-	return &AutoscalerScaleDownConfigBuilder{}
+	return &AutoscalerScaleDownConfigBuilder{
+		fieldSet_: make([]bool, 6),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AutoscalerScaleDownConfigBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // DelayAfterAdd sets the value of the 'delay_after_add' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) DelayAfterAdd(value string) *AutoscalerScaleDownConfigBuilder {
 	b.delayAfterAdd = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // DelayAfterDelete sets the value of the 'delay_after_delete' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) DelayAfterDelete(value string) *AutoscalerScaleDownConfigBuilder {
 	b.delayAfterDelete = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // DelayAfterFailure sets the value of the 'delay_after_failure' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) DelayAfterFailure(value string) *AutoscalerScaleDownConfigBuilder {
 	b.delayAfterFailure = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) Enabled(value bool) *AutoscalerScaleDownConfigBuilder {
 	b.enabled = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // UnneededTime sets the value of the 'unneeded_time' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) UnneededTime(value string) *AutoscalerScaleDownConfigBuilder {
 	b.unneededTime = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // UtilizationThreshold sets the value of the 'utilization_threshold' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) UtilizationThreshold(value string) *AutoscalerScaleDownConfigBuilder {
 	b.utilizationThreshold = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -87,7 +96,10 @@ func (b *AutoscalerScaleDownConfigBuilder) Copy(object *AutoscalerScaleDownConfi
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.delayAfterAdd = object.delayAfterAdd
 	b.delayAfterDelete = object.delayAfterDelete
 	b.delayAfterFailure = object.delayAfterFailure
@@ -100,7 +112,10 @@ func (b *AutoscalerScaleDownConfigBuilder) Copy(object *AutoscalerScaleDownConfi
 // Build creates a 'autoscaler_scale_down_config' object using the configuration stored in the builder.
 func (b *AutoscalerScaleDownConfigBuilder) Build() (object *AutoscalerScaleDownConfig, err error) {
 	object = new(AutoscalerScaleDownConfig)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.delayAfterAdd = b.delayAfterAdd
 	object.delayAfterDelete = b.delayAfterDelete
 	object.delayAfterFailure = b.delayAfterFailure

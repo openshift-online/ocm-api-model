@@ -19,36 +19,44 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
-// SelfFeatureReviewResponseBuilder contains the data and logic needed to build 'self_feature_review_response' objects.
-//
 // Representation of a feature review response, performed against oneself
 type SelfFeatureReviewResponseBuilder struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	featureID string
 	enabled   bool
 }
 
 // NewSelfFeatureReviewResponse creates a new builder of 'self_feature_review_response' objects.
 func NewSelfFeatureReviewResponse() *SelfFeatureReviewResponseBuilder {
-	return &SelfFeatureReviewResponseBuilder{}
+	return &SelfFeatureReviewResponseBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SelfFeatureReviewResponseBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *SelfFeatureReviewResponseBuilder) Enabled(value bool) *SelfFeatureReviewResponseBuilder {
 	b.enabled = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // FeatureID sets the value of the 'feature_ID' attribute to the given value.
 func (b *SelfFeatureReviewResponseBuilder) FeatureID(value string) *SelfFeatureReviewResponseBuilder {
 	b.featureID = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -57,7 +65,10 @@ func (b *SelfFeatureReviewResponseBuilder) Copy(object *SelfFeatureReviewRespons
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.enabled = object.enabled
 	b.featureID = object.featureID
 	return b
@@ -66,7 +77,10 @@ func (b *SelfFeatureReviewResponseBuilder) Copy(object *SelfFeatureReviewRespons
 // Build creates a 'self_feature_review_response' object using the configuration stored in the builder.
 func (b *SelfFeatureReviewResponseBuilder) Build() (object *SelfFeatureReviewResponse, err error) {
 	object = new(SelfFeatureReviewResponse)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.enabled = b.enabled
 	object.featureID = b.featureID
 	return

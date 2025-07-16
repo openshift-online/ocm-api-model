@@ -43,7 +43,7 @@ func WriteSocketTotalNodeRoleOSMetricNode(object *SocketTotalNodeRoleOSMetricNod
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.nodeRoles != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.nodeRoles != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -52,7 +52,7 @@ func WriteSocketTotalNodeRoleOSMetricNode(object *SocketTotalNodeRoleOSMetricNod
 		WriteStringList(object.nodeRoles, stream)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -61,7 +61,7 @@ func WriteSocketTotalNodeRoleOSMetricNode(object *SocketTotalNodeRoleOSMetricNod
 		stream.WriteString(object.operatingSystem)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -70,7 +70,7 @@ func WriteSocketTotalNodeRoleOSMetricNode(object *SocketTotalNodeRoleOSMetricNod
 		stream.WriteFloat64(object.socketTotal)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -95,7 +95,9 @@ func UnmarshalSocketTotalNodeRoleOSMetricNode(source interface{}) (object *Socke
 
 // ReadSocketTotalNodeRoleOSMetricNode reads a value of the 'socket_total_node_role_OS_metric_node' type from the given iterator.
 func ReadSocketTotalNodeRoleOSMetricNode(iterator *jsoniter.Iterator) *SocketTotalNodeRoleOSMetricNode {
-	object := &SocketTotalNodeRoleOSMetricNode{}
+	object := &SocketTotalNodeRoleOSMetricNode{
+		fieldSet_: make([]bool, 4),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -105,15 +107,15 @@ func ReadSocketTotalNodeRoleOSMetricNode(iterator *jsoniter.Iterator) *SocketTot
 		case "node_roles":
 			value := ReadStringList(iterator)
 			object.nodeRoles = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "operating_system":
 			value := iterator.ReadString()
 			object.operatingSystem = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "socket_total":
 			value := iterator.ReadFloat64()
 			object.socketTotal = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "time":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -121,7 +123,7 @@ func ReadSocketTotalNodeRoleOSMetricNode(iterator *jsoniter.Iterator) *SocketTot
 				iterator.ReportError("", err.Error())
 			}
 			object.time = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		default:
 			iterator.ReadAny()
 		}

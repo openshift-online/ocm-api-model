@@ -19,44 +19,52 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// HTPasswdIdentityProviderBuilder contains the data and logic needed to build 'HT_passwd_identity_provider' objects.
-//
 // Details for `htpasswd` identity providers.
 type HTPasswdIdentityProviderBuilder struct {
-	bitmap_  uint32
-	password string
-	username string
-	users    *HTPasswdUserListBuilder
+	fieldSet_ []bool
+	password  string
+	username  string
+	users     *HTPasswdUserListBuilder
 }
 
 // NewHTPasswdIdentityProvider creates a new builder of 'HT_passwd_identity_provider' objects.
 func NewHTPasswdIdentityProvider() *HTPasswdIdentityProviderBuilder {
-	return &HTPasswdIdentityProviderBuilder{}
+	return &HTPasswdIdentityProviderBuilder{
+		fieldSet_: make([]bool, 3),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *HTPasswdIdentityProviderBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Password sets the value of the 'password' attribute to the given value.
 func (b *HTPasswdIdentityProviderBuilder) Password(value string) *HTPasswdIdentityProviderBuilder {
 	b.password = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Username sets the value of the 'username' attribute to the given value.
 func (b *HTPasswdIdentityProviderBuilder) Username(value string) *HTPasswdIdentityProviderBuilder {
 	b.username = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // Users sets the value of the 'users' attribute to the given values.
 func (b *HTPasswdIdentityProviderBuilder) Users(value *HTPasswdUserListBuilder) *HTPasswdIdentityProviderBuilder {
 	b.users = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -65,7 +73,10 @@ func (b *HTPasswdIdentityProviderBuilder) Copy(object *HTPasswdIdentityProvider)
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.password = object.password
 	b.username = object.username
 	if object.users != nil {
@@ -79,7 +90,10 @@ func (b *HTPasswdIdentityProviderBuilder) Copy(object *HTPasswdIdentityProvider)
 // Build creates a 'HT_passwd_identity_provider' object using the configuration stored in the builder.
 func (b *HTPasswdIdentityProviderBuilder) Build() (object *HTPasswdIdentityProvider, err error) {
 	object = new(HTPasswdIdentityProvider)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.password = b.password
 	object.username = b.username
 	if b.users != nil {

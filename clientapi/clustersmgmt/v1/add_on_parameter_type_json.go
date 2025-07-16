@@ -42,13 +42,13 @@ func WriteAddOnParameter(object *AddOnParameter, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(AddOnParameterLinkKind)
 	} else {
 		stream.WriteString(AddOnParameterKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteAddOnParameter(object *AddOnParameter, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteAddOnParameter(object *AddOnParameter, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0 && object.addon != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.addon != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteAddOnParameter(object *AddOnParameter, stream *jsoniter.Stream) {
 		WriteAddOn(object.addon, stream)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0 && object.conditions != nil
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.conditions != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteAddOnParameter(object *AddOnParameter, stream *jsoniter.Stream) {
 		WriteAddOnRequirementList(object.conditions, stream)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -92,7 +92,7 @@ func WriteAddOnParameter(object *AddOnParameter, stream *jsoniter.Stream) {
 		stream.WriteString(object.defaultValue)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -101,7 +101,7 @@ func WriteAddOnParameter(object *AddOnParameter, stream *jsoniter.Stream) {
 		stream.WriteString(object.description)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -110,7 +110,7 @@ func WriteAddOnParameter(object *AddOnParameter, stream *jsoniter.Stream) {
 		stream.WriteBool(object.editable)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -119,7 +119,7 @@ func WriteAddOnParameter(object *AddOnParameter, stream *jsoniter.Stream) {
 		stream.WriteString(object.editableDirection)
 		count++
 	}
-	present_ = object.bitmap_&512 != 0
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -128,7 +128,7 @@ func WriteAddOnParameter(object *AddOnParameter, stream *jsoniter.Stream) {
 		stream.WriteBool(object.enabled)
 		count++
 	}
-	present_ = object.bitmap_&1024 != 0
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -137,7 +137,7 @@ func WriteAddOnParameter(object *AddOnParameter, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = object.bitmap_&2048 != 0 && object.options != nil
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11] && object.options != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -146,7 +146,7 @@ func WriteAddOnParameter(object *AddOnParameter, stream *jsoniter.Stream) {
 		WriteAddOnParameterOptionList(object.options, stream)
 		count++
 	}
-	present_ = object.bitmap_&4096 != 0
+	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -155,7 +155,7 @@ func WriteAddOnParameter(object *AddOnParameter, stream *jsoniter.Stream) {
 		stream.WriteBool(object.required)
 		count++
 	}
-	present_ = object.bitmap_&8192 != 0
+	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -164,7 +164,7 @@ func WriteAddOnParameter(object *AddOnParameter, stream *jsoniter.Stream) {
 		stream.WriteString(object.validation)
 		count++
 	}
-	present_ = object.bitmap_&16384 != 0
+	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -173,7 +173,7 @@ func WriteAddOnParameter(object *AddOnParameter, stream *jsoniter.Stream) {
 		stream.WriteString(object.validationErrMsg)
 		count++
 	}
-	present_ = object.bitmap_&32768 != 0
+	present_ = len(object.fieldSet_) > 15 && object.fieldSet_[15]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -198,7 +198,9 @@ func UnmarshalAddOnParameter(source interface{}) (object *AddOnParameter, err er
 
 // ReadAddOnParameter reads a value of the 'add_on_parameter' type from the given iterator.
 func ReadAddOnParameter(iterator *jsoniter.Iterator) *AddOnParameter {
-	object := &AddOnParameter{}
+	object := &AddOnParameter{
+		fieldSet_: make([]bool, 16),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -208,66 +210,66 @@ func ReadAddOnParameter(iterator *jsoniter.Iterator) *AddOnParameter {
 		case "kind":
 			value := iterator.ReadString()
 			if value == AddOnParameterLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "addon":
 			value := ReadAddOn(iterator)
 			object.addon = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "conditions":
 			value := ReadAddOnRequirementList(iterator)
 			object.conditions = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "default_value":
 			value := iterator.ReadString()
 			object.defaultValue = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "description":
 			value := iterator.ReadString()
 			object.description = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "editable":
 			value := iterator.ReadBool()
 			object.editable = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "editable_direction":
 			value := iterator.ReadString()
 			object.editableDirection = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.bitmap_ |= 512
+			object.fieldSet_[9] = true
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.bitmap_ |= 1024
+			object.fieldSet_[10] = true
 		case "options":
 			value := ReadAddOnParameterOptionList(iterator)
 			object.options = value
-			object.bitmap_ |= 2048
+			object.fieldSet_[11] = true
 		case "required":
 			value := iterator.ReadBool()
 			object.required = value
-			object.bitmap_ |= 4096
+			object.fieldSet_[12] = true
 		case "validation":
 			value := iterator.ReadString()
 			object.validation = value
-			object.bitmap_ |= 8192
+			object.fieldSet_[13] = true
 		case "validation_err_msg":
 			value := iterator.ReadString()
 			object.validationErrMsg = value
-			object.bitmap_ |= 16384
+			object.fieldSet_[14] = true
 		case "value_type":
 			value := iterator.ReadString()
 			object.valueType = value
-			object.bitmap_ |= 32768
+			object.fieldSet_[15] = true
 		default:
 			iterator.ReadAny()
 		}

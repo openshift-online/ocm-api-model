@@ -23,9 +23,8 @@ import (
 	time "time"
 )
 
-// QueueBuilder contains the data and logic needed to build 'queue' objects.
 type QueueBuilder struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	id          string
 	href        string
 	createdAt   time.Time
@@ -37,66 +36,77 @@ type QueueBuilder struct {
 
 // NewQueue creates a new builder of 'queue' objects.
 func NewQueue() *QueueBuilder {
-	return &QueueBuilder{}
+	return &QueueBuilder{
+		fieldSet_: make([]bool, 8),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *QueueBuilder) Link(value bool) *QueueBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *QueueBuilder) ID(value string) *QueueBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *QueueBuilder) HREF(value string) *QueueBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *QueueBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *QueueBuilder) CreatedAt(value time.Time) *QueueBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // MaxAttempts sets the value of the 'max_attempts' attribute to the given value.
 func (b *QueueBuilder) MaxAttempts(value int) *QueueBuilder {
 	b.maxAttempts = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // MaxRunTime sets the value of the 'max_run_time' attribute to the given value.
 func (b *QueueBuilder) MaxRunTime(value int) *QueueBuilder {
 	b.maxRunTime = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *QueueBuilder) Name(value string) *QueueBuilder {
 	b.name = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *QueueBuilder) UpdatedAt(value time.Time) *QueueBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
@@ -105,7 +115,10 @@ func (b *QueueBuilder) Copy(object *Queue) *QueueBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.createdAt = object.createdAt
@@ -121,7 +134,10 @@ func (b *QueueBuilder) Build() (object *Queue, err error) {
 	object = new(Queue)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.createdAt = b.createdAt
 	object.maxAttempts = b.maxAttempts
 	object.maxRunTime = b.maxRunTime

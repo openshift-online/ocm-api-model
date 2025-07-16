@@ -19,9 +19,8 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// SupportCaseRequestBuilder contains the data and logic needed to build 'support_case_request' objects.
 type SupportCaseRequestBuilder struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	id             string
 	href           string
 	clusterId      string
@@ -35,80 +34,91 @@ type SupportCaseRequestBuilder struct {
 
 // NewSupportCaseRequest creates a new builder of 'support_case_request' objects.
 func NewSupportCaseRequest() *SupportCaseRequestBuilder {
-	return &SupportCaseRequestBuilder{}
+	return &SupportCaseRequestBuilder{
+		fieldSet_: make([]bool, 10),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *SupportCaseRequestBuilder) Link(value bool) *SupportCaseRequestBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *SupportCaseRequestBuilder) ID(value string) *SupportCaseRequestBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *SupportCaseRequestBuilder) HREF(value string) *SupportCaseRequestBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SupportCaseRequestBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *SupportCaseRequestBuilder) ClusterId(value string) *SupportCaseRequestBuilder {
 	b.clusterId = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // ClusterUuid sets the value of the 'cluster_uuid' attribute to the given value.
 func (b *SupportCaseRequestBuilder) ClusterUuid(value string) *SupportCaseRequestBuilder {
 	b.clusterUuid = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *SupportCaseRequestBuilder) Description(value string) *SupportCaseRequestBuilder {
 	b.description = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // EventStreamId sets the value of the 'event_stream_id' attribute to the given value.
 func (b *SupportCaseRequestBuilder) EventStreamId(value string) *SupportCaseRequestBuilder {
 	b.eventStreamId = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // Severity sets the value of the 'severity' attribute to the given value.
 func (b *SupportCaseRequestBuilder) Severity(value string) *SupportCaseRequestBuilder {
 	b.severity = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // SubscriptionId sets the value of the 'subscription_id' attribute to the given value.
 func (b *SupportCaseRequestBuilder) SubscriptionId(value string) *SupportCaseRequestBuilder {
 	b.subscriptionId = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // Summary sets the value of the 'summary' attribute to the given value.
 func (b *SupportCaseRequestBuilder) Summary(value string) *SupportCaseRequestBuilder {
 	b.summary = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
@@ -117,7 +127,10 @@ func (b *SupportCaseRequestBuilder) Copy(object *SupportCaseRequest) *SupportCas
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.clusterId = object.clusterId
@@ -135,7 +148,10 @@ func (b *SupportCaseRequestBuilder) Build() (object *SupportCaseRequest, err err
 	object = new(SupportCaseRequest)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.clusterId = b.clusterId
 	object.clusterUuid = b.clusterUuid
 	object.description = b.description

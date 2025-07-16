@@ -42,7 +42,7 @@ func WriteDNS(object *DNS, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,9 @@ func UnmarshalDNS(source interface{}) (object *DNS, err error) {
 
 // ReadDNS reads a value of the 'DNS' type from the given iterator.
 func ReadDNS(iterator *jsoniter.Iterator) *DNS {
-	object := &DNS{}
+	object := &DNS{
+		fieldSet_: make([]bool, 1),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -77,7 +79,7 @@ func ReadDNS(iterator *jsoniter.Iterator) *DNS {
 		case "base_domain":
 			value := iterator.ReadString()
 			object.baseDomain = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

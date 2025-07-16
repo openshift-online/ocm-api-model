@@ -19,13 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AzureOperatorsAuthenticationManagedIdentitiesBuilder contains the data and logic needed to build 'azure_operators_authentication_managed_identities' objects.
-//
 // Represents the information related to Azure User-Assigned managed identities
 // needed to perform Operators authentication based on Azure User-Assigned
 // Managed Identities
 type AzureOperatorsAuthenticationManagedIdentitiesBuilder struct {
-	bitmap_                                uint32
+	fieldSet_                              []bool
 	controlPlaneOperatorsManagedIdentities map[string]*AzureControlPlaneManagedIdentityBuilder
 	dataPlaneOperatorsManagedIdentities    map[string]*AzureDataPlaneManagedIdentityBuilder
 	managedIdentitiesDataPlaneIdentityUrl  string
@@ -34,21 +32,31 @@ type AzureOperatorsAuthenticationManagedIdentitiesBuilder struct {
 
 // NewAzureOperatorsAuthenticationManagedIdentities creates a new builder of 'azure_operators_authentication_managed_identities' objects.
 func NewAzureOperatorsAuthenticationManagedIdentities() *AzureOperatorsAuthenticationManagedIdentitiesBuilder {
-	return &AzureOperatorsAuthenticationManagedIdentitiesBuilder{}
+	return &AzureOperatorsAuthenticationManagedIdentitiesBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ControlPlaneOperatorsManagedIdentities sets the value of the 'control_plane_operators_managed_identities' attribute to the given value.
 func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) ControlPlaneOperatorsManagedIdentities(value map[string]*AzureControlPlaneManagedIdentityBuilder) *AzureOperatorsAuthenticationManagedIdentitiesBuilder {
 	b.controlPlaneOperatorsManagedIdentities = value
 	if value != nil {
-		b.bitmap_ |= 1
+		b.fieldSet_[0] = true
 	} else {
-		b.bitmap_ &^= 1
+		b.fieldSet_[0] = false
 	}
 	return b
 }
@@ -57,9 +65,9 @@ func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) ControlPlaneOpera
 func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) DataPlaneOperatorsManagedIdentities(value map[string]*AzureDataPlaneManagedIdentityBuilder) *AzureOperatorsAuthenticationManagedIdentitiesBuilder {
 	b.dataPlaneOperatorsManagedIdentities = value
 	if value != nil {
-		b.bitmap_ |= 2
+		b.fieldSet_[1] = true
 	} else {
-		b.bitmap_ &^= 2
+		b.fieldSet_[1] = false
 	}
 	return b
 }
@@ -67,7 +75,7 @@ func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) DataPlaneOperator
 // ManagedIdentitiesDataPlaneIdentityUrl sets the value of the 'managed_identities_data_plane_identity_url' attribute to the given value.
 func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) ManagedIdentitiesDataPlaneIdentityUrl(value string) *AzureOperatorsAuthenticationManagedIdentitiesBuilder {
 	b.managedIdentitiesDataPlaneIdentityUrl = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -78,9 +86,9 @@ func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) ManagedIdentities
 func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) ServiceManagedIdentity(value *AzureServiceManagedIdentityBuilder) *AzureOperatorsAuthenticationManagedIdentitiesBuilder {
 	b.serviceManagedIdentity = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -90,7 +98,10 @@ func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) Copy(object *Azur
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if len(object.controlPlaneOperatorsManagedIdentities) > 0 {
 		b.controlPlaneOperatorsManagedIdentities = map[string]*AzureControlPlaneManagedIdentityBuilder{}
 		for k, v := range object.controlPlaneOperatorsManagedIdentities {
@@ -119,7 +130,10 @@ func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) Copy(object *Azur
 // Build creates a 'azure_operators_authentication_managed_identities' object using the configuration stored in the builder.
 func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) Build() (object *AzureOperatorsAuthenticationManagedIdentities, err error) {
 	object = new(AzureOperatorsAuthenticationManagedIdentities)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.controlPlaneOperatorsManagedIdentities != nil {
 		object.controlPlaneOperatorsManagedIdentities = make(map[string]*AzureControlPlaneManagedIdentity)
 		for k, v := range b.controlPlaneOperatorsManagedIdentities {

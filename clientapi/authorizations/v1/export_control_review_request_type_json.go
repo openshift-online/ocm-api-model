@@ -42,7 +42,7 @@ func WriteExportControlReviewRequest(object *ExportControlReviewRequest, stream 
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,9 @@ func UnmarshalExportControlReviewRequest(source interface{}) (object *ExportCont
 
 // ReadExportControlReviewRequest reads a value of the 'export_control_review_request' type from the given iterator.
 func ReadExportControlReviewRequest(iterator *jsoniter.Iterator) *ExportControlReviewRequest {
-	object := &ExportControlReviewRequest{}
+	object := &ExportControlReviewRequest{
+		fieldSet_: make([]bool, 1),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -77,7 +79,7 @@ func ReadExportControlReviewRequest(iterator *jsoniter.Iterator) *ExportControlR
 		case "account_username":
 			value := iterator.ReadString()
 			object.accountUsername = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

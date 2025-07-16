@@ -24,7 +24,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 // Representation of an add-on sub operator. A sub operator is an operator
 // who's life cycle is controlled by the add-on umbrella operator.
 type AddOnSubOperator struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	operatorName      string
 	operatorNamespace string
 	enabled           bool
@@ -32,7 +32,15 @@ type AddOnSubOperator struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddOnSubOperator) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Enabled returns the value of the 'enabled' attribute, or
@@ -40,7 +48,7 @@ func (o *AddOnSubOperator) Empty() bool {
 //
 // Indicates if the sub operator is enabled for the add-on
 func (o *AddOnSubOperator) Enabled() bool {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.enabled
 	}
 	return false
@@ -51,7 +59,7 @@ func (o *AddOnSubOperator) Enabled() bool {
 //
 // Indicates if the sub operator is enabled for the add-on
 func (o *AddOnSubOperator) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.enabled
 	}
@@ -63,7 +71,7 @@ func (o *AddOnSubOperator) GetEnabled() (value bool, ok bool) {
 //
 // Name of the add-on sub operator
 func (o *AddOnSubOperator) OperatorName() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.operatorName
 	}
 	return ""
@@ -74,7 +82,7 @@ func (o *AddOnSubOperator) OperatorName() string {
 //
 // Name of the add-on sub operator
 func (o *AddOnSubOperator) GetOperatorName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.operatorName
 	}
@@ -86,7 +94,7 @@ func (o *AddOnSubOperator) GetOperatorName() (value string, ok bool) {
 //
 // Namespace of the add-on sub operator
 func (o *AddOnSubOperator) OperatorNamespace() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.operatorNamespace
 	}
 	return ""
@@ -97,7 +105,7 @@ func (o *AddOnSubOperator) OperatorNamespace() string {
 //
 // Namespace of the add-on sub operator
 func (o *AddOnSubOperator) GetOperatorNamespace() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.operatorNamespace
 	}

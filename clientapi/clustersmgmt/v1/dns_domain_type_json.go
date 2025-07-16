@@ -43,13 +43,13 @@ func WriteDNSDomain(object *DNSDomain, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(DNSDomainLinkKind)
 	} else {
 		stream.WriteString(DNSDomainKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteDNSDomain(object *DNSDomain, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteDNSDomain(object *DNSDomain, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0 && object.cluster != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.cluster != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteDNSDomain(object *DNSDomain, stream *jsoniter.Stream) {
 		WriteClusterLink(object.cluster, stream)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteDNSDomain(object *DNSDomain, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.clusterArch))
 		count++
 	}
-	present_ = object.bitmap_&32 != 0 && object.organization != nil
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.organization != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteDNSDomain(object *DNSDomain, stream *jsoniter.Stream) {
 		WriteOrganizationLink(object.organization, stream)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteDNSDomain(object *DNSDomain, stream *jsoniter.Stream) {
 		stream.WriteString((object.reservedAtTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -127,7 +127,9 @@ func UnmarshalDNSDomain(source interface{}) (object *DNSDomain, err error) {
 
 // ReadDNSDomain reads a value of the 'DNS_domain' type from the given iterator.
 func ReadDNSDomain(iterator *jsoniter.Iterator) *DNSDomain {
-	object := &DNSDomain{}
+	object := &DNSDomain{
+		fieldSet_: make([]bool, 8),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -137,27 +139,27 @@ func ReadDNSDomain(iterator *jsoniter.Iterator) *DNSDomain {
 		case "kind":
 			value := iterator.ReadString()
 			if value == DNSDomainLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "cluster":
 			value := ReadClusterLink(iterator)
 			object.cluster = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "cluster_arch":
 			text := iterator.ReadString()
 			value := ClusterArchitecture(text)
 			object.clusterArch = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "organization":
 			value := ReadOrganizationLink(iterator)
 			object.organization = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "reserved_at_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -165,11 +167,11 @@ func ReadDNSDomain(iterator *jsoniter.Iterator) *DNSDomain {
 				iterator.ReportError("", err.Error())
 			}
 			object.reservedAtTimestamp = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "user_defined":
 			value := iterator.ReadBool()
 			object.userDefined = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		default:
 			iterator.ReadAny()
 		}

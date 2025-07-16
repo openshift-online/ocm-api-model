@@ -42,7 +42,7 @@ func WriteObjectReference(object *ObjectReference, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteObjectReference(object *ObjectReference, stream *jsoniter.Stream) {
 		stream.WriteString(object.href)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteObjectReference(object *ObjectReference, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,7 +85,9 @@ func UnmarshalObjectReference(source interface{}) (object *ObjectReference, err 
 
 // ReadObjectReference reads a value of the 'object_reference' type from the given iterator.
 func ReadObjectReference(iterator *jsoniter.Iterator) *ObjectReference {
-	object := &ObjectReference{}
+	object := &ObjectReference{
+		fieldSet_: make([]bool, 3),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -95,15 +97,15 @@ func ReadObjectReference(iterator *jsoniter.Iterator) *ObjectReference {
 		case "href":
 			value := iterator.ReadString()
 			object.href = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "kind":
 			value := iterator.ReadString()
 			object.kind = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		default:
 			iterator.ReadAny()
 		}

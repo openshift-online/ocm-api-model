@@ -23,13 +23,21 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Counts of different classes of nodes inside a flavour.
 type FlavourNodes struct {
-	bitmap_ uint32
-	master  int
+	fieldSet_ []bool
+	master    int
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *FlavourNodes) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Master returns the value of the 'master' attribute, or
@@ -37,7 +45,7 @@ func (o *FlavourNodes) Empty() bool {
 //
 // Number of master nodes of the cluster.
 func (o *FlavourNodes) Master() int {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.master
 	}
 	return 0
@@ -48,7 +56,7 @@ func (o *FlavourNodes) Master() int {
 //
 // Number of master nodes of the cluster.
 func (o *FlavourNodes) GetMaster() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.master
 	}

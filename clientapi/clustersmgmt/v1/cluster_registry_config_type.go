@@ -39,7 +39,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // ```
 type ClusterRegistryConfig struct {
-	bitmap_                    uint32
+	fieldSet_                  []bool
 	additionalTrustedCa        map[string]string
 	allowedRegistriesForImport []*RegistryLocation
 	platformAllowlist          *RegistryAllowlist
@@ -48,7 +48,15 @@ type ClusterRegistryConfig struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterRegistryConfig) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AdditionalTrustedCa returns the value of the 'additional_trusted_ca' attribute, or
@@ -57,7 +65,7 @@ func (o *ClusterRegistryConfig) Empty() bool {
 // A map containing the registry hostname as the key, and the PEM-encoded certificate as the value,
 // for each additional registry CA to trust.
 func (o *ClusterRegistryConfig) AdditionalTrustedCa() map[string]string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.additionalTrustedCa
 	}
 	return nil
@@ -69,7 +77,7 @@ func (o *ClusterRegistryConfig) AdditionalTrustedCa() map[string]string {
 // A map containing the registry hostname as the key, and the PEM-encoded certificate as the value,
 // for each additional registry CA to trust.
 func (o *ClusterRegistryConfig) GetAdditionalTrustedCa() (value map[string]string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.additionalTrustedCa
 	}
@@ -86,7 +94,7 @@ func (o *ClusterRegistryConfig) GetAdditionalTrustedCa() (value map[string]strin
 // this policy - typically only administrators or system integrations will have those
 // permissions.
 func (o *ClusterRegistryConfig) AllowedRegistriesForImport() []*RegistryLocation {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.allowedRegistriesForImport
 	}
 	return nil
@@ -102,7 +110,7 @@ func (o *ClusterRegistryConfig) AllowedRegistriesForImport() []*RegistryLocation
 // this policy - typically only administrators or system integrations will have those
 // permissions.
 func (o *ClusterRegistryConfig) GetAllowedRegistriesForImport() (value []*RegistryLocation, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.allowedRegistriesForImport
 	}
@@ -116,7 +124,7 @@ func (o *ClusterRegistryConfig) GetAllowedRegistriesForImport() (value []*Regist
 // which needs to be whitelisted for the platform to work. It can be omitted at creation and
 // updating and its lifecycle can be managed separately if needed.
 func (o *ClusterRegistryConfig) PlatformAllowlist() *RegistryAllowlist {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.platformAllowlist
 	}
 	return nil
@@ -129,7 +137,7 @@ func (o *ClusterRegistryConfig) PlatformAllowlist() *RegistryAllowlist {
 // which needs to be whitelisted for the platform to work. It can be omitted at creation and
 // updating and its lifecycle can be managed separately if needed.
 func (o *ClusterRegistryConfig) GetPlatformAllowlist() (value *RegistryAllowlist, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.platformAllowlist
 	}
@@ -144,7 +152,7 @@ func (o *ClusterRegistryConfig) GetPlatformAllowlist() (value *RegistryAllowlist
 // whether or not to allow insecure access). It does not contain configuration for the
 // internal cluster registry.
 func (o *ClusterRegistryConfig) RegistrySources() *RegistrySources {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.registrySources
 	}
 	return nil
@@ -158,7 +166,7 @@ func (o *ClusterRegistryConfig) RegistrySources() *RegistrySources {
 // whether or not to allow insecure access). It does not contain configuration for the
 // internal cluster registry.
 func (o *ClusterRegistryConfig) GetRegistrySources() (value *RegistrySources, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.registrySources
 	}

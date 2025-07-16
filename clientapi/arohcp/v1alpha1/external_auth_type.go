@@ -35,13 +35,13 @@ const ExternalAuthNilKind = "ExternalAuthNil"
 //
 // Representation of an external authentication provider.
 type ExternalAuth struct {
-	bitmap_ uint32
-	id      string
-	href    string
-	claim   *ExternalAuthClaim
-	clients []*ExternalAuthClientConfig
-	issuer  *TokenIssuer
-	status  *ExternalAuthStatus
+	fieldSet_ []bool
+	id        string
+	href      string
+	claim     *ExternalAuthClaim
+	clients   []*ExternalAuthClientConfig
+	issuer    *TokenIssuer
+	status    *ExternalAuthStatus
 }
 
 // Kind returns the name of the type of the object.
@@ -49,7 +49,7 @@ func (o *ExternalAuth) Kind() string {
 	if o == nil {
 		return ExternalAuthNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return ExternalAuthLinkKind
 	}
 	return ExternalAuthKind
@@ -57,12 +57,12 @@ func (o *ExternalAuth) Kind() string {
 
 // Link returns true if this is a link.
 func (o *ExternalAuth) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *ExternalAuth) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -71,7 +71,7 @@ func (o *ExternalAuth) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *ExternalAuth) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -80,7 +80,7 @@ func (o *ExternalAuth) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *ExternalAuth) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -89,7 +89,7 @@ func (o *ExternalAuth) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *ExternalAuth) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -98,7 +98,17 @@ func (o *ExternalAuth) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ExternalAuth) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Claim returns the value of the 'claim' attribute, or
@@ -106,7 +116,7 @@ func (o *ExternalAuth) Empty() bool {
 //
 // The rules on how to transform information from an ID token into a cluster identity.
 func (o *ExternalAuth) Claim() *ExternalAuthClaim {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.claim
 	}
 	return nil
@@ -117,7 +127,7 @@ func (o *ExternalAuth) Claim() *ExternalAuthClaim {
 //
 // The rules on how to transform information from an ID token into a cluster identity.
 func (o *ExternalAuth) GetClaim() (value *ExternalAuthClaim, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.claim
 	}
@@ -129,7 +139,7 @@ func (o *ExternalAuth) GetClaim() (value *ExternalAuthClaim, ok bool) {
 //
 // The list of the platform's clients that need to request tokens from the issuer.
 func (o *ExternalAuth) Clients() []*ExternalAuthClientConfig {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.clients
 	}
 	return nil
@@ -140,7 +150,7 @@ func (o *ExternalAuth) Clients() []*ExternalAuthClientConfig {
 //
 // The list of the platform's clients that need to request tokens from the issuer.
 func (o *ExternalAuth) GetClients() (value []*ExternalAuthClientConfig, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.clients
 	}
@@ -152,7 +162,7 @@ func (o *ExternalAuth) GetClients() (value []*ExternalAuthClientConfig, ok bool)
 //
 // The issuer describes the attributes of the OIDC token issuer.
 func (o *ExternalAuth) Issuer() *TokenIssuer {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.issuer
 	}
 	return nil
@@ -163,7 +173,7 @@ func (o *ExternalAuth) Issuer() *TokenIssuer {
 //
 // The issuer describes the attributes of the OIDC token issuer.
 func (o *ExternalAuth) GetIssuer() (value *TokenIssuer, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.issuer
 	}
@@ -176,7 +186,7 @@ func (o *ExternalAuth) GetIssuer() (value *TokenIssuer, ok bool) {
 // The status describes the current state of the external authentication provider.
 // This is read-only.
 func (o *ExternalAuth) Status() *ExternalAuthStatus {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.status
 	}
 	return nil
@@ -188,7 +198,7 @@ func (o *ExternalAuth) Status() *ExternalAuthStatus {
 // The status describes the current state of the external authentication provider.
 // This is read-only.
 func (o *ExternalAuth) GetStatus() (value *ExternalAuthStatus, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.status
 	}

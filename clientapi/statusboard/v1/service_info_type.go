@@ -23,14 +23,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/statusboard/v1
 //
 // Definition of a Status Board service info.
 type ServiceInfo struct {
-	bitmap_    uint32
+	fieldSet_  []bool
 	fullname   string
 	statusType string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ServiceInfo) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Fullname returns the value of the 'fullname' attribute, or
@@ -38,7 +46,7 @@ func (o *ServiceInfo) Empty() bool {
 //
 // Full name of the service
 func (o *ServiceInfo) Fullname() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.fullname
 	}
 	return ""
@@ -49,7 +57,7 @@ func (o *ServiceInfo) Fullname() string {
 //
 // Full name of the service
 func (o *ServiceInfo) GetFullname() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.fullname
 	}
@@ -61,7 +69,7 @@ func (o *ServiceInfo) GetFullname() (value string, ok bool) {
 //
 // Type of the service status
 func (o *ServiceInfo) StatusType() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.statusType
 	}
 	return ""
@@ -72,7 +80,7 @@ func (o *ServiceInfo) StatusType() string {
 //
 // Type of the service status
 func (o *ServiceInfo) GetStatusType() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.statusType
 	}

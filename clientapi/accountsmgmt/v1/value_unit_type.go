@@ -21,20 +21,28 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 
 // ValueUnit represents the values of the 'value_unit' type.
 type ValueUnit struct {
-	bitmap_ uint32
-	unit    string
-	value   float64
+	fieldSet_ []bool
+	unit      string
+	value     float64
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ValueUnit) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Unit returns the value of the 'unit' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ValueUnit) Unit() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.unit
 	}
 	return ""
@@ -43,7 +51,7 @@ func (o *ValueUnit) Unit() string {
 // GetUnit returns the value of the 'unit' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ValueUnit) GetUnit() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.unit
 	}
@@ -53,7 +61,7 @@ func (o *ValueUnit) GetUnit() (value string, ok bool) {
 // Value returns the value of the 'value' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ValueUnit) Value() float64 {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.value
 	}
 	return 0.0
@@ -62,7 +70,7 @@ func (o *ValueUnit) Value() float64 {
 // GetValue returns the value of the 'value' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ValueUnit) GetValue() (value float64, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.value
 	}

@@ -23,14 +23,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Holds settings for an AWS storage volume.
 type AWSVolume struct {
-	bitmap_ uint32
-	iops    int
-	size    int
+	fieldSet_ []bool
+	iops      int
+	size      int
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AWSVolume) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // IOPS returns the value of the 'IOPS' attribute, or
@@ -38,7 +46,7 @@ func (o *AWSVolume) Empty() bool {
 //
 // Volume provisioned IOPS.
 func (o *AWSVolume) IOPS() int {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.iops
 	}
 	return 0
@@ -49,7 +57,7 @@ func (o *AWSVolume) IOPS() int {
 //
 // Volume provisioned IOPS.
 func (o *AWSVolume) GetIOPS() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.iops
 	}
@@ -61,7 +69,7 @@ func (o *AWSVolume) GetIOPS() (value int, ok bool) {
 //
 // Volume size in Gib.
 func (o *AWSVolume) Size() int {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.size
 	}
 	return 0
@@ -72,7 +80,7 @@ func (o *AWSVolume) Size() int {
 //
 // Volume size in Gib.
 func (o *AWSVolume) GetSize() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.size
 	}

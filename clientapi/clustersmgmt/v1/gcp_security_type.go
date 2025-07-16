@@ -23,13 +23,21 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Google cloud platform security settings of a cluster.
 type GcpSecurity struct {
-	bitmap_    uint32
+	fieldSet_  []bool
 	secureBoot bool
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *GcpSecurity) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // SecureBoot returns the value of the 'secure_boot' attribute, or
@@ -37,7 +45,7 @@ func (o *GcpSecurity) Empty() bool {
 //
 // Determines if Shielded VM feature "Secure Boot" should be set for the nodes of the cluster.
 func (o *GcpSecurity) SecureBoot() bool {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.secureBoot
 	}
 	return false
@@ -48,7 +56,7 @@ func (o *GcpSecurity) SecureBoot() bool {
 //
 // Determines if Shielded VM feature "Secure Boot" should be set for the nodes of the cluster.
 func (o *GcpSecurity) GetSecureBoot() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.secureBoot
 	}

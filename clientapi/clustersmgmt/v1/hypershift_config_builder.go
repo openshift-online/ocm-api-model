@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// HypershiftConfigBuilder contains the data and logic needed to build 'hypershift_config' objects.
-//
 // Hypershift configuration.
 type HypershiftConfigBuilder struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	hcpNamespace      string
 	managementCluster string
 	enabled           bool
@@ -31,32 +29,42 @@ type HypershiftConfigBuilder struct {
 
 // NewHypershiftConfig creates a new builder of 'hypershift_config' objects.
 func NewHypershiftConfig() *HypershiftConfigBuilder {
-	return &HypershiftConfigBuilder{}
+	return &HypershiftConfigBuilder{
+		fieldSet_: make([]bool, 3),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *HypershiftConfigBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // HCPNamespace sets the value of the 'HCP_namespace' attribute to the given value.
 func (b *HypershiftConfigBuilder) HCPNamespace(value string) *HypershiftConfigBuilder {
 	b.hcpNamespace = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *HypershiftConfigBuilder) Enabled(value bool) *HypershiftConfigBuilder {
 	b.enabled = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // ManagementCluster sets the value of the 'management_cluster' attribute to the given value.
 func (b *HypershiftConfigBuilder) ManagementCluster(value string) *HypershiftConfigBuilder {
 	b.managementCluster = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -65,7 +73,10 @@ func (b *HypershiftConfigBuilder) Copy(object *HypershiftConfig) *HypershiftConf
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.hcpNamespace = object.hcpNamespace
 	b.enabled = object.enabled
 	b.managementCluster = object.managementCluster
@@ -75,7 +86,10 @@ func (b *HypershiftConfigBuilder) Copy(object *HypershiftConfig) *HypershiftConf
 // Build creates a 'hypershift_config' object using the configuration stored in the builder.
 func (b *HypershiftConfigBuilder) Build() (object *HypershiftConfig, err error) {
 	object = new(HypershiftConfig)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.hcpNamespace = b.hcpNamespace
 	object.enabled = b.enabled
 	object.managementCluster = b.managementCluster

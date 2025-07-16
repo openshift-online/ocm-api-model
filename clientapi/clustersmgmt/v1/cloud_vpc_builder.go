@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// CloudVPCBuilder contains the data and logic needed to build 'cloud_VPC' objects.
-//
 // Description of a cloud provider virtual private cloud.
 type CloudVPCBuilder struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	awsSecurityGroups []*SecurityGroupBuilder
 	awsSubnets        []*SubnetworkBuilder
 	cidrBlock         string
@@ -35,19 +33,29 @@ type CloudVPCBuilder struct {
 
 // NewCloudVPC creates a new builder of 'cloud_VPC' objects.
 func NewCloudVPC() *CloudVPCBuilder {
-	return &CloudVPCBuilder{}
+	return &CloudVPCBuilder{
+		fieldSet_: make([]bool, 7),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *CloudVPCBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AWSSecurityGroups sets the value of the 'AWS_security_groups' attribute to the given values.
 func (b *CloudVPCBuilder) AWSSecurityGroups(values ...*SecurityGroupBuilder) *CloudVPCBuilder {
 	b.awsSecurityGroups = make([]*SecurityGroupBuilder, len(values))
 	copy(b.awsSecurityGroups, values)
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -55,35 +63,35 @@ func (b *CloudVPCBuilder) AWSSecurityGroups(values ...*SecurityGroupBuilder) *Cl
 func (b *CloudVPCBuilder) AWSSubnets(values ...*SubnetworkBuilder) *CloudVPCBuilder {
 	b.awsSubnets = make([]*SubnetworkBuilder, len(values))
 	copy(b.awsSubnets, values)
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // CIDRBlock sets the value of the 'CIDR_block' attribute to the given value.
 func (b *CloudVPCBuilder) CIDRBlock(value string) *CloudVPCBuilder {
 	b.cidrBlock = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *CloudVPCBuilder) ID(value string) *CloudVPCBuilder {
 	b.id = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *CloudVPCBuilder) Name(value string) *CloudVPCBuilder {
 	b.name = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // RedHatManaged sets the value of the 'red_hat_managed' attribute to the given value.
 func (b *CloudVPCBuilder) RedHatManaged(value bool) *CloudVPCBuilder {
 	b.redHatManaged = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -91,7 +99,7 @@ func (b *CloudVPCBuilder) RedHatManaged(value bool) *CloudVPCBuilder {
 func (b *CloudVPCBuilder) Subnets(values ...string) *CloudVPCBuilder {
 	b.subnets = make([]string, len(values))
 	copy(b.subnets, values)
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -100,7 +108,10 @@ func (b *CloudVPCBuilder) Copy(object *CloudVPC) *CloudVPCBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.awsSecurityGroups != nil {
 		b.awsSecurityGroups = make([]*SecurityGroupBuilder, len(object.awsSecurityGroups))
 		for i, v := range object.awsSecurityGroups {
@@ -133,7 +144,10 @@ func (b *CloudVPCBuilder) Copy(object *CloudVPC) *CloudVPCBuilder {
 // Build creates a 'cloud_VPC' object using the configuration stored in the builder.
 func (b *CloudVPCBuilder) Build() (object *CloudVPC, err error) {
 	object = new(CloudVPC)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.awsSecurityGroups != nil {
 		object.awsSecurityGroups = make([]*SecurityGroup, len(b.awsSecurityGroups))
 		for i, v := range b.awsSecurityGroups {

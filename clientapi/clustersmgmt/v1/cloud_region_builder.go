@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// CloudRegionBuilder contains the data and logic needed to build 'cloud_region' objects.
-//
 // Description of a region of a cloud provider.
 type CloudRegionBuilder struct {
-	bitmap_            uint32
+	fieldSet_          []bool
 	id                 string
 	href               string
 	kmsLocationID      string
@@ -40,52 +38,63 @@ type CloudRegionBuilder struct {
 
 // NewCloudRegion creates a new builder of 'cloud_region' objects.
 func NewCloudRegion() *CloudRegionBuilder {
-	return &CloudRegionBuilder{}
+	return &CloudRegionBuilder{
+		fieldSet_: make([]bool, 13),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *CloudRegionBuilder) Link(value bool) *CloudRegionBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *CloudRegionBuilder) ID(value string) *CloudRegionBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *CloudRegionBuilder) HREF(value string) *CloudRegionBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *CloudRegionBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // CCSOnly sets the value of the 'CCS_only' attribute to the given value.
 func (b *CloudRegionBuilder) CCSOnly(value bool) *CloudRegionBuilder {
 	b.ccsOnly = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // KMSLocationID sets the value of the 'KMS_location_ID' attribute to the given value.
 func (b *CloudRegionBuilder) KMSLocationID(value string) *CloudRegionBuilder {
 	b.kmsLocationID = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // KMSLocationName sets the value of the 'KMS_location_name' attribute to the given value.
 func (b *CloudRegionBuilder) KMSLocationName(value string) *CloudRegionBuilder {
 	b.kmsLocationName = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -95,9 +104,9 @@ func (b *CloudRegionBuilder) KMSLocationName(value string) *CloudRegionBuilder {
 func (b *CloudRegionBuilder) CloudProvider(value *CloudProviderBuilder) *CloudRegionBuilder {
 	b.cloudProvider = value
 	if value != nil {
-		b.bitmap_ |= 64
+		b.fieldSet_[6] = true
 	} else {
-		b.bitmap_ &^= 64
+		b.fieldSet_[6] = false
 	}
 	return b
 }
@@ -105,42 +114,42 @@ func (b *CloudRegionBuilder) CloudProvider(value *CloudProviderBuilder) *CloudRe
 // DisplayName sets the value of the 'display_name' attribute to the given value.
 func (b *CloudRegionBuilder) DisplayName(value string) *CloudRegionBuilder {
 	b.displayName = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *CloudRegionBuilder) Enabled(value bool) *CloudRegionBuilder {
 	b.enabled = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // GovCloud sets the value of the 'gov_cloud' attribute to the given value.
 func (b *CloudRegionBuilder) GovCloud(value bool) *CloudRegionBuilder {
 	b.govCloud = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *CloudRegionBuilder) Name(value string) *CloudRegionBuilder {
 	b.name = value
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
 // SupportsHypershift sets the value of the 'supports_hypershift' attribute to the given value.
 func (b *CloudRegionBuilder) SupportsHypershift(value bool) *CloudRegionBuilder {
 	b.supportsHypershift = value
-	b.bitmap_ |= 2048
+	b.fieldSet_[11] = true
 	return b
 }
 
 // SupportsMultiAZ sets the value of the 'supports_multi_AZ' attribute to the given value.
 func (b *CloudRegionBuilder) SupportsMultiAZ(value bool) *CloudRegionBuilder {
 	b.supportsMultiAZ = value
-	b.bitmap_ |= 4096
+	b.fieldSet_[12] = true
 	return b
 }
 
@@ -149,7 +158,10 @@ func (b *CloudRegionBuilder) Copy(object *CloudRegion) *CloudRegionBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.ccsOnly = object.ccsOnly
@@ -174,7 +186,10 @@ func (b *CloudRegionBuilder) Build() (object *CloudRegion, err error) {
 	object = new(CloudRegion)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.ccsOnly = b.ccsOnly
 	object.kmsLocationID = b.kmsLocationID
 	object.kmsLocationName = b.kmsLocationName

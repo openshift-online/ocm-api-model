@@ -19,12 +19,10 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// AzureServiceManagedIdentityBuilder contains the data and logic needed to build 'azure_service_managed_identity' objects.
-//
 // Represents the information associated to an Azure User-Assigned
 // Managed Identity whose purpose is to perform service level actions.
 type AzureServiceManagedIdentityBuilder struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	clientID    string
 	principalID string
 	resourceID  string
@@ -32,32 +30,42 @@ type AzureServiceManagedIdentityBuilder struct {
 
 // NewAzureServiceManagedIdentity creates a new builder of 'azure_service_managed_identity' objects.
 func NewAzureServiceManagedIdentity() *AzureServiceManagedIdentityBuilder {
-	return &AzureServiceManagedIdentityBuilder{}
+	return &AzureServiceManagedIdentityBuilder{
+		fieldSet_: make([]bool, 3),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AzureServiceManagedIdentityBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ClientID sets the value of the 'client_ID' attribute to the given value.
 func (b *AzureServiceManagedIdentityBuilder) ClientID(value string) *AzureServiceManagedIdentityBuilder {
 	b.clientID = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // PrincipalID sets the value of the 'principal_ID' attribute to the given value.
 func (b *AzureServiceManagedIdentityBuilder) PrincipalID(value string) *AzureServiceManagedIdentityBuilder {
 	b.principalID = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // ResourceID sets the value of the 'resource_ID' attribute to the given value.
 func (b *AzureServiceManagedIdentityBuilder) ResourceID(value string) *AzureServiceManagedIdentityBuilder {
 	b.resourceID = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -66,7 +74,10 @@ func (b *AzureServiceManagedIdentityBuilder) Copy(object *AzureServiceManagedIde
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.clientID = object.clientID
 	b.principalID = object.principalID
 	b.resourceID = object.resourceID
@@ -76,7 +87,10 @@ func (b *AzureServiceManagedIdentityBuilder) Copy(object *AzureServiceManagedIde
 // Build creates a 'azure_service_managed_identity' object using the configuration stored in the builder.
 func (b *AzureServiceManagedIdentityBuilder) Build() (object *AzureServiceManagedIdentity, err error) {
 	object = new(AzureServiceManagedIdentity)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.clientID = b.clientID
 	object.principalID = b.principalID
 	object.resourceID = b.resourceID

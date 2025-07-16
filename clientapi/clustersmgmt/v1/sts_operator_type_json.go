@@ -42,7 +42,7 @@ func WriteSTSOperator(object *STSOperator, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteSTSOperator(object *STSOperator, stream *jsoniter.Stream) {
 		stream.WriteString(object.maxVersion)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteSTSOperator(object *STSOperator, stream *jsoniter.Stream) {
 		stream.WriteString(object.minVersion)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteSTSOperator(object *STSOperator, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteSTSOperator(object *STSOperator, stream *jsoniter.Stream) {
 		stream.WriteString(object.namespace)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0 && object.serviceAccounts != nil
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.serviceAccounts != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -103,7 +103,9 @@ func UnmarshalSTSOperator(source interface{}) (object *STSOperator, err error) {
 
 // ReadSTSOperator reads a value of the 'STS_operator' type from the given iterator.
 func ReadSTSOperator(iterator *jsoniter.Iterator) *STSOperator {
-	object := &STSOperator{}
+	object := &STSOperator{
+		fieldSet_: make([]bool, 5),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -113,23 +115,23 @@ func ReadSTSOperator(iterator *jsoniter.Iterator) *STSOperator {
 		case "max_version":
 			value := iterator.ReadString()
 			object.maxVersion = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "min_version":
 			value := iterator.ReadString()
 			object.minVersion = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "namespace":
 			value := iterator.ReadString()
 			object.namespace = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "service_accounts":
 			value := ReadStringList(iterator)
 			object.serviceAccounts = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		default:
 			iterator.ReadAny()
 		}

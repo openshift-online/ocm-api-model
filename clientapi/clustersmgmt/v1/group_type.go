@@ -35,10 +35,10 @@ const GroupNilKind = "GroupNil"
 //
 // Representation of a group of users.
 type Group struct {
-	bitmap_ uint32
-	id      string
-	href    string
-	users   *UserList
+	fieldSet_ []bool
+	id        string
+	href      string
+	users     *UserList
 }
 
 // Kind returns the name of the type of the object.
@@ -46,7 +46,7 @@ func (o *Group) Kind() string {
 	if o == nil {
 		return GroupNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return GroupLinkKind
 	}
 	return GroupKind
@@ -54,12 +54,12 @@ func (o *Group) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Group) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *Group) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -68,7 +68,7 @@ func (o *Group) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Group) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -77,7 +77,7 @@ func (o *Group) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Group) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -86,7 +86,7 @@ func (o *Group) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Group) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -95,7 +95,17 @@ func (o *Group) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Group) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Users returns the value of the 'users' attribute, or
@@ -103,7 +113,7 @@ func (o *Group) Empty() bool {
 //
 // List of users of the group.
 func (o *Group) Users() *UserList {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.users
 	}
 	return nil
@@ -114,7 +124,7 @@ func (o *Group) Users() *UserList {
 //
 // List of users of the group.
 func (o *Group) GetUsers() (value *UserList, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.users
 	}

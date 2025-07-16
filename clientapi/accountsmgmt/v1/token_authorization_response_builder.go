@@ -19,29 +19,38 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// TokenAuthorizationResponseBuilder contains the data and logic needed to build 'token_authorization_response' objects.
 type TokenAuthorizationResponseBuilder struct {
-	bitmap_ uint32
-	account *AccountBuilder
+	fieldSet_ []bool
+	account   *AccountBuilder
 }
 
 // NewTokenAuthorizationResponse creates a new builder of 'token_authorization_response' objects.
 func NewTokenAuthorizationResponse() *TokenAuthorizationResponseBuilder {
-	return &TokenAuthorizationResponseBuilder{}
+	return &TokenAuthorizationResponseBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *TokenAuthorizationResponseBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Account sets the value of the 'account' attribute to the given value.
 func (b *TokenAuthorizationResponseBuilder) Account(value *AccountBuilder) *TokenAuthorizationResponseBuilder {
 	b.account = value
 	if value != nil {
-		b.bitmap_ |= 1
+		b.fieldSet_[0] = true
 	} else {
-		b.bitmap_ &^= 1
+		b.fieldSet_[0] = false
 	}
 	return b
 }
@@ -51,7 +60,10 @@ func (b *TokenAuthorizationResponseBuilder) Copy(object *TokenAuthorizationRespo
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.account != nil {
 		b.account = NewAccount().Copy(object.account)
 	} else {
@@ -63,7 +75,10 @@ func (b *TokenAuthorizationResponseBuilder) Copy(object *TokenAuthorizationRespo
 // Build creates a 'token_authorization_response' object using the configuration stored in the builder.
 func (b *TokenAuthorizationResponseBuilder) Build() (object *TokenAuthorizationResponse, err error) {
 	object = new(TokenAuthorizationResponse)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.account != nil {
 		object.account, err = b.account.Build()
 		if err != nil {

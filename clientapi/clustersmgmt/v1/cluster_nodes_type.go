@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Counts of different classes of nodes inside a cluster.
 type ClusterNodes struct {
-	bitmap_              uint32
+	fieldSet_            []bool
 	autoscaleCompute     *MachinePoolAutoscaling
 	availabilityZones    []string
 	compute              int
@@ -40,7 +40,15 @@ type ClusterNodes struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterNodes) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AutoscaleCompute returns the value of the 'autoscale_compute' attribute, or
@@ -49,7 +57,7 @@ func (o *ClusterNodes) Empty() bool {
 // Details for auto-scaling the compute machine pool.
 // Compute and AutoscaleCompute cannot be used together.
 func (o *ClusterNodes) AutoscaleCompute() *MachinePoolAutoscaling {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.autoscaleCompute
 	}
 	return nil
@@ -61,7 +69,7 @@ func (o *ClusterNodes) AutoscaleCompute() *MachinePoolAutoscaling {
 // Details for auto-scaling the compute machine pool.
 // Compute and AutoscaleCompute cannot be used together.
 func (o *ClusterNodes) GetAutoscaleCompute() (value *MachinePoolAutoscaling, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.autoscaleCompute
 	}
@@ -73,7 +81,7 @@ func (o *ClusterNodes) GetAutoscaleCompute() (value *MachinePoolAutoscaling, ok 
 //
 // The availability zones upon which the nodes are created.
 func (o *ClusterNodes) AvailabilityZones() []string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.availabilityZones
 	}
 	return nil
@@ -84,7 +92,7 @@ func (o *ClusterNodes) AvailabilityZones() []string {
 //
 // The availability zones upon which the nodes are created.
 func (o *ClusterNodes) GetAvailabilityZones() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.availabilityZones
 	}
@@ -97,7 +105,7 @@ func (o *ClusterNodes) GetAvailabilityZones() (value []string, ok bool) {
 // Number of compute nodes of the cluster.
 // Compute and AutoscaleCompute cannot be used together.
 func (o *ClusterNodes) Compute() int {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.compute
 	}
 	return 0
@@ -109,7 +117,7 @@ func (o *ClusterNodes) Compute() int {
 // Number of compute nodes of the cluster.
 // Compute and AutoscaleCompute cannot be used together.
 func (o *ClusterNodes) GetCompute() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.compute
 	}
@@ -121,7 +129,7 @@ func (o *ClusterNodes) GetCompute() (value int, ok bool) {
 //
 // The labels set on the "default" compute machine pool.
 func (o *ClusterNodes) ComputeLabels() map[string]string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.computeLabels
 	}
 	return nil
@@ -132,7 +140,7 @@ func (o *ClusterNodes) ComputeLabels() map[string]string {
 //
 // The labels set on the "default" compute machine pool.
 func (o *ClusterNodes) GetComputeLabels() (value map[string]string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.computeLabels
 	}
@@ -144,7 +152,7 @@ func (o *ClusterNodes) GetComputeLabels() (value map[string]string, ok bool) {
 //
 // The compute machine type to use, for example `r5.xlarge`.
 func (o *ClusterNodes) ComputeMachineType() *MachineType {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.computeMachineType
 	}
 	return nil
@@ -155,7 +163,7 @@ func (o *ClusterNodes) ComputeMachineType() *MachineType {
 //
 // The compute machine type to use, for example `r5.xlarge`.
 func (o *ClusterNodes) GetComputeMachineType() (value *MachineType, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.computeMachineType
 	}
@@ -167,7 +175,7 @@ func (o *ClusterNodes) GetComputeMachineType() (value *MachineType, ok bool) {
 //
 // The compute machine root volume capabilities.
 func (o *ClusterNodes) ComputeRootVolume() *RootVolume {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.computeRootVolume
 	}
 	return nil
@@ -178,7 +186,7 @@ func (o *ClusterNodes) ComputeRootVolume() *RootVolume {
 //
 // The compute machine root volume capabilities.
 func (o *ClusterNodes) GetComputeRootVolume() (value *RootVolume, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.computeRootVolume
 	}
@@ -190,7 +198,7 @@ func (o *ClusterNodes) GetComputeRootVolume() (value *RootVolume, ok bool) {
 //
 // Number of infrastructure nodes of the cluster.
 func (o *ClusterNodes) Infra() int {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.infra
 	}
 	return 0
@@ -201,7 +209,7 @@ func (o *ClusterNodes) Infra() int {
 //
 // Number of infrastructure nodes of the cluster.
 func (o *ClusterNodes) GetInfra() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.infra
 	}
@@ -213,7 +221,7 @@ func (o *ClusterNodes) GetInfra() (value int, ok bool) {
 //
 // The infra machine type to use, for example `r5.xlarge` (Optional).
 func (o *ClusterNodes) InfraMachineType() *MachineType {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.infraMachineType
 	}
 	return nil
@@ -224,7 +232,7 @@ func (o *ClusterNodes) InfraMachineType() *MachineType {
 //
 // The infra machine type to use, for example `r5.xlarge` (Optional).
 func (o *ClusterNodes) GetInfraMachineType() (value *MachineType, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.infraMachineType
 	}
@@ -236,7 +244,7 @@ func (o *ClusterNodes) GetInfraMachineType() (value *MachineType, ok bool) {
 //
 // Number of master nodes of the cluster.
 func (o *ClusterNodes) Master() int {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.master
 	}
 	return 0
@@ -247,7 +255,7 @@ func (o *ClusterNodes) Master() int {
 //
 // Number of master nodes of the cluster.
 func (o *ClusterNodes) GetMaster() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.master
 	}
@@ -259,7 +267,7 @@ func (o *ClusterNodes) GetMaster() (value int, ok bool) {
 //
 // The master machine type to use, for example `r5.xlarge` (Optional).
 func (o *ClusterNodes) MasterMachineType() *MachineType {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.masterMachineType
 	}
 	return nil
@@ -270,7 +278,7 @@ func (o *ClusterNodes) MasterMachineType() *MachineType {
 //
 // The master machine type to use, for example `r5.xlarge` (Optional).
 func (o *ClusterNodes) GetMasterMachineType() (value *MachineType, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.masterMachineType
 	}
@@ -282,7 +290,7 @@ func (o *ClusterNodes) GetMasterMachineType() (value *MachineType, ok bool) {
 //
 // List of security groups to be applied to nodes (Optional).
 func (o *ClusterNodes) SecurityGroupFilters() []*MachinePoolSecurityGroupFilter {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.securityGroupFilters
 	}
 	return nil
@@ -293,7 +301,7 @@ func (o *ClusterNodes) SecurityGroupFilters() []*MachinePoolSecurityGroupFilter 
 //
 // List of security groups to be applied to nodes (Optional).
 func (o *ClusterNodes) GetSecurityGroupFilters() (value []*MachinePoolSecurityGroupFilter, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.securityGroupFilters
 	}
@@ -305,7 +313,7 @@ func (o *ClusterNodes) GetSecurityGroupFilters() (value []*MachinePoolSecurityGr
 //
 // Total number of nodes of the cluster.
 func (o *ClusterNodes) Total() int {
-	if o != nil && o.bitmap_&2048 != 0 {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.total
 	}
 	return 0
@@ -316,7 +324,7 @@ func (o *ClusterNodes) Total() int {
 //
 // Total number of nodes of the cluster.
 func (o *ClusterNodes) GetTotal() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&2048 != 0
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.total
 	}

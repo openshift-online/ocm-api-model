@@ -43,13 +43,13 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(SubscriptionLinkKind)
 	} else {
 		stream.WriteString(SubscriptionKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.billingMarketplaceAccount)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0 && object.capabilities != nil
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.capabilities != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		WriteCapabilityList(object.capabilities, stream)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.cloudAccountID)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.cloudProviderID)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.clusterID)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -120,7 +120,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.clusterBillingModel))
 		count++
 	}
-	present_ = object.bitmap_&512 != 0
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -129,7 +129,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.consoleURL)
 		count++
 	}
-	present_ = object.bitmap_&1024 != 0
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -138,7 +138,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.consumerUUID)
 		count++
 	}
-	present_ = object.bitmap_&2048 != 0
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -147,7 +147,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteInt(object.cpuTotal)
 		count++
 	}
-	present_ = object.bitmap_&4096 != 0
+	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -156,7 +156,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&8192 != 0 && object.creator != nil
+	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13] && object.creator != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -165,7 +165,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		WriteAccount(object.creator, stream)
 		count++
 	}
-	present_ = object.bitmap_&16384 != 0
+	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -174,7 +174,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.displayName)
 		count++
 	}
-	present_ = object.bitmap_&32768 != 0
+	present_ = len(object.fieldSet_) > 15 && object.fieldSet_[15]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -183,7 +183,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.externalClusterID)
 		count++
 	}
-	present_ = object.bitmap_&65536 != 0 && object.labels != nil
+	present_ = len(object.fieldSet_) > 16 && object.fieldSet_[16] && object.labels != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -192,7 +192,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		WriteLabelList(object.labels, stream)
 		count++
 	}
-	present_ = object.bitmap_&131072 != 0
+	present_ = len(object.fieldSet_) > 17 && object.fieldSet_[17]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -201,7 +201,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString((object.lastReconcileDate).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&262144 != 0
+	present_ = len(object.fieldSet_) > 18 && object.fieldSet_[18]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -210,7 +210,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString((object.lastReleasedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&524288 != 0
+	present_ = len(object.fieldSet_) > 19 && object.fieldSet_[19]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -219,7 +219,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString((object.lastTelemetryDate).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&1048576 != 0
+	present_ = len(object.fieldSet_) > 20 && object.fieldSet_[20]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -228,7 +228,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteBool(object.managed)
 		count++
 	}
-	present_ = object.bitmap_&2097152 != 0 && object.metrics != nil
+	present_ = len(object.fieldSet_) > 21 && object.fieldSet_[21] && object.metrics != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -237,7 +237,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		WriteSubscriptionMetricsList(object.metrics, stream)
 		count++
 	}
-	present_ = object.bitmap_&4194304 != 0 && object.notificationContacts != nil
+	present_ = len(object.fieldSet_) > 22 && object.fieldSet_[22] && object.notificationContacts != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -246,7 +246,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		WriteAccountList(object.notificationContacts, stream)
 		count++
 	}
-	present_ = object.bitmap_&8388608 != 0
+	present_ = len(object.fieldSet_) > 23 && object.fieldSet_[23]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -255,7 +255,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.organizationID)
 		count++
 	}
-	present_ = object.bitmap_&16777216 != 0 && object.plan != nil
+	present_ = len(object.fieldSet_) > 24 && object.fieldSet_[24] && object.plan != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -264,7 +264,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		WritePlan(object.plan, stream)
 		count++
 	}
-	present_ = object.bitmap_&33554432 != 0
+	present_ = len(object.fieldSet_) > 25 && object.fieldSet_[25]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -273,7 +273,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.productBundle)
 		count++
 	}
-	present_ = object.bitmap_&67108864 != 0
+	present_ = len(object.fieldSet_) > 26 && object.fieldSet_[26]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -282,7 +282,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.provenance)
 		count++
 	}
-	present_ = object.bitmap_&134217728 != 0
+	present_ = len(object.fieldSet_) > 27 && object.fieldSet_[27]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -291,7 +291,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.regionID)
 		count++
 	}
-	present_ = object.bitmap_&268435456 != 0
+	present_ = len(object.fieldSet_) > 28 && object.fieldSet_[28]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -300,7 +300,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteBool(object.released)
 		count++
 	}
-	present_ = object.bitmap_&536870912 != 0
+	present_ = len(object.fieldSet_) > 29 && object.fieldSet_[29]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -309,7 +309,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.rhRegionID)
 		count++
 	}
-	present_ = object.bitmap_&1073741824 != 0
+	present_ = len(object.fieldSet_) > 30 && object.fieldSet_[30]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -318,7 +318,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.serviceLevel)
 		count++
 	}
-	present_ = object.bitmap_&2147483648 != 0
+	present_ = len(object.fieldSet_) > 31 && object.fieldSet_[31]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -327,7 +327,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteInt(object.socketTotal)
 		count++
 	}
-	present_ = object.bitmap_&4294967296 != 0
+	present_ = len(object.fieldSet_) > 32 && object.fieldSet_[32]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -336,7 +336,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.status)
 		count++
 	}
-	present_ = object.bitmap_&8589934592 != 0
+	present_ = len(object.fieldSet_) > 33 && object.fieldSet_[33]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -345,7 +345,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.supportLevel)
 		count++
 	}
-	present_ = object.bitmap_&17179869184 != 0
+	present_ = len(object.fieldSet_) > 34 && object.fieldSet_[34]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -354,7 +354,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString(object.systemUnits)
 		count++
 	}
-	present_ = object.bitmap_&34359738368 != 0
+	present_ = len(object.fieldSet_) > 35 && object.fieldSet_[35]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -363,7 +363,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString((object.trialEndDate).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&68719476736 != 0
+	present_ = len(object.fieldSet_) > 36 && object.fieldSet_[36]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -372,7 +372,7 @@ func WriteSubscription(object *Subscription, stream *jsoniter.Stream) {
 		stream.WriteString((object.updatedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&137438953472 != 0
+	present_ = len(object.fieldSet_) > 37 && object.fieldSet_[37]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -397,7 +397,9 @@ func UnmarshalSubscription(source interface{}) (object *Subscription, err error)
 
 // ReadSubscription reads a value of the 'subscription' type from the given iterator.
 func ReadSubscription(iterator *jsoniter.Iterator) *Subscription {
-	object := &Subscription{}
+	object := &Subscription{
+		fieldSet_: make([]bool, 38),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -407,51 +409,51 @@ func ReadSubscription(iterator *jsoniter.Iterator) *Subscription {
 		case "kind":
 			value := iterator.ReadString()
 			if value == SubscriptionLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "billing_marketplace_account":
 			value := iterator.ReadString()
 			object.billingMarketplaceAccount = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "capabilities":
 			value := ReadCapabilityList(iterator)
 			object.capabilities = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "cloud_account_id":
 			value := iterator.ReadString()
 			object.cloudAccountID = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "cloud_provider_id":
 			value := iterator.ReadString()
 			object.cloudProviderID = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterID = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "cluster_billing_model":
 			text := iterator.ReadString()
 			value := BillingModel(text)
 			object.clusterBillingModel = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		case "console_url":
 			value := iterator.ReadString()
 			object.consoleURL = value
-			object.bitmap_ |= 512
+			object.fieldSet_[9] = true
 		case "consumer_uuid":
 			value := iterator.ReadString()
 			object.consumerUUID = value
-			object.bitmap_ |= 1024
+			object.fieldSet_[10] = true
 		case "cpu_total":
 			value := iterator.ReadInt()
 			object.cpuTotal = value
-			object.bitmap_ |= 2048
+			object.fieldSet_[11] = true
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -459,23 +461,23 @@ func ReadSubscription(iterator *jsoniter.Iterator) *Subscription {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.bitmap_ |= 4096
+			object.fieldSet_[12] = true
 		case "creator":
 			value := ReadAccount(iterator)
 			object.creator = value
-			object.bitmap_ |= 8192
+			object.fieldSet_[13] = true
 		case "display_name":
 			value := iterator.ReadString()
 			object.displayName = value
-			object.bitmap_ |= 16384
+			object.fieldSet_[14] = true
 		case "external_cluster_id":
 			value := iterator.ReadString()
 			object.externalClusterID = value
-			object.bitmap_ |= 32768
+			object.fieldSet_[15] = true
 		case "labels":
 			value := ReadLabelList(iterator)
 			object.labels = value
-			object.bitmap_ |= 65536
+			object.fieldSet_[16] = true
 		case "last_reconcile_date":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -483,7 +485,7 @@ func ReadSubscription(iterator *jsoniter.Iterator) *Subscription {
 				iterator.ReportError("", err.Error())
 			}
 			object.lastReconcileDate = value
-			object.bitmap_ |= 131072
+			object.fieldSet_[17] = true
 		case "last_released_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -491,7 +493,7 @@ func ReadSubscription(iterator *jsoniter.Iterator) *Subscription {
 				iterator.ReportError("", err.Error())
 			}
 			object.lastReleasedAt = value
-			object.bitmap_ |= 262144
+			object.fieldSet_[18] = true
 		case "last_telemetry_date":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -499,67 +501,67 @@ func ReadSubscription(iterator *jsoniter.Iterator) *Subscription {
 				iterator.ReportError("", err.Error())
 			}
 			object.lastTelemetryDate = value
-			object.bitmap_ |= 524288
+			object.fieldSet_[19] = true
 		case "managed":
 			value := iterator.ReadBool()
 			object.managed = value
-			object.bitmap_ |= 1048576
+			object.fieldSet_[20] = true
 		case "metrics":
 			value := ReadSubscriptionMetricsList(iterator)
 			object.metrics = value
-			object.bitmap_ |= 2097152
+			object.fieldSet_[21] = true
 		case "notification_contacts":
 			value := ReadAccountList(iterator)
 			object.notificationContacts = value
-			object.bitmap_ |= 4194304
+			object.fieldSet_[22] = true
 		case "organization_id":
 			value := iterator.ReadString()
 			object.organizationID = value
-			object.bitmap_ |= 8388608
+			object.fieldSet_[23] = true
 		case "plan":
 			value := ReadPlan(iterator)
 			object.plan = value
-			object.bitmap_ |= 16777216
+			object.fieldSet_[24] = true
 		case "product_bundle":
 			value := iterator.ReadString()
 			object.productBundle = value
-			object.bitmap_ |= 33554432
+			object.fieldSet_[25] = true
 		case "provenance":
 			value := iterator.ReadString()
 			object.provenance = value
-			object.bitmap_ |= 67108864
+			object.fieldSet_[26] = true
 		case "region_id":
 			value := iterator.ReadString()
 			object.regionID = value
-			object.bitmap_ |= 134217728
+			object.fieldSet_[27] = true
 		case "released":
 			value := iterator.ReadBool()
 			object.released = value
-			object.bitmap_ |= 268435456
+			object.fieldSet_[28] = true
 		case "rh_region_id":
 			value := iterator.ReadString()
 			object.rhRegionID = value
-			object.bitmap_ |= 536870912
+			object.fieldSet_[29] = true
 		case "service_level":
 			value := iterator.ReadString()
 			object.serviceLevel = value
-			object.bitmap_ |= 1073741824
+			object.fieldSet_[30] = true
 		case "socket_total":
 			value := iterator.ReadInt()
 			object.socketTotal = value
-			object.bitmap_ |= 2147483648
+			object.fieldSet_[31] = true
 		case "status":
 			value := iterator.ReadString()
 			object.status = value
-			object.bitmap_ |= 4294967296
+			object.fieldSet_[32] = true
 		case "support_level":
 			value := iterator.ReadString()
 			object.supportLevel = value
-			object.bitmap_ |= 8589934592
+			object.fieldSet_[33] = true
 		case "system_units":
 			value := iterator.ReadString()
 			object.systemUnits = value
-			object.bitmap_ |= 17179869184
+			object.fieldSet_[34] = true
 		case "trial_end_date":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -567,7 +569,7 @@ func ReadSubscription(iterator *jsoniter.Iterator) *Subscription {
 				iterator.ReportError("", err.Error())
 			}
 			object.trialEndDate = value
-			object.bitmap_ |= 34359738368
+			object.fieldSet_[35] = true
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -575,11 +577,11 @@ func ReadSubscription(iterator *jsoniter.Iterator) *Subscription {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.bitmap_ |= 68719476736
+			object.fieldSet_[36] = true
 		case "usage":
 			value := iterator.ReadString()
 			object.usage = value
-			object.bitmap_ |= 137438953472
+			object.fieldSet_[37] = true
 		default:
 			iterator.ReadAny()
 		}

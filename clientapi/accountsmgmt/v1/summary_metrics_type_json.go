@@ -42,7 +42,7 @@ func WriteSummaryMetrics(object *SummaryMetrics, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteSummaryMetrics(object *SummaryMetrics, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.vector != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.vector != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,9 @@ func UnmarshalSummaryMetrics(source interface{}) (object *SummaryMetrics, err er
 
 // ReadSummaryMetrics reads a value of the 'summary_metrics' type from the given iterator.
 func ReadSummaryMetrics(iterator *jsoniter.Iterator) *SummaryMetrics {
-	object := &SummaryMetrics{}
+	object := &SummaryMetrics{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -86,11 +88,11 @@ func ReadSummaryMetrics(iterator *jsoniter.Iterator) *SummaryMetrics {
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "vector":
 			value := ReadSummarySampleList(iterator)
 			object.vector = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

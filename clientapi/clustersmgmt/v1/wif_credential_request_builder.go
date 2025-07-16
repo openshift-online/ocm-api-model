@@ -19,30 +19,39 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// WifCredentialRequestBuilder contains the data and logic needed to build 'wif_credential_request' objects.
 type WifCredentialRequestBuilder struct {
-	bitmap_             uint32
+	fieldSet_           []bool
 	secretRef           *WifSecretRefBuilder
 	serviceAccountNames []string
 }
 
 // NewWifCredentialRequest creates a new builder of 'wif_credential_request' objects.
 func NewWifCredentialRequest() *WifCredentialRequestBuilder {
-	return &WifCredentialRequestBuilder{}
+	return &WifCredentialRequestBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *WifCredentialRequestBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // SecretRef sets the value of the 'secret_ref' attribute to the given value.
 func (b *WifCredentialRequestBuilder) SecretRef(value *WifSecretRefBuilder) *WifCredentialRequestBuilder {
 	b.secretRef = value
 	if value != nil {
-		b.bitmap_ |= 1
+		b.fieldSet_[0] = true
 	} else {
-		b.bitmap_ &^= 1
+		b.fieldSet_[0] = false
 	}
 	return b
 }
@@ -51,7 +60,7 @@ func (b *WifCredentialRequestBuilder) SecretRef(value *WifSecretRefBuilder) *Wif
 func (b *WifCredentialRequestBuilder) ServiceAccountNames(values ...string) *WifCredentialRequestBuilder {
 	b.serviceAccountNames = make([]string, len(values))
 	copy(b.serviceAccountNames, values)
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -60,7 +69,10 @@ func (b *WifCredentialRequestBuilder) Copy(object *WifCredentialRequest) *WifCre
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.secretRef != nil {
 		b.secretRef = NewWifSecretRef().Copy(object.secretRef)
 	} else {
@@ -78,7 +90,10 @@ func (b *WifCredentialRequestBuilder) Copy(object *WifCredentialRequest) *WifCre
 // Build creates a 'wif_credential_request' object using the configuration stored in the builder.
 func (b *WifCredentialRequestBuilder) Build() (object *WifCredentialRequest, err error) {
 	object = new(WifCredentialRequest)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.secretRef != nil {
 		object.secretRef, err = b.secretRef.Build()
 		if err != nil {

@@ -19,8 +19,6 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// ClusterRegistryConfigBuilder contains the data and logic needed to build 'cluster_registry_config' objects.
-//
 // ClusterRegistryConfig describes the configuration of registries for the cluster.
 // Its format reflects the OpenShift Image Configuration, for which docs are available on
 // [docs.openshift.com](https://docs.openshift.com/container-platform/4.16/openshift_images/image-configuration.html)
@@ -39,7 +37,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // ```
 type ClusterRegistryConfigBuilder struct {
-	bitmap_                    uint32
+	fieldSet_                  []bool
 	additionalTrustedCa        map[string]string
 	allowedRegistriesForImport []*RegistryLocationBuilder
 	platformAllowlist          *RegistryAllowlistBuilder
@@ -48,21 +46,31 @@ type ClusterRegistryConfigBuilder struct {
 
 // NewClusterRegistryConfig creates a new builder of 'cluster_registry_config' objects.
 func NewClusterRegistryConfig() *ClusterRegistryConfigBuilder {
-	return &ClusterRegistryConfigBuilder{}
+	return &ClusterRegistryConfigBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterRegistryConfigBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AdditionalTrustedCa sets the value of the 'additional_trusted_ca' attribute to the given value.
 func (b *ClusterRegistryConfigBuilder) AdditionalTrustedCa(value map[string]string) *ClusterRegistryConfigBuilder {
 	b.additionalTrustedCa = value
 	if value != nil {
-		b.bitmap_ |= 1
+		b.fieldSet_[0] = true
 	} else {
-		b.bitmap_ &^= 1
+		b.fieldSet_[0] = false
 	}
 	return b
 }
@@ -71,7 +79,7 @@ func (b *ClusterRegistryConfigBuilder) AdditionalTrustedCa(value map[string]stri
 func (b *ClusterRegistryConfigBuilder) AllowedRegistriesForImport(values ...*RegistryLocationBuilder) *ClusterRegistryConfigBuilder {
 	b.allowedRegistriesForImport = make([]*RegistryLocationBuilder, len(values))
 	copy(b.allowedRegistriesForImport, values)
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -81,9 +89,9 @@ func (b *ClusterRegistryConfigBuilder) AllowedRegistriesForImport(values ...*Reg
 func (b *ClusterRegistryConfigBuilder) PlatformAllowlist(value *RegistryAllowlistBuilder) *ClusterRegistryConfigBuilder {
 	b.platformAllowlist = value
 	if value != nil {
-		b.bitmap_ |= 4
+		b.fieldSet_[2] = true
 	} else {
-		b.bitmap_ &^= 4
+		b.fieldSet_[2] = false
 	}
 	return b
 }
@@ -96,9 +104,9 @@ func (b *ClusterRegistryConfigBuilder) PlatformAllowlist(value *RegistryAllowlis
 func (b *ClusterRegistryConfigBuilder) RegistrySources(value *RegistrySourcesBuilder) *ClusterRegistryConfigBuilder {
 	b.registrySources = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -108,7 +116,10 @@ func (b *ClusterRegistryConfigBuilder) Copy(object *ClusterRegistryConfig) *Clus
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if len(object.additionalTrustedCa) > 0 {
 		b.additionalTrustedCa = map[string]string{}
 		for k, v := range object.additionalTrustedCa {
@@ -141,7 +152,10 @@ func (b *ClusterRegistryConfigBuilder) Copy(object *ClusterRegistryConfig) *Clus
 // Build creates a 'cluster_registry_config' object using the configuration stored in the builder.
 func (b *ClusterRegistryConfigBuilder) Build() (object *ClusterRegistryConfig, err error) {
 	object = new(ClusterRegistryConfig)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.additionalTrustedCa != nil {
 		object.additionalTrustedCa = make(map[string]string)
 		for k, v := range b.additionalTrustedCa {

@@ -21,19 +21,27 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 
 // AccessToken represents the values of the 'access_token' type.
 type AccessToken struct {
-	bitmap_ uint32
-	auths   map[string]*AccessTokenAuth
+	fieldSet_ []bool
+	auths     map[string]*AccessTokenAuth
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AccessToken) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Auths returns the value of the 'auths' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *AccessToken) Auths() map[string]*AccessTokenAuth {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.auths
 	}
 	return nil
@@ -42,7 +50,7 @@ func (o *AccessToken) Auths() map[string]*AccessTokenAuth {
 // GetAuths returns the value of the 'auths' attribute and
 // a flag indicating if the attribute has a value.
 func (o *AccessToken) GetAuths() (value map[string]*AccessTokenAuth, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.auths
 	}

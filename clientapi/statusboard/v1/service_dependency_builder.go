@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// ServiceDependencyBuilder contains the data and logic needed to build 'service_dependency' objects.
-//
 // Definition of a Status Board service dependency.
 type ServiceDependencyBuilder struct {
-	bitmap_       uint32
+	fieldSet_     []bool
 	id            string
 	href          string
 	childService  *ServiceBuilder
@@ -42,32 +40,43 @@ type ServiceDependencyBuilder struct {
 
 // NewServiceDependency creates a new builder of 'service_dependency' objects.
 func NewServiceDependency() *ServiceDependencyBuilder {
-	return &ServiceDependencyBuilder{}
+	return &ServiceDependencyBuilder{
+		fieldSet_: make([]bool, 11),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ServiceDependencyBuilder) Link(value bool) *ServiceDependencyBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ServiceDependencyBuilder) ID(value string) *ServiceDependencyBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ServiceDependencyBuilder) HREF(value string) *ServiceDependencyBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ServiceDependencyBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // ChildService sets the value of the 'child_service' attribute to the given value.
@@ -76,9 +85,9 @@ func (b *ServiceDependencyBuilder) Empty() bool {
 func (b *ServiceDependencyBuilder) ChildService(value *ServiceBuilder) *ServiceDependencyBuilder {
 	b.childService = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -86,21 +95,21 @@ func (b *ServiceDependencyBuilder) ChildService(value *ServiceBuilder) *ServiceD
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ServiceDependencyBuilder) CreatedAt(value time.Time) *ServiceDependencyBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // Metadata sets the value of the 'metadata' attribute to the given value.
 func (b *ServiceDependencyBuilder) Metadata(value interface{}) *ServiceDependencyBuilder {
 	b.metadata = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ServiceDependencyBuilder) Name(value string) *ServiceDependencyBuilder {
 	b.name = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -108,7 +117,7 @@ func (b *ServiceDependencyBuilder) Name(value string) *ServiceDependencyBuilder 
 func (b *ServiceDependencyBuilder) Owners(values ...*OwnerBuilder) *ServiceDependencyBuilder {
 	b.owners = make([]*OwnerBuilder, len(values))
 	copy(b.owners, values)
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
@@ -118,9 +127,9 @@ func (b *ServiceDependencyBuilder) Owners(values ...*OwnerBuilder) *ServiceDepen
 func (b *ServiceDependencyBuilder) ParentService(value *ServiceBuilder) *ServiceDependencyBuilder {
 	b.parentService = value
 	if value != nil {
-		b.bitmap_ |= 256
+		b.fieldSet_[8] = true
 	} else {
-		b.bitmap_ &^= 256
+		b.fieldSet_[8] = false
 	}
 	return b
 }
@@ -128,14 +137,14 @@ func (b *ServiceDependencyBuilder) ParentService(value *ServiceBuilder) *Service
 // Type sets the value of the 'type' attribute to the given value.
 func (b *ServiceDependencyBuilder) Type(value string) *ServiceDependencyBuilder {
 	b.type_ = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ServiceDependencyBuilder) UpdatedAt(value time.Time) *ServiceDependencyBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
@@ -144,7 +153,10 @@ func (b *ServiceDependencyBuilder) Copy(object *ServiceDependency) *ServiceDepen
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.childService != nil {
@@ -178,7 +190,10 @@ func (b *ServiceDependencyBuilder) Build() (object *ServiceDependency, err error
 	object = new(ServiceDependency)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.childService != nil {
 		object.childService, err = b.childService.Build()
 		if err != nil {

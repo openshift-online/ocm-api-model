@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// GitlabIdentityProviderBuilder contains the data and logic needed to build 'gitlab_identity_provider' objects.
-//
 // Details for `gitlab` identity providers.
 type GitlabIdentityProviderBuilder struct {
-	bitmap_      uint32
+	fieldSet_    []bool
 	ca           string
 	url          string
 	clientID     string
@@ -32,39 +30,49 @@ type GitlabIdentityProviderBuilder struct {
 
 // NewGitlabIdentityProvider creates a new builder of 'gitlab_identity_provider' objects.
 func NewGitlabIdentityProvider() *GitlabIdentityProviderBuilder {
-	return &GitlabIdentityProviderBuilder{}
+	return &GitlabIdentityProviderBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GitlabIdentityProviderBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // CA sets the value of the 'CA' attribute to the given value.
 func (b *GitlabIdentityProviderBuilder) CA(value string) *GitlabIdentityProviderBuilder {
 	b.ca = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // URL sets the value of the 'URL' attribute to the given value.
 func (b *GitlabIdentityProviderBuilder) URL(value string) *GitlabIdentityProviderBuilder {
 	b.url = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // ClientID sets the value of the 'client_ID' attribute to the given value.
 func (b *GitlabIdentityProviderBuilder) ClientID(value string) *GitlabIdentityProviderBuilder {
 	b.clientID = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // ClientSecret sets the value of the 'client_secret' attribute to the given value.
 func (b *GitlabIdentityProviderBuilder) ClientSecret(value string) *GitlabIdentityProviderBuilder {
 	b.clientSecret = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -73,7 +81,10 @@ func (b *GitlabIdentityProviderBuilder) Copy(object *GitlabIdentityProvider) *Gi
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.ca = object.ca
 	b.url = object.url
 	b.clientID = object.clientID
@@ -84,7 +95,10 @@ func (b *GitlabIdentityProviderBuilder) Copy(object *GitlabIdentityProvider) *Gi
 // Build creates a 'gitlab_identity_provider' object using the configuration stored in the builder.
 func (b *GitlabIdentityProviderBuilder) Build() (object *GitlabIdentityProvider, err error) {
 	object = new(GitlabIdentityProvider)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.ca = b.ca
 	object.url = b.url
 	object.clientID = b.clientID

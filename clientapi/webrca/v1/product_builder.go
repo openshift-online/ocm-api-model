@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// ProductBuilder contains the data and logic needed to build 'product' objects.
-//
 // Definition of a Web RCA product.
 type ProductBuilder struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	id          string
 	href        string
 	createdAt   time.Time
@@ -39,66 +37,77 @@ type ProductBuilder struct {
 
 // NewProduct creates a new builder of 'product' objects.
 func NewProduct() *ProductBuilder {
-	return &ProductBuilder{}
+	return &ProductBuilder{
+		fieldSet_: make([]bool, 8),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ProductBuilder) Link(value bool) *ProductBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ProductBuilder) ID(value string) *ProductBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ProductBuilder) HREF(value string) *ProductBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ProductBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ProductBuilder) CreatedAt(value time.Time) *ProductBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *ProductBuilder) DeletedAt(value time.Time) *ProductBuilder {
 	b.deletedAt = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // ProductId sets the value of the 'product_id' attribute to the given value.
 func (b *ProductBuilder) ProductId(value string) *ProductBuilder {
 	b.productId = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // ProductName sets the value of the 'product_name' attribute to the given value.
 func (b *ProductBuilder) ProductName(value string) *ProductBuilder {
 	b.productName = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ProductBuilder) UpdatedAt(value time.Time) *ProductBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
@@ -107,7 +116,10 @@ func (b *ProductBuilder) Copy(object *Product) *ProductBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.createdAt = object.createdAt
@@ -123,7 +135,10 @@ func (b *ProductBuilder) Build() (object *Product, err error) {
 	object = new(Product)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.createdAt = b.createdAt
 	object.deletedAt = b.deletedAt
 	object.productId = b.productId

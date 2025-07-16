@@ -23,9 +23,8 @@ import (
 	time "time"
 )
 
-// RolePolicyBindingBuilder contains the data and logic needed to build 'role_policy_binding' objects.
 type RolePolicyBindingBuilder struct {
-	bitmap_             uint32
+	fieldSet_           []bool
 	arn                 string
 	creationTimestamp   time.Time
 	lastUpdateTimestamp time.Time
@@ -37,39 +36,49 @@ type RolePolicyBindingBuilder struct {
 
 // NewRolePolicyBinding creates a new builder of 'role_policy_binding' objects.
 func NewRolePolicyBinding() *RolePolicyBindingBuilder {
-	return &RolePolicyBindingBuilder{}
+	return &RolePolicyBindingBuilder{
+		fieldSet_: make([]bool, 7),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *RolePolicyBindingBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Arn sets the value of the 'arn' attribute to the given value.
 func (b *RolePolicyBindingBuilder) Arn(value string) *RolePolicyBindingBuilder {
 	b.arn = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *RolePolicyBindingBuilder) CreationTimestamp(value time.Time) *RolePolicyBindingBuilder {
 	b.creationTimestamp = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // LastUpdateTimestamp sets the value of the 'last_update_timestamp' attribute to the given value.
 func (b *RolePolicyBindingBuilder) LastUpdateTimestamp(value time.Time) *RolePolicyBindingBuilder {
 	b.lastUpdateTimestamp = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *RolePolicyBindingBuilder) Name(value string) *RolePolicyBindingBuilder {
 	b.name = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -77,7 +86,7 @@ func (b *RolePolicyBindingBuilder) Name(value string) *RolePolicyBindingBuilder 
 func (b *RolePolicyBindingBuilder) Policies(values ...*RolePolicyBuilder) *RolePolicyBindingBuilder {
 	b.policies = make([]*RolePolicyBuilder, len(values))
 	copy(b.policies, values)
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -85,9 +94,9 @@ func (b *RolePolicyBindingBuilder) Policies(values ...*RolePolicyBuilder) *RoleP
 func (b *RolePolicyBindingBuilder) Status(value *RolePolicyBindingStatusBuilder) *RolePolicyBindingBuilder {
 	b.status = value
 	if value != nil {
-		b.bitmap_ |= 32
+		b.fieldSet_[5] = true
 	} else {
-		b.bitmap_ &^= 32
+		b.fieldSet_[5] = false
 	}
 	return b
 }
@@ -95,7 +104,7 @@ func (b *RolePolicyBindingBuilder) Status(value *RolePolicyBindingStatusBuilder)
 // Type sets the value of the 'type' attribute to the given value.
 func (b *RolePolicyBindingBuilder) Type(value string) *RolePolicyBindingBuilder {
 	b.type_ = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -104,7 +113,10 @@ func (b *RolePolicyBindingBuilder) Copy(object *RolePolicyBinding) *RolePolicyBi
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.arn = object.arn
 	b.creationTimestamp = object.creationTimestamp
 	b.lastUpdateTimestamp = object.lastUpdateTimestamp
@@ -129,7 +141,10 @@ func (b *RolePolicyBindingBuilder) Copy(object *RolePolicyBinding) *RolePolicyBi
 // Build creates a 'role_policy_binding' object using the configuration stored in the builder.
 func (b *RolePolicyBindingBuilder) Build() (object *RolePolicyBinding, err error) {
 	object = new(RolePolicyBinding)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.arn = b.arn
 	object.creationTimestamp = b.creationTimestamp
 	object.lastUpdateTimestamp = b.lastUpdateTimestamp

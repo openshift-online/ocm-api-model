@@ -19,9 +19,8 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// QuotaCostBuilder contains the data and logic needed to build 'quota_cost' objects.
 type QuotaCostBuilder struct {
-	bitmap_          uint32
+	fieldSet_        []bool
 	allowed          int
 	cloudAccounts    []*CloudAccountBuilder
 	consumed         int
@@ -33,18 +32,28 @@ type QuotaCostBuilder struct {
 
 // NewQuotaCost creates a new builder of 'quota_cost' objects.
 func NewQuotaCost() *QuotaCostBuilder {
-	return &QuotaCostBuilder{}
+	return &QuotaCostBuilder{
+		fieldSet_: make([]bool, 7),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *QuotaCostBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Allowed sets the value of the 'allowed' attribute to the given value.
 func (b *QuotaCostBuilder) Allowed(value int) *QuotaCostBuilder {
 	b.allowed = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -52,28 +61,28 @@ func (b *QuotaCostBuilder) Allowed(value int) *QuotaCostBuilder {
 func (b *QuotaCostBuilder) CloudAccounts(values ...*CloudAccountBuilder) *QuotaCostBuilder {
 	b.cloudAccounts = make([]*CloudAccountBuilder, len(values))
 	copy(b.cloudAccounts, values)
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // Consumed sets the value of the 'consumed' attribute to the given value.
 func (b *QuotaCostBuilder) Consumed(value int) *QuotaCostBuilder {
 	b.consumed = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *QuotaCostBuilder) OrganizationID(value string) *QuotaCostBuilder {
 	b.organizationID = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // QuotaID sets the value of the 'quota_ID' attribute to the given value.
 func (b *QuotaCostBuilder) QuotaID(value string) *QuotaCostBuilder {
 	b.quotaID = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -81,14 +90,14 @@ func (b *QuotaCostBuilder) QuotaID(value string) *QuotaCostBuilder {
 func (b *QuotaCostBuilder) RelatedResources(values ...*RelatedResourceBuilder) *QuotaCostBuilder {
 	b.relatedResources = make([]*RelatedResourceBuilder, len(values))
 	copy(b.relatedResources, values)
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // Version sets the value of the 'version' attribute to the given value.
 func (b *QuotaCostBuilder) Version(value string) *QuotaCostBuilder {
 	b.version = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -97,7 +106,10 @@ func (b *QuotaCostBuilder) Copy(object *QuotaCost) *QuotaCostBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.allowed = object.allowed
 	if object.cloudAccounts != nil {
 		b.cloudAccounts = make([]*CloudAccountBuilder, len(object.cloudAccounts))
@@ -125,7 +137,10 @@ func (b *QuotaCostBuilder) Copy(object *QuotaCost) *QuotaCostBuilder {
 // Build creates a 'quota_cost' object using the configuration stored in the builder.
 func (b *QuotaCostBuilder) Build() (object *QuotaCost, err error) {
 	object = new(QuotaCost)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.allowed = b.allowed
 	if b.cloudAccounts != nil {
 		object.cloudAccounts = make([]*CloudAccount, len(b.cloudAccounts))

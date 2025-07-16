@@ -43,7 +43,7 @@ func WriteHTPasswdIdentityProvider(object *HTPasswdIdentityProvider, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -52,7 +52,7 @@ func WriteHTPasswdIdentityProvider(object *HTPasswdIdentityProvider, stream *jso
 		stream.WriteString(object.password)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -61,7 +61,7 @@ func WriteHTPasswdIdentityProvider(object *HTPasswdIdentityProvider, stream *jso
 		stream.WriteString(object.username)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0 && object.users != nil
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.users != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -89,7 +89,9 @@ func UnmarshalHTPasswdIdentityProvider(source interface{}) (object *HTPasswdIden
 
 // ReadHTPasswdIdentityProvider reads a value of the 'HT_passwd_identity_provider' type from the given iterator.
 func ReadHTPasswdIdentityProvider(iterator *jsoniter.Iterator) *HTPasswdIdentityProvider {
-	object := &HTPasswdIdentityProvider{}
+	object := &HTPasswdIdentityProvider{
+		fieldSet_: make([]bool, 3),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -99,11 +101,11 @@ func ReadHTPasswdIdentityProvider(iterator *jsoniter.Iterator) *HTPasswdIdentity
 		case "password":
 			value := iterator.ReadString()
 			object.password = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "username":
 			value := iterator.ReadString()
 			object.username = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "users":
 			value := &v1.HTPasswdUserList{}
 			for {
@@ -124,7 +126,7 @@ func ReadHTPasswdIdentityProvider(iterator *jsoniter.Iterator) *HTPasswdIdentity
 				}
 			}
 			object.users = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		default:
 			iterator.ReadAny()
 		}

@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// AccessRequestBuilder contains the data and logic needed to build 'access_request' objects.
-//
 // Representation of an access request.
 type AccessRequestBuilder struct {
-	bitmap_               uint32
+	fieldSet_             []bool
 	id                    string
 	href                  string
 	clusterId             string
@@ -48,59 +46,70 @@ type AccessRequestBuilder struct {
 
 // NewAccessRequest creates a new builder of 'access_request' objects.
 func NewAccessRequest() *AccessRequestBuilder {
-	return &AccessRequestBuilder{}
+	return &AccessRequestBuilder{
+		fieldSet_: make([]bool, 17),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AccessRequestBuilder) Link(value bool) *AccessRequestBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AccessRequestBuilder) ID(value string) *AccessRequestBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AccessRequestBuilder) HREF(value string) *AccessRequestBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AccessRequestBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *AccessRequestBuilder) ClusterId(value string) *AccessRequestBuilder {
 	b.clusterId = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *AccessRequestBuilder) CreatedAt(value time.Time) *AccessRequestBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // Deadline sets the value of the 'deadline' attribute to the given value.
 func (b *AccessRequestBuilder) Deadline(value string) *AccessRequestBuilder {
 	b.deadline = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // DeadlineAt sets the value of the 'deadline_at' attribute to the given value.
 func (b *AccessRequestBuilder) DeadlineAt(value time.Time) *AccessRequestBuilder {
 	b.deadlineAt = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -108,42 +117,42 @@ func (b *AccessRequestBuilder) DeadlineAt(value time.Time) *AccessRequestBuilder
 func (b *AccessRequestBuilder) Decisions(values ...*DecisionBuilder) *AccessRequestBuilder {
 	b.decisions = make([]*DecisionBuilder, len(values))
 	copy(b.decisions, values)
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // Duration sets the value of the 'duration' attribute to the given value.
 func (b *AccessRequestBuilder) Duration(value string) *AccessRequestBuilder {
 	b.duration = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // InternalSupportCaseId sets the value of the 'internal_support_case_id' attribute to the given value.
 func (b *AccessRequestBuilder) InternalSupportCaseId(value string) *AccessRequestBuilder {
 	b.internalSupportCaseId = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
 // Justification sets the value of the 'justification' attribute to the given value.
 func (b *AccessRequestBuilder) Justification(value string) *AccessRequestBuilder {
 	b.justification = value
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
 // OrganizationId sets the value of the 'organization_id' attribute to the given value.
 func (b *AccessRequestBuilder) OrganizationId(value string) *AccessRequestBuilder {
 	b.organizationId = value
-	b.bitmap_ |= 2048
+	b.fieldSet_[11] = true
 	return b
 }
 
 // RequestedBy sets the value of the 'requested_by' attribute to the given value.
 func (b *AccessRequestBuilder) RequestedBy(value string) *AccessRequestBuilder {
 	b.requestedBy = value
-	b.bitmap_ |= 4096
+	b.fieldSet_[12] = true
 	return b
 }
 
@@ -153,9 +162,9 @@ func (b *AccessRequestBuilder) RequestedBy(value string) *AccessRequestBuilder {
 func (b *AccessRequestBuilder) Status(value *AccessRequestStatusBuilder) *AccessRequestBuilder {
 	b.status = value
 	if value != nil {
-		b.bitmap_ |= 8192
+		b.fieldSet_[13] = true
 	} else {
-		b.bitmap_ &^= 8192
+		b.fieldSet_[13] = false
 	}
 	return b
 }
@@ -163,21 +172,21 @@ func (b *AccessRequestBuilder) Status(value *AccessRequestStatusBuilder) *Access
 // SubscriptionId sets the value of the 'subscription_id' attribute to the given value.
 func (b *AccessRequestBuilder) SubscriptionId(value string) *AccessRequestBuilder {
 	b.subscriptionId = value
-	b.bitmap_ |= 16384
+	b.fieldSet_[14] = true
 	return b
 }
 
 // SupportCaseId sets the value of the 'support_case_id' attribute to the given value.
 func (b *AccessRequestBuilder) SupportCaseId(value string) *AccessRequestBuilder {
 	b.supportCaseId = value
-	b.bitmap_ |= 32768
+	b.fieldSet_[15] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *AccessRequestBuilder) UpdatedAt(value time.Time) *AccessRequestBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 65536
+	b.fieldSet_[16] = true
 	return b
 }
 
@@ -186,7 +195,10 @@ func (b *AccessRequestBuilder) Copy(object *AccessRequest) *AccessRequestBuilder
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.clusterId = object.clusterId
@@ -222,7 +234,10 @@ func (b *AccessRequestBuilder) Build() (object *AccessRequest, err error) {
 	object = new(AccessRequest)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.clusterId = b.clusterId
 	object.createdAt = b.createdAt
 	object.deadline = b.deadline

@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// ApplicationDependencyBuilder contains the data and logic needed to build 'application_dependency' objects.
-//
 // Definition of a Status Board application dependency.
 type ApplicationDependencyBuilder struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	id          string
 	href        string
 	application *ApplicationBuilder
@@ -42,32 +40,43 @@ type ApplicationDependencyBuilder struct {
 
 // NewApplicationDependency creates a new builder of 'application_dependency' objects.
 func NewApplicationDependency() *ApplicationDependencyBuilder {
-	return &ApplicationDependencyBuilder{}
+	return &ApplicationDependencyBuilder{
+		fieldSet_: make([]bool, 11),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ApplicationDependencyBuilder) Link(value bool) *ApplicationDependencyBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ApplicationDependencyBuilder) ID(value string) *ApplicationDependencyBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ApplicationDependencyBuilder) HREF(value string) *ApplicationDependencyBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ApplicationDependencyBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Application sets the value of the 'application' attribute to the given value.
@@ -76,9 +85,9 @@ func (b *ApplicationDependencyBuilder) Empty() bool {
 func (b *ApplicationDependencyBuilder) Application(value *ApplicationBuilder) *ApplicationDependencyBuilder {
 	b.application = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -86,21 +95,21 @@ func (b *ApplicationDependencyBuilder) Application(value *ApplicationBuilder) *A
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ApplicationDependencyBuilder) CreatedAt(value time.Time) *ApplicationDependencyBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // Metadata sets the value of the 'metadata' attribute to the given value.
 func (b *ApplicationDependencyBuilder) Metadata(value interface{}) *ApplicationDependencyBuilder {
 	b.metadata = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ApplicationDependencyBuilder) Name(value string) *ApplicationDependencyBuilder {
 	b.name = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -108,7 +117,7 @@ func (b *ApplicationDependencyBuilder) Name(value string) *ApplicationDependency
 func (b *ApplicationDependencyBuilder) Owners(values ...*OwnerBuilder) *ApplicationDependencyBuilder {
 	b.owners = make([]*OwnerBuilder, len(values))
 	copy(b.owners, values)
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
@@ -118,9 +127,9 @@ func (b *ApplicationDependencyBuilder) Owners(values ...*OwnerBuilder) *Applicat
 func (b *ApplicationDependencyBuilder) Service(value *ServiceBuilder) *ApplicationDependencyBuilder {
 	b.service = value
 	if value != nil {
-		b.bitmap_ |= 256
+		b.fieldSet_[8] = true
 	} else {
-		b.bitmap_ &^= 256
+		b.fieldSet_[8] = false
 	}
 	return b
 }
@@ -128,14 +137,14 @@ func (b *ApplicationDependencyBuilder) Service(value *ServiceBuilder) *Applicati
 // Type sets the value of the 'type' attribute to the given value.
 func (b *ApplicationDependencyBuilder) Type(value string) *ApplicationDependencyBuilder {
 	b.type_ = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ApplicationDependencyBuilder) UpdatedAt(value time.Time) *ApplicationDependencyBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
@@ -144,7 +153,10 @@ func (b *ApplicationDependencyBuilder) Copy(object *ApplicationDependency) *Appl
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.application != nil {
@@ -178,7 +190,10 @@ func (b *ApplicationDependencyBuilder) Build() (object *ApplicationDependency, e
 	object = new(ApplicationDependency)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.application != nil {
 		object.application, err = b.application.Build()
 		if err != nil {

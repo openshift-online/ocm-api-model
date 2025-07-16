@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 //
 // Capability model that represents internal labels with a key that matches a set list defined in AMS (defined in pkg/api/capability_types.go).
 type Capability struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	name      string
 	value     string
 	inherited bool
@@ -31,7 +31,15 @@ type Capability struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Capability) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Inherited returns the value of the 'inherited' attribute, or
@@ -39,7 +47,7 @@ func (o *Capability) Empty() bool {
 //
 // Dynamic attribute of the capability that tells us that this capability was inherited from the subscription's organization.
 func (o *Capability) Inherited() bool {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.inherited
 	}
 	return false
@@ -50,7 +58,7 @@ func (o *Capability) Inherited() bool {
 //
 // Dynamic attribute of the capability that tells us that this capability was inherited from the subscription's organization.
 func (o *Capability) GetInherited() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.inherited
 	}
@@ -62,7 +70,7 @@ func (o *Capability) GetInherited() (value bool, ok bool) {
 //
 // Name of the capability label.
 func (o *Capability) Name() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.name
 	}
 	return ""
@@ -73,7 +81,7 @@ func (o *Capability) Name() string {
 //
 // Name of the capability label.
 func (o *Capability) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.name
 	}
@@ -85,7 +93,7 @@ func (o *Capability) GetName() (value string, ok bool) {
 //
 // Value that can be assigned to the capability (eg. "true", "false" etc).
 func (o *Capability) Value() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.value
 	}
 	return ""
@@ -96,7 +104,7 @@ func (o *Capability) Value() string {
 //
 // Value that can be assigned to the capability (eg. "true", "false" etc).
 func (o *Capability) GetValue() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.value
 	}

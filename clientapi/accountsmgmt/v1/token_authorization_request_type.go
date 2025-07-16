@@ -21,13 +21,21 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 
 // TokenAuthorizationRequest represents the values of the 'token_authorization_request' type.
 type TokenAuthorizationRequest struct {
-	bitmap_            uint32
+	fieldSet_          []bool
 	authorizationToken string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *TokenAuthorizationRequest) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AuthorizationToken returns the value of the 'authorization_token' attribute, or
@@ -35,7 +43,7 @@ func (o *TokenAuthorizationRequest) Empty() bool {
 //
 // The pull secret of a given account
 func (o *TokenAuthorizationRequest) AuthorizationToken() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.authorizationToken
 	}
 	return ""
@@ -46,7 +54,7 @@ func (o *TokenAuthorizationRequest) AuthorizationToken() string {
 //
 // The pull secret of a given account
 func (o *TokenAuthorizationRequest) GetAuthorizationToken() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.authorizationToken
 	}

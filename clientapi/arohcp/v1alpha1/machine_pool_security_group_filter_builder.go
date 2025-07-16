@@ -19,36 +19,44 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// MachinePoolSecurityGroupFilterBuilder contains the data and logic needed to build 'machine_pool_security_group_filter' objects.
-//
 // Security Group Filter object, containing name of the filter tag and value of the filter tag
 type MachinePoolSecurityGroupFilterBuilder struct {
-	bitmap_ uint32
-	name    string
-	value   string
+	fieldSet_ []bool
+	name      string
+	value     string
 }
 
 // NewMachinePoolSecurityGroupFilter creates a new builder of 'machine_pool_security_group_filter' objects.
 func NewMachinePoolSecurityGroupFilter() *MachinePoolSecurityGroupFilterBuilder {
-	return &MachinePoolSecurityGroupFilterBuilder{}
+	return &MachinePoolSecurityGroupFilterBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *MachinePoolSecurityGroupFilterBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *MachinePoolSecurityGroupFilterBuilder) Name(value string) *MachinePoolSecurityGroupFilterBuilder {
 	b.name = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *MachinePoolSecurityGroupFilterBuilder) Value(value string) *MachinePoolSecurityGroupFilterBuilder {
 	b.value = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -57,7 +65,10 @@ func (b *MachinePoolSecurityGroupFilterBuilder) Copy(object *MachinePoolSecurity
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.name = object.name
 	b.value = object.value
 	return b
@@ -66,7 +77,10 @@ func (b *MachinePoolSecurityGroupFilterBuilder) Copy(object *MachinePoolSecurity
 // Build creates a 'machine_pool_security_group_filter' object using the configuration stored in the builder.
 func (b *MachinePoolSecurityGroupFilterBuilder) Build() (object *MachinePoolSecurityGroupFilter, err error) {
 	object = new(MachinePoolSecurityGroupFilter)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.name = b.name
 	object.value = b.value
 	return

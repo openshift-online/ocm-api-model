@@ -23,13 +23,21 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Contains the necessary attributes to support audit log forwarding
 type AuditLog struct {
-	bitmap_ uint32
-	roleArn string
+	fieldSet_ []bool
+	roleArn   string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AuditLog) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // RoleArn returns the value of the 'role_arn' attribute, or
@@ -37,7 +45,7 @@ func (o *AuditLog) Empty() bool {
 //
 // ARN of the CloudWatch audit log forwarding role
 func (o *AuditLog) RoleArn() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.roleArn
 	}
 	return ""
@@ -48,7 +56,7 @@ func (o *AuditLog) RoleArn() string {
 //
 // ARN of the CloudWatch audit log forwarding role
 func (o *AuditLog) GetRoleArn() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.roleArn
 	}

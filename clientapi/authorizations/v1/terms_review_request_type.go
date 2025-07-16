@@ -24,7 +24,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations
 // Representation of Red Hat's Terms and Conditions for using OpenShift Dedicated and Amazon Red Hat OpenShift [Terms]
 // review requests.
 type TermsReviewRequest struct {
-	bitmap_            uint32
+	fieldSet_          []bool
 	accountUsername    string
 	eventCode          string
 	siteCode           string
@@ -33,7 +33,15 @@ type TermsReviewRequest struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *TermsReviewRequest) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AccountUsername returns the value of the 'account_username' attribute, or
@@ -41,7 +49,7 @@ func (o *TermsReviewRequest) Empty() bool {
 //
 // Defines the username of the account of which Terms is being reviewed.
 func (o *TermsReviewRequest) AccountUsername() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.accountUsername
 	}
 	return ""
@@ -52,7 +60,7 @@ func (o *TermsReviewRequest) AccountUsername() string {
 //
 // Defines the username of the account of which Terms is being reviewed.
 func (o *TermsReviewRequest) GetAccountUsername() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.accountUsername
 	}
@@ -64,7 +72,7 @@ func (o *TermsReviewRequest) GetAccountUsername() (value string, ok bool) {
 //
 // If false, only `terms_required` will be checked
 func (o *TermsReviewRequest) CheckOptionalTerms() bool {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.checkOptionalTerms
 	}
 	return false
@@ -75,7 +83,7 @@ func (o *TermsReviewRequest) CheckOptionalTerms() bool {
 //
 // If false, only `terms_required` will be checked
 func (o *TermsReviewRequest) GetCheckOptionalTerms() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.checkOptionalTerms
 	}
@@ -87,7 +95,7 @@ func (o *TermsReviewRequest) GetCheckOptionalTerms() (value bool, ok bool) {
 //
 // Defines the event code of the terms being checked
 func (o *TermsReviewRequest) EventCode() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.eventCode
 	}
 	return ""
@@ -98,7 +106,7 @@ func (o *TermsReviewRequest) EventCode() string {
 //
 // Defines the event code of the terms being checked
 func (o *TermsReviewRequest) GetEventCode() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.eventCode
 	}
@@ -110,7 +118,7 @@ func (o *TermsReviewRequest) GetEventCode() (value string, ok bool) {
 //
 // Defines the site code of the terms being checked
 func (o *TermsReviewRequest) SiteCode() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.siteCode
 	}
 	return ""
@@ -121,7 +129,7 @@ func (o *TermsReviewRequest) SiteCode() string {
 //
 // Defines the site code of the terms being checked
 func (o *TermsReviewRequest) GetSiteCode() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.siteCode
 	}

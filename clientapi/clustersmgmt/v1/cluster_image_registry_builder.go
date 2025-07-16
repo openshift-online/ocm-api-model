@@ -19,28 +19,36 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// ClusterImageRegistryBuilder contains the data and logic needed to build 'cluster_image_registry' objects.
-//
 // ClusterImageRegistry represents the configuration for the cluster's internal image registry.
 type ClusterImageRegistryBuilder struct {
-	bitmap_ uint32
-	state   string
+	fieldSet_ []bool
+	state     string
 }
 
 // NewClusterImageRegistry creates a new builder of 'cluster_image_registry' objects.
 func NewClusterImageRegistry() *ClusterImageRegistryBuilder {
-	return &ClusterImageRegistryBuilder{}
+	return &ClusterImageRegistryBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterImageRegistryBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // State sets the value of the 'state' attribute to the given value.
 func (b *ClusterImageRegistryBuilder) State(value string) *ClusterImageRegistryBuilder {
 	b.state = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -49,7 +57,10 @@ func (b *ClusterImageRegistryBuilder) Copy(object *ClusterImageRegistry) *Cluste
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.state = object.state
 	return b
 }
@@ -57,7 +68,10 @@ func (b *ClusterImageRegistryBuilder) Copy(object *ClusterImageRegistry) *Cluste
 // Build creates a 'cluster_image_registry' object using the configuration stored in the builder.
 func (b *ClusterImageRegistryBuilder) Build() (object *ClusterImageRegistry, err error) {
 	object = new(ClusterImageRegistry)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.state = b.state
 	return
 }

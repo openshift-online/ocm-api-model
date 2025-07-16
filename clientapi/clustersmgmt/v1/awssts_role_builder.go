@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AWSSTSRoleBuilder contains the data and logic needed to build 'AWSSTS_role' objects.
-//
 // Representation of an sts role for a rosa cluster
 type AWSSTSRoleBuilder struct {
-	bitmap_            uint32
+	fieldSet_          []bool
 	roleARN            string
 	roleType           string
 	roleVersion        string
@@ -34,53 +32,63 @@ type AWSSTSRoleBuilder struct {
 
 // NewAWSSTSRole creates a new builder of 'AWSSTS_role' objects.
 func NewAWSSTSRole() *AWSSTSRoleBuilder {
-	return &AWSSTSRoleBuilder{}
+	return &AWSSTSRoleBuilder{
+		fieldSet_: make([]bool, 6),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AWSSTSRoleBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // HcpManagedPolicies sets the value of the 'hcp_managed_policies' attribute to the given value.
 func (b *AWSSTSRoleBuilder) HcpManagedPolicies(value bool) *AWSSTSRoleBuilder {
 	b.hcpManagedPolicies = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // IsAdmin sets the value of the 'is_admin' attribute to the given value.
 func (b *AWSSTSRoleBuilder) IsAdmin(value bool) *AWSSTSRoleBuilder {
 	b.isAdmin = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // ManagedPolicies sets the value of the 'managed_policies' attribute to the given value.
 func (b *AWSSTSRoleBuilder) ManagedPolicies(value bool) *AWSSTSRoleBuilder {
 	b.managedPolicies = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // RoleARN sets the value of the 'role_ARN' attribute to the given value.
 func (b *AWSSTSRoleBuilder) RoleARN(value string) *AWSSTSRoleBuilder {
 	b.roleARN = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // RoleType sets the value of the 'role_type' attribute to the given value.
 func (b *AWSSTSRoleBuilder) RoleType(value string) *AWSSTSRoleBuilder {
 	b.roleType = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // RoleVersion sets the value of the 'role_version' attribute to the given value.
 func (b *AWSSTSRoleBuilder) RoleVersion(value string) *AWSSTSRoleBuilder {
 	b.roleVersion = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -89,7 +97,10 @@ func (b *AWSSTSRoleBuilder) Copy(object *AWSSTSRole) *AWSSTSRoleBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.hcpManagedPolicies = object.hcpManagedPolicies
 	b.isAdmin = object.isAdmin
 	b.managedPolicies = object.managedPolicies
@@ -102,7 +113,10 @@ func (b *AWSSTSRoleBuilder) Copy(object *AWSSTSRole) *AWSSTSRoleBuilder {
 // Build creates a 'AWSSTS_role' object using the configuration stored in the builder.
 func (b *AWSSTSRoleBuilder) Build() (object *AWSSTSRole, err error) {
 	object = new(AWSSTSRole)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.hcpManagedPolicies = b.hcpManagedPolicies
 	object.isAdmin = b.isAdmin
 	object.managedPolicies = b.managedPolicies

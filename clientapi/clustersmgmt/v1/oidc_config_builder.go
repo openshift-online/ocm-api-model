@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// OidcConfigBuilder contains the data and logic needed to build 'oidc_config' objects.
-//
 // Contains the necessary attributes to support oidc configuration hosting under Red Hat or registering a Customer's byo oidc config.
 type OidcConfigBuilder struct {
-	bitmap_             uint32
+	fieldSet_           []bool
 	href                string
 	id                  string
 	creationTimestamp   time.Time
@@ -43,88 +41,98 @@ type OidcConfigBuilder struct {
 
 // NewOidcConfig creates a new builder of 'oidc_config' objects.
 func NewOidcConfig() *OidcConfigBuilder {
-	return &OidcConfigBuilder{}
+	return &OidcConfigBuilder{
+		fieldSet_: make([]bool, 11),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *OidcConfigBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // HREF sets the value of the 'HREF' attribute to the given value.
 func (b *OidcConfigBuilder) HREF(value string) *OidcConfigBuilder {
 	b.href = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *OidcConfigBuilder) ID(value string) *OidcConfigBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *OidcConfigBuilder) CreationTimestamp(value time.Time) *OidcConfigBuilder {
 	b.creationTimestamp = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // InstallerRoleArn sets the value of the 'installer_role_arn' attribute to the given value.
 func (b *OidcConfigBuilder) InstallerRoleArn(value string) *OidcConfigBuilder {
 	b.installerRoleArn = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // IssuerUrl sets the value of the 'issuer_url' attribute to the given value.
 func (b *OidcConfigBuilder) IssuerUrl(value string) *OidcConfigBuilder {
 	b.issuerUrl = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // LastUpdateTimestamp sets the value of the 'last_update_timestamp' attribute to the given value.
 func (b *OidcConfigBuilder) LastUpdateTimestamp(value time.Time) *OidcConfigBuilder {
 	b.lastUpdateTimestamp = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // LastUsedTimestamp sets the value of the 'last_used_timestamp' attribute to the given value.
 func (b *OidcConfigBuilder) LastUsedTimestamp(value time.Time) *OidcConfigBuilder {
 	b.lastUsedTimestamp = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // Managed sets the value of the 'managed' attribute to the given value.
 func (b *OidcConfigBuilder) Managed(value bool) *OidcConfigBuilder {
 	b.managed = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // OrganizationId sets the value of the 'organization_id' attribute to the given value.
 func (b *OidcConfigBuilder) OrganizationId(value string) *OidcConfigBuilder {
 	b.organizationId = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // Reusable sets the value of the 'reusable' attribute to the given value.
 func (b *OidcConfigBuilder) Reusable(value bool) *OidcConfigBuilder {
 	b.reusable = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
 // SecretArn sets the value of the 'secret_arn' attribute to the given value.
 func (b *OidcConfigBuilder) SecretArn(value string) *OidcConfigBuilder {
 	b.secretArn = value
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
@@ -133,7 +141,10 @@ func (b *OidcConfigBuilder) Copy(object *OidcConfig) *OidcConfigBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.href = object.href
 	b.id = object.id
 	b.creationTimestamp = object.creationTimestamp
@@ -151,7 +162,10 @@ func (b *OidcConfigBuilder) Copy(object *OidcConfig) *OidcConfigBuilder {
 // Build creates a 'oidc_config' object using the configuration stored in the builder.
 func (b *OidcConfigBuilder) Build() (object *OidcConfig, err error) {
 	object = new(OidcConfig)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.href = b.href
 	object.id = b.id
 	object.creationTimestamp = b.creationTimestamp

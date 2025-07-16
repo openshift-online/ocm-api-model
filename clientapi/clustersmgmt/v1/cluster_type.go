@@ -77,7 +77,7 @@ const ClusterNilKind = "ClusterNil"
 // attributes are mandatory when creation a cluster with your own Amazon Web
 // Services account.
 type Cluster struct {
-	bitmap_                           uint64
+	fieldSet_                         []bool
 	id                                string
 	href                              string
 	api                               *ClusterAPI
@@ -148,7 +148,7 @@ func (o *Cluster) Kind() string {
 	if o == nil {
 		return ClusterNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return ClusterLinkKind
 	}
 	return ClusterKind
@@ -156,12 +156,12 @@ func (o *Cluster) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Cluster) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *Cluster) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -170,7 +170,7 @@ func (o *Cluster) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Cluster) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -179,7 +179,7 @@ func (o *Cluster) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Cluster) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -188,7 +188,7 @@ func (o *Cluster) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Cluster) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -197,7 +197,17 @@ func (o *Cluster) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Cluster) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // API returns the value of the 'API' attribute, or
@@ -205,7 +215,7 @@ func (o *Cluster) Empty() bool {
 //
 // Information about the API of the cluster.
 func (o *Cluster) API() *ClusterAPI {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.api
 	}
 	return nil
@@ -216,7 +226,7 @@ func (o *Cluster) API() *ClusterAPI {
 //
 // Information about the API of the cluster.
 func (o *Cluster) GetAPI() (value *ClusterAPI, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.api
 	}
@@ -228,7 +238,7 @@ func (o *Cluster) GetAPI() (value *ClusterAPI, ok bool) {
 //
 // Amazon Web Services settings of the cluster.
 func (o *Cluster) AWS() *AWS {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.aws
 	}
 	return nil
@@ -239,7 +249,7 @@ func (o *Cluster) AWS() *AWS {
 //
 // Amazon Web Services settings of the cluster.
 func (o *Cluster) GetAWS() (value *AWS, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.aws
 	}
@@ -251,7 +261,7 @@ func (o *Cluster) GetAWS() (value *AWS, ok bool) {
 //
 // List of AWS infrastructure access role grants on this cluster.
 func (o *Cluster) AWSInfrastructureAccessRoleGrants() *AWSInfrastructureAccessRoleGrantList {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.awsInfrastructureAccessRoleGrants
 	}
 	return nil
@@ -262,7 +272,7 @@ func (o *Cluster) AWSInfrastructureAccessRoleGrants() *AWSInfrastructureAccessRo
 //
 // List of AWS infrastructure access role grants on this cluster.
 func (o *Cluster) GetAWSInfrastructureAccessRoleGrants() (value *AWSInfrastructureAccessRoleGrantList, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.awsInfrastructureAccessRoleGrants
 	}
@@ -274,7 +284,7 @@ func (o *Cluster) GetAWSInfrastructureAccessRoleGrants() (value *AWSInfrastructu
 //
 // Contains configuration of a Customer Cloud Subscription cluster.
 func (o *Cluster) CCS() *CCS {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.ccs
 	}
 	return nil
@@ -285,7 +295,7 @@ func (o *Cluster) CCS() *CCS {
 //
 // Contains configuration of a Customer Cloud Subscription cluster.
 func (o *Cluster) GetCCS() (value *CCS, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.ccs
 	}
@@ -297,7 +307,7 @@ func (o *Cluster) GetCCS() (value *CCS, ok bool) {
 //
 // DNS settings of the cluster.
 func (o *Cluster) DNS() *DNS {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.dns
 	}
 	return nil
@@ -308,7 +318,7 @@ func (o *Cluster) DNS() *DNS {
 //
 // DNS settings of the cluster.
 func (o *Cluster) GetDNS() (value *DNS, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.dns
 	}
@@ -320,7 +330,7 @@ func (o *Cluster) GetDNS() (value *DNS, ok bool) {
 //
 // Create cluster that uses FIPS Validated / Modules in Process cryptographic libraries.
 func (o *Cluster) FIPS() bool {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.fips
 	}
 	return false
@@ -331,7 +341,7 @@ func (o *Cluster) FIPS() bool {
 //
 // Create cluster that uses FIPS Validated / Modules in Process cryptographic libraries.
 func (o *Cluster) GetFIPS() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.fips
 	}
@@ -343,7 +353,7 @@ func (o *Cluster) GetFIPS() (value bool, ok bool) {
 //
 // Google cloud platform settings of the cluster.
 func (o *Cluster) GCP() *GCP {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.gcp
 	}
 	return nil
@@ -354,7 +364,7 @@ func (o *Cluster) GCP() *GCP {
 //
 // Google cloud platform settings of the cluster.
 func (o *Cluster) GetGCP() (value *GCP, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.gcp
 	}
@@ -366,7 +376,7 @@ func (o *Cluster) GetGCP() (value *GCP, ok bool) {
 //
 // Key used for encryption of GCP cluster nodes.
 func (o *Cluster) GCPEncryptionKey() *GCPEncryptionKey {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.gcpEncryptionKey
 	}
 	return nil
@@ -377,7 +387,7 @@ func (o *Cluster) GCPEncryptionKey() *GCPEncryptionKey {
 //
 // Key used for encryption of GCP cluster nodes.
 func (o *Cluster) GetGCPEncryptionKey() (value *GCPEncryptionKey, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.gcpEncryptionKey
 	}
@@ -389,7 +399,7 @@ func (o *Cluster) GetGCPEncryptionKey() (value *GCPEncryptionKey, ok bool) {
 //
 // GCP Network.
 func (o *Cluster) GCPNetwork() *GCPNetwork {
-	if o != nil && o.bitmap_&2048 != 0 {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.gcpNetwork
 	}
 	return nil
@@ -400,7 +410,7 @@ func (o *Cluster) GCPNetwork() *GCPNetwork {
 //
 // GCP Network.
 func (o *Cluster) GetGCPNetwork() (value *GCPNetwork, ok bool) {
-	ok = o != nil && o.bitmap_&2048 != 0
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.gcpNetwork
 	}
@@ -412,7 +422,7 @@ func (o *Cluster) GetGCPNetwork() (value *GCPNetwork, ok bool) {
 //
 // Additional trust bundle.
 func (o *Cluster) AdditionalTrustBundle() string {
-	if o != nil && o.bitmap_&4096 != 0 {
+	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
 		return o.additionalTrustBundle
 	}
 	return ""
@@ -423,7 +433,7 @@ func (o *Cluster) AdditionalTrustBundle() string {
 //
 // Additional trust bundle.
 func (o *Cluster) GetAdditionalTrustBundle() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4096 != 0
+	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
 	if ok {
 		value = o.additionalTrustBundle
 	}
@@ -435,7 +445,7 @@ func (o *Cluster) GetAdditionalTrustBundle() (value string, ok bool) {
 //
 // List of add-ons on this cluster.
 func (o *Cluster) Addons() *AddOnInstallationList {
-	if o != nil && o.bitmap_&8192 != 0 {
+	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
 		return o.addons
 	}
 	return nil
@@ -446,7 +456,7 @@ func (o *Cluster) Addons() *AddOnInstallationList {
 //
 // List of add-ons on this cluster.
 func (o *Cluster) GetAddons() (value *AddOnInstallationList, ok bool) {
-	ok = o != nil && o.bitmap_&8192 != 0
+	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
 	if ok {
 		value = o.addons
 	}
@@ -458,7 +468,7 @@ func (o *Cluster) GetAddons() (value *AddOnInstallationList, ok bool) {
 //
 // Link to an optional _ClusterAutoscaler_ that is coupled with the cluster.
 func (o *Cluster) Autoscaler() *ClusterAutoscaler {
-	if o != nil && o.bitmap_&16384 != 0 {
+	if o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14] {
 		return o.autoscaler
 	}
 	return nil
@@ -469,7 +479,7 @@ func (o *Cluster) Autoscaler() *ClusterAutoscaler {
 //
 // Link to an optional _ClusterAutoscaler_ that is coupled with the cluster.
 func (o *Cluster) GetAutoscaler() (value *ClusterAutoscaler, ok bool) {
-	ok = o != nil && o.bitmap_&16384 != 0
+	ok = o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14]
 	if ok {
 		value = o.autoscaler
 	}
@@ -481,7 +491,7 @@ func (o *Cluster) GetAutoscaler() (value *ClusterAutoscaler, ok bool) {
 //
 // Microsoft Azure settings of the cluster.
 func (o *Cluster) Azure() *Azure {
-	if o != nil && o.bitmap_&32768 != 0 {
+	if o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15] {
 		return o.azure
 	}
 	return nil
@@ -492,7 +502,7 @@ func (o *Cluster) Azure() *Azure {
 //
 // Microsoft Azure settings of the cluster.
 func (o *Cluster) GetAzure() (value *Azure, ok bool) {
-	ok = o != nil && o.bitmap_&32768 != 0
+	ok = o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15]
 	if ok {
 		value = o.azure
 	}
@@ -504,7 +514,7 @@ func (o *Cluster) GetAzure() (value *Azure, ok bool) {
 //
 // Billing model for cluster resources.
 func (o *Cluster) BillingModel() BillingModel {
-	if o != nil && o.bitmap_&65536 != 0 {
+	if o != nil && len(o.fieldSet_) > 16 && o.fieldSet_[16] {
 		return o.billingModel
 	}
 	return BillingModel("")
@@ -515,7 +525,7 @@ func (o *Cluster) BillingModel() BillingModel {
 //
 // Billing model for cluster resources.
 func (o *Cluster) GetBillingModel() (value BillingModel, ok bool) {
-	ok = o != nil && o.bitmap_&65536 != 0
+	ok = o != nil && len(o.fieldSet_) > 16 && o.fieldSet_[16]
 	if ok {
 		value = o.billingModel
 	}
@@ -527,7 +537,7 @@ func (o *Cluster) GetBillingModel() (value BillingModel, ok bool) {
 //
 // Contains information about BYO OIDC.
 func (o *Cluster) ByoOidc() *ByoOidc {
-	if o != nil && o.bitmap_&131072 != 0 {
+	if o != nil && len(o.fieldSet_) > 17 && o.fieldSet_[17] {
 		return o.byoOidc
 	}
 	return nil
@@ -538,7 +548,7 @@ func (o *Cluster) ByoOidc() *ByoOidc {
 //
 // Contains information about BYO OIDC.
 func (o *Cluster) GetByoOidc() (value *ByoOidc, ok bool) {
-	ok = o != nil && o.bitmap_&131072 != 0
+	ok = o != nil && len(o.fieldSet_) > 17 && o.fieldSet_[17]
 	if ok {
 		value = o.byoOidc
 	}
@@ -550,7 +560,7 @@ func (o *Cluster) GetByoOidc() (value *ByoOidc, ok bool) {
 //
 // OpenShift Cluster Capabilities configuration
 func (o *Cluster) Capabilities() *ClusterCapabilities {
-	if o != nil && o.bitmap_&262144 != 0 {
+	if o != nil && len(o.fieldSet_) > 18 && o.fieldSet_[18] {
 		return o.capabilities
 	}
 	return nil
@@ -561,7 +571,7 @@ func (o *Cluster) Capabilities() *ClusterCapabilities {
 //
 // OpenShift Cluster Capabilities configuration
 func (o *Cluster) GetCapabilities() (value *ClusterCapabilities, ok bool) {
-	ok = o != nil && o.bitmap_&262144 != 0
+	ok = o != nil && len(o.fieldSet_) > 18 && o.fieldSet_[18]
 	if ok {
 		value = o.capabilities
 	}
@@ -573,7 +583,7 @@ func (o *Cluster) GetCapabilities() (value *ClusterCapabilities, ok bool) {
 //
 // Link to the cloud provider where the cluster is installed.
 func (o *Cluster) CloudProvider() *CloudProvider {
-	if o != nil && o.bitmap_&524288 != 0 {
+	if o != nil && len(o.fieldSet_) > 19 && o.fieldSet_[19] {
 		return o.cloudProvider
 	}
 	return nil
@@ -584,7 +594,7 @@ func (o *Cluster) CloudProvider() *CloudProvider {
 //
 // Link to the cloud provider where the cluster is installed.
 func (o *Cluster) GetCloudProvider() (value *CloudProvider, ok bool) {
-	ok = o != nil && o.bitmap_&524288 != 0
+	ok = o != nil && len(o.fieldSet_) > 19 && o.fieldSet_[19]
 	if ok {
 		value = o.cloudProvider
 	}
@@ -596,7 +606,7 @@ func (o *Cluster) GetCloudProvider() (value *CloudProvider, ok bool) {
 //
 // Information about the console of the cluster.
 func (o *Cluster) Console() *ClusterConsole {
-	if o != nil && o.bitmap_&1048576 != 0 {
+	if o != nil && len(o.fieldSet_) > 20 && o.fieldSet_[20] {
 		return o.console
 	}
 	return nil
@@ -607,7 +617,7 @@ func (o *Cluster) Console() *ClusterConsole {
 //
 // Information about the console of the cluster.
 func (o *Cluster) GetConsole() (value *ClusterConsole, ok bool) {
-	ok = o != nil && o.bitmap_&1048576 != 0
+	ok = o != nil && len(o.fieldSet_) > 20 && o.fieldSet_[20]
 	if ok {
 		value = o.console
 	}
@@ -620,7 +630,7 @@ func (o *Cluster) GetConsole() (value *ClusterConsole, ok bool) {
 // Date and time when the cluster was initially created, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *Cluster) CreationTimestamp() time.Time {
-	if o != nil && o.bitmap_&2097152 != 0 {
+	if o != nil && len(o.fieldSet_) > 21 && o.fieldSet_[21] {
 		return o.creationTimestamp
 	}
 	return time.Time{}
@@ -632,7 +642,7 @@ func (o *Cluster) CreationTimestamp() time.Time {
 // Date and time when the cluster was initially created, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *Cluster) GetCreationTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&2097152 != 0
+	ok = o != nil && len(o.fieldSet_) > 21 && o.fieldSet_[21]
 	if ok {
 		value = o.creationTimestamp
 	}
@@ -644,7 +654,7 @@ func (o *Cluster) GetCreationTimestamp() (value time.Time, ok bool) {
 //
 // Delete protection
 func (o *Cluster) DeleteProtection() *DeleteProtection {
-	if o != nil && o.bitmap_&4194304 != 0 {
+	if o != nil && len(o.fieldSet_) > 22 && o.fieldSet_[22] {
 		return o.deleteProtection
 	}
 	return nil
@@ -655,7 +665,7 @@ func (o *Cluster) DeleteProtection() *DeleteProtection {
 //
 // Delete protection
 func (o *Cluster) GetDeleteProtection() (value *DeleteProtection, ok bool) {
-	ok = o != nil && o.bitmap_&4194304 != 0
+	ok = o != nil && len(o.fieldSet_) > 22 && o.fieldSet_[22]
 	if ok {
 		value = o.deleteProtection
 	}
@@ -668,7 +678,7 @@ func (o *Cluster) GetDeleteProtection() (value *DeleteProtection, ok bool) {
 // Indicates whether the User workload monitoring is enabled or not
 // It is enabled by default
 func (o *Cluster) DisableUserWorkloadMonitoring() bool {
-	if o != nil && o.bitmap_&8388608 != 0 {
+	if o != nil && len(o.fieldSet_) > 23 && o.fieldSet_[23] {
 		return o.disableUserWorkloadMonitoring
 	}
 	return false
@@ -680,7 +690,7 @@ func (o *Cluster) DisableUserWorkloadMonitoring() bool {
 // Indicates whether the User workload monitoring is enabled or not
 // It is enabled by default
 func (o *Cluster) GetDisableUserWorkloadMonitoring() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&8388608 != 0
+	ok = o != nil && len(o.fieldSet_) > 23 && o.fieldSet_[23]
 	if ok {
 		value = o.disableUserWorkloadMonitoring
 	}
@@ -693,7 +703,7 @@ func (o *Cluster) GetDisableUserWorkloadMonitoring() (value bool, ok bool) {
 // DomainPrefix of the cluster. This prefix is optionally assigned by the user when the
 // cluster is created. It will appear in the Cluster's domain when the cluster is provisioned.
 func (o *Cluster) DomainPrefix() string {
-	if o != nil && o.bitmap_&16777216 != 0 {
+	if o != nil && len(o.fieldSet_) > 24 && o.fieldSet_[24] {
 		return o.domainPrefix
 	}
 	return ""
@@ -705,7 +715,7 @@ func (o *Cluster) DomainPrefix() string {
 // DomainPrefix of the cluster. This prefix is optionally assigned by the user when the
 // cluster is created. It will appear in the Cluster's domain when the cluster is provisioned.
 func (o *Cluster) GetDomainPrefix() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16777216 != 0
+	ok = o != nil && len(o.fieldSet_) > 24 && o.fieldSet_[24]
 	if ok {
 		value = o.domainPrefix
 	}
@@ -719,7 +729,7 @@ func (o *Cluster) GetDomainPrefix() (value string, ok bool) {
 // This is set only during cluster creation.
 // For ARO-HCP Clusters, this is a readonly attribute, always set to true.
 func (o *Cluster) EtcdEncryption() bool {
-	if o != nil && o.bitmap_&33554432 != 0 {
+	if o != nil && len(o.fieldSet_) > 25 && o.fieldSet_[25] {
 		return o.etcdEncryption
 	}
 	return false
@@ -732,7 +742,7 @@ func (o *Cluster) EtcdEncryption() bool {
 // This is set only during cluster creation.
 // For ARO-HCP Clusters, this is a readonly attribute, always set to true.
 func (o *Cluster) GetEtcdEncryption() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&33554432 != 0
+	ok = o != nil && len(o.fieldSet_) > 25 && o.fieldSet_[25]
 	if ok {
 		value = o.etcdEncryption
 	}
@@ -748,7 +758,7 @@ func (o *Cluster) GetEtcdEncryption() (value bool, ok bool) {
 //
 // This option is unsupported.
 func (o *Cluster) ExpirationTimestamp() time.Time {
-	if o != nil && o.bitmap_&67108864 != 0 {
+	if o != nil && len(o.fieldSet_) > 26 && o.fieldSet_[26] {
 		return o.expirationTimestamp
 	}
 	return time.Time{}
@@ -763,7 +773,7 @@ func (o *Cluster) ExpirationTimestamp() time.Time {
 //
 // This option is unsupported.
 func (o *Cluster) GetExpirationTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&67108864 != 0
+	ok = o != nil && len(o.fieldSet_) > 26 && o.fieldSet_[26]
 	if ok {
 		value = o.expirationTimestamp
 	}
@@ -775,7 +785,7 @@ func (o *Cluster) GetExpirationTimestamp() (value time.Time, ok bool) {
 //
 // External identifier of the cluster, generated by the installer.
 func (o *Cluster) ExternalID() string {
-	if o != nil && o.bitmap_&134217728 != 0 {
+	if o != nil && len(o.fieldSet_) > 27 && o.fieldSet_[27] {
 		return o.externalID
 	}
 	return ""
@@ -786,7 +796,7 @@ func (o *Cluster) ExternalID() string {
 //
 // External identifier of the cluster, generated by the installer.
 func (o *Cluster) GetExternalID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&134217728 != 0
+	ok = o != nil && len(o.fieldSet_) > 27 && o.fieldSet_[27]
 	if ok {
 		value = o.externalID
 	}
@@ -801,7 +811,7 @@ func (o *Cluster) GetExternalID() (value string, ok bool) {
 // For ROSA HCP, if this is not specified, external authentication configuration will be disabled by default
 // For ARO HCP, if this is not specified, external authentication configuration will be enabled by default
 func (o *Cluster) ExternalAuthConfig() *ExternalAuthConfig {
-	if o != nil && o.bitmap_&268435456 != 0 {
+	if o != nil && len(o.fieldSet_) > 28 && o.fieldSet_[28] {
 		return o.externalAuthConfig
 	}
 	return nil
@@ -815,7 +825,7 @@ func (o *Cluster) ExternalAuthConfig() *ExternalAuthConfig {
 // For ROSA HCP, if this is not specified, external authentication configuration will be disabled by default
 // For ARO HCP, if this is not specified, external authentication configuration will be enabled by default
 func (o *Cluster) GetExternalAuthConfig() (value *ExternalAuthConfig, ok bool) {
-	ok = o != nil && o.bitmap_&268435456 != 0
+	ok = o != nil && len(o.fieldSet_) > 28 && o.fieldSet_[28]
 	if ok {
 		value = o.externalAuthConfig
 	}
@@ -827,7 +837,7 @@ func (o *Cluster) GetExternalAuthConfig() (value *ExternalAuthConfig, ok bool) {
 //
 // ExternalConfiguration shows external configuration on the cluster.
 func (o *Cluster) ExternalConfiguration() *ExternalConfiguration {
-	if o != nil && o.bitmap_&536870912 != 0 {
+	if o != nil && len(o.fieldSet_) > 29 && o.fieldSet_[29] {
 		return o.externalConfiguration
 	}
 	return nil
@@ -838,7 +848,7 @@ func (o *Cluster) ExternalConfiguration() *ExternalConfiguration {
 //
 // ExternalConfiguration shows external configuration on the cluster.
 func (o *Cluster) GetExternalConfiguration() (value *ExternalConfiguration, ok bool) {
-	ok = o != nil && o.bitmap_&536870912 != 0
+	ok = o != nil && len(o.fieldSet_) > 29 && o.fieldSet_[29]
 	if ok {
 		value = o.externalConfiguration
 	}
@@ -850,7 +860,7 @@ func (o *Cluster) GetExternalConfiguration() (value *ExternalConfiguration, ok b
 //
 // Link to the _flavour_ that was used to create the cluster.
 func (o *Cluster) Flavour() *Flavour {
-	if o != nil && o.bitmap_&1073741824 != 0 {
+	if o != nil && len(o.fieldSet_) > 30 && o.fieldSet_[30] {
 		return o.flavour
 	}
 	return nil
@@ -861,7 +871,7 @@ func (o *Cluster) Flavour() *Flavour {
 //
 // Link to the _flavour_ that was used to create the cluster.
 func (o *Cluster) GetFlavour() (value *Flavour, ok bool) {
-	ok = o != nil && o.bitmap_&1073741824 != 0
+	ok = o != nil && len(o.fieldSet_) > 30 && o.fieldSet_[30]
 	if ok {
 		value = o.flavour
 	}
@@ -873,7 +883,7 @@ func (o *Cluster) GetFlavour() (value *Flavour, ok bool) {
 //
 // Link to the collection of groups of user of the cluster.
 func (o *Cluster) Groups() *GroupList {
-	if o != nil && o.bitmap_&2147483648 != 0 {
+	if o != nil && len(o.fieldSet_) > 31 && o.fieldSet_[31] {
 		return o.groups
 	}
 	return nil
@@ -884,7 +894,7 @@ func (o *Cluster) Groups() *GroupList {
 //
 // Link to the collection of groups of user of the cluster.
 func (o *Cluster) GetGroups() (value *GroupList, ok bool) {
-	ok = o != nil && o.bitmap_&2147483648 != 0
+	ok = o != nil && len(o.fieldSet_) > 31 && o.fieldSet_[31]
 	if ok {
 		value = o.groups
 	}
@@ -896,7 +906,7 @@ func (o *Cluster) GetGroups() (value *GroupList, ok bool) {
 //
 // HealthState indicates the overall health state of the cluster.
 func (o *Cluster) HealthState() ClusterHealthState {
-	if o != nil && o.bitmap_&4294967296 != 0 {
+	if o != nil && len(o.fieldSet_) > 32 && o.fieldSet_[32] {
 		return o.healthState
 	}
 	return ClusterHealthState("")
@@ -907,7 +917,7 @@ func (o *Cluster) HealthState() ClusterHealthState {
 //
 // HealthState indicates the overall health state of the cluster.
 func (o *Cluster) GetHealthState() (value ClusterHealthState, ok bool) {
-	ok = o != nil && o.bitmap_&4294967296 != 0
+	ok = o != nil && len(o.fieldSet_) > 32 && o.fieldSet_[32]
 	if ok {
 		value = o.healthState
 	}
@@ -919,7 +929,7 @@ func (o *Cluster) GetHealthState() (value ClusterHealthState, ok bool) {
 //
 // Details for `htpasswd` identity provider.
 func (o *Cluster) Htpasswd() *HTPasswdIdentityProvider {
-	if o != nil && o.bitmap_&8589934592 != 0 {
+	if o != nil && len(o.fieldSet_) > 33 && o.fieldSet_[33] {
 		return o.htpasswd
 	}
 	return nil
@@ -930,7 +940,7 @@ func (o *Cluster) Htpasswd() *HTPasswdIdentityProvider {
 //
 // Details for `htpasswd` identity provider.
 func (o *Cluster) GetHtpasswd() (value *HTPasswdIdentityProvider, ok bool) {
-	ok = o != nil && o.bitmap_&8589934592 != 0
+	ok = o != nil && len(o.fieldSet_) > 33 && o.fieldSet_[33]
 	if ok {
 		value = o.htpasswd
 	}
@@ -942,7 +952,7 @@ func (o *Cluster) GetHtpasswd() (value *HTPasswdIdentityProvider, ok bool) {
 //
 // Hypershift configuration.
 func (o *Cluster) Hypershift() *Hypershift {
-	if o != nil && o.bitmap_&17179869184 != 0 {
+	if o != nil && len(o.fieldSet_) > 34 && o.fieldSet_[34] {
 		return o.hypershift
 	}
 	return nil
@@ -953,7 +963,7 @@ func (o *Cluster) Hypershift() *Hypershift {
 //
 // Hypershift configuration.
 func (o *Cluster) GetHypershift() (value *Hypershift, ok bool) {
-	ok = o != nil && o.bitmap_&17179869184 != 0
+	ok = o != nil && len(o.fieldSet_) > 34 && o.fieldSet_[34]
 	if ok {
 		value = o.hypershift
 	}
@@ -965,7 +975,7 @@ func (o *Cluster) GetHypershift() (value *Hypershift, ok bool) {
 //
 // Link to the collection of identity providers of the cluster.
 func (o *Cluster) IdentityProviders() *IdentityProviderList {
-	if o != nil && o.bitmap_&34359738368 != 0 {
+	if o != nil && len(o.fieldSet_) > 35 && o.fieldSet_[35] {
 		return o.identityProviders
 	}
 	return nil
@@ -976,7 +986,7 @@ func (o *Cluster) IdentityProviders() *IdentityProviderList {
 //
 // Link to the collection of identity providers of the cluster.
 func (o *Cluster) GetIdentityProviders() (value *IdentityProviderList, ok bool) {
-	ok = o != nil && o.bitmap_&34359738368 != 0
+	ok = o != nil && len(o.fieldSet_) > 35 && o.fieldSet_[35]
 	if ok {
 		value = o.identityProviders
 	}
@@ -989,7 +999,7 @@ func (o *Cluster) GetIdentityProviders() (value *IdentityProviderList, ok bool) 
 // Image registry configuration.
 // For non ARO-HCP clusters, it is readonly and always enabled
 func (o *Cluster) ImageRegistry() *ClusterImageRegistry {
-	if o != nil && o.bitmap_&68719476736 != 0 {
+	if o != nil && len(o.fieldSet_) > 36 && o.fieldSet_[36] {
 		return o.imageRegistry
 	}
 	return nil
@@ -1001,7 +1011,7 @@ func (o *Cluster) ImageRegistry() *ClusterImageRegistry {
 // Image registry configuration.
 // For non ARO-HCP clusters, it is readonly and always enabled
 func (o *Cluster) GetImageRegistry() (value *ClusterImageRegistry, ok bool) {
-	ok = o != nil && o.bitmap_&68719476736 != 0
+	ok = o != nil && len(o.fieldSet_) > 36 && o.fieldSet_[36]
 	if ok {
 		value = o.imageRegistry
 	}
@@ -1013,7 +1023,7 @@ func (o *Cluster) GetImageRegistry() (value *ClusterImageRegistry, ok bool) {
 //
 // List of inflight checks on this cluster.
 func (o *Cluster) InflightChecks() *InflightCheckList {
-	if o != nil && o.bitmap_&137438953472 != 0 {
+	if o != nil && len(o.fieldSet_) > 37 && o.fieldSet_[37] {
 		return o.inflightChecks
 	}
 	return nil
@@ -1024,7 +1034,7 @@ func (o *Cluster) InflightChecks() *InflightCheckList {
 //
 // List of inflight checks on this cluster.
 func (o *Cluster) GetInflightChecks() (value *InflightCheckList, ok bool) {
-	ok = o != nil && o.bitmap_&137438953472 != 0
+	ok = o != nil && len(o.fieldSet_) > 37 && o.fieldSet_[37]
 	if ok {
 		value = o.inflightChecks
 	}
@@ -1036,7 +1046,7 @@ func (o *Cluster) GetInflightChecks() (value *InflightCheckList, ok bool) {
 //
 // InfraID is used for example to name the VPCs.
 func (o *Cluster) InfraID() string {
-	if o != nil && o.bitmap_&274877906944 != 0 {
+	if o != nil && len(o.fieldSet_) > 38 && o.fieldSet_[38] {
 		return o.infraID
 	}
 	return ""
@@ -1047,7 +1057,7 @@ func (o *Cluster) InfraID() string {
 //
 // InfraID is used for example to name the VPCs.
 func (o *Cluster) GetInfraID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&274877906944 != 0
+	ok = o != nil && len(o.fieldSet_) > 38 && o.fieldSet_[38]
 	if ok {
 		value = o.infraID
 	}
@@ -1059,7 +1069,7 @@ func (o *Cluster) GetInfraID() (value string, ok bool) {
 //
 // List of ingresses on this cluster.
 func (o *Cluster) Ingresses() *IngressList {
-	if o != nil && o.bitmap_&549755813888 != 0 {
+	if o != nil && len(o.fieldSet_) > 39 && o.fieldSet_[39] {
 		return o.ingresses
 	}
 	return nil
@@ -1070,7 +1080,7 @@ func (o *Cluster) Ingresses() *IngressList {
 //
 // List of ingresses on this cluster.
 func (o *Cluster) GetIngresses() (value *IngressList, ok bool) {
-	ok = o != nil && o.bitmap_&549755813888 != 0
+	ok = o != nil && len(o.fieldSet_) > 39 && o.fieldSet_[39]
 	if ok {
 		value = o.ingresses
 	}
@@ -1082,7 +1092,7 @@ func (o *Cluster) GetIngresses() (value *IngressList, ok bool) {
 //
 // Details of cluster-wide KubeletConfig
 func (o *Cluster) KubeletConfig() *KubeletConfig {
-	if o != nil && o.bitmap_&1099511627776 != 0 {
+	if o != nil && len(o.fieldSet_) > 40 && o.fieldSet_[40] {
 		return o.kubeletConfig
 	}
 	return nil
@@ -1093,7 +1103,7 @@ func (o *Cluster) KubeletConfig() *KubeletConfig {
 //
 // Details of cluster-wide KubeletConfig
 func (o *Cluster) GetKubeletConfig() (value *KubeletConfig, ok bool) {
-	ok = o != nil && o.bitmap_&1099511627776 != 0
+	ok = o != nil && len(o.fieldSet_) > 40 && o.fieldSet_[40]
 	if ok {
 		value = o.kubeletConfig
 	}
@@ -1105,7 +1115,7 @@ func (o *Cluster) GetKubeletConfig() (value *KubeletConfig, ok bool) {
 //
 // Load Balancer quota to be assigned to the cluster.
 func (o *Cluster) LoadBalancerQuota() int {
-	if o != nil && o.bitmap_&2199023255552 != 0 {
+	if o != nil && len(o.fieldSet_) > 41 && o.fieldSet_[41] {
 		return o.loadBalancerQuota
 	}
 	return 0
@@ -1116,7 +1126,7 @@ func (o *Cluster) LoadBalancerQuota() int {
 //
 // Load Balancer quota to be assigned to the cluster.
 func (o *Cluster) GetLoadBalancerQuota() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&2199023255552 != 0
+	ok = o != nil && len(o.fieldSet_) > 41 && o.fieldSet_[41]
 	if ok {
 		value = o.loadBalancerQuota
 	}
@@ -1128,7 +1138,7 @@ func (o *Cluster) GetLoadBalancerQuota() (value int, ok bool) {
 //
 // List of machine pools on this cluster.
 func (o *Cluster) MachinePools() *MachinePoolList {
-	if o != nil && o.bitmap_&4398046511104 != 0 {
+	if o != nil && len(o.fieldSet_) > 42 && o.fieldSet_[42] {
 		return o.machinePools
 	}
 	return nil
@@ -1139,7 +1149,7 @@ func (o *Cluster) MachinePools() *MachinePoolList {
 //
 // List of machine pools on this cluster.
 func (o *Cluster) GetMachinePools() (value *MachinePoolList, ok bool) {
-	ok = o != nil && o.bitmap_&4398046511104 != 0
+	ok = o != nil && len(o.fieldSet_) > 42 && o.fieldSet_[42]
 	if ok {
 		value = o.machinePools
 	}
@@ -1152,7 +1162,7 @@ func (o *Cluster) GetMachinePools() (value *MachinePoolList, ok bool) {
 // Flag indicating if the cluster is managed (by Red Hat) or
 // self-managed by the user.
 func (o *Cluster) Managed() bool {
-	if o != nil && o.bitmap_&8796093022208 != 0 {
+	if o != nil && len(o.fieldSet_) > 43 && o.fieldSet_[43] {
 		return o.managed
 	}
 	return false
@@ -1164,7 +1174,7 @@ func (o *Cluster) Managed() bool {
 // Flag indicating if the cluster is managed (by Red Hat) or
 // self-managed by the user.
 func (o *Cluster) GetManaged() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&8796093022208 != 0
+	ok = o != nil && len(o.fieldSet_) > 43 && o.fieldSet_[43]
 	if ok {
 		value = o.managed
 	}
@@ -1176,7 +1186,7 @@ func (o *Cluster) GetManaged() (value bool, ok bool) {
 //
 // Contains information about Managed Service
 func (o *Cluster) ManagedService() *ManagedService {
-	if o != nil && o.bitmap_&17592186044416 != 0 {
+	if o != nil && len(o.fieldSet_) > 44 && o.fieldSet_[44] {
 		return o.managedService
 	}
 	return nil
@@ -1187,7 +1197,7 @@ func (o *Cluster) ManagedService() *ManagedService {
 //
 // Contains information about Managed Service
 func (o *Cluster) GetManagedService() (value *ManagedService, ok bool) {
-	ok = o != nil && o.bitmap_&17592186044416 != 0
+	ok = o != nil && len(o.fieldSet_) > 44 && o.fieldSet_[44]
 	if ok {
 		value = o.managedService
 	}
@@ -1204,7 +1214,7 @@ func (o *Cluster) GetManagedService() (value *ManagedService, ok bool) {
 // is deployed in multiple availability zones when the Azure region where
 // it is deployed supports multiple availability zones.
 func (o *Cluster) MultiAZ() bool {
-	if o != nil && o.bitmap_&35184372088832 != 0 {
+	if o != nil && len(o.fieldSet_) > 45 && o.fieldSet_[45] {
 		return o.multiAZ
 	}
 	return false
@@ -1220,7 +1230,7 @@ func (o *Cluster) MultiAZ() bool {
 // is deployed in multiple availability zones when the Azure region where
 // it is deployed supports multiple availability zones.
 func (o *Cluster) GetMultiAZ() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&35184372088832 != 0
+	ok = o != nil && len(o.fieldSet_) > 45 && o.fieldSet_[45]
 	if ok {
 		value = o.multiAZ
 	}
@@ -1232,7 +1242,7 @@ func (o *Cluster) GetMultiAZ() (value bool, ok bool) {
 //
 // Indicate whether the cluster is enabled for multi arch workers
 func (o *Cluster) MultiArchEnabled() bool {
-	if o != nil && o.bitmap_&70368744177664 != 0 {
+	if o != nil && len(o.fieldSet_) > 46 && o.fieldSet_[46] {
 		return o.multiArchEnabled
 	}
 	return false
@@ -1243,7 +1253,7 @@ func (o *Cluster) MultiArchEnabled() bool {
 //
 // Indicate whether the cluster is enabled for multi arch workers
 func (o *Cluster) GetMultiArchEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&70368744177664 != 0
+	ok = o != nil && len(o.fieldSet_) > 46 && o.fieldSet_[46]
 	if ok {
 		value = o.multiArchEnabled
 	}
@@ -1256,7 +1266,7 @@ func (o *Cluster) GetMultiArchEnabled() (value bool, ok bool) {
 // Name of the cluster. This name is assigned by the user when the
 // cluster is created. This is used to uniquely identify the cluster
 func (o *Cluster) Name() string {
-	if o != nil && o.bitmap_&140737488355328 != 0 {
+	if o != nil && len(o.fieldSet_) > 47 && o.fieldSet_[47] {
 		return o.name
 	}
 	return ""
@@ -1268,7 +1278,7 @@ func (o *Cluster) Name() string {
 // Name of the cluster. This name is assigned by the user when the
 // cluster is created. This is used to uniquely identify the cluster
 func (o *Cluster) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&140737488355328 != 0
+	ok = o != nil && len(o.fieldSet_) > 47 && o.fieldSet_[47]
 	if ok {
 		value = o.name
 	}
@@ -1280,7 +1290,7 @@ func (o *Cluster) GetName() (value string, ok bool) {
 //
 // Network settings of the cluster.
 func (o *Cluster) Network() *Network {
-	if o != nil && o.bitmap_&281474976710656 != 0 {
+	if o != nil && len(o.fieldSet_) > 48 && o.fieldSet_[48] {
 		return o.network
 	}
 	return nil
@@ -1291,7 +1301,7 @@ func (o *Cluster) Network() *Network {
 //
 // Network settings of the cluster.
 func (o *Cluster) GetNetwork() (value *Network, ok bool) {
-	ok = o != nil && o.bitmap_&281474976710656 != 0
+	ok = o != nil && len(o.fieldSet_) > 48 && o.fieldSet_[48]
 	if ok {
 		value = o.network
 	}
@@ -1303,7 +1313,7 @@ func (o *Cluster) GetNetwork() (value *Network, ok bool) {
 //
 // Node drain grace period.
 func (o *Cluster) NodeDrainGracePeriod() *Value {
-	if o != nil && o.bitmap_&562949953421312 != 0 {
+	if o != nil && len(o.fieldSet_) > 49 && o.fieldSet_[49] {
 		return o.nodeDrainGracePeriod
 	}
 	return nil
@@ -1314,7 +1324,7 @@ func (o *Cluster) NodeDrainGracePeriod() *Value {
 //
 // Node drain grace period.
 func (o *Cluster) GetNodeDrainGracePeriod() (value *Value, ok bool) {
-	ok = o != nil && o.bitmap_&562949953421312 != 0
+	ok = o != nil && len(o.fieldSet_) > 49 && o.fieldSet_[49]
 	if ok {
 		value = o.nodeDrainGracePeriod
 	}
@@ -1327,7 +1337,7 @@ func (o *Cluster) GetNodeDrainGracePeriod() (value *Value, ok bool) {
 // List of node pools on this cluster.
 // NodePool is a scalable set of worker nodes attached to a hosted cluster.
 func (o *Cluster) NodePools() *NodePoolList {
-	if o != nil && o.bitmap_&1125899906842624 != 0 {
+	if o != nil && len(o.fieldSet_) > 50 && o.fieldSet_[50] {
 		return o.nodePools
 	}
 	return nil
@@ -1339,7 +1349,7 @@ func (o *Cluster) NodePools() *NodePoolList {
 // List of node pools on this cluster.
 // NodePool is a scalable set of worker nodes attached to a hosted cluster.
 func (o *Cluster) GetNodePools() (value *NodePoolList, ok bool) {
-	ok = o != nil && o.bitmap_&1125899906842624 != 0
+	ok = o != nil && len(o.fieldSet_) > 50 && o.fieldSet_[50]
 	if ok {
 		value = o.nodePools
 	}
@@ -1351,7 +1361,7 @@ func (o *Cluster) GetNodePools() (value *NodePoolList, ok bool) {
 //
 // Information about the nodes of the cluster.
 func (o *Cluster) Nodes() *ClusterNodes {
-	if o != nil && o.bitmap_&2251799813685248 != 0 {
+	if o != nil && len(o.fieldSet_) > 51 && o.fieldSet_[51] {
 		return o.nodes
 	}
 	return nil
@@ -1362,7 +1372,7 @@ func (o *Cluster) Nodes() *ClusterNodes {
 //
 // Information about the nodes of the cluster.
 func (o *Cluster) GetNodes() (value *ClusterNodes, ok bool) {
-	ok = o != nil && o.bitmap_&2251799813685248 != 0
+	ok = o != nil && len(o.fieldSet_) > 51 && o.fieldSet_[51]
 	if ok {
 		value = o.nodes
 	}
@@ -1379,7 +1389,7 @@ func (o *Cluster) GetNodes() (value *ClusterNodes, ok bool) {
 // When provisioning a cluster this will be ignored, as the version to
 // deploy will be determined internally.
 func (o *Cluster) OpenshiftVersion() string {
-	if o != nil && o.bitmap_&4503599627370496 != 0 {
+	if o != nil && len(o.fieldSet_) > 52 && o.fieldSet_[52] {
 		return o.openshiftVersion
 	}
 	return ""
@@ -1395,7 +1405,7 @@ func (o *Cluster) OpenshiftVersion() string {
 // When provisioning a cluster this will be ignored, as the version to
 // deploy will be determined internally.
 func (o *Cluster) GetOpenshiftVersion() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4503599627370496 != 0
+	ok = o != nil && len(o.fieldSet_) > 52 && o.fieldSet_[52]
 	if ok {
 		value = o.openshiftVersion
 	}
@@ -1407,7 +1417,7 @@ func (o *Cluster) GetOpenshiftVersion() (value string, ok bool) {
 //
 // Link to the product type of this cluster.
 func (o *Cluster) Product() *Product {
-	if o != nil && o.bitmap_&9007199254740992 != 0 {
+	if o != nil && len(o.fieldSet_) > 53 && o.fieldSet_[53] {
 		return o.product
 	}
 	return nil
@@ -1418,7 +1428,7 @@ func (o *Cluster) Product() *Product {
 //
 // Link to the product type of this cluster.
 func (o *Cluster) GetProduct() (value *Product, ok bool) {
-	ok = o != nil && o.bitmap_&9007199254740992 != 0
+	ok = o != nil && len(o.fieldSet_) > 53 && o.fieldSet_[53]
 	if ok {
 		value = o.product
 	}
@@ -1430,7 +1440,7 @@ func (o *Cluster) GetProduct() (value *Product, ok bool) {
 //
 // User defined properties for tagging and querying.
 func (o *Cluster) Properties() map[string]string {
-	if o != nil && o.bitmap_&18014398509481984 != 0 {
+	if o != nil && len(o.fieldSet_) > 54 && o.fieldSet_[54] {
 		return o.properties
 	}
 	return nil
@@ -1441,7 +1451,7 @@ func (o *Cluster) Properties() map[string]string {
 //
 // User defined properties for tagging and querying.
 func (o *Cluster) GetProperties() (value map[string]string, ok bool) {
-	ok = o != nil && o.bitmap_&18014398509481984 != 0
+	ok = o != nil && len(o.fieldSet_) > 54 && o.fieldSet_[54]
 	if ok {
 		value = o.properties
 	}
@@ -1453,7 +1463,7 @@ func (o *Cluster) GetProperties() (value map[string]string, ok bool) {
 //
 // ProvisionShard contains the properties of the provision shard, including AWS and GCP related configurations
 func (o *Cluster) ProvisionShard() *ProvisionShard {
-	if o != nil && o.bitmap_&36028797018963968 != 0 {
+	if o != nil && len(o.fieldSet_) > 55 && o.fieldSet_[55] {
 		return o.provisionShard
 	}
 	return nil
@@ -1464,7 +1474,7 @@ func (o *Cluster) ProvisionShard() *ProvisionShard {
 //
 // ProvisionShard contains the properties of the provision shard, including AWS and GCP related configurations
 func (o *Cluster) GetProvisionShard() (value *ProvisionShard, ok bool) {
-	ok = o != nil && o.bitmap_&36028797018963968 != 0
+	ok = o != nil && len(o.fieldSet_) > 55 && o.fieldSet_[55]
 	if ok {
 		value = o.provisionShard
 	}
@@ -1476,7 +1486,7 @@ func (o *Cluster) GetProvisionShard() (value *ProvisionShard, ok bool) {
 //
 // Proxy.
 func (o *Cluster) Proxy() *Proxy {
-	if o != nil && o.bitmap_&72057594037927936 != 0 {
+	if o != nil && len(o.fieldSet_) > 56 && o.fieldSet_[56] {
 		return o.proxy
 	}
 	return nil
@@ -1487,7 +1497,7 @@ func (o *Cluster) Proxy() *Proxy {
 //
 // Proxy.
 func (o *Cluster) GetProxy() (value *Proxy, ok bool) {
-	ok = o != nil && o.bitmap_&72057594037927936 != 0
+	ok = o != nil && len(o.fieldSet_) > 56 && o.fieldSet_[56]
 	if ok {
 		value = o.proxy
 	}
@@ -1499,7 +1509,7 @@ func (o *Cluster) GetProxy() (value *Proxy, ok bool) {
 //
 // Link to the cloud provider region where the cluster is installed.
 func (o *Cluster) Region() *CloudRegion {
-	if o != nil && o.bitmap_&144115188075855872 != 0 {
+	if o != nil && len(o.fieldSet_) > 57 && o.fieldSet_[57] {
 		return o.region
 	}
 	return nil
@@ -1510,7 +1520,7 @@ func (o *Cluster) Region() *CloudRegion {
 //
 // Link to the cloud provider region where the cluster is installed.
 func (o *Cluster) GetRegion() (value *CloudRegion, ok bool) {
-	ok = o != nil && o.bitmap_&144115188075855872 != 0
+	ok = o != nil && len(o.fieldSet_) > 57 && o.fieldSet_[57]
 	if ok {
 		value = o.region
 	}
@@ -1522,7 +1532,7 @@ func (o *Cluster) GetRegion() (value *CloudRegion, ok bool) {
 //
 // Registry configuration for the cluster
 func (o *Cluster) RegistryConfig() *ClusterRegistryConfig {
-	if o != nil && o.bitmap_&288230376151711744 != 0 {
+	if o != nil && len(o.fieldSet_) > 58 && o.fieldSet_[58] {
 		return o.registryConfig
 	}
 	return nil
@@ -1533,7 +1543,7 @@ func (o *Cluster) RegistryConfig() *ClusterRegistryConfig {
 //
 // Registry configuration for the cluster
 func (o *Cluster) GetRegistryConfig() (value *ClusterRegistryConfig, ok bool) {
-	ok = o != nil && o.bitmap_&288230376151711744 != 0
+	ok = o != nil && len(o.fieldSet_) > 58 && o.fieldSet_[58]
 	if ok {
 		value = o.registryConfig
 	}
@@ -1545,7 +1555,7 @@ func (o *Cluster) GetRegistryConfig() (value *ClusterRegistryConfig, ok bool) {
 //
 // Overall state of the cluster.
 func (o *Cluster) State() ClusterState {
-	if o != nil && o.bitmap_&576460752303423488 != 0 {
+	if o != nil && len(o.fieldSet_) > 59 && o.fieldSet_[59] {
 		return o.state
 	}
 	return ClusterState("")
@@ -1556,7 +1566,7 @@ func (o *Cluster) State() ClusterState {
 //
 // Overall state of the cluster.
 func (o *Cluster) GetState() (value ClusterState, ok bool) {
-	ok = o != nil && o.bitmap_&576460752303423488 != 0
+	ok = o != nil && len(o.fieldSet_) > 59 && o.fieldSet_[59]
 	if ok {
 		value = o.state
 	}
@@ -1568,7 +1578,7 @@ func (o *Cluster) GetState() (value ClusterState, ok bool) {
 //
 // Status of cluster
 func (o *Cluster) Status() *ClusterStatus {
-	if o != nil && o.bitmap_&1152921504606846976 != 0 {
+	if o != nil && len(o.fieldSet_) > 60 && o.fieldSet_[60] {
 		return o.status
 	}
 	return nil
@@ -1579,7 +1589,7 @@ func (o *Cluster) Status() *ClusterStatus {
 //
 // Status of cluster
 func (o *Cluster) GetStatus() (value *ClusterStatus, ok bool) {
-	ok = o != nil && o.bitmap_&1152921504606846976 != 0
+	ok = o != nil && len(o.fieldSet_) > 60 && o.fieldSet_[60]
 	if ok {
 		value = o.status
 	}
@@ -1591,7 +1601,7 @@ func (o *Cluster) GetStatus() (value *ClusterStatus, ok bool) {
 //
 // Storage quota to be assigned to the cluster.
 func (o *Cluster) StorageQuota() *Value {
-	if o != nil && o.bitmap_&2305843009213693952 != 0 {
+	if o != nil && len(o.fieldSet_) > 61 && o.fieldSet_[61] {
 		return o.storageQuota
 	}
 	return nil
@@ -1602,7 +1612,7 @@ func (o *Cluster) StorageQuota() *Value {
 //
 // Storage quota to be assigned to the cluster.
 func (o *Cluster) GetStorageQuota() (value *Value, ok bool) {
-	ok = o != nil && o.bitmap_&2305843009213693952 != 0
+	ok = o != nil && len(o.fieldSet_) > 61 && o.fieldSet_[61]
 	if ok {
 		value = o.storageQuota
 	}
@@ -1615,7 +1625,7 @@ func (o *Cluster) GetStorageQuota() (value *Value, ok bool) {
 // Link to the subscription that comes from the account management service when the cluster
 // is registered.
 func (o *Cluster) Subscription() *Subscription {
-	if o != nil && o.bitmap_&4611686018427387904 != 0 {
+	if o != nil && len(o.fieldSet_) > 62 && o.fieldSet_[62] {
 		return o.subscription
 	}
 	return nil
@@ -1627,7 +1637,7 @@ func (o *Cluster) Subscription() *Subscription {
 // Link to the subscription that comes from the account management service when the cluster
 // is registered.
 func (o *Cluster) GetSubscription() (value *Subscription, ok bool) {
-	ok = o != nil && o.bitmap_&4611686018427387904 != 0
+	ok = o != nil && len(o.fieldSet_) > 62 && o.fieldSet_[62]
 	if ok {
 		value = o.subscription
 	}
@@ -1639,7 +1649,7 @@ func (o *Cluster) GetSubscription() (value *Subscription, ok bool) {
 //
 // Link to the version of _OpenShift_ that will be used to install the cluster.
 func (o *Cluster) Version() *Version {
-	if o != nil && o.bitmap_&-9223372036854775808 != 0 {
+	if o != nil && len(o.fieldSet_) > 63 && o.fieldSet_[63] {
 		return o.version
 	}
 	return nil
@@ -1650,7 +1660,7 @@ func (o *Cluster) Version() *Version {
 //
 // Link to the version of _OpenShift_ that will be used to install the cluster.
 func (o *Cluster) GetVersion() (value *Version, ok bool) {
-	ok = o != nil && o.bitmap_&-9223372036854775808 != 0
+	ok = o != nil && len(o.fieldSet_) > 63 && o.fieldSet_[63]
 	if ok {
 		value = o.version
 	}

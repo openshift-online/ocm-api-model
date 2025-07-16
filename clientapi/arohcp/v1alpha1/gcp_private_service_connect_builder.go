@@ -19,28 +19,36 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// GcpPrivateServiceConnectBuilder contains the data and logic needed to build 'gcp_private_service_connect' objects.
-//
 // Google cloud platform private service connect configuration of a cluster.
 type GcpPrivateServiceConnectBuilder struct {
-	bitmap_                 uint32
+	fieldSet_               []bool
 	serviceAttachmentSubnet string
 }
 
 // NewGcpPrivateServiceConnect creates a new builder of 'gcp_private_service_connect' objects.
 func NewGcpPrivateServiceConnect() *GcpPrivateServiceConnectBuilder {
-	return &GcpPrivateServiceConnectBuilder{}
+	return &GcpPrivateServiceConnectBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GcpPrivateServiceConnectBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ServiceAttachmentSubnet sets the value of the 'service_attachment_subnet' attribute to the given value.
 func (b *GcpPrivateServiceConnectBuilder) ServiceAttachmentSubnet(value string) *GcpPrivateServiceConnectBuilder {
 	b.serviceAttachmentSubnet = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -49,7 +57,10 @@ func (b *GcpPrivateServiceConnectBuilder) Copy(object *GcpPrivateServiceConnect)
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.serviceAttachmentSubnet = object.serviceAttachmentSubnet
 	return b
 }
@@ -57,7 +68,10 @@ func (b *GcpPrivateServiceConnectBuilder) Copy(object *GcpPrivateServiceConnect)
 // Build creates a 'gcp_private_service_connect' object using the configuration stored in the builder.
 func (b *GcpPrivateServiceConnectBuilder) Build() (object *GcpPrivateServiceConnect, err error) {
 	object = new(GcpPrivateServiceConnect)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.serviceAttachmentSubnet = b.serviceAttachmentSubnet
 	return
 }

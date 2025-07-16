@@ -35,7 +35,7 @@ const CloudRegionNilKind = "CloudRegionNil"
 //
 // Description of a region of a cloud provider.
 type CloudRegion struct {
-	bitmap_            uint32
+	fieldSet_          []bool
 	id                 string
 	href               string
 	kmsLocationID      string
@@ -55,7 +55,7 @@ func (o *CloudRegion) Kind() string {
 	if o == nil {
 		return CloudRegionNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return CloudRegionLinkKind
 	}
 	return CloudRegionKind
@@ -63,12 +63,12 @@ func (o *CloudRegion) Kind() string {
 
 // Link returns true if this is a link.
 func (o *CloudRegion) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *CloudRegion) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -77,7 +77,7 @@ func (o *CloudRegion) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *CloudRegion) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -86,7 +86,7 @@ func (o *CloudRegion) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *CloudRegion) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -95,7 +95,7 @@ func (o *CloudRegion) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *CloudRegion) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -104,7 +104,17 @@ func (o *CloudRegion) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *CloudRegion) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // CCSOnly returns the value of the 'CCS_only' attribute, or
@@ -112,7 +122,7 @@ func (o *CloudRegion) Empty() bool {
 //
 // 'true' if the region is supported only for CCS clusters, 'false' otherwise.
 func (o *CloudRegion) CCSOnly() bool {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.ccsOnly
 	}
 	return false
@@ -123,7 +133,7 @@ func (o *CloudRegion) CCSOnly() bool {
 //
 // 'true' if the region is supported only for CCS clusters, 'false' otherwise.
 func (o *CloudRegion) GetCCSOnly() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.ccsOnly
 	}
@@ -136,7 +146,7 @@ func (o *CloudRegion) GetCCSOnly() (value bool, ok bool) {
 // (GCP only) Comma-separated list of KMS location IDs that can be used with this region.
 // E.g. "global,nam4,us". Order is not guaranteed.
 func (o *CloudRegion) KMSLocationID() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.kmsLocationID
 	}
 	return ""
@@ -148,7 +158,7 @@ func (o *CloudRegion) KMSLocationID() string {
 // (GCP only) Comma-separated list of KMS location IDs that can be used with this region.
 // E.g. "global,nam4,us". Order is not guaranteed.
 func (o *CloudRegion) GetKMSLocationID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.kmsLocationID
 	}
@@ -162,7 +172,7 @@ func (o *CloudRegion) GetKMSLocationID() (value string, ok bool) {
 // E.g. "Global,nam4 (Iowa, South Carolina, and Oklahoma),US". Order is not guaranteed but will match KMSLocationID.
 // Unfortunately, this API doesn't allow robust splitting - Contact ocm-feedback@redhat.com if you want to rely on this.
 func (o *CloudRegion) KMSLocationName() string {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.kmsLocationName
 	}
 	return ""
@@ -175,7 +185,7 @@ func (o *CloudRegion) KMSLocationName() string {
 // E.g. "Global,nam4 (Iowa, South Carolina, and Oklahoma),US". Order is not guaranteed but will match KMSLocationID.
 // Unfortunately, this API doesn't allow robust splitting - Contact ocm-feedback@redhat.com if you want to rely on this.
 func (o *CloudRegion) GetKMSLocationName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.kmsLocationName
 	}
@@ -187,7 +197,7 @@ func (o *CloudRegion) GetKMSLocationName() (value string, ok bool) {
 //
 // Link to the cloud provider that the region belongs to.
 func (o *CloudRegion) CloudProvider() *CloudProvider {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.cloudProvider
 	}
 	return nil
@@ -198,7 +208,7 @@ func (o *CloudRegion) CloudProvider() *CloudProvider {
 //
 // Link to the cloud provider that the region belongs to.
 func (o *CloudRegion) GetCloudProvider() (value *CloudProvider, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.cloudProvider
 	}
@@ -210,7 +220,7 @@ func (o *CloudRegion) GetCloudProvider() (value *CloudProvider, ok bool) {
 //
 // Name of the region for display purposes, for example `N. Virginia`.
 func (o *CloudRegion) DisplayName() string {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.displayName
 	}
 	return ""
@@ -221,7 +231,7 @@ func (o *CloudRegion) DisplayName() string {
 //
 // Name of the region for display purposes, for example `N. Virginia`.
 func (o *CloudRegion) GetDisplayName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.displayName
 	}
@@ -233,7 +243,7 @@ func (o *CloudRegion) GetDisplayName() (value string, ok bool) {
 //
 // Whether the region is enabled for deploying a managed cluster.
 func (o *CloudRegion) Enabled() bool {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.enabled
 	}
 	return false
@@ -244,7 +254,7 @@ func (o *CloudRegion) Enabled() bool {
 //
 // Whether the region is enabled for deploying a managed cluster.
 func (o *CloudRegion) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.enabled
 	}
@@ -256,7 +266,7 @@ func (o *CloudRegion) GetEnabled() (value bool, ok bool) {
 //
 // Whether the region is an AWS GovCloud region.
 func (o *CloudRegion) GovCloud() bool {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.govCloud
 	}
 	return false
@@ -267,7 +277,7 @@ func (o *CloudRegion) GovCloud() bool {
 //
 // Whether the region is an AWS GovCloud region.
 func (o *CloudRegion) GetGovCloud() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.govCloud
 	}
@@ -282,7 +292,7 @@ func (o *CloudRegion) GetGovCloud() (value bool, ok bool) {
 // NOTE: Currently for all cloud providers and all regions `id` and `name` have exactly
 // the same values.
 func (o *CloudRegion) Name() string {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.name
 	}
 	return ""
@@ -296,7 +306,7 @@ func (o *CloudRegion) Name() string {
 // NOTE: Currently for all cloud providers and all regions `id` and `name` have exactly
 // the same values.
 func (o *CloudRegion) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.name
 	}
@@ -308,7 +318,7 @@ func (o *CloudRegion) GetName() (value string, ok bool) {
 //
 // 'true' if the region is supported for Hypershift deployments, 'false' otherwise.
 func (o *CloudRegion) SupportsHypershift() bool {
-	if o != nil && o.bitmap_&2048 != 0 {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.supportsHypershift
 	}
 	return false
@@ -319,7 +329,7 @@ func (o *CloudRegion) SupportsHypershift() bool {
 //
 // 'true' if the region is supported for Hypershift deployments, 'false' otherwise.
 func (o *CloudRegion) GetSupportsHypershift() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&2048 != 0
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.supportsHypershift
 	}
@@ -331,7 +341,7 @@ func (o *CloudRegion) GetSupportsHypershift() (value bool, ok bool) {
 //
 // Whether the region supports multiple availability zones.
 func (o *CloudRegion) SupportsMultiAZ() bool {
-	if o != nil && o.bitmap_&4096 != 0 {
+	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
 		return o.supportsMultiAZ
 	}
 	return false
@@ -342,7 +352,7 @@ func (o *CloudRegion) SupportsMultiAZ() bool {
 //
 // Whether the region supports multiple availability zones.
 func (o *CloudRegion) GetSupportsMultiAZ() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&4096 != 0
+	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
 	if ok {
 		value = o.supportsMultiAZ
 	}

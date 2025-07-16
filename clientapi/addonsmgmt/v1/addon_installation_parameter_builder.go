@@ -19,52 +19,60 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
-// AddonInstallationParameterBuilder contains the data and logic needed to build 'addon_installation_parameter' objects.
-//
 // representation of addon installation parameter
 type AddonInstallationParameterBuilder struct {
-	bitmap_ uint32
-	href    string
-	id      string
-	kind    string
-	value   string
+	fieldSet_ []bool
+	href      string
+	id        string
+	kind      string
+	value     string
 }
 
 // NewAddonInstallationParameter creates a new builder of 'addon_installation_parameter' objects.
 func NewAddonInstallationParameter() *AddonInstallationParameterBuilder {
-	return &AddonInstallationParameterBuilder{}
+	return &AddonInstallationParameterBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddonInstallationParameterBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Href sets the value of the 'href' attribute to the given value.
 func (b *AddonInstallationParameterBuilder) Href(value string) *AddonInstallationParameterBuilder {
 	b.href = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Id sets the value of the 'id' attribute to the given value.
 func (b *AddonInstallationParameterBuilder) Id(value string) *AddonInstallationParameterBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // Kind sets the value of the 'kind' attribute to the given value.
 func (b *AddonInstallationParameterBuilder) Kind(value string) *AddonInstallationParameterBuilder {
 	b.kind = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *AddonInstallationParameterBuilder) Value(value string) *AddonInstallationParameterBuilder {
 	b.value = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -73,7 +81,10 @@ func (b *AddonInstallationParameterBuilder) Copy(object *AddonInstallationParame
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.href = object.href
 	b.id = object.id
 	b.kind = object.kind
@@ -84,7 +95,10 @@ func (b *AddonInstallationParameterBuilder) Copy(object *AddonInstallationParame
 // Build creates a 'addon_installation_parameter' object using the configuration stored in the builder.
 func (b *AddonInstallationParameterBuilder) Build() (object *AddonInstallationParameter, err error) {
 	object = new(AddonInstallationParameter)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.href = b.href
 	object.id = b.id
 	object.kind = b.kind

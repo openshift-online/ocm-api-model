@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 //
 // Representation of an addon parameter.
 type AddonParameter struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	id                string
 	addon             *Addon
 	conditions        []*AddonRequirement
@@ -43,7 +43,15 @@ type AddonParameter struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddonParameter) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ID returns the value of the 'ID' attribute, or
@@ -51,7 +59,7 @@ func (o *AddonParameter) Empty() bool {
 //
 // ID for this addon parameter
 func (o *AddonParameter) ID() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.id
 	}
 	return ""
@@ -62,7 +70,7 @@ func (o *AddonParameter) ID() string {
 //
 // ID for this addon parameter
 func (o *AddonParameter) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.id
 	}
@@ -72,7 +80,7 @@ func (o *AddonParameter) GetID() (value string, ok bool) {
 // Addon returns the value of the 'addon' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *AddonParameter) Addon() *Addon {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.addon
 	}
 	return nil
@@ -81,7 +89,7 @@ func (o *AddonParameter) Addon() *Addon {
 // GetAddon returns the value of the 'addon' attribute and
 // a flag indicating if the attribute has a value.
 func (o *AddonParameter) GetAddon() (value *Addon, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.addon
 	}
@@ -93,7 +101,7 @@ func (o *AddonParameter) GetAddon() (value *Addon, ok bool) {
 //
 // Conditions in which this parameter is valid for
 func (o *AddonParameter) Conditions() []*AddonRequirement {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.conditions
 	}
 	return nil
@@ -104,7 +112,7 @@ func (o *AddonParameter) Conditions() []*AddonRequirement {
 //
 // Conditions in which this parameter is valid for
 func (o *AddonParameter) GetConditions() (value []*AddonRequirement, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.conditions
 	}
@@ -116,7 +124,7 @@ func (o *AddonParameter) GetConditions() (value []*AddonRequirement, ok bool) {
 //
 // Indicates the value default for the addon parameter.
 func (o *AddonParameter) DefaultValue() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.defaultValue
 	}
 	return ""
@@ -127,7 +135,7 @@ func (o *AddonParameter) DefaultValue() string {
 //
 // Indicates the value default for the addon parameter.
 func (o *AddonParameter) GetDefaultValue() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.defaultValue
 	}
@@ -139,7 +147,7 @@ func (o *AddonParameter) GetDefaultValue() (value string, ok bool) {
 //
 // Description of the addon parameter.
 func (o *AddonParameter) Description() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.description
 	}
 	return ""
@@ -150,7 +158,7 @@ func (o *AddonParameter) Description() string {
 //
 // Description of the addon parameter.
 func (o *AddonParameter) GetDescription() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.description
 	}
@@ -162,7 +170,7 @@ func (o *AddonParameter) GetDescription() (value string, ok bool) {
 //
 // Indicates if this parameter can be edited after creation.
 func (o *AddonParameter) Editable() bool {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.editable
 	}
 	return false
@@ -173,7 +181,7 @@ func (o *AddonParameter) Editable() bool {
 //
 // Indicates if this parameter can be edited after creation.
 func (o *AddonParameter) GetEditable() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.editable
 	}
@@ -186,7 +194,7 @@ func (o *AddonParameter) GetEditable() (value bool, ok bool) {
 // Restricts if the parameter can be upscaled/downscaled
 // Expected values are "up", "down", or "" (no restriction).
 func (o *AddonParameter) EditableDirection() string {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.editableDirection
 	}
 	return ""
@@ -198,7 +206,7 @@ func (o *AddonParameter) EditableDirection() string {
 // Restricts if the parameter can be upscaled/downscaled
 // Expected values are "up", "down", or "" (no restriction).
 func (o *AddonParameter) GetEditableDirection() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.editableDirection
 	}
@@ -210,7 +218,7 @@ func (o *AddonParameter) GetEditableDirection() (value string, ok bool) {
 //
 // Indicates if this parameter is enabled for the addon.
 func (o *AddonParameter) Enabled() bool {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.enabled
 	}
 	return false
@@ -221,7 +229,7 @@ func (o *AddonParameter) Enabled() bool {
 //
 // Indicates if this parameter is enabled for the addon.
 func (o *AddonParameter) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.enabled
 	}
@@ -233,7 +241,7 @@ func (o *AddonParameter) GetEnabled() (value bool, ok bool) {
 //
 // Name of the addon parameter.
 func (o *AddonParameter) Name() string {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.name
 	}
 	return ""
@@ -244,7 +252,7 @@ func (o *AddonParameter) Name() string {
 //
 // Name of the addon parameter.
 func (o *AddonParameter) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.name
 	}
@@ -256,7 +264,7 @@ func (o *AddonParameter) GetName() (value string, ok bool) {
 //
 // List of options for the addon parameter value.
 func (o *AddonParameter) Options() []*AddonParameterOption {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.options
 	}
 	return nil
@@ -267,7 +275,7 @@ func (o *AddonParameter) Options() []*AddonParameterOption {
 //
 // List of options for the addon parameter value.
 func (o *AddonParameter) GetOptions() (value []*AddonParameterOption, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.options
 	}
@@ -279,7 +287,7 @@ func (o *AddonParameter) GetOptions() (value []*AddonParameterOption, ok bool) {
 //
 // Indicates the weight of the AddonParameter which would be used by sort order
 func (o *AddonParameter) Order() int {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.order
 	}
 	return 0
@@ -290,7 +298,7 @@ func (o *AddonParameter) Order() int {
 //
 // Indicates the weight of the AddonParameter which would be used by sort order
 func (o *AddonParameter) GetOrder() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.order
 	}
@@ -302,7 +310,7 @@ func (o *AddonParameter) GetOrder() (value int, ok bool) {
 //
 // Indicates if this parameter is required by the addon.
 func (o *AddonParameter) Required() bool {
-	if o != nil && o.bitmap_&2048 != 0 {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.required
 	}
 	return false
@@ -313,7 +321,7 @@ func (o *AddonParameter) Required() bool {
 //
 // Indicates if this parameter is required by the addon.
 func (o *AddonParameter) GetRequired() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&2048 != 0
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.required
 	}
@@ -325,7 +333,7 @@ func (o *AddonParameter) GetRequired() (value bool, ok bool) {
 //
 // Validation rule for the addon parameter.
 func (o *AddonParameter) Validation() string {
-	if o != nil && o.bitmap_&4096 != 0 {
+	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
 		return o.validation
 	}
 	return ""
@@ -336,7 +344,7 @@ func (o *AddonParameter) Validation() string {
 //
 // Validation rule for the addon parameter.
 func (o *AddonParameter) GetValidation() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4096 != 0
+	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
 	if ok {
 		value = o.validation
 	}
@@ -348,7 +356,7 @@ func (o *AddonParameter) GetValidation() (value string, ok bool) {
 //
 // Error message to return should the parameter be invalid.
 func (o *AddonParameter) ValidationErrMsg() string {
-	if o != nil && o.bitmap_&8192 != 0 {
+	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
 		return o.validationErrMsg
 	}
 	return ""
@@ -359,7 +367,7 @@ func (o *AddonParameter) ValidationErrMsg() string {
 //
 // Error message to return should the parameter be invalid.
 func (o *AddonParameter) GetValidationErrMsg() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8192 != 0
+	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
 	if ok {
 		value = o.validationErrMsg
 	}
@@ -371,7 +379,7 @@ func (o *AddonParameter) GetValidationErrMsg() (value string, ok bool) {
 //
 // Type of value of the addon parameter.
 func (o *AddonParameter) ValueType() AddonParameterValueType {
-	if o != nil && o.bitmap_&16384 != 0 {
+	if o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14] {
 		return o.valueType
 	}
 	return AddonParameterValueType("")
@@ -382,7 +390,7 @@ func (o *AddonParameter) ValueType() AddonParameterValueType {
 //
 // Type of value of the addon parameter.
 func (o *AddonParameter) GetValueType() (value AddonParameterValueType, ok bool) {
-	ok = o != nil && o.bitmap_&16384 != 0
+	ok = o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14]
 	if ok {
 		value = o.valueType
 	}

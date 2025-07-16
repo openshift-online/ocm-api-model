@@ -39,7 +39,7 @@ const ApplicationDependencyNilKind = "ApplicationDependencyNil"
 //
 // Definition of a Status Board application dependency.
 type ApplicationDependency struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	id          string
 	href        string
 	application *Application
@@ -57,7 +57,7 @@ func (o *ApplicationDependency) Kind() string {
 	if o == nil {
 		return ApplicationDependencyNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return ApplicationDependencyLinkKind
 	}
 	return ApplicationDependencyKind
@@ -65,12 +65,12 @@ func (o *ApplicationDependency) Kind() string {
 
 // Link returns true if this is a link.
 func (o *ApplicationDependency) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *ApplicationDependency) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -79,7 +79,7 @@ func (o *ApplicationDependency) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *ApplicationDependency) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -88,7 +88,7 @@ func (o *ApplicationDependency) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *ApplicationDependency) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -97,7 +97,7 @@ func (o *ApplicationDependency) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *ApplicationDependency) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -106,7 +106,17 @@ func (o *ApplicationDependency) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ApplicationDependency) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Application returns the value of the 'application' attribute, or
@@ -114,7 +124,7 @@ func (o *ApplicationDependency) Empty() bool {
 //
 // The parent Application of the dependency.
 func (o *ApplicationDependency) Application() *Application {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.application
 	}
 	return nil
@@ -125,7 +135,7 @@ func (o *ApplicationDependency) Application() *Application {
 //
 // The parent Application of the dependency.
 func (o *ApplicationDependency) GetApplication() (value *Application, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.application
 	}
@@ -137,7 +147,7 @@ func (o *ApplicationDependency) GetApplication() (value *Application, ok bool) {
 //
 // Object creation timestamp.
 func (o *ApplicationDependency) CreatedAt() time.Time {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -148,7 +158,7 @@ func (o *ApplicationDependency) CreatedAt() time.Time {
 //
 // Object creation timestamp.
 func (o *ApplicationDependency) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.createdAt
 	}
@@ -160,7 +170,7 @@ func (o *ApplicationDependency) GetCreatedAt() (value time.Time, ok bool) {
 //
 // Miscellaneous metadata about the application.
 func (o *ApplicationDependency) Metadata() interface{} {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.metadata
 	}
 	return nil
@@ -171,7 +181,7 @@ func (o *ApplicationDependency) Metadata() interface{} {
 //
 // Miscellaneous metadata about the application.
 func (o *ApplicationDependency) GetMetadata() (value interface{}, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.metadata
 	}
@@ -183,7 +193,7 @@ func (o *ApplicationDependency) GetMetadata() (value interface{}, ok bool) {
 //
 // The name of the application.
 func (o *ApplicationDependency) Name() string {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.name
 	}
 	return ""
@@ -194,7 +204,7 @@ func (o *ApplicationDependency) Name() string {
 //
 // The name of the application.
 func (o *ApplicationDependency) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.name
 	}
@@ -206,7 +216,7 @@ func (o *ApplicationDependency) GetName() (value string, ok bool) {
 //
 // The application dependency owners (name and email)
 func (o *ApplicationDependency) Owners() []*Owner {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.owners
 	}
 	return nil
@@ -217,7 +227,7 @@ func (o *ApplicationDependency) Owners() []*Owner {
 //
 // The application dependency owners (name and email)
 func (o *ApplicationDependency) GetOwners() (value []*Owner, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.owners
 	}
@@ -229,7 +239,7 @@ func (o *ApplicationDependency) GetOwners() (value []*Owner, ok bool) {
 //
 // The Service associated with the dependency.
 func (o *ApplicationDependency) Service() *Service {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.service
 	}
 	return nil
@@ -240,7 +250,7 @@ func (o *ApplicationDependency) Service() *Service {
 //
 // The Service associated with the dependency.
 func (o *ApplicationDependency) GetService() (value *Service, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.service
 	}
@@ -252,7 +262,7 @@ func (o *ApplicationDependency) GetService() (value *Service, ok bool) {
 //
 // The type of application dependency, e.g. soft or hard.
 func (o *ApplicationDependency) Type() string {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.type_
 	}
 	return ""
@@ -263,7 +273,7 @@ func (o *ApplicationDependency) Type() string {
 //
 // The type of application dependency, e.g. soft or hard.
 func (o *ApplicationDependency) GetType() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.type_
 	}
@@ -275,7 +285,7 @@ func (o *ApplicationDependency) GetType() (value string, ok bool) {
 //
 // Object modification timestamp.
 func (o *ApplicationDependency) UpdatedAt() time.Time {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -286,7 +296,7 @@ func (o *ApplicationDependency) UpdatedAt() time.Time {
 //
 // Object modification timestamp.
 func (o *ApplicationDependency) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.updatedAt
 	}

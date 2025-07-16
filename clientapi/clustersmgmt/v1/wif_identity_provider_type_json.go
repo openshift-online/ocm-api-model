@@ -42,7 +42,7 @@ func WriteWifIdentityProvider(object *WifIdentityProvider, stream *jsoniter.Stre
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.allowedAudiences != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.allowedAudiences != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteWifIdentityProvider(object *WifIdentityProvider, stream *jsoniter.Stre
 		WriteStringList(object.allowedAudiences, stream)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteWifIdentityProvider(object *WifIdentityProvider, stream *jsoniter.Stre
 		stream.WriteString(object.identityProviderId)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteWifIdentityProvider(object *WifIdentityProvider, stream *jsoniter.Stre
 		stream.WriteString(object.issuerUrl)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,7 +94,9 @@ func UnmarshalWifIdentityProvider(source interface{}) (object *WifIdentityProvid
 
 // ReadWifIdentityProvider reads a value of the 'wif_identity_provider' type from the given iterator.
 func ReadWifIdentityProvider(iterator *jsoniter.Iterator) *WifIdentityProvider {
-	object := &WifIdentityProvider{}
+	object := &WifIdentityProvider{
+		fieldSet_: make([]bool, 4),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -104,19 +106,19 @@ func ReadWifIdentityProvider(iterator *jsoniter.Iterator) *WifIdentityProvider {
 		case "allowed_audiences":
 			value := ReadStringList(iterator)
 			object.allowedAudiences = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "identity_provider_id":
 			value := iterator.ReadString()
 			object.identityProviderId = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "issuer_url":
 			value := iterator.ReadString()
 			object.issuerUrl = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "jwks":
 			value := iterator.ReadString()
 			object.jwks = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		default:
 			iterator.ReadAny()
 		}

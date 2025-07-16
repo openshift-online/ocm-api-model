@@ -33,12 +33,12 @@ const PlanNilKind = "PlanNil"
 
 // Plan represents the values of the 'plan' type.
 type Plan struct {
-	bitmap_  uint32
-	id       string
-	href     string
-	category string
-	name     string
-	type_    string
+	fieldSet_ []bool
+	id        string
+	href      string
+	category  string
+	name      string
+	type_     string
 }
 
 // Kind returns the name of the type of the object.
@@ -46,7 +46,7 @@ func (o *Plan) Kind() string {
 	if o == nil {
 		return PlanNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return PlanLinkKind
 	}
 	return PlanKind
@@ -54,12 +54,12 @@ func (o *Plan) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Plan) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *Plan) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -68,7 +68,7 @@ func (o *Plan) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Plan) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -77,7 +77,7 @@ func (o *Plan) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Plan) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -86,7 +86,7 @@ func (o *Plan) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Plan) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -95,13 +95,23 @@ func (o *Plan) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Plan) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Category returns the value of the 'category' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Plan) Category() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.category
 	}
 	return ""
@@ -110,7 +120,7 @@ func (o *Plan) Category() string {
 // GetCategory returns the value of the 'category' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Plan) GetCategory() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.category
 	}
@@ -120,7 +130,7 @@ func (o *Plan) GetCategory() (value string, ok bool) {
 // Name returns the value of the 'name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Plan) Name() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.name
 	}
 	return ""
@@ -129,7 +139,7 @@ func (o *Plan) Name() string {
 // GetName returns the value of the 'name' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Plan) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.name
 	}
@@ -139,7 +149,7 @@ func (o *Plan) GetName() (value string, ok bool) {
 // Type returns the value of the 'type' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Plan) Type() string {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.type_
 	}
 	return ""
@@ -148,7 +158,7 @@ func (o *Plan) Type() string {
 // GetType returns the value of the 'type' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Plan) GetType() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.type_
 	}

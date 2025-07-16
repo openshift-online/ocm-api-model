@@ -23,14 +23,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Contains the necessary attributes to support data encryption for Azure based clusters.
 type AzureEtcdDataEncryption struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	customerManaged   *AzureEtcdDataEncryptionCustomerManaged
 	keyManagementMode string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AzureEtcdDataEncryption) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // CustomerManaged returns the value of the 'customer_managed' attribute, or
@@ -39,7 +47,7 @@ func (o *AzureEtcdDataEncryption) Empty() bool {
 // Customer Managed encryption keys configuration.
 // Required when key_management_mode is "customer_managed".
 func (o *AzureEtcdDataEncryption) CustomerManaged() *AzureEtcdDataEncryptionCustomerManaged {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.customerManaged
 	}
 	return nil
@@ -51,7 +59,7 @@ func (o *AzureEtcdDataEncryption) CustomerManaged() *AzureEtcdDataEncryptionCust
 // Customer Managed encryption keys configuration.
 // Required when key_management_mode is "customer_managed".
 func (o *AzureEtcdDataEncryption) GetCustomerManaged() (value *AzureEtcdDataEncryptionCustomerManaged, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.customerManaged
 	}
@@ -66,7 +74,7 @@ func (o *AzureEtcdDataEncryption) GetCustomerManaged() (value *AzureEtcdDataEncr
 // By default, "platform_managed" is used.
 // Currently only "customer_managed" mode is supported.
 func (o *AzureEtcdDataEncryption) KeyManagementMode() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.keyManagementMode
 	}
 	return ""
@@ -80,7 +88,7 @@ func (o *AzureEtcdDataEncryption) KeyManagementMode() string {
 // By default, "platform_managed" is used.
 // Currently only "customer_managed" mode is supported.
 func (o *AzureEtcdDataEncryption) GetKeyManagementMode() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.keyManagementMode
 	}

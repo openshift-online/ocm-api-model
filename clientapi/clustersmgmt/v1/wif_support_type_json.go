@@ -42,7 +42,7 @@ func WriteWifSupport(object *WifSupport, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteWifSupport(object *WifSupport, stream *jsoniter.Stream) {
 		stream.WriteString(object.principal)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.roles != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.roles != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,9 @@ func UnmarshalWifSupport(source interface{}) (object *WifSupport, err error) {
 
 // ReadWifSupport reads a value of the 'wif_support' type from the given iterator.
 func ReadWifSupport(iterator *jsoniter.Iterator) *WifSupport {
-	object := &WifSupport{}
+	object := &WifSupport{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -86,11 +88,11 @@ func ReadWifSupport(iterator *jsoniter.Iterator) *WifSupport {
 		case "principal":
 			value := iterator.ReadString()
 			object.principal = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "roles":
 			value := ReadWifRoleList(iterator)
 			object.roles = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

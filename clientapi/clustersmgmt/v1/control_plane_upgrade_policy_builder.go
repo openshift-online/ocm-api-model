@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// ControlPlaneUpgradePolicyBuilder contains the data and logic needed to build 'control_plane_upgrade_policy' objects.
-//
 // Representation of an upgrade policy that can be set for a cluster.
 type ControlPlaneUpgradePolicyBuilder struct {
-	bitmap_                    uint32
+	fieldSet_                  []bool
 	id                         string
 	href                       string
 	clusterID                  string
@@ -44,73 +42,84 @@ type ControlPlaneUpgradePolicyBuilder struct {
 
 // NewControlPlaneUpgradePolicy creates a new builder of 'control_plane_upgrade_policy' objects.
 func NewControlPlaneUpgradePolicy() *ControlPlaneUpgradePolicyBuilder {
-	return &ControlPlaneUpgradePolicyBuilder{}
+	return &ControlPlaneUpgradePolicyBuilder{
+		fieldSet_: make([]bool, 13),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ControlPlaneUpgradePolicyBuilder) Link(value bool) *ControlPlaneUpgradePolicyBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ControlPlaneUpgradePolicyBuilder) ID(value string) *ControlPlaneUpgradePolicyBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ControlPlaneUpgradePolicyBuilder) HREF(value string) *ControlPlaneUpgradePolicyBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ControlPlaneUpgradePolicyBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *ControlPlaneUpgradePolicyBuilder) ClusterID(value string) *ControlPlaneUpgradePolicyBuilder {
 	b.clusterID = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *ControlPlaneUpgradePolicyBuilder) CreationTimestamp(value time.Time) *ControlPlaneUpgradePolicyBuilder {
 	b.creationTimestamp = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // EnableMinorVersionUpgrades sets the value of the 'enable_minor_version_upgrades' attribute to the given value.
 func (b *ControlPlaneUpgradePolicyBuilder) EnableMinorVersionUpgrades(value bool) *ControlPlaneUpgradePolicyBuilder {
 	b.enableMinorVersionUpgrades = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // LastUpdateTimestamp sets the value of the 'last_update_timestamp' attribute to the given value.
 func (b *ControlPlaneUpgradePolicyBuilder) LastUpdateTimestamp(value time.Time) *ControlPlaneUpgradePolicyBuilder {
 	b.lastUpdateTimestamp = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // NextRun sets the value of the 'next_run' attribute to the given value.
 func (b *ControlPlaneUpgradePolicyBuilder) NextRun(value time.Time) *ControlPlaneUpgradePolicyBuilder {
 	b.nextRun = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // Schedule sets the value of the 'schedule' attribute to the given value.
 func (b *ControlPlaneUpgradePolicyBuilder) Schedule(value string) *ControlPlaneUpgradePolicyBuilder {
 	b.schedule = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
@@ -119,7 +128,7 @@ func (b *ControlPlaneUpgradePolicyBuilder) Schedule(value string) *ControlPlaneU
 // ScheduleType defines which type of scheduling should be used for the upgrade policy.
 func (b *ControlPlaneUpgradePolicyBuilder) ScheduleType(value ScheduleType) *ControlPlaneUpgradePolicyBuilder {
 	b.scheduleType = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
@@ -129,9 +138,9 @@ func (b *ControlPlaneUpgradePolicyBuilder) ScheduleType(value ScheduleType) *Con
 func (b *ControlPlaneUpgradePolicyBuilder) State(value *UpgradePolicyStateBuilder) *ControlPlaneUpgradePolicyBuilder {
 	b.state = value
 	if value != nil {
-		b.bitmap_ |= 1024
+		b.fieldSet_[10] = true
 	} else {
-		b.bitmap_ &^= 1024
+		b.fieldSet_[10] = false
 	}
 	return b
 }
@@ -141,14 +150,14 @@ func (b *ControlPlaneUpgradePolicyBuilder) State(value *UpgradePolicyStateBuilde
 // UpgradeType defines which type of upgrade should be used.
 func (b *ControlPlaneUpgradePolicyBuilder) UpgradeType(value UpgradeType) *ControlPlaneUpgradePolicyBuilder {
 	b.upgradeType = value
-	b.bitmap_ |= 2048
+	b.fieldSet_[11] = true
 	return b
 }
 
 // Version sets the value of the 'version' attribute to the given value.
 func (b *ControlPlaneUpgradePolicyBuilder) Version(value string) *ControlPlaneUpgradePolicyBuilder {
 	b.version = value
-	b.bitmap_ |= 4096
+	b.fieldSet_[12] = true
 	return b
 }
 
@@ -157,7 +166,10 @@ func (b *ControlPlaneUpgradePolicyBuilder) Copy(object *ControlPlaneUpgradePolic
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.clusterID = object.clusterID
@@ -182,7 +194,10 @@ func (b *ControlPlaneUpgradePolicyBuilder) Build() (object *ControlPlaneUpgradeP
 	object = new(ControlPlaneUpgradePolicy)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.clusterID = b.clusterID
 	object.creationTimestamp = b.creationTimestamp
 	object.enableMinorVersionUpgrades = b.enableMinorVersionUpgrades

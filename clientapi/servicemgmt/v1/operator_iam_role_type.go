@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 //
 // Contains the necessary attributes to allow each operator to access the necessary AWS resources
 type OperatorIAMRole struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	name      string
 	namespace string
 	roleARN   string
@@ -31,7 +31,15 @@ type OperatorIAMRole struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *OperatorIAMRole) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Name returns the value of the 'name' attribute, or
@@ -39,7 +47,7 @@ func (o *OperatorIAMRole) Empty() bool {
 //
 // Name of the operator
 func (o *OperatorIAMRole) Name() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.name
 	}
 	return ""
@@ -50,7 +58,7 @@ func (o *OperatorIAMRole) Name() string {
 //
 // Name of the operator
 func (o *OperatorIAMRole) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.name
 	}
@@ -62,7 +70,7 @@ func (o *OperatorIAMRole) GetName() (value string, ok bool) {
 //
 // Namespace where the operator lives in the cluster
 func (o *OperatorIAMRole) Namespace() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.namespace
 	}
 	return ""
@@ -73,7 +81,7 @@ func (o *OperatorIAMRole) Namespace() string {
 //
 // Namespace where the operator lives in the cluster
 func (o *OperatorIAMRole) GetNamespace() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.namespace
 	}
@@ -85,7 +93,7 @@ func (o *OperatorIAMRole) GetNamespace() (value string, ok bool) {
 //
 // Role to assume when accessing AWS resources
 func (o *OperatorIAMRole) RoleARN() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.roleARN
 	}
 	return ""
@@ -96,7 +104,7 @@ func (o *OperatorIAMRole) RoleARN() string {
 //
 // Role to assume when accessing AWS resources
 func (o *OperatorIAMRole) GetRoleARN() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.roleARN
 	}

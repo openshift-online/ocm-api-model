@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
-// AccessReviewRequestBuilder contains the data and logic needed to build 'access_review_request' objects.
-//
 // Representation of an access review
 type AccessReviewRequestBuilder struct {
-	bitmap_         uint32
+	fieldSet_       []bool
 	accountUsername string
 	action          string
 	clusterID       string
@@ -35,60 +33,70 @@ type AccessReviewRequestBuilder struct {
 
 // NewAccessReviewRequest creates a new builder of 'access_review_request' objects.
 func NewAccessReviewRequest() *AccessReviewRequestBuilder {
-	return &AccessReviewRequestBuilder{}
+	return &AccessReviewRequestBuilder{
+		fieldSet_: make([]bool, 7),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AccessReviewRequestBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *AccessReviewRequestBuilder) AccountUsername(value string) *AccessReviewRequestBuilder {
 	b.accountUsername = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Action sets the value of the 'action' attribute to the given value.
 func (b *AccessReviewRequestBuilder) Action(value string) *AccessReviewRequestBuilder {
 	b.action = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *AccessReviewRequestBuilder) ClusterID(value string) *AccessReviewRequestBuilder {
 	b.clusterID = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // ClusterUUID sets the value of the 'cluster_UUID' attribute to the given value.
 func (b *AccessReviewRequestBuilder) ClusterUUID(value string) *AccessReviewRequestBuilder {
 	b.clusterUUID = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *AccessReviewRequestBuilder) OrganizationID(value string) *AccessReviewRequestBuilder {
 	b.organizationID = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *AccessReviewRequestBuilder) ResourceType(value string) *AccessReviewRequestBuilder {
 	b.resourceType = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *AccessReviewRequestBuilder) SubscriptionID(value string) *AccessReviewRequestBuilder {
 	b.subscriptionID = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -97,7 +105,10 @@ func (b *AccessReviewRequestBuilder) Copy(object *AccessReviewRequest) *AccessRe
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.accountUsername = object.accountUsername
 	b.action = object.action
 	b.clusterID = object.clusterID
@@ -111,7 +122,10 @@ func (b *AccessReviewRequestBuilder) Copy(object *AccessReviewRequest) *AccessRe
 // Build creates a 'access_review_request' object using the configuration stored in the builder.
 func (b *AccessReviewRequestBuilder) Build() (object *AccessReviewRequest, err error) {
 	object = new(AccessReviewRequest)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.accountUsername = b.accountUsername
 	object.action = b.action
 	object.clusterID = b.clusterID

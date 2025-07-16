@@ -42,7 +42,7 @@ func WriteClusterMigrationState(object *ClusterMigrationState, stream *jsoniter.
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteClusterMigrationState(object *ClusterMigrationState, stream *jsoniter.
 		stream.WriteString(object.description)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,9 @@ func UnmarshalClusterMigrationState(source interface{}) (object *ClusterMigratio
 
 // ReadClusterMigrationState reads a value of the 'cluster_migration_state' type from the given iterator.
 func ReadClusterMigrationState(iterator *jsoniter.Iterator) *ClusterMigrationState {
-	object := &ClusterMigrationState{}
+	object := &ClusterMigrationState{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -86,12 +88,12 @@ func ReadClusterMigrationState(iterator *jsoniter.Iterator) *ClusterMigrationSta
 		case "description":
 			value := iterator.ReadString()
 			object.description = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "value":
 			text := iterator.ReadString()
 			value := ClusterMigrationStateValue(text)
 			object.value = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

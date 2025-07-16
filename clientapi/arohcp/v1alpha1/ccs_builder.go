@@ -19,9 +19,8 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// CCSBuilder contains the data and logic needed to build 'CCS' objects.
 type CCSBuilder struct {
-	bitmap_          uint32
+	fieldSet_        []bool
 	id               string
 	href             string
 	disableSCPChecks bool
@@ -30,45 +29,56 @@ type CCSBuilder struct {
 
 // NewCCS creates a new builder of 'CCS' objects.
 func NewCCS() *CCSBuilder {
-	return &CCSBuilder{}
+	return &CCSBuilder{
+		fieldSet_: make([]bool, 5),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *CCSBuilder) Link(value bool) *CCSBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *CCSBuilder) ID(value string) *CCSBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *CCSBuilder) HREF(value string) *CCSBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *CCSBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // DisableSCPChecks sets the value of the 'disable_SCP_checks' attribute to the given value.
 func (b *CCSBuilder) DisableSCPChecks(value bool) *CCSBuilder {
 	b.disableSCPChecks = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *CCSBuilder) Enabled(value bool) *CCSBuilder {
 	b.enabled = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -77,7 +87,10 @@ func (b *CCSBuilder) Copy(object *CCS) *CCSBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.disableSCPChecks = object.disableSCPChecks
@@ -90,7 +103,10 @@ func (b *CCSBuilder) Build() (object *CCS, err error) {
 	object = new(CCS)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.disableSCPChecks = b.disableSCPChecks
 	object.enabled = b.enabled
 	return

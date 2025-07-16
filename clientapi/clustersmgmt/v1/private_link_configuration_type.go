@@ -23,13 +23,21 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Manages the configuration for the Private Links.
 type PrivateLinkConfiguration struct {
-	bitmap_    uint32
+	fieldSet_  []bool
 	principals *PrivateLinkPrincipals
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *PrivateLinkConfiguration) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Principals returns the value of the 'principals' attribute, or
@@ -37,7 +45,7 @@ func (o *PrivateLinkConfiguration) Empty() bool {
 //
 // List of additional principals for the Private Link
 func (o *PrivateLinkConfiguration) Principals() *PrivateLinkPrincipals {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.principals
 	}
 	return nil
@@ -48,7 +56,7 @@ func (o *PrivateLinkConfiguration) Principals() *PrivateLinkPrincipals {
 //
 // List of additional principals for the Private Link
 func (o *PrivateLinkConfiguration) GetPrincipals() (value *PrivateLinkPrincipals, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.principals
 	}

@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AWSNodePoolBuilder contains the data and logic needed to build 'AWS_node_pool' objects.
-//
 // Representation of aws node pool specific parameters.
 type AWSNodePoolBuilder struct {
-	bitmap_                    uint32
+	fieldSet_                  []bool
 	id                         string
 	href                       string
 	additionalSecurityGroupIds []string
@@ -38,39 +36,50 @@ type AWSNodePoolBuilder struct {
 
 // NewAWSNodePool creates a new builder of 'AWS_node_pool' objects.
 func NewAWSNodePool() *AWSNodePoolBuilder {
-	return &AWSNodePoolBuilder{}
+	return &AWSNodePoolBuilder{
+		fieldSet_: make([]bool, 11),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AWSNodePoolBuilder) Link(value bool) *AWSNodePoolBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AWSNodePoolBuilder) ID(value string) *AWSNodePoolBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AWSNodePoolBuilder) HREF(value string) *AWSNodePoolBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AWSNodePoolBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // AdditionalSecurityGroupIds sets the value of the 'additional_security_group_ids' attribute to the given values.
 func (b *AWSNodePoolBuilder) AdditionalSecurityGroupIds(values ...string) *AWSNodePoolBuilder {
 	b.additionalSecurityGroupIds = make([]string, len(values))
 	copy(b.additionalSecurityGroupIds, values)
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -78,9 +87,9 @@ func (b *AWSNodePoolBuilder) AdditionalSecurityGroupIds(values ...string) *AWSNo
 func (b *AWSNodePoolBuilder) AvailabilityZoneTypes(value map[string]string) *AWSNodePoolBuilder {
 	b.availabilityZoneTypes = value
 	if value != nil {
-		b.bitmap_ |= 16
+		b.fieldSet_[4] = true
 	} else {
-		b.bitmap_ &^= 16
+		b.fieldSet_[4] = false
 	}
 	return b
 }
@@ -90,21 +99,21 @@ func (b *AWSNodePoolBuilder) AvailabilityZoneTypes(value map[string]string) *AWS
 // Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances
 func (b *AWSNodePoolBuilder) Ec2MetadataHttpTokens(value Ec2MetadataHttpTokens) *AWSNodePoolBuilder {
 	b.ec2MetadataHttpTokens = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // InstanceProfile sets the value of the 'instance_profile' attribute to the given value.
 func (b *AWSNodePoolBuilder) InstanceProfile(value string) *AWSNodePoolBuilder {
 	b.instanceProfile = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // InstanceType sets the value of the 'instance_type' attribute to the given value.
 func (b *AWSNodePoolBuilder) InstanceType(value string) *AWSNodePoolBuilder {
 	b.instanceType = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
@@ -114,9 +123,9 @@ func (b *AWSNodePoolBuilder) InstanceType(value string) *AWSNodePoolBuilder {
 func (b *AWSNodePoolBuilder) RootVolume(value *AWSVolumeBuilder) *AWSNodePoolBuilder {
 	b.rootVolume = value
 	if value != nil {
-		b.bitmap_ |= 256
+		b.fieldSet_[8] = true
 	} else {
-		b.bitmap_ &^= 256
+		b.fieldSet_[8] = false
 	}
 	return b
 }
@@ -125,9 +134,9 @@ func (b *AWSNodePoolBuilder) RootVolume(value *AWSVolumeBuilder) *AWSNodePoolBui
 func (b *AWSNodePoolBuilder) SubnetOutposts(value map[string]string) *AWSNodePoolBuilder {
 	b.subnetOutposts = value
 	if value != nil {
-		b.bitmap_ |= 512
+		b.fieldSet_[9] = true
 	} else {
-		b.bitmap_ &^= 512
+		b.fieldSet_[9] = false
 	}
 	return b
 }
@@ -136,9 +145,9 @@ func (b *AWSNodePoolBuilder) SubnetOutposts(value map[string]string) *AWSNodePoo
 func (b *AWSNodePoolBuilder) Tags(value map[string]string) *AWSNodePoolBuilder {
 	b.tags = value
 	if value != nil {
-		b.bitmap_ |= 1024
+		b.fieldSet_[10] = true
 	} else {
-		b.bitmap_ &^= 1024
+		b.fieldSet_[10] = false
 	}
 	return b
 }
@@ -148,7 +157,10 @@ func (b *AWSNodePoolBuilder) Copy(object *AWSNodePool) *AWSNodePoolBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.additionalSecurityGroupIds != nil {
@@ -197,7 +209,10 @@ func (b *AWSNodePoolBuilder) Build() (object *AWSNodePool, err error) {
 	object = new(AWSNodePool)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.additionalSecurityGroupIds != nil {
 		object.additionalSecurityGroupIds = make([]string, len(b.additionalSecurityGroupIds))
 		copy(object.additionalSecurityGroupIds, b.additionalSecurityGroupIds)

@@ -42,7 +42,7 @@ func WriteServiceInfo(object *ServiceInfo, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteServiceInfo(object *ServiceInfo, stream *jsoniter.Stream) {
 		stream.WriteString(object.fullname)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,9 @@ func UnmarshalServiceInfo(source interface{}) (object *ServiceInfo, err error) {
 
 // ReadServiceInfo reads a value of the 'service_info' type from the given iterator.
 func ReadServiceInfo(iterator *jsoniter.Iterator) *ServiceInfo {
-	object := &ServiceInfo{}
+	object := &ServiceInfo{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -86,11 +88,11 @@ func ReadServiceInfo(iterator *jsoniter.Iterator) *ServiceInfo {
 		case "fullname":
 			value := iterator.ReadString()
 			object.fullname = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "status_type":
 			value := iterator.ReadString()
 			object.statusType = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

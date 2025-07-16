@@ -39,7 +39,7 @@ const AccessRequestNilKind = "AccessRequestNil"
 //
 // Representation of an access request.
 type AccessRequest struct {
-	bitmap_               uint32
+	fieldSet_             []bool
 	id                    string
 	href                  string
 	clusterId             string
@@ -63,7 +63,7 @@ func (o *AccessRequest) Kind() string {
 	if o == nil {
 		return AccessRequestNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return AccessRequestLinkKind
 	}
 	return AccessRequestKind
@@ -71,12 +71,12 @@ func (o *AccessRequest) Kind() string {
 
 // Link returns true if this is a link.
 func (o *AccessRequest) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *AccessRequest) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -85,7 +85,7 @@ func (o *AccessRequest) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *AccessRequest) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -94,7 +94,7 @@ func (o *AccessRequest) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *AccessRequest) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -103,7 +103,7 @@ func (o *AccessRequest) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *AccessRequest) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -112,7 +112,17 @@ func (o *AccessRequest) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AccessRequest) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // ClusterId returns the value of the 'cluster_id' attribute, or
@@ -120,7 +130,7 @@ func (o *AccessRequest) Empty() bool {
 //
 // Cluster from which the Access Request belongs to.
 func (o *AccessRequest) ClusterId() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.clusterId
 	}
 	return ""
@@ -131,7 +141,7 @@ func (o *AccessRequest) ClusterId() string {
 //
 // Cluster from which the Access Request belongs to.
 func (o *AccessRequest) GetClusterId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.clusterId
 	}
@@ -144,7 +154,7 @@ func (o *AccessRequest) GetClusterId() (value string, ok bool) {
 // Date and time when the access request was initially created, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *AccessRequest) CreatedAt() time.Time {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -156,7 +166,7 @@ func (o *AccessRequest) CreatedAt() time.Time {
 // Date and time when the access request was initially created, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *AccessRequest) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.createdAt
 	}
@@ -168,7 +178,7 @@ func (o *AccessRequest) GetCreatedAt() (value time.Time, ok bool) {
 //
 // How long the Access Request can be in pending state waiting for a customer decision.
 func (o *AccessRequest) Deadline() string {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.deadline
 	}
 	return ""
@@ -179,7 +189,7 @@ func (o *AccessRequest) Deadline() string {
 //
 // How long the Access Request can be in pending state waiting for a customer decision.
 func (o *AccessRequest) GetDeadline() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.deadline
 	}
@@ -192,7 +202,7 @@ func (o *AccessRequest) GetDeadline() (value string, ok bool) {
 // Date and time for the deadline that the Access Request needs to be decided, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *AccessRequest) DeadlineAt() time.Time {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.deadlineAt
 	}
 	return time.Time{}
@@ -204,7 +214,7 @@ func (o *AccessRequest) DeadlineAt() time.Time {
 // Date and time for the deadline that the Access Request needs to be decided, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *AccessRequest) GetDeadlineAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.deadlineAt
 	}
@@ -216,7 +226,7 @@ func (o *AccessRequest) GetDeadlineAt() (value time.Time, ok bool) {
 //
 // Decisions attached to the Access Request.
 func (o *AccessRequest) Decisions() []*Decision {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.decisions
 	}
 	return nil
@@ -227,7 +237,7 @@ func (o *AccessRequest) Decisions() []*Decision {
 //
 // Decisions attached to the Access Request.
 func (o *AccessRequest) GetDecisions() (value []*Decision, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.decisions
 	}
@@ -239,7 +249,7 @@ func (o *AccessRequest) GetDecisions() (value []*Decision, ok bool) {
 //
 // How long the access will last after it's been approved.
 func (o *AccessRequest) Duration() string {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.duration
 	}
 	return ""
@@ -250,7 +260,7 @@ func (o *AccessRequest) Duration() string {
 //
 // How long the access will last after it's been approved.
 func (o *AccessRequest) GetDuration() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.duration
 	}
@@ -262,7 +272,7 @@ func (o *AccessRequest) GetDuration() (value string, ok bool) {
 //
 // Internal support case id linking to jira ticket.
 func (o *AccessRequest) InternalSupportCaseId() string {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.internalSupportCaseId
 	}
 	return ""
@@ -273,7 +283,7 @@ func (o *AccessRequest) InternalSupportCaseId() string {
 //
 // Internal support case id linking to jira ticket.
 func (o *AccessRequest) GetInternalSupportCaseId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.internalSupportCaseId
 	}
@@ -285,7 +295,7 @@ func (o *AccessRequest) GetInternalSupportCaseId() (value string, ok bool) {
 //
 // Justification of the Access Request.
 func (o *AccessRequest) Justification() string {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.justification
 	}
 	return ""
@@ -296,7 +306,7 @@ func (o *AccessRequest) Justification() string {
 //
 // Justification of the Access Request.
 func (o *AccessRequest) GetJustification() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.justification
 	}
@@ -308,7 +318,7 @@ func (o *AccessRequest) GetJustification() (value string, ok bool) {
 //
 // Organization from which the Access Request belongs to.
 func (o *AccessRequest) OrganizationId() string {
-	if o != nil && o.bitmap_&2048 != 0 {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.organizationId
 	}
 	return ""
@@ -319,7 +329,7 @@ func (o *AccessRequest) OrganizationId() string {
 //
 // Organization from which the Access Request belongs to.
 func (o *AccessRequest) GetOrganizationId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2048 != 0
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.organizationId
 	}
@@ -331,7 +341,7 @@ func (o *AccessRequest) GetOrganizationId() (value string, ok bool) {
 //
 // User that requested the Access.
 func (o *AccessRequest) RequestedBy() string {
-	if o != nil && o.bitmap_&4096 != 0 {
+	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
 		return o.requestedBy
 	}
 	return ""
@@ -342,7 +352,7 @@ func (o *AccessRequest) RequestedBy() string {
 //
 // User that requested the Access.
 func (o *AccessRequest) GetRequestedBy() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4096 != 0
+	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
 	if ok {
 		value = o.requestedBy
 	}
@@ -354,7 +364,7 @@ func (o *AccessRequest) GetRequestedBy() (value string, ok bool) {
 //
 // Access Request status.
 func (o *AccessRequest) Status() *AccessRequestStatus {
-	if o != nil && o.bitmap_&8192 != 0 {
+	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
 		return o.status
 	}
 	return nil
@@ -365,7 +375,7 @@ func (o *AccessRequest) Status() *AccessRequestStatus {
 //
 // Access Request status.
 func (o *AccessRequest) GetStatus() (value *AccessRequestStatus, ok bool) {
-	ok = o != nil && o.bitmap_&8192 != 0
+	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
 	if ok {
 		value = o.status
 	}
@@ -377,7 +387,7 @@ func (o *AccessRequest) GetStatus() (value *AccessRequestStatus, ok bool) {
 //
 // Subscription from which the Access Request belongs to.
 func (o *AccessRequest) SubscriptionId() string {
-	if o != nil && o.bitmap_&16384 != 0 {
+	if o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14] {
 		return o.subscriptionId
 	}
 	return ""
@@ -388,7 +398,7 @@ func (o *AccessRequest) SubscriptionId() string {
 //
 // Subscription from which the Access Request belongs to.
 func (o *AccessRequest) GetSubscriptionId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16384 != 0
+	ok = o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14]
 	if ok {
 		value = o.subscriptionId
 	}
@@ -400,7 +410,7 @@ func (o *AccessRequest) GetSubscriptionId() (value string, ok bool) {
 //
 // Support case ID linking to JIRA ticket.
 func (o *AccessRequest) SupportCaseId() string {
-	if o != nil && o.bitmap_&32768 != 0 {
+	if o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15] {
 		return o.supportCaseId
 	}
 	return ""
@@ -411,7 +421,7 @@ func (o *AccessRequest) SupportCaseId() string {
 //
 // Support case ID linking to JIRA ticket.
 func (o *AccessRequest) GetSupportCaseId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&32768 != 0
+	ok = o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15]
 	if ok {
 		value = o.supportCaseId
 	}
@@ -424,7 +434,7 @@ func (o *AccessRequest) GetSupportCaseId() (value string, ok bool) {
 // Date and time when the access request was lastly updated, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *AccessRequest) UpdatedAt() time.Time {
-	if o != nil && o.bitmap_&65536 != 0 {
+	if o != nil && len(o.fieldSet_) > 16 && o.fieldSet_[16] {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -436,7 +446,7 @@ func (o *AccessRequest) UpdatedAt() time.Time {
 // Date and time when the access request was lastly updated, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *AccessRequest) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&65536 != 0
+	ok = o != nil && len(o.fieldSet_) > 16 && o.fieldSet_[16]
 	if ok {
 		value = o.updatedAt
 	}

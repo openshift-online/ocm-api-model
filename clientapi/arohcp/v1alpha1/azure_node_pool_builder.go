@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// AzureNodePoolBuilder contains the data and logic needed to build 'azure_node_pool' objects.
-//
 // Representation of azure node pool specific parameters.
 type AzureNodePoolBuilder struct {
-	bitmap_                          uint32
+	fieldSet_                        []bool
 	osDiskSizeGibibytes              int
 	osDiskStorageAccountType         string
 	vmSize                           string
@@ -35,32 +33,42 @@ type AzureNodePoolBuilder struct {
 
 // NewAzureNodePool creates a new builder of 'azure_node_pool' objects.
 func NewAzureNodePool() *AzureNodePoolBuilder {
-	return &AzureNodePoolBuilder{}
+	return &AzureNodePoolBuilder{
+		fieldSet_: make([]bool, 7),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AzureNodePoolBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // OSDiskSizeGibibytes sets the value of the 'OS_disk_size_gibibytes' attribute to the given value.
 func (b *AzureNodePoolBuilder) OSDiskSizeGibibytes(value int) *AzureNodePoolBuilder {
 	b.osDiskSizeGibibytes = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // OSDiskStorageAccountType sets the value of the 'OS_disk_storage_account_type' attribute to the given value.
 func (b *AzureNodePoolBuilder) OSDiskStorageAccountType(value string) *AzureNodePoolBuilder {
 	b.osDiskStorageAccountType = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // VMSize sets the value of the 'VM_size' attribute to the given value.
 func (b *AzureNodePoolBuilder) VMSize(value string) *AzureNodePoolBuilder {
 	b.vmSize = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -71,9 +79,9 @@ func (b *AzureNodePoolBuilder) VMSize(value string) *AzureNodePoolBuilder {
 func (b *AzureNodePoolBuilder) EncryptionAtHost(value *AzureNodePoolEncryptionAtHostBuilder) *AzureNodePoolBuilder {
 	b.encryptionAtHost = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -81,21 +89,21 @@ func (b *AzureNodePoolBuilder) EncryptionAtHost(value *AzureNodePoolEncryptionAt
 // EphemeralOSDiskEnabled sets the value of the 'ephemeral_OS_disk_enabled' attribute to the given value.
 func (b *AzureNodePoolBuilder) EphemeralOSDiskEnabled(value bool) *AzureNodePoolBuilder {
 	b.ephemeralOSDiskEnabled = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // OsDiskSseEncryptionSetResourceId sets the value of the 'os_disk_sse_encryption_set_resource_id' attribute to the given value.
 func (b *AzureNodePoolBuilder) OsDiskSseEncryptionSetResourceId(value string) *AzureNodePoolBuilder {
 	b.osDiskSseEncryptionSetResourceId = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // ResourceName sets the value of the 'resource_name' attribute to the given value.
 func (b *AzureNodePoolBuilder) ResourceName(value string) *AzureNodePoolBuilder {
 	b.resourceName = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -104,7 +112,10 @@ func (b *AzureNodePoolBuilder) Copy(object *AzureNodePool) *AzureNodePoolBuilder
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.osDiskSizeGibibytes = object.osDiskSizeGibibytes
 	b.osDiskStorageAccountType = object.osDiskStorageAccountType
 	b.vmSize = object.vmSize
@@ -122,7 +133,10 @@ func (b *AzureNodePoolBuilder) Copy(object *AzureNodePool) *AzureNodePoolBuilder
 // Build creates a 'azure_node_pool' object using the configuration stored in the builder.
 func (b *AzureNodePoolBuilder) Build() (object *AzureNodePool, err error) {
 	object = new(AzureNodePool)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.osDiskSizeGibibytes = b.osDiskSizeGibibytes
 	object.osDiskStorageAccountType = b.osDiskStorageAccountType
 	object.vmSize = b.vmSize

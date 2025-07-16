@@ -42,13 +42,13 @@ func WriteSupportCaseResponse(object *SupportCaseResponse, stream *jsoniter.Stre
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(SupportCaseResponseLinkKind)
 	} else {
 		stream.WriteString(SupportCaseResponseKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteSupportCaseResponse(object *SupportCaseResponse, stream *jsoniter.Stre
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteSupportCaseResponse(object *SupportCaseResponse, stream *jsoniter.Stre
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteSupportCaseResponse(object *SupportCaseResponse, stream *jsoniter.Stre
 		stream.WriteString(object.uri)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteSupportCaseResponse(object *SupportCaseResponse, stream *jsoniter.Stre
 		stream.WriteString(object.caseNumber)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -92,7 +92,7 @@ func WriteSupportCaseResponse(object *SupportCaseResponse, stream *jsoniter.Stre
 		stream.WriteString(object.clusterId)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -101,7 +101,7 @@ func WriteSupportCaseResponse(object *SupportCaseResponse, stream *jsoniter.Stre
 		stream.WriteString(object.clusterUuid)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -110,7 +110,7 @@ func WriteSupportCaseResponse(object *SupportCaseResponse, stream *jsoniter.Stre
 		stream.WriteString(object.description)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -119,7 +119,7 @@ func WriteSupportCaseResponse(object *SupportCaseResponse, stream *jsoniter.Stre
 		stream.WriteString(object.severity)
 		count++
 	}
-	present_ = object.bitmap_&512 != 0
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -128,7 +128,7 @@ func WriteSupportCaseResponse(object *SupportCaseResponse, stream *jsoniter.Stre
 		stream.WriteString(object.status)
 		count++
 	}
-	present_ = object.bitmap_&1024 != 0
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -137,7 +137,7 @@ func WriteSupportCaseResponse(object *SupportCaseResponse, stream *jsoniter.Stre
 		stream.WriteString(object.subscriptionId)
 		count++
 	}
-	present_ = object.bitmap_&2048 != 0
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -162,7 +162,9 @@ func UnmarshalSupportCaseResponse(source interface{}) (object *SupportCaseRespon
 
 // ReadSupportCaseResponse reads a value of the 'support_case_response' type from the given iterator.
 func ReadSupportCaseResponse(iterator *jsoniter.Iterator) *SupportCaseResponse {
-	object := &SupportCaseResponse{}
+	object := &SupportCaseResponse{
+		fieldSet_: make([]bool, 12),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -172,50 +174,50 @@ func ReadSupportCaseResponse(iterator *jsoniter.Iterator) *SupportCaseResponse {
 		case "kind":
 			value := iterator.ReadString()
 			if value == SupportCaseResponseLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "uri":
 			value := iterator.ReadString()
 			object.uri = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "case_number":
 			value := iterator.ReadString()
 			object.caseNumber = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterId = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "cluster_uuid":
 			value := iterator.ReadString()
 			object.clusterUuid = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "description":
 			value := iterator.ReadString()
 			object.description = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "severity":
 			value := iterator.ReadString()
 			object.severity = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		case "status":
 			value := iterator.ReadString()
 			object.status = value
-			object.bitmap_ |= 512
+			object.fieldSet_[9] = true
 		case "subscription_id":
 			value := iterator.ReadString()
 			object.subscriptionId = value
-			object.bitmap_ |= 1024
+			object.fieldSet_[10] = true
 		case "summary":
 			value := iterator.ReadString()
 			object.summary = value
-			object.bitmap_ |= 2048
+			object.fieldSet_[11] = true
 		default:
 			iterator.ReadAny()
 		}

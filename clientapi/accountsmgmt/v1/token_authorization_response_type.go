@@ -21,19 +21,27 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 
 // TokenAuthorizationResponse represents the values of the 'token_authorization_response' type.
 type TokenAuthorizationResponse struct {
-	bitmap_ uint32
-	account *Account
+	fieldSet_ []bool
+	account   *Account
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *TokenAuthorizationResponse) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Account returns the value of the 'account' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *TokenAuthorizationResponse) Account() *Account {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.account
 	}
 	return nil
@@ -42,7 +50,7 @@ func (o *TokenAuthorizationResponse) Account() *Account {
 // GetAccount returns the value of the 'account' attribute and
 // a flag indicating if the attribute has a value.
 func (o *TokenAuthorizationResponse) GetAccount() (value *Account, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.account
 	}

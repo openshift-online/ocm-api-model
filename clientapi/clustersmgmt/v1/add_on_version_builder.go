@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AddOnVersionBuilder contains the data and logic needed to build 'add_on_version' objects.
-//
 // Representation of an add-on version.
 type AddOnVersionBuilder struct {
-	bitmap_                  uint32
+	fieldSet_                []bool
 	id                       string
 	href                     string
 	additionalCatalogSources []*AdditionalCatalogSourceBuilder
@@ -41,39 +39,50 @@ type AddOnVersionBuilder struct {
 
 // NewAddOnVersion creates a new builder of 'add_on_version' objects.
 func NewAddOnVersion() *AddOnVersionBuilder {
-	return &AddOnVersionBuilder{}
+	return &AddOnVersionBuilder{
+		fieldSet_: make([]bool, 14),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddOnVersionBuilder) Link(value bool) *AddOnVersionBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddOnVersionBuilder) ID(value string) *AddOnVersionBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AddOnVersionBuilder) HREF(value string) *AddOnVersionBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddOnVersionBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // AdditionalCatalogSources sets the value of the 'additional_catalog_sources' attribute to the given values.
 func (b *AddOnVersionBuilder) AdditionalCatalogSources(values ...*AdditionalCatalogSourceBuilder) *AddOnVersionBuilder {
 	b.additionalCatalogSources = make([]*AdditionalCatalogSourceBuilder, len(values))
 	copy(b.additionalCatalogSources, values)
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -81,14 +90,14 @@ func (b *AddOnVersionBuilder) AdditionalCatalogSources(values ...*AdditionalCata
 func (b *AddOnVersionBuilder) AvailableUpgrades(values ...string) *AddOnVersionBuilder {
 	b.availableUpgrades = make([]string, len(values))
 	copy(b.availableUpgrades, values)
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // Channel sets the value of the 'channel' attribute to the given value.
 func (b *AddOnVersionBuilder) Channel(value string) *AddOnVersionBuilder {
 	b.channel = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -99,9 +108,9 @@ func (b *AddOnVersionBuilder) Channel(value string) *AddOnVersionBuilder {
 func (b *AddOnVersionBuilder) Config(value *AddOnConfigBuilder) *AddOnVersionBuilder {
 	b.config = value
 	if value != nil {
-		b.bitmap_ |= 64
+		b.fieldSet_[6] = true
 	} else {
-		b.bitmap_ &^= 64
+		b.fieldSet_[6] = false
 	}
 	return b
 }
@@ -109,28 +118,28 @@ func (b *AddOnVersionBuilder) Config(value *AddOnConfigBuilder) *AddOnVersionBui
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddOnVersionBuilder) Enabled(value bool) *AddOnVersionBuilder {
 	b.enabled = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // PackageImage sets the value of the 'package_image' attribute to the given value.
 func (b *AddOnVersionBuilder) PackageImage(value string) *AddOnVersionBuilder {
 	b.packageImage = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // Parameters sets the value of the 'parameters' attribute to the given values.
 func (b *AddOnVersionBuilder) Parameters(value *AddOnParameterListBuilder) *AddOnVersionBuilder {
 	b.parameters = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
 // PullSecretName sets the value of the 'pull_secret_name' attribute to the given value.
 func (b *AddOnVersionBuilder) PullSecretName(value string) *AddOnVersionBuilder {
 	b.pullSecretName = value
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
@@ -138,14 +147,14 @@ func (b *AddOnVersionBuilder) PullSecretName(value string) *AddOnVersionBuilder 
 func (b *AddOnVersionBuilder) Requirements(values ...*AddOnRequirementBuilder) *AddOnVersionBuilder {
 	b.requirements = make([]*AddOnRequirementBuilder, len(values))
 	copy(b.requirements, values)
-	b.bitmap_ |= 2048
+	b.fieldSet_[11] = true
 	return b
 }
 
 // SourceImage sets the value of the 'source_image' attribute to the given value.
 func (b *AddOnVersionBuilder) SourceImage(value string) *AddOnVersionBuilder {
 	b.sourceImage = value
-	b.bitmap_ |= 4096
+	b.fieldSet_[12] = true
 	return b
 }
 
@@ -153,7 +162,7 @@ func (b *AddOnVersionBuilder) SourceImage(value string) *AddOnVersionBuilder {
 func (b *AddOnVersionBuilder) SubOperators(values ...*AddOnSubOperatorBuilder) *AddOnVersionBuilder {
 	b.subOperators = make([]*AddOnSubOperatorBuilder, len(values))
 	copy(b.subOperators, values)
-	b.bitmap_ |= 8192
+	b.fieldSet_[13] = true
 	return b
 }
 
@@ -162,7 +171,10 @@ func (b *AddOnVersionBuilder) Copy(object *AddOnVersion) *AddOnVersionBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.additionalCatalogSources != nil {
@@ -218,7 +230,10 @@ func (b *AddOnVersionBuilder) Build() (object *AddOnVersion, err error) {
 	object = new(AddOnVersion)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.additionalCatalogSources != nil {
 		object.additionalCatalogSources = make([]*AdditionalCatalogSource, len(b.additionalCatalogSources))
 		for i, v := range b.additionalCatalogSources {

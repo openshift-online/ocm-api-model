@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// ProvisionShardBuilder contains the data and logic needed to build 'provision_shard' objects.
-//
 // Contains the properties of the provision shard, including AWS and GCP related configurations
 type ProvisionShardBuilder struct {
-	bitmap_                  uint32
+	fieldSet_                []bool
 	id                       string
 	href                     string
 	awsAccountOperatorConfig *ServerConfigBuilder
@@ -46,32 +44,43 @@ type ProvisionShardBuilder struct {
 
 // NewProvisionShard creates a new builder of 'provision_shard' objects.
 func NewProvisionShard() *ProvisionShardBuilder {
-	return &ProvisionShardBuilder{}
+	return &ProvisionShardBuilder{
+		fieldSet_: make([]bool, 15),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ProvisionShardBuilder) Link(value bool) *ProvisionShardBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ProvisionShardBuilder) ID(value string) *ProvisionShardBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ProvisionShardBuilder) HREF(value string) *ProvisionShardBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ProvisionShardBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // AWSAccountOperatorConfig sets the value of the 'AWS_account_operator_config' attribute to the given value.
@@ -80,9 +89,9 @@ func (b *ProvisionShardBuilder) Empty() bool {
 func (b *ProvisionShardBuilder) AWSAccountOperatorConfig(value *ServerConfigBuilder) *ProvisionShardBuilder {
 	b.awsAccountOperatorConfig = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -90,14 +99,14 @@ func (b *ProvisionShardBuilder) AWSAccountOperatorConfig(value *ServerConfigBuil
 // AWSBaseDomain sets the value of the 'AWS_base_domain' attribute to the given value.
 func (b *ProvisionShardBuilder) AWSBaseDomain(value string) *ProvisionShardBuilder {
 	b.awsBaseDomain = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // GCPBaseDomain sets the value of the 'GCP_base_domain' attribute to the given value.
 func (b *ProvisionShardBuilder) GCPBaseDomain(value string) *ProvisionShardBuilder {
 	b.gcpBaseDomain = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -107,9 +116,9 @@ func (b *ProvisionShardBuilder) GCPBaseDomain(value string) *ProvisionShardBuild
 func (b *ProvisionShardBuilder) GCPProjectOperator(value *ServerConfigBuilder) *ProvisionShardBuilder {
 	b.gcpProjectOperator = value
 	if value != nil {
-		b.bitmap_ |= 64
+		b.fieldSet_[6] = true
 	} else {
-		b.bitmap_ &^= 64
+		b.fieldSet_[6] = false
 	}
 	return b
 }
@@ -120,9 +129,9 @@ func (b *ProvisionShardBuilder) GCPProjectOperator(value *ServerConfigBuilder) *
 func (b *ProvisionShardBuilder) CloudProvider(value *CloudProviderBuilder) *ProvisionShardBuilder {
 	b.cloudProvider = value
 	if value != nil {
-		b.bitmap_ |= 128
+		b.fieldSet_[7] = true
 	} else {
-		b.bitmap_ &^= 128
+		b.fieldSet_[7] = false
 	}
 	return b
 }
@@ -130,7 +139,7 @@ func (b *ProvisionShardBuilder) CloudProvider(value *CloudProviderBuilder) *Prov
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *ProvisionShardBuilder) CreationTimestamp(value time.Time) *ProvisionShardBuilder {
 	b.creationTimestamp = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
@@ -140,9 +149,9 @@ func (b *ProvisionShardBuilder) CreationTimestamp(value time.Time) *ProvisionSha
 func (b *ProvisionShardBuilder) HiveConfig(value *ServerConfigBuilder) *ProvisionShardBuilder {
 	b.hiveConfig = value
 	if value != nil {
-		b.bitmap_ |= 512
+		b.fieldSet_[9] = true
 	} else {
-		b.bitmap_ &^= 512
+		b.fieldSet_[9] = false
 	}
 	return b
 }
@@ -153,9 +162,9 @@ func (b *ProvisionShardBuilder) HiveConfig(value *ServerConfigBuilder) *Provisio
 func (b *ProvisionShardBuilder) HypershiftConfig(value *ServerConfigBuilder) *ProvisionShardBuilder {
 	b.hypershiftConfig = value
 	if value != nil {
-		b.bitmap_ |= 1024
+		b.fieldSet_[10] = true
 	} else {
-		b.bitmap_ &^= 1024
+		b.fieldSet_[10] = false
 	}
 	return b
 }
@@ -163,14 +172,14 @@ func (b *ProvisionShardBuilder) HypershiftConfig(value *ServerConfigBuilder) *Pr
 // LastUpdateTimestamp sets the value of the 'last_update_timestamp' attribute to the given value.
 func (b *ProvisionShardBuilder) LastUpdateTimestamp(value time.Time) *ProvisionShardBuilder {
 	b.lastUpdateTimestamp = value
-	b.bitmap_ |= 2048
+	b.fieldSet_[11] = true
 	return b
 }
 
 // ManagementCluster sets the value of the 'management_cluster' attribute to the given value.
 func (b *ProvisionShardBuilder) ManagementCluster(value string) *ProvisionShardBuilder {
 	b.managementCluster = value
-	b.bitmap_ |= 4096
+	b.fieldSet_[12] = true
 	return b
 }
 
@@ -180,9 +189,9 @@ func (b *ProvisionShardBuilder) ManagementCluster(value string) *ProvisionShardB
 func (b *ProvisionShardBuilder) Region(value *CloudRegionBuilder) *ProvisionShardBuilder {
 	b.region = value
 	if value != nil {
-		b.bitmap_ |= 8192
+		b.fieldSet_[13] = true
 	} else {
-		b.bitmap_ &^= 8192
+		b.fieldSet_[13] = false
 	}
 	return b
 }
@@ -190,7 +199,7 @@ func (b *ProvisionShardBuilder) Region(value *CloudRegionBuilder) *ProvisionShar
 // Status sets the value of the 'status' attribute to the given value.
 func (b *ProvisionShardBuilder) Status(value string) *ProvisionShardBuilder {
 	b.status = value
-	b.bitmap_ |= 16384
+	b.fieldSet_[14] = true
 	return b
 }
 
@@ -199,7 +208,10 @@ func (b *ProvisionShardBuilder) Copy(object *ProvisionShard) *ProvisionShardBuil
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.awsAccountOperatorConfig != nil {
@@ -246,7 +258,10 @@ func (b *ProvisionShardBuilder) Build() (object *ProvisionShard, err error) {
 	object = new(ProvisionShard)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.awsAccountOperatorConfig != nil {
 		object.awsAccountOperatorConfig, err = b.awsAccountOperatorConfig.Build()
 		if err != nil {

@@ -42,7 +42,7 @@ func WriteRolePolicy(object *RolePolicy, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteRolePolicy(object *RolePolicy, stream *jsoniter.Stream) {
 		stream.WriteString(object.arn)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteRolePolicy(object *RolePolicy, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,7 +85,9 @@ func UnmarshalRolePolicy(source interface{}) (object *RolePolicy, err error) {
 
 // ReadRolePolicy reads a value of the 'role_policy' type from the given iterator.
 func ReadRolePolicy(iterator *jsoniter.Iterator) *RolePolicy {
-	object := &RolePolicy{}
+	object := &RolePolicy{
+		fieldSet_: make([]bool, 3),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -95,15 +97,15 @@ func ReadRolePolicy(iterator *jsoniter.Iterator) *RolePolicy {
 		case "arn":
 			value := iterator.ReadString()
 			object.arn = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "type":
 			value := iterator.ReadString()
 			object.type_ = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		default:
 			iterator.ReadAny()
 		}

@@ -42,7 +42,7 @@ func WriteClusterCapabilities(object *ClusterCapabilities, stream *jsoniter.Stre
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.disabled != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.disabled != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,9 @@ func UnmarshalClusterCapabilities(source interface{}) (object *ClusterCapabiliti
 
 // ReadClusterCapabilities reads a value of the 'cluster_capabilities' type from the given iterator.
 func ReadClusterCapabilities(iterator *jsoniter.Iterator) *ClusterCapabilities {
-	object := &ClusterCapabilities{}
+	object := &ClusterCapabilities{
+		fieldSet_: make([]bool, 1),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -77,7 +79,7 @@ func ReadClusterCapabilities(iterator *jsoniter.Iterator) *ClusterCapabilities {
 		case "disabled":
 			value := ReadStringList(iterator)
 			object.disabled = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

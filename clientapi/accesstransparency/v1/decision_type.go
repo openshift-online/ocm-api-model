@@ -39,7 +39,7 @@ const DecisionNilKind = "DecisionNil"
 //
 // Representation of an decision.
 type Decision struct {
-	bitmap_       uint32
+	fieldSet_     []bool
 	id            string
 	href          string
 	createdAt     time.Time
@@ -54,7 +54,7 @@ func (o *Decision) Kind() string {
 	if o == nil {
 		return DecisionNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return DecisionLinkKind
 	}
 	return DecisionKind
@@ -62,12 +62,12 @@ func (o *Decision) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Decision) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *Decision) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -76,7 +76,7 @@ func (o *Decision) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Decision) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -85,7 +85,7 @@ func (o *Decision) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Decision) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -94,7 +94,7 @@ func (o *Decision) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Decision) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -103,7 +103,17 @@ func (o *Decision) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Decision) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // CreatedAt returns the value of the 'created_at' attribute, or
@@ -112,7 +122,7 @@ func (o *Decision) Empty() bool {
 // Date and time when the decision was initially created, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *Decision) CreatedAt() time.Time {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -124,7 +134,7 @@ func (o *Decision) CreatedAt() time.Time {
 // Date and time when the decision was initially created, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *Decision) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.createdAt
 	}
@@ -136,7 +146,7 @@ func (o *Decision) GetCreatedAt() (value time.Time, ok bool) {
 //
 // User that decided.
 func (o *Decision) DecidedBy() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.decidedBy
 	}
 	return ""
@@ -147,7 +157,7 @@ func (o *Decision) DecidedBy() string {
 //
 // User that decided.
 func (o *Decision) GetDecidedBy() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.decidedBy
 	}
@@ -159,7 +169,7 @@ func (o *Decision) GetDecidedBy() (value string, ok bool) {
 //
 // State of the decision.
 func (o *Decision) Decision() DecisionDecision {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.decision
 	}
 	return DecisionDecision("")
@@ -170,7 +180,7 @@ func (o *Decision) Decision() DecisionDecision {
 //
 // State of the decision.
 func (o *Decision) GetDecision() (value DecisionDecision, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.decision
 	}
@@ -182,7 +192,7 @@ func (o *Decision) GetDecision() (value DecisionDecision, ok bool) {
 //
 // Justification of the decision.
 func (o *Decision) Justification() string {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.justification
 	}
 	return ""
@@ -193,7 +203,7 @@ func (o *Decision) Justification() string {
 //
 // Justification of the decision.
 func (o *Decision) GetJustification() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.justification
 	}
@@ -206,7 +216,7 @@ func (o *Decision) GetJustification() (value string, ok bool) {
 // Date and time when the decision was lastly updated, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *Decision) UpdatedAt() time.Time {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -218,7 +228,7 @@ func (o *Decision) UpdatedAt() time.Time {
 // Date and time when the decision was lastly updated, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *Decision) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.updatedAt
 	}

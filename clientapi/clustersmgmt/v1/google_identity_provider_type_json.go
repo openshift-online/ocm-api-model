@@ -42,7 +42,7 @@ func WriteGoogleIdentityProvider(object *GoogleIdentityProvider, stream *jsonite
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteGoogleIdentityProvider(object *GoogleIdentityProvider, stream *jsonite
 		stream.WriteString(object.clientID)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteGoogleIdentityProvider(object *GoogleIdentityProvider, stream *jsonite
 		stream.WriteString(object.clientSecret)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,7 +85,9 @@ func UnmarshalGoogleIdentityProvider(source interface{}) (object *GoogleIdentity
 
 // ReadGoogleIdentityProvider reads a value of the 'google_identity_provider' type from the given iterator.
 func ReadGoogleIdentityProvider(iterator *jsoniter.Iterator) *GoogleIdentityProvider {
-	object := &GoogleIdentityProvider{}
+	object := &GoogleIdentityProvider{
+		fieldSet_: make([]bool, 3),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -95,15 +97,15 @@ func ReadGoogleIdentityProvider(iterator *jsoniter.Iterator) *GoogleIdentityProv
 		case "client_id":
 			value := iterator.ReadString()
 			object.clientID = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "client_secret":
 			value := iterator.ReadString()
 			object.clientSecret = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "hosted_domain":
 			value := iterator.ReadString()
 			object.hostedDomain = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		default:
 			iterator.ReadAny()
 		}

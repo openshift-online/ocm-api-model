@@ -19,12 +19,10 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// ExternalAuthClientConfigBuilder contains the data and logic needed to build 'external_auth_client_config' objects.
-//
 // ExternalAuthClientConfig contains configuration for the platform's clients that
 // need to request tokens from the issuer.
 type ExternalAuthClientConfigBuilder struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	id          string
 	component   *ClientComponentBuilder
 	extraScopes []string
@@ -34,18 +32,28 @@ type ExternalAuthClientConfigBuilder struct {
 
 // NewExternalAuthClientConfig creates a new builder of 'external_auth_client_config' objects.
 func NewExternalAuthClientConfig() *ExternalAuthClientConfigBuilder {
-	return &ExternalAuthClientConfigBuilder{}
+	return &ExternalAuthClientConfigBuilder{
+		fieldSet_: make([]bool, 5),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ExternalAuthClientConfigBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *ExternalAuthClientConfigBuilder) ID(value string) *ExternalAuthClientConfigBuilder {
 	b.id = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -55,9 +63,9 @@ func (b *ExternalAuthClientConfigBuilder) ID(value string) *ExternalAuthClientCo
 func (b *ExternalAuthClientConfigBuilder) Component(value *ClientComponentBuilder) *ExternalAuthClientConfigBuilder {
 	b.component = value
 	if value != nil {
-		b.bitmap_ |= 2
+		b.fieldSet_[1] = true
 	} else {
-		b.bitmap_ &^= 2
+		b.fieldSet_[1] = false
 	}
 	return b
 }
@@ -66,14 +74,14 @@ func (b *ExternalAuthClientConfigBuilder) Component(value *ClientComponentBuilde
 func (b *ExternalAuthClientConfigBuilder) ExtraScopes(values ...string) *ExternalAuthClientConfigBuilder {
 	b.extraScopes = make([]string, len(values))
 	copy(b.extraScopes, values)
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Secret sets the value of the 'secret' attribute to the given value.
 func (b *ExternalAuthClientConfigBuilder) Secret(value string) *ExternalAuthClientConfigBuilder {
 	b.secret = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -82,7 +90,7 @@ func (b *ExternalAuthClientConfigBuilder) Secret(value string) *ExternalAuthClie
 // Representation of the possible values of an external authentication client's type
 func (b *ExternalAuthClientConfigBuilder) Type(value ExternalAuthClientType) *ExternalAuthClientConfigBuilder {
 	b.type_ = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -91,7 +99,10 @@ func (b *ExternalAuthClientConfigBuilder) Copy(object *ExternalAuthClientConfig)
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	if object.component != nil {
 		b.component = NewClientComponent().Copy(object.component)
@@ -112,7 +123,10 @@ func (b *ExternalAuthClientConfigBuilder) Copy(object *ExternalAuthClientConfig)
 // Build creates a 'external_auth_client_config' object using the configuration stored in the builder.
 func (b *ExternalAuthClientConfigBuilder) Build() (object *ExternalAuthClientConfig, err error) {
 	object = new(ExternalAuthClientConfig)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.id = b.id
 	if b.component != nil {
 		object.component, err = b.component.Build()

@@ -36,7 +36,7 @@ const KubeletConfigNilKind = "KubeletConfigNil"
 // OCM representation of KubeletConfig, exposing the fields of Kubernetes
 // KubeletConfig that can be managed by users
 type KubeletConfig struct {
-	bitmap_      uint32
+	fieldSet_    []bool
 	id           string
 	href         string
 	name         string
@@ -48,7 +48,7 @@ func (o *KubeletConfig) Kind() string {
 	if o == nil {
 		return KubeletConfigNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return KubeletConfigLinkKind
 	}
 	return KubeletConfigKind
@@ -56,12 +56,12 @@ func (o *KubeletConfig) Kind() string {
 
 // Link returns true if this is a link.
 func (o *KubeletConfig) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *KubeletConfig) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -70,7 +70,7 @@ func (o *KubeletConfig) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *KubeletConfig) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -79,7 +79,7 @@ func (o *KubeletConfig) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *KubeletConfig) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -88,7 +88,7 @@ func (o *KubeletConfig) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *KubeletConfig) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -97,7 +97,17 @@ func (o *KubeletConfig) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *KubeletConfig) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Name returns the value of the 'name' attribute, or
@@ -106,7 +116,7 @@ func (o *KubeletConfig) Empty() bool {
 // Allows the user to specify the name to be used to identify this KubeletConfig.
 // Optional. A name will be generated if not provided.
 func (o *KubeletConfig) Name() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.name
 	}
 	return ""
@@ -118,7 +128,7 @@ func (o *KubeletConfig) Name() string {
 // Allows the user to specify the name to be used to identify this KubeletConfig.
 // Optional. A name will be generated if not provided.
 func (o *KubeletConfig) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.name
 	}
@@ -131,7 +141,7 @@ func (o *KubeletConfig) GetName() (value string, ok bool) {
 // Allows the user to specify the podPidsLimit to be applied via KubeletConfig.
 // Useful if workloads have greater PIDs limit requirements than the OCP default.
 func (o *KubeletConfig) PodPidsLimit() int {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.podPidsLimit
 	}
 	return 0
@@ -143,7 +153,7 @@ func (o *KubeletConfig) PodPidsLimit() int {
 // Allows the user to specify the podPidsLimit to be applied via KubeletConfig.
 // Useful if workloads have greater PIDs limit requirements than the OCP default.
 func (o *KubeletConfig) GetPodPidsLimit() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.podPidsLimit
 	}

@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
-// SelfAccessReviewRequestBuilder contains the data and logic needed to build 'self_access_review_request' objects.
-//
 // Representation of an access review performed against oneself
 type SelfAccessReviewRequestBuilder struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	action         string
 	clusterID      string
 	clusterUUID    string
@@ -34,53 +32,63 @@ type SelfAccessReviewRequestBuilder struct {
 
 // NewSelfAccessReviewRequest creates a new builder of 'self_access_review_request' objects.
 func NewSelfAccessReviewRequest() *SelfAccessReviewRequestBuilder {
-	return &SelfAccessReviewRequestBuilder{}
+	return &SelfAccessReviewRequestBuilder{
+		fieldSet_: make([]bool, 6),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SelfAccessReviewRequestBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Action sets the value of the 'action' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) Action(value string) *SelfAccessReviewRequestBuilder {
 	b.action = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) ClusterID(value string) *SelfAccessReviewRequestBuilder {
 	b.clusterID = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // ClusterUUID sets the value of the 'cluster_UUID' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) ClusterUUID(value string) *SelfAccessReviewRequestBuilder {
 	b.clusterUUID = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) OrganizationID(value string) *SelfAccessReviewRequestBuilder {
 	b.organizationID = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) ResourceType(value string) *SelfAccessReviewRequestBuilder {
 	b.resourceType = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) SubscriptionID(value string) *SelfAccessReviewRequestBuilder {
 	b.subscriptionID = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -89,7 +97,10 @@ func (b *SelfAccessReviewRequestBuilder) Copy(object *SelfAccessReviewRequest) *
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.action = object.action
 	b.clusterID = object.clusterID
 	b.clusterUUID = object.clusterUUID
@@ -102,7 +113,10 @@ func (b *SelfAccessReviewRequestBuilder) Copy(object *SelfAccessReviewRequest) *
 // Build creates a 'self_access_review_request' object using the configuration stored in the builder.
 func (b *SelfAccessReviewRequestBuilder) Build() (object *SelfAccessReviewRequest, err error) {
 	object = new(SelfAccessReviewRequest)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.action = b.action
 	object.clusterID = b.clusterID
 	object.clusterUUID = b.clusterUUID

@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations
 //
 // Representation of an access review response
 type AccessReviewResponse struct {
-	bitmap_         uint32
+	fieldSet_       []bool
 	accountUsername string
 	action          string
 	clusterID       string
@@ -38,7 +38,15 @@ type AccessReviewResponse struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AccessReviewResponse) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AccountUsername returns the value of the 'account_username' attribute, or
@@ -46,7 +54,7 @@ func (o *AccessReviewResponse) Empty() bool {
 //
 // Defines the username of the account of which access is being reviewed.
 func (o *AccessReviewResponse) AccountUsername() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.accountUsername
 	}
 	return ""
@@ -57,7 +65,7 @@ func (o *AccessReviewResponse) AccountUsername() string {
 //
 // Defines the username of the account of which access is being reviewed.
 func (o *AccessReviewResponse) GetAccountUsername() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.accountUsername
 	}
@@ -69,7 +77,7 @@ func (o *AccessReviewResponse) GetAccountUsername() (value string, ok bool) {
 //
 // Indicates the action, one of: [get,list,create,delete,update].
 func (o *AccessReviewResponse) Action() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.action
 	}
 	return ""
@@ -80,7 +88,7 @@ func (o *AccessReviewResponse) Action() string {
 //
 // Indicates the action, one of: [get,list,create,delete,update].
 func (o *AccessReviewResponse) GetAction() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.action
 	}
@@ -92,7 +100,7 @@ func (o *AccessReviewResponse) GetAction() (value string, ok bool) {
 //
 // Defines whether the action on the specified resource type is allowed.
 func (o *AccessReviewResponse) Allowed() bool {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.allowed
 	}
 	return false
@@ -103,7 +111,7 @@ func (o *AccessReviewResponse) Allowed() bool {
 //
 // Defines whether the action on the specified resource type is allowed.
 func (o *AccessReviewResponse) GetAllowed() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.allowed
 	}
@@ -115,7 +123,7 @@ func (o *AccessReviewResponse) GetAllowed() (value bool, ok bool) {
 //
 // Indicates which Cluster (internal id) the resource type belongs to.
 func (o *AccessReviewResponse) ClusterID() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.clusterID
 	}
 	return ""
@@ -126,7 +134,7 @@ func (o *AccessReviewResponse) ClusterID() string {
 //
 // Indicates which Cluster (internal id) the resource type belongs to.
 func (o *AccessReviewResponse) GetClusterID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.clusterID
 	}
@@ -138,7 +146,7 @@ func (o *AccessReviewResponse) GetClusterID() (value string, ok bool) {
 //
 // Indicates which Cluster (external id) the resource type belongs to.
 func (o *AccessReviewResponse) ClusterUUID() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.clusterUUID
 	}
 	return ""
@@ -149,7 +157,7 @@ func (o *AccessReviewResponse) ClusterUUID() string {
 //
 // Indicates which Cluster (external id) the resource type belongs to.
 func (o *AccessReviewResponse) GetClusterUUID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.clusterUUID
 	}
@@ -161,7 +169,7 @@ func (o *AccessReviewResponse) GetClusterUUID() (value string, ok bool) {
 //
 // Defines whether an account is ocm internal.
 func (o *AccessReviewResponse) IsOCMInternal() bool {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.isOCMInternal
 	}
 	return false
@@ -172,7 +180,7 @@ func (o *AccessReviewResponse) IsOCMInternal() bool {
 //
 // Defines whether an account is ocm internal.
 func (o *AccessReviewResponse) GetIsOCMInternal() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.isOCMInternal
 	}
@@ -184,7 +192,7 @@ func (o *AccessReviewResponse) GetIsOCMInternal() (value bool, ok bool) {
 //
 // Indicates which Organization the resource type belongs to.
 func (o *AccessReviewResponse) OrganizationID() string {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.organizationID
 	}
 	return ""
@@ -195,7 +203,7 @@ func (o *AccessReviewResponse) OrganizationID() string {
 //
 // Indicates which Organization the resource type belongs to.
 func (o *AccessReviewResponse) GetOrganizationID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.organizationID
 	}
@@ -207,7 +215,7 @@ func (o *AccessReviewResponse) GetOrganizationID() (value string, ok bool) {
 //
 // Defines further context for the value in allowed (if applicable).
 func (o *AccessReviewResponse) Reason() string {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.reason
 	}
 	return ""
@@ -218,7 +226,7 @@ func (o *AccessReviewResponse) Reason() string {
 //
 // Defines further context for the value in allowed (if applicable).
 func (o *AccessReviewResponse) GetReason() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.reason
 	}
@@ -231,7 +239,7 @@ func (o *AccessReviewResponse) GetReason() (value string, ok bool) {
 // Indicates the type of the resource an action would be taken on.
 // See uhc-account-manager/openapi/openapi.yaml for a list of possible values.
 func (o *AccessReviewResponse) ResourceType() string {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.resourceType
 	}
 	return ""
@@ -243,7 +251,7 @@ func (o *AccessReviewResponse) ResourceType() string {
 // Indicates the type of the resource an action would be taken on.
 // See uhc-account-manager/openapi/openapi.yaml for a list of possible values.
 func (o *AccessReviewResponse) GetResourceType() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.resourceType
 	}
@@ -255,7 +263,7 @@ func (o *AccessReviewResponse) GetResourceType() (value string, ok bool) {
 //
 // Indicates which Subscription the resource type belongs to.
 func (o *AccessReviewResponse) SubscriptionID() string {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.subscriptionID
 	}
 	return ""
@@ -266,7 +274,7 @@ func (o *AccessReviewResponse) SubscriptionID() string {
 //
 // Indicates which Subscription the resource type belongs to.
 func (o *AccessReviewResponse) GetSubscriptionID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.subscriptionID
 	}

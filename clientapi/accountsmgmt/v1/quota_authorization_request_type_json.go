@@ -42,7 +42,7 @@ func WriteQuotaAuthorizationRequest(object *QuotaAuthorizationRequest, stream *j
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteQuotaAuthorizationRequest(object *QuotaAuthorizationRequest, stream *j
 		stream.WriteString(object.accountUsername)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteQuotaAuthorizationRequest(object *QuotaAuthorizationRequest, stream *j
 		stream.WriteString(object.availabilityZone)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteQuotaAuthorizationRequest(object *QuotaAuthorizationRequest, stream *j
 		stream.WriteString(object.displayName)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteQuotaAuthorizationRequest(object *QuotaAuthorizationRequest, stream *j
 		stream.WriteString(object.productID)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteQuotaAuthorizationRequest(object *QuotaAuthorizationRequest, stream *j
 		stream.WriteString(object.productCategory)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -96,7 +96,7 @@ func WriteQuotaAuthorizationRequest(object *QuotaAuthorizationRequest, stream *j
 		stream.WriteString(object.quotaVersion)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -105,7 +105,7 @@ func WriteQuotaAuthorizationRequest(object *QuotaAuthorizationRequest, stream *j
 		stream.WriteBool(object.reserve)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0 && object.resources != nil
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7] && object.resources != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -130,7 +130,9 @@ func UnmarshalQuotaAuthorizationRequest(source interface{}) (object *QuotaAuthor
 
 // ReadQuotaAuthorizationRequest reads a value of the 'quota_authorization_request' type from the given iterator.
 func ReadQuotaAuthorizationRequest(iterator *jsoniter.Iterator) *QuotaAuthorizationRequest {
-	object := &QuotaAuthorizationRequest{}
+	object := &QuotaAuthorizationRequest{
+		fieldSet_: make([]bool, 8),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -140,35 +142,35 @@ func ReadQuotaAuthorizationRequest(iterator *jsoniter.Iterator) *QuotaAuthorizat
 		case "account_username":
 			value := iterator.ReadString()
 			object.accountUsername = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "availability_zone":
 			value := iterator.ReadString()
 			object.availabilityZone = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "display_name":
 			value := iterator.ReadString()
 			object.displayName = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "product_id":
 			value := iterator.ReadString()
 			object.productID = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "product_category":
 			value := iterator.ReadString()
 			object.productCategory = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "quota_version":
 			value := iterator.ReadString()
 			object.quotaVersion = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "reserve":
 			value := iterator.ReadBool()
 			object.reserve = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "resources":
 			value := ReadReservedResourceList(iterator)
 			object.resources = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		default:
 			iterator.ReadAny()
 		}

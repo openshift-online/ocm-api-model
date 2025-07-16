@@ -19,34 +19,43 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// SummarySampleBuilder contains the data and logic needed to build 'summary_sample' objects.
 type SummarySampleBuilder struct {
-	bitmap_ uint32
-	time    string
-	value   float64
+	fieldSet_ []bool
+	time      string
+	value     float64
 }
 
 // NewSummarySample creates a new builder of 'summary_sample' objects.
 func NewSummarySample() *SummarySampleBuilder {
-	return &SummarySampleBuilder{}
+	return &SummarySampleBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SummarySampleBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Time sets the value of the 'time' attribute to the given value.
 func (b *SummarySampleBuilder) Time(value string) *SummarySampleBuilder {
 	b.time = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *SummarySampleBuilder) Value(value float64) *SummarySampleBuilder {
 	b.value = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -55,7 +64,10 @@ func (b *SummarySampleBuilder) Copy(object *SummarySample) *SummarySampleBuilder
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.time = object.time
 	b.value = object.value
 	return b
@@ -64,7 +76,10 @@ func (b *SummarySampleBuilder) Copy(object *SummarySample) *SummarySampleBuilder
 // Build creates a 'summary_sample' object using the configuration stored in the builder.
 func (b *SummarySampleBuilder) Build() (object *SummarySample, err error) {
 	object = new(SummarySample)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.time = b.time
 	object.value = b.value
 	return

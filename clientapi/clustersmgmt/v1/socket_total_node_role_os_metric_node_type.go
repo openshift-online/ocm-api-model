@@ -28,7 +28,7 @@ import (
 // Representation of information from telemetry about a the socket capacity
 // by node role and OS.
 type SocketTotalNodeRoleOSMetricNode struct {
-	bitmap_         uint32
+	fieldSet_       []bool
 	nodeRoles       []string
 	operatingSystem string
 	socketTotal     float64
@@ -37,7 +37,15 @@ type SocketTotalNodeRoleOSMetricNode struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *SocketTotalNodeRoleOSMetricNode) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // NodeRoles returns the value of the 'node_roles' attribute, or
@@ -45,7 +53,7 @@ func (o *SocketTotalNodeRoleOSMetricNode) Empty() bool {
 //
 // Representation of the node role for a cluster.
 func (o *SocketTotalNodeRoleOSMetricNode) NodeRoles() []string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.nodeRoles
 	}
 	return nil
@@ -56,7 +64,7 @@ func (o *SocketTotalNodeRoleOSMetricNode) NodeRoles() []string {
 //
 // Representation of the node role for a cluster.
 func (o *SocketTotalNodeRoleOSMetricNode) GetNodeRoles() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.nodeRoles
 	}
@@ -68,7 +76,7 @@ func (o *SocketTotalNodeRoleOSMetricNode) GetNodeRoles() (value []string, ok boo
 //
 // The operating system.
 func (o *SocketTotalNodeRoleOSMetricNode) OperatingSystem() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.operatingSystem
 	}
 	return ""
@@ -79,7 +87,7 @@ func (o *SocketTotalNodeRoleOSMetricNode) OperatingSystem() string {
 //
 // The operating system.
 func (o *SocketTotalNodeRoleOSMetricNode) GetOperatingSystem() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.operatingSystem
 	}
@@ -91,7 +99,7 @@ func (o *SocketTotalNodeRoleOSMetricNode) GetOperatingSystem() (value string, ok
 //
 // The total socket capacity of nodes with this set of roles and operating system.
 func (o *SocketTotalNodeRoleOSMetricNode) SocketTotal() float64 {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.socketTotal
 	}
 	return 0.0
@@ -102,7 +110,7 @@ func (o *SocketTotalNodeRoleOSMetricNode) SocketTotal() float64 {
 //
 // The total socket capacity of nodes with this set of roles and operating system.
 func (o *SocketTotalNodeRoleOSMetricNode) GetSocketTotal() (value float64, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.socketTotal
 	}
@@ -112,7 +120,7 @@ func (o *SocketTotalNodeRoleOSMetricNode) GetSocketTotal() (value float64, ok bo
 // Time returns the value of the 'time' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *SocketTotalNodeRoleOSMetricNode) Time() time.Time {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.time
 	}
 	return time.Time{}
@@ -121,7 +129,7 @@ func (o *SocketTotalNodeRoleOSMetricNode) Time() time.Time {
 // GetTime returns the value of the 'time' attribute and
 // a flag indicating if the attribute has a value.
 func (o *SocketTotalNodeRoleOSMetricNode) GetTime() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.time
 	}

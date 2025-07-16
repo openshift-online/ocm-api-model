@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// SdnToOvnClusterMigrationBuilder contains the data and logic needed to build 'sdn_to_ovn_cluster_migration' objects.
-//
 // Details for `SdnToOvn` cluster migrations.
 type SdnToOvnClusterMigrationBuilder struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	joinIpv4       string
 	masqueradeIpv4 string
 	transitIpv4    string
@@ -31,32 +29,42 @@ type SdnToOvnClusterMigrationBuilder struct {
 
 // NewSdnToOvnClusterMigration creates a new builder of 'sdn_to_ovn_cluster_migration' objects.
 func NewSdnToOvnClusterMigration() *SdnToOvnClusterMigrationBuilder {
-	return &SdnToOvnClusterMigrationBuilder{}
+	return &SdnToOvnClusterMigrationBuilder{
+		fieldSet_: make([]bool, 3),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SdnToOvnClusterMigrationBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // JoinIpv4 sets the value of the 'join_ipv_4' attribute to the given value.
 func (b *SdnToOvnClusterMigrationBuilder) JoinIpv4(value string) *SdnToOvnClusterMigrationBuilder {
 	b.joinIpv4 = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // MasqueradeIpv4 sets the value of the 'masquerade_ipv_4' attribute to the given value.
 func (b *SdnToOvnClusterMigrationBuilder) MasqueradeIpv4(value string) *SdnToOvnClusterMigrationBuilder {
 	b.masqueradeIpv4 = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // TransitIpv4 sets the value of the 'transit_ipv_4' attribute to the given value.
 func (b *SdnToOvnClusterMigrationBuilder) TransitIpv4(value string) *SdnToOvnClusterMigrationBuilder {
 	b.transitIpv4 = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -65,7 +73,10 @@ func (b *SdnToOvnClusterMigrationBuilder) Copy(object *SdnToOvnClusterMigration)
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.joinIpv4 = object.joinIpv4
 	b.masqueradeIpv4 = object.masqueradeIpv4
 	b.transitIpv4 = object.transitIpv4
@@ -75,7 +86,10 @@ func (b *SdnToOvnClusterMigrationBuilder) Copy(object *SdnToOvnClusterMigration)
 // Build creates a 'sdn_to_ovn_cluster_migration' object using the configuration stored in the builder.
 func (b *SdnToOvnClusterMigrationBuilder) Build() (object *SdnToOvnClusterMigration, err error) {
 	object = new(SdnToOvnClusterMigration)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.joinIpv4 = b.joinIpv4
 	object.masqueradeIpv4 = b.masqueradeIpv4
 	object.transitIpv4 = b.transitIpv4

@@ -19,9 +19,8 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// WifGcpBuilder contains the data and logic needed to build 'wif_gcp' objects.
 type WifGcpBuilder struct {
-	bitmap_              uint32
+	fieldSet_            []bool
 	impersonatorEmail    string
 	projectId            string
 	projectNumber        string
@@ -33,39 +32,49 @@ type WifGcpBuilder struct {
 
 // NewWifGcp creates a new builder of 'wif_gcp' objects.
 func NewWifGcp() *WifGcpBuilder {
-	return &WifGcpBuilder{}
+	return &WifGcpBuilder{
+		fieldSet_: make([]bool, 7),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *WifGcpBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ImpersonatorEmail sets the value of the 'impersonator_email' attribute to the given value.
 func (b *WifGcpBuilder) ImpersonatorEmail(value string) *WifGcpBuilder {
 	b.impersonatorEmail = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ProjectId sets the value of the 'project_id' attribute to the given value.
 func (b *WifGcpBuilder) ProjectId(value string) *WifGcpBuilder {
 	b.projectId = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // ProjectNumber sets the value of the 'project_number' attribute to the given value.
 func (b *WifGcpBuilder) ProjectNumber(value string) *WifGcpBuilder {
 	b.projectNumber = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // RolePrefix sets the value of the 'role_prefix' attribute to the given value.
 func (b *WifGcpBuilder) RolePrefix(value string) *WifGcpBuilder {
 	b.rolePrefix = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -73,7 +82,7 @@ func (b *WifGcpBuilder) RolePrefix(value string) *WifGcpBuilder {
 func (b *WifGcpBuilder) ServiceAccounts(values ...*WifServiceAccountBuilder) *WifGcpBuilder {
 	b.serviceAccounts = make([]*WifServiceAccountBuilder, len(values))
 	copy(b.serviceAccounts, values)
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -81,9 +90,9 @@ func (b *WifGcpBuilder) ServiceAccounts(values ...*WifServiceAccountBuilder) *Wi
 func (b *WifGcpBuilder) Support(value *WifSupportBuilder) *WifGcpBuilder {
 	b.support = value
 	if value != nil {
-		b.bitmap_ |= 32
+		b.fieldSet_[5] = true
 	} else {
-		b.bitmap_ &^= 32
+		b.fieldSet_[5] = false
 	}
 	return b
 }
@@ -92,9 +101,9 @@ func (b *WifGcpBuilder) Support(value *WifSupportBuilder) *WifGcpBuilder {
 func (b *WifGcpBuilder) WorkloadIdentityPool(value *WifPoolBuilder) *WifGcpBuilder {
 	b.workloadIdentityPool = value
 	if value != nil {
-		b.bitmap_ |= 64
+		b.fieldSet_[6] = true
 	} else {
-		b.bitmap_ &^= 64
+		b.fieldSet_[6] = false
 	}
 	return b
 }
@@ -104,7 +113,10 @@ func (b *WifGcpBuilder) Copy(object *WifGcp) *WifGcpBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.impersonatorEmail = object.impersonatorEmail
 	b.projectId = object.projectId
 	b.projectNumber = object.projectNumber
@@ -133,7 +145,10 @@ func (b *WifGcpBuilder) Copy(object *WifGcp) *WifGcpBuilder {
 // Build creates a 'wif_gcp' object using the configuration stored in the builder.
 func (b *WifGcpBuilder) Build() (object *WifGcp, err error) {
 	object = new(WifGcp)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.impersonatorEmail = b.impersonatorEmail
 	object.projectId = b.projectId
 	object.projectNumber = b.projectNumber

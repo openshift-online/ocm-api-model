@@ -42,7 +42,7 @@ func WriteAWSSTSPolicy(object *AWSSTSPolicy, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAWSSTSPolicy(object *AWSSTSPolicy, stream *jsoniter.Stream) {
 		stream.WriteString(object.arn)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteAWSSTSPolicy(object *AWSSTSPolicy, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteAWSSTSPolicy(object *AWSSTSPolicy, stream *jsoniter.Stream) {
 		stream.WriteString(object.details)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,7 +94,9 @@ func UnmarshalAWSSTSPolicy(source interface{}) (object *AWSSTSPolicy, err error)
 
 // ReadAWSSTSPolicy reads a value of the 'AWSSTS_policy' type from the given iterator.
 func ReadAWSSTSPolicy(iterator *jsoniter.Iterator) *AWSSTSPolicy {
-	object := &AWSSTSPolicy{}
+	object := &AWSSTSPolicy{
+		fieldSet_: make([]bool, 4),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -104,19 +106,19 @@ func ReadAWSSTSPolicy(iterator *jsoniter.Iterator) *AWSSTSPolicy {
 		case "arn":
 			value := iterator.ReadString()
 			object.arn = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "details":
 			value := iterator.ReadString()
 			object.details = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "type":
 			value := iterator.ReadString()
 			object.type_ = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		default:
 			iterator.ReadAny()
 		}

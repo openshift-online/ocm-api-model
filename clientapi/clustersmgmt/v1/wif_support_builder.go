@@ -19,27 +19,36 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// WifSupportBuilder contains the data and logic needed to build 'wif_support' objects.
 type WifSupportBuilder struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	principal string
 	roles     []*WifRoleBuilder
 }
 
 // NewWifSupport creates a new builder of 'wif_support' objects.
 func NewWifSupport() *WifSupportBuilder {
-	return &WifSupportBuilder{}
+	return &WifSupportBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *WifSupportBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Principal sets the value of the 'principal' attribute to the given value.
 func (b *WifSupportBuilder) Principal(value string) *WifSupportBuilder {
 	b.principal = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -47,7 +56,7 @@ func (b *WifSupportBuilder) Principal(value string) *WifSupportBuilder {
 func (b *WifSupportBuilder) Roles(values ...*WifRoleBuilder) *WifSupportBuilder {
 	b.roles = make([]*WifRoleBuilder, len(values))
 	copy(b.roles, values)
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -56,7 +65,10 @@ func (b *WifSupportBuilder) Copy(object *WifSupport) *WifSupportBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.principal = object.principal
 	if object.roles != nil {
 		b.roles = make([]*WifRoleBuilder, len(object.roles))
@@ -72,7 +84,10 @@ func (b *WifSupportBuilder) Copy(object *WifSupport) *WifSupportBuilder {
 // Build creates a 'wif_support' object using the configuration stored in the builder.
 func (b *WifSupportBuilder) Build() (object *WifSupport, err error) {
 	object = new(WifSupport)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.principal = b.principal
 	if b.roles != nil {
 		object.roles = make([]*WifRole, len(b.roles))

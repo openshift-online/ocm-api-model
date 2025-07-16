@@ -23,14 +23,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Configuration status of a WifConfig.
 type WifConfigStatus struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	description string
 	configured  bool
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *WifConfigStatus) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Configured returns the value of the 'configured' attribute, or
@@ -40,7 +48,7 @@ func (o *WifConfigStatus) Empty() bool {
 // - `false`: The WifConfig resource has a user configuration error.
 // - `true`: The resources associated with the WifConfig object are properly configured and operational at the time of the check.
 func (o *WifConfigStatus) Configured() bool {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.configured
 	}
 	return false
@@ -53,7 +61,7 @@ func (o *WifConfigStatus) Configured() bool {
 // - `false`: The WifConfig resource has a user configuration error.
 // - `true`: The resources associated with the WifConfig object are properly configured and operational at the time of the check.
 func (o *WifConfigStatus) GetConfigured() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.configured
 	}
@@ -67,7 +75,7 @@ func (o *WifConfigStatus) GetConfigured() (value bool, ok bool) {
 // - When `Configured` is `false`, this field contains details about the user configuration error.
 // - When `Configured` is `true`, this field may be empty or contain optional notes about the configuration.
 func (o *WifConfigStatus) Description() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.description
 	}
 	return ""
@@ -80,7 +88,7 @@ func (o *WifConfigStatus) Description() string {
 // - When `Configured` is `false`, this field contains details about the user configuration error.
 // - When `Configured` is `true`, this field may be empty or contain optional notes about the configuration.
 func (o *WifConfigStatus) GetDescription() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.description
 	}

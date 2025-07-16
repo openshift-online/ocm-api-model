@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// GenericNotifyDetailsResponseBuilder contains the data and logic needed to build 'generic_notify_details_response' objects.
-//
 // class that defines notify details response in general.
 type GenericNotifyDetailsResponseBuilder struct {
-	bitmap_    uint32
+	fieldSet_  []bool
 	id         string
 	href       string
 	associates []string
@@ -33,39 +31,50 @@ type GenericNotifyDetailsResponseBuilder struct {
 
 // NewGenericNotifyDetailsResponse creates a new builder of 'generic_notify_details_response' objects.
 func NewGenericNotifyDetailsResponse() *GenericNotifyDetailsResponseBuilder {
-	return &GenericNotifyDetailsResponseBuilder{}
+	return &GenericNotifyDetailsResponseBuilder{
+		fieldSet_: make([]bool, 6),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *GenericNotifyDetailsResponseBuilder) Link(value bool) *GenericNotifyDetailsResponseBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *GenericNotifyDetailsResponseBuilder) ID(value string) *GenericNotifyDetailsResponseBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *GenericNotifyDetailsResponseBuilder) HREF(value string) *GenericNotifyDetailsResponseBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GenericNotifyDetailsResponseBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Associates sets the value of the 'associates' attribute to the given values.
 func (b *GenericNotifyDetailsResponseBuilder) Associates(values ...string) *GenericNotifyDetailsResponseBuilder {
 	b.associates = make([]string, len(values))
 	copy(b.associates, values)
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -73,7 +82,7 @@ func (b *GenericNotifyDetailsResponseBuilder) Associates(values ...string) *Gene
 func (b *GenericNotifyDetailsResponseBuilder) Items(values ...*NotificationDetailsResponseBuilder) *GenericNotifyDetailsResponseBuilder {
 	b.items = make([]*NotificationDetailsResponseBuilder, len(values))
 	copy(b.items, values)
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -81,7 +90,7 @@ func (b *GenericNotifyDetailsResponseBuilder) Items(values ...*NotificationDetai
 func (b *GenericNotifyDetailsResponseBuilder) Recipients(values ...string) *GenericNotifyDetailsResponseBuilder {
 	b.recipients = make([]string, len(values))
 	copy(b.recipients, values)
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -90,7 +99,10 @@ func (b *GenericNotifyDetailsResponseBuilder) Copy(object *GenericNotifyDetailsR
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.associates != nil {
@@ -121,7 +133,10 @@ func (b *GenericNotifyDetailsResponseBuilder) Build() (object *GenericNotifyDeta
 	object = new(GenericNotifyDetailsResponse)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.associates != nil {
 		object.associates = make([]string, len(b.associates))
 		copy(object.associates, b.associates)

@@ -19,37 +19,45 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AddOnRequirementStatusBuilder contains the data and logic needed to build 'add_on_requirement_status' objects.
-//
 // Representation of an add-on requirement status.
 type AddOnRequirementStatusBuilder struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	errorMsgs []string
 	fulfilled bool
 }
 
 // NewAddOnRequirementStatus creates a new builder of 'add_on_requirement_status' objects.
 func NewAddOnRequirementStatus() *AddOnRequirementStatusBuilder {
-	return &AddOnRequirementStatusBuilder{}
+	return &AddOnRequirementStatusBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddOnRequirementStatusBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ErrorMsgs sets the value of the 'error_msgs' attribute to the given values.
 func (b *AddOnRequirementStatusBuilder) ErrorMsgs(values ...string) *AddOnRequirementStatusBuilder {
 	b.errorMsgs = make([]string, len(values))
 	copy(b.errorMsgs, values)
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Fulfilled sets the value of the 'fulfilled' attribute to the given value.
 func (b *AddOnRequirementStatusBuilder) Fulfilled(value bool) *AddOnRequirementStatusBuilder {
 	b.fulfilled = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -58,7 +66,10 @@ func (b *AddOnRequirementStatusBuilder) Copy(object *AddOnRequirementStatus) *Ad
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.errorMsgs != nil {
 		b.errorMsgs = make([]string, len(object.errorMsgs))
 		copy(b.errorMsgs, object.errorMsgs)
@@ -72,7 +83,10 @@ func (b *AddOnRequirementStatusBuilder) Copy(object *AddOnRequirementStatus) *Ad
 // Build creates a 'add_on_requirement_status' object using the configuration stored in the builder.
 func (b *AddOnRequirementStatusBuilder) Build() (object *AddOnRequirementStatus, err error) {
 	object = new(AddOnRequirementStatus)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.errorMsgs != nil {
 		object.errorMsgs = make([]string, len(b.errorMsgs))
 		copy(object.errorMsgs, b.errorMsgs)

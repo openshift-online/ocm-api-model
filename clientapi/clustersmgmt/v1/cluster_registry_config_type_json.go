@@ -43,7 +43,7 @@ func WriteClusterRegistryConfig(object *ClusterRegistryConfig, stream *jsoniter.
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.additionalTrustedCa != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.additionalTrustedCa != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -72,7 +72,7 @@ func WriteClusterRegistryConfig(object *ClusterRegistryConfig, stream *jsoniter.
 		}
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.allowedRegistriesForImport != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.allowedRegistriesForImport != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -81,7 +81,7 @@ func WriteClusterRegistryConfig(object *ClusterRegistryConfig, stream *jsoniter.
 		WriteRegistryLocationList(object.allowedRegistriesForImport, stream)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0 && object.platformAllowlist != nil
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.platformAllowlist != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -90,7 +90,7 @@ func WriteClusterRegistryConfig(object *ClusterRegistryConfig, stream *jsoniter.
 		WriteRegistryAllowlist(object.platformAllowlist, stream)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0 && object.registrySources != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.registrySources != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -115,7 +115,9 @@ func UnmarshalClusterRegistryConfig(source interface{}) (object *ClusterRegistry
 
 // ReadClusterRegistryConfig reads a value of the 'cluster_registry_config' type from the given iterator.
 func ReadClusterRegistryConfig(iterator *jsoniter.Iterator) *ClusterRegistryConfig {
-	object := &ClusterRegistryConfig{}
+	object := &ClusterRegistryConfig{
+		fieldSet_: make([]bool, 4),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -133,19 +135,19 @@ func ReadClusterRegistryConfig(iterator *jsoniter.Iterator) *ClusterRegistryConf
 				value[key] = item
 			}
 			object.additionalTrustedCa = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "allowed_registries_for_import":
 			value := ReadRegistryLocationList(iterator)
 			object.allowedRegistriesForImport = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "platform_allowlist":
 			value := ReadRegistryAllowlist(iterator)
 			object.platformAllowlist = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "registry_sources":
 			value := ReadRegistrySources(iterator)
 			object.registrySources = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		default:
 			iterator.ReadAny()
 		}

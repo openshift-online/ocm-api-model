@@ -43,7 +43,7 @@ func WriteOidcConfig(object *OidcConfig, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -52,7 +52,7 @@ func WriteOidcConfig(object *OidcConfig, stream *jsoniter.Stream) {
 		stream.WriteString(object.href)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -61,7 +61,7 @@ func WriteOidcConfig(object *OidcConfig, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -70,7 +70,7 @@ func WriteOidcConfig(object *OidcConfig, stream *jsoniter.Stream) {
 		stream.WriteString((object.creationTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -79,7 +79,7 @@ func WriteOidcConfig(object *OidcConfig, stream *jsoniter.Stream) {
 		stream.WriteString(object.installerRoleArn)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -88,7 +88,7 @@ func WriteOidcConfig(object *OidcConfig, stream *jsoniter.Stream) {
 		stream.WriteString(object.issuerUrl)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -97,7 +97,7 @@ func WriteOidcConfig(object *OidcConfig, stream *jsoniter.Stream) {
 		stream.WriteString((object.lastUpdateTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -106,7 +106,7 @@ func WriteOidcConfig(object *OidcConfig, stream *jsoniter.Stream) {
 		stream.WriteString((object.lastUsedTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -115,7 +115,7 @@ func WriteOidcConfig(object *OidcConfig, stream *jsoniter.Stream) {
 		stream.WriteBool(object.managed)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -124,7 +124,7 @@ func WriteOidcConfig(object *OidcConfig, stream *jsoniter.Stream) {
 		stream.WriteString(object.organizationId)
 		count++
 	}
-	present_ = object.bitmap_&512 != 0
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -133,7 +133,7 @@ func WriteOidcConfig(object *OidcConfig, stream *jsoniter.Stream) {
 		stream.WriteBool(object.reusable)
 		count++
 	}
-	present_ = object.bitmap_&1024 != 0
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -158,7 +158,9 @@ func UnmarshalOidcConfig(source interface{}) (object *OidcConfig, err error) {
 
 // ReadOidcConfig reads a value of the 'oidc_config' type from the given iterator.
 func ReadOidcConfig(iterator *jsoniter.Iterator) *OidcConfig {
-	object := &OidcConfig{}
+	object := &OidcConfig{
+		fieldSet_: make([]bool, 11),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -168,11 +170,11 @@ func ReadOidcConfig(iterator *jsoniter.Iterator) *OidcConfig {
 		case "href":
 			value := iterator.ReadString()
 			object.href = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "creation_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -180,15 +182,15 @@ func ReadOidcConfig(iterator *jsoniter.Iterator) *OidcConfig {
 				iterator.ReportError("", err.Error())
 			}
 			object.creationTimestamp = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "installer_role_arn":
 			value := iterator.ReadString()
 			object.installerRoleArn = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "issuer_url":
 			value := iterator.ReadString()
 			object.issuerUrl = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "last_update_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -196,7 +198,7 @@ func ReadOidcConfig(iterator *jsoniter.Iterator) *OidcConfig {
 				iterator.ReportError("", err.Error())
 			}
 			object.lastUpdateTimestamp = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "last_used_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -204,23 +206,23 @@ func ReadOidcConfig(iterator *jsoniter.Iterator) *OidcConfig {
 				iterator.ReportError("", err.Error())
 			}
 			object.lastUsedTimestamp = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "managed":
 			value := iterator.ReadBool()
 			object.managed = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "organization_id":
 			value := iterator.ReadString()
 			object.organizationId = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		case "reusable":
 			value := iterator.ReadBool()
 			object.reusable = value
-			object.bitmap_ |= 512
+			object.fieldSet_[9] = true
 		case "secret_arn":
 			value := iterator.ReadString()
 			object.secretArn = value
-			object.bitmap_ |= 1024
+			object.fieldSet_[10] = true
 		default:
 			iterator.ReadAny()
 		}

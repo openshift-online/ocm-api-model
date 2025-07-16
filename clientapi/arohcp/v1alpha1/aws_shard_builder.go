@@ -19,30 +19,38 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// AWSShardBuilder contains the data and logic needed to build 'AWS_shard' objects.
-//
 // Config for AWS provision shards
 type AWSShardBuilder struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	ecrRepositoryURLs []string
 	backupConfigs     []*AWSBackupConfigBuilder
 }
 
 // NewAWSShard creates a new builder of 'AWS_shard' objects.
 func NewAWSShard() *AWSShardBuilder {
-	return &AWSShardBuilder{}
+	return &AWSShardBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AWSShardBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ECRRepositoryURLs sets the value of the 'ECR_repository_URLs' attribute to the given values.
 func (b *AWSShardBuilder) ECRRepositoryURLs(values ...string) *AWSShardBuilder {
 	b.ecrRepositoryURLs = make([]string, len(values))
 	copy(b.ecrRepositoryURLs, values)
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -50,7 +58,7 @@ func (b *AWSShardBuilder) ECRRepositoryURLs(values ...string) *AWSShardBuilder {
 func (b *AWSShardBuilder) BackupConfigs(values ...*AWSBackupConfigBuilder) *AWSShardBuilder {
 	b.backupConfigs = make([]*AWSBackupConfigBuilder, len(values))
 	copy(b.backupConfigs, values)
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -59,7 +67,10 @@ func (b *AWSShardBuilder) Copy(object *AWSShard) *AWSShardBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.ecrRepositoryURLs != nil {
 		b.ecrRepositoryURLs = make([]string, len(object.ecrRepositoryURLs))
 		copy(b.ecrRepositoryURLs, object.ecrRepositoryURLs)
@@ -80,7 +91,10 @@ func (b *AWSShardBuilder) Copy(object *AWSShard) *AWSShardBuilder {
 // Build creates a 'AWS_shard' object using the configuration stored in the builder.
 func (b *AWSShardBuilder) Build() (object *AWSShard, err error) {
 	object = new(AWSShard)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.ecrRepositoryURLs != nil {
 		object.ecrRepositoryURLs = make([]string, len(b.ecrRepositoryURLs))
 		copy(object.ecrRepositoryURLs, b.ecrRepositoryURLs)

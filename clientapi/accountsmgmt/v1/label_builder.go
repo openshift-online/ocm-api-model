@@ -23,9 +23,8 @@ import (
 	time "time"
 )
 
-// LabelBuilder contains the data and logic needed to build 'label' objects.
 type LabelBuilder struct {
-	bitmap_        uint32
+	fieldSet_      []bool
 	id             string
 	href           string
 	accountID      string
@@ -42,101 +41,112 @@ type LabelBuilder struct {
 
 // NewLabel creates a new builder of 'label' objects.
 func NewLabel() *LabelBuilder {
-	return &LabelBuilder{}
+	return &LabelBuilder{
+		fieldSet_: make([]bool, 13),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *LabelBuilder) Link(value bool) *LabelBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *LabelBuilder) ID(value string) *LabelBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *LabelBuilder) HREF(value string) *LabelBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *LabelBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // AccountID sets the value of the 'account_ID' attribute to the given value.
 func (b *LabelBuilder) AccountID(value string) *LabelBuilder {
 	b.accountID = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *LabelBuilder) CreatedAt(value time.Time) *LabelBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // Internal sets the value of the 'internal' attribute to the given value.
 func (b *LabelBuilder) Internal(value bool) *LabelBuilder {
 	b.internal = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // Key sets the value of the 'key' attribute to the given value.
 func (b *LabelBuilder) Key(value string) *LabelBuilder {
 	b.key = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // ManagedBy sets the value of the 'managed_by' attribute to the given value.
 func (b *LabelBuilder) ManagedBy(value string) *LabelBuilder {
 	b.managedBy = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *LabelBuilder) OrganizationID(value string) *LabelBuilder {
 	b.organizationID = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *LabelBuilder) SubscriptionID(value string) *LabelBuilder {
 	b.subscriptionID = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *LabelBuilder) Type(value string) *LabelBuilder {
 	b.type_ = value
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *LabelBuilder) UpdatedAt(value time.Time) *LabelBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 2048
+	b.fieldSet_[11] = true
 	return b
 }
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *LabelBuilder) Value(value string) *LabelBuilder {
 	b.value = value
-	b.bitmap_ |= 4096
+	b.fieldSet_[12] = true
 	return b
 }
 
@@ -145,7 +155,10 @@ func (b *LabelBuilder) Copy(object *Label) *LabelBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.accountID = object.accountID
@@ -166,7 +179,10 @@ func (b *LabelBuilder) Build() (object *Label, err error) {
 	object = new(Label)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.accountID = b.accountID
 	object.createdAt = b.createdAt
 	object.internal = b.internal

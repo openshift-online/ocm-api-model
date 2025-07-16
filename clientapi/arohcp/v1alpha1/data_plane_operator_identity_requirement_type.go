@@ -21,7 +21,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 
 // DataPlaneOperatorIdentityRequirement represents the values of the 'data_plane_operator_identity_requirement' type.
 type DataPlaneOperatorIdentityRequirement struct {
-	bitmap_             uint32
+	fieldSet_           []bool
 	maxOpenShiftVersion string
 	minOpenShiftVersion string
 	operatorName        string
@@ -32,7 +32,15 @@ type DataPlaneOperatorIdentityRequirement struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *DataPlaneOperatorIdentityRequirement) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // MaxOpenShiftVersion returns the value of the 'max_open_shift_version' attribute, or
@@ -43,7 +51,7 @@ func (o *DataPlaneOperatorIdentityRequirement) Empty() bool {
 // Not specifying it indicates support for this operator in all Openshift versions,
 // starting from min_openshift_version if min_openshift_version is defined.
 func (o *DataPlaneOperatorIdentityRequirement) MaxOpenShiftVersion() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.maxOpenShiftVersion
 	}
 	return ""
@@ -57,7 +65,7 @@ func (o *DataPlaneOperatorIdentityRequirement) MaxOpenShiftVersion() string {
 // Not specifying it indicates support for this operator in all Openshift versions,
 // starting from min_openshift_version if min_openshift_version is defined.
 func (o *DataPlaneOperatorIdentityRequirement) GetMaxOpenShiftVersion() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.maxOpenShiftVersion
 	}
@@ -72,7 +80,7 @@ func (o *DataPlaneOperatorIdentityRequirement) GetMaxOpenShiftVersion() (value s
 // Not specifying it indicates support for this operator in all Openshift versions,
 // or up to max_openshift_version, if defined.
 func (o *DataPlaneOperatorIdentityRequirement) MinOpenShiftVersion() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.minOpenShiftVersion
 	}
 	return ""
@@ -86,7 +94,7 @@ func (o *DataPlaneOperatorIdentityRequirement) MinOpenShiftVersion() string {
 // Not specifying it indicates support for this operator in all Openshift versions,
 // or up to max_openshift_version, if defined.
 func (o *DataPlaneOperatorIdentityRequirement) GetMinOpenShiftVersion() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.minOpenShiftVersion
 	}
@@ -98,7 +106,7 @@ func (o *DataPlaneOperatorIdentityRequirement) GetMinOpenShiftVersion() (value s
 //
 // The name of the data plane operator that needs the identity
 func (o *DataPlaneOperatorIdentityRequirement) OperatorName() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.operatorName
 	}
 	return ""
@@ -109,7 +117,7 @@ func (o *DataPlaneOperatorIdentityRequirement) OperatorName() string {
 //
 // The name of the data plane operator that needs the identity
 func (o *DataPlaneOperatorIdentityRequirement) GetOperatorName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.operatorName
 	}
@@ -125,7 +133,7 @@ func (o *DataPlaneOperatorIdentityRequirement) GetOperatorName() (value string, 
 // that leverages the operator is enabled.
 // Possible values are ("always", "on_enablement")
 func (o *DataPlaneOperatorIdentityRequirement) Required() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.required
 	}
 	return ""
@@ -140,7 +148,7 @@ func (o *DataPlaneOperatorIdentityRequirement) Required() string {
 // that leverages the operator is enabled.
 // Possible values are ("always", "on_enablement")
 func (o *DataPlaneOperatorIdentityRequirement) GetRequired() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.required
 	}
@@ -152,7 +160,7 @@ func (o *DataPlaneOperatorIdentityRequirement) GetRequired() (value string, ok b
 //
 // A list of roles that are required by the operator
 func (o *DataPlaneOperatorIdentityRequirement) RoleDefinitions() []*RoleDefinitionOperatorIdentityRequirement {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.roleDefinitions
 	}
 	return nil
@@ -163,7 +171,7 @@ func (o *DataPlaneOperatorIdentityRequirement) RoleDefinitions() []*RoleDefiniti
 //
 // A list of roles that are required by the operator
 func (o *DataPlaneOperatorIdentityRequirement) GetRoleDefinitions() (value []*RoleDefinitionOperatorIdentityRequirement, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.roleDefinitions
 	}
@@ -178,7 +186,7 @@ func (o *DataPlaneOperatorIdentityRequirement) GetRoleDefinitions() (value []*Ro
 // This information is needed to federate a managed identity to a k8s subject.
 // There should be no duplicated "name:namespace" entries within this field.
 func (o *DataPlaneOperatorIdentityRequirement) ServiceAccounts() []*K8sServiceAccountOperatorIdentityRequirement {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.serviceAccounts
 	}
 	return nil
@@ -192,7 +200,7 @@ func (o *DataPlaneOperatorIdentityRequirement) ServiceAccounts() []*K8sServiceAc
 // This information is needed to federate a managed identity to a k8s subject.
 // There should be no duplicated "name:namespace" entries within this field.
 func (o *DataPlaneOperatorIdentityRequirement) GetServiceAccounts() (value []*K8sServiceAccountOperatorIdentityRequirement, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.serviceAccounts
 	}

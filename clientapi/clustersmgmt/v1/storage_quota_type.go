@@ -23,14 +23,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Representation of a storage quota
 type StorageQuota struct {
-	bitmap_ uint32
-	unit    string
-	value   float64
+	fieldSet_ []bool
+	unit      string
+	value     float64
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *StorageQuota) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Unit returns the value of the 'unit' attribute, or
@@ -38,7 +46,7 @@ func (o *StorageQuota) Empty() bool {
 //
 // Unit of storage
 func (o *StorageQuota) Unit() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.unit
 	}
 	return ""
@@ -49,7 +57,7 @@ func (o *StorageQuota) Unit() string {
 //
 // Unit of storage
 func (o *StorageQuota) GetUnit() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.unit
 	}
@@ -61,7 +69,7 @@ func (o *StorageQuota) GetUnit() (value string, ok bool) {
 //
 // Numerical value
 func (o *StorageQuota) Value() float64 {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.value
 	}
 	return 0.0
@@ -72,7 +80,7 @@ func (o *StorageQuota) Value() float64 {
 //
 // Numerical value
 func (o *StorageQuota) GetValue() (value float64, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.value
 	}

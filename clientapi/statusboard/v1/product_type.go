@@ -39,7 +39,7 @@ const ProductNilKind = "ProductNil"
 //
 // Definition of a Status Board product.
 type Product struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	id        string
 	href      string
 	createdAt time.Time
@@ -55,7 +55,7 @@ func (o *Product) Kind() string {
 	if o == nil {
 		return ProductNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return ProductLinkKind
 	}
 	return ProductKind
@@ -63,12 +63,12 @@ func (o *Product) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Product) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *Product) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -77,7 +77,7 @@ func (o *Product) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Product) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -86,7 +86,7 @@ func (o *Product) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Product) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -95,7 +95,7 @@ func (o *Product) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Product) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -104,7 +104,17 @@ func (o *Product) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Product) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // CreatedAt returns the value of the 'created_at' attribute, or
@@ -112,7 +122,7 @@ func (o *Product) Empty() bool {
 //
 // Object creation timestamp.
 func (o *Product) CreatedAt() time.Time {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -123,7 +133,7 @@ func (o *Product) CreatedAt() time.Time {
 //
 // Object creation timestamp.
 func (o *Product) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.createdAt
 	}
@@ -135,7 +145,7 @@ func (o *Product) GetCreatedAt() (value time.Time, ok bool) {
 //
 // The fullname of the product.
 func (o *Product) Fullname() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.fullname
 	}
 	return ""
@@ -146,7 +156,7 @@ func (o *Product) Fullname() string {
 //
 // The fullname of the product.
 func (o *Product) GetFullname() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.fullname
 	}
@@ -158,7 +168,7 @@ func (o *Product) GetFullname() (value string, ok bool) {
 //
 // Miscellaneous data about the product.
 func (o *Product) Metadata() interface{} {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.metadata
 	}
 	return nil
@@ -169,7 +179,7 @@ func (o *Product) Metadata() interface{} {
 //
 // Miscellaneous data about the product.
 func (o *Product) GetMetadata() (value interface{}, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.metadata
 	}
@@ -181,7 +191,7 @@ func (o *Product) GetMetadata() (value interface{}, ok bool) {
 //
 // The name of the product.
 func (o *Product) Name() string {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.name
 	}
 	return ""
@@ -192,7 +202,7 @@ func (o *Product) Name() string {
 //
 // The name of the product.
 func (o *Product) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.name
 	}
@@ -204,7 +214,7 @@ func (o *Product) GetName() (value string, ok bool) {
 //
 // The product owners (name and email).
 func (o *Product) Owners() []*Owner {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.owners
 	}
 	return nil
@@ -215,7 +225,7 @@ func (o *Product) Owners() []*Owner {
 //
 // The product owners (name and email).
 func (o *Product) GetOwners() (value []*Owner, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.owners
 	}
@@ -227,7 +237,7 @@ func (o *Product) GetOwners() (value []*Owner, ok bool) {
 //
 // Object modification timestamp.
 func (o *Product) UpdatedAt() time.Time {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -238,7 +248,7 @@ func (o *Product) UpdatedAt() time.Time {
 //
 // Object modification timestamp.
 func (o *Product) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.updatedAt
 	}

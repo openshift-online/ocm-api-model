@@ -19,9 +19,8 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// NetworkVerificationBuilder contains the data and logic needed to build 'network_verification' objects.
 type NetworkVerificationBuilder struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	cloudProviderData *CloudProviderDataBuilder
 	clusterId         string
 	items             []*SubnetNetworkVerificationBuilder
@@ -31,12 +30,22 @@ type NetworkVerificationBuilder struct {
 
 // NewNetworkVerification creates a new builder of 'network_verification' objects.
 func NewNetworkVerification() *NetworkVerificationBuilder {
-	return &NetworkVerificationBuilder{}
+	return &NetworkVerificationBuilder{
+		fieldSet_: make([]bool, 5),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *NetworkVerificationBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // CloudProviderData sets the value of the 'cloud_provider_data' attribute to the given value.
@@ -45,9 +54,9 @@ func (b *NetworkVerificationBuilder) Empty() bool {
 func (b *NetworkVerificationBuilder) CloudProviderData(value *CloudProviderDataBuilder) *NetworkVerificationBuilder {
 	b.cloudProviderData = value
 	if value != nil {
-		b.bitmap_ |= 1
+		b.fieldSet_[0] = true
 	} else {
-		b.bitmap_ &^= 1
+		b.fieldSet_[0] = false
 	}
 	return b
 }
@@ -55,7 +64,7 @@ func (b *NetworkVerificationBuilder) CloudProviderData(value *CloudProviderDataB
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *NetworkVerificationBuilder) ClusterId(value string) *NetworkVerificationBuilder {
 	b.clusterId = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -63,7 +72,7 @@ func (b *NetworkVerificationBuilder) ClusterId(value string) *NetworkVerificatio
 func (b *NetworkVerificationBuilder) Items(values ...*SubnetNetworkVerificationBuilder) *NetworkVerificationBuilder {
 	b.items = make([]*SubnetNetworkVerificationBuilder, len(values))
 	copy(b.items, values)
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -72,14 +81,14 @@ func (b *NetworkVerificationBuilder) Items(values ...*SubnetNetworkVerificationB
 // Representation of an platform type field.
 func (b *NetworkVerificationBuilder) Platform(value Platform) *NetworkVerificationBuilder {
 	b.platform = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Total sets the value of the 'total' attribute to the given value.
 func (b *NetworkVerificationBuilder) Total(value int) *NetworkVerificationBuilder {
 	b.total = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -88,7 +97,10 @@ func (b *NetworkVerificationBuilder) Copy(object *NetworkVerification) *NetworkV
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.cloudProviderData != nil {
 		b.cloudProviderData = NewCloudProviderData().Copy(object.cloudProviderData)
 	} else {
@@ -111,7 +123,10 @@ func (b *NetworkVerificationBuilder) Copy(object *NetworkVerification) *NetworkV
 // Build creates a 'network_verification' object using the configuration stored in the builder.
 func (b *NetworkVerificationBuilder) Build() (object *NetworkVerification, err error) {
 	object = new(NetworkVerification)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.cloudProviderData != nil {
 		object.cloudProviderData, err = b.cloudProviderData.Build()
 		if err != nil {

@@ -23,11 +23,9 @@ import (
 	v1 "github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1"
 )
 
-// ExternalConfigurationBuilder contains the data and logic needed to build 'external_configuration' objects.
-//
 // Representation of cluster external configuration.
 type ExternalConfigurationBuilder struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	labels    *v1.LabelListBuilder
 	manifests *v1.ManifestListBuilder
 	syncsets  *v1.SyncsetListBuilder
@@ -35,32 +33,42 @@ type ExternalConfigurationBuilder struct {
 
 // NewExternalConfiguration creates a new builder of 'external_configuration' objects.
 func NewExternalConfiguration() *ExternalConfigurationBuilder {
-	return &ExternalConfigurationBuilder{}
+	return &ExternalConfigurationBuilder{
+		fieldSet_: make([]bool, 3),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ExternalConfigurationBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Labels sets the value of the 'labels' attribute to the given values.
 func (b *ExternalConfigurationBuilder) Labels(value *v1.LabelListBuilder) *ExternalConfigurationBuilder {
 	b.labels = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Manifests sets the value of the 'manifests' attribute to the given values.
 func (b *ExternalConfigurationBuilder) Manifests(value *v1.ManifestListBuilder) *ExternalConfigurationBuilder {
 	b.manifests = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // Syncsets sets the value of the 'syncsets' attribute to the given values.
 func (b *ExternalConfigurationBuilder) Syncsets(value *v1.SyncsetListBuilder) *ExternalConfigurationBuilder {
 	b.syncsets = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -69,7 +77,10 @@ func (b *ExternalConfigurationBuilder) Copy(object *ExternalConfiguration) *Exte
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.labels != nil {
 		b.labels = v1.NewLabelList().Copy(object.labels)
 	} else {
@@ -91,7 +102,10 @@ func (b *ExternalConfigurationBuilder) Copy(object *ExternalConfiguration) *Exte
 // Build creates a 'external_configuration' object using the configuration stored in the builder.
 func (b *ExternalConfigurationBuilder) Build() (object *ExternalConfiguration, err error) {
 	object = new(ExternalConfiguration)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.labels != nil {
 		object.labels, err = b.labels.Build()
 		if err != nil {

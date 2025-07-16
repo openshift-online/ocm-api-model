@@ -19,50 +19,59 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AddOnInstallationParameterBuilder contains the data and logic needed to build 'add_on_installation_parameter' objects.
-//
 // Representation of an add-on installation parameter.
 type AddOnInstallationParameterBuilder struct {
-	bitmap_ uint32
-	id      string
-	href    string
-	value   string
+	fieldSet_ []bool
+	id        string
+	href      string
+	value     string
 }
 
 // NewAddOnInstallationParameter creates a new builder of 'add_on_installation_parameter' objects.
 func NewAddOnInstallationParameter() *AddOnInstallationParameterBuilder {
-	return &AddOnInstallationParameterBuilder{}
+	return &AddOnInstallationParameterBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddOnInstallationParameterBuilder) Link(value bool) *AddOnInstallationParameterBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddOnInstallationParameterBuilder) ID(value string) *AddOnInstallationParameterBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AddOnInstallationParameterBuilder) HREF(value string) *AddOnInstallationParameterBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddOnInstallationParameterBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *AddOnInstallationParameterBuilder) Value(value string) *AddOnInstallationParameterBuilder {
 	b.value = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -71,7 +80,10 @@ func (b *AddOnInstallationParameterBuilder) Copy(object *AddOnInstallationParame
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.value = object.value
@@ -83,7 +95,10 @@ func (b *AddOnInstallationParameterBuilder) Build() (object *AddOnInstallationPa
 	object = new(AddOnInstallationParameter)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.value = b.value
 	return
 }

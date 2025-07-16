@@ -42,7 +42,7 @@ func WriteFeatureReviewRequest(object *FeatureReviewRequest, stream *jsoniter.St
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteFeatureReviewRequest(object *FeatureReviewRequest, stream *jsoniter.St
 		stream.WriteString(object.accountUsername)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteFeatureReviewRequest(object *FeatureReviewRequest, stream *jsoniter.St
 		stream.WriteString(object.clusterId)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteFeatureReviewRequest(object *FeatureReviewRequest, stream *jsoniter.St
 		stream.WriteString(object.feature)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,7 +94,9 @@ func UnmarshalFeatureReviewRequest(source interface{}) (object *FeatureReviewReq
 
 // ReadFeatureReviewRequest reads a value of the 'feature_review_request' type from the given iterator.
 func ReadFeatureReviewRequest(iterator *jsoniter.Iterator) *FeatureReviewRequest {
-	object := &FeatureReviewRequest{}
+	object := &FeatureReviewRequest{
+		fieldSet_: make([]bool, 4),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -104,19 +106,19 @@ func ReadFeatureReviewRequest(iterator *jsoniter.Iterator) *FeatureReviewRequest
 		case "account_username":
 			value := iterator.ReadString()
 			object.accountUsername = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterId = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "feature":
 			value := iterator.ReadString()
 			object.feature = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "organization_id":
 			value := iterator.ReadString()
 			object.organizationId = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		default:
 			iterator.ReadAny()
 		}

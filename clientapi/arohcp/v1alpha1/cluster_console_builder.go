@@ -19,28 +19,36 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// ClusterConsoleBuilder contains the data and logic needed to build 'cluster_console' objects.
-//
 // Information about the console of a cluster.
 type ClusterConsoleBuilder struct {
-	bitmap_ uint32
-	url     string
+	fieldSet_ []bool
+	url       string
 }
 
 // NewClusterConsole creates a new builder of 'cluster_console' objects.
 func NewClusterConsole() *ClusterConsoleBuilder {
-	return &ClusterConsoleBuilder{}
+	return &ClusterConsoleBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterConsoleBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // URL sets the value of the 'URL' attribute to the given value.
 func (b *ClusterConsoleBuilder) URL(value string) *ClusterConsoleBuilder {
 	b.url = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -49,7 +57,10 @@ func (b *ClusterConsoleBuilder) Copy(object *ClusterConsole) *ClusterConsoleBuil
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.url = object.url
 	return b
 }
@@ -57,7 +68,10 @@ func (b *ClusterConsoleBuilder) Copy(object *ClusterConsole) *ClusterConsoleBuil
 // Build creates a 'cluster_console' object using the configuration stored in the builder.
 func (b *ClusterConsoleBuilder) Build() (object *ClusterConsole, err error) {
 	object = new(ClusterConsole)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.url = b.url
 	return
 }

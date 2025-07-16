@@ -19,8 +19,6 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// ValueBuilder contains the data and logic needed to build 'value' objects.
-//
 // Numeric value and the unit used to measure it.
 //
 // Units are not mandatory, and they're not specified for some resources. For
@@ -40,32 +38,42 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 // - 1 TiB = 2^40 bytes
 // - 1 PiB = 2^50 bytes
 type ValueBuilder struct {
-	bitmap_ uint32
-	unit    string
-	value   float64
+	fieldSet_ []bool
+	unit      string
+	value     float64
 }
 
 // NewValue creates a new builder of 'value' objects.
 func NewValue() *ValueBuilder {
-	return &ValueBuilder{}
+	return &ValueBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ValueBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Unit sets the value of the 'unit' attribute to the given value.
 func (b *ValueBuilder) Unit(value string) *ValueBuilder {
 	b.unit = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *ValueBuilder) Value(value float64) *ValueBuilder {
 	b.value = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -74,7 +82,10 @@ func (b *ValueBuilder) Copy(object *Value) *ValueBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.unit = object.unit
 	b.value = object.value
 	return b
@@ -83,7 +94,10 @@ func (b *ValueBuilder) Copy(object *Value) *ValueBuilder {
 // Build creates a 'value' object using the configuration stored in the builder.
 func (b *ValueBuilder) Build() (object *Value, err error) {
 	object = new(Value)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.unit = b.unit
 	object.value = b.value
 	return

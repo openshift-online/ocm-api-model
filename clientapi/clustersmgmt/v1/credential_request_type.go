@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Contains the necessary attributes to allow each operator to access the necessary AWS resources
 type CredentialRequest struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	name              string
 	namespace         string
 	policyPermissions []string
@@ -32,7 +32,15 @@ type CredentialRequest struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *CredentialRequest) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Name returns the value of the 'name' attribute, or
@@ -40,7 +48,7 @@ func (o *CredentialRequest) Empty() bool {
 //
 // Name of the credentials secret used to access cloud resources
 func (o *CredentialRequest) Name() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.name
 	}
 	return ""
@@ -51,7 +59,7 @@ func (o *CredentialRequest) Name() string {
 //
 // Name of the credentials secret used to access cloud resources
 func (o *CredentialRequest) GetName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.name
 	}
@@ -63,7 +71,7 @@ func (o *CredentialRequest) GetName() (value string, ok bool) {
 //
 // Namespace where the credentials secret lives in the cluster
 func (o *CredentialRequest) Namespace() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.namespace
 	}
 	return ""
@@ -74,7 +82,7 @@ func (o *CredentialRequest) Namespace() string {
 //
 // Namespace where the credentials secret lives in the cluster
 func (o *CredentialRequest) GetNamespace() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.namespace
 	}
@@ -86,7 +94,7 @@ func (o *CredentialRequest) GetNamespace() (value string, ok bool) {
 //
 // List of policy permissions needed to access cloud resources
 func (o *CredentialRequest) PolicyPermissions() []string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.policyPermissions
 	}
 	return nil
@@ -97,7 +105,7 @@ func (o *CredentialRequest) PolicyPermissions() []string {
 //
 // List of policy permissions needed to access cloud resources
 func (o *CredentialRequest) GetPolicyPermissions() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.policyPermissions
 	}
@@ -109,7 +117,7 @@ func (o *CredentialRequest) GetPolicyPermissions() (value []string, ok bool) {
 //
 // Service account name to use when authenticating
 func (o *CredentialRequest) ServiceAccount() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.serviceAccount
 	}
 	return ""
@@ -120,7 +128,7 @@ func (o *CredentialRequest) ServiceAccount() string {
 //
 // Service account name to use when authenticating
 func (o *CredentialRequest) GetServiceAccount() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.serviceAccount
 	}

@@ -23,11 +23,9 @@ import (
 	v1 "github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1"
 )
 
-// GCPImageOverrideBuilder contains the data and logic needed to build 'GCP_image_override' objects.
-//
 // GcpImageOverride specifies what a GCP VM Image should be used for a particular product and billing model
 type GCPImageOverrideBuilder struct {
-	bitmap_      uint32
+	fieldSet_    []bool
 	id           string
 	href         string
 	billingModel *v1.BillingModelItemBuilder
@@ -38,32 +36,43 @@ type GCPImageOverrideBuilder struct {
 
 // NewGCPImageOverride creates a new builder of 'GCP_image_override' objects.
 func NewGCPImageOverride() *GCPImageOverrideBuilder {
-	return &GCPImageOverrideBuilder{}
+	return &GCPImageOverrideBuilder{
+		fieldSet_: make([]bool, 7),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *GCPImageOverrideBuilder) Link(value bool) *GCPImageOverrideBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *GCPImageOverrideBuilder) ID(value string) *GCPImageOverrideBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *GCPImageOverrideBuilder) HREF(value string) *GCPImageOverrideBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GCPImageOverrideBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // BillingModel sets the value of the 'billing_model' attribute to the given value.
@@ -72,9 +81,9 @@ func (b *GCPImageOverrideBuilder) Empty() bool {
 func (b *GCPImageOverrideBuilder) BillingModel(value *v1.BillingModelItemBuilder) *GCPImageOverrideBuilder {
 	b.billingModel = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.fieldSet_[3] = true
 	} else {
-		b.bitmap_ &^= 8
+		b.fieldSet_[3] = false
 	}
 	return b
 }
@@ -82,7 +91,7 @@ func (b *GCPImageOverrideBuilder) BillingModel(value *v1.BillingModelItemBuilder
 // ImageID sets the value of the 'image_ID' attribute to the given value.
 func (b *GCPImageOverrideBuilder) ImageID(value string) *GCPImageOverrideBuilder {
 	b.imageID = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -92,9 +101,9 @@ func (b *GCPImageOverrideBuilder) ImageID(value string) *GCPImageOverrideBuilder
 func (b *GCPImageOverrideBuilder) Product(value *v1.ProductBuilder) *GCPImageOverrideBuilder {
 	b.product = value
 	if value != nil {
-		b.bitmap_ |= 32
+		b.fieldSet_[5] = true
 	} else {
-		b.bitmap_ &^= 32
+		b.fieldSet_[5] = false
 	}
 	return b
 }
@@ -102,7 +111,7 @@ func (b *GCPImageOverrideBuilder) Product(value *v1.ProductBuilder) *GCPImageOve
 // ProjectID sets the value of the 'project_ID' attribute to the given value.
 func (b *GCPImageOverrideBuilder) ProjectID(value string) *GCPImageOverrideBuilder {
 	b.projectID = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -111,7 +120,10 @@ func (b *GCPImageOverrideBuilder) Copy(object *GCPImageOverride) *GCPImageOverri
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	if object.billingModel != nil {
@@ -134,7 +146,10 @@ func (b *GCPImageOverrideBuilder) Build() (object *GCPImageOverride, err error) 
 	object = new(GCPImageOverride)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.billingModel != nil {
 		object.billingModel, err = b.billingModel.Build()
 		if err != nil {

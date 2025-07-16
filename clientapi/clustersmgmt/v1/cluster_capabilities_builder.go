@@ -19,27 +19,36 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// ClusterCapabilitiesBuilder contains the data and logic needed to build 'cluster_capabilities' objects.
 type ClusterCapabilitiesBuilder struct {
-	bitmap_  uint32
-	disabled []string
+	fieldSet_ []bool
+	disabled  []string
 }
 
 // NewClusterCapabilities creates a new builder of 'cluster_capabilities' objects.
 func NewClusterCapabilities() *ClusterCapabilitiesBuilder {
-	return &ClusterCapabilitiesBuilder{}
+	return &ClusterCapabilitiesBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterCapabilitiesBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Disabled sets the value of the 'disabled' attribute to the given values.
 func (b *ClusterCapabilitiesBuilder) Disabled(values ...string) *ClusterCapabilitiesBuilder {
 	b.disabled = make([]string, len(values))
 	copy(b.disabled, values)
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -48,7 +57,10 @@ func (b *ClusterCapabilitiesBuilder) Copy(object *ClusterCapabilities) *ClusterC
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.disabled != nil {
 		b.disabled = make([]string, len(object.disabled))
 		copy(b.disabled, object.disabled)
@@ -61,7 +73,10 @@ func (b *ClusterCapabilitiesBuilder) Copy(object *ClusterCapabilities) *ClusterC
 // Build creates a 'cluster_capabilities' object using the configuration stored in the builder.
 func (b *ClusterCapabilitiesBuilder) Build() (object *ClusterCapabilities, err error) {
 	object = new(ClusterCapabilities)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.disabled != nil {
 		object.disabled = make([]string, len(b.disabled))
 		copy(object.disabled, b.disabled)

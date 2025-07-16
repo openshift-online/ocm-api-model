@@ -43,7 +43,7 @@ func WriteClusterNodes(object *ClusterNodes, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.autoscaleCompute != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.autoscaleCompute != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -52,7 +52,7 @@ func WriteClusterNodes(object *ClusterNodes, stream *jsoniter.Stream) {
 		WriteMachinePoolAutoscaling(object.autoscaleCompute, stream)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.availabilityZones != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.availabilityZones != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -61,7 +61,7 @@ func WriteClusterNodes(object *ClusterNodes, stream *jsoniter.Stream) {
 		WriteStringList(object.availabilityZones, stream)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -70,7 +70,7 @@ func WriteClusterNodes(object *ClusterNodes, stream *jsoniter.Stream) {
 		stream.WriteInt(object.compute)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0 && object.computeLabels != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.computeLabels != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -99,7 +99,7 @@ func WriteClusterNodes(object *ClusterNodes, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = object.bitmap_&16 != 0 && object.computeMachineType != nil
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.computeMachineType != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -108,7 +108,7 @@ func WriteClusterNodes(object *ClusterNodes, stream *jsoniter.Stream) {
 		WriteMachineType(object.computeMachineType, stream)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0 && object.computeRootVolume != nil
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.computeRootVolume != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -117,7 +117,7 @@ func WriteClusterNodes(object *ClusterNodes, stream *jsoniter.Stream) {
 		WriteRootVolume(object.computeRootVolume, stream)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -126,7 +126,7 @@ func WriteClusterNodes(object *ClusterNodes, stream *jsoniter.Stream) {
 		stream.WriteInt(object.infra)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0 && object.infraMachineType != nil
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7] && object.infraMachineType != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -135,7 +135,7 @@ func WriteClusterNodes(object *ClusterNodes, stream *jsoniter.Stream) {
 		WriteMachineType(object.infraMachineType, stream)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -144,7 +144,7 @@ func WriteClusterNodes(object *ClusterNodes, stream *jsoniter.Stream) {
 		stream.WriteInt(object.master)
 		count++
 	}
-	present_ = object.bitmap_&512 != 0 && object.masterMachineType != nil
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9] && object.masterMachineType != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -153,7 +153,7 @@ func WriteClusterNodes(object *ClusterNodes, stream *jsoniter.Stream) {
 		WriteMachineType(object.masterMachineType, stream)
 		count++
 	}
-	present_ = object.bitmap_&1024 != 0 && object.securityGroupFilters != nil
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10] && object.securityGroupFilters != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -162,7 +162,7 @@ func WriteClusterNodes(object *ClusterNodes, stream *jsoniter.Stream) {
 		WriteMachinePoolSecurityGroupFilterList(object.securityGroupFilters, stream)
 		count++
 	}
-	present_ = object.bitmap_&2048 != 0
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -187,7 +187,9 @@ func UnmarshalClusterNodes(source interface{}) (object *ClusterNodes, err error)
 
 // ReadClusterNodes reads a value of the 'cluster_nodes' type from the given iterator.
 func ReadClusterNodes(iterator *jsoniter.Iterator) *ClusterNodes {
-	object := &ClusterNodes{}
+	object := &ClusterNodes{
+		fieldSet_: make([]bool, 12),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -197,15 +199,15 @@ func ReadClusterNodes(iterator *jsoniter.Iterator) *ClusterNodes {
 		case "autoscale_compute":
 			value := ReadMachinePoolAutoscaling(iterator)
 			object.autoscaleCompute = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "availability_zones":
 			value := ReadStringList(iterator)
 			object.availabilityZones = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "compute":
 			value := iterator.ReadInt()
 			object.compute = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "compute_labels":
 			value := map[string]string{}
 			for {
@@ -217,39 +219,39 @@ func ReadClusterNodes(iterator *jsoniter.Iterator) *ClusterNodes {
 				value[key] = item
 			}
 			object.computeLabels = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "compute_machine_type":
 			value := ReadMachineType(iterator)
 			object.computeMachineType = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "compute_root_volume":
 			value := ReadRootVolume(iterator)
 			object.computeRootVolume = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "infra":
 			value := iterator.ReadInt()
 			object.infra = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "infra_machine_type":
 			value := ReadMachineType(iterator)
 			object.infraMachineType = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "master":
 			value := iterator.ReadInt()
 			object.master = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		case "master_machine_type":
 			value := ReadMachineType(iterator)
 			object.masterMachineType = value
-			object.bitmap_ |= 512
+			object.fieldSet_[9] = true
 		case "security_group_filters":
 			value := ReadMachinePoolSecurityGroupFilterList(iterator)
 			object.securityGroupFilters = value
-			object.bitmap_ |= 1024
+			object.fieldSet_[10] = true
 		case "total":
 			value := iterator.ReadInt()
 			object.total = value
-			object.bitmap_ |= 2048
+			object.fieldSet_[11] = true
 		default:
 			iterator.ReadAny()
 		}

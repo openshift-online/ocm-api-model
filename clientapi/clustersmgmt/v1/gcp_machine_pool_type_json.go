@@ -42,7 +42,7 @@ func WriteGCPMachinePool(object *GCPMachinePool, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,9 @@ func UnmarshalGCPMachinePool(source interface{}) (object *GCPMachinePool, err er
 
 // ReadGCPMachinePool reads a value of the 'GCP_machine_pool' type from the given iterator.
 func ReadGCPMachinePool(iterator *jsoniter.Iterator) *GCPMachinePool {
-	object := &GCPMachinePool{}
+	object := &GCPMachinePool{
+		fieldSet_: make([]bool, 1),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -77,7 +79,7 @@ func ReadGCPMachinePool(iterator *jsoniter.Iterator) *GCPMachinePool {
 		case "secure_boot":
 			value := iterator.ReadBool()
 			object.secureBoot = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

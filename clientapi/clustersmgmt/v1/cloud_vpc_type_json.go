@@ -42,7 +42,7 @@ func WriteCloudVPC(object *CloudVPC, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.awsSecurityGroups != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.awsSecurityGroups != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteCloudVPC(object *CloudVPC, stream *jsoniter.Stream) {
 		WriteSecurityGroupList(object.awsSecurityGroups, stream)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.awsSubnets != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.awsSubnets != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteCloudVPC(object *CloudVPC, stream *jsoniter.Stream) {
 		WriteSubnetworkList(object.awsSubnets, stream)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteCloudVPC(object *CloudVPC, stream *jsoniter.Stream) {
 		stream.WriteString(object.cidrBlock)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteCloudVPC(object *CloudVPC, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteCloudVPC(object *CloudVPC, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -96,7 +96,7 @@ func WriteCloudVPC(object *CloudVPC, stream *jsoniter.Stream) {
 		stream.WriteBool(object.redHatManaged)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0 && object.subnets != nil
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.subnets != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -121,7 +121,9 @@ func UnmarshalCloudVPC(source interface{}) (object *CloudVPC, err error) {
 
 // ReadCloudVPC reads a value of the 'cloud_VPC' type from the given iterator.
 func ReadCloudVPC(iterator *jsoniter.Iterator) *CloudVPC {
-	object := &CloudVPC{}
+	object := &CloudVPC{
+		fieldSet_: make([]bool, 7),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -131,31 +133,31 @@ func ReadCloudVPC(iterator *jsoniter.Iterator) *CloudVPC {
 		case "aws_security_groups":
 			value := ReadSecurityGroupList(iterator)
 			object.awsSecurityGroups = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "aws_subnets":
 			value := ReadSubnetworkList(iterator)
 			object.awsSubnets = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "cidr_block":
 			value := iterator.ReadString()
 			object.cidrBlock = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "red_hat_managed":
 			value := iterator.ReadBool()
 			object.redHatManaged = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "subnets":
 			value := ReadStringList(iterator)
 			object.subnets = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		default:
 			iterator.ReadAny()
 		}

@@ -35,7 +35,7 @@ const ServerConfigNilKind = "ServerConfigNil"
 //
 // Representation of a server config
 type ServerConfig struct {
-	bitmap_    uint32
+	fieldSet_  []bool
 	id         string
 	href       string
 	awsShard   *AWSShard
@@ -49,7 +49,7 @@ func (o *ServerConfig) Kind() string {
 	if o == nil {
 		return ServerConfigNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return ServerConfigLinkKind
 	}
 	return ServerConfigKind
@@ -57,12 +57,12 @@ func (o *ServerConfig) Kind() string {
 
 // Link returns true if this is a link.
 func (o *ServerConfig) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *ServerConfig) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -71,7 +71,7 @@ func (o *ServerConfig) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *ServerConfig) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -80,7 +80,7 @@ func (o *ServerConfig) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *ServerConfig) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -89,7 +89,7 @@ func (o *ServerConfig) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *ServerConfig) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -98,7 +98,17 @@ func (o *ServerConfig) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ServerConfig) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // AWSShard returns the value of the 'AWS_shard' attribute, or
@@ -106,7 +116,7 @@ func (o *ServerConfig) Empty() bool {
 //
 // Config for AWS provision shards
 func (o *ServerConfig) AWSShard() *AWSShard {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.awsShard
 	}
 	return nil
@@ -117,7 +127,7 @@ func (o *ServerConfig) AWSShard() *AWSShard {
 //
 // Config for AWS provision shards
 func (o *ServerConfig) GetAWSShard() (value *AWSShard, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.awsShard
 	}
@@ -129,7 +139,7 @@ func (o *ServerConfig) GetAWSShard() (value *AWSShard, ok bool) {
 //
 // The kubeconfig of the server.
 func (o *ServerConfig) Kubeconfig() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.kubeconfig
 	}
 	return ""
@@ -140,7 +150,7 @@ func (o *ServerConfig) Kubeconfig() string {
 //
 // The kubeconfig of the server.
 func (o *ServerConfig) GetKubeconfig() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.kubeconfig
 	}
@@ -152,7 +162,7 @@ func (o *ServerConfig) GetKubeconfig() (value string, ok bool) {
 //
 // The URL of the server.
 func (o *ServerConfig) Server() string {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.server
 	}
 	return ""
@@ -163,7 +173,7 @@ func (o *ServerConfig) Server() string {
 //
 // The URL of the server.
 func (o *ServerConfig) GetServer() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.server
 	}
@@ -175,7 +185,7 @@ func (o *ServerConfig) GetServer() (value string, ok bool) {
 //
 // The topology of a provision shard (Optional).
 func (o *ServerConfig) Topology() ProvisionShardTopology {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.topology
 	}
 	return ProvisionShardTopology("")
@@ -186,7 +196,7 @@ func (o *ServerConfig) Topology() ProvisionShardTopology {
 //
 // The topology of a provision shard (Optional).
 func (o *ServerConfig) GetTopology() (value ProvisionShardTopology, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.topology
 	}

@@ -35,12 +35,12 @@ const SkuRuleNilKind = "SkuRuleNil"
 //
 // Identifies sku rule
 type SkuRule struct {
-	bitmap_ uint32
-	id      string
-	href    string
-	allowed int
-	quotaId string
-	sku     string
+	fieldSet_ []bool
+	id        string
+	href      string
+	allowed   int
+	quotaId   string
+	sku       string
 }
 
 // Kind returns the name of the type of the object.
@@ -48,7 +48,7 @@ func (o *SkuRule) Kind() string {
 	if o == nil {
 		return SkuRuleNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return SkuRuleLinkKind
 	}
 	return SkuRuleKind
@@ -56,12 +56,12 @@ func (o *SkuRule) Kind() string {
 
 // Link returns true if this is a link.
 func (o *SkuRule) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *SkuRule) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -70,7 +70,7 @@ func (o *SkuRule) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *SkuRule) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -79,7 +79,7 @@ func (o *SkuRule) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *SkuRule) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -88,7 +88,7 @@ func (o *SkuRule) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *SkuRule) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -97,7 +97,17 @@ func (o *SkuRule) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *SkuRule) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Allowed returns the value of the 'allowed' attribute, or
@@ -105,7 +115,7 @@ func (o *SkuRule) Empty() bool {
 //
 // Specifies the allowed parameter for calculation
 func (o *SkuRule) Allowed() int {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.allowed
 	}
 	return 0
@@ -116,7 +126,7 @@ func (o *SkuRule) Allowed() int {
 //
 // Specifies the allowed parameter for calculation
 func (o *SkuRule) GetAllowed() (value int, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.allowed
 	}
@@ -128,7 +138,7 @@ func (o *SkuRule) GetAllowed() (value int, ok bool) {
 //
 // Specifies the quota id
 func (o *SkuRule) QuotaId() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.quotaId
 	}
 	return ""
@@ -139,7 +149,7 @@ func (o *SkuRule) QuotaId() string {
 //
 // Specifies the quota id
 func (o *SkuRule) GetQuotaId() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.quotaId
 	}
@@ -151,7 +161,7 @@ func (o *SkuRule) GetQuotaId() (value string, ok bool) {
 //
 // Specifies the sku, such as ""MW00504""
 func (o *SkuRule) Sku() string {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.sku
 	}
 	return ""
@@ -162,7 +172,7 @@ func (o *SkuRule) Sku() string {
 //
 // Specifies the sku, such as ""MW00504""
 func (o *SkuRule) GetSku() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.sku
 	}

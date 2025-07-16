@@ -24,13 +24,21 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 // Represents the information associated to an Azure User-Assigned
 // Managed Identity belonging to the Data Plane of the cluster.
 type AzureDataPlaneManagedIdentity struct {
-	bitmap_    uint32
+	fieldSet_  []bool
 	resourceID string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AzureDataPlaneManagedIdentity) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ResourceID returns the value of the 'resource_ID' attribute, or
@@ -51,7 +59,7 @@ func (o *AzureDataPlaneManagedIdentity) Empty() bool {
 // Required during creation.
 // Immutable.
 func (o *AzureDataPlaneManagedIdentity) ResourceID() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.resourceID
 	}
 	return ""
@@ -75,7 +83,7 @@ func (o *AzureDataPlaneManagedIdentity) ResourceID() string {
 // Required during creation.
 // Immutable.
 func (o *AzureDataPlaneManagedIdentity) GetResourceID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.resourceID
 	}

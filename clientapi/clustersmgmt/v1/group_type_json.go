@@ -42,13 +42,13 @@ func WriteGroup(object *Group, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(GroupLinkKind)
 	} else {
 		stream.WriteString(GroupKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteGroup(object *Group, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteGroup(object *Group, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0 && object.users != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.users != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,9 @@ func UnmarshalGroup(source interface{}) (object *Group, err error) {
 
 // ReadGroup reads a value of the 'group' type from the given iterator.
 func ReadGroup(iterator *jsoniter.Iterator) *Group {
-	object := &Group{}
+	object := &Group{
+		fieldSet_: make([]bool, 4),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -103,14 +105,14 @@ func ReadGroup(iterator *jsoniter.Iterator) *Group {
 		case "kind":
 			value := iterator.ReadString()
 			if value == GroupLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "users":
 			value := &UserList{}
 			for {
@@ -131,7 +133,7 @@ func ReadGroup(iterator *jsoniter.Iterator) *Group {
 				}
 			}
 			object.users = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		default:
 			iterator.ReadAny()
 		}

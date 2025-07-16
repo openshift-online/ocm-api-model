@@ -23,9 +23,8 @@ import (
 	time "time"
 )
 
-// StatusUpdateBuilder contains the data and logic needed to build 'status_update' objects.
 type StatusUpdateBuilder struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	id          string
 	href        string
 	createdAt   time.Time
@@ -38,45 +37,56 @@ type StatusUpdateBuilder struct {
 
 // NewStatusUpdate creates a new builder of 'status_update' objects.
 func NewStatusUpdate() *StatusUpdateBuilder {
-	return &StatusUpdateBuilder{}
+	return &StatusUpdateBuilder{
+		fieldSet_: make([]bool, 9),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *StatusUpdateBuilder) Link(value bool) *StatusUpdateBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *StatusUpdateBuilder) ID(value string) *StatusUpdateBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *StatusUpdateBuilder) HREF(value string) *StatusUpdateBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *StatusUpdateBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *StatusUpdateBuilder) CreatedAt(value time.Time) *StatusUpdateBuilder {
 	b.createdAt = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Metadata sets the value of the 'metadata' attribute to the given value.
 func (b *StatusUpdateBuilder) Metadata(value interface{}) *StatusUpdateBuilder {
 	b.metadata = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -86,9 +96,9 @@ func (b *StatusUpdateBuilder) Metadata(value interface{}) *StatusUpdateBuilder {
 func (b *StatusUpdateBuilder) Service(value *ServiceBuilder) *StatusUpdateBuilder {
 	b.service = value
 	if value != nil {
-		b.bitmap_ |= 32
+		b.fieldSet_[5] = true
 	} else {
-		b.bitmap_ &^= 32
+		b.fieldSet_[5] = false
 	}
 	return b
 }
@@ -99,9 +109,9 @@ func (b *StatusUpdateBuilder) Service(value *ServiceBuilder) *StatusUpdateBuilde
 func (b *StatusUpdateBuilder) ServiceInfo(value *ServiceInfoBuilder) *StatusUpdateBuilder {
 	b.serviceInfo = value
 	if value != nil {
-		b.bitmap_ |= 64
+		b.fieldSet_[6] = true
 	} else {
-		b.bitmap_ &^= 64
+		b.fieldSet_[6] = false
 	}
 	return b
 }
@@ -109,14 +119,14 @@ func (b *StatusUpdateBuilder) ServiceInfo(value *ServiceInfoBuilder) *StatusUpda
 // Status sets the value of the 'status' attribute to the given value.
 func (b *StatusUpdateBuilder) Status(value string) *StatusUpdateBuilder {
 	b.status = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *StatusUpdateBuilder) UpdatedAt(value time.Time) *StatusUpdateBuilder {
 	b.updatedAt = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
@@ -125,7 +135,10 @@ func (b *StatusUpdateBuilder) Copy(object *StatusUpdate) *StatusUpdateBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.createdAt = object.createdAt
@@ -150,7 +163,10 @@ func (b *StatusUpdateBuilder) Build() (object *StatusUpdate, err error) {
 	object = new(StatusUpdate)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.createdAt = b.createdAt
 	object.metadata = b.metadata
 	if b.service != nil {

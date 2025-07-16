@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// NetworkBuilder contains the data and logic needed to build 'network' objects.
-//
 // Network configuration of a cluster.
 type NetworkBuilder struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	hostPrefix  int
 	machineCIDR string
 	podCIDR     string
@@ -33,46 +31,56 @@ type NetworkBuilder struct {
 
 // NewNetwork creates a new builder of 'network' objects.
 func NewNetwork() *NetworkBuilder {
-	return &NetworkBuilder{}
+	return &NetworkBuilder{
+		fieldSet_: make([]bool, 5),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *NetworkBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // HostPrefix sets the value of the 'host_prefix' attribute to the given value.
 func (b *NetworkBuilder) HostPrefix(value int) *NetworkBuilder {
 	b.hostPrefix = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // MachineCIDR sets the value of the 'machine_CIDR' attribute to the given value.
 func (b *NetworkBuilder) MachineCIDR(value string) *NetworkBuilder {
 	b.machineCIDR = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // PodCIDR sets the value of the 'pod_CIDR' attribute to the given value.
 func (b *NetworkBuilder) PodCIDR(value string) *NetworkBuilder {
 	b.podCIDR = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // ServiceCIDR sets the value of the 'service_CIDR' attribute to the given value.
 func (b *NetworkBuilder) ServiceCIDR(value string) *NetworkBuilder {
 	b.serviceCIDR = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *NetworkBuilder) Type(value string) *NetworkBuilder {
 	b.type_ = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -81,7 +89,10 @@ func (b *NetworkBuilder) Copy(object *Network) *NetworkBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.hostPrefix = object.hostPrefix
 	b.machineCIDR = object.machineCIDR
 	b.podCIDR = object.podCIDR
@@ -93,7 +104,10 @@ func (b *NetworkBuilder) Copy(object *Network) *NetworkBuilder {
 // Build creates a 'network' object using the configuration stored in the builder.
 func (b *NetworkBuilder) Build() (object *Network, err error) {
 	object = new(Network)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.hostPrefix = b.hostPrefix
 	object.machineCIDR = b.machineCIDR
 	object.podCIDR = b.podCIDR

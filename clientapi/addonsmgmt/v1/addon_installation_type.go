@@ -39,7 +39,7 @@ const AddonInstallationNilKind = "AddonInstallationNil"
 //
 // Representation of addon installation
 type AddonInstallation struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	id                string
 	href              string
 	addon             *Addon
@@ -62,7 +62,7 @@ func (o *AddonInstallation) Kind() string {
 	if o == nil {
 		return AddonInstallationNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return AddonInstallationLinkKind
 	}
 	return AddonInstallationKind
@@ -70,12 +70,12 @@ func (o *AddonInstallation) Kind() string {
 
 // Link returns true if this is a link.
 func (o *AddonInstallation) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *AddonInstallation) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -84,7 +84,7 @@ func (o *AddonInstallation) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *AddonInstallation) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -93,7 +93,7 @@ func (o *AddonInstallation) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *AddonInstallation) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -102,7 +102,7 @@ func (o *AddonInstallation) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *AddonInstallation) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -111,7 +111,17 @@ func (o *AddonInstallation) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddonInstallation) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Addon returns the value of the 'addon' attribute, or
@@ -119,7 +129,7 @@ func (o *AddonInstallation) Empty() bool {
 //
 // Addon installed
 func (o *AddonInstallation) Addon() *Addon {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.addon
 	}
 	return nil
@@ -130,7 +140,7 @@ func (o *AddonInstallation) Addon() *Addon {
 //
 // Addon installed
 func (o *AddonInstallation) GetAddon() (value *Addon, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.addon
 	}
@@ -142,7 +152,7 @@ func (o *AddonInstallation) GetAddon() (value *Addon, ok bool) {
 //
 // Addon version of the addon
 func (o *AddonInstallation) AddonVersion() *AddonVersion {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.addonVersion
 	}
 	return nil
@@ -153,7 +163,7 @@ func (o *AddonInstallation) AddonVersion() *AddonVersion {
 //
 // Addon version of the addon
 func (o *AddonInstallation) GetAddonVersion() (value *AddonVersion, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.addonVersion
 	}
@@ -165,7 +175,7 @@ func (o *AddonInstallation) GetAddonVersion() (value *AddonVersion, ok bool) {
 //
 // Billing of addon installation.
 func (o *AddonInstallation) Billing() *AddonInstallationBilling {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.billing
 	}
 	return nil
@@ -176,7 +186,7 @@ func (o *AddonInstallation) Billing() *AddonInstallationBilling {
 //
 // Billing of addon installation.
 func (o *AddonInstallation) GetBilling() (value *AddonInstallationBilling, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.billing
 	}
@@ -188,7 +198,7 @@ func (o *AddonInstallation) GetBilling() (value *AddonInstallationBilling, ok bo
 //
 // Date and time when the add-on was initially installed in the cluster.
 func (o *AddonInstallation) CreationTimestamp() time.Time {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.creationTimestamp
 	}
 	return time.Time{}
@@ -199,7 +209,7 @@ func (o *AddonInstallation) CreationTimestamp() time.Time {
 //
 // Date and time when the add-on was initially installed in the cluster.
 func (o *AddonInstallation) GetCreationTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.creationTimestamp
 	}
@@ -211,7 +221,7 @@ func (o *AddonInstallation) GetCreationTimestamp() (value time.Time, ok bool) {
 //
 // Current CSV installed on cluster
 func (o *AddonInstallation) CsvName() string {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.csvName
 	}
 	return ""
@@ -222,7 +232,7 @@ func (o *AddonInstallation) CsvName() string {
 //
 // Current CSV installed on cluster
 func (o *AddonInstallation) GetCsvName() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.csvName
 	}
@@ -234,7 +244,7 @@ func (o *AddonInstallation) GetCsvName() (value string, ok bool) {
 //
 // Date and time when the add-on installation deleted at.
 func (o *AddonInstallation) DeletedTimestamp() time.Time {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.deletedTimestamp
 	}
 	return time.Time{}
@@ -245,7 +255,7 @@ func (o *AddonInstallation) DeletedTimestamp() time.Time {
 //
 // Date and time when the add-on installation deleted at.
 func (o *AddonInstallation) GetDeletedTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.deletedTimestamp
 	}
@@ -257,7 +267,7 @@ func (o *AddonInstallation) GetDeletedTimestamp() (value time.Time, ok bool) {
 //
 // Version of the next scheduled upgrade
 func (o *AddonInstallation) DesiredVersion() string {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.desiredVersion
 	}
 	return ""
@@ -268,7 +278,7 @@ func (o *AddonInstallation) DesiredVersion() string {
 //
 // Version of the next scheduled upgrade
 func (o *AddonInstallation) GetDesiredVersion() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.desiredVersion
 	}
@@ -280,7 +290,7 @@ func (o *AddonInstallation) GetDesiredVersion() (value string, ok bool) {
 //
 // Version of the operator installed by the add-on.
 func (o *AddonInstallation) OperatorVersion() string {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.operatorVersion
 	}
 	return ""
@@ -291,7 +301,7 @@ func (o *AddonInstallation) OperatorVersion() string {
 //
 // Version of the operator installed by the add-on.
 func (o *AddonInstallation) GetOperatorVersion() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.operatorVersion
 	}
@@ -303,7 +313,7 @@ func (o *AddonInstallation) GetOperatorVersion() (value string, ok bool) {
 //
 // Parameters in the installation
 func (o *AddonInstallation) Parameters() *AddonInstallationParameterList {
-	if o != nil && o.bitmap_&2048 != 0 {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.parameters
 	}
 	return nil
@@ -314,7 +324,7 @@ func (o *AddonInstallation) Parameters() *AddonInstallationParameterList {
 //
 // Parameters in the installation
 func (o *AddonInstallation) GetParameters() (value *AddonInstallationParameterList, ok bool) {
-	ok = o != nil && o.bitmap_&2048 != 0
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.parameters
 	}
@@ -326,7 +336,7 @@ func (o *AddonInstallation) GetParameters() (value *AddonInstallationParameterLi
 //
 // Addon Installation State
 func (o *AddonInstallation) State() AddonInstallationState {
-	if o != nil && o.bitmap_&4096 != 0 {
+	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
 		return o.state
 	}
 	return AddonInstallationState("")
@@ -337,7 +347,7 @@ func (o *AddonInstallation) State() AddonInstallationState {
 //
 // Addon Installation State
 func (o *AddonInstallation) GetState() (value AddonInstallationState, ok bool) {
-	ok = o != nil && o.bitmap_&4096 != 0
+	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
 	if ok {
 		value = o.state
 	}
@@ -349,7 +359,7 @@ func (o *AddonInstallation) GetState() (value AddonInstallationState, ok bool) {
 //
 // Reason for the current State.
 func (o *AddonInstallation) StateDescription() string {
-	if o != nil && o.bitmap_&8192 != 0 {
+	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
 		return o.stateDescription
 	}
 	return ""
@@ -360,7 +370,7 @@ func (o *AddonInstallation) StateDescription() string {
 //
 // Reason for the current State.
 func (o *AddonInstallation) GetStateDescription() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8192 != 0
+	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
 	if ok {
 		value = o.stateDescription
 	}
@@ -372,7 +382,7 @@ func (o *AddonInstallation) GetStateDescription() (value string, ok bool) {
 //
 // Subscription for the addon installation
 func (o *AddonInstallation) Subscription() *ObjectReference {
-	if o != nil && o.bitmap_&16384 != 0 {
+	if o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14] {
 		return o.subscription
 	}
 	return nil
@@ -383,7 +393,7 @@ func (o *AddonInstallation) Subscription() *ObjectReference {
 //
 // Subscription for the addon installation
 func (o *AddonInstallation) GetSubscription() (value *ObjectReference, ok bool) {
-	ok = o != nil && o.bitmap_&16384 != 0
+	ok = o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14]
 	if ok {
 		value = o.subscription
 	}
@@ -395,7 +405,7 @@ func (o *AddonInstallation) GetSubscription() (value *ObjectReference, ok bool) 
 //
 // Date and time when the add-on installation information was last updated.
 func (o *AddonInstallation) UpdatedTimestamp() time.Time {
-	if o != nil && o.bitmap_&32768 != 0 {
+	if o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15] {
 		return o.updatedTimestamp
 	}
 	return time.Time{}
@@ -406,7 +416,7 @@ func (o *AddonInstallation) UpdatedTimestamp() time.Time {
 //
 // Date and time when the add-on installation information was last updated.
 func (o *AddonInstallation) GetUpdatedTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&32768 != 0
+	ok = o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15]
 	if ok {
 		value = o.updatedTimestamp
 	}

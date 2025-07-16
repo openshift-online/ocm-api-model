@@ -19,9 +19,8 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// PrivateLinkPrincipalBuilder contains the data and logic needed to build 'private_link_principal' objects.
 type PrivateLinkPrincipalBuilder struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	id        string
 	href      string
 	principal string
@@ -29,38 +28,49 @@ type PrivateLinkPrincipalBuilder struct {
 
 // NewPrivateLinkPrincipal creates a new builder of 'private_link_principal' objects.
 func NewPrivateLinkPrincipal() *PrivateLinkPrincipalBuilder {
-	return &PrivateLinkPrincipalBuilder{}
+	return &PrivateLinkPrincipalBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *PrivateLinkPrincipalBuilder) Link(value bool) *PrivateLinkPrincipalBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *PrivateLinkPrincipalBuilder) ID(value string) *PrivateLinkPrincipalBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *PrivateLinkPrincipalBuilder) HREF(value string) *PrivateLinkPrincipalBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *PrivateLinkPrincipalBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Principal sets the value of the 'principal' attribute to the given value.
 func (b *PrivateLinkPrincipalBuilder) Principal(value string) *PrivateLinkPrincipalBuilder {
 	b.principal = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -69,7 +79,10 @@ func (b *PrivateLinkPrincipalBuilder) Copy(object *PrivateLinkPrincipal) *Privat
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.principal = object.principal
@@ -81,7 +94,10 @@ func (b *PrivateLinkPrincipalBuilder) Build() (object *PrivateLinkPrincipal, err
 	object = new(PrivateLinkPrincipal)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.principal = b.principal
 	return
 }

@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// VersionGateBuilder contains the data and logic needed to build 'version_gate' objects.
-//
 // Representation of an _OpenShift_ version gate.
 type VersionGateBuilder struct {
-	bitmap_            uint32
+	fieldSet_          []bool
 	id                 string
 	href               string
 	clusterCondition   string
@@ -43,94 +41,105 @@ type VersionGateBuilder struct {
 
 // NewVersionGate creates a new builder of 'version_gate' objects.
 func NewVersionGate() *VersionGateBuilder {
-	return &VersionGateBuilder{}
+	return &VersionGateBuilder{
+		fieldSet_: make([]bool, 12),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *VersionGateBuilder) Link(value bool) *VersionGateBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *VersionGateBuilder) ID(value string) *VersionGateBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *VersionGateBuilder) HREF(value string) *VersionGateBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *VersionGateBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // STSOnly sets the value of the 'STS_only' attribute to the given value.
 func (b *VersionGateBuilder) STSOnly(value bool) *VersionGateBuilder {
 	b.stsOnly = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // ClusterCondition sets the value of the 'cluster_condition' attribute to the given value.
 func (b *VersionGateBuilder) ClusterCondition(value string) *VersionGateBuilder {
 	b.clusterCondition = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *VersionGateBuilder) CreationTimestamp(value time.Time) *VersionGateBuilder {
 	b.creationTimestamp = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *VersionGateBuilder) Description(value string) *VersionGateBuilder {
 	b.description = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // DocumentationURL sets the value of the 'documentation_URL' attribute to the given value.
 func (b *VersionGateBuilder) DocumentationURL(value string) *VersionGateBuilder {
 	b.documentationURL = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
 // Label sets the value of the 'label' attribute to the given value.
 func (b *VersionGateBuilder) Label(value string) *VersionGateBuilder {
 	b.label = value
-	b.bitmap_ |= 256
+	b.fieldSet_[8] = true
 	return b
 }
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *VersionGateBuilder) Value(value string) *VersionGateBuilder {
 	b.value = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
 // VersionRawIDPrefix sets the value of the 'version_raw_ID_prefix' attribute to the given value.
 func (b *VersionGateBuilder) VersionRawIDPrefix(value string) *VersionGateBuilder {
 	b.versionRawIDPrefix = value
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
 // WarningMessage sets the value of the 'warning_message' attribute to the given value.
 func (b *VersionGateBuilder) WarningMessage(value string) *VersionGateBuilder {
 	b.warningMessage = value
-	b.bitmap_ |= 2048
+	b.fieldSet_[11] = true
 	return b
 }
 
@@ -139,7 +148,10 @@ func (b *VersionGateBuilder) Copy(object *VersionGate) *VersionGateBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.stsOnly = object.stsOnly
@@ -159,7 +171,10 @@ func (b *VersionGateBuilder) Build() (object *VersionGate, err error) {
 	object = new(VersionGate)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.stsOnly = b.stsOnly
 	object.clusterCondition = b.clusterCondition
 	object.creationTimestamp = b.creationTimestamp

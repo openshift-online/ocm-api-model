@@ -35,7 +35,7 @@ const AWSMachinePoolNilKind = "AWSMachinePoolNil"
 //
 // Representation of aws machine pool specific parameters.
 type AWSMachinePool struct {
-	bitmap_                    uint32
+	fieldSet_                  []bool
 	id                         string
 	href                       string
 	additionalSecurityGroupIds []string
@@ -50,7 +50,7 @@ func (o *AWSMachinePool) Kind() string {
 	if o == nil {
 		return AWSMachinePoolNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return AWSMachinePoolLinkKind
 	}
 	return AWSMachinePoolKind
@@ -58,12 +58,12 @@ func (o *AWSMachinePool) Kind() string {
 
 // Link returns true if this is a link.
 func (o *AWSMachinePool) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *AWSMachinePool) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -72,7 +72,7 @@ func (o *AWSMachinePool) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *AWSMachinePool) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -81,7 +81,7 @@ func (o *AWSMachinePool) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *AWSMachinePool) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -90,7 +90,7 @@ func (o *AWSMachinePool) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *AWSMachinePool) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -99,7 +99,17 @@ func (o *AWSMachinePool) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AWSMachinePool) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // AdditionalSecurityGroupIds returns the value of the 'additional_security_group_ids' attribute, or
@@ -107,7 +117,7 @@ func (o *AWSMachinePool) Empty() bool {
 //
 // Additional AWS Security Groups to be added machine pool. Note that machine pools can only be worker node at the time.
 func (o *AWSMachinePool) AdditionalSecurityGroupIds() []string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.additionalSecurityGroupIds
 	}
 	return nil
@@ -118,7 +128,7 @@ func (o *AWSMachinePool) AdditionalSecurityGroupIds() []string {
 //
 // Additional AWS Security Groups to be added machine pool. Note that machine pools can only be worker node at the time.
 func (o *AWSMachinePool) GetAdditionalSecurityGroupIds() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.additionalSecurityGroupIds
 	}
@@ -130,7 +140,7 @@ func (o *AWSMachinePool) GetAdditionalSecurityGroupIds() (value []string, ok boo
 //
 // Associates nodepool availability zones with zone types (e.g. wavelength, local).
 func (o *AWSMachinePool) AvailabilityZoneTypes() map[string]string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.availabilityZoneTypes
 	}
 	return nil
@@ -141,7 +151,7 @@ func (o *AWSMachinePool) AvailabilityZoneTypes() map[string]string {
 //
 // Associates nodepool availability zones with zone types (e.g. wavelength, local).
 func (o *AWSMachinePool) GetAvailabilityZoneTypes() (value map[string]string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.availabilityZoneTypes
 	}
@@ -153,7 +163,7 @@ func (o *AWSMachinePool) GetAvailabilityZoneTypes() (value map[string]string, ok
 //
 // Use spot instances on this machine pool to reduce cost.
 func (o *AWSMachinePool) SpotMarketOptions() *AWSSpotMarketOptions {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.spotMarketOptions
 	}
 	return nil
@@ -164,7 +174,7 @@ func (o *AWSMachinePool) SpotMarketOptions() *AWSSpotMarketOptions {
 //
 // Use spot instances on this machine pool to reduce cost.
 func (o *AWSMachinePool) GetSpotMarketOptions() (value *AWSSpotMarketOptions, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.spotMarketOptions
 	}
@@ -176,7 +186,7 @@ func (o *AWSMachinePool) GetSpotMarketOptions() (value *AWSSpotMarketOptions, ok
 //
 // Associates nodepool subnets with AWS Outposts.
 func (o *AWSMachinePool) SubnetOutposts() map[string]string {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.subnetOutposts
 	}
 	return nil
@@ -187,7 +197,7 @@ func (o *AWSMachinePool) SubnetOutposts() map[string]string {
 //
 // Associates nodepool subnets with AWS Outposts.
 func (o *AWSMachinePool) GetSubnetOutposts() (value map[string]string, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.subnetOutposts
 	}
@@ -206,7 +216,7 @@ func (o *AWSMachinePool) GetSubnetOutposts() (value map[string]string, ok bool) 
 // - Tag values may be between 0 and 256 characters in length
 // - Tags may only contain letters, numbers, spaces, and the following characters: [_ . : / = + - @]
 func (o *AWSMachinePool) Tags() map[string]string {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.tags
 	}
 	return nil
@@ -224,7 +234,7 @@ func (o *AWSMachinePool) Tags() map[string]string {
 // - Tag values may be between 0 and 256 characters in length
 // - Tags may only contain letters, numbers, spaces, and the following characters: [_ . : / = + - @]
 func (o *AWSMachinePool) GetTags() (value map[string]string, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.tags
 	}

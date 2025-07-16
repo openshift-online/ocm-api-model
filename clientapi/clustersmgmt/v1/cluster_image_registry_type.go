@@ -23,13 +23,21 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // ClusterImageRegistry represents the configuration for the cluster's internal image registry.
 type ClusterImageRegistry struct {
-	bitmap_ uint32
-	state   string
+	fieldSet_ []bool
+	state     string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterImageRegistry) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // State returns the value of the 'state' attribute, or
@@ -40,7 +48,7 @@ func (o *ClusterImageRegistry) Empty() bool {
 // This setting is immutable and cannot be changed after the cluster is created.
 // Valid values: "enabled", "disabled".
 func (o *ClusterImageRegistry) State() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.state
 	}
 	return ""
@@ -54,7 +62,7 @@ func (o *ClusterImageRegistry) State() string {
 // This setting is immutable and cannot be changed after the cluster is created.
 // Valid values: "enabled", "disabled".
 func (o *ClusterImageRegistry) GetState() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.state
 	}

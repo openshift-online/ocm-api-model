@@ -24,7 +24,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 // ExternalAuthClientConfig contains configuration for the platform's clients that
 // need to request tokens from the issuer.
 type ExternalAuthClientConfig struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	id          string
 	component   *ClientComponent
 	extraScopes []string
@@ -34,7 +34,15 @@ type ExternalAuthClientConfig struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ExternalAuthClientConfig) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ID returns the value of the 'ID' attribute, or
@@ -44,7 +52,7 @@ func (o *ExternalAuthClientConfig) Empty() bool {
 // This is required.
 // Must be at least one character length.
 func (o *ExternalAuthClientConfig) ID() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.id
 	}
 	return ""
@@ -57,7 +65,7 @@ func (o *ExternalAuthClientConfig) ID() string {
 // This is required.
 // Must be at least one character length.
 func (o *ExternalAuthClientConfig) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.id
 	}
@@ -69,7 +77,7 @@ func (o *ExternalAuthClientConfig) GetID() (value string, ok bool) {
 //
 // The component that is supposed to consume this client configuration.
 func (o *ExternalAuthClientConfig) Component() *ClientComponent {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.component
 	}
 	return nil
@@ -80,7 +88,7 @@ func (o *ExternalAuthClientConfig) Component() *ClientComponent {
 //
 // The component that is supposed to consume this client configuration.
 func (o *ExternalAuthClientConfig) GetComponent() (value *ClientComponent, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.component
 	}
@@ -92,7 +100,7 @@ func (o *ExternalAuthClientConfig) GetComponent() (value *ClientComponent, ok bo
 //
 // ExtraScopes is an optional set of scopes to request tokens with.
 func (o *ExternalAuthClientConfig) ExtraScopes() []string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.extraScopes
 	}
 	return nil
@@ -103,7 +111,7 @@ func (o *ExternalAuthClientConfig) ExtraScopes() []string {
 //
 // ExtraScopes is an optional set of scopes to request tokens with.
 func (o *ExternalAuthClientConfig) GetExtraScopes() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.extraScopes
 	}
@@ -118,7 +126,7 @@ func (o *ExternalAuthClientConfig) GetExtraScopes() (value []string, ok bool) {
 // as a 'confidential' client.
 // This can only be used for an external authentication provider belonging to a ROSA HCP cluster.
 func (o *ExternalAuthClientConfig) Secret() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.secret
 	}
 	return ""
@@ -132,7 +140,7 @@ func (o *ExternalAuthClientConfig) Secret() string {
 // as a 'confidential' client.
 // This can only be used for an external authentication provider belonging to a ROSA HCP cluster.
 func (o *ExternalAuthClientConfig) GetSecret() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.secret
 	}
@@ -151,7 +159,7 @@ func (o *ExternalAuthClientConfig) GetSecret() (value string, ok bool) {
 //   - If the 'secret' property is set, the type of the client is 'confidential.
 //   - If the 'secret' property is not set, the type of the client is 'public.
 func (o *ExternalAuthClientConfig) Type() ExternalAuthClientType {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.type_
 	}
 	return ExternalAuthClientType("")
@@ -169,7 +177,7 @@ func (o *ExternalAuthClientConfig) Type() ExternalAuthClientType {
 //   - If the 'secret' property is set, the type of the client is 'confidential.
 //   - If the 'secret' property is not set, the type of the client is 'public.
 func (o *ExternalAuthClientConfig) GetType() (value ExternalAuthClientType, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.type_
 	}

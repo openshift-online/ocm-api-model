@@ -19,37 +19,45 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
-// SelfTermsReviewRequestBuilder contains the data and logic needed to build 'self_terms_review_request' objects.
-//
 // Representation of Red Hat's Terms and Conditions for using OpenShift Dedicated and Amazon Red Hat OpenShift [Terms]
 // review requests.
 type SelfTermsReviewRequestBuilder struct {
-	bitmap_   uint32
+	fieldSet_ []bool
 	eventCode string
 	siteCode  string
 }
 
 // NewSelfTermsReviewRequest creates a new builder of 'self_terms_review_request' objects.
 func NewSelfTermsReviewRequest() *SelfTermsReviewRequestBuilder {
-	return &SelfTermsReviewRequestBuilder{}
+	return &SelfTermsReviewRequestBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SelfTermsReviewRequestBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // EventCode sets the value of the 'event_code' attribute to the given value.
 func (b *SelfTermsReviewRequestBuilder) EventCode(value string) *SelfTermsReviewRequestBuilder {
 	b.eventCode = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // SiteCode sets the value of the 'site_code' attribute to the given value.
 func (b *SelfTermsReviewRequestBuilder) SiteCode(value string) *SelfTermsReviewRequestBuilder {
 	b.siteCode = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -58,7 +66,10 @@ func (b *SelfTermsReviewRequestBuilder) Copy(object *SelfTermsReviewRequest) *Se
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.eventCode = object.eventCode
 	b.siteCode = object.siteCode
 	return b
@@ -67,7 +78,10 @@ func (b *SelfTermsReviewRequestBuilder) Copy(object *SelfTermsReviewRequest) *Se
 // Build creates a 'self_terms_review_request' object using the configuration stored in the builder.
 func (b *SelfTermsReviewRequestBuilder) Build() (object *SelfTermsReviewRequest, err error) {
 	object = new(SelfTermsReviewRequest)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.eventCode = b.eventCode
 	object.siteCode = b.siteCode
 	return

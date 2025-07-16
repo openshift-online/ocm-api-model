@@ -43,13 +43,13 @@ func WriteNodePoolUpgradePolicy(object *NodePoolUpgradePolicy, stream *jsoniter.
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(NodePoolUpgradePolicyLinkKind)
 	} else {
 		stream.WriteString(NodePoolUpgradePolicyKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteNodePoolUpgradePolicy(object *NodePoolUpgradePolicy, stream *jsoniter.
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteNodePoolUpgradePolicy(object *NodePoolUpgradePolicy, stream *jsoniter.
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteNodePoolUpgradePolicy(object *NodePoolUpgradePolicy, stream *jsoniter.
 		stream.WriteString(object.clusterID)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteNodePoolUpgradePolicy(object *NodePoolUpgradePolicy, stream *jsoniter.
 		stream.WriteString((object.creationTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteNodePoolUpgradePolicy(object *NodePoolUpgradePolicy, stream *jsoniter.
 		stream.WriteBool(object.enableMinorVersionUpgrades)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteNodePoolUpgradePolicy(object *NodePoolUpgradePolicy, stream *jsoniter.
 		stream.WriteString((object.lastUpdateTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteNodePoolUpgradePolicy(object *NodePoolUpgradePolicy, stream *jsoniter.
 		stream.WriteString((object.nextRun).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&256 != 0
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -120,7 +120,7 @@ func WriteNodePoolUpgradePolicy(object *NodePoolUpgradePolicy, stream *jsoniter.
 		stream.WriteString(object.nodePoolID)
 		count++
 	}
-	present_ = object.bitmap_&512 != 0
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -129,7 +129,7 @@ func WriteNodePoolUpgradePolicy(object *NodePoolUpgradePolicy, stream *jsoniter.
 		stream.WriteString(object.schedule)
 		count++
 	}
-	present_ = object.bitmap_&1024 != 0
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -138,7 +138,7 @@ func WriteNodePoolUpgradePolicy(object *NodePoolUpgradePolicy, stream *jsoniter.
 		stream.WriteString(string(object.scheduleType))
 		count++
 	}
-	present_ = object.bitmap_&2048 != 0 && object.state != nil
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11] && object.state != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -147,7 +147,7 @@ func WriteNodePoolUpgradePolicy(object *NodePoolUpgradePolicy, stream *jsoniter.
 		WriteUpgradePolicyState(object.state, stream)
 		count++
 	}
-	present_ = object.bitmap_&4096 != 0
+	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -156,7 +156,7 @@ func WriteNodePoolUpgradePolicy(object *NodePoolUpgradePolicy, stream *jsoniter.
 		stream.WriteString(string(object.upgradeType))
 		count++
 	}
-	present_ = object.bitmap_&8192 != 0
+	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -181,7 +181,9 @@ func UnmarshalNodePoolUpgradePolicy(source interface{}) (object *NodePoolUpgrade
 
 // ReadNodePoolUpgradePolicy reads a value of the 'node_pool_upgrade_policy' type from the given iterator.
 func ReadNodePoolUpgradePolicy(iterator *jsoniter.Iterator) *NodePoolUpgradePolicy {
-	object := &NodePoolUpgradePolicy{}
+	object := &NodePoolUpgradePolicy{
+		fieldSet_: make([]bool, 14),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -191,18 +193,18 @@ func ReadNodePoolUpgradePolicy(iterator *jsoniter.Iterator) *NodePoolUpgradePoli
 		case "kind":
 			value := iterator.ReadString()
 			if value == NodePoolUpgradePolicyLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterID = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "creation_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -210,11 +212,11 @@ func ReadNodePoolUpgradePolicy(iterator *jsoniter.Iterator) *NodePoolUpgradePoli
 				iterator.ReportError("", err.Error())
 			}
 			object.creationTimestamp = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "enable_minor_version_upgrades":
 			value := iterator.ReadBool()
 			object.enableMinorVersionUpgrades = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "last_update_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -222,7 +224,7 @@ func ReadNodePoolUpgradePolicy(iterator *jsoniter.Iterator) *NodePoolUpgradePoli
 				iterator.ReportError("", err.Error())
 			}
 			object.lastUpdateTimestamp = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "next_run":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -230,33 +232,33 @@ func ReadNodePoolUpgradePolicy(iterator *jsoniter.Iterator) *NodePoolUpgradePoli
 				iterator.ReportError("", err.Error())
 			}
 			object.nextRun = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "node_pool_id":
 			value := iterator.ReadString()
 			object.nodePoolID = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		case "schedule":
 			value := iterator.ReadString()
 			object.schedule = value
-			object.bitmap_ |= 512
+			object.fieldSet_[9] = true
 		case "schedule_type":
 			text := iterator.ReadString()
 			value := ScheduleType(text)
 			object.scheduleType = value
-			object.bitmap_ |= 1024
+			object.fieldSet_[10] = true
 		case "state":
 			value := ReadUpgradePolicyState(iterator)
 			object.state = value
-			object.bitmap_ |= 2048
+			object.fieldSet_[11] = true
 		case "upgrade_type":
 			text := iterator.ReadString()
 			value := UpgradeType(text)
 			object.upgradeType = value
-			object.bitmap_ |= 4096
+			object.fieldSet_[12] = true
 		case "version":
 			value := iterator.ReadString()
 			object.version = value
-			object.bitmap_ |= 8192
+			object.fieldSet_[13] = true
 		default:
 			iterator.ReadAny()
 		}

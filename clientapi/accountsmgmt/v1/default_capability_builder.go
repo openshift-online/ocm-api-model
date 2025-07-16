@@ -19,34 +19,43 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// DefaultCapabilityBuilder contains the data and logic needed to build 'default_capability' objects.
 type DefaultCapabilityBuilder struct {
-	bitmap_ uint32
-	name    string
-	value   string
+	fieldSet_ []bool
+	name      string
+	value     string
 }
 
 // NewDefaultCapability creates a new builder of 'default_capability' objects.
 func NewDefaultCapability() *DefaultCapabilityBuilder {
-	return &DefaultCapabilityBuilder{}
+	return &DefaultCapabilityBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *DefaultCapabilityBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *DefaultCapabilityBuilder) Name(value string) *DefaultCapabilityBuilder {
 	b.name = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *DefaultCapabilityBuilder) Value(value string) *DefaultCapabilityBuilder {
 	b.value = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -55,7 +64,10 @@ func (b *DefaultCapabilityBuilder) Copy(object *DefaultCapability) *DefaultCapab
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.name = object.name
 	b.value = object.value
 	return b
@@ -64,7 +76,10 @@ func (b *DefaultCapabilityBuilder) Copy(object *DefaultCapability) *DefaultCapab
 // Build creates a 'default_capability' object using the configuration stored in the builder.
 func (b *DefaultCapabilityBuilder) Build() (object *DefaultCapability, err error) {
 	object = new(DefaultCapability)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.name = b.name
 	object.value = b.value
 	return

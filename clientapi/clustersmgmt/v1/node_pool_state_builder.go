@@ -23,11 +23,9 @@ import (
 	time "time"
 )
 
-// NodePoolStateBuilder contains the data and logic needed to build 'node_pool_state' objects.
-//
 // Representation of the status of a node pool.
 type NodePoolStateBuilder struct {
-	bitmap_              uint32
+	fieldSet_            []bool
 	id                   string
 	href                 string
 	lastUpdatedTimestamp time.Time
@@ -36,45 +34,56 @@ type NodePoolStateBuilder struct {
 
 // NewNodePoolState creates a new builder of 'node_pool_state' objects.
 func NewNodePoolState() *NodePoolStateBuilder {
-	return &NodePoolStateBuilder{}
+	return &NodePoolStateBuilder{
+		fieldSet_: make([]bool, 5),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *NodePoolStateBuilder) Link(value bool) *NodePoolStateBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *NodePoolStateBuilder) ID(value string) *NodePoolStateBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *NodePoolStateBuilder) HREF(value string) *NodePoolStateBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *NodePoolStateBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // LastUpdatedTimestamp sets the value of the 'last_updated_timestamp' attribute to the given value.
 func (b *NodePoolStateBuilder) LastUpdatedTimestamp(value time.Time) *NodePoolStateBuilder {
 	b.lastUpdatedTimestamp = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // NodePoolStateValue sets the value of the 'node_pool_state_value' attribute to the given value.
 func (b *NodePoolStateBuilder) NodePoolStateValue(value string) *NodePoolStateBuilder {
 	b.nodePoolStateValue = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -83,7 +92,10 @@ func (b *NodePoolStateBuilder) Copy(object *NodePoolState) *NodePoolStateBuilder
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	b.lastUpdatedTimestamp = object.lastUpdatedTimestamp
@@ -96,7 +108,10 @@ func (b *NodePoolStateBuilder) Build() (object *NodePoolState, err error) {
 	object = new(NodePoolState)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.lastUpdatedTimestamp = b.lastUpdatedTimestamp
 	object.nodePoolStateValue = b.nodePoolStateValue
 	return

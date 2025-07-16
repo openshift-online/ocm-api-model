@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Hypershift configuration.
 type HypershiftConfig struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	hcpNamespace      string
 	managementCluster string
 	enabled           bool
@@ -31,7 +31,15 @@ type HypershiftConfig struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *HypershiftConfig) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // HCPNamespace returns the value of the 'HCP_namespace' attribute, or
@@ -40,7 +48,7 @@ func (o *HypershiftConfig) Empty() bool {
 // Contains the name of the hcp namespace for this Hypershift cluster.
 // Empty for non Hypershift clusters.
 func (o *HypershiftConfig) HCPNamespace() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.hcpNamespace
 	}
 	return ""
@@ -52,7 +60,7 @@ func (o *HypershiftConfig) HCPNamespace() string {
 // Contains the name of the hcp namespace for this Hypershift cluster.
 // Empty for non Hypershift clusters.
 func (o *HypershiftConfig) GetHCPNamespace() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.hcpNamespace
 	}
@@ -69,7 +77,7 @@ func (o *HypershiftConfig) GetHCPNamespace() (value string, ok bool) {
 // To enable it the cluster needs to be ROSA cluster and the organization of the user needs
 // to have the `hypershift` capability enabled.
 func (o *HypershiftConfig) Enabled() bool {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.enabled
 	}
 	return false
@@ -85,7 +93,7 @@ func (o *HypershiftConfig) Enabled() bool {
 // To enable it the cluster needs to be ROSA cluster and the organization of the user needs
 // to have the `hypershift` capability enabled.
 func (o *HypershiftConfig) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.enabled
 	}
@@ -98,7 +106,7 @@ func (o *HypershiftConfig) GetEnabled() (value bool, ok bool) {
 // Contains the name of the current management cluster for this Hypershift cluster.
 // Empty for non Hypershift clusters.
 func (o *HypershiftConfig) ManagementCluster() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.managementCluster
 	}
 	return ""
@@ -110,7 +118,7 @@ func (o *HypershiftConfig) ManagementCluster() string {
 // Contains the name of the current management cluster for this Hypershift cluster.
 // Empty for non Hypershift clusters.
 func (o *HypershiftConfig) GetManagementCluster() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.managementCluster
 	}

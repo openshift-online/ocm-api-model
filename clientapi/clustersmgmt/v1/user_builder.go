@@ -19,43 +19,52 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// UserBuilder contains the data and logic needed to build 'user' objects.
-//
 // Representation of a user.
 type UserBuilder struct {
-	bitmap_ uint32
-	id      string
-	href    string
+	fieldSet_ []bool
+	id        string
+	href      string
 }
 
 // NewUser creates a new builder of 'user' objects.
 func NewUser() *UserBuilder {
-	return &UserBuilder{}
+	return &UserBuilder{
+		fieldSet_: make([]bool, 3),
+	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *UserBuilder) Link(value bool) *UserBuilder {
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *UserBuilder) ID(value string) *UserBuilder {
 	b.id = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *UserBuilder) HREF(value string) *UserBuilder {
 	b.href = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *UserBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(b.fieldSet_); i++ {
+		if b.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // Copy copies the attributes of the given object into this builder, discarding any previous values.
@@ -63,7 +72,10 @@ func (b *UserBuilder) Copy(object *User) *UserBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.id = object.id
 	b.href = object.href
 	return b
@@ -74,6 +86,9 @@ func (b *UserBuilder) Build() (object *User, err error) {
 	object = new(User)
 	object.id = b.id
 	object.href = b.href
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	return
 }

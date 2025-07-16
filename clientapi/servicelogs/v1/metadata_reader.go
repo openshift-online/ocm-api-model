@@ -39,7 +39,7 @@ func MarshalMetadata(object *Metadata, writer io.Writer) error {
 }
 func writeMetadata(object *Metadata, stream *jsoniter.Stream) {
 	stream.WriteObjectStart()
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteObjectField("server_version")
 		stream.WriteString(object.serverVersion)
 	}
@@ -67,7 +67,10 @@ func readMetadata(iterator *jsoniter.Iterator) *Metadata {
 		switch field {
 		case "server_version":
 			object.serverVersion = iterator.ReadString()
-			object.bitmap_ |= 1
+			if len(object.fieldSet_) <= 0 {
+				object.fieldSet_ = make([]bool, 1)
+			}
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

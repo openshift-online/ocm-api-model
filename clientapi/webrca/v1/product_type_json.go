@@ -43,13 +43,13 @@ func WriteProduct(object *Product, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(ProductLinkKind)
 	} else {
 		stream.WriteString(ProductKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteProduct(object *Product, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteProduct(object *Product, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteProduct(object *Product, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteProduct(object *Product, stream *jsoniter.Stream) {
 		stream.WriteString((object.deletedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteProduct(object *Product, stream *jsoniter.Stream) {
 		stream.WriteString(object.productId)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteProduct(object *Product, stream *jsoniter.Stream) {
 		stream.WriteString(object.productName)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -127,7 +127,9 @@ func UnmarshalProduct(source interface{}) (object *Product, err error) {
 
 // ReadProduct reads a value of the 'product' type from the given iterator.
 func ReadProduct(iterator *jsoniter.Iterator) *Product {
-	object := &Product{}
+	object := &Product{
+		fieldSet_: make([]bool, 8),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -137,14 +139,14 @@ func ReadProduct(iterator *jsoniter.Iterator) *Product {
 		case "kind":
 			value := iterator.ReadString()
 			if value == ProductLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -152,7 +154,7 @@ func ReadProduct(iterator *jsoniter.Iterator) *Product {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "deleted_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -160,15 +162,15 @@ func ReadProduct(iterator *jsoniter.Iterator) *Product {
 				iterator.ReportError("", err.Error())
 			}
 			object.deletedAt = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "product_id":
 			value := iterator.ReadString()
 			object.productId = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "product_name":
 			value := iterator.ReadString()
 			object.productName = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -176,7 +178,7 @@ func ReadProduct(iterator *jsoniter.Iterator) *Product {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		default:
 			iterator.ReadAny()
 		}

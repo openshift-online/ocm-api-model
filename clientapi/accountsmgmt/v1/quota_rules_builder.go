@@ -19,9 +19,8 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// QuotaRulesBuilder contains the data and logic needed to build 'quota_rules' objects.
 type QuotaRulesBuilder struct {
-	bitmap_          uint32
+	fieldSet_        []bool
 	availabilityZone string
 	billingModel     string
 	byoc             string
@@ -34,67 +33,77 @@ type QuotaRulesBuilder struct {
 
 // NewQuotaRules creates a new builder of 'quota_rules' objects.
 func NewQuotaRules() *QuotaRulesBuilder {
-	return &QuotaRulesBuilder{}
+	return &QuotaRulesBuilder{
+		fieldSet_: make([]bool, 8),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *QuotaRulesBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AvailabilityZone sets the value of the 'availability_zone' attribute to the given value.
 func (b *QuotaRulesBuilder) AvailabilityZone(value string) *QuotaRulesBuilder {
 	b.availabilityZone = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // BillingModel sets the value of the 'billing_model' attribute to the given value.
 func (b *QuotaRulesBuilder) BillingModel(value string) *QuotaRulesBuilder {
 	b.billingModel = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // Byoc sets the value of the 'byoc' attribute to the given value.
 func (b *QuotaRulesBuilder) Byoc(value string) *QuotaRulesBuilder {
 	b.byoc = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // Cloud sets the value of the 'cloud' attribute to the given value.
 func (b *QuotaRulesBuilder) Cloud(value string) *QuotaRulesBuilder {
 	b.cloud = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // Cost sets the value of the 'cost' attribute to the given value.
 func (b *QuotaRulesBuilder) Cost(value int) *QuotaRulesBuilder {
 	b.cost = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *QuotaRulesBuilder) Name(value string) *QuotaRulesBuilder {
 	b.name = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
 // Product sets the value of the 'product' attribute to the given value.
 func (b *QuotaRulesBuilder) Product(value string) *QuotaRulesBuilder {
 	b.product = value
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
 // QuotaId sets the value of the 'quota_id' attribute to the given value.
 func (b *QuotaRulesBuilder) QuotaId(value string) *QuotaRulesBuilder {
 	b.quotaId = value
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
@@ -103,7 +112,10 @@ func (b *QuotaRulesBuilder) Copy(object *QuotaRules) *QuotaRulesBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.availabilityZone = object.availabilityZone
 	b.billingModel = object.billingModel
 	b.byoc = object.byoc
@@ -118,7 +130,10 @@ func (b *QuotaRulesBuilder) Copy(object *QuotaRules) *QuotaRulesBuilder {
 // Build creates a 'quota_rules' object using the configuration stored in the builder.
 func (b *QuotaRulesBuilder) Build() (object *QuotaRules, err error) {
 	object = new(QuotaRules)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.availabilityZone = b.availabilityZone
 	object.billingModel = b.billingModel
 	object.byoc = b.byoc

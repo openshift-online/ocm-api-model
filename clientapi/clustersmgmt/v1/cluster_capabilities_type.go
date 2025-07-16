@@ -21,13 +21,21 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // ClusterCapabilities represents the values of the 'cluster_capabilities' type.
 type ClusterCapabilities struct {
-	bitmap_  uint32
-	disabled []string
+	fieldSet_ []bool
+	disabled  []string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterCapabilities) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Disabled returns the value of the 'disabled' attribute, or
@@ -37,7 +45,7 @@ func (o *ClusterCapabilities) Empty() bool {
 // this time. Additional capabilities may be available in the future. Clients
 // should expect to handle additional values.
 func (o *ClusterCapabilities) Disabled() []string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.disabled
 	}
 	return nil
@@ -50,7 +58,7 @@ func (o *ClusterCapabilities) Disabled() []string {
 // this time. Additional capabilities may be available in the future. Clients
 // should expect to handle additional values.
 func (o *ClusterCapabilities) GetDisabled() (value []string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.disabled
 	}

@@ -35,7 +35,7 @@ const GCPImageOverrideNilKind = "GCPImageOverrideNil"
 //
 // GcpImageOverride specifies what a GCP VM Image should be used for a particular product and billing model
 type GCPImageOverride struct {
-	bitmap_      uint32
+	fieldSet_    []bool
 	id           string
 	href         string
 	billingModel *BillingModelItem
@@ -49,7 +49,7 @@ func (o *GCPImageOverride) Kind() string {
 	if o == nil {
 		return GCPImageOverrideNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return GCPImageOverrideLinkKind
 	}
 	return GCPImageOverrideKind
@@ -57,12 +57,12 @@ func (o *GCPImageOverride) Kind() string {
 
 // Link returns true if this is a link.
 func (o *GCPImageOverride) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *GCPImageOverride) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -71,7 +71,7 @@ func (o *GCPImageOverride) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *GCPImageOverride) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -80,7 +80,7 @@ func (o *GCPImageOverride) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *GCPImageOverride) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -89,7 +89,7 @@ func (o *GCPImageOverride) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *GCPImageOverride) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -98,7 +98,17 @@ func (o *GCPImageOverride) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *GCPImageOverride) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // BillingModel returns the value of the 'billing_model' attribute, or
@@ -106,7 +116,7 @@ func (o *GCPImageOverride) Empty() bool {
 //
 // Link to the billing model.
 func (o *GCPImageOverride) BillingModel() *BillingModelItem {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.billingModel
 	}
 	return nil
@@ -117,7 +127,7 @@ func (o *GCPImageOverride) BillingModel() *BillingModelItem {
 //
 // Link to the billing model.
 func (o *GCPImageOverride) GetBillingModel() (value *BillingModelItem, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.billingModel
 	}
@@ -129,7 +139,7 @@ func (o *GCPImageOverride) GetBillingModel() (value *BillingModelItem, ok bool) 
 //
 // ImageID is the id of the Google Cloud Platform image.
 func (o *GCPImageOverride) ImageID() string {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.imageID
 	}
 	return ""
@@ -140,7 +150,7 @@ func (o *GCPImageOverride) ImageID() string {
 //
 // ImageID is the id of the Google Cloud Platform image.
 func (o *GCPImageOverride) GetImageID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.imageID
 	}
@@ -152,7 +162,7 @@ func (o *GCPImageOverride) GetImageID() (value string, ok bool) {
 //
 // Link to the product type.
 func (o *GCPImageOverride) Product() *Product {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.product
 	}
 	return nil
@@ -163,7 +173,7 @@ func (o *GCPImageOverride) Product() *Product {
 //
 // Link to the product type.
 func (o *GCPImageOverride) GetProduct() (value *Product, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.product
 	}
@@ -175,7 +185,7 @@ func (o *GCPImageOverride) GetProduct() (value *Product, ok bool) {
 //
 // ProjectID is the id of the Google Cloud Platform project that hosts the image.
 func (o *GCPImageOverride) ProjectID() string {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.projectID
 	}
 	return ""
@@ -186,7 +196,7 @@ func (o *GCPImageOverride) ProjectID() string {
 //
 // ProjectID is the id of the Google Cloud Platform project that hosts the image.
 func (o *GCPImageOverride) GetProjectID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.projectID
 	}

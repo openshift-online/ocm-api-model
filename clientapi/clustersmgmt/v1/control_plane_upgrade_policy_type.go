@@ -39,7 +39,7 @@ const ControlPlaneUpgradePolicyNilKind = "ControlPlaneUpgradePolicyNil"
 //
 // Representation of an upgrade policy that can be set for a cluster.
 type ControlPlaneUpgradePolicy struct {
-	bitmap_                    uint32
+	fieldSet_                  []bool
 	id                         string
 	href                       string
 	clusterID                  string
@@ -59,7 +59,7 @@ func (o *ControlPlaneUpgradePolicy) Kind() string {
 	if o == nil {
 		return ControlPlaneUpgradePolicyNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return ControlPlaneUpgradePolicyLinkKind
 	}
 	return ControlPlaneUpgradePolicyKind
@@ -67,12 +67,12 @@ func (o *ControlPlaneUpgradePolicy) Kind() string {
 
 // Link returns true if this is a link.
 func (o *ControlPlaneUpgradePolicy) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *ControlPlaneUpgradePolicy) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -81,7 +81,7 @@ func (o *ControlPlaneUpgradePolicy) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *ControlPlaneUpgradePolicy) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -90,7 +90,7 @@ func (o *ControlPlaneUpgradePolicy) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *ControlPlaneUpgradePolicy) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -99,7 +99,7 @@ func (o *ControlPlaneUpgradePolicy) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *ControlPlaneUpgradePolicy) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -108,7 +108,17 @@ func (o *ControlPlaneUpgradePolicy) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ControlPlaneUpgradePolicy) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // ClusterID returns the value of the 'cluster_ID' attribute, or
@@ -116,7 +126,7 @@ func (o *ControlPlaneUpgradePolicy) Empty() bool {
 //
 // Cluster ID this upgrade policy for control plane is defined for.
 func (o *ControlPlaneUpgradePolicy) ClusterID() string {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.clusterID
 	}
 	return ""
@@ -127,7 +137,7 @@ func (o *ControlPlaneUpgradePolicy) ClusterID() string {
 //
 // Cluster ID this upgrade policy for control plane is defined for.
 func (o *ControlPlaneUpgradePolicy) GetClusterID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.clusterID
 	}
@@ -139,7 +149,7 @@ func (o *ControlPlaneUpgradePolicy) GetClusterID() (value string, ok bool) {
 //
 // Timestamp for creation of resource.
 func (o *ControlPlaneUpgradePolicy) CreationTimestamp() time.Time {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.creationTimestamp
 	}
 	return time.Time{}
@@ -150,7 +160,7 @@ func (o *ControlPlaneUpgradePolicy) CreationTimestamp() time.Time {
 //
 // Timestamp for creation of resource.
 func (o *ControlPlaneUpgradePolicy) GetCreationTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.creationTimestamp
 	}
@@ -162,7 +172,7 @@ func (o *ControlPlaneUpgradePolicy) GetCreationTimestamp() (value time.Time, ok 
 //
 // Indicates if minor version upgrades are allowed for automatic upgrades (for manual it's always allowed).
 func (o *ControlPlaneUpgradePolicy) EnableMinorVersionUpgrades() bool {
-	if o != nil && o.bitmap_&32 != 0 {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.enableMinorVersionUpgrades
 	}
 	return false
@@ -173,7 +183,7 @@ func (o *ControlPlaneUpgradePolicy) EnableMinorVersionUpgrades() bool {
 //
 // Indicates if minor version upgrades are allowed for automatic upgrades (for manual it's always allowed).
 func (o *ControlPlaneUpgradePolicy) GetEnableMinorVersionUpgrades() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&32 != 0
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.enableMinorVersionUpgrades
 	}
@@ -185,7 +195,7 @@ func (o *ControlPlaneUpgradePolicy) GetEnableMinorVersionUpgrades() (value bool,
 //
 // Timestamp for last update that happened to resource.
 func (o *ControlPlaneUpgradePolicy) LastUpdateTimestamp() time.Time {
-	if o != nil && o.bitmap_&64 != 0 {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.lastUpdateTimestamp
 	}
 	return time.Time{}
@@ -196,7 +206,7 @@ func (o *ControlPlaneUpgradePolicy) LastUpdateTimestamp() time.Time {
 //
 // Timestamp for last update that happened to resource.
 func (o *ControlPlaneUpgradePolicy) GetLastUpdateTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&64 != 0
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.lastUpdateTimestamp
 	}
@@ -208,7 +218,7 @@ func (o *ControlPlaneUpgradePolicy) GetLastUpdateTimestamp() (value time.Time, o
 //
 // Next time the upgrade should run.
 func (o *ControlPlaneUpgradePolicy) NextRun() time.Time {
-	if o != nil && o.bitmap_&128 != 0 {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.nextRun
 	}
 	return time.Time{}
@@ -219,7 +229,7 @@ func (o *ControlPlaneUpgradePolicy) NextRun() time.Time {
 //
 // Next time the upgrade should run.
 func (o *ControlPlaneUpgradePolicy) GetNextRun() (value time.Time, ok bool) {
-	ok = o != nil && o.bitmap_&128 != 0
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.nextRun
 	}
@@ -231,7 +241,7 @@ func (o *ControlPlaneUpgradePolicy) GetNextRun() (value time.Time, ok bool) {
 //
 // Schedule cron expression that defines automatic upgrade scheduling.
 func (o *ControlPlaneUpgradePolicy) Schedule() string {
-	if o != nil && o.bitmap_&256 != 0 {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.schedule
 	}
 	return ""
@@ -242,7 +252,7 @@ func (o *ControlPlaneUpgradePolicy) Schedule() string {
 //
 // Schedule cron expression that defines automatic upgrade scheduling.
 func (o *ControlPlaneUpgradePolicy) GetSchedule() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&256 != 0
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.schedule
 	}
@@ -254,7 +264,7 @@ func (o *ControlPlaneUpgradePolicy) GetSchedule() (value string, ok bool) {
 //
 // Schedule type of the control plane upgrade.
 func (o *ControlPlaneUpgradePolicy) ScheduleType() ScheduleType {
-	if o != nil && o.bitmap_&512 != 0 {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.scheduleType
 	}
 	return ScheduleType("")
@@ -265,7 +275,7 @@ func (o *ControlPlaneUpgradePolicy) ScheduleType() ScheduleType {
 //
 // Schedule type of the control plane upgrade.
 func (o *ControlPlaneUpgradePolicy) GetScheduleType() (value ScheduleType, ok bool) {
-	ok = o != nil && o.bitmap_&512 != 0
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.scheduleType
 	}
@@ -277,7 +287,7 @@ func (o *ControlPlaneUpgradePolicy) GetScheduleType() (value ScheduleType, ok bo
 //
 // State of the upgrade policy for the hosted control plane.
 func (o *ControlPlaneUpgradePolicy) State() *UpgradePolicyState {
-	if o != nil && o.bitmap_&1024 != 0 {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.state
 	}
 	return nil
@@ -288,7 +298,7 @@ func (o *ControlPlaneUpgradePolicy) State() *UpgradePolicyState {
 //
 // State of the upgrade policy for the hosted control plane.
 func (o *ControlPlaneUpgradePolicy) GetState() (value *UpgradePolicyState, ok bool) {
-	ok = o != nil && o.bitmap_&1024 != 0
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.state
 	}
@@ -300,7 +310,7 @@ func (o *ControlPlaneUpgradePolicy) GetState() (value *UpgradePolicyState, ok bo
 //
 // Upgrade type of the control plane.
 func (o *ControlPlaneUpgradePolicy) UpgradeType() UpgradeType {
-	if o != nil && o.bitmap_&2048 != 0 {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.upgradeType
 	}
 	return UpgradeType("")
@@ -311,7 +321,7 @@ func (o *ControlPlaneUpgradePolicy) UpgradeType() UpgradeType {
 //
 // Upgrade type of the control plane.
 func (o *ControlPlaneUpgradePolicy) GetUpgradeType() (value UpgradeType, ok bool) {
-	ok = o != nil && o.bitmap_&2048 != 0
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.upgradeType
 	}
@@ -323,7 +333,7 @@ func (o *ControlPlaneUpgradePolicy) GetUpgradeType() (value UpgradeType, ok bool
 //
 // Version is the desired upgrade version.
 func (o *ControlPlaneUpgradePolicy) Version() string {
-	if o != nil && o.bitmap_&4096 != 0 {
+	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
 		return o.version
 	}
 	return ""
@@ -334,7 +344,7 @@ func (o *ControlPlaneUpgradePolicy) Version() string {
 //
 // Version is the desired upgrade version.
 func (o *ControlPlaneUpgradePolicy) GetVersion() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4096 != 0
+	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
 	if ok {
 		value = o.version
 	}

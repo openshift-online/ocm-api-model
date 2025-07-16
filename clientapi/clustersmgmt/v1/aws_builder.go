@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AWSBuilder contains the data and logic needed to build 'AWS' objects.
-//
 // _Amazon Web Services_ specific settings of a cluster.
 type AWSBuilder struct {
-	bitmap_                                uint32
+	fieldSet_                              []bool
 	kmsKeyArn                              string
 	sts                                    *STSBuilder
 	accessKeyID                            string
@@ -49,18 +47,28 @@ type AWSBuilder struct {
 
 // NewAWS creates a new builder of 'AWS' objects.
 func NewAWS() *AWSBuilder {
-	return &AWSBuilder{}
+	return &AWSBuilder{
+		fieldSet_: make([]bool, 21),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AWSBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // KMSKeyArn sets the value of the 'KMS_key_arn' attribute to the given value.
 func (b *AWSBuilder) KMSKeyArn(value string) *AWSBuilder {
 	b.kmsKeyArn = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -70,9 +78,9 @@ func (b *AWSBuilder) KMSKeyArn(value string) *AWSBuilder {
 func (b *AWSBuilder) STS(value *STSBuilder) *AWSBuilder {
 	b.sts = value
 	if value != nil {
-		b.bitmap_ |= 2
+		b.fieldSet_[1] = true
 	} else {
-		b.bitmap_ &^= 2
+		b.fieldSet_[1] = false
 	}
 	return b
 }
@@ -80,14 +88,14 @@ func (b *AWSBuilder) STS(value *STSBuilder) *AWSBuilder {
 // AccessKeyID sets the value of the 'access_key_ID' attribute to the given value.
 func (b *AWSBuilder) AccessKeyID(value string) *AWSBuilder {
 	b.accessKeyID = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // AccountID sets the value of the 'account_ID' attribute to the given value.
 func (b *AWSBuilder) AccountID(value string) *AWSBuilder {
 	b.accountID = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -95,7 +103,7 @@ func (b *AWSBuilder) AccountID(value string) *AWSBuilder {
 func (b *AWSBuilder) AdditionalAllowedPrincipals(values ...string) *AWSBuilder {
 	b.additionalAllowedPrincipals = make([]string, len(values))
 	copy(b.additionalAllowedPrincipals, values)
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
@@ -103,7 +111,7 @@ func (b *AWSBuilder) AdditionalAllowedPrincipals(values ...string) *AWSBuilder {
 func (b *AWSBuilder) AdditionalComputeSecurityGroupIds(values ...string) *AWSBuilder {
 	b.additionalComputeSecurityGroupIds = make([]string, len(values))
 	copy(b.additionalComputeSecurityGroupIds, values)
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -111,7 +119,7 @@ func (b *AWSBuilder) AdditionalComputeSecurityGroupIds(values ...string) *AWSBui
 func (b *AWSBuilder) AdditionalControlPlaneSecurityGroupIds(values ...string) *AWSBuilder {
 	b.additionalControlPlaneSecurityGroupIds = make([]string, len(values))
 	copy(b.additionalControlPlaneSecurityGroupIds, values)
-	b.bitmap_ |= 64
+	b.fieldSet_[6] = true
 	return b
 }
 
@@ -119,7 +127,7 @@ func (b *AWSBuilder) AdditionalControlPlaneSecurityGroupIds(values ...string) *A
 func (b *AWSBuilder) AdditionalInfraSecurityGroupIds(values ...string) *AWSBuilder {
 	b.additionalInfraSecurityGroupIds = make([]string, len(values))
 	copy(b.additionalInfraSecurityGroupIds, values)
-	b.bitmap_ |= 128
+	b.fieldSet_[7] = true
 	return b
 }
 
@@ -129,9 +137,9 @@ func (b *AWSBuilder) AdditionalInfraSecurityGroupIds(values ...string) *AWSBuild
 func (b *AWSBuilder) AuditLog(value *AuditLogBuilder) *AWSBuilder {
 	b.auditLog = value
 	if value != nil {
-		b.bitmap_ |= 256
+		b.fieldSet_[8] = true
 	} else {
-		b.bitmap_ &^= 256
+		b.fieldSet_[8] = false
 	}
 	return b
 }
@@ -139,7 +147,7 @@ func (b *AWSBuilder) AuditLog(value *AuditLogBuilder) *AWSBuilder {
 // BillingAccountID sets the value of the 'billing_account_ID' attribute to the given value.
 func (b *AWSBuilder) BillingAccountID(value string) *AWSBuilder {
 	b.billingAccountID = value
-	b.bitmap_ |= 512
+	b.fieldSet_[9] = true
 	return b
 }
 
@@ -148,7 +156,7 @@ func (b *AWSBuilder) BillingAccountID(value string) *AWSBuilder {
 // Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances
 func (b *AWSBuilder) Ec2MetadataHttpTokens(value Ec2MetadataHttpTokens) *AWSBuilder {
 	b.ec2MetadataHttpTokens = value
-	b.bitmap_ |= 1024
+	b.fieldSet_[10] = true
 	return b
 }
 
@@ -158,9 +166,9 @@ func (b *AWSBuilder) Ec2MetadataHttpTokens(value Ec2MetadataHttpTokens) *AWSBuil
 func (b *AWSBuilder) EtcdEncryption(value *AwsEtcdEncryptionBuilder) *AWSBuilder {
 	b.etcdEncryption = value
 	if value != nil {
-		b.bitmap_ |= 2048
+		b.fieldSet_[11] = true
 	} else {
-		b.bitmap_ &^= 2048
+		b.fieldSet_[11] = false
 	}
 	return b
 }
@@ -168,28 +176,28 @@ func (b *AWSBuilder) EtcdEncryption(value *AwsEtcdEncryptionBuilder) *AWSBuilder
 // HcpInternalCommunicationHostedZoneId sets the value of the 'hcp_internal_communication_hosted_zone_id' attribute to the given value.
 func (b *AWSBuilder) HcpInternalCommunicationHostedZoneId(value string) *AWSBuilder {
 	b.hcpInternalCommunicationHostedZoneId = value
-	b.bitmap_ |= 4096
+	b.fieldSet_[12] = true
 	return b
 }
 
 // PrivateHostedZoneID sets the value of the 'private_hosted_zone_ID' attribute to the given value.
 func (b *AWSBuilder) PrivateHostedZoneID(value string) *AWSBuilder {
 	b.privateHostedZoneID = value
-	b.bitmap_ |= 8192
+	b.fieldSet_[13] = true
 	return b
 }
 
 // PrivateHostedZoneRoleARN sets the value of the 'private_hosted_zone_role_ARN' attribute to the given value.
 func (b *AWSBuilder) PrivateHostedZoneRoleARN(value string) *AWSBuilder {
 	b.privateHostedZoneRoleARN = value
-	b.bitmap_ |= 16384
+	b.fieldSet_[14] = true
 	return b
 }
 
 // PrivateLink sets the value of the 'private_link' attribute to the given value.
 func (b *AWSBuilder) PrivateLink(value bool) *AWSBuilder {
 	b.privateLink = value
-	b.bitmap_ |= 32768
+	b.fieldSet_[15] = true
 	return b
 }
 
@@ -199,9 +207,9 @@ func (b *AWSBuilder) PrivateLink(value bool) *AWSBuilder {
 func (b *AWSBuilder) PrivateLinkConfiguration(value *PrivateLinkClusterConfigurationBuilder) *AWSBuilder {
 	b.privateLinkConfiguration = value
 	if value != nil {
-		b.bitmap_ |= 65536
+		b.fieldSet_[16] = true
 	} else {
-		b.bitmap_ &^= 65536
+		b.fieldSet_[16] = false
 	}
 	return b
 }
@@ -209,7 +217,7 @@ func (b *AWSBuilder) PrivateLinkConfiguration(value *PrivateLinkClusterConfigura
 // SecretAccessKey sets the value of the 'secret_access_key' attribute to the given value.
 func (b *AWSBuilder) SecretAccessKey(value string) *AWSBuilder {
 	b.secretAccessKey = value
-	b.bitmap_ |= 131072
+	b.fieldSet_[17] = true
 	return b
 }
 
@@ -217,7 +225,7 @@ func (b *AWSBuilder) SecretAccessKey(value string) *AWSBuilder {
 func (b *AWSBuilder) SubnetIDs(values ...string) *AWSBuilder {
 	b.subnetIDs = make([]string, len(values))
 	copy(b.subnetIDs, values)
-	b.bitmap_ |= 262144
+	b.fieldSet_[18] = true
 	return b
 }
 
@@ -225,9 +233,9 @@ func (b *AWSBuilder) SubnetIDs(values ...string) *AWSBuilder {
 func (b *AWSBuilder) Tags(value map[string]string) *AWSBuilder {
 	b.tags = value
 	if value != nil {
-		b.bitmap_ |= 524288
+		b.fieldSet_[19] = true
 	} else {
-		b.bitmap_ &^= 524288
+		b.fieldSet_[19] = false
 	}
 	return b
 }
@@ -235,7 +243,7 @@ func (b *AWSBuilder) Tags(value map[string]string) *AWSBuilder {
 // VpcEndpointRoleArn sets the value of the 'vpc_endpoint_role_arn' attribute to the given value.
 func (b *AWSBuilder) VpcEndpointRoleArn(value string) *AWSBuilder {
 	b.vpcEndpointRoleArn = value
-	b.bitmap_ |= 1048576
+	b.fieldSet_[20] = true
 	return b
 }
 
@@ -244,7 +252,10 @@ func (b *AWSBuilder) Copy(object *AWS) *AWSBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.kmsKeyArn = object.kmsKeyArn
 	if object.sts != nil {
 		b.sts = NewSTS().Copy(object.sts)
@@ -320,7 +331,10 @@ func (b *AWSBuilder) Copy(object *AWS) *AWSBuilder {
 // Build creates a 'AWS' object using the configuration stored in the builder.
 func (b *AWSBuilder) Build() (object *AWS, err error) {
 	object = new(AWS)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.kmsKeyArn = b.kmsKeyArn
 	if b.sts != nil {
 		object.sts, err = b.sts.Build()

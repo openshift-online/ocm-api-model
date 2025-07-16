@@ -19,34 +19,43 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// ClusterRegistrationRequestBuilder contains the data and logic needed to build 'cluster_registration_request' objects.
 type ClusterRegistrationRequestBuilder struct {
-	bitmap_            uint32
+	fieldSet_          []bool
 	authorizationToken string
 	clusterID          string
 }
 
 // NewClusterRegistrationRequest creates a new builder of 'cluster_registration_request' objects.
 func NewClusterRegistrationRequest() *ClusterRegistrationRequestBuilder {
-	return &ClusterRegistrationRequestBuilder{}
+	return &ClusterRegistrationRequestBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterRegistrationRequestBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // AuthorizationToken sets the value of the 'authorization_token' attribute to the given value.
 func (b *ClusterRegistrationRequestBuilder) AuthorizationToken(value string) *ClusterRegistrationRequestBuilder {
 	b.authorizationToken = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *ClusterRegistrationRequestBuilder) ClusterID(value string) *ClusterRegistrationRequestBuilder {
 	b.clusterID = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -55,7 +64,10 @@ func (b *ClusterRegistrationRequestBuilder) Copy(object *ClusterRegistrationRequ
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.authorizationToken = object.authorizationToken
 	b.clusterID = object.clusterID
 	return b
@@ -64,7 +76,10 @@ func (b *ClusterRegistrationRequestBuilder) Copy(object *ClusterRegistrationRequ
 // Build creates a 'cluster_registration_request' object using the configuration stored in the builder.
 func (b *ClusterRegistrationRequestBuilder) Build() (object *ClusterRegistrationRequest, err error) {
 	object = new(ClusterRegistrationRequest)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.authorizationToken = b.authorizationToken
 	object.clusterID = b.clusterID
 	return

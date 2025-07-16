@@ -42,7 +42,7 @@ func WriteFeatureToggleQueryRequest(object *FeatureToggleQueryRequest, stream *j
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,9 @@ func UnmarshalFeatureToggleQueryRequest(source interface{}) (object *FeatureTogg
 
 // ReadFeatureToggleQueryRequest reads a value of the 'feature_toggle_query_request' type from the given iterator.
 func ReadFeatureToggleQueryRequest(iterator *jsoniter.Iterator) *FeatureToggleQueryRequest {
-	object := &FeatureToggleQueryRequest{}
+	object := &FeatureToggleQueryRequest{
+		fieldSet_: make([]bool, 1),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -77,7 +79,7 @@ func ReadFeatureToggleQueryRequest(iterator *jsoniter.Iterator) *FeatureToggleQu
 		case "organization_id":
 			value := iterator.ReadString()
 			object.organizationID = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

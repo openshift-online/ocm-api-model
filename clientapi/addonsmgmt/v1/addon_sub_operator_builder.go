@@ -19,12 +19,10 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
-// AddonSubOperatorBuilder contains the data and logic needed to build 'addon_sub_operator' objects.
-//
 // Representation of an addon sub operator. A sub operator is an operator
 // who's life cycle is controlled by the addon umbrella operator.
 type AddonSubOperatorBuilder struct {
-	bitmap_           uint32
+	fieldSet_         []bool
 	addon             *AddonBuilder
 	operatorName      string
 	operatorNamespace string
@@ -33,12 +31,22 @@ type AddonSubOperatorBuilder struct {
 
 // NewAddonSubOperator creates a new builder of 'addon_sub_operator' objects.
 func NewAddonSubOperator() *AddonSubOperatorBuilder {
-	return &AddonSubOperatorBuilder{}
+	return &AddonSubOperatorBuilder{
+		fieldSet_: make([]bool, 4),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddonSubOperatorBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Addon sets the value of the 'addon' attribute to the given value.
@@ -47,9 +55,9 @@ func (b *AddonSubOperatorBuilder) Empty() bool {
 func (b *AddonSubOperatorBuilder) Addon(value *AddonBuilder) *AddonSubOperatorBuilder {
 	b.addon = value
 	if value != nil {
-		b.bitmap_ |= 1
+		b.fieldSet_[0] = true
 	} else {
-		b.bitmap_ &^= 1
+		b.fieldSet_[0] = false
 	}
 	return b
 }
@@ -57,21 +65,21 @@ func (b *AddonSubOperatorBuilder) Addon(value *AddonBuilder) *AddonSubOperatorBu
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddonSubOperatorBuilder) Enabled(value bool) *AddonSubOperatorBuilder {
 	b.enabled = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
 // OperatorName sets the value of the 'operator_name' attribute to the given value.
 func (b *AddonSubOperatorBuilder) OperatorName(value string) *AddonSubOperatorBuilder {
 	b.operatorName = value
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // OperatorNamespace sets the value of the 'operator_namespace' attribute to the given value.
 func (b *AddonSubOperatorBuilder) OperatorNamespace(value string) *AddonSubOperatorBuilder {
 	b.operatorNamespace = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
@@ -80,7 +88,10 @@ func (b *AddonSubOperatorBuilder) Copy(object *AddonSubOperator) *AddonSubOperat
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	if object.addon != nil {
 		b.addon = NewAddon().Copy(object.addon)
 	} else {
@@ -95,7 +106,10 @@ func (b *AddonSubOperatorBuilder) Copy(object *AddonSubOperator) *AddonSubOperat
 // Build creates a 'addon_sub_operator' object using the configuration stored in the builder.
 func (b *AddonSubOperatorBuilder) Build() (object *AddonSubOperator, err error) {
 	object = new(AddonSubOperator)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	if b.addon != nil {
 		object.addon, err = b.addon.Build()
 		if err != nil {

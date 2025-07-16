@@ -19,26 +19,35 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
-// PullSecretsRequestBuilder contains the data and logic needed to build 'pull_secrets_request' objects.
 type PullSecretsRequestBuilder struct {
-	bitmap_            uint32
+	fieldSet_          []bool
 	externalResourceId string
 }
 
 // NewPullSecretsRequest creates a new builder of 'pull_secrets_request' objects.
 func NewPullSecretsRequest() *PullSecretsRequestBuilder {
-	return &PullSecretsRequestBuilder{}
+	return &PullSecretsRequestBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *PullSecretsRequestBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // ExternalResourceId sets the value of the 'external_resource_id' attribute to the given value.
 func (b *PullSecretsRequestBuilder) ExternalResourceId(value string) *PullSecretsRequestBuilder {
 	b.externalResourceId = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -47,7 +56,10 @@ func (b *PullSecretsRequestBuilder) Copy(object *PullSecretsRequest) *PullSecret
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.externalResourceId = object.externalResourceId
 	return b
 }
@@ -55,7 +67,10 @@ func (b *PullSecretsRequestBuilder) Copy(object *PullSecretsRequest) *PullSecret
 // Build creates a 'pull_secrets_request' object using the configuration stored in the builder.
 func (b *PullSecretsRequestBuilder) Build() (object *PullSecretsRequest, err error) {
 	object = new(PullSecretsRequest)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.externalResourceId = b.externalResourceId
 	return
 }

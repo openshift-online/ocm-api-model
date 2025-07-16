@@ -19,34 +19,43 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// ResourceRangeBuilder contains the data and logic needed to build 'resource_range' objects.
 type ResourceRangeBuilder struct {
-	bitmap_ uint32
-	max     int
-	min     int
+	fieldSet_ []bool
+	max       int
+	min       int
 }
 
 // NewResourceRange creates a new builder of 'resource_range' objects.
 func NewResourceRange() *ResourceRangeBuilder {
-	return &ResourceRangeBuilder{}
+	return &ResourceRangeBuilder{
+		fieldSet_: make([]bool, 2),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ResourceRangeBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Max sets the value of the 'max' attribute to the given value.
 func (b *ResourceRangeBuilder) Max(value int) *ResourceRangeBuilder {
 	b.max = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
 // Min sets the value of the 'min' attribute to the given value.
 func (b *ResourceRangeBuilder) Min(value int) *ResourceRangeBuilder {
 	b.min = value
-	b.bitmap_ |= 2
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -55,7 +64,10 @@ func (b *ResourceRangeBuilder) Copy(object *ResourceRange) *ResourceRangeBuilder
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.max = object.max
 	b.min = object.min
 	return b
@@ -64,7 +76,10 @@ func (b *ResourceRangeBuilder) Copy(object *ResourceRange) *ResourceRangeBuilder
 // Build creates a 'resource_range' object using the configuration stored in the builder.
 func (b *ResourceRangeBuilder) Build() (object *ResourceRange, err error) {
 	object = new(ResourceRange)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.max = b.max
 	object.min = b.min
 	return

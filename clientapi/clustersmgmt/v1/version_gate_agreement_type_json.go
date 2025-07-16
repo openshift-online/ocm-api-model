@@ -43,13 +43,13 @@ func WriteVersionGateAgreement(object *VersionGateAgreement, stream *jsoniter.St
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(VersionGateAgreementLinkKind)
 	} else {
 		stream.WriteString(VersionGateAgreementKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteVersionGateAgreement(object *VersionGateAgreement, stream *jsoniter.St
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteVersionGateAgreement(object *VersionGateAgreement, stream *jsoniter.St
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteVersionGateAgreement(object *VersionGateAgreement, stream *jsoniter.St
 		stream.WriteString((object.agreedTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&16 != 0 && object.versionGate != nil
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.versionGate != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -100,7 +100,9 @@ func UnmarshalVersionGateAgreement(source interface{}) (object *VersionGateAgree
 
 // ReadVersionGateAgreement reads a value of the 'version_gate_agreement' type from the given iterator.
 func ReadVersionGateAgreement(iterator *jsoniter.Iterator) *VersionGateAgreement {
-	object := &VersionGateAgreement{}
+	object := &VersionGateAgreement{
+		fieldSet_: make([]bool, 5),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -110,14 +112,14 @@ func ReadVersionGateAgreement(iterator *jsoniter.Iterator) *VersionGateAgreement
 		case "kind":
 			value := iterator.ReadString()
 			if value == VersionGateAgreementLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "agreed_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -125,11 +127,11 @@ func ReadVersionGateAgreement(iterator *jsoniter.Iterator) *VersionGateAgreement
 				iterator.ReportError("", err.Error())
 			}
 			object.agreedTimestamp = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "version_gate":
 			value := ReadVersionGate(iterator)
 			object.versionGate = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		default:
 			iterator.ReadAny()
 		}

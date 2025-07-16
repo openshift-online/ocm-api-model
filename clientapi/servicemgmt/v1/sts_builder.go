@@ -19,11 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 
-// STSBuilder contains the data and logic needed to build 'STS' objects.
-//
 // Contains the necessary attributes to support role-based authentication on AWS.
 type STSBuilder struct {
-	bitmap_            uint32
+	fieldSet_          []bool
 	oidcEndpointURL    string
 	instanceIAMRoles   *InstanceIAMRolesBuilder
 	operatorIAMRoles   []*OperatorIAMRoleBuilder
@@ -34,18 +32,28 @@ type STSBuilder struct {
 
 // NewSTS creates a new builder of 'STS' objects.
 func NewSTS() *STSBuilder {
-	return &STSBuilder{}
+	return &STSBuilder{
+		fieldSet_: make([]bool, 6),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *STSBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // OIDCEndpointURL sets the value of the 'OIDC_endpoint_URL' attribute to the given value.
 func (b *STSBuilder) OIDCEndpointURL(value string) *STSBuilder {
 	b.oidcEndpointURL = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -55,9 +63,9 @@ func (b *STSBuilder) OIDCEndpointURL(value string) *STSBuilder {
 func (b *STSBuilder) InstanceIAMRoles(value *InstanceIAMRolesBuilder) *STSBuilder {
 	b.instanceIAMRoles = value
 	if value != nil {
-		b.bitmap_ |= 2
+		b.fieldSet_[1] = true
 	} else {
-		b.bitmap_ &^= 2
+		b.fieldSet_[1] = false
 	}
 	return b
 }
@@ -66,28 +74,28 @@ func (b *STSBuilder) InstanceIAMRoles(value *InstanceIAMRolesBuilder) *STSBuilde
 func (b *STSBuilder) OperatorIAMRoles(values ...*OperatorIAMRoleBuilder) *STSBuilder {
 	b.operatorIAMRoles = make([]*OperatorIAMRoleBuilder, len(values))
 	copy(b.operatorIAMRoles, values)
-	b.bitmap_ |= 4
+	b.fieldSet_[2] = true
 	return b
 }
 
 // OperatorRolePrefix sets the value of the 'operator_role_prefix' attribute to the given value.
 func (b *STSBuilder) OperatorRolePrefix(value string) *STSBuilder {
 	b.operatorRolePrefix = value
-	b.bitmap_ |= 8
+	b.fieldSet_[3] = true
 	return b
 }
 
 // RoleARN sets the value of the 'role_ARN' attribute to the given value.
 func (b *STSBuilder) RoleARN(value string) *STSBuilder {
 	b.roleARN = value
-	b.bitmap_ |= 16
+	b.fieldSet_[4] = true
 	return b
 }
 
 // SupportRoleARN sets the value of the 'support_role_ARN' attribute to the given value.
 func (b *STSBuilder) SupportRoleARN(value string) *STSBuilder {
 	b.supportRoleARN = value
-	b.bitmap_ |= 32
+	b.fieldSet_[5] = true
 	return b
 }
 
@@ -96,7 +104,10 @@ func (b *STSBuilder) Copy(object *STS) *STSBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.oidcEndpointURL = object.oidcEndpointURL
 	if object.instanceIAMRoles != nil {
 		b.instanceIAMRoles = NewInstanceIAMRoles().Copy(object.instanceIAMRoles)
@@ -120,7 +131,10 @@ func (b *STSBuilder) Copy(object *STS) *STSBuilder {
 // Build creates a 'STS' object using the configuration stored in the builder.
 func (b *STSBuilder) Build() (object *STS, err error) {
 	object = new(STS)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.oidcEndpointURL = b.oidcEndpointURL
 	if b.instanceIAMRoles != nil {
 		object.instanceIAMRoles, err = b.instanceIAMRoles.Build()

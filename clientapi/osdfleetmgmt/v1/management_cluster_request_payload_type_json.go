@@ -42,7 +42,7 @@ func WriteManagementClusterRequestPayload(object *ManagementClusterRequestPayloa
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,7 +67,9 @@ func UnmarshalManagementClusterRequestPayload(source interface{}) (object *Manag
 
 // ReadManagementClusterRequestPayload reads a value of the 'management_cluster_request_payload' type from the given iterator.
 func ReadManagementClusterRequestPayload(iterator *jsoniter.Iterator) *ManagementClusterRequestPayload {
-	object := &ManagementClusterRequestPayload{}
+	object := &ManagementClusterRequestPayload{
+		fieldSet_: make([]bool, 1),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -77,7 +79,7 @@ func ReadManagementClusterRequestPayload(iterator *jsoniter.Iterator) *Managemen
 		case "service_cluster_id_service_cluster_id_service_cluster_id_service_cluster_id_id":
 			value := iterator.ReadString()
 			object.service_cluster_idService_cluster_idService_cluster_idService_cluster_idId = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()
 		}

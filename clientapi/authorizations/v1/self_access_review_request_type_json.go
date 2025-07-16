@@ -42,7 +42,7 @@ func WriteSelfAccessReviewRequest(object *SelfAccessReviewRequest, stream *jsoni
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteSelfAccessReviewRequest(object *SelfAccessReviewRequest, stream *jsoni
 		stream.WriteString(object.action)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteSelfAccessReviewRequest(object *SelfAccessReviewRequest, stream *jsoni
 		stream.WriteString(object.clusterID)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteSelfAccessReviewRequest(object *SelfAccessReviewRequest, stream *jsoni
 		stream.WriteString(object.clusterUUID)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteSelfAccessReviewRequest(object *SelfAccessReviewRequest, stream *jsoni
 		stream.WriteString(object.organizationID)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteSelfAccessReviewRequest(object *SelfAccessReviewRequest, stream *jsoni
 		stream.WriteString(object.resourceType)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -112,7 +112,9 @@ func UnmarshalSelfAccessReviewRequest(source interface{}) (object *SelfAccessRev
 
 // ReadSelfAccessReviewRequest reads a value of the 'self_access_review_request' type from the given iterator.
 func ReadSelfAccessReviewRequest(iterator *jsoniter.Iterator) *SelfAccessReviewRequest {
-	object := &SelfAccessReviewRequest{}
+	object := &SelfAccessReviewRequest{
+		fieldSet_: make([]bool, 6),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -122,27 +124,27 @@ func ReadSelfAccessReviewRequest(iterator *jsoniter.Iterator) *SelfAccessReviewR
 		case "action":
 			value := iterator.ReadString()
 			object.action = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterID = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "cluster_uuid":
 			value := iterator.ReadString()
 			object.clusterUUID = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "organization_id":
 			value := iterator.ReadString()
 			object.organizationID = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "resource_type":
 			value := iterator.ReadString()
 			object.resourceType = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "subscription_id":
 			value := iterator.ReadString()
 			object.subscriptionID = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		default:
 			iterator.ReadAny()
 		}

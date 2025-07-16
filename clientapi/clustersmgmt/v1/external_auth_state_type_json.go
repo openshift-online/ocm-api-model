@@ -43,7 +43,7 @@ func WriteExternalAuthState(object *ExternalAuthState, stream *jsoniter.Stream) 
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -52,7 +52,7 @@ func WriteExternalAuthState(object *ExternalAuthState, stream *jsoniter.Stream) 
 		stream.WriteString((object.lastUpdatedTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -77,7 +77,9 @@ func UnmarshalExternalAuthState(source interface{}) (object *ExternalAuthState, 
 
 // ReadExternalAuthState reads a value of the 'external_auth_state' type from the given iterator.
 func ReadExternalAuthState(iterator *jsoniter.Iterator) *ExternalAuthState {
-	object := &ExternalAuthState{}
+	object := &ExternalAuthState{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -91,11 +93,11 @@ func ReadExternalAuthState(iterator *jsoniter.Iterator) *ExternalAuthState {
 				iterator.ReportError("", err.Error())
 			}
 			object.lastUpdatedTimestamp = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "value":
 			value := iterator.ReadString()
 			object.value = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}

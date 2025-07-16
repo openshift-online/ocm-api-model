@@ -42,7 +42,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 		stream.WriteBool(object.byoc)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 		stream.WriteString(object.accountUsername)
 		count++
 	}
-	present_ = object.bitmap_&4 != 0
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 		stream.WriteString(object.availabilityZone)
 		count++
 	}
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 		stream.WriteString(object.cloudAccountID)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 		stream.WriteString(object.cloudProviderID)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -96,7 +96,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 		stream.WriteString(object.clusterID)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -105,7 +105,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 		stream.WriteBool(object.disconnected)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -114,7 +114,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 		stream.WriteString(object.displayName)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -123,7 +123,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 		stream.WriteString(object.externalClusterID)
 		count++
 	}
-	present_ = object.bitmap_&512 != 0
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -132,7 +132,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 		stream.WriteBool(object.managed)
 		count++
 	}
-	present_ = object.bitmap_&1024 != 0
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -141,7 +141,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 		stream.WriteString(object.productID)
 		count++
 	}
-	present_ = object.bitmap_&2048 != 0
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -150,7 +150,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 		stream.WriteString(object.productCategory)
 		count++
 	}
-	present_ = object.bitmap_&4096 != 0
+	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -159,7 +159,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 		stream.WriteString(object.quotaVersion)
 		count++
 	}
-	present_ = object.bitmap_&8192 != 0
+	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -168,7 +168,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 		stream.WriteBool(object.reserve)
 		count++
 	}
-	present_ = object.bitmap_&16384 != 0 && object.resources != nil
+	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14] && object.resources != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -177,7 +177,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 		WriteReservedResourceList(object.resources, stream)
 		count++
 	}
-	present_ = object.bitmap_&32768 != 0
+	present_ = len(object.fieldSet_) > 15 && object.fieldSet_[15]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -186,7 +186,7 @@ func WriteClusterAuthorizationRequest(object *ClusterAuthorizationRequest, strea
 		stream.WriteString(object.rhRegionID)
 		count++
 	}
-	present_ = object.bitmap_&65536 != 0
+	present_ = len(object.fieldSet_) > 16 && object.fieldSet_[16]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -211,7 +211,9 @@ func UnmarshalClusterAuthorizationRequest(source interface{}) (object *ClusterAu
 
 // ReadClusterAuthorizationRequest reads a value of the 'cluster_authorization_request' type from the given iterator.
 func ReadClusterAuthorizationRequest(iterator *jsoniter.Iterator) *ClusterAuthorizationRequest {
-	object := &ClusterAuthorizationRequest{}
+	object := &ClusterAuthorizationRequest{
+		fieldSet_: make([]bool, 17),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -221,71 +223,71 @@ func ReadClusterAuthorizationRequest(iterator *jsoniter.Iterator) *ClusterAuthor
 		case "byoc":
 			value := iterator.ReadBool()
 			object.byoc = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "account_username":
 			value := iterator.ReadString()
 			object.accountUsername = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "availability_zone":
 			value := iterator.ReadString()
 			object.availabilityZone = value
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "cloud_account_id":
 			value := iterator.ReadString()
 			object.cloudAccountID = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "cloud_provider_id":
 			value := iterator.ReadString()
 			object.cloudProviderID = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterID = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "disconnected":
 			value := iterator.ReadBool()
 			object.disconnected = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "display_name":
 			value := iterator.ReadString()
 			object.displayName = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "external_cluster_id":
 			value := iterator.ReadString()
 			object.externalClusterID = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		case "managed":
 			value := iterator.ReadBool()
 			object.managed = value
-			object.bitmap_ |= 512
+			object.fieldSet_[9] = true
 		case "product_id":
 			value := iterator.ReadString()
 			object.productID = value
-			object.bitmap_ |= 1024
+			object.fieldSet_[10] = true
 		case "product_category":
 			value := iterator.ReadString()
 			object.productCategory = value
-			object.bitmap_ |= 2048
+			object.fieldSet_[11] = true
 		case "quota_version":
 			value := iterator.ReadString()
 			object.quotaVersion = value
-			object.bitmap_ |= 4096
+			object.fieldSet_[12] = true
 		case "reserve":
 			value := iterator.ReadBool()
 			object.reserve = value
-			object.bitmap_ |= 8192
+			object.fieldSet_[13] = true
 		case "resources":
 			value := ReadReservedResourceList(iterator)
 			object.resources = value
-			object.bitmap_ |= 16384
+			object.fieldSet_[14] = true
 		case "rh_region_id":
 			value := iterator.ReadString()
 			object.rhRegionID = value
-			object.bitmap_ |= 32768
+			object.fieldSet_[15] = true
 		case "scope":
 			value := iterator.ReadString()
 			object.scope = value
-			object.bitmap_ |= 65536
+			object.fieldSet_[16] = true
 		default:
 			iterator.ReadAny()
 		}

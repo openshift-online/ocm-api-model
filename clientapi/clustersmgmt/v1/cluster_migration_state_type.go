@@ -23,14 +23,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Representation of a cluster migration state.
 type ClusterMigrationState struct {
-	bitmap_     uint32
+	fieldSet_   []bool
 	description string
 	value       ClusterMigrationStateValue
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterMigrationState) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Description returns the value of the 'description' attribute, or
@@ -38,7 +46,7 @@ func (o *ClusterMigrationState) Empty() bool {
 //
 // A longer description of the current state of the cluster migration.
 func (o *ClusterMigrationState) Description() string {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.description
 	}
 	return ""
@@ -49,7 +57,7 @@ func (o *ClusterMigrationState) Description() string {
 //
 // A longer description of the current state of the cluster migration.
 func (o *ClusterMigrationState) GetDescription() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.description
 	}
@@ -61,7 +69,7 @@ func (o *ClusterMigrationState) GetDescription() (value string, ok bool) {
 //
 // The current state of the cluster migration.
 func (o *ClusterMigrationState) Value() ClusterMigrationStateValue {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.value
 	}
 	return ClusterMigrationStateValue("")
@@ -72,7 +80,7 @@ func (o *ClusterMigrationState) Value() ClusterMigrationStateValue {
 //
 // The current state of the cluster migration.
 func (o *ClusterMigrationState) GetValue() (value ClusterMigrationStateValue, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.value
 	}

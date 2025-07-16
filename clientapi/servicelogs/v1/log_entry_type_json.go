@@ -43,13 +43,13 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(LogEntryLinkKind)
 	} else {
 		stream.WriteString(LogEntryKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 		stream.WriteString(object.clusterID)
 		count++
 	}
-	present_ = object.bitmap_&16 != 0
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 		stream.WriteString(object.clusterUUID)
 		count++
 	}
-	present_ = object.bitmap_&32 != 0
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&64 != 0
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 		stream.WriteString(object.createdBy)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 		stream.WriteString(object.description)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0 && object.docReferences != nil
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8] && object.docReferences != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -120,7 +120,7 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 		WriteStringList(object.docReferences, stream)
 		count++
 	}
-	present_ = object.bitmap_&512 != 0
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -129,7 +129,7 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 		stream.WriteString(object.eventStreamID)
 		count++
 	}
-	present_ = object.bitmap_&1024 != 0
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -138,7 +138,7 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 		stream.WriteBool(object.internalOnly)
 		count++
 	}
-	present_ = object.bitmap_&2048 != 0
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -147,7 +147,7 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.logType))
 		count++
 	}
-	present_ = object.bitmap_&4096 != 0
+	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -156,7 +156,7 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 		stream.WriteString(object.serviceName)
 		count++
 	}
-	present_ = object.bitmap_&8192 != 0
+	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -165,7 +165,7 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.severity))
 		count++
 	}
-	present_ = object.bitmap_&16384 != 0
+	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -174,7 +174,7 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 		stream.WriteString(object.subscriptionID)
 		count++
 	}
-	present_ = object.bitmap_&32768 != 0
+	present_ = len(object.fieldSet_) > 15 && object.fieldSet_[15]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -183,7 +183,7 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 		stream.WriteString(object.summary)
 		count++
 	}
-	present_ = object.bitmap_&65536 != 0
+	present_ = len(object.fieldSet_) > 16 && object.fieldSet_[16]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -192,7 +192,7 @@ func WriteLogEntry(object *LogEntry, stream *jsoniter.Stream) {
 		stream.WriteString((object.timestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = object.bitmap_&131072 != 0
+	present_ = len(object.fieldSet_) > 17 && object.fieldSet_[17]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -217,7 +217,9 @@ func UnmarshalLogEntry(source interface{}) (object *LogEntry, err error) {
 
 // ReadLogEntry reads a value of the 'log_entry' type from the given iterator.
 func ReadLogEntry(iterator *jsoniter.Iterator) *LogEntry {
-	object := &LogEntry{}
+	object := &LogEntry{
+		fieldSet_: make([]bool, 18),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -227,22 +229,22 @@ func ReadLogEntry(iterator *jsoniter.Iterator) *LogEntry {
 		case "kind":
 			value := iterator.ReadString()
 			if value == LogEntryLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterID = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "cluster_uuid":
 			value := iterator.ReadString()
 			object.clusterUUID = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -250,49 +252,49 @@ func ReadLogEntry(iterator *jsoniter.Iterator) *LogEntry {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "created_by":
 			value := iterator.ReadString()
 			object.createdBy = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "description":
 			value := iterator.ReadString()
 			object.description = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "doc_references":
 			value := ReadStringList(iterator)
 			object.docReferences = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		case "event_stream_id":
 			value := iterator.ReadString()
 			object.eventStreamID = value
-			object.bitmap_ |= 512
+			object.fieldSet_[9] = true
 		case "internal_only":
 			value := iterator.ReadBool()
 			object.internalOnly = value
-			object.bitmap_ |= 1024
+			object.fieldSet_[10] = true
 		case "log_type":
 			text := iterator.ReadString()
 			value := LogType(text)
 			object.logType = value
-			object.bitmap_ |= 2048
+			object.fieldSet_[11] = true
 		case "service_name":
 			value := iterator.ReadString()
 			object.serviceName = value
-			object.bitmap_ |= 4096
+			object.fieldSet_[12] = true
 		case "severity":
 			text := iterator.ReadString()
 			value := Severity(text)
 			object.severity = value
-			object.bitmap_ |= 8192
+			object.fieldSet_[13] = true
 		case "subscription_id":
 			value := iterator.ReadString()
 			object.subscriptionID = value
-			object.bitmap_ |= 16384
+			object.fieldSet_[14] = true
 		case "summary":
 			value := iterator.ReadString()
 			object.summary = value
-			object.bitmap_ |= 32768
+			object.fieldSet_[15] = true
 		case "timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -300,11 +302,11 @@ func ReadLogEntry(iterator *jsoniter.Iterator) *LogEntry {
 				iterator.ReportError("", err.Error())
 			}
 			object.timestamp = value
-			object.bitmap_ |= 65536
+			object.fieldSet_[16] = true
 		case "username":
 			value := iterator.ReadString()
 			object.username = value
-			object.bitmap_ |= 131072
+			object.fieldSet_[17] = true
 		default:
 			iterator.ReadAny()
 		}

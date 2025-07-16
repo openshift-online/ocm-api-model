@@ -43,13 +43,13 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
+	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
 		stream.WriteString(AddonLinkKind)
 	} else {
 		stream.WriteString(AddonKind)
 	}
 	count++
-	if object.bitmap_&2 != 0 {
+	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if object.bitmap_&4 != 0 {
+	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0 && object.commonAnnotations != nil
+	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.commonAnnotations != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -95,7 +95,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = object.bitmap_&16 != 0 && object.commonLabels != nil
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.commonLabels != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -124,7 +124,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = object.bitmap_&32 != 0 && object.config != nil
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.config != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -133,7 +133,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		WriteAddonConfig(object.config, stream)
 		count++
 	}
-	present_ = object.bitmap_&64 != 0 && object.credentialsRequests != nil
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.credentialsRequests != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -142,7 +142,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		WriteCredentialRequestList(object.credentialsRequests, stream)
 		count++
 	}
-	present_ = object.bitmap_&128 != 0
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -151,7 +151,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		stream.WriteString(object.description)
 		count++
 	}
-	present_ = object.bitmap_&256 != 0
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -160,7 +160,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		stream.WriteString(object.docsLink)
 		count++
 	}
-	present_ = object.bitmap_&512 != 0
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -169,7 +169,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		stream.WriteBool(object.enabled)
 		count++
 	}
-	present_ = object.bitmap_&1024 != 0
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -178,7 +178,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		stream.WriteBool(object.hasExternalResources)
 		count++
 	}
-	present_ = object.bitmap_&2048 != 0
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -187,7 +187,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		stream.WriteBool(object.hidden)
 		count++
 	}
-	present_ = object.bitmap_&4096 != 0
+	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -196,7 +196,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		stream.WriteString(object.icon)
 		count++
 	}
-	present_ = object.bitmap_&8192 != 0
+	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -205,7 +205,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.installMode))
 		count++
 	}
-	present_ = object.bitmap_&16384 != 0
+	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -214,7 +214,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		stream.WriteString(object.label)
 		count++
 	}
-	present_ = object.bitmap_&32768 != 0
+	present_ = len(object.fieldSet_) > 15 && object.fieldSet_[15]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -223,7 +223,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		stream.WriteBool(object.managedService)
 		count++
 	}
-	present_ = object.bitmap_&65536 != 0
+	present_ = len(object.fieldSet_) > 16 && object.fieldSet_[16]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -232,7 +232,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = object.bitmap_&131072 != 0 && object.namespaces != nil
+	present_ = len(object.fieldSet_) > 17 && object.fieldSet_[17] && object.namespaces != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -241,7 +241,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		WriteAddonNamespaceList(object.namespaces, stream)
 		count++
 	}
-	present_ = object.bitmap_&262144 != 0
+	present_ = len(object.fieldSet_) > 18 && object.fieldSet_[18]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -250,7 +250,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		stream.WriteString(object.operatorName)
 		count++
 	}
-	present_ = object.bitmap_&524288 != 0 && object.parameters != nil
+	present_ = len(object.fieldSet_) > 19 && object.fieldSet_[19] && object.parameters != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -262,7 +262,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		stream.WriteObjectEnd()
 		count++
 	}
-	present_ = object.bitmap_&1048576 != 0 && object.requirements != nil
+	present_ = len(object.fieldSet_) > 20 && object.fieldSet_[20] && object.requirements != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -271,7 +271,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		WriteAddonRequirementList(object.requirements, stream)
 		count++
 	}
-	present_ = object.bitmap_&2097152 != 0
+	present_ = len(object.fieldSet_) > 21 && object.fieldSet_[21]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -280,7 +280,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		stream.WriteFloat64(object.resourceCost)
 		count++
 	}
-	present_ = object.bitmap_&4194304 != 0
+	present_ = len(object.fieldSet_) > 22 && object.fieldSet_[22]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -289,7 +289,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		stream.WriteString(object.resourceName)
 		count++
 	}
-	present_ = object.bitmap_&8388608 != 0 && object.subOperators != nil
+	present_ = len(object.fieldSet_) > 23 && object.fieldSet_[23] && object.subOperators != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -298,7 +298,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		WriteAddonSubOperatorList(object.subOperators, stream)
 		count++
 	}
-	present_ = object.bitmap_&16777216 != 0
+	present_ = len(object.fieldSet_) > 24 && object.fieldSet_[24]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -307,7 +307,7 @@ func WriteAddon(object *Addon, stream *jsoniter.Stream) {
 		stream.WriteString(object.targetNamespace)
 		count++
 	}
-	present_ = object.bitmap_&33554432 != 0 && object.version != nil
+	present_ = len(object.fieldSet_) > 25 && object.fieldSet_[25] && object.version != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -332,7 +332,9 @@ func UnmarshalAddon(source interface{}) (object *Addon, err error) {
 
 // ReadAddon reads a value of the 'addon' type from the given iterator.
 func ReadAddon(iterator *jsoniter.Iterator) *Addon {
-	object := &Addon{}
+	object := &Addon{
+		fieldSet_: make([]bool, 26),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -342,14 +344,14 @@ func ReadAddon(iterator *jsoniter.Iterator) *Addon {
 		case "kind":
 			value := iterator.ReadString()
 			if value == AddonLinkKind {
-				object.bitmap_ |= 1
+				object.fieldSet_[0] = true
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		case "href":
 			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
+			object.fieldSet_[2] = true
 		case "common_annotations":
 			value := map[string]string{}
 			for {
@@ -361,7 +363,7 @@ func ReadAddon(iterator *jsoniter.Iterator) *Addon {
 				value[key] = item
 			}
 			object.commonAnnotations = value
-			object.bitmap_ |= 8
+			object.fieldSet_[3] = true
 		case "common_labels":
 			value := map[string]string{}
 			for {
@@ -373,64 +375,64 @@ func ReadAddon(iterator *jsoniter.Iterator) *Addon {
 				value[key] = item
 			}
 			object.commonLabels = value
-			object.bitmap_ |= 16
+			object.fieldSet_[4] = true
 		case "config":
 			value := ReadAddonConfig(iterator)
 			object.config = value
-			object.bitmap_ |= 32
+			object.fieldSet_[5] = true
 		case "credentials_requests":
 			value := ReadCredentialRequestList(iterator)
 			object.credentialsRequests = value
-			object.bitmap_ |= 64
+			object.fieldSet_[6] = true
 		case "description":
 			value := iterator.ReadString()
 			object.description = value
-			object.bitmap_ |= 128
+			object.fieldSet_[7] = true
 		case "docs_link":
 			value := iterator.ReadString()
 			object.docsLink = value
-			object.bitmap_ |= 256
+			object.fieldSet_[8] = true
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.bitmap_ |= 512
+			object.fieldSet_[9] = true
 		case "has_external_resources":
 			value := iterator.ReadBool()
 			object.hasExternalResources = value
-			object.bitmap_ |= 1024
+			object.fieldSet_[10] = true
 		case "hidden":
 			value := iterator.ReadBool()
 			object.hidden = value
-			object.bitmap_ |= 2048
+			object.fieldSet_[11] = true
 		case "icon":
 			value := iterator.ReadString()
 			object.icon = value
-			object.bitmap_ |= 4096
+			object.fieldSet_[12] = true
 		case "install_mode":
 			text := iterator.ReadString()
 			value := AddonInstallMode(text)
 			object.installMode = value
-			object.bitmap_ |= 8192
+			object.fieldSet_[13] = true
 		case "label":
 			value := iterator.ReadString()
 			object.label = value
-			object.bitmap_ |= 16384
+			object.fieldSet_[14] = true
 		case "managed_service":
 			value := iterator.ReadBool()
 			object.managedService = value
-			object.bitmap_ |= 32768
+			object.fieldSet_[15] = true
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.bitmap_ |= 65536
+			object.fieldSet_[16] = true
 		case "namespaces":
 			value := ReadAddonNamespaceList(iterator)
 			object.namespaces = value
-			object.bitmap_ |= 131072
+			object.fieldSet_[17] = true
 		case "operator_name":
 			value := iterator.ReadString()
 			object.operatorName = value
-			object.bitmap_ |= 262144
+			object.fieldSet_[18] = true
 		case "parameters":
 			value := &AddonParameterList{}
 			for {
@@ -451,31 +453,31 @@ func ReadAddon(iterator *jsoniter.Iterator) *Addon {
 				}
 			}
 			object.parameters = value
-			object.bitmap_ |= 524288
+			object.fieldSet_[19] = true
 		case "requirements":
 			value := ReadAddonRequirementList(iterator)
 			object.requirements = value
-			object.bitmap_ |= 1048576
+			object.fieldSet_[20] = true
 		case "resource_cost":
 			value := iterator.ReadFloat64()
 			object.resourceCost = value
-			object.bitmap_ |= 2097152
+			object.fieldSet_[21] = true
 		case "resource_name":
 			value := iterator.ReadString()
 			object.resourceName = value
-			object.bitmap_ |= 4194304
+			object.fieldSet_[22] = true
 		case "sub_operators":
 			value := ReadAddonSubOperatorList(iterator)
 			object.subOperators = value
-			object.bitmap_ |= 8388608
+			object.fieldSet_[23] = true
 		case "target_namespace":
 			value := iterator.ReadString()
 			object.targetNamespace = value
-			object.bitmap_ |= 16777216
+			object.fieldSet_[24] = true
 		case "version":
 			value := ReadAddonVersion(iterator)
 			object.version = value
-			object.bitmap_ |= 33554432
+			object.fieldSet_[25] = true
 		default:
 			iterator.ReadAny()
 		}

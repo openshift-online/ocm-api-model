@@ -44,7 +44,7 @@ const ManagedIdentitiesRequirementsNilKind = "ManagedIdentitiesRequirementsNil"
 // Additionally, the Managed Identities that the end-users will need to precreate will have to have a
 // set of required permissions assigned to them which also have to be returned to the end users.
 type ManagedIdentitiesRequirements struct {
-	bitmap_                         uint32
+	fieldSet_                       []bool
 	id                              string
 	href                            string
 	controlPlaneOperatorsIdentities []*ControlPlaneOperatorIdentityRequirement
@@ -56,7 +56,7 @@ func (o *ManagedIdentitiesRequirements) Kind() string {
 	if o == nil {
 		return ManagedIdentitiesRequirementsNilKind
 	}
-	if o.bitmap_&1 != 0 {
+	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return ManagedIdentitiesRequirementsLinkKind
 	}
 	return ManagedIdentitiesRequirementsKind
@@ -64,12 +64,12 @@ func (o *ManagedIdentitiesRequirements) Kind() string {
 
 // Link returns true if this is a link.
 func (o *ManagedIdentitiesRequirements) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
+	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 }
 
 // ID returns the identifier of the object.
 func (o *ManagedIdentitiesRequirements) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.id
 	}
 	return ""
@@ -78,7 +78,7 @@ func (o *ManagedIdentitiesRequirements) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *ManagedIdentitiesRequirements) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.id
 	}
@@ -87,7 +87,7 @@ func (o *ManagedIdentitiesRequirements) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *ManagedIdentitiesRequirements) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.href
 	}
 	return ""
@@ -96,7 +96,7 @@ func (o *ManagedIdentitiesRequirements) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *ManagedIdentitiesRequirements) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.href
 	}
@@ -105,7 +105,17 @@ func (o *ManagedIdentitiesRequirements) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ManagedIdentitiesRequirements) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+
+	// Check all fields except the link flag (index 0)
+	for i := 1; i < len(o.fieldSet_); i++ {
+		if o.fieldSet_[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // ControlPlaneOperatorsIdentities returns the value of the 'control_plane_operators_identities' attribute, or
@@ -113,7 +123,7 @@ func (o *ManagedIdentitiesRequirements) Empty() bool {
 //
 // The control plane operators managed identities requirements
 func (o *ManagedIdentitiesRequirements) ControlPlaneOperatorsIdentities() []*ControlPlaneOperatorIdentityRequirement {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.controlPlaneOperatorsIdentities
 	}
 	return nil
@@ -124,7 +134,7 @@ func (o *ManagedIdentitiesRequirements) ControlPlaneOperatorsIdentities() []*Con
 //
 // The control plane operators managed identities requirements
 func (o *ManagedIdentitiesRequirements) GetControlPlaneOperatorsIdentities() (value []*ControlPlaneOperatorIdentityRequirement, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.controlPlaneOperatorsIdentities
 	}
@@ -136,7 +146,7 @@ func (o *ManagedIdentitiesRequirements) GetControlPlaneOperatorsIdentities() (va
 //
 // The data plane operators managed identities requirements
 func (o *ManagedIdentitiesRequirements) DataPlaneOperatorsIdentities() []*DataPlaneOperatorIdentityRequirement {
-	if o != nil && o.bitmap_&16 != 0 {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.dataPlaneOperatorsIdentities
 	}
 	return nil
@@ -147,7 +157,7 @@ func (o *ManagedIdentitiesRequirements) DataPlaneOperatorsIdentities() []*DataPl
 //
 // The data plane operators managed identities requirements
 func (o *ManagedIdentitiesRequirements) GetDataPlaneOperatorsIdentities() (value []*DataPlaneOperatorIdentityRequirement, ok bool) {
-	ok = o != nil && o.bitmap_&16 != 0
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.dataPlaneOperatorsIdentities
 	}

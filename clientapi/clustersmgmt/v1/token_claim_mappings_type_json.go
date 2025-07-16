@@ -42,7 +42,7 @@ func WriteTokenClaimMappings(object *TokenClaimMappings, stream *jsoniter.Stream
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = object.bitmap_&1 != 0 && object.groups != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.groups != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteTokenClaimMappings(object *TokenClaimMappings, stream *jsoniter.Stream
 		WriteGroupsClaim(object.groups, stream)
 		count++
 	}
-	present_ = object.bitmap_&2 != 0 && object.userName != nil
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.userName != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,9 @@ func UnmarshalTokenClaimMappings(source interface{}) (object *TokenClaimMappings
 
 // ReadTokenClaimMappings reads a value of the 'token_claim_mappings' type from the given iterator.
 func ReadTokenClaimMappings(iterator *jsoniter.Iterator) *TokenClaimMappings {
-	object := &TokenClaimMappings{}
+	object := &TokenClaimMappings{
+		fieldSet_: make([]bool, 2),
+	}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -86,11 +88,11 @@ func ReadTokenClaimMappings(iterator *jsoniter.Iterator) *TokenClaimMappings {
 		case "groups":
 			value := ReadGroupsClaim(iterator)
 			object.groups = value
-			object.bitmap_ |= 1
+			object.fieldSet_[0] = true
 		case "username":
 			value := ReadUsernameClaim(iterator)
 			object.userName = value
-			object.bitmap_ |= 2
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}
