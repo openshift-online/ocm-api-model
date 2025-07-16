@@ -19,28 +19,36 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// BackupBuilder contains the data and logic needed to build 'backup' objects.
-//
 // Representation of a Backup.
 type BackupBuilder struct {
-	bitmap_ uint32
-	enabled bool
+	fieldSet_ []bool
+	enabled   bool
 }
 
 // NewBackup creates a new builder of 'backup' objects.
 func NewBackup() *BackupBuilder {
-	return &BackupBuilder{}
+	return &BackupBuilder{
+		fieldSet_: make([]bool, 1),
+	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *BackupBuilder) Empty() bool {
-	return b == nil || b.bitmap_ == 0
+	if b == nil || len(b.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range b.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *BackupBuilder) Enabled(value bool) *BackupBuilder {
 	b.enabled = value
-	b.bitmap_ |= 1
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -49,7 +57,10 @@ func (b *BackupBuilder) Copy(object *Backup) *BackupBuilder {
 	if object == nil {
 		return b
 	}
-	b.bitmap_ = object.bitmap_
+	if len(object.fieldSet_) > 0 {
+		b.fieldSet_ = make([]bool, len(object.fieldSet_))
+		copy(b.fieldSet_, object.fieldSet_)
+	}
 	b.enabled = object.enabled
 	return b
 }
@@ -57,7 +68,10 @@ func (b *BackupBuilder) Copy(object *Backup) *BackupBuilder {
 // Build creates a 'backup' object using the configuration stored in the builder.
 func (b *BackupBuilder) Build() (object *Backup, err error) {
 	object = new(Backup)
-	object.bitmap_ = b.bitmap_
+	if len(b.fieldSet_) > 0 {
+		object.fieldSet_ = make([]bool, len(b.fieldSet_))
+		copy(object.fieldSet_, b.fieldSet_)
+	}
 	object.enabled = b.enabled
 	return
 }
