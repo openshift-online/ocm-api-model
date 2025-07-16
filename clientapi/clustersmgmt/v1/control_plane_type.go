@@ -23,13 +23,21 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Representation of a Control Plane
 type ControlPlane struct {
-	bitmap_ uint32
-	backup  *Backup
+	fieldSet_ []bool
+	backup    *Backup
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ControlPlane) Empty() bool {
-	return o == nil || o.bitmap_ == 0
+	if o == nil || len(o.fieldSet_) == 0 {
+		return true
+	}
+	for _, set := range o.fieldSet_ {
+		if set {
+			return false
+		}
+	}
+	return true
 }
 
 // Backup returns the value of the 'backup' attribute, or
@@ -37,7 +45,7 @@ func (o *ControlPlane) Empty() bool {
 //
 // Information about the backup of the control plane
 func (o *ControlPlane) Backup() *Backup {
-	if o != nil && o.bitmap_&1 != 0 {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.backup
 	}
 	return nil
@@ -48,7 +56,7 @@ func (o *ControlPlane) Backup() *Backup {
 //
 // Information about the backup of the control plane
 func (o *ControlPlane) GetBackup() (value *Backup, ok bool) {
-	ok = o != nil && o.bitmap_&1 != 0
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.backup
 	}
