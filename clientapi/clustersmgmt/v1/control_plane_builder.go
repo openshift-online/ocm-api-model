@@ -24,8 +24,6 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 // Representation of a Control Plane
 type ControlPlaneBuilder struct {
 	bitmap_ uint32
-	id      string
-	href    string
 	backup  *BackupBuilder
 }
 
@@ -34,29 +32,9 @@ func NewControlPlane() *ControlPlaneBuilder {
 	return &ControlPlaneBuilder{}
 }
 
-// Link sets the flag that indicates if this is a link.
-func (b *ControlPlaneBuilder) Link(value bool) *ControlPlaneBuilder {
-	b.bitmap_ |= 1
-	return b
-}
-
-// ID sets the identifier of the object.
-func (b *ControlPlaneBuilder) ID(value string) *ControlPlaneBuilder {
-	b.id = value
-	b.bitmap_ |= 2
-	return b
-}
-
-// HREF sets the link to the object.
-func (b *ControlPlaneBuilder) HREF(value string) *ControlPlaneBuilder {
-	b.href = value
-	b.bitmap_ |= 4
-	return b
-}
-
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ControlPlaneBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	return b == nil || b.bitmap_ == 0
 }
 
 // Backup sets the value of the 'backup' attribute to the given value.
@@ -65,9 +43,9 @@ func (b *ControlPlaneBuilder) Empty() bool {
 func (b *ControlPlaneBuilder) Backup(value *BackupBuilder) *ControlPlaneBuilder {
 	b.backup = value
 	if value != nil {
-		b.bitmap_ |= 8
+		b.bitmap_ |= 1
 	} else {
-		b.bitmap_ &^= 8
+		b.bitmap_ &^= 1
 	}
 	return b
 }
@@ -78,8 +56,6 @@ func (b *ControlPlaneBuilder) Copy(object *ControlPlane) *ControlPlaneBuilder {
 		return b
 	}
 	b.bitmap_ = object.bitmap_
-	b.id = object.id
-	b.href = object.href
 	if object.backup != nil {
 		b.backup = NewBackup().Copy(object.backup)
 	} else {
@@ -91,8 +67,6 @@ func (b *ControlPlaneBuilder) Copy(object *ControlPlane) *ControlPlaneBuilder {
 // Build creates a 'control_plane' object using the configuration stored in the builder.
 func (b *ControlPlaneBuilder) Build() (object *ControlPlane, err error) {
 	object = new(ControlPlane)
-	object.id = b.id
-	object.href = b.href
 	object.bitmap_ = b.bitmap_
 	if b.backup != nil {
 		object.backup, err = b.backup.Build()

@@ -19,83 +19,17 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// ControlPlaneKind is the name of the type used to represent objects
-// of type 'control_plane'.
-const ControlPlaneKind = "ControlPlane"
-
-// ControlPlaneLinkKind is the name of the type used to represent links
-// to objects of type 'control_plane'.
-const ControlPlaneLinkKind = "ControlPlaneLink"
-
-// ControlPlaneNilKind is the name of the type used to nil references
-// to objects of type 'control_plane'.
-const ControlPlaneNilKind = "ControlPlaneNil"
-
 // ControlPlane represents the values of the 'control_plane' type.
 //
 // Representation of a Control Plane
 type ControlPlane struct {
 	bitmap_ uint32
-	id      string
-	href    string
 	backup  *Backup
-}
-
-// Kind returns the name of the type of the object.
-func (o *ControlPlane) Kind() string {
-	if o == nil {
-		return ControlPlaneNilKind
-	}
-	if o.bitmap_&1 != 0 {
-		return ControlPlaneLinkKind
-	}
-	return ControlPlaneKind
-}
-
-// Link returns true if this is a link.
-func (o *ControlPlane) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
-}
-
-// ID returns the identifier of the object.
-func (o *ControlPlane) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
-		return o.id
-	}
-	return ""
-}
-
-// GetID returns the identifier of the object and a flag indicating if the
-// identifier has a value.
-func (o *ControlPlane) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
-	if ok {
-		value = o.id
-	}
-	return
-}
-
-// HREF returns the link to the object.
-func (o *ControlPlane) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
-		return o.href
-	}
-	return ""
-}
-
-// GetHREF returns the link of the object and a flag indicating if the
-// link has a value.
-func (o *ControlPlane) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
-	if ok {
-		value = o.href
-	}
-	return
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ControlPlane) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	return o == nil || o.bitmap_ == 0
 }
 
 // Backup returns the value of the 'backup' attribute, or
@@ -103,7 +37,7 @@ func (o *ControlPlane) Empty() bool {
 //
 // Information about the backup of the control plane
 func (o *ControlPlane) Backup() *Backup {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.backup
 	}
 	return nil
@@ -114,7 +48,7 @@ func (o *ControlPlane) Backup() *Backup {
 //
 // Information about the backup of the control plane
 func (o *ControlPlane) GetBackup() (value *Backup, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.backup
 	}
@@ -138,40 +72,6 @@ type ControlPlaneList struct {
 	href  string
 	link  bool
 	items []*ControlPlane
-}
-
-// Kind returns the name of the type of the object.
-func (l *ControlPlaneList) Kind() string {
-	if l == nil {
-		return ControlPlaneListNilKind
-	}
-	if l.link {
-		return ControlPlaneListLinkKind
-	}
-	return ControlPlaneListKind
-}
-
-// Link returns true iif this is a link.
-func (l *ControlPlaneList) Link() bool {
-	return l != nil && l.link
-}
-
-// HREF returns the link to the list.
-func (l *ControlPlaneList) HREF() string {
-	if l != nil {
-		return l.href
-	}
-	return ""
-}
-
-// GetHREF returns the link of the list and a flag indicating if the
-// link has a value.
-func (l *ControlPlaneList) GetHREF() (value string, ok bool) {
-	ok = l != nil && l.href != ""
-	if ok {
-		value = l.href
-	}
-	return
 }
 
 // Len returns the length of the list.

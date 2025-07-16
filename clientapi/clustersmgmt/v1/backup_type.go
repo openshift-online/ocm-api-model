@@ -19,83 +19,17 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// BackupKind is the name of the type used to represent objects
-// of type 'backup'.
-const BackupKind = "Backup"
-
-// BackupLinkKind is the name of the type used to represent links
-// to objects of type 'backup'.
-const BackupLinkKind = "BackupLink"
-
-// BackupNilKind is the name of the type used to nil references
-// to objects of type 'backup'.
-const BackupNilKind = "BackupNil"
-
 // Backup represents the values of the 'backup' type.
 //
 // Representation of a Backup.
 type Backup struct {
 	bitmap_ uint32
-	id      string
-	href    string
 	enabled bool
-}
-
-// Kind returns the name of the type of the object.
-func (o *Backup) Kind() string {
-	if o == nil {
-		return BackupNilKind
-	}
-	if o.bitmap_&1 != 0 {
-		return BackupLinkKind
-	}
-	return BackupKind
-}
-
-// Link returns true if this is a link.
-func (o *Backup) Link() bool {
-	return o != nil && o.bitmap_&1 != 0
-}
-
-// ID returns the identifier of the object.
-func (o *Backup) ID() string {
-	if o != nil && o.bitmap_&2 != 0 {
-		return o.id
-	}
-	return ""
-}
-
-// GetID returns the identifier of the object and a flag indicating if the
-// identifier has a value.
-func (o *Backup) GetID() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&2 != 0
-	if ok {
-		value = o.id
-	}
-	return
-}
-
-// HREF returns the link to the object.
-func (o *Backup) HREF() string {
-	if o != nil && o.bitmap_&4 != 0 {
-		return o.href
-	}
-	return ""
-}
-
-// GetHREF returns the link of the object and a flag indicating if the
-// link has a value.
-func (o *Backup) GetHREF() (value string, ok bool) {
-	ok = o != nil && o.bitmap_&4 != 0
-	if ok {
-		value = o.href
-	}
-	return
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Backup) Empty() bool {
-	return o == nil || o.bitmap_&^1 == 0
+	return o == nil || o.bitmap_ == 0
 }
 
 // Enabled returns the value of the 'enabled' attribute, or
@@ -103,7 +37,7 @@ func (o *Backup) Empty() bool {
 //
 // Indicates whether the backup is enabled
 func (o *Backup) Enabled() bool {
-	if o != nil && o.bitmap_&8 != 0 {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.enabled
 	}
 	return false
@@ -114,7 +48,7 @@ func (o *Backup) Enabled() bool {
 //
 // Indicates whether the backup is enabled
 func (o *Backup) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && o.bitmap_&8 != 0
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.enabled
 	}
@@ -138,40 +72,6 @@ type BackupList struct {
 	href  string
 	link  bool
 	items []*Backup
-}
-
-// Kind returns the name of the type of the object.
-func (l *BackupList) Kind() string {
-	if l == nil {
-		return BackupListNilKind
-	}
-	if l.link {
-		return BackupListLinkKind
-	}
-	return BackupListKind
-}
-
-// Link returns true iif this is a link.
-func (l *BackupList) Link() bool {
-	return l != nil && l.link
-}
-
-// HREF returns the link to the list.
-func (l *BackupList) HREF() string {
-	if l != nil {
-		return l.href
-	}
-	return ""
-}
-
-// GetHREF returns the link of the list and a flag indicating if the
-// link has a value.
-func (l *BackupList) GetHREF() (value string, ok bool) {
-	ok = l != nil && l.href != ""
-	if ok {
-		value = l.href
-	}
-	return
 }
 
 // Len returns the length of the list.

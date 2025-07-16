@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Representation of a Control Plane
-class ControlPlane {
+struct ControlPlane {
 	// Information about the backup of the control plane
 	Backup Backup
 

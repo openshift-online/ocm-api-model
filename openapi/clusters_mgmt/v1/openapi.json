@@ -15287,18 +15287,6 @@
       "Backup": {
         "description": "Representation of a Backup.",
         "properties": {
-          "kind": {
-            "description": "Indicates the type of this object. Will be 'Backup' if this is a complete object or 'BackupLink' if it is just a link.",
-            "type": "string"
-          },
-          "id": {
-            "description": "Unique identifier of the object.",
-            "type": "string"
-          },
-          "href": {
-            "description": "Self link.",
-            "type": "string"
-          },
           "enabled": {
             "description": "Indicates whether the backup is enabled",
             "type": "boolean"
@@ -16440,18 +16428,6 @@
       "ControlPlane": {
         "description": "Representation of a Control Plane",
         "properties": {
-          "kind": {
-            "description": "Indicates the type of this object. Will be 'ControlPlane' if this is a complete object or 'ControlPlaneLink' if it is just a link.",
-            "type": "string"
-          },
-          "id": {
-            "description": "Unique identifier of the object.",
-            "type": "string"
-          },
-          "href": {
-            "description": "Self link.",
-            "type": "string"
-          },
           "backup": {
             "description": "Information about the backup of the control plane",
             "$ref": "#/components/schemas/Backup"

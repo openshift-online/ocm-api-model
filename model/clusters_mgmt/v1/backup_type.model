@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Representation of a Backup.
-class Backup {
+struct Backup {
 	// Indicates whether the backup is enabled
 	Enabled Boolean
 }
