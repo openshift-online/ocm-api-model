@@ -41,31 +41,8 @@ func MarshalBackup(object *Backup, writer io.Writer) error {
 func WriteBackup(object *Backup, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
-	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
-		stream.WriteString(BackupLinkKind)
-	} else {
-		stream.WriteString(BackupKind)
-	}
-	count++
-	if object.bitmap_&2 != 0 {
-		if count > 0 {
-			stream.WriteMore()
-		}
-		stream.WriteObjectField("id")
-		stream.WriteString(object.id)
-		count++
-	}
-	if object.bitmap_&4 != 0 {
-		if count > 0 {
-			stream.WriteMore()
-		}
-		stream.WriteObjectField("href")
-		stream.WriteString(object.href)
-		count++
-	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -97,21 +74,10 @@ func ReadBackup(iterator *jsoniter.Iterator) *Backup {
 			break
 		}
 		switch field {
-		case "kind":
-			value := iterator.ReadString()
-			if value == BackupLinkKind {
-				object.bitmap_ |= 1
-			}
-		case "id":
-			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
-		case "href":
-			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.bitmap_ |= 8
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

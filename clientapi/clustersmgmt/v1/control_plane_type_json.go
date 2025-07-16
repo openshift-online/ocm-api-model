@@ -41,31 +41,8 @@ func MarshalControlPlane(object *ControlPlane, writer io.Writer) error {
 func WriteControlPlane(object *ControlPlane, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
-	stream.WriteObjectField("kind")
-	if object.bitmap_&1 != 0 {
-		stream.WriteString(ControlPlaneLinkKind)
-	} else {
-		stream.WriteString(ControlPlaneKind)
-	}
-	count++
-	if object.bitmap_&2 != 0 {
-		if count > 0 {
-			stream.WriteMore()
-		}
-		stream.WriteObjectField("id")
-		stream.WriteString(object.id)
-		count++
-	}
-	if object.bitmap_&4 != 0 {
-		if count > 0 {
-			stream.WriteMore()
-		}
-		stream.WriteObjectField("href")
-		stream.WriteString(object.href)
-		count++
-	}
 	var present_ bool
-	present_ = object.bitmap_&8 != 0 && object.backup != nil
+	present_ = object.bitmap_&1 != 0 && object.backup != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -97,21 +74,10 @@ func ReadControlPlane(iterator *jsoniter.Iterator) *ControlPlane {
 			break
 		}
 		switch field {
-		case "kind":
-			value := iterator.ReadString()
-			if value == ControlPlaneLinkKind {
-				object.bitmap_ |= 1
-			}
-		case "id":
-			object.id = iterator.ReadString()
-			object.bitmap_ |= 2
-		case "href":
-			object.href = iterator.ReadString()
-			object.bitmap_ |= 4
 		case "backup":
 			value := ReadBackup(iterator)
 			object.backup = value
-			object.bitmap_ |= 8
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

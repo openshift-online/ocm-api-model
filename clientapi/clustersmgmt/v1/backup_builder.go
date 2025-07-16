@@ -24,8 +24,6 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 // Representation of a Backup.
 type BackupBuilder struct {
 	bitmap_ uint32
-	id      string
-	href    string
 	enabled bool
 }
 
@@ -34,35 +32,15 @@ func NewBackup() *BackupBuilder {
 	return &BackupBuilder{}
 }
 
-// Link sets the flag that indicates if this is a link.
-func (b *BackupBuilder) Link(value bool) *BackupBuilder {
-	b.bitmap_ |= 1
-	return b
-}
-
-// ID sets the identifier of the object.
-func (b *BackupBuilder) ID(value string) *BackupBuilder {
-	b.id = value
-	b.bitmap_ |= 2
-	return b
-}
-
-// HREF sets the link to the object.
-func (b *BackupBuilder) HREF(value string) *BackupBuilder {
-	b.href = value
-	b.bitmap_ |= 4
-	return b
-}
-
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *BackupBuilder) Empty() bool {
-	return b == nil || b.bitmap_&^1 == 0
+	return b == nil || b.bitmap_ == 0
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *BackupBuilder) Enabled(value bool) *BackupBuilder {
 	b.enabled = value
-	b.bitmap_ |= 8
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -72,8 +50,6 @@ func (b *BackupBuilder) Copy(object *Backup) *BackupBuilder {
 		return b
 	}
 	b.bitmap_ = object.bitmap_
-	b.id = object.id
-	b.href = object.href
 	b.enabled = object.enabled
 	return b
 }
@@ -81,8 +57,6 @@ func (b *BackupBuilder) Copy(object *Backup) *BackupBuilder {
 // Build creates a 'backup' object using the configuration stored in the builder.
 func (b *BackupBuilder) Build() (object *Backup, err error) {
 	object = new(Backup)
-	object.id = b.id
-	object.href = b.href
 	object.bitmap_ = b.bitmap_
 	object.enabled = b.enabled
 	return
