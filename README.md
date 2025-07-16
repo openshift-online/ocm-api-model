@@ -32,8 +32,9 @@ also known as the _model_.
 
 ### Update the `metamodel` Generator Flow
 1. Update the `ocm-api-metamodel` version in the `metamodel_generator` `go mod` file.
-2. Run `make update`.
-3. Run `make verify`.
+2. Run `cd metamodel_generator && go mod tidy` to download the required version and fix `go.sum` file.
+3. Run `make update`.
+4. Run `make verify`.
 
 ### Update the `metamodel` Generator Flow to a Dev Branch
 1. Use the `replace` directive in the `ocm-api-metamodel` version in the `metamodel_generator` `go mod` file.
