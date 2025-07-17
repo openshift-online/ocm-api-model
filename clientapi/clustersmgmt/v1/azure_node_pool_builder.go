@@ -26,6 +26,7 @@ type AzureNodePoolBuilder struct {
 	osDiskStorageAccountType         string
 	vmSize                           string
 	encryptionAtHost                 *AzureNodePoolEncryptionAtHostBuilder
+	osDisk                           *AzureNodePoolOsDiskBuilder
 	osDiskSseEncryptionSetResourceId string
 	resourceName                     string
 	ephemeralOSDiskEnabled           bool
@@ -34,7 +35,7 @@ type AzureNodePoolBuilder struct {
 // NewAzureNodePool creates a new builder of 'azure_node_pool' objects.
 func NewAzureNodePool() *AzureNodePoolBuilder {
 	return &AzureNodePoolBuilder{
-		fieldSet_: make([]bool, 7),
+		fieldSet_: make([]bool, 8),
 	}
 }
 
@@ -93,17 +94,30 @@ func (b *AzureNodePoolBuilder) EphemeralOSDiskEnabled(value bool) *AzureNodePool
 	return b
 }
 
+// OsDisk sets the value of the 'os_disk' attribute to the given value.
+//
+// Defines the configuration of a Node Pool's OS disk.
+func (b *AzureNodePoolBuilder) OsDisk(value *AzureNodePoolOsDiskBuilder) *AzureNodePoolBuilder {
+	b.osDisk = value
+	if value != nil {
+		b.fieldSet_[5] = true
+	} else {
+		b.fieldSet_[5] = false
+	}
+	return b
+}
+
 // OsDiskSseEncryptionSetResourceId sets the value of the 'os_disk_sse_encryption_set_resource_id' attribute to the given value.
 func (b *AzureNodePoolBuilder) OsDiskSseEncryptionSetResourceId(value string) *AzureNodePoolBuilder {
 	b.osDiskSseEncryptionSetResourceId = value
-	b.fieldSet_[5] = true
+	b.fieldSet_[6] = true
 	return b
 }
 
 // ResourceName sets the value of the 'resource_name' attribute to the given value.
 func (b *AzureNodePoolBuilder) ResourceName(value string) *AzureNodePoolBuilder {
 	b.resourceName = value
-	b.fieldSet_[6] = true
+	b.fieldSet_[7] = true
 	return b
 }
 
@@ -125,6 +139,11 @@ func (b *AzureNodePoolBuilder) Copy(object *AzureNodePool) *AzureNodePoolBuilder
 		b.encryptionAtHost = nil
 	}
 	b.ephemeralOSDiskEnabled = object.ephemeralOSDiskEnabled
+	if object.osDisk != nil {
+		b.osDisk = NewAzureNodePoolOsDisk().Copy(object.osDisk)
+	} else {
+		b.osDisk = nil
+	}
 	b.osDiskSseEncryptionSetResourceId = object.osDiskSseEncryptionSetResourceId
 	b.resourceName = object.resourceName
 	return b
@@ -147,6 +166,12 @@ func (b *AzureNodePoolBuilder) Build() (object *AzureNodePool, err error) {
 		}
 	}
 	object.ephemeralOSDiskEnabled = b.ephemeralOSDiskEnabled
+	if b.osDisk != nil {
+		object.osDisk, err = b.osDisk.Build()
+		if err != nil {
+			return
+		}
+	}
 	object.osDiskSseEncryptionSetResourceId = b.osDiskSseEncryptionSetResourceId
 	object.resourceName = b.resourceName
 	return
