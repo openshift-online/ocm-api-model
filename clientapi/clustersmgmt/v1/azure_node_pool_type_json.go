@@ -87,7 +87,16 @@ func WriteAzureNodePool(object *AzureNodePool, stream *jsoniter.Stream) {
 		stream.WriteBool(object.ephemeralOSDiskEnabled)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.osDisk != nil
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
+		stream.WriteObjectField("os_disk")
+		WriteAzureNodePoolOsDisk(object.osDisk, stream)
+		count++
+	}
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -96,7 +105,7 @@ func WriteAzureNodePool(object *AzureNodePool, stream *jsoniter.Stream) {
 		stream.WriteString(object.osDiskSseEncryptionSetResourceId)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -122,7 +131,7 @@ func UnmarshalAzureNodePool(source interface{}) (object *AzureNodePool, err erro
 // ReadAzureNodePool reads a value of the 'azure_node_pool' type from the given iterator.
 func ReadAzureNodePool(iterator *jsoniter.Iterator) *AzureNodePool {
 	object := &AzureNodePool{
-		fieldSet_: make([]bool, 7),
+		fieldSet_: make([]bool, 8),
 	}
 	for {
 		field := iterator.ReadObject()
@@ -150,14 +159,18 @@ func ReadAzureNodePool(iterator *jsoniter.Iterator) *AzureNodePool {
 			value := iterator.ReadBool()
 			object.ephemeralOSDiskEnabled = value
 			object.fieldSet_[4] = true
+		case "os_disk":
+			value := ReadAzureNodePoolOsDisk(iterator)
+			object.osDisk = value
+			object.fieldSet_[5] = true
 		case "os_disk_sse_encryption_set_resource_id":
 			value := iterator.ReadString()
 			object.osDiskSseEncryptionSetResourceId = value
-			object.fieldSet_[5] = true
+			object.fieldSet_[6] = true
 		case "resource_name":
 			value := iterator.ReadString()
 			object.resourceName = value
-			object.fieldSet_[6] = true
+			object.fieldSet_[7] = true
 		default:
 			iterator.ReadAny()
 		}
