@@ -253,9 +253,6 @@ class Cluster {
 	// Registry configuration for the cluster
 	RegistryConfig ClusterRegistryConfig
 
-	// OpenShift Cluster Capabilities configuration
-	Capabilities ClusterCapabilities
-
 	// Image registry configuration.
 	// For non ARO-HCP clusters, it is readonly and always enabled
 	ImageRegistry ClusterImageRegistry
