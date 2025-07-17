@@ -104,7 +104,16 @@ func WriteAWSNodePool(object *AWSNodePool, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.capacityReservation != nil
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
+		stream.WriteObjectField("capacity_reservation")
+		WriteAWSCapacityReservation(object.capacityReservation, stream)
+		count++
+	}
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -113,7 +122,7 @@ func WriteAWSNodePool(object *AWSNodePool, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.ec2MetadataHttpTokens))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -122,7 +131,7 @@ func WriteAWSNodePool(object *AWSNodePool, stream *jsoniter.Stream) {
 		stream.WriteString(object.instanceProfile)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -131,7 +140,7 @@ func WriteAWSNodePool(object *AWSNodePool, stream *jsoniter.Stream) {
 		stream.WriteString(object.instanceType)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8] && object.rootVolume != nil
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9] && object.rootVolume != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -140,7 +149,7 @@ func WriteAWSNodePool(object *AWSNodePool, stream *jsoniter.Stream) {
 		WriteAWSVolume(object.rootVolume, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9] && object.subnetOutposts != nil
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10] && object.subnetOutposts != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -169,7 +178,7 @@ func WriteAWSNodePool(object *AWSNodePool, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10] && object.tags != nil
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11] && object.tags != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -215,7 +224,7 @@ func UnmarshalAWSNodePool(source interface{}) (object *AWSNodePool, err error) {
 // ReadAWSNodePool reads a value of the 'AWS_node_pool' type from the given iterator.
 func ReadAWSNodePool(iterator *jsoniter.Iterator) *AWSNodePool {
 	object := &AWSNodePool{
-		fieldSet_: make([]bool, 11),
+		fieldSet_: make([]bool, 12),
 	}
 	for {
 		field := iterator.ReadObject()
@@ -250,23 +259,27 @@ func ReadAWSNodePool(iterator *jsoniter.Iterator) *AWSNodePool {
 			}
 			object.availabilityZoneTypes = value
 			object.fieldSet_[4] = true
+		case "capacity_reservation":
+			value := ReadAWSCapacityReservation(iterator)
+			object.capacityReservation = value
+			object.fieldSet_[5] = true
 		case "ec2_metadata_http_tokens":
 			text := iterator.ReadString()
 			value := Ec2MetadataHttpTokens(text)
 			object.ec2MetadataHttpTokens = value
-			object.fieldSet_[5] = true
+			object.fieldSet_[6] = true
 		case "instance_profile":
 			value := iterator.ReadString()
 			object.instanceProfile = value
-			object.fieldSet_[6] = true
+			object.fieldSet_[7] = true
 		case "instance_type":
 			value := iterator.ReadString()
 			object.instanceType = value
-			object.fieldSet_[7] = true
+			object.fieldSet_[8] = true
 		case "root_volume":
 			value := ReadAWSVolume(iterator)
 			object.rootVolume = value
-			object.fieldSet_[8] = true
+			object.fieldSet_[9] = true
 		case "subnet_outposts":
 			value := map[string]string{}
 			for {
@@ -278,7 +291,7 @@ func ReadAWSNodePool(iterator *jsoniter.Iterator) *AWSNodePool {
 				value[key] = item
 			}
 			object.subnetOutposts = value
-			object.fieldSet_[9] = true
+			object.fieldSet_[10] = true
 		case "tags":
 			value := map[string]string{}
 			for {
@@ -290,7 +303,7 @@ func ReadAWSNodePool(iterator *jsoniter.Iterator) *AWSNodePool {
 				value[key] = item
 			}
 			object.tags = value
-			object.fieldSet_[10] = true
+			object.fieldSet_[11] = true
 		default:
 			iterator.ReadAny()
 		}
