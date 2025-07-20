@@ -47,6 +47,9 @@ func (b *FlavourNodesBuilder) Empty() bool {
 
 // Master sets the value of the 'master' attribute to the given value.
 func (b *FlavourNodesBuilder) Master(value int) *FlavourNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.master = value
 	b.fieldSet_[0] = true
 	return b

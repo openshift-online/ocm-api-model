@@ -38,12 +38,18 @@ func NewCloudProvider() *CloudProviderBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *CloudProviderBuilder) Link(value bool) *CloudProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *CloudProviderBuilder) ID(value string) *CloudProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -51,6 +57,9 @@ func (b *CloudProviderBuilder) ID(value string) *CloudProviderBuilder {
 
 // HREF sets the link to the object.
 func (b *CloudProviderBuilder) HREF(value string) *CloudProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *CloudProviderBuilder) Empty() bool {
 
 // DisplayName sets the value of the 'display_name' attribute to the given value.
 func (b *CloudProviderBuilder) DisplayName(value string) *CloudProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.displayName = value
 	b.fieldSet_[3] = true
 	return b
@@ -79,6 +91,9 @@ func (b *CloudProviderBuilder) DisplayName(value string) *CloudProviderBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *CloudProviderBuilder) Name(value string) *CloudProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.name = value
 	b.fieldSet_[4] = true
 	return b
@@ -86,6 +101,9 @@ func (b *CloudProviderBuilder) Name(value string) *CloudProviderBuilder {
 
 // Regions sets the value of the 'regions' attribute to the given values.
 func (b *CloudProviderBuilder) Regions(values ...*CloudRegionBuilder) *CloudProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.regions = make([]*CloudRegionBuilder, len(values))
 	copy(b.regions, values)
 	b.fieldSet_[5] = true

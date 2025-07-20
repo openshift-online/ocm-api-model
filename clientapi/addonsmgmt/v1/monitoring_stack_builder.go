@@ -48,6 +48,9 @@ func (b *MonitoringStackBuilder) Empty() bool {
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *MonitoringStackBuilder) Enabled(value bool) *MonitoringStackBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.enabled = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *MonitoringStackBuilder) Enabled(value bool) *MonitoringStackBuilder {
 //
 // Representation of Monitoring Stack Resources
 func (b *MonitoringStackBuilder) Resources(value *MonitoringStackResourcesBuilder) *MonitoringStackBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.resources = value
 	if value != nil {
 		b.fieldSet_[1] = true

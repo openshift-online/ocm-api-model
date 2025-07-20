@@ -50,6 +50,9 @@ func (b *GCPEncryptionKeyBuilder) Empty() bool {
 
 // KMSKeyServiceAccount sets the value of the 'KMS_key_service_account' attribute to the given value.
 func (b *GCPEncryptionKeyBuilder) KMSKeyServiceAccount(value string) *GCPEncryptionKeyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.kmsKeyServiceAccount = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *GCPEncryptionKeyBuilder) KMSKeyServiceAccount(value string) *GCPEncrypt
 
 // KeyLocation sets the value of the 'key_location' attribute to the given value.
 func (b *GCPEncryptionKeyBuilder) KeyLocation(value string) *GCPEncryptionKeyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.keyLocation = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *GCPEncryptionKeyBuilder) KeyLocation(value string) *GCPEncryptionKeyBui
 
 // KeyName sets the value of the 'key_name' attribute to the given value.
 func (b *GCPEncryptionKeyBuilder) KeyName(value string) *GCPEncryptionKeyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.keyName = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *GCPEncryptionKeyBuilder) KeyName(value string) *GCPEncryptionKeyBuilder
 
 // KeyRing sets the value of the 'key_ring' attribute to the given value.
 func (b *GCPEncryptionKeyBuilder) KeyRing(value string) *GCPEncryptionKeyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.keyRing = value
 	b.fieldSet_[3] = true
 	return b

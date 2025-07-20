@@ -82,12 +82,18 @@ func NewServiceCluster() *ServiceClusterBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ServiceClusterBuilder) Link(value bool) *ServiceClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ServiceClusterBuilder) ID(value string) *ServiceClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -95,6 +101,9 @@ func (b *ServiceClusterBuilder) ID(value string) *ServiceClusterBuilder {
 
 // HREF sets the link to the object.
 func (b *ServiceClusterBuilder) HREF(value string) *ServiceClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -119,6 +128,9 @@ func (b *ServiceClusterBuilder) Empty() bool {
 //
 // DNS settings of the cluster.
 func (b *ServiceClusterBuilder) DNS(value *DNSBuilder) *ServiceClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.dns = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -130,6 +142,9 @@ func (b *ServiceClusterBuilder) DNS(value *DNSBuilder) *ServiceClusterBuilder {
 
 // CloudProvider sets the value of the 'cloud_provider' attribute to the given value.
 func (b *ServiceClusterBuilder) CloudProvider(value string) *ServiceClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.cloudProvider = value
 	b.fieldSet_[4] = true
 	return b
@@ -139,6 +154,9 @@ func (b *ServiceClusterBuilder) CloudProvider(value string) *ServiceClusterBuild
 //
 // Cluster Mgmt reference settings of the cluster.
 func (b *ServiceClusterBuilder) ClusterManagementReference(value *ClusterManagementReferenceBuilder) *ServiceClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.clusterManagementReference = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -150,6 +168,9 @@ func (b *ServiceClusterBuilder) ClusterManagementReference(value *ClusterManagem
 
 // Labels sets the value of the 'labels' attribute to the given values.
 func (b *ServiceClusterBuilder) Labels(values ...*LabelBuilder) *ServiceClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.labels = make([]*LabelBuilder, len(values))
 	copy(b.labels, values)
 	b.fieldSet_[6] = true
@@ -158,6 +179,9 @@ func (b *ServiceClusterBuilder) Labels(values ...*LabelBuilder) *ServiceClusterB
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ServiceClusterBuilder) Name(value string) *ServiceClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.name = value
 	b.fieldSet_[7] = true
 	return b
@@ -167,6 +191,9 @@ func (b *ServiceClusterBuilder) Name(value string) *ServiceClusterBuilder {
 //
 // Provision Shard Reference of the cluster.
 func (b *ServiceClusterBuilder) ProvisionShardReference(value *ProvisionShardReferenceBuilder) *ServiceClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.provisionShardReference = value
 	if value != nil {
 		b.fieldSet_[8] = true
@@ -178,6 +205,9 @@ func (b *ServiceClusterBuilder) ProvisionShardReference(value *ProvisionShardRef
 
 // Region sets the value of the 'region' attribute to the given value.
 func (b *ServiceClusterBuilder) Region(value string) *ServiceClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.region = value
 	b.fieldSet_[9] = true
 	return b
@@ -185,6 +215,9 @@ func (b *ServiceClusterBuilder) Region(value string) *ServiceClusterBuilder {
 
 // Sector sets the value of the 'sector' attribute to the given value.
 func (b *ServiceClusterBuilder) Sector(value string) *ServiceClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.sector = value
 	b.fieldSet_[10] = true
 	return b
@@ -192,6 +225,9 @@ func (b *ServiceClusterBuilder) Sector(value string) *ServiceClusterBuilder {
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *ServiceClusterBuilder) Status(value string) *ServiceClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.status = value
 	b.fieldSet_[11] = true
 	return b

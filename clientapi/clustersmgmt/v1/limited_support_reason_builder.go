@@ -45,12 +45,18 @@ func NewLimitedSupportReason() *LimitedSupportReasonBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *LimitedSupportReasonBuilder) Link(value bool) *LimitedSupportReasonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *LimitedSupportReasonBuilder) ID(value string) *LimitedSupportReasonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -58,6 +64,9 @@ func (b *LimitedSupportReasonBuilder) ID(value string) *LimitedSupportReasonBuil
 
 // HREF sets the link to the object.
 func (b *LimitedSupportReasonBuilder) HREF(value string) *LimitedSupportReasonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -79,6 +88,9 @@ func (b *LimitedSupportReasonBuilder) Empty() bool {
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *LimitedSupportReasonBuilder) CreationTimestamp(value time.Time) *LimitedSupportReasonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.creationTimestamp = value
 	b.fieldSet_[3] = true
 	return b
@@ -86,6 +98,9 @@ func (b *LimitedSupportReasonBuilder) CreationTimestamp(value time.Time) *Limite
 
 // Details sets the value of the 'details' attribute to the given value.
 func (b *LimitedSupportReasonBuilder) Details(value string) *LimitedSupportReasonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.details = value
 	b.fieldSet_[4] = true
 	return b
@@ -93,6 +108,9 @@ func (b *LimitedSupportReasonBuilder) Details(value string) *LimitedSupportReaso
 
 // DetectionType sets the value of the 'detection_type' attribute to the given value.
 func (b *LimitedSupportReasonBuilder) DetectionType(value DetectionType) *LimitedSupportReasonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.detectionType = value
 	b.fieldSet_[5] = true
 	return b
@@ -102,6 +120,9 @@ func (b *LimitedSupportReasonBuilder) DetectionType(value DetectionType) *Limite
 //
 // Representation of the limited support reason override.
 func (b *LimitedSupportReasonBuilder) Override(value *LimitedSupportReasonOverrideBuilder) *LimitedSupportReasonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.override = value
 	if value != nil {
 		b.fieldSet_[6] = true
@@ -113,6 +134,9 @@ func (b *LimitedSupportReasonBuilder) Override(value *LimitedSupportReasonOverri
 
 // Summary sets the value of the 'summary' attribute to the given value.
 func (b *LimitedSupportReasonBuilder) Summary(value string) *LimitedSupportReasonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.summary = value
 	b.fieldSet_[7] = true
 	return b
@@ -122,6 +146,9 @@ func (b *LimitedSupportReasonBuilder) Summary(value string) *LimitedSupportReaso
 //
 // A template for cluster limited support reason.
 func (b *LimitedSupportReasonBuilder) Template(value *LimitedSupportReasonTemplateBuilder) *LimitedSupportReasonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.template = value
 	if value != nil {
 		b.fieldSet_[8] = true

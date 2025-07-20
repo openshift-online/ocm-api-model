@@ -46,6 +46,9 @@ func (b *VersionInquiryRequestBuilder) Empty() bool {
 
 // ServiceType sets the value of the 'service_type' attribute to the given value.
 func (b *VersionInquiryRequestBuilder) ServiceType(value string) *VersionInquiryRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.serviceType = value
 	b.fieldSet_[0] = true
 	return b

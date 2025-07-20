@@ -61,6 +61,9 @@ func (b *AddonParameterBuilder) Empty() bool {
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *AddonParameterBuilder) ID(value string) *AddonParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.id = value
 	b.fieldSet_[0] = true
 	return b
@@ -70,6 +73,9 @@ func (b *AddonParameterBuilder) ID(value string) *AddonParameterBuilder {
 //
 // Representation of an addon that can be installed in a cluster.
 func (b *AddonParameterBuilder) Addon(value *AddonBuilder) *AddonParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.addon = value
 	if value != nil {
 		b.fieldSet_[1] = true
@@ -81,6 +87,9 @@ func (b *AddonParameterBuilder) Addon(value *AddonBuilder) *AddonParameterBuilde
 
 // Conditions sets the value of the 'conditions' attribute to the given values.
 func (b *AddonParameterBuilder) Conditions(values ...*AddonRequirementBuilder) *AddonParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.conditions = make([]*AddonRequirementBuilder, len(values))
 	copy(b.conditions, values)
 	b.fieldSet_[2] = true
@@ -89,6 +98,9 @@ func (b *AddonParameterBuilder) Conditions(values ...*AddonRequirementBuilder) *
 
 // DefaultValue sets the value of the 'default_value' attribute to the given value.
 func (b *AddonParameterBuilder) DefaultValue(value string) *AddonParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.defaultValue = value
 	b.fieldSet_[3] = true
 	return b
@@ -96,6 +108,9 @@ func (b *AddonParameterBuilder) DefaultValue(value string) *AddonParameterBuilde
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *AddonParameterBuilder) Description(value string) *AddonParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.description = value
 	b.fieldSet_[4] = true
 	return b
@@ -103,6 +118,9 @@ func (b *AddonParameterBuilder) Description(value string) *AddonParameterBuilder
 
 // Editable sets the value of the 'editable' attribute to the given value.
 func (b *AddonParameterBuilder) Editable(value bool) *AddonParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.editable = value
 	b.fieldSet_[5] = true
 	return b
@@ -110,6 +128,9 @@ func (b *AddonParameterBuilder) Editable(value bool) *AddonParameterBuilder {
 
 // EditableDirection sets the value of the 'editable_direction' attribute to the given value.
 func (b *AddonParameterBuilder) EditableDirection(value string) *AddonParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.editableDirection = value
 	b.fieldSet_[6] = true
 	return b
@@ -117,6 +138,9 @@ func (b *AddonParameterBuilder) EditableDirection(value string) *AddonParameterB
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddonParameterBuilder) Enabled(value bool) *AddonParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.enabled = value
 	b.fieldSet_[7] = true
 	return b
@@ -124,6 +148,9 @@ func (b *AddonParameterBuilder) Enabled(value bool) *AddonParameterBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AddonParameterBuilder) Name(value string) *AddonParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.name = value
 	b.fieldSet_[8] = true
 	return b
@@ -131,6 +158,9 @@ func (b *AddonParameterBuilder) Name(value string) *AddonParameterBuilder {
 
 // Options sets the value of the 'options' attribute to the given values.
 func (b *AddonParameterBuilder) Options(values ...*AddonParameterOptionBuilder) *AddonParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.options = make([]*AddonParameterOptionBuilder, len(values))
 	copy(b.options, values)
 	b.fieldSet_[9] = true
@@ -139,6 +169,9 @@ func (b *AddonParameterBuilder) Options(values ...*AddonParameterOptionBuilder) 
 
 // Order sets the value of the 'order' attribute to the given value.
 func (b *AddonParameterBuilder) Order(value int) *AddonParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.order = value
 	b.fieldSet_[10] = true
 	return b
@@ -146,6 +179,9 @@ func (b *AddonParameterBuilder) Order(value int) *AddonParameterBuilder {
 
 // Required sets the value of the 'required' attribute to the given value.
 func (b *AddonParameterBuilder) Required(value bool) *AddonParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.required = value
 	b.fieldSet_[11] = true
 	return b
@@ -153,6 +189,9 @@ func (b *AddonParameterBuilder) Required(value bool) *AddonParameterBuilder {
 
 // Validation sets the value of the 'validation' attribute to the given value.
 func (b *AddonParameterBuilder) Validation(value string) *AddonParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.validation = value
 	b.fieldSet_[12] = true
 	return b
@@ -160,6 +199,9 @@ func (b *AddonParameterBuilder) Validation(value string) *AddonParameterBuilder 
 
 // ValidationErrMsg sets the value of the 'validation_err_msg' attribute to the given value.
 func (b *AddonParameterBuilder) ValidationErrMsg(value string) *AddonParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.validationErrMsg = value
 	b.fieldSet_[13] = true
 	return b
@@ -169,6 +211,9 @@ func (b *AddonParameterBuilder) ValidationErrMsg(value string) *AddonParameterBu
 //
 // Representation of the value type for this specific addon parameter
 func (b *AddonParameterBuilder) ValueType(value AddonParameterValueType) *AddonParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.valueType = value
 	b.fieldSet_[14] = true
 	return b

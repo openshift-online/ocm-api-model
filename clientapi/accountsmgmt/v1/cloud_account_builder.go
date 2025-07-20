@@ -48,6 +48,9 @@ func (b *CloudAccountBuilder) Empty() bool {
 
 // CloudAccountID sets the value of the 'cloud_account_ID' attribute to the given value.
 func (b *CloudAccountBuilder) CloudAccountID(value string) *CloudAccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.cloudAccountID = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *CloudAccountBuilder) CloudAccountID(value string) *CloudAccountBuilder 
 
 // CloudProviderID sets the value of the 'cloud_provider_ID' attribute to the given value.
 func (b *CloudAccountBuilder) CloudProviderID(value string) *CloudAccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.cloudProviderID = value
 	b.fieldSet_[1] = true
 	return b
@@ -62,6 +68,9 @@ func (b *CloudAccountBuilder) CloudProviderID(value string) *CloudAccountBuilder
 
 // Contracts sets the value of the 'contracts' attribute to the given values.
 func (b *CloudAccountBuilder) Contracts(values ...*ContractBuilder) *CloudAccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.contracts = make([]*ContractBuilder, len(values))
 	copy(b.contracts, values)
 	b.fieldSet_[2] = true

@@ -52,6 +52,9 @@ func (b *AccessRequestStatusBuilder) Empty() bool {
 
 // ExpiresAt sets the value of the 'expires_at' attribute to the given value.
 func (b *AccessRequestStatusBuilder) ExpiresAt(value time.Time) *AccessRequestStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.expiresAt = value
 	b.fieldSet_[0] = true
 	return b
@@ -61,6 +64,9 @@ func (b *AccessRequestStatusBuilder) ExpiresAt(value time.Time) *AccessRequestSt
 //
 // Possible states to an access request status.
 func (b *AccessRequestStatusBuilder) State(value AccessRequestState) *AccessRequestStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.state = value
 	b.fieldSet_[1] = true
 	return b

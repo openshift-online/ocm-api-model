@@ -39,12 +39,18 @@ func NewServerConfig() *ServerConfigBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ServerConfigBuilder) Link(value bool) *ServerConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ServerConfigBuilder) ID(value string) *ServerConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -52,6 +58,9 @@ func (b *ServerConfigBuilder) ID(value string) *ServerConfigBuilder {
 
 // HREF sets the link to the object.
 func (b *ServerConfigBuilder) HREF(value string) *ServerConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -75,6 +84,9 @@ func (b *ServerConfigBuilder) Empty() bool {
 //
 // Config for AWS provision shards
 func (b *ServerConfigBuilder) AWSShard(value *AWSShardBuilder) *ServerConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.awsShard = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -86,6 +98,9 @@ func (b *ServerConfigBuilder) AWSShard(value *AWSShardBuilder) *ServerConfigBuil
 
 // Kubeconfig sets the value of the 'kubeconfig' attribute to the given value.
 func (b *ServerConfigBuilder) Kubeconfig(value string) *ServerConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.kubeconfig = value
 	b.fieldSet_[4] = true
 	return b
@@ -93,6 +108,9 @@ func (b *ServerConfigBuilder) Kubeconfig(value string) *ServerConfigBuilder {
 
 // Server sets the value of the 'server' attribute to the given value.
 func (b *ServerConfigBuilder) Server(value string) *ServerConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.server = value
 	b.fieldSet_[5] = true
 	return b
@@ -100,6 +118,9 @@ func (b *ServerConfigBuilder) Server(value string) *ServerConfigBuilder {
 
 // Topology sets the value of the 'topology' attribute to the given value.
 func (b *ServerConfigBuilder) Topology(value ProvisionShardTopology) *ServerConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.topology = value
 	b.fieldSet_[6] = true
 	return b

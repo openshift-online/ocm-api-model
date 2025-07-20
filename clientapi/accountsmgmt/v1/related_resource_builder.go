@@ -54,6 +54,9 @@ func (b *RelatedResourceBuilder) Empty() bool {
 
 // BYOC sets the value of the 'BYOC' attribute to the given value.
 func (b *RelatedResourceBuilder) BYOC(value string) *RelatedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.byoc = value
 	b.fieldSet_[0] = true
 	return b
@@ -61,6 +64,9 @@ func (b *RelatedResourceBuilder) BYOC(value string) *RelatedResourceBuilder {
 
 // AvailabilityZoneType sets the value of the 'availability_zone_type' attribute to the given value.
 func (b *RelatedResourceBuilder) AvailabilityZoneType(value string) *RelatedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.availabilityZoneType = value
 	b.fieldSet_[1] = true
 	return b
@@ -68,6 +74,9 @@ func (b *RelatedResourceBuilder) AvailabilityZoneType(value string) *RelatedReso
 
 // BillingModel sets the value of the 'billing_model' attribute to the given value.
 func (b *RelatedResourceBuilder) BillingModel(value string) *RelatedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.billingModel = value
 	b.fieldSet_[2] = true
 	return b
@@ -75,6 +84,9 @@ func (b *RelatedResourceBuilder) BillingModel(value string) *RelatedResourceBuil
 
 // CloudProvider sets the value of the 'cloud_provider' attribute to the given value.
 func (b *RelatedResourceBuilder) CloudProvider(value string) *RelatedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.cloudProvider = value
 	b.fieldSet_[3] = true
 	return b
@@ -82,6 +94,9 @@ func (b *RelatedResourceBuilder) CloudProvider(value string) *RelatedResourceBui
 
 // Cost sets the value of the 'cost' attribute to the given value.
 func (b *RelatedResourceBuilder) Cost(value int) *RelatedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.cost = value
 	b.fieldSet_[4] = true
 	return b
@@ -89,6 +104,9 @@ func (b *RelatedResourceBuilder) Cost(value int) *RelatedResourceBuilder {
 
 // Product sets the value of the 'product' attribute to the given value.
 func (b *RelatedResourceBuilder) Product(value string) *RelatedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.product = value
 	b.fieldSet_[5] = true
 	return b
@@ -96,6 +114,9 @@ func (b *RelatedResourceBuilder) Product(value string) *RelatedResourceBuilder {
 
 // ResourceName sets the value of the 'resource_name' attribute to the given value.
 func (b *RelatedResourceBuilder) ResourceName(value string) *RelatedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.resourceName = value
 	b.fieldSet_[6] = true
 	return b
@@ -103,6 +124,9 @@ func (b *RelatedResourceBuilder) ResourceName(value string) *RelatedResourceBuil
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *RelatedResourceBuilder) ResourceType(value string) *RelatedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.resourceType = value
 	b.fieldSet_[7] = true
 	return b

@@ -38,12 +38,18 @@ func NewNodePoolStatus() *NodePoolStatusBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *NodePoolStatusBuilder) Link(value bool) *NodePoolStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *NodePoolStatusBuilder) ID(value string) *NodePoolStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -51,6 +57,9 @@ func (b *NodePoolStatusBuilder) ID(value string) *NodePoolStatusBuilder {
 
 // HREF sets the link to the object.
 func (b *NodePoolStatusBuilder) HREF(value string) *NodePoolStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *NodePoolStatusBuilder) Empty() bool {
 
 // CurrentReplicas sets the value of the 'current_replicas' attribute to the given value.
 func (b *NodePoolStatusBuilder) CurrentReplicas(value int) *NodePoolStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.currentReplicas = value
 	b.fieldSet_[3] = true
 	return b
@@ -79,6 +91,9 @@ func (b *NodePoolStatusBuilder) CurrentReplicas(value int) *NodePoolStatusBuilde
 
 // Message sets the value of the 'message' attribute to the given value.
 func (b *NodePoolStatusBuilder) Message(value string) *NodePoolStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.message = value
 	b.fieldSet_[4] = true
 	return b
@@ -88,6 +103,9 @@ func (b *NodePoolStatusBuilder) Message(value string) *NodePoolStatusBuilder {
 //
 // Representation of the status of a node pool.
 func (b *NodePoolStatusBuilder) State(value *NodePoolStateBuilder) *NodePoolStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.state = value
 	if value != nil {
 		b.fieldSet_[5] = true

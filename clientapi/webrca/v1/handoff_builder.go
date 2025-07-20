@@ -45,12 +45,18 @@ func NewHandoff() *HandoffBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *HandoffBuilder) Link(value bool) *HandoffBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *HandoffBuilder) ID(value string) *HandoffBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -58,6 +64,9 @@ func (b *HandoffBuilder) ID(value string) *HandoffBuilder {
 
 // HREF sets the link to the object.
 func (b *HandoffBuilder) HREF(value string) *HandoffBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -79,6 +88,9 @@ func (b *HandoffBuilder) Empty() bool {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *HandoffBuilder) CreatedAt(value time.Time) *HandoffBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.createdAt = value
 	b.fieldSet_[3] = true
 	return b
@@ -86,6 +98,9 @@ func (b *HandoffBuilder) CreatedAt(value time.Time) *HandoffBuilder {
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *HandoffBuilder) DeletedAt(value time.Time) *HandoffBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.deletedAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -95,6 +110,9 @@ func (b *HandoffBuilder) DeletedAt(value time.Time) *HandoffBuilder {
 //
 // Definition of a Web RCA user.
 func (b *HandoffBuilder) HandoffFrom(value *UserBuilder) *HandoffBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.handoffFrom = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -108,6 +126,9 @@ func (b *HandoffBuilder) HandoffFrom(value *UserBuilder) *HandoffBuilder {
 //
 // Definition of a Web RCA user.
 func (b *HandoffBuilder) HandoffTo(value *UserBuilder) *HandoffBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.handoffTo = value
 	if value != nil {
 		b.fieldSet_[6] = true
@@ -119,6 +140,9 @@ func (b *HandoffBuilder) HandoffTo(value *UserBuilder) *HandoffBuilder {
 
 // HandoffType sets the value of the 'handoff_type' attribute to the given value.
 func (b *HandoffBuilder) HandoffType(value string) *HandoffBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.handoffType = value
 	b.fieldSet_[7] = true
 	return b
@@ -126,6 +150,9 @@ func (b *HandoffBuilder) HandoffType(value string) *HandoffBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *HandoffBuilder) UpdatedAt(value time.Time) *HandoffBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.updatedAt = value
 	b.fieldSet_[8] = true
 	return b

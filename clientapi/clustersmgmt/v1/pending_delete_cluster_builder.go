@@ -42,12 +42,18 @@ func NewPendingDeleteCluster() *PendingDeleteClusterBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *PendingDeleteClusterBuilder) Link(value bool) *PendingDeleteClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *PendingDeleteClusterBuilder) ID(value string) *PendingDeleteClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -55,6 +61,9 @@ func (b *PendingDeleteClusterBuilder) ID(value string) *PendingDeleteClusterBuil
 
 // HREF sets the link to the object.
 func (b *PendingDeleteClusterBuilder) HREF(value string) *PendingDeleteClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -76,6 +85,9 @@ func (b *PendingDeleteClusterBuilder) Empty() bool {
 
 // BestEffort sets the value of the 'best_effort' attribute to the given value.
 func (b *PendingDeleteClusterBuilder) BestEffort(value bool) *PendingDeleteClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.bestEffort = value
 	b.fieldSet_[3] = true
 	return b
@@ -123,6 +135,9 @@ func (b *PendingDeleteClusterBuilder) BestEffort(value bool) *PendingDeleteClust
 // attributes are mandatory when creation a cluster with your own Amazon Web
 // Services account.
 func (b *PendingDeleteClusterBuilder) Cluster(value *ClusterBuilder) *PendingDeleteClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.cluster = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -134,6 +149,9 @@ func (b *PendingDeleteClusterBuilder) Cluster(value *ClusterBuilder) *PendingDel
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *PendingDeleteClusterBuilder) CreationTimestamp(value time.Time) *PendingDeleteClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.creationTimestamp = value
 	b.fieldSet_[5] = true
 	return b

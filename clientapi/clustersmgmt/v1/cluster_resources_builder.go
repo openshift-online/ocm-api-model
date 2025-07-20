@@ -42,12 +42,18 @@ func NewClusterResources() *ClusterResourcesBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ClusterResourcesBuilder) Link(value bool) *ClusterResourcesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ClusterResourcesBuilder) ID(value string) *ClusterResourcesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -55,6 +61,9 @@ func (b *ClusterResourcesBuilder) ID(value string) *ClusterResourcesBuilder {
 
 // HREF sets the link to the object.
 func (b *ClusterResourcesBuilder) HREF(value string) *ClusterResourcesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -76,6 +85,9 @@ func (b *ClusterResourcesBuilder) Empty() bool {
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *ClusterResourcesBuilder) ClusterID(value string) *ClusterResourcesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.clusterID = value
 	b.fieldSet_[3] = true
 	return b
@@ -83,6 +95,9 @@ func (b *ClusterResourcesBuilder) ClusterID(value string) *ClusterResourcesBuild
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *ClusterResourcesBuilder) CreationTimestamp(value time.Time) *ClusterResourcesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.creationTimestamp = value
 	b.fieldSet_[4] = true
 	return b
@@ -90,6 +105,9 @@ func (b *ClusterResourcesBuilder) CreationTimestamp(value time.Time) *ClusterRes
 
 // Resources sets the value of the 'resources' attribute to the given value.
 func (b *ClusterResourcesBuilder) Resources(value map[string]string) *ClusterResourcesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.resources = value
 	if value != nil {
 		b.fieldSet_[5] = true

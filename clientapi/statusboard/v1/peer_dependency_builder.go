@@ -45,12 +45,18 @@ func NewPeerDependency() *PeerDependencyBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *PeerDependencyBuilder) Link(value bool) *PeerDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *PeerDependencyBuilder) ID(value string) *PeerDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -58,6 +64,9 @@ func (b *PeerDependencyBuilder) ID(value string) *PeerDependencyBuilder {
 
 // HREF sets the link to the object.
 func (b *PeerDependencyBuilder) HREF(value string) *PeerDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -79,6 +88,9 @@ func (b *PeerDependencyBuilder) Empty() bool {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *PeerDependencyBuilder) CreatedAt(value time.Time) *PeerDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.createdAt = value
 	b.fieldSet_[3] = true
 	return b
@@ -86,6 +98,9 @@ func (b *PeerDependencyBuilder) CreatedAt(value time.Time) *PeerDependencyBuilde
 
 // Metadata sets the value of the 'metadata' attribute to the given value.
 func (b *PeerDependencyBuilder) Metadata(value interface{}) *PeerDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.metadata = value
 	b.fieldSet_[4] = true
 	return b
@@ -93,6 +108,9 @@ func (b *PeerDependencyBuilder) Metadata(value interface{}) *PeerDependencyBuild
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *PeerDependencyBuilder) Name(value string) *PeerDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.name = value
 	b.fieldSet_[5] = true
 	return b
@@ -100,6 +118,9 @@ func (b *PeerDependencyBuilder) Name(value string) *PeerDependencyBuilder {
 
 // Owners sets the value of the 'owners' attribute to the given values.
 func (b *PeerDependencyBuilder) Owners(values ...*OwnerBuilder) *PeerDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.owners = make([]*OwnerBuilder, len(values))
 	copy(b.owners, values)
 	b.fieldSet_[6] = true
@@ -108,6 +129,9 @@ func (b *PeerDependencyBuilder) Owners(values ...*OwnerBuilder) *PeerDependencyB
 
 // Services sets the value of the 'services' attribute to the given values.
 func (b *PeerDependencyBuilder) Services(values ...*ServiceBuilder) *PeerDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.services = make([]*ServiceBuilder, len(values))
 	copy(b.services, values)
 	b.fieldSet_[7] = true
@@ -116,6 +140,9 @@ func (b *PeerDependencyBuilder) Services(values ...*ServiceBuilder) *PeerDepende
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *PeerDependencyBuilder) UpdatedAt(value time.Time) *PeerDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.updatedAt = value
 	b.fieldSet_[8] = true
 	return b

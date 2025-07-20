@@ -52,6 +52,9 @@ func (b *ExternalAuthClientConfigBuilder) Empty() bool {
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *ExternalAuthClientConfigBuilder) ID(value string) *ExternalAuthClientConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[0] = true
 	return b
@@ -61,6 +64,9 @@ func (b *ExternalAuthClientConfigBuilder) ID(value string) *ExternalAuthClientCo
 //
 // The reference of a component that will consume the client configuration.
 func (b *ExternalAuthClientConfigBuilder) Component(value *ClientComponentBuilder) *ExternalAuthClientConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.component = value
 	if value != nil {
 		b.fieldSet_[1] = true
@@ -72,6 +78,9 @@ func (b *ExternalAuthClientConfigBuilder) Component(value *ClientComponentBuilde
 
 // ExtraScopes sets the value of the 'extra_scopes' attribute to the given values.
 func (b *ExternalAuthClientConfigBuilder) ExtraScopes(values ...string) *ExternalAuthClientConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.extraScopes = make([]string, len(values))
 	copy(b.extraScopes, values)
 	b.fieldSet_[2] = true
@@ -80,6 +89,9 @@ func (b *ExternalAuthClientConfigBuilder) ExtraScopes(values ...string) *Externa
 
 // Secret sets the value of the 'secret' attribute to the given value.
 func (b *ExternalAuthClientConfigBuilder) Secret(value string) *ExternalAuthClientConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.secret = value
 	b.fieldSet_[3] = true
 	return b
@@ -89,6 +101,9 @@ func (b *ExternalAuthClientConfigBuilder) Secret(value string) *ExternalAuthClie
 //
 // Representation of the possible values of an external authentication client's type
 func (b *ExternalAuthClientConfigBuilder) Type(value ExternalAuthClientType) *ExternalAuthClientConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.type_ = value
 	b.fieldSet_[4] = true
 	return b

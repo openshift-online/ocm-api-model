@@ -51,6 +51,9 @@ func (b *AzureEtcdDataEncryptionBuilder) Empty() bool {
 // Contains the necessary attributes to support etcd data encryption with customer managed keys
 // for Azure based clusters.
 func (b *AzureEtcdDataEncryptionBuilder) CustomerManaged(value *AzureEtcdDataEncryptionCustomerManagedBuilder) *AzureEtcdDataEncryptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.customerManaged = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -62,6 +65,9 @@ func (b *AzureEtcdDataEncryptionBuilder) CustomerManaged(value *AzureEtcdDataEnc
 
 // KeyManagementMode sets the value of the 'key_management_mode' attribute to the given value.
 func (b *AzureEtcdDataEncryptionBuilder) KeyManagementMode(value string) *AzureEtcdDataEncryptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.keyManagementMode = value
 	b.fieldSet_[1] = true
 	return b

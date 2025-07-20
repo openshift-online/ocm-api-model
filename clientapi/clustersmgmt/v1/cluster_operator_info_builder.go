@@ -56,6 +56,9 @@ func (b *ClusterOperatorInfoBuilder) Empty() bool {
 //
 // Overall state of a cluster operator.
 func (b *ClusterOperatorInfoBuilder) Condition(value ClusterOperatorState) *ClusterOperatorInfoBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.condition = value
 	b.fieldSet_[0] = true
 	return b
@@ -63,6 +66,9 @@ func (b *ClusterOperatorInfoBuilder) Condition(value ClusterOperatorState) *Clus
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ClusterOperatorInfoBuilder) Name(value string) *ClusterOperatorInfoBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.name = value
 	b.fieldSet_[1] = true
 	return b
@@ -70,6 +76,9 @@ func (b *ClusterOperatorInfoBuilder) Name(value string) *ClusterOperatorInfoBuil
 
 // Reason sets the value of the 'reason' attribute to the given value.
 func (b *ClusterOperatorInfoBuilder) Reason(value string) *ClusterOperatorInfoBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.reason = value
 	b.fieldSet_[2] = true
 	return b
@@ -77,6 +86,9 @@ func (b *ClusterOperatorInfoBuilder) Reason(value string) *ClusterOperatorInfoBu
 
 // Time sets the value of the 'time' attribute to the given value.
 func (b *ClusterOperatorInfoBuilder) Time(value time.Time) *ClusterOperatorInfoBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.time = value
 	b.fieldSet_[3] = true
 	return b
@@ -84,6 +96,9 @@ func (b *ClusterOperatorInfoBuilder) Time(value time.Time) *ClusterOperatorInfoB
 
 // Version sets the value of the 'version' attribute to the given value.
 func (b *ClusterOperatorInfoBuilder) Version(value string) *ClusterOperatorInfoBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.version = value
 	b.fieldSet_[4] = true
 	return b

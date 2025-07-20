@@ -47,6 +47,9 @@ func (b *NodesInfoBuilder) Empty() bool {
 
 // Nodes sets the value of the 'nodes' attribute to the given values.
 func (b *NodesInfoBuilder) Nodes(values ...*NodeInfoBuilder) *NodesInfoBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.nodes = make([]*NodeInfoBuilder, len(values))
 	copy(b.nodes, values)
 	b.fieldSet_[0] = true

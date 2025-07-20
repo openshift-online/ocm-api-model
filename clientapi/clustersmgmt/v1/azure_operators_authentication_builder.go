@@ -52,6 +52,9 @@ func (b *AzureOperatorsAuthenticationBuilder) Empty() bool {
 // needed to perform Operators authentication based on Azure User-Assigned
 // Managed Identities
 func (b *AzureOperatorsAuthenticationBuilder) ManagedIdentities(value *AzureOperatorsAuthenticationManagedIdentitiesBuilder) *AzureOperatorsAuthenticationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.managedIdentities = value
 	if value != nil {
 		b.fieldSet_[0] = true

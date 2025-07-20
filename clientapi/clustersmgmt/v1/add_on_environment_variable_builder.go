@@ -37,12 +37,18 @@ func NewAddOnEnvironmentVariable() *AddOnEnvironmentVariableBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddOnEnvironmentVariableBuilder) Link(value bool) *AddOnEnvironmentVariableBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddOnEnvironmentVariableBuilder) ID(value string) *AddOnEnvironmentVariableBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *AddOnEnvironmentVariableBuilder) ID(value string) *AddOnEnvironmentVari
 
 // HREF sets the link to the object.
 func (b *AddOnEnvironmentVariableBuilder) HREF(value string) *AddOnEnvironmentVariableBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *AddOnEnvironmentVariableBuilder) Empty() bool {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AddOnEnvironmentVariableBuilder) Name(value string) *AddOnEnvironmentVariableBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.name = value
 	b.fieldSet_[3] = true
 	return b
@@ -78,6 +90,9 @@ func (b *AddOnEnvironmentVariableBuilder) Name(value string) *AddOnEnvironmentVa
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *AddOnEnvironmentVariableBuilder) Value(value string) *AddOnEnvironmentVariableBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.value = value
 	b.fieldSet_[4] = true
 	return b

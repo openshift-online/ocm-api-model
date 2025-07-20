@@ -52,6 +52,9 @@ func (b *NetworkVerificationBuilder) Empty() bool {
 //
 // Description of a cloud provider data used for cloud provider inquiries.
 func (b *NetworkVerificationBuilder) CloudProviderData(value *CloudProviderDataBuilder) *NetworkVerificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.cloudProviderData = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -63,6 +66,9 @@ func (b *NetworkVerificationBuilder) CloudProviderData(value *CloudProviderDataB
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *NetworkVerificationBuilder) ClusterId(value string) *NetworkVerificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.clusterId = value
 	b.fieldSet_[1] = true
 	return b
@@ -70,6 +76,9 @@ func (b *NetworkVerificationBuilder) ClusterId(value string) *NetworkVerificatio
 
 // Items sets the value of the 'items' attribute to the given values.
 func (b *NetworkVerificationBuilder) Items(values ...*SubnetNetworkVerificationBuilder) *NetworkVerificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.items = make([]*SubnetNetworkVerificationBuilder, len(values))
 	copy(b.items, values)
 	b.fieldSet_[2] = true
@@ -80,6 +89,9 @@ func (b *NetworkVerificationBuilder) Items(values ...*SubnetNetworkVerificationB
 //
 // Representation of an platform type field.
 func (b *NetworkVerificationBuilder) Platform(value Platform) *NetworkVerificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.platform = value
 	b.fieldSet_[3] = true
 	return b
@@ -87,6 +99,9 @@ func (b *NetworkVerificationBuilder) Platform(value Platform) *NetworkVerificati
 
 // Total sets the value of the 'total' attribute to the given value.
 func (b *NetworkVerificationBuilder) Total(value int) *NetworkVerificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.total = value
 	b.fieldSet_[4] = true
 	return b

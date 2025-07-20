@@ -52,6 +52,9 @@ func (b *ClusterResourceBuilder) Empty() bool {
 
 // Total sets the value of the 'total' attribute to the given value.
 func (b *ClusterResourceBuilder) Total(value *ValueUnitBuilder) *ClusterResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.total = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -63,6 +66,9 @@ func (b *ClusterResourceBuilder) Total(value *ValueUnitBuilder) *ClusterResource
 
 // UpdatedTimestamp sets the value of the 'updated_timestamp' attribute to the given value.
 func (b *ClusterResourceBuilder) UpdatedTimestamp(value time.Time) *ClusterResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.updatedTimestamp = value
 	b.fieldSet_[1] = true
 	return b
@@ -70,6 +76,9 @@ func (b *ClusterResourceBuilder) UpdatedTimestamp(value time.Time) *ClusterResou
 
 // Used sets the value of the 'used' attribute to the given value.
 func (b *ClusterResourceBuilder) Used(value *ValueUnitBuilder) *ClusterResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.used = value
 	if value != nil {
 		b.fieldSet_[2] = true

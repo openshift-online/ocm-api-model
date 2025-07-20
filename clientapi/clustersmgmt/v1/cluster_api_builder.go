@@ -48,6 +48,9 @@ func (b *ClusterAPIBuilder) Empty() bool {
 
 // URL sets the value of the 'URL' attribute to the given value.
 func (b *ClusterAPIBuilder) URL(value string) *ClusterAPIBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.url = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *ClusterAPIBuilder) URL(value string) *ClusterAPIBuilder {
 //
 // Cluster components listening method.
 func (b *ClusterAPIBuilder) Listening(value ListeningMethod) *ClusterAPIBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.listening = value
 	b.fieldSet_[1] = true
 	return b

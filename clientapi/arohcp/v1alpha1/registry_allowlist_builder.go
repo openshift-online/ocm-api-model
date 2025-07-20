@@ -42,12 +42,18 @@ func NewRegistryAllowlist() *RegistryAllowlistBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *RegistryAllowlistBuilder) Link(value bool) *RegistryAllowlistBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *RegistryAllowlistBuilder) ID(value string) *RegistryAllowlistBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -55,6 +61,9 @@ func (b *RegistryAllowlistBuilder) ID(value string) *RegistryAllowlistBuilder {
 
 // HREF sets the link to the object.
 func (b *RegistryAllowlistBuilder) HREF(value string) *RegistryAllowlistBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -78,6 +87,9 @@ func (b *RegistryAllowlistBuilder) Empty() bool {
 //
 // Cloud provider.
 func (b *RegistryAllowlistBuilder) CloudProvider(value *CloudProviderBuilder) *RegistryAllowlistBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.cloudProvider = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -89,6 +101,9 @@ func (b *RegistryAllowlistBuilder) CloudProvider(value *CloudProviderBuilder) *R
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *RegistryAllowlistBuilder) CreationTimestamp(value time.Time) *RegistryAllowlistBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.creationTimestamp = value
 	b.fieldSet_[4] = true
 	return b
@@ -96,6 +111,9 @@ func (b *RegistryAllowlistBuilder) CreationTimestamp(value time.Time) *RegistryA
 
 // Registries sets the value of the 'registries' attribute to the given values.
 func (b *RegistryAllowlistBuilder) Registries(values ...string) *RegistryAllowlistBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.registries = make([]string, len(values))
 	copy(b.registries, values)
 	b.fieldSet_[5] = true

@@ -62,6 +62,9 @@ func (b *ClusterAuthorizationRequestBuilder) Empty() bool {
 
 // BYOC sets the value of the 'BYOC' attribute to the given value.
 func (b *ClusterAuthorizationRequestBuilder) BYOC(value bool) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.byoc = value
 	b.fieldSet_[0] = true
 	return b
@@ -69,6 +72,9 @@ func (b *ClusterAuthorizationRequestBuilder) BYOC(value bool) *ClusterAuthorizat
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *ClusterAuthorizationRequestBuilder) AccountUsername(value string) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.accountUsername = value
 	b.fieldSet_[1] = true
 	return b
@@ -76,6 +82,9 @@ func (b *ClusterAuthorizationRequestBuilder) AccountUsername(value string) *Clus
 
 // AvailabilityZone sets the value of the 'availability_zone' attribute to the given value.
 func (b *ClusterAuthorizationRequestBuilder) AvailabilityZone(value string) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.availabilityZone = value
 	b.fieldSet_[2] = true
 	return b
@@ -83,6 +92,9 @@ func (b *ClusterAuthorizationRequestBuilder) AvailabilityZone(value string) *Clu
 
 // CloudAccountID sets the value of the 'cloud_account_ID' attribute to the given value.
 func (b *ClusterAuthorizationRequestBuilder) CloudAccountID(value string) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.cloudAccountID = value
 	b.fieldSet_[3] = true
 	return b
@@ -90,6 +102,9 @@ func (b *ClusterAuthorizationRequestBuilder) CloudAccountID(value string) *Clust
 
 // CloudProviderID sets the value of the 'cloud_provider_ID' attribute to the given value.
 func (b *ClusterAuthorizationRequestBuilder) CloudProviderID(value string) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.cloudProviderID = value
 	b.fieldSet_[4] = true
 	return b
@@ -97,6 +112,9 @@ func (b *ClusterAuthorizationRequestBuilder) CloudProviderID(value string) *Clus
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *ClusterAuthorizationRequestBuilder) ClusterID(value string) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.clusterID = value
 	b.fieldSet_[5] = true
 	return b
@@ -104,6 +122,9 @@ func (b *ClusterAuthorizationRequestBuilder) ClusterID(value string) *ClusterAut
 
 // Disconnected sets the value of the 'disconnected' attribute to the given value.
 func (b *ClusterAuthorizationRequestBuilder) Disconnected(value bool) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.disconnected = value
 	b.fieldSet_[6] = true
 	return b
@@ -111,6 +132,9 @@ func (b *ClusterAuthorizationRequestBuilder) Disconnected(value bool) *ClusterAu
 
 // DisplayName sets the value of the 'display_name' attribute to the given value.
 func (b *ClusterAuthorizationRequestBuilder) DisplayName(value string) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.displayName = value
 	b.fieldSet_[7] = true
 	return b
@@ -118,6 +142,9 @@ func (b *ClusterAuthorizationRequestBuilder) DisplayName(value string) *ClusterA
 
 // ExternalClusterID sets the value of the 'external_cluster_ID' attribute to the given value.
 func (b *ClusterAuthorizationRequestBuilder) ExternalClusterID(value string) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.externalClusterID = value
 	b.fieldSet_[8] = true
 	return b
@@ -125,6 +152,9 @@ func (b *ClusterAuthorizationRequestBuilder) ExternalClusterID(value string) *Cl
 
 // Managed sets the value of the 'managed' attribute to the given value.
 func (b *ClusterAuthorizationRequestBuilder) Managed(value bool) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.managed = value
 	b.fieldSet_[9] = true
 	return b
@@ -132,6 +162,9 @@ func (b *ClusterAuthorizationRequestBuilder) Managed(value bool) *ClusterAuthori
 
 // ProductID sets the value of the 'product_ID' attribute to the given value.
 func (b *ClusterAuthorizationRequestBuilder) ProductID(value string) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.productID = value
 	b.fieldSet_[10] = true
 	return b
@@ -139,6 +172,9 @@ func (b *ClusterAuthorizationRequestBuilder) ProductID(value string) *ClusterAut
 
 // ProductCategory sets the value of the 'product_category' attribute to the given value.
 func (b *ClusterAuthorizationRequestBuilder) ProductCategory(value string) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.productCategory = value
 	b.fieldSet_[11] = true
 	return b
@@ -146,6 +182,9 @@ func (b *ClusterAuthorizationRequestBuilder) ProductCategory(value string) *Clus
 
 // QuotaVersion sets the value of the 'quota_version' attribute to the given value.
 func (b *ClusterAuthorizationRequestBuilder) QuotaVersion(value string) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.quotaVersion = value
 	b.fieldSet_[12] = true
 	return b
@@ -153,6 +192,9 @@ func (b *ClusterAuthorizationRequestBuilder) QuotaVersion(value string) *Cluster
 
 // Reserve sets the value of the 'reserve' attribute to the given value.
 func (b *ClusterAuthorizationRequestBuilder) Reserve(value bool) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.reserve = value
 	b.fieldSet_[13] = true
 	return b
@@ -160,6 +202,9 @@ func (b *ClusterAuthorizationRequestBuilder) Reserve(value bool) *ClusterAuthori
 
 // Resources sets the value of the 'resources' attribute to the given values.
 func (b *ClusterAuthorizationRequestBuilder) Resources(values ...*ReservedResourceBuilder) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.resources = make([]*ReservedResourceBuilder, len(values))
 	copy(b.resources, values)
 	b.fieldSet_[14] = true
@@ -168,6 +213,9 @@ func (b *ClusterAuthorizationRequestBuilder) Resources(values ...*ReservedResour
 
 // RhRegionID sets the value of the 'rh_region_ID' attribute to the given value.
 func (b *ClusterAuthorizationRequestBuilder) RhRegionID(value string) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.rhRegionID = value
 	b.fieldSet_[15] = true
 	return b
@@ -175,6 +223,9 @@ func (b *ClusterAuthorizationRequestBuilder) RhRegionID(value string) *ClusterAu
 
 // Scope sets the value of the 'scope' attribute to the given value.
 func (b *ClusterAuthorizationRequestBuilder) Scope(value string) *ClusterAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.scope = value
 	b.fieldSet_[16] = true
 	return b

@@ -47,6 +47,9 @@ func (b *CloudRegionBuilder) Empty() bool {
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *CloudRegionBuilder) ID(value string) *CloudRegionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.id = value
 	b.fieldSet_[0] = true
 	return b

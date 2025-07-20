@@ -48,6 +48,9 @@ func (b *NodeInfoBuilder) Empty() bool {
 
 // Amount sets the value of the 'amount' attribute to the given value.
 func (b *NodeInfoBuilder) Amount(value int) *NodeInfoBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.amount = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *NodeInfoBuilder) Amount(value int) *NodeInfoBuilder {
 //
 // Type of node received via telemetry.
 func (b *NodeInfoBuilder) Type(value NodeType) *NodeInfoBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.type_ = value
 	b.fieldSet_[1] = true
 	return b

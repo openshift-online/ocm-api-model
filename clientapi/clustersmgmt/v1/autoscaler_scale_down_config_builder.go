@@ -51,6 +51,9 @@ func (b *AutoscalerScaleDownConfigBuilder) Empty() bool {
 
 // DelayAfterAdd sets the value of the 'delay_after_add' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) DelayAfterAdd(value string) *AutoscalerScaleDownConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.delayAfterAdd = value
 	b.fieldSet_[0] = true
 	return b
@@ -58,6 +61,9 @@ func (b *AutoscalerScaleDownConfigBuilder) DelayAfterAdd(value string) *Autoscal
 
 // DelayAfterDelete sets the value of the 'delay_after_delete' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) DelayAfterDelete(value string) *AutoscalerScaleDownConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.delayAfterDelete = value
 	b.fieldSet_[1] = true
 	return b
@@ -65,6 +71,9 @@ func (b *AutoscalerScaleDownConfigBuilder) DelayAfterDelete(value string) *Autos
 
 // DelayAfterFailure sets the value of the 'delay_after_failure' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) DelayAfterFailure(value string) *AutoscalerScaleDownConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.delayAfterFailure = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *AutoscalerScaleDownConfigBuilder) DelayAfterFailure(value string) *Auto
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) Enabled(value bool) *AutoscalerScaleDownConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.enabled = value
 	b.fieldSet_[3] = true
 	return b
@@ -79,6 +91,9 @@ func (b *AutoscalerScaleDownConfigBuilder) Enabled(value bool) *AutoscalerScaleD
 
 // UnneededTime sets the value of the 'unneeded_time' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) UnneededTime(value string) *AutoscalerScaleDownConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.unneededTime = value
 	b.fieldSet_[4] = true
 	return b
@@ -86,6 +101,9 @@ func (b *AutoscalerScaleDownConfigBuilder) UnneededTime(value string) *Autoscale
 
 // UtilizationThreshold sets the value of the 'utilization_threshold' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) UtilizationThreshold(value string) *AutoscalerScaleDownConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.utilizationThreshold = value
 	b.fieldSet_[5] = true
 	return b

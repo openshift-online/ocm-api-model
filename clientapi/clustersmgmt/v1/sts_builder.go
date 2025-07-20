@@ -58,6 +58,9 @@ func (b *STSBuilder) Empty() bool {
 
 // OIDCEndpointURL sets the value of the 'OIDC_endpoint_URL' attribute to the given value.
 func (b *STSBuilder) OIDCEndpointURL(value string) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.oidcEndpointURL = value
 	b.fieldSet_[0] = true
 	return b
@@ -65,6 +68,9 @@ func (b *STSBuilder) OIDCEndpointURL(value string) *STSBuilder {
 
 // AutoMode sets the value of the 'auto_mode' attribute to the given value.
 func (b *STSBuilder) AutoMode(value bool) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.autoMode = value
 	b.fieldSet_[1] = true
 	return b
@@ -72,6 +78,9 @@ func (b *STSBuilder) AutoMode(value bool) *STSBuilder {
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *STSBuilder) Enabled(value bool) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.enabled = value
 	b.fieldSet_[2] = true
 	return b
@@ -79,6 +88,9 @@ func (b *STSBuilder) Enabled(value bool) *STSBuilder {
 
 // ExternalID sets the value of the 'external_ID' attribute to the given value.
 func (b *STSBuilder) ExternalID(value string) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.externalID = value
 	b.fieldSet_[3] = true
 	return b
@@ -88,6 +100,9 @@ func (b *STSBuilder) ExternalID(value string) *STSBuilder {
 //
 // Contains the necessary attributes to support role-based authentication on AWS.
 func (b *STSBuilder) InstanceIAMRoles(value *InstanceIAMRolesBuilder) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.instanceIAMRoles = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -99,6 +114,9 @@ func (b *STSBuilder) InstanceIAMRoles(value *InstanceIAMRolesBuilder) *STSBuilde
 
 // ManagedPolicies sets the value of the 'managed_policies' attribute to the given value.
 func (b *STSBuilder) ManagedPolicies(value bool) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.managedPolicies = value
 	b.fieldSet_[5] = true
 	return b
@@ -108,6 +126,9 @@ func (b *STSBuilder) ManagedPolicies(value bool) *STSBuilder {
 //
 // Contains the necessary attributes to support oidc configuration hosting under Red Hat or registering a Customer's byo oidc config.
 func (b *STSBuilder) OidcConfig(value *OidcConfigBuilder) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.oidcConfig = value
 	if value != nil {
 		b.fieldSet_[6] = true
@@ -119,6 +140,9 @@ func (b *STSBuilder) OidcConfig(value *OidcConfigBuilder) *STSBuilder {
 
 // OperatorIAMRoles sets the value of the 'operator_IAM_roles' attribute to the given values.
 func (b *STSBuilder) OperatorIAMRoles(values ...*OperatorIAMRoleBuilder) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.operatorIAMRoles = make([]*OperatorIAMRoleBuilder, len(values))
 	copy(b.operatorIAMRoles, values)
 	b.fieldSet_[7] = true
@@ -127,6 +151,9 @@ func (b *STSBuilder) OperatorIAMRoles(values ...*OperatorIAMRoleBuilder) *STSBui
 
 // OperatorRolePrefix sets the value of the 'operator_role_prefix' attribute to the given value.
 func (b *STSBuilder) OperatorRolePrefix(value string) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.operatorRolePrefix = value
 	b.fieldSet_[8] = true
 	return b
@@ -134,6 +161,9 @@ func (b *STSBuilder) OperatorRolePrefix(value string) *STSBuilder {
 
 // PermissionBoundary sets the value of the 'permission_boundary' attribute to the given value.
 func (b *STSBuilder) PermissionBoundary(value string) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.permissionBoundary = value
 	b.fieldSet_[9] = true
 	return b
@@ -141,6 +171,9 @@ func (b *STSBuilder) PermissionBoundary(value string) *STSBuilder {
 
 // RoleARN sets the value of the 'role_ARN' attribute to the given value.
 func (b *STSBuilder) RoleARN(value string) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.roleARN = value
 	b.fieldSet_[10] = true
 	return b
@@ -148,6 +181,9 @@ func (b *STSBuilder) RoleARN(value string) *STSBuilder {
 
 // SupportRoleARN sets the value of the 'support_role_ARN' attribute to the given value.
 func (b *STSBuilder) SupportRoleARN(value string) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.supportRoleARN = value
 	b.fieldSet_[11] = true
 	return b

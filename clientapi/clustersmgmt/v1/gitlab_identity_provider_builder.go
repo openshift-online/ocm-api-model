@@ -50,6 +50,9 @@ func (b *GitlabIdentityProviderBuilder) Empty() bool {
 
 // CA sets the value of the 'CA' attribute to the given value.
 func (b *GitlabIdentityProviderBuilder) CA(value string) *GitlabIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.ca = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *GitlabIdentityProviderBuilder) CA(value string) *GitlabIdentityProvider
 
 // URL sets the value of the 'URL' attribute to the given value.
 func (b *GitlabIdentityProviderBuilder) URL(value string) *GitlabIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.url = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *GitlabIdentityProviderBuilder) URL(value string) *GitlabIdentityProvide
 
 // ClientID sets the value of the 'client_ID' attribute to the given value.
 func (b *GitlabIdentityProviderBuilder) ClientID(value string) *GitlabIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.clientID = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *GitlabIdentityProviderBuilder) ClientID(value string) *GitlabIdentityPr
 
 // ClientSecret sets the value of the 'client_secret' attribute to the given value.
 func (b *GitlabIdentityProviderBuilder) ClientSecret(value string) *GitlabIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.clientSecret = value
 	b.fieldSet_[3] = true
 	return b

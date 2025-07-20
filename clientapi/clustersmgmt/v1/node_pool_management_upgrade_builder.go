@@ -38,12 +38,18 @@ func NewNodePoolManagementUpgrade() *NodePoolManagementUpgradeBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *NodePoolManagementUpgradeBuilder) Link(value bool) *NodePoolManagementUpgradeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *NodePoolManagementUpgradeBuilder) ID(value string) *NodePoolManagementUpgradeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -51,6 +57,9 @@ func (b *NodePoolManagementUpgradeBuilder) ID(value string) *NodePoolManagementU
 
 // HREF sets the link to the object.
 func (b *NodePoolManagementUpgradeBuilder) HREF(value string) *NodePoolManagementUpgradeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *NodePoolManagementUpgradeBuilder) Empty() bool {
 
 // MaxSurge sets the value of the 'max_surge' attribute to the given value.
 func (b *NodePoolManagementUpgradeBuilder) MaxSurge(value string) *NodePoolManagementUpgradeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.maxSurge = value
 	b.fieldSet_[3] = true
 	return b
@@ -79,6 +91,9 @@ func (b *NodePoolManagementUpgradeBuilder) MaxSurge(value string) *NodePoolManag
 
 // MaxUnavailable sets the value of the 'max_unavailable' attribute to the given value.
 func (b *NodePoolManagementUpgradeBuilder) MaxUnavailable(value string) *NodePoolManagementUpgradeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.maxUnavailable = value
 	b.fieldSet_[4] = true
 	return b
@@ -86,6 +101,9 @@ func (b *NodePoolManagementUpgradeBuilder) MaxUnavailable(value string) *NodePoo
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *NodePoolManagementUpgradeBuilder) Type(value string) *NodePoolManagementUpgradeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.type_ = value
 	b.fieldSet_[5] = true
 	return b

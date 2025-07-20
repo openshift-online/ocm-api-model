@@ -51,6 +51,9 @@ func (b *OidcThumbprintBuilder) Empty() bool {
 
 // HREF sets the value of the 'HREF' attribute to the given value.
 func (b *OidcThumbprintBuilder) HREF(value string) *OidcThumbprintBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[0] = true
 	return b
@@ -58,6 +61,9 @@ func (b *OidcThumbprintBuilder) HREF(value string) *OidcThumbprintBuilder {
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *OidcThumbprintBuilder) ClusterId(value string) *OidcThumbprintBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.clusterId = value
 	b.fieldSet_[1] = true
 	return b
@@ -65,6 +71,9 @@ func (b *OidcThumbprintBuilder) ClusterId(value string) *OidcThumbprintBuilder {
 
 // Kind sets the value of the 'kind' attribute to the given value.
 func (b *OidcThumbprintBuilder) Kind(value string) *OidcThumbprintBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.kind = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *OidcThumbprintBuilder) Kind(value string) *OidcThumbprintBuilder {
 
 // OidcConfigId sets the value of the 'oidc_config_id' attribute to the given value.
 func (b *OidcThumbprintBuilder) OidcConfigId(value string) *OidcThumbprintBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.oidcConfigId = value
 	b.fieldSet_[3] = true
 	return b
@@ -79,6 +91,9 @@ func (b *OidcThumbprintBuilder) OidcConfigId(value string) *OidcThumbprintBuilde
 
 // Thumbprint sets the value of the 'thumbprint' attribute to the given value.
 func (b *OidcThumbprintBuilder) Thumbprint(value string) *OidcThumbprintBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.thumbprint = value
 	b.fieldSet_[4] = true
 	return b

@@ -53,6 +53,9 @@ func (b *CloudVPCBuilder) Empty() bool {
 
 // AWSSecurityGroups sets the value of the 'AWS_security_groups' attribute to the given values.
 func (b *CloudVPCBuilder) AWSSecurityGroups(values ...*SecurityGroupBuilder) *CloudVPCBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.awsSecurityGroups = make([]*SecurityGroupBuilder, len(values))
 	copy(b.awsSecurityGroups, values)
 	b.fieldSet_[0] = true
@@ -61,6 +64,9 @@ func (b *CloudVPCBuilder) AWSSecurityGroups(values ...*SecurityGroupBuilder) *Cl
 
 // AWSSubnets sets the value of the 'AWS_subnets' attribute to the given values.
 func (b *CloudVPCBuilder) AWSSubnets(values ...*SubnetworkBuilder) *CloudVPCBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.awsSubnets = make([]*SubnetworkBuilder, len(values))
 	copy(b.awsSubnets, values)
 	b.fieldSet_[1] = true
@@ -69,6 +75,9 @@ func (b *CloudVPCBuilder) AWSSubnets(values ...*SubnetworkBuilder) *CloudVPCBuil
 
 // CIDRBlock sets the value of the 'CIDR_block' attribute to the given value.
 func (b *CloudVPCBuilder) CIDRBlock(value string) *CloudVPCBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.cidrBlock = value
 	b.fieldSet_[2] = true
 	return b
@@ -76,6 +85,9 @@ func (b *CloudVPCBuilder) CIDRBlock(value string) *CloudVPCBuilder {
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *CloudVPCBuilder) ID(value string) *CloudVPCBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.id = value
 	b.fieldSet_[3] = true
 	return b
@@ -83,6 +95,9 @@ func (b *CloudVPCBuilder) ID(value string) *CloudVPCBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *CloudVPCBuilder) Name(value string) *CloudVPCBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.name = value
 	b.fieldSet_[4] = true
 	return b
@@ -90,6 +105,9 @@ func (b *CloudVPCBuilder) Name(value string) *CloudVPCBuilder {
 
 // RedHatManaged sets the value of the 'red_hat_managed' attribute to the given value.
 func (b *CloudVPCBuilder) RedHatManaged(value bool) *CloudVPCBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.redHatManaged = value
 	b.fieldSet_[5] = true
 	return b
@@ -97,6 +115,9 @@ func (b *CloudVPCBuilder) RedHatManaged(value bool) *CloudVPCBuilder {
 
 // Subnets sets the value of the 'subnets' attribute to the given values.
 func (b *CloudVPCBuilder) Subnets(values ...string) *CloudVPCBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.subnets = make([]string, len(values))
 	copy(b.subnets, values)
 	b.fieldSet_[6] = true

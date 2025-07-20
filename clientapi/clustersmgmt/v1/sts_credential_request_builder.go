@@ -48,6 +48,9 @@ func (b *STSCredentialRequestBuilder) Empty() bool {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *STSCredentialRequestBuilder) Name(value string) *STSCredentialRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.name = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *STSCredentialRequestBuilder) Name(value string) *STSCredentialRequestBu
 //
 // Representation of an sts operator
 func (b *STSCredentialRequestBuilder) Operator(value *STSOperatorBuilder) *STSCredentialRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.operator = value
 	if value != nil {
 		b.fieldSet_[1] = true

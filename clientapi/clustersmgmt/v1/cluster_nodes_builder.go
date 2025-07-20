@@ -60,6 +60,9 @@ func (b *ClusterNodesBuilder) Empty() bool {
 //
 // Representation of a autoscaling in a machine pool.
 func (b *ClusterNodesBuilder) AutoscaleCompute(value *MachinePoolAutoscalingBuilder) *ClusterNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.autoscaleCompute = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -71,6 +74,9 @@ func (b *ClusterNodesBuilder) AutoscaleCompute(value *MachinePoolAutoscalingBuil
 
 // AvailabilityZones sets the value of the 'availability_zones' attribute to the given values.
 func (b *ClusterNodesBuilder) AvailabilityZones(values ...string) *ClusterNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.availabilityZones = make([]string, len(values))
 	copy(b.availabilityZones, values)
 	b.fieldSet_[1] = true
@@ -79,6 +85,9 @@ func (b *ClusterNodesBuilder) AvailabilityZones(values ...string) *ClusterNodesB
 
 // Compute sets the value of the 'compute' attribute to the given value.
 func (b *ClusterNodesBuilder) Compute(value int) *ClusterNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.compute = value
 	b.fieldSet_[2] = true
 	return b
@@ -86,6 +95,9 @@ func (b *ClusterNodesBuilder) Compute(value int) *ClusterNodesBuilder {
 
 // ComputeLabels sets the value of the 'compute_labels' attribute to the given value.
 func (b *ClusterNodesBuilder) ComputeLabels(value map[string]string) *ClusterNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.computeLabels = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -99,6 +111,9 @@ func (b *ClusterNodesBuilder) ComputeLabels(value map[string]string) *ClusterNod
 //
 // Machine type.
 func (b *ClusterNodesBuilder) ComputeMachineType(value *MachineTypeBuilder) *ClusterNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.computeMachineType = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -112,6 +127,9 @@ func (b *ClusterNodesBuilder) ComputeMachineType(value *MachineTypeBuilder) *Clu
 //
 // Root volume capabilities.
 func (b *ClusterNodesBuilder) ComputeRootVolume(value *RootVolumeBuilder) *ClusterNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.computeRootVolume = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -123,6 +141,9 @@ func (b *ClusterNodesBuilder) ComputeRootVolume(value *RootVolumeBuilder) *Clust
 
 // Infra sets the value of the 'infra' attribute to the given value.
 func (b *ClusterNodesBuilder) Infra(value int) *ClusterNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.infra = value
 	b.fieldSet_[6] = true
 	return b
@@ -132,6 +153,9 @@ func (b *ClusterNodesBuilder) Infra(value int) *ClusterNodesBuilder {
 //
 // Machine type.
 func (b *ClusterNodesBuilder) InfraMachineType(value *MachineTypeBuilder) *ClusterNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.infraMachineType = value
 	if value != nil {
 		b.fieldSet_[7] = true
@@ -143,6 +167,9 @@ func (b *ClusterNodesBuilder) InfraMachineType(value *MachineTypeBuilder) *Clust
 
 // Master sets the value of the 'master' attribute to the given value.
 func (b *ClusterNodesBuilder) Master(value int) *ClusterNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.master = value
 	b.fieldSet_[8] = true
 	return b
@@ -152,6 +179,9 @@ func (b *ClusterNodesBuilder) Master(value int) *ClusterNodesBuilder {
 //
 // Machine type.
 func (b *ClusterNodesBuilder) MasterMachineType(value *MachineTypeBuilder) *ClusterNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.masterMachineType = value
 	if value != nil {
 		b.fieldSet_[9] = true
@@ -163,6 +193,9 @@ func (b *ClusterNodesBuilder) MasterMachineType(value *MachineTypeBuilder) *Clus
 
 // SecurityGroupFilters sets the value of the 'security_group_filters' attribute to the given values.
 func (b *ClusterNodesBuilder) SecurityGroupFilters(values ...*MachinePoolSecurityGroupFilterBuilder) *ClusterNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.securityGroupFilters = make([]*MachinePoolSecurityGroupFilterBuilder, len(values))
 	copy(b.securityGroupFilters, values)
 	b.fieldSet_[10] = true
@@ -171,6 +204,9 @@ func (b *ClusterNodesBuilder) SecurityGroupFilters(values ...*MachinePoolSecurit
 
 // Total sets the value of the 'total' attribute to the given value.
 func (b *ClusterNodesBuilder) Total(value int) *ClusterNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.total = value
 	b.fieldSet_[11] = true
 	return b

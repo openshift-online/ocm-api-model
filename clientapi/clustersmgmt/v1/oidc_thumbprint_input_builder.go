@@ -48,6 +48,9 @@ func (b *OidcThumbprintInputBuilder) Empty() bool {
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *OidcThumbprintInputBuilder) ClusterId(value string) *OidcThumbprintInputBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.clusterId = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *OidcThumbprintInputBuilder) ClusterId(value string) *OidcThumbprintInpu
 
 // OidcConfigId sets the value of the 'oidc_config_id' attribute to the given value.
 func (b *OidcThumbprintInputBuilder) OidcConfigId(value string) *OidcThumbprintInputBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.oidcConfigId = value
 	b.fieldSet_[1] = true
 	return b

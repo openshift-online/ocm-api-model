@@ -47,6 +47,9 @@ func (b *SelfFeatureReviewRequestBuilder) Empty() bool {
 
 // Feature sets the value of the 'feature' attribute to the given value.
 func (b *SelfFeatureReviewRequestBuilder) Feature(value string) *SelfFeatureReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.feature = value
 	b.fieldSet_[0] = true
 	return b

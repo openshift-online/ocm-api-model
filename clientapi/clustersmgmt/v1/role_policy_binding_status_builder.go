@@ -47,6 +47,9 @@ func (b *RolePolicyBindingStatusBuilder) Empty() bool {
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *RolePolicyBindingStatusBuilder) Description(value string) *RolePolicyBindingStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.description = value
 	b.fieldSet_[0] = true
 	return b
@@ -54,6 +57,9 @@ func (b *RolePolicyBindingStatusBuilder) Description(value string) *RolePolicyBi
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *RolePolicyBindingStatusBuilder) Value(value string) *RolePolicyBindingStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.value = value
 	b.fieldSet_[1] = true
 	return b

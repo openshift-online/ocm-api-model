@@ -47,6 +47,9 @@ func (b *SelfCapabilityReviewResponseBuilder) Empty() bool {
 
 // Result sets the value of the 'result' attribute to the given value.
 func (b *SelfCapabilityReviewResponseBuilder) Result(value string) *SelfCapabilityReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.result = value
 	b.fieldSet_[0] = true
 	return b

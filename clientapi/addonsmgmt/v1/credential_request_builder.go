@@ -50,6 +50,9 @@ func (b *CredentialRequestBuilder) Empty() bool {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *CredentialRequestBuilder) Name(value string) *CredentialRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.name = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *CredentialRequestBuilder) Name(value string) *CredentialRequestBuilder 
 
 // Namespace sets the value of the 'namespace' attribute to the given value.
 func (b *CredentialRequestBuilder) Namespace(value string) *CredentialRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.namespace = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *CredentialRequestBuilder) Namespace(value string) *CredentialRequestBui
 
 // PolicyPermissions sets the value of the 'policy_permissions' attribute to the given values.
 func (b *CredentialRequestBuilder) PolicyPermissions(values ...string) *CredentialRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.policyPermissions = make([]string, len(values))
 	copy(b.policyPermissions, values)
 	b.fieldSet_[2] = true
@@ -72,6 +81,9 @@ func (b *CredentialRequestBuilder) PolicyPermissions(values ...string) *Credenti
 
 // ServiceAccount sets the value of the 'service_account' attribute to the given value.
 func (b *CredentialRequestBuilder) ServiceAccount(value string) *CredentialRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.serviceAccount = value
 	b.fieldSet_[3] = true
 	return b

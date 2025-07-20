@@ -47,6 +47,9 @@ func (b *AutoscalerResourceLimitsGPULimitBuilder) Empty() bool {
 
 // Range sets the value of the 'range' attribute to the given value.
 func (b *AutoscalerResourceLimitsGPULimitBuilder) Range(value *ResourceRangeBuilder) *AutoscalerResourceLimitsGPULimitBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.range_ = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -58,6 +61,9 @@ func (b *AutoscalerResourceLimitsGPULimitBuilder) Range(value *ResourceRangeBuil
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *AutoscalerResourceLimitsGPULimitBuilder) Type(value string) *AutoscalerResourceLimitsGPULimitBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.type_ = value
 	b.fieldSet_[1] = true
 	return b

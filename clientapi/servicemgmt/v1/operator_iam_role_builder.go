@@ -49,6 +49,9 @@ func (b *OperatorIAMRoleBuilder) Empty() bool {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *OperatorIAMRoleBuilder) Name(value string) *OperatorIAMRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.name = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *OperatorIAMRoleBuilder) Name(value string) *OperatorIAMRoleBuilder {
 
 // Namespace sets the value of the 'namespace' attribute to the given value.
 func (b *OperatorIAMRoleBuilder) Namespace(value string) *OperatorIAMRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.namespace = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *OperatorIAMRoleBuilder) Namespace(value string) *OperatorIAMRoleBuilder
 
 // RoleARN sets the value of the 'role_ARN' attribute to the given value.
 func (b *OperatorIAMRoleBuilder) RoleARN(value string) *OperatorIAMRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.roleARN = value
 	b.fieldSet_[2] = true
 	return b

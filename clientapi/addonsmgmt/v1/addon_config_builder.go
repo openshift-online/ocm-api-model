@@ -49,6 +49,9 @@ func (b *AddonConfigBuilder) Empty() bool {
 
 // AddOnEnvironmentVariables sets the value of the 'add_on_environment_variables' attribute to the given values.
 func (b *AddonConfigBuilder) AddOnEnvironmentVariables(values ...*AddonEnvironmentVariableBuilder) *AddonConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.addOnEnvironmentVariables = make([]*AddonEnvironmentVariableBuilder, len(values))
 	copy(b.addOnEnvironmentVariables, values)
 	b.fieldSet_[0] = true
@@ -57,6 +60,9 @@ func (b *AddonConfigBuilder) AddOnEnvironmentVariables(values ...*AddonEnvironme
 
 // AddOnSecretPropagations sets the value of the 'add_on_secret_propagations' attribute to the given values.
 func (b *AddonConfigBuilder) AddOnSecretPropagations(values ...*AddonSecretPropagationBuilder) *AddonConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.addOnSecretPropagations = make([]*AddonSecretPropagationBuilder, len(values))
 	copy(b.addOnSecretPropagations, values)
 	b.fieldSet_[1] = true

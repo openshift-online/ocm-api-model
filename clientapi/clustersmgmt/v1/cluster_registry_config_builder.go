@@ -66,6 +66,9 @@ func (b *ClusterRegistryConfigBuilder) Empty() bool {
 
 // AdditionalTrustedCa sets the value of the 'additional_trusted_ca' attribute to the given value.
 func (b *ClusterRegistryConfigBuilder) AdditionalTrustedCa(value map[string]string) *ClusterRegistryConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.additionalTrustedCa = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -77,6 +80,9 @@ func (b *ClusterRegistryConfigBuilder) AdditionalTrustedCa(value map[string]stri
 
 // AllowedRegistriesForImport sets the value of the 'allowed_registries_for_import' attribute to the given values.
 func (b *ClusterRegistryConfigBuilder) AllowedRegistriesForImport(values ...*RegistryLocationBuilder) *ClusterRegistryConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.allowedRegistriesForImport = make([]*RegistryLocationBuilder, len(values))
 	copy(b.allowedRegistriesForImport, values)
 	b.fieldSet_[1] = true
@@ -87,6 +93,9 @@ func (b *ClusterRegistryConfigBuilder) AllowedRegistriesForImport(values ...*Reg
 //
 // RegistryAllowlist represents a single registry allowlist.
 func (b *ClusterRegistryConfigBuilder) PlatformAllowlist(value *RegistryAllowlistBuilder) *ClusterRegistryConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.platformAllowlist = value
 	if value != nil {
 		b.fieldSet_[2] = true
@@ -102,6 +111,9 @@ func (b *ClusterRegistryConfigBuilder) PlatformAllowlist(value *RegistryAllowlis
 // registries when accessing images for builds and pods. For instance, whether or not to allow insecure access.
 // It does not contain configuration for the internal cluster registry.
 func (b *ClusterRegistryConfigBuilder) RegistrySources(value *RegistrySourcesBuilder) *ClusterRegistryConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.registrySources = value
 	if value != nil {
 		b.fieldSet_[3] = true

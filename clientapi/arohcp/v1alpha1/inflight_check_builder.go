@@ -45,12 +45,18 @@ func NewInflightCheck() *InflightCheckBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *InflightCheckBuilder) Link(value bool) *InflightCheckBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *InflightCheckBuilder) ID(value string) *InflightCheckBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -58,6 +64,9 @@ func (b *InflightCheckBuilder) ID(value string) *InflightCheckBuilder {
 
 // HREF sets the link to the object.
 func (b *InflightCheckBuilder) HREF(value string) *InflightCheckBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -79,6 +88,9 @@ func (b *InflightCheckBuilder) Empty() bool {
 
 // Details sets the value of the 'details' attribute to the given value.
 func (b *InflightCheckBuilder) Details(value interface{}) *InflightCheckBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.details = value
 	b.fieldSet_[3] = true
 	return b
@@ -86,6 +98,9 @@ func (b *InflightCheckBuilder) Details(value interface{}) *InflightCheckBuilder 
 
 // EndedAt sets the value of the 'ended_at' attribute to the given value.
 func (b *InflightCheckBuilder) EndedAt(value time.Time) *InflightCheckBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.endedAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -93,6 +108,9 @@ func (b *InflightCheckBuilder) EndedAt(value time.Time) *InflightCheckBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *InflightCheckBuilder) Name(value string) *InflightCheckBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.name = value
 	b.fieldSet_[5] = true
 	return b
@@ -100,6 +118,9 @@ func (b *InflightCheckBuilder) Name(value string) *InflightCheckBuilder {
 
 // Restarts sets the value of the 'restarts' attribute to the given value.
 func (b *InflightCheckBuilder) Restarts(value int) *InflightCheckBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.restarts = value
 	b.fieldSet_[6] = true
 	return b
@@ -107,6 +128,9 @@ func (b *InflightCheckBuilder) Restarts(value int) *InflightCheckBuilder {
 
 // StartedAt sets the value of the 'started_at' attribute to the given value.
 func (b *InflightCheckBuilder) StartedAt(value time.Time) *InflightCheckBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.startedAt = value
 	b.fieldSet_[7] = true
 	return b
@@ -116,6 +140,9 @@ func (b *InflightCheckBuilder) StartedAt(value time.Time) *InflightCheckBuilder 
 //
 // State of an inflight check.
 func (b *InflightCheckBuilder) State(value InflightCheckState) *InflightCheckBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.state = value
 	b.fieldSet_[8] = true
 	return b

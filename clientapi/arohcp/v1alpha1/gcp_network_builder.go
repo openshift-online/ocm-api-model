@@ -50,6 +50,9 @@ func (b *GCPNetworkBuilder) Empty() bool {
 
 // VPCName sets the value of the 'VPC_name' attribute to the given value.
 func (b *GCPNetworkBuilder) VPCName(value string) *GCPNetworkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.vpcName = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *GCPNetworkBuilder) VPCName(value string) *GCPNetworkBuilder {
 
 // VPCProjectID sets the value of the 'VPC_project_ID' attribute to the given value.
 func (b *GCPNetworkBuilder) VPCProjectID(value string) *GCPNetworkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.vpcProjectID = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *GCPNetworkBuilder) VPCProjectID(value string) *GCPNetworkBuilder {
 
 // ComputeSubnet sets the value of the 'compute_subnet' attribute to the given value.
 func (b *GCPNetworkBuilder) ComputeSubnet(value string) *GCPNetworkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.computeSubnet = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *GCPNetworkBuilder) ComputeSubnet(value string) *GCPNetworkBuilder {
 
 // ControlPlaneSubnet sets the value of the 'control_plane_subnet' attribute to the given value.
 func (b *GCPNetworkBuilder) ControlPlaneSubnet(value string) *GCPNetworkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.controlPlaneSubnet = value
 	b.fieldSet_[3] = true
 	return b

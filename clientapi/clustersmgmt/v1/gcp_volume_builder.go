@@ -47,6 +47,9 @@ func (b *GCPVolumeBuilder) Empty() bool {
 
 // Size sets the value of the 'size' attribute to the given value.
 func (b *GCPVolumeBuilder) Size(value int) *GCPVolumeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.size = value
 	b.fieldSet_[0] = true
 	return b

@@ -49,6 +49,9 @@ func (b *ClusterMetricsNodesBuilder) Empty() bool {
 
 // Compute sets the value of the 'compute' attribute to the given value.
 func (b *ClusterMetricsNodesBuilder) Compute(value float64) *ClusterMetricsNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.compute = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *ClusterMetricsNodesBuilder) Compute(value float64) *ClusterMetricsNodes
 
 // Infra sets the value of the 'infra' attribute to the given value.
 func (b *ClusterMetricsNodesBuilder) Infra(value float64) *ClusterMetricsNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.infra = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *ClusterMetricsNodesBuilder) Infra(value float64) *ClusterMetricsNodesBu
 
 // Master sets the value of the 'master' attribute to the given value.
 func (b *ClusterMetricsNodesBuilder) Master(value float64) *ClusterMetricsNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.master = value
 	b.fieldSet_[2] = true
 	return b
@@ -70,6 +79,9 @@ func (b *ClusterMetricsNodesBuilder) Master(value float64) *ClusterMetricsNodesB
 
 // Total sets the value of the 'total' attribute to the given value.
 func (b *ClusterMetricsNodesBuilder) Total(value float64) *ClusterMetricsNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.total = value
 	b.fieldSet_[3] = true
 	return b

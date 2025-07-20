@@ -50,6 +50,9 @@ func (b *AddonInstallationParameterBuilder) Empty() bool {
 
 // Href sets the value of the 'href' attribute to the given value.
 func (b *AddonInstallationParameterBuilder) Href(value string) *AddonInstallationParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.href = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *AddonInstallationParameterBuilder) Href(value string) *AddonInstallatio
 
 // Id sets the value of the 'id' attribute to the given value.
 func (b *AddonInstallationParameterBuilder) Id(value string) *AddonInstallationParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *AddonInstallationParameterBuilder) Id(value string) *AddonInstallationP
 
 // Kind sets the value of the 'kind' attribute to the given value.
 func (b *AddonInstallationParameterBuilder) Kind(value string) *AddonInstallationParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.kind = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *AddonInstallationParameterBuilder) Kind(value string) *AddonInstallatio
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *AddonInstallationParameterBuilder) Value(value string) *AddonInstallationParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.value = value
 	b.fieldSet_[3] = true
 	return b

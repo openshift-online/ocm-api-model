@@ -38,12 +38,18 @@ func NewAddOnConfig() *AddOnConfigBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddOnConfigBuilder) Link(value bool) *AddOnConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddOnConfigBuilder) ID(value string) *AddOnConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -51,6 +57,9 @@ func (b *AddOnConfigBuilder) ID(value string) *AddOnConfigBuilder {
 
 // HREF sets the link to the object.
 func (b *AddOnConfigBuilder) HREF(value string) *AddOnConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *AddOnConfigBuilder) Empty() bool {
 
 // AddOnEnvironmentVariables sets the value of the 'add_on_environment_variables' attribute to the given values.
 func (b *AddOnConfigBuilder) AddOnEnvironmentVariables(values ...*AddOnEnvironmentVariableBuilder) *AddOnConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.addOnEnvironmentVariables = make([]*AddOnEnvironmentVariableBuilder, len(values))
 	copy(b.addOnEnvironmentVariables, values)
 	b.fieldSet_[3] = true
@@ -80,6 +92,9 @@ func (b *AddOnConfigBuilder) AddOnEnvironmentVariables(values ...*AddOnEnvironme
 
 // SecretPropagations sets the value of the 'secret_propagations' attribute to the given values.
 func (b *AddOnConfigBuilder) SecretPropagations(values ...*AddOnSecretPropagationBuilder) *AddOnConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.secretPropagations = make([]*AddOnSecretPropagationBuilder, len(values))
 	copy(b.secretPropagations, values)
 	b.fieldSet_[4] = true

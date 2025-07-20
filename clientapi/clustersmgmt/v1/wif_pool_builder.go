@@ -48,6 +48,9 @@ func (b *WifPoolBuilder) Empty() bool {
 
 // IdentityProvider sets the value of the 'identity_provider' attribute to the given value.
 func (b *WifPoolBuilder) IdentityProvider(value *WifIdentityProviderBuilder) *WifPoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.identityProvider = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -59,6 +62,9 @@ func (b *WifPoolBuilder) IdentityProvider(value *WifIdentityProviderBuilder) *Wi
 
 // PoolId sets the value of the 'pool_id' attribute to the given value.
 func (b *WifPoolBuilder) PoolId(value string) *WifPoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.poolId = value
 	b.fieldSet_[1] = true
 	return b
@@ -66,6 +72,9 @@ func (b *WifPoolBuilder) PoolId(value string) *WifPoolBuilder {
 
 // PoolName sets the value of the 'pool_name' attribute to the given value.
 func (b *WifPoolBuilder) PoolName(value string) *WifPoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.poolName = value
 	b.fieldSet_[2] = true
 	return b

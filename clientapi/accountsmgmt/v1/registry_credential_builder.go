@@ -45,12 +45,18 @@ func NewRegistryCredential() *RegistryCredentialBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *RegistryCredentialBuilder) Link(value bool) *RegistryCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *RegistryCredentialBuilder) ID(value string) *RegistryCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -58,6 +64,9 @@ func (b *RegistryCredentialBuilder) ID(value string) *RegistryCredentialBuilder 
 
 // HREF sets the link to the object.
 func (b *RegistryCredentialBuilder) HREF(value string) *RegistryCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -79,6 +88,9 @@ func (b *RegistryCredentialBuilder) Empty() bool {
 
 // Account sets the value of the 'account' attribute to the given value.
 func (b *RegistryCredentialBuilder) Account(value *AccountBuilder) *RegistryCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.account = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -90,6 +102,9 @@ func (b *RegistryCredentialBuilder) Account(value *AccountBuilder) *RegistryCred
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *RegistryCredentialBuilder) CreatedAt(value time.Time) *RegistryCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.createdAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -97,6 +112,9 @@ func (b *RegistryCredentialBuilder) CreatedAt(value time.Time) *RegistryCredenti
 
 // ExternalResourceID sets the value of the 'external_resource_ID' attribute to the given value.
 func (b *RegistryCredentialBuilder) ExternalResourceID(value string) *RegistryCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.externalResourceID = value
 	b.fieldSet_[5] = true
 	return b
@@ -104,6 +122,9 @@ func (b *RegistryCredentialBuilder) ExternalResourceID(value string) *RegistryCr
 
 // Registry sets the value of the 'registry' attribute to the given value.
 func (b *RegistryCredentialBuilder) Registry(value *RegistryBuilder) *RegistryCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.registry = value
 	if value != nil {
 		b.fieldSet_[6] = true
@@ -115,6 +136,9 @@ func (b *RegistryCredentialBuilder) Registry(value *RegistryBuilder) *RegistryCr
 
 // Token sets the value of the 'token' attribute to the given value.
 func (b *RegistryCredentialBuilder) Token(value string) *RegistryCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.token = value
 	b.fieldSet_[7] = true
 	return b
@@ -122,6 +146,9 @@ func (b *RegistryCredentialBuilder) Token(value string) *RegistryCredentialBuild
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *RegistryCredentialBuilder) UpdatedAt(value time.Time) *RegistryCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.updatedAt = value
 	b.fieldSet_[8] = true
 	return b
@@ -129,6 +156,9 @@ func (b *RegistryCredentialBuilder) UpdatedAt(value time.Time) *RegistryCredenti
 
 // Username sets the value of the 'username' attribute to the given value.
 func (b *RegistryCredentialBuilder) Username(value string) *RegistryCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.username = value
 	b.fieldSet_[9] = true
 	return b

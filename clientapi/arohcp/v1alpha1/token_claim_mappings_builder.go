@@ -48,6 +48,9 @@ func (b *TokenClaimMappingsBuilder) Empty() bool {
 
 // Groups sets the value of the 'groups' attribute to the given value.
 func (b *TokenClaimMappingsBuilder) Groups(value *GroupsClaimBuilder) *TokenClaimMappingsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.groups = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -61,6 +64,9 @@ func (b *TokenClaimMappingsBuilder) Groups(value *GroupsClaimBuilder) *TokenClai
 //
 // The username claim mapping.
 func (b *TokenClaimMappingsBuilder) UserName(value *UsernameClaimBuilder) *TokenClaimMappingsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.userName = value
 	if value != nil {
 		b.fieldSet_[1] = true

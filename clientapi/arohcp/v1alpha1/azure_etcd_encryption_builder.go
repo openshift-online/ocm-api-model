@@ -49,6 +49,9 @@ func (b *AzureEtcdEncryptionBuilder) Empty() bool {
 //
 // Contains the necessary attributes to support data encryption for Azure based clusters.
 func (b *AzureEtcdEncryptionBuilder) DataEncryption(value *AzureEtcdDataEncryptionBuilder) *AzureEtcdEncryptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.dataEncryption = value
 	if value != nil {
 		b.fieldSet_[0] = true

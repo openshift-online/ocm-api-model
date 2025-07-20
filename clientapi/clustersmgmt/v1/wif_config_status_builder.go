@@ -48,6 +48,9 @@ func (b *WifConfigStatusBuilder) Empty() bool {
 
 // Configured sets the value of the 'configured' attribute to the given value.
 func (b *WifConfigStatusBuilder) Configured(value bool) *WifConfigStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.configured = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *WifConfigStatusBuilder) Configured(value bool) *WifConfigStatusBuilder 
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *WifConfigStatusBuilder) Description(value string) *WifConfigStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.description = value
 	b.fieldSet_[1] = true
 	return b

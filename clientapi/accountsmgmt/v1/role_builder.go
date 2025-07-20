@@ -36,12 +36,18 @@ func NewRole() *RoleBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *RoleBuilder) Link(value bool) *RoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *RoleBuilder) ID(value string) *RoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -49,6 +55,9 @@ func (b *RoleBuilder) ID(value string) *RoleBuilder {
 
 // HREF sets the link to the object.
 func (b *RoleBuilder) HREF(value string) *RoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -70,6 +79,9 @@ func (b *RoleBuilder) Empty() bool {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *RoleBuilder) Name(value string) *RoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.name = value
 	b.fieldSet_[3] = true
 	return b
@@ -77,6 +89,9 @@ func (b *RoleBuilder) Name(value string) *RoleBuilder {
 
 // Permissions sets the value of the 'permissions' attribute to the given values.
 func (b *RoleBuilder) Permissions(values ...*PermissionBuilder) *RoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.permissions = make([]*PermissionBuilder, len(values))
 	copy(b.permissions, values)
 	b.fieldSet_[4] = true

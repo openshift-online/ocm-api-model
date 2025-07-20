@@ -40,12 +40,18 @@ func NewAWSMachinePool() *AWSMachinePoolBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AWSMachinePoolBuilder) Link(value bool) *AWSMachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AWSMachinePoolBuilder) ID(value string) *AWSMachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -53,6 +59,9 @@ func (b *AWSMachinePoolBuilder) ID(value string) *AWSMachinePoolBuilder {
 
 // HREF sets the link to the object.
 func (b *AWSMachinePoolBuilder) HREF(value string) *AWSMachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -74,6 +83,9 @@ func (b *AWSMachinePoolBuilder) Empty() bool {
 
 // AdditionalSecurityGroupIds sets the value of the 'additional_security_group_ids' attribute to the given values.
 func (b *AWSMachinePoolBuilder) AdditionalSecurityGroupIds(values ...string) *AWSMachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.additionalSecurityGroupIds = make([]string, len(values))
 	copy(b.additionalSecurityGroupIds, values)
 	b.fieldSet_[3] = true
@@ -82,6 +94,9 @@ func (b *AWSMachinePoolBuilder) AdditionalSecurityGroupIds(values ...string) *AW
 
 // AvailabilityZoneTypes sets the value of the 'availability_zone_types' attribute to the given value.
 func (b *AWSMachinePoolBuilder) AvailabilityZoneTypes(value map[string]string) *AWSMachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.availabilityZoneTypes = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -95,6 +110,9 @@ func (b *AWSMachinePoolBuilder) AvailabilityZoneTypes(value map[string]string) *
 //
 // Spot market options for AWS machine pool.
 func (b *AWSMachinePoolBuilder) SpotMarketOptions(value *AWSSpotMarketOptionsBuilder) *AWSMachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.spotMarketOptions = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -106,6 +124,9 @@ func (b *AWSMachinePoolBuilder) SpotMarketOptions(value *AWSSpotMarketOptionsBui
 
 // SubnetOutposts sets the value of the 'subnet_outposts' attribute to the given value.
 func (b *AWSMachinePoolBuilder) SubnetOutposts(value map[string]string) *AWSMachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.subnetOutposts = value
 	if value != nil {
 		b.fieldSet_[6] = true
@@ -117,6 +138,9 @@ func (b *AWSMachinePoolBuilder) SubnetOutposts(value map[string]string) *AWSMach
 
 // Tags sets the value of the 'tags' attribute to the given value.
 func (b *AWSMachinePoolBuilder) Tags(value map[string]string) *AWSMachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.tags = value
 	if value != nil {
 		b.fieldSet_[7] = true

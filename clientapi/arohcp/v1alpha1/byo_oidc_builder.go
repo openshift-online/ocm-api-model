@@ -47,6 +47,9 @@ func (b *ByoOidcBuilder) Empty() bool {
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *ByoOidcBuilder) Enabled(value bool) *ByoOidcBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.enabled = value
 	b.fieldSet_[0] = true
 	return b

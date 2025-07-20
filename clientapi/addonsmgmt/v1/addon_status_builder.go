@@ -39,12 +39,18 @@ func NewAddonStatus() *AddonStatusBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddonStatusBuilder) Link(value bool) *AddonStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddonStatusBuilder) ID(value string) *AddonStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -52,6 +58,9 @@ func (b *AddonStatusBuilder) ID(value string) *AddonStatusBuilder {
 
 // HREF sets the link to the object.
 func (b *AddonStatusBuilder) HREF(value string) *AddonStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -73,6 +82,9 @@ func (b *AddonStatusBuilder) Empty() bool {
 
 // AddonId sets the value of the 'addon_id' attribute to the given value.
 func (b *AddonStatusBuilder) AddonId(value string) *AddonStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.addonId = value
 	b.fieldSet_[3] = true
 	return b
@@ -80,6 +92,9 @@ func (b *AddonStatusBuilder) AddonId(value string) *AddonStatusBuilder {
 
 // CorrelationID sets the value of the 'correlation_ID' attribute to the given value.
 func (b *AddonStatusBuilder) CorrelationID(value string) *AddonStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.correlationID = value
 	b.fieldSet_[4] = true
 	return b
@@ -87,6 +102,9 @@ func (b *AddonStatusBuilder) CorrelationID(value string) *AddonStatusBuilder {
 
 // StatusConditions sets the value of the 'status_conditions' attribute to the given values.
 func (b *AddonStatusBuilder) StatusConditions(values ...*AddonStatusConditionBuilder) *AddonStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.statusConditions = make([]*AddonStatusConditionBuilder, len(values))
 	copy(b.statusConditions, values)
 	b.fieldSet_[5] = true
@@ -95,6 +113,9 @@ func (b *AddonStatusBuilder) StatusConditions(values ...*AddonStatusConditionBui
 
 // Version sets the value of the 'version' attribute to the given value.
 func (b *AddonStatusBuilder) Version(value string) *AddonStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.version = value
 	b.fieldSet_[6] = true
 	return b

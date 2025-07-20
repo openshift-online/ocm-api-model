@@ -46,6 +46,9 @@ func (b *ClusterNodesBuilder) Empty() bool {
 
 // AvailabilityZones sets the value of the 'availability_zones' attribute to the given values.
 func (b *ClusterNodesBuilder) AvailabilityZones(values ...string) *ClusterNodesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.availabilityZones = make([]string, len(values))
 	copy(b.availabilityZones, values)
 	b.fieldSet_[0] = true

@@ -36,12 +36,18 @@ func NewTrustedIp() *TrustedIpBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *TrustedIpBuilder) Link(value bool) *TrustedIpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *TrustedIpBuilder) ID(value string) *TrustedIpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -49,6 +55,9 @@ func (b *TrustedIpBuilder) ID(value string) *TrustedIpBuilder {
 
 // HREF sets the link to the object.
 func (b *TrustedIpBuilder) HREF(value string) *TrustedIpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -70,6 +79,9 @@ func (b *TrustedIpBuilder) Empty() bool {
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *TrustedIpBuilder) Enabled(value bool) *TrustedIpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.enabled = value
 	b.fieldSet_[3] = true
 	return b

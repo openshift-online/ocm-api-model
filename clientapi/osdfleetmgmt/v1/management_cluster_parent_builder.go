@@ -50,6 +50,9 @@ func (b *ManagementClusterParentBuilder) Empty() bool {
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *ManagementClusterParentBuilder) ClusterId(value string) *ManagementClusterParentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.clusterId = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *ManagementClusterParentBuilder) ClusterId(value string) *ManagementClus
 
 // Href sets the value of the 'href' attribute to the given value.
 func (b *ManagementClusterParentBuilder) Href(value string) *ManagementClusterParentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.href = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *ManagementClusterParentBuilder) Href(value string) *ManagementClusterPa
 
 // Kind sets the value of the 'kind' attribute to the given value.
 func (b *ManagementClusterParentBuilder) Kind(value string) *ManagementClusterParentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.kind = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *ManagementClusterParentBuilder) Kind(value string) *ManagementClusterPa
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ManagementClusterParentBuilder) Name(value string) *ManagementClusterParentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.name = value
 	b.fieldSet_[3] = true
 	return b

@@ -41,12 +41,18 @@ func NewFlavour() *FlavourBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *FlavourBuilder) Link(value bool) *FlavourBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *FlavourBuilder) ID(value string) *FlavourBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -54,6 +60,9 @@ func (b *FlavourBuilder) ID(value string) *FlavourBuilder {
 
 // HREF sets the link to the object.
 func (b *FlavourBuilder) HREF(value string) *FlavourBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -77,6 +86,9 @@ func (b *FlavourBuilder) Empty() bool {
 //
 // Specification for different classes of nodes inside a flavour.
 func (b *FlavourBuilder) AWS(value *AWSFlavourBuilder) *FlavourBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.aws = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -90,6 +102,9 @@ func (b *FlavourBuilder) AWS(value *AWSFlavourBuilder) *FlavourBuilder {
 //
 // Specification for different classes of nodes inside a flavour.
 func (b *FlavourBuilder) GCP(value *GCPFlavourBuilder) *FlavourBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.gcp = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -101,6 +116,9 @@ func (b *FlavourBuilder) GCP(value *GCPFlavourBuilder) *FlavourBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *FlavourBuilder) Name(value string) *FlavourBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.name = value
 	b.fieldSet_[5] = true
 	return b
@@ -110,6 +128,9 @@ func (b *FlavourBuilder) Name(value string) *FlavourBuilder {
 //
 // Network configuration of a cluster.
 func (b *FlavourBuilder) Network(value *NetworkBuilder) *FlavourBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.network = value
 	if value != nil {
 		b.fieldSet_[6] = true
@@ -123,6 +144,9 @@ func (b *FlavourBuilder) Network(value *NetworkBuilder) *FlavourBuilder {
 //
 // Counts of different classes of nodes inside a flavour.
 func (b *FlavourBuilder) Nodes(value *FlavourNodesBuilder) *FlavourBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.nodes = value
 	if value != nil {
 		b.fieldSet_[7] = true

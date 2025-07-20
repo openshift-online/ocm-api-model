@@ -48,6 +48,9 @@ func (b *InstanceIAMRolesBuilder) Empty() bool {
 
 // MasterRoleARN sets the value of the 'master_role_ARN' attribute to the given value.
 func (b *InstanceIAMRolesBuilder) MasterRoleARN(value string) *InstanceIAMRolesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.masterRoleARN = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *InstanceIAMRolesBuilder) MasterRoleARN(value string) *InstanceIAMRolesB
 
 // WorkerRoleARN sets the value of the 'worker_role_ARN' attribute to the given value.
 func (b *InstanceIAMRolesBuilder) WorkerRoleARN(value string) *InstanceIAMRolesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.workerRoleARN = value
 	b.fieldSet_[1] = true
 	return b

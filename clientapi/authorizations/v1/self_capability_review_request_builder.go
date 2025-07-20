@@ -53,6 +53,9 @@ func (b *SelfCapabilityReviewRequestBuilder) Empty() bool {
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *SelfCapabilityReviewRequestBuilder) AccountUsername(value string) *SelfCapabilityReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.accountUsername = value
 	b.fieldSet_[0] = true
 	return b
@@ -60,6 +63,9 @@ func (b *SelfCapabilityReviewRequestBuilder) AccountUsername(value string) *Self
 
 // Capability sets the value of the 'capability' attribute to the given value.
 func (b *SelfCapabilityReviewRequestBuilder) Capability(value string) *SelfCapabilityReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.capability = value
 	b.fieldSet_[1] = true
 	return b
@@ -67,6 +73,9 @@ func (b *SelfCapabilityReviewRequestBuilder) Capability(value string) *SelfCapab
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *SelfCapabilityReviewRequestBuilder) ClusterID(value string) *SelfCapabilityReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.clusterID = value
 	b.fieldSet_[2] = true
 	return b
@@ -74,6 +83,9 @@ func (b *SelfCapabilityReviewRequestBuilder) ClusterID(value string) *SelfCapabi
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *SelfCapabilityReviewRequestBuilder) OrganizationID(value string) *SelfCapabilityReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.organizationID = value
 	b.fieldSet_[3] = true
 	return b
@@ -81,6 +93,9 @@ func (b *SelfCapabilityReviewRequestBuilder) OrganizationID(value string) *SelfC
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *SelfCapabilityReviewRequestBuilder) ResourceType(value string) *SelfCapabilityReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.resourceType = value
 	b.fieldSet_[4] = true
 	return b
@@ -88,6 +103,9 @@ func (b *SelfCapabilityReviewRequestBuilder) ResourceType(value string) *SelfCap
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *SelfCapabilityReviewRequestBuilder) SubscriptionID(value string) *SelfCapabilityReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.subscriptionID = value
 	b.fieldSet_[5] = true
 	return b
@@ -95,6 +113,9 @@ func (b *SelfCapabilityReviewRequestBuilder) SubscriptionID(value string) *SelfC
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *SelfCapabilityReviewRequestBuilder) Type(value string) *SelfCapabilityReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.type_ = value
 	b.fieldSet_[6] = true
 	return b

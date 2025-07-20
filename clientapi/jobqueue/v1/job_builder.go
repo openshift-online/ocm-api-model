@@ -45,12 +45,18 @@ func NewJob() *JobBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *JobBuilder) Link(value bool) *JobBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *JobBuilder) ID(value string) *JobBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -58,6 +64,9 @@ func (b *JobBuilder) ID(value string) *JobBuilder {
 
 // HREF sets the link to the object.
 func (b *JobBuilder) HREF(value string) *JobBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -79,6 +88,9 @@ func (b *JobBuilder) Empty() bool {
 
 // AbandonedAt sets the value of the 'abandoned_at' attribute to the given value.
 func (b *JobBuilder) AbandonedAt(value time.Time) *JobBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.abandonedAt = value
 	b.fieldSet_[3] = true
 	return b
@@ -86,6 +98,9 @@ func (b *JobBuilder) AbandonedAt(value time.Time) *JobBuilder {
 
 // Arguments sets the value of the 'arguments' attribute to the given value.
 func (b *JobBuilder) Arguments(value string) *JobBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.arguments = value
 	b.fieldSet_[4] = true
 	return b
@@ -93,6 +108,9 @@ func (b *JobBuilder) Arguments(value string) *JobBuilder {
 
 // Attempts sets the value of the 'attempts' attribute to the given value.
 func (b *JobBuilder) Attempts(value int) *JobBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.attempts = value
 	b.fieldSet_[5] = true
 	return b
@@ -100,6 +118,9 @@ func (b *JobBuilder) Attempts(value int) *JobBuilder {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *JobBuilder) CreatedAt(value time.Time) *JobBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.createdAt = value
 	b.fieldSet_[6] = true
 	return b
@@ -107,6 +128,9 @@ func (b *JobBuilder) CreatedAt(value time.Time) *JobBuilder {
 
 // ReceiptId sets the value of the 'receipt_id' attribute to the given value.
 func (b *JobBuilder) ReceiptId(value string) *JobBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.receiptId = value
 	b.fieldSet_[7] = true
 	return b
@@ -114,6 +138,9 @@ func (b *JobBuilder) ReceiptId(value string) *JobBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *JobBuilder) UpdatedAt(value time.Time) *JobBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.updatedAt = value
 	b.fieldSet_[8] = true
 	return b

@@ -36,12 +36,18 @@ func NewClusterCredentials() *ClusterCredentialsBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ClusterCredentialsBuilder) Link(value bool) *ClusterCredentialsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ClusterCredentialsBuilder) ID(value string) *ClusterCredentialsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -49,6 +55,9 @@ func (b *ClusterCredentialsBuilder) ID(value string) *ClusterCredentialsBuilder 
 
 // HREF sets the link to the object.
 func (b *ClusterCredentialsBuilder) HREF(value string) *ClusterCredentialsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -70,6 +79,9 @@ func (b *ClusterCredentialsBuilder) Empty() bool {
 
 // Kubeconfig sets the value of the 'kubeconfig' attribute to the given value.
 func (b *ClusterCredentialsBuilder) Kubeconfig(value string) *ClusterCredentialsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.kubeconfig = value
 	b.fieldSet_[3] = true
 	return b

@@ -48,6 +48,9 @@ func (b *ProvisionShardReferenceBuilder) Empty() bool {
 
 // Href sets the value of the 'href' attribute to the given value.
 func (b *ProvisionShardReferenceBuilder) Href(value string) *ProvisionShardReferenceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.href = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *ProvisionShardReferenceBuilder) Href(value string) *ProvisionShardRefer
 
 // Id sets the value of the 'id' attribute to the given value.
 func (b *ProvisionShardReferenceBuilder) Id(value string) *ProvisionShardReferenceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b

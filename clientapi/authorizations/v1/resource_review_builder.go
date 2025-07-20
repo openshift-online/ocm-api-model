@@ -53,6 +53,9 @@ func (b *ResourceReviewBuilder) Empty() bool {
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *ResourceReviewBuilder) AccountUsername(value string) *ResourceReviewBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.accountUsername = value
 	b.fieldSet_[0] = true
 	return b
@@ -60,6 +63,9 @@ func (b *ResourceReviewBuilder) AccountUsername(value string) *ResourceReviewBui
 
 // Action sets the value of the 'action' attribute to the given value.
 func (b *ResourceReviewBuilder) Action(value string) *ResourceReviewBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.action = value
 	b.fieldSet_[1] = true
 	return b
@@ -67,6 +73,9 @@ func (b *ResourceReviewBuilder) Action(value string) *ResourceReviewBuilder {
 
 // ClusterIDs sets the value of the 'cluster_IDs' attribute to the given values.
 func (b *ResourceReviewBuilder) ClusterIDs(values ...string) *ResourceReviewBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.clusterIDs = make([]string, len(values))
 	copy(b.clusterIDs, values)
 	b.fieldSet_[2] = true
@@ -75,6 +84,9 @@ func (b *ResourceReviewBuilder) ClusterIDs(values ...string) *ResourceReviewBuil
 
 // ClusterUUIDs sets the value of the 'cluster_UUIDs' attribute to the given values.
 func (b *ResourceReviewBuilder) ClusterUUIDs(values ...string) *ResourceReviewBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.clusterUUIDs = make([]string, len(values))
 	copy(b.clusterUUIDs, values)
 	b.fieldSet_[3] = true
@@ -83,6 +95,9 @@ func (b *ResourceReviewBuilder) ClusterUUIDs(values ...string) *ResourceReviewBu
 
 // OrganizationIDs sets the value of the 'organization_IDs' attribute to the given values.
 func (b *ResourceReviewBuilder) OrganizationIDs(values ...string) *ResourceReviewBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.organizationIDs = make([]string, len(values))
 	copy(b.organizationIDs, values)
 	b.fieldSet_[4] = true
@@ -91,6 +106,9 @@ func (b *ResourceReviewBuilder) OrganizationIDs(values ...string) *ResourceRevie
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *ResourceReviewBuilder) ResourceType(value string) *ResourceReviewBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.resourceType = value
 	b.fieldSet_[5] = true
 	return b
@@ -98,6 +116,9 @@ func (b *ResourceReviewBuilder) ResourceType(value string) *ResourceReviewBuilde
 
 // SubscriptionIDs sets the value of the 'subscription_IDs' attribute to the given values.
 func (b *ResourceReviewBuilder) SubscriptionIDs(values ...string) *ResourceReviewBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.subscriptionIDs = make([]string, len(values))
 	copy(b.subscriptionIDs, values)
 	b.fieldSet_[6] = true

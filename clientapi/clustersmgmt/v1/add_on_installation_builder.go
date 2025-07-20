@@ -48,12 +48,18 @@ func NewAddOnInstallation() *AddOnInstallationBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddOnInstallationBuilder) Link(value bool) *AddOnInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddOnInstallationBuilder) ID(value string) *AddOnInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -61,6 +67,9 @@ func (b *AddOnInstallationBuilder) ID(value string) *AddOnInstallationBuilder {
 
 // HREF sets the link to the object.
 func (b *AddOnInstallationBuilder) HREF(value string) *AddOnInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -84,6 +93,9 @@ func (b *AddOnInstallationBuilder) Empty() bool {
 //
 // Representation of an add-on that can be installed in a cluster.
 func (b *AddOnInstallationBuilder) Addon(value *AddOnBuilder) *AddOnInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.addon = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -97,6 +109,9 @@ func (b *AddOnInstallationBuilder) Addon(value *AddOnBuilder) *AddOnInstallation
 //
 // Representation of an add-on version.
 func (b *AddOnInstallationBuilder) AddonVersion(value *AddOnVersionBuilder) *AddOnInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.addonVersion = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -110,6 +125,9 @@ func (b *AddOnInstallationBuilder) AddonVersion(value *AddOnVersionBuilder) *Add
 //
 // Representation of an add-on installation billing.
 func (b *AddOnInstallationBuilder) Billing(value *AddOnInstallationBillingBuilder) *AddOnInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.billing = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -121,6 +139,9 @@ func (b *AddOnInstallationBuilder) Billing(value *AddOnInstallationBillingBuilde
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *AddOnInstallationBuilder) CreationTimestamp(value time.Time) *AddOnInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.creationTimestamp = value
 	b.fieldSet_[6] = true
 	return b
@@ -128,6 +149,9 @@ func (b *AddOnInstallationBuilder) CreationTimestamp(value time.Time) *AddOnInst
 
 // OperatorVersion sets the value of the 'operator_version' attribute to the given value.
 func (b *AddOnInstallationBuilder) OperatorVersion(value string) *AddOnInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.operatorVersion = value
 	b.fieldSet_[7] = true
 	return b
@@ -135,6 +159,9 @@ func (b *AddOnInstallationBuilder) OperatorVersion(value string) *AddOnInstallat
 
 // Parameters sets the value of the 'parameters' attribute to the given values.
 func (b *AddOnInstallationBuilder) Parameters(value *AddOnInstallationParameterListBuilder) *AddOnInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.parameters = value
 	b.fieldSet_[8] = true
 	return b
@@ -144,6 +171,9 @@ func (b *AddOnInstallationBuilder) Parameters(value *AddOnInstallationParameterL
 //
 // Representation of an add-on installation State field.
 func (b *AddOnInstallationBuilder) State(value AddOnInstallationState) *AddOnInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.state = value
 	b.fieldSet_[9] = true
 	return b
@@ -151,6 +181,9 @@ func (b *AddOnInstallationBuilder) State(value AddOnInstallationState) *AddOnIns
 
 // StateDescription sets the value of the 'state_description' attribute to the given value.
 func (b *AddOnInstallationBuilder) StateDescription(value string) *AddOnInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.stateDescription = value
 	b.fieldSet_[10] = true
 	return b
@@ -158,6 +191,9 @@ func (b *AddOnInstallationBuilder) StateDescription(value string) *AddOnInstalla
 
 // UpdatedTimestamp sets the value of the 'updated_timestamp' attribute to the given value.
 func (b *AddOnInstallationBuilder) UpdatedTimestamp(value time.Time) *AddOnInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.updatedTimestamp = value
 	b.fieldSet_[11] = true
 	return b

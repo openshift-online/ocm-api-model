@@ -53,12 +53,18 @@ func NewAccessRequest() *AccessRequestBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AccessRequestBuilder) Link(value bool) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AccessRequestBuilder) ID(value string) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -66,6 +72,9 @@ func (b *AccessRequestBuilder) ID(value string) *AccessRequestBuilder {
 
 // HREF sets the link to the object.
 func (b *AccessRequestBuilder) HREF(value string) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -87,6 +96,9 @@ func (b *AccessRequestBuilder) Empty() bool {
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *AccessRequestBuilder) ClusterId(value string) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.clusterId = value
 	b.fieldSet_[3] = true
 	return b
@@ -94,6 +106,9 @@ func (b *AccessRequestBuilder) ClusterId(value string) *AccessRequestBuilder {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *AccessRequestBuilder) CreatedAt(value time.Time) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.createdAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -101,6 +116,9 @@ func (b *AccessRequestBuilder) CreatedAt(value time.Time) *AccessRequestBuilder 
 
 // Deadline sets the value of the 'deadline' attribute to the given value.
 func (b *AccessRequestBuilder) Deadline(value string) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.deadline = value
 	b.fieldSet_[5] = true
 	return b
@@ -108,6 +126,9 @@ func (b *AccessRequestBuilder) Deadline(value string) *AccessRequestBuilder {
 
 // DeadlineAt sets the value of the 'deadline_at' attribute to the given value.
 func (b *AccessRequestBuilder) DeadlineAt(value time.Time) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.deadlineAt = value
 	b.fieldSet_[6] = true
 	return b
@@ -115,6 +136,9 @@ func (b *AccessRequestBuilder) DeadlineAt(value time.Time) *AccessRequestBuilder
 
 // Decisions sets the value of the 'decisions' attribute to the given values.
 func (b *AccessRequestBuilder) Decisions(values ...*DecisionBuilder) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.decisions = make([]*DecisionBuilder, len(values))
 	copy(b.decisions, values)
 	b.fieldSet_[7] = true
@@ -123,6 +147,9 @@ func (b *AccessRequestBuilder) Decisions(values ...*DecisionBuilder) *AccessRequ
 
 // Duration sets the value of the 'duration' attribute to the given value.
 func (b *AccessRequestBuilder) Duration(value string) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.duration = value
 	b.fieldSet_[8] = true
 	return b
@@ -130,6 +157,9 @@ func (b *AccessRequestBuilder) Duration(value string) *AccessRequestBuilder {
 
 // InternalSupportCaseId sets the value of the 'internal_support_case_id' attribute to the given value.
 func (b *AccessRequestBuilder) InternalSupportCaseId(value string) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.internalSupportCaseId = value
 	b.fieldSet_[9] = true
 	return b
@@ -137,6 +167,9 @@ func (b *AccessRequestBuilder) InternalSupportCaseId(value string) *AccessReques
 
 // Justification sets the value of the 'justification' attribute to the given value.
 func (b *AccessRequestBuilder) Justification(value string) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.justification = value
 	b.fieldSet_[10] = true
 	return b
@@ -144,6 +177,9 @@ func (b *AccessRequestBuilder) Justification(value string) *AccessRequestBuilder
 
 // OrganizationId sets the value of the 'organization_id' attribute to the given value.
 func (b *AccessRequestBuilder) OrganizationId(value string) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.organizationId = value
 	b.fieldSet_[11] = true
 	return b
@@ -151,6 +187,9 @@ func (b *AccessRequestBuilder) OrganizationId(value string) *AccessRequestBuilde
 
 // RequestedBy sets the value of the 'requested_by' attribute to the given value.
 func (b *AccessRequestBuilder) RequestedBy(value string) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.requestedBy = value
 	b.fieldSet_[12] = true
 	return b
@@ -160,6 +199,9 @@ func (b *AccessRequestBuilder) RequestedBy(value string) *AccessRequestBuilder {
 //
 // Representation of an access request status.
 func (b *AccessRequestBuilder) Status(value *AccessRequestStatusBuilder) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.status = value
 	if value != nil {
 		b.fieldSet_[13] = true
@@ -171,6 +213,9 @@ func (b *AccessRequestBuilder) Status(value *AccessRequestStatusBuilder) *Access
 
 // SubscriptionId sets the value of the 'subscription_id' attribute to the given value.
 func (b *AccessRequestBuilder) SubscriptionId(value string) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.subscriptionId = value
 	b.fieldSet_[14] = true
 	return b
@@ -178,6 +223,9 @@ func (b *AccessRequestBuilder) SubscriptionId(value string) *AccessRequestBuilde
 
 // SupportCaseId sets the value of the 'support_case_id' attribute to the given value.
 func (b *AccessRequestBuilder) SupportCaseId(value string) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.supportCaseId = value
 	b.fieldSet_[15] = true
 	return b
@@ -185,6 +233,9 @@ func (b *AccessRequestBuilder) SupportCaseId(value string) *AccessRequestBuilder
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *AccessRequestBuilder) UpdatedAt(value time.Time) *AccessRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.updatedAt = value
 	b.fieldSet_[16] = true
 	return b

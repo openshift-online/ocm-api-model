@@ -36,12 +36,18 @@ func NewAWSSpotMarketOptions() *AWSSpotMarketOptionsBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AWSSpotMarketOptionsBuilder) Link(value bool) *AWSSpotMarketOptionsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AWSSpotMarketOptionsBuilder) ID(value string) *AWSSpotMarketOptionsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -49,6 +55,9 @@ func (b *AWSSpotMarketOptionsBuilder) ID(value string) *AWSSpotMarketOptionsBuil
 
 // HREF sets the link to the object.
 func (b *AWSSpotMarketOptionsBuilder) HREF(value string) *AWSSpotMarketOptionsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -70,6 +79,9 @@ func (b *AWSSpotMarketOptionsBuilder) Empty() bool {
 
 // MaxPrice sets the value of the 'max_price' attribute to the given value.
 func (b *AWSSpotMarketOptionsBuilder) MaxPrice(value float64) *AWSSpotMarketOptionsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.maxPrice = value
 	b.fieldSet_[3] = true
 	return b

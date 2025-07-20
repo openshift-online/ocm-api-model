@@ -55,6 +55,9 @@ func (b *NotificationDetailsRequestBuilder) Empty() bool {
 
 // BccAddress sets the value of the 'bcc_address' attribute to the given value.
 func (b *NotificationDetailsRequestBuilder) BccAddress(value string) *NotificationDetailsRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.bccAddress = value
 	b.fieldSet_[0] = true
 	return b
@@ -62,6 +65,9 @@ func (b *NotificationDetailsRequestBuilder) BccAddress(value string) *Notificati
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *NotificationDetailsRequestBuilder) ClusterID(value string) *NotificationDetailsRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.clusterID = value
 	b.fieldSet_[1] = true
 	return b
@@ -69,6 +75,9 @@ func (b *NotificationDetailsRequestBuilder) ClusterID(value string) *Notificatio
 
 // ClusterUUID sets the value of the 'cluster_UUID' attribute to the given value.
 func (b *NotificationDetailsRequestBuilder) ClusterUUID(value string) *NotificationDetailsRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.clusterUUID = value
 	b.fieldSet_[2] = true
 	return b
@@ -76,6 +85,9 @@ func (b *NotificationDetailsRequestBuilder) ClusterUUID(value string) *Notificat
 
 // IncludeRedHatAssociates sets the value of the 'include_red_hat_associates' attribute to the given value.
 func (b *NotificationDetailsRequestBuilder) IncludeRedHatAssociates(value bool) *NotificationDetailsRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.includeRedHatAssociates = value
 	b.fieldSet_[3] = true
 	return b
@@ -83,6 +95,9 @@ func (b *NotificationDetailsRequestBuilder) IncludeRedHatAssociates(value bool) 
 
 // InternalOnly sets the value of the 'internal_only' attribute to the given value.
 func (b *NotificationDetailsRequestBuilder) InternalOnly(value bool) *NotificationDetailsRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.internalOnly = value
 	b.fieldSet_[4] = true
 	return b
@@ -90,6 +105,9 @@ func (b *NotificationDetailsRequestBuilder) InternalOnly(value bool) *Notificati
 
 // LogType sets the value of the 'log_type' attribute to the given value.
 func (b *NotificationDetailsRequestBuilder) LogType(value string) *NotificationDetailsRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.logType = value
 	b.fieldSet_[5] = true
 	return b
@@ -97,6 +115,9 @@ func (b *NotificationDetailsRequestBuilder) LogType(value string) *NotificationD
 
 // Subject sets the value of the 'subject' attribute to the given value.
 func (b *NotificationDetailsRequestBuilder) Subject(value string) *NotificationDetailsRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.subject = value
 	b.fieldSet_[6] = true
 	return b
@@ -104,6 +125,9 @@ func (b *NotificationDetailsRequestBuilder) Subject(value string) *NotificationD
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *NotificationDetailsRequestBuilder) SubscriptionID(value string) *NotificationDetailsRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.subscriptionID = value
 	b.fieldSet_[7] = true
 	return b

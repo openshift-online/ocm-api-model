@@ -45,12 +45,18 @@ func NewClusterAutoscaler() *ClusterAutoscalerBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ClusterAutoscalerBuilder) Link(value bool) *ClusterAutoscalerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ClusterAutoscalerBuilder) ID(value string) *ClusterAutoscalerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -58,6 +64,9 @@ func (b *ClusterAutoscalerBuilder) ID(value string) *ClusterAutoscalerBuilder {
 
 // HREF sets the link to the object.
 func (b *ClusterAutoscalerBuilder) HREF(value string) *ClusterAutoscalerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -79,6 +88,9 @@ func (b *ClusterAutoscalerBuilder) Empty() bool {
 
 // BalanceSimilarNodeGroups sets the value of the 'balance_similar_node_groups' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) BalanceSimilarNodeGroups(value bool) *ClusterAutoscalerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.balanceSimilarNodeGroups = value
 	b.fieldSet_[3] = true
 	return b
@@ -86,6 +98,9 @@ func (b *ClusterAutoscalerBuilder) BalanceSimilarNodeGroups(value bool) *Cluster
 
 // BalancingIgnoredLabels sets the value of the 'balancing_ignored_labels' attribute to the given values.
 func (b *ClusterAutoscalerBuilder) BalancingIgnoredLabels(values ...string) *ClusterAutoscalerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.balancingIgnoredLabels = make([]string, len(values))
 	copy(b.balancingIgnoredLabels, values)
 	b.fieldSet_[4] = true
@@ -94,6 +109,9 @@ func (b *ClusterAutoscalerBuilder) BalancingIgnoredLabels(values ...string) *Clu
 
 // IgnoreDaemonsetsUtilization sets the value of the 'ignore_daemonsets_utilization' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) IgnoreDaemonsetsUtilization(value bool) *ClusterAutoscalerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.ignoreDaemonsetsUtilization = value
 	b.fieldSet_[5] = true
 	return b
@@ -101,6 +119,9 @@ func (b *ClusterAutoscalerBuilder) IgnoreDaemonsetsUtilization(value bool) *Clus
 
 // LogVerbosity sets the value of the 'log_verbosity' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) LogVerbosity(value int) *ClusterAutoscalerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.logVerbosity = value
 	b.fieldSet_[6] = true
 	return b
@@ -108,6 +129,9 @@ func (b *ClusterAutoscalerBuilder) LogVerbosity(value int) *ClusterAutoscalerBui
 
 // MaxNodeProvisionTime sets the value of the 'max_node_provision_time' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) MaxNodeProvisionTime(value string) *ClusterAutoscalerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.maxNodeProvisionTime = value
 	b.fieldSet_[7] = true
 	return b
@@ -115,6 +139,9 @@ func (b *ClusterAutoscalerBuilder) MaxNodeProvisionTime(value string) *ClusterAu
 
 // MaxPodGracePeriod sets the value of the 'max_pod_grace_period' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) MaxPodGracePeriod(value int) *ClusterAutoscalerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.maxPodGracePeriod = value
 	b.fieldSet_[8] = true
 	return b
@@ -122,6 +149,9 @@ func (b *ClusterAutoscalerBuilder) MaxPodGracePeriod(value int) *ClusterAutoscal
 
 // PodPriorityThreshold sets the value of the 'pod_priority_threshold' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) PodPriorityThreshold(value int) *ClusterAutoscalerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.podPriorityThreshold = value
 	b.fieldSet_[9] = true
 	return b
@@ -129,6 +159,9 @@ func (b *ClusterAutoscalerBuilder) PodPriorityThreshold(value int) *ClusterAutos
 
 // ResourceLimits sets the value of the 'resource_limits' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) ResourceLimits(value *AutoscalerResourceLimitsBuilder) *ClusterAutoscalerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.resourceLimits = value
 	if value != nil {
 		b.fieldSet_[10] = true
@@ -140,6 +173,9 @@ func (b *ClusterAutoscalerBuilder) ResourceLimits(value *AutoscalerResourceLimit
 
 // ScaleDown sets the value of the 'scale_down' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) ScaleDown(value *AutoscalerScaleDownConfigBuilder) *ClusterAutoscalerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.scaleDown = value
 	if value != nil {
 		b.fieldSet_[11] = true
@@ -151,6 +187,9 @@ func (b *ClusterAutoscalerBuilder) ScaleDown(value *AutoscalerScaleDownConfigBui
 
 // SkipNodesWithLocalStorage sets the value of the 'skip_nodes_with_local_storage' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) SkipNodesWithLocalStorage(value bool) *ClusterAutoscalerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.skipNodesWithLocalStorage = value
 	b.fieldSet_[12] = true
 	return b

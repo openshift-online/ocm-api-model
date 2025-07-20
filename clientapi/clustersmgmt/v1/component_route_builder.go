@@ -37,12 +37,18 @@ func NewComponentRoute() *ComponentRouteBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ComponentRouteBuilder) Link(value bool) *ComponentRouteBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ComponentRouteBuilder) ID(value string) *ComponentRouteBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *ComponentRouteBuilder) ID(value string) *ComponentRouteBuilder {
 
 // HREF sets the link to the object.
 func (b *ComponentRouteBuilder) HREF(value string) *ComponentRouteBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *ComponentRouteBuilder) Empty() bool {
 
 // Hostname sets the value of the 'hostname' attribute to the given value.
 func (b *ComponentRouteBuilder) Hostname(value string) *ComponentRouteBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.hostname = value
 	b.fieldSet_[3] = true
 	return b
@@ -78,6 +90,9 @@ func (b *ComponentRouteBuilder) Hostname(value string) *ComponentRouteBuilder {
 
 // TlsSecretRef sets the value of the 'tls_secret_ref' attribute to the given value.
 func (b *ComponentRouteBuilder) TlsSecretRef(value string) *ComponentRouteBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.tlsSecretRef = value
 	b.fieldSet_[4] = true
 	return b

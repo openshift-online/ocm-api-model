@@ -44,12 +44,18 @@ func NewDNSDomain() *DNSDomainBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *DNSDomainBuilder) Link(value bool) *DNSDomainBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *DNSDomainBuilder) ID(value string) *DNSDomainBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -57,6 +63,9 @@ func (b *DNSDomainBuilder) ID(value string) *DNSDomainBuilder {
 
 // HREF sets the link to the object.
 func (b *DNSDomainBuilder) HREF(value string) *DNSDomainBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -80,6 +89,9 @@ func (b *DNSDomainBuilder) Empty() bool {
 //
 // Definition of a cluster link.
 func (b *DNSDomainBuilder) Cluster(value *ClusterLinkBuilder) *DNSDomainBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.cluster = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -93,6 +105,9 @@ func (b *DNSDomainBuilder) Cluster(value *ClusterLinkBuilder) *DNSDomainBuilder 
 //
 // Possible cluster architectures.
 func (b *DNSDomainBuilder) ClusterArch(value ClusterArchitecture) *DNSDomainBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.clusterArch = value
 	b.fieldSet_[4] = true
 	return b
@@ -102,6 +117,9 @@ func (b *DNSDomainBuilder) ClusterArch(value ClusterArchitecture) *DNSDomainBuil
 //
 // Definition of an organization link.
 func (b *DNSDomainBuilder) Organization(value *OrganizationLinkBuilder) *DNSDomainBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.organization = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -113,6 +131,9 @@ func (b *DNSDomainBuilder) Organization(value *OrganizationLinkBuilder) *DNSDoma
 
 // ReservedAtTimestamp sets the value of the 'reserved_at_timestamp' attribute to the given value.
 func (b *DNSDomainBuilder) ReservedAtTimestamp(value time.Time) *DNSDomainBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.reservedAtTimestamp = value
 	b.fieldSet_[6] = true
 	return b
@@ -120,6 +141,9 @@ func (b *DNSDomainBuilder) ReservedAtTimestamp(value time.Time) *DNSDomainBuilde
 
 // UserDefined sets the value of the 'user_defined' attribute to the given value.
 func (b *DNSDomainBuilder) UserDefined(value bool) *DNSDomainBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.userDefined = value
 	b.fieldSet_[7] = true
 	return b

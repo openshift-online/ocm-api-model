@@ -47,6 +47,9 @@ func (b *HypershiftBuilder) Empty() bool {
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *HypershiftBuilder) Enabled(value bool) *HypershiftBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.enabled = value
 	b.fieldSet_[0] = true
 	return b

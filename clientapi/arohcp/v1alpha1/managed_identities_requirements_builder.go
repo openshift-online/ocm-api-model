@@ -46,12 +46,18 @@ func NewManagedIdentitiesRequirements() *ManagedIdentitiesRequirementsBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ManagedIdentitiesRequirementsBuilder) Link(value bool) *ManagedIdentitiesRequirementsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ManagedIdentitiesRequirementsBuilder) ID(value string) *ManagedIdentitiesRequirementsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -59,6 +65,9 @@ func (b *ManagedIdentitiesRequirementsBuilder) ID(value string) *ManagedIdentiti
 
 // HREF sets the link to the object.
 func (b *ManagedIdentitiesRequirementsBuilder) HREF(value string) *ManagedIdentitiesRequirementsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -80,6 +89,9 @@ func (b *ManagedIdentitiesRequirementsBuilder) Empty() bool {
 
 // ControlPlaneOperatorsIdentities sets the value of the 'control_plane_operators_identities' attribute to the given values.
 func (b *ManagedIdentitiesRequirementsBuilder) ControlPlaneOperatorsIdentities(values ...*ControlPlaneOperatorIdentityRequirementBuilder) *ManagedIdentitiesRequirementsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.controlPlaneOperatorsIdentities = make([]*ControlPlaneOperatorIdentityRequirementBuilder, len(values))
 	copy(b.controlPlaneOperatorsIdentities, values)
 	b.fieldSet_[3] = true
@@ -88,6 +100,9 @@ func (b *ManagedIdentitiesRequirementsBuilder) ControlPlaneOperatorsIdentities(v
 
 // DataPlaneOperatorsIdentities sets the value of the 'data_plane_operators_identities' attribute to the given values.
 func (b *ManagedIdentitiesRequirementsBuilder) DataPlaneOperatorsIdentities(values ...*DataPlaneOperatorIdentityRequirementBuilder) *ManagedIdentitiesRequirementsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.dataPlaneOperatorsIdentities = make([]*DataPlaneOperatorIdentityRequirementBuilder, len(values))
 	copy(b.dataPlaneOperatorsIdentities, values)
 	b.fieldSet_[4] = true

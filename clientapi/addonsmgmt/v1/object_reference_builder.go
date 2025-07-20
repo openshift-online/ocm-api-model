@@ -49,6 +49,9 @@ func (b *ObjectReferenceBuilder) Empty() bool {
 
 // Href sets the value of the 'href' attribute to the given value.
 func (b *ObjectReferenceBuilder) Href(value string) *ObjectReferenceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.href = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *ObjectReferenceBuilder) Href(value string) *ObjectReferenceBuilder {
 
 // Id sets the value of the 'id' attribute to the given value.
 func (b *ObjectReferenceBuilder) Id(value string) *ObjectReferenceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *ObjectReferenceBuilder) Id(value string) *ObjectReferenceBuilder {
 
 // Kind sets the value of the 'kind' attribute to the given value.
 func (b *ObjectReferenceBuilder) Kind(value string) *ObjectReferenceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.kind = value
 	b.fieldSet_[2] = true
 	return b

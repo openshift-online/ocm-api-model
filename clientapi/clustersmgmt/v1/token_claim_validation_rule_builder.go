@@ -48,6 +48,9 @@ func (b *TokenClaimValidationRuleBuilder) Empty() bool {
 
 // Claim sets the value of the 'claim' attribute to the given value.
 func (b *TokenClaimValidationRuleBuilder) Claim(value string) *TokenClaimValidationRuleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.claim = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *TokenClaimValidationRuleBuilder) Claim(value string) *TokenClaimValidat
 
 // RequiredValue sets the value of the 'required_value' attribute to the given value.
 func (b *TokenClaimValidationRuleBuilder) RequiredValue(value string) *TokenClaimValidationRuleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.requiredValue = value
 	b.fieldSet_[1] = true
 	return b

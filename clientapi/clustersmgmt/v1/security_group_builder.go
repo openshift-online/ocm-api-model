@@ -49,6 +49,9 @@ func (b *SecurityGroupBuilder) Empty() bool {
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *SecurityGroupBuilder) ID(value string) *SecurityGroupBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.id = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *SecurityGroupBuilder) ID(value string) *SecurityGroupBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *SecurityGroupBuilder) Name(value string) *SecurityGroupBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.name = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *SecurityGroupBuilder) Name(value string) *SecurityGroupBuilder {
 
 // RedHatManaged sets the value of the 'red_hat_managed' attribute to the given value.
 func (b *SecurityGroupBuilder) RedHatManaged(value bool) *SecurityGroupBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.redHatManaged = value
 	b.fieldSet_[2] = true
 	return b

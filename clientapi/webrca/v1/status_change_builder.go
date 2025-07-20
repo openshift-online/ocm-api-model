@@ -44,12 +44,18 @@ func NewStatusChange() *StatusChangeBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *StatusChangeBuilder) Link(value bool) *StatusChangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *StatusChangeBuilder) ID(value string) *StatusChangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -57,6 +63,9 @@ func (b *StatusChangeBuilder) ID(value string) *StatusChangeBuilder {
 
 // HREF sets the link to the object.
 func (b *StatusChangeBuilder) HREF(value string) *StatusChangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -78,6 +87,9 @@ func (b *StatusChangeBuilder) Empty() bool {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *StatusChangeBuilder) CreatedAt(value time.Time) *StatusChangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.createdAt = value
 	b.fieldSet_[3] = true
 	return b
@@ -85,6 +97,9 @@ func (b *StatusChangeBuilder) CreatedAt(value time.Time) *StatusChangeBuilder {
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *StatusChangeBuilder) DeletedAt(value time.Time) *StatusChangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.deletedAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -92,6 +107,9 @@ func (b *StatusChangeBuilder) DeletedAt(value time.Time) *StatusChangeBuilder {
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *StatusChangeBuilder) Status(value interface{}) *StatusChangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.status = value
 	b.fieldSet_[5] = true
 	return b
@@ -99,6 +117,9 @@ func (b *StatusChangeBuilder) Status(value interface{}) *StatusChangeBuilder {
 
 // StatusId sets the value of the 'status_id' attribute to the given value.
 func (b *StatusChangeBuilder) StatusId(value string) *StatusChangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.statusId = value
 	b.fieldSet_[6] = true
 	return b
@@ -106,6 +127,9 @@ func (b *StatusChangeBuilder) StatusId(value string) *StatusChangeBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *StatusChangeBuilder) UpdatedAt(value time.Time) *StatusChangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.updatedAt = value
 	b.fieldSet_[7] = true
 	return b

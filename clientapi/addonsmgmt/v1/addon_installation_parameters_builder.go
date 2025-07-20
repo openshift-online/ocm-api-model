@@ -47,6 +47,9 @@ func (b *AddonInstallationParametersBuilder) Empty() bool {
 
 // Items sets the value of the 'items' attribute to the given values.
 func (b *AddonInstallationParametersBuilder) Items(values ...*AddonInstallationParameterBuilder) *AddonInstallationParametersBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.items = make([]*AddonInstallationParameterBuilder, len(values))
 	copy(b.items, values)
 	b.fieldSet_[0] = true

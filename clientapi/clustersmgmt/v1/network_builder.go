@@ -51,6 +51,9 @@ func (b *NetworkBuilder) Empty() bool {
 
 // HostPrefix sets the value of the 'host_prefix' attribute to the given value.
 func (b *NetworkBuilder) HostPrefix(value int) *NetworkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.hostPrefix = value
 	b.fieldSet_[0] = true
 	return b
@@ -58,6 +61,9 @@ func (b *NetworkBuilder) HostPrefix(value int) *NetworkBuilder {
 
 // MachineCIDR sets the value of the 'machine_CIDR' attribute to the given value.
 func (b *NetworkBuilder) MachineCIDR(value string) *NetworkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.machineCIDR = value
 	b.fieldSet_[1] = true
 	return b
@@ -65,6 +71,9 @@ func (b *NetworkBuilder) MachineCIDR(value string) *NetworkBuilder {
 
 // PodCIDR sets the value of the 'pod_CIDR' attribute to the given value.
 func (b *NetworkBuilder) PodCIDR(value string) *NetworkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.podCIDR = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *NetworkBuilder) PodCIDR(value string) *NetworkBuilder {
 
 // ServiceCIDR sets the value of the 'service_CIDR' attribute to the given value.
 func (b *NetworkBuilder) ServiceCIDR(value string) *NetworkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.serviceCIDR = value
 	b.fieldSet_[3] = true
 	return b
@@ -79,6 +91,9 @@ func (b *NetworkBuilder) ServiceCIDR(value string) *NetworkBuilder {
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *NetworkBuilder) Type(value string) *NetworkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.type_ = value
 	b.fieldSet_[4] = true
 	return b

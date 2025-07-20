@@ -57,6 +57,9 @@ func (b *CloudProviderDataBuilder) Empty() bool {
 //
 // _Amazon Web Services_ specific settings of a cluster.
 func (b *CloudProviderDataBuilder) AWS(value *AWSBuilder) *CloudProviderDataBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.aws = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -70,6 +73,9 @@ func (b *CloudProviderDataBuilder) AWS(value *AWSBuilder) *CloudProviderDataBuil
 //
 // Google cloud platform settings of a cluster.
 func (b *CloudProviderDataBuilder) GCP(value *GCPBuilder) *CloudProviderDataBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.gcp = value
 	if value != nil {
 		b.fieldSet_[1] = true
@@ -81,6 +87,9 @@ func (b *CloudProviderDataBuilder) GCP(value *GCPBuilder) *CloudProviderDataBuil
 
 // AvailabilityZones sets the value of the 'availability_zones' attribute to the given values.
 func (b *CloudProviderDataBuilder) AvailabilityZones(values ...string) *CloudProviderDataBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.availabilityZones = make([]string, len(values))
 	copy(b.availabilityZones, values)
 	b.fieldSet_[2] = true
@@ -89,6 +98,9 @@ func (b *CloudProviderDataBuilder) AvailabilityZones(values ...string) *CloudPro
 
 // KeyLocation sets the value of the 'key_location' attribute to the given value.
 func (b *CloudProviderDataBuilder) KeyLocation(value string) *CloudProviderDataBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.keyLocation = value
 	b.fieldSet_[3] = true
 	return b
@@ -96,6 +108,9 @@ func (b *CloudProviderDataBuilder) KeyLocation(value string) *CloudProviderDataB
 
 // KeyRingName sets the value of the 'key_ring_name' attribute to the given value.
 func (b *CloudProviderDataBuilder) KeyRingName(value string) *CloudProviderDataBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.keyRingName = value
 	b.fieldSet_[4] = true
 	return b
@@ -105,6 +120,9 @@ func (b *CloudProviderDataBuilder) KeyRingName(value string) *CloudProviderDataB
 //
 // Description of a region of a cloud provider.
 func (b *CloudProviderDataBuilder) Region(value *CloudRegionBuilder) *CloudProviderDataBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.region = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -116,6 +134,9 @@ func (b *CloudProviderDataBuilder) Region(value *CloudRegionBuilder) *CloudProvi
 
 // Subnets sets the value of the 'subnets' attribute to the given values.
 func (b *CloudProviderDataBuilder) Subnets(values ...string) *CloudProviderDataBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.subnets = make([]string, len(values))
 	copy(b.subnets, values)
 	b.fieldSet_[6] = true
@@ -126,6 +147,9 @@ func (b *CloudProviderDataBuilder) Subnets(values ...string) *CloudProviderDataB
 //
 // Representation of an _OpenShift_ version.
 func (b *CloudProviderDataBuilder) Version(value *VersionBuilder) *CloudProviderDataBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.version = value
 	if value != nil {
 		b.fieldSet_[7] = true
@@ -137,6 +161,9 @@ func (b *CloudProviderDataBuilder) Version(value *VersionBuilder) *CloudProvider
 
 // VpcIds sets the value of the 'vpc_ids' attribute to the given values.
 func (b *CloudProviderDataBuilder) VpcIds(values ...string) *CloudProviderDataBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.vpcIds = make([]string, len(values))
 	copy(b.vpcIds, values)
 	b.fieldSet_[8] = true

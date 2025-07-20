@@ -38,12 +38,18 @@ func NewKubeletConfig() *KubeletConfigBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *KubeletConfigBuilder) Link(value bool) *KubeletConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *KubeletConfigBuilder) ID(value string) *KubeletConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -51,6 +57,9 @@ func (b *KubeletConfigBuilder) ID(value string) *KubeletConfigBuilder {
 
 // HREF sets the link to the object.
 func (b *KubeletConfigBuilder) HREF(value string) *KubeletConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *KubeletConfigBuilder) Empty() bool {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *KubeletConfigBuilder) Name(value string) *KubeletConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.name = value
 	b.fieldSet_[3] = true
 	return b
@@ -79,6 +91,9 @@ func (b *KubeletConfigBuilder) Name(value string) *KubeletConfigBuilder {
 
 // PodPidsLimit sets the value of the 'pod_pids_limit' attribute to the given value.
 func (b *KubeletConfigBuilder) PodPidsLimit(value int) *KubeletConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.podPidsLimit = value
 	b.fieldSet_[4] = true
 	return b

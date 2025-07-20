@@ -47,6 +47,9 @@ func (b *ClusterOperatorsInfoBuilder) Empty() bool {
 
 // Operators sets the value of the 'operators' attribute to the given values.
 func (b *ClusterOperatorsInfoBuilder) Operators(values ...*ClusterOperatorInfoBuilder) *ClusterOperatorsInfoBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.operators = make([]*ClusterOperatorInfoBuilder, len(values))
 	copy(b.operators, values)
 	b.fieldSet_[0] = true

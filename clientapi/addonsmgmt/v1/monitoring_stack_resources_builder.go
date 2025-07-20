@@ -50,6 +50,9 @@ func (b *MonitoringStackResourcesBuilder) Empty() bool {
 //
 // Representation of Monitoring Stack Resource
 func (b *MonitoringStackResourcesBuilder) Limits(value *MonitoringStackResourceBuilder) *MonitoringStackResourcesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.limits = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -63,6 +66,9 @@ func (b *MonitoringStackResourcesBuilder) Limits(value *MonitoringStackResourceB
 //
 // Representation of Monitoring Stack Resource
 func (b *MonitoringStackResourcesBuilder) Requests(value *MonitoringStackResourceBuilder) *MonitoringStackResourcesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.requests = value
 	if value != nil {
 		b.fieldSet_[1] = true

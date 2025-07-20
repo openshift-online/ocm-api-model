@@ -44,12 +44,18 @@ func NewFollowUpChange() *FollowUpChangeBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *FollowUpChangeBuilder) Link(value bool) *FollowUpChangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *FollowUpChangeBuilder) ID(value string) *FollowUpChangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -57,6 +63,9 @@ func (b *FollowUpChangeBuilder) ID(value string) *FollowUpChangeBuilder {
 
 // HREF sets the link to the object.
 func (b *FollowUpChangeBuilder) HREF(value string) *FollowUpChangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -78,6 +87,9 @@ func (b *FollowUpChangeBuilder) Empty() bool {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *FollowUpChangeBuilder) CreatedAt(value time.Time) *FollowUpChangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.createdAt = value
 	b.fieldSet_[3] = true
 	return b
@@ -85,6 +97,9 @@ func (b *FollowUpChangeBuilder) CreatedAt(value time.Time) *FollowUpChangeBuilde
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *FollowUpChangeBuilder) DeletedAt(value time.Time) *FollowUpChangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.deletedAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -94,6 +109,9 @@ func (b *FollowUpChangeBuilder) DeletedAt(value time.Time) *FollowUpChangeBuilde
 //
 // Definition of a Web RCA event.
 func (b *FollowUpChangeBuilder) FollowUp(value *FollowUpBuilder) *FollowUpChangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.followUp = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -105,6 +123,9 @@ func (b *FollowUpChangeBuilder) FollowUp(value *FollowUpBuilder) *FollowUpChange
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *FollowUpChangeBuilder) Status(value interface{}) *FollowUpChangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.status = value
 	b.fieldSet_[6] = true
 	return b
@@ -112,6 +133,9 @@ func (b *FollowUpChangeBuilder) Status(value interface{}) *FollowUpChangeBuilder
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *FollowUpChangeBuilder) UpdatedAt(value time.Time) *FollowUpChangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.updatedAt = value
 	b.fieldSet_[7] = true
 	return b

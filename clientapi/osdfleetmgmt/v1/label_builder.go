@@ -37,12 +37,18 @@ func NewLabel() *LabelBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *LabelBuilder) Link(value bool) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *LabelBuilder) ID(value string) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *LabelBuilder) ID(value string) *LabelBuilder {
 
 // HREF sets the link to the object.
 func (b *LabelBuilder) HREF(value string) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *LabelBuilder) Empty() bool {
 
 // Key sets the value of the 'key' attribute to the given value.
 func (b *LabelBuilder) Key(value string) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.key = value
 	b.fieldSet_[3] = true
 	return b
@@ -78,6 +90,9 @@ func (b *LabelBuilder) Key(value string) *LabelBuilder {
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *LabelBuilder) Value(value string) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.value = value
 	b.fieldSet_[4] = true
 	return b

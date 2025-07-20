@@ -35,12 +35,18 @@ func NewSummaryDashboard() *SummaryDashboardBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *SummaryDashboardBuilder) Link(value bool) *SummaryDashboardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *SummaryDashboardBuilder) ID(value string) *SummaryDashboardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -48,6 +54,9 @@ func (b *SummaryDashboardBuilder) ID(value string) *SummaryDashboardBuilder {
 
 // HREF sets the link to the object.
 func (b *SummaryDashboardBuilder) HREF(value string) *SummaryDashboardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -69,6 +78,9 @@ func (b *SummaryDashboardBuilder) Empty() bool {
 
 // Metrics sets the value of the 'metrics' attribute to the given values.
 func (b *SummaryDashboardBuilder) Metrics(values ...*SummaryMetricsBuilder) *SummaryDashboardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.metrics = make([]*SummaryMetricsBuilder, len(values))
 	copy(b.metrics, values)
 	b.fieldSet_[3] = true

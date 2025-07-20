@@ -48,6 +48,9 @@ func (b *AzureDataPlaneManagedIdentityBuilder) Empty() bool {
 
 // ResourceID sets the value of the 'resource_ID' attribute to the given value.
 func (b *AzureDataPlaneManagedIdentityBuilder) ResourceID(value string) *AzureDataPlaneManagedIdentityBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.resourceID = value
 	b.fieldSet_[0] = true
 	return b

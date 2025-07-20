@@ -54,6 +54,9 @@ func (b *EnvironmentBuilder) Empty() bool {
 
 // BackplaneURL sets the value of the 'backplane_URL' attribute to the given value.
 func (b *EnvironmentBuilder) BackplaneURL(value string) *EnvironmentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.backplaneURL = value
 	b.fieldSet_[0] = true
 	return b
@@ -61,6 +64,9 @@ func (b *EnvironmentBuilder) BackplaneURL(value string) *EnvironmentBuilder {
 
 // LastLimitedSupportCheck sets the value of the 'last_limited_support_check' attribute to the given value.
 func (b *EnvironmentBuilder) LastLimitedSupportCheck(value time.Time) *EnvironmentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.lastLimitedSupportCheck = value
 	b.fieldSet_[1] = true
 	return b
@@ -68,6 +74,9 @@ func (b *EnvironmentBuilder) LastLimitedSupportCheck(value time.Time) *Environme
 
 // LastUpgradeAvailableCheck sets the value of the 'last_upgrade_available_check' attribute to the given value.
 func (b *EnvironmentBuilder) LastUpgradeAvailableCheck(value time.Time) *EnvironmentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.lastUpgradeAvailableCheck = value
 	b.fieldSet_[2] = true
 	return b
@@ -75,6 +84,9 @@ func (b *EnvironmentBuilder) LastUpgradeAvailableCheck(value time.Time) *Environ
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *EnvironmentBuilder) Name(value string) *EnvironmentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.name = value
 	b.fieldSet_[3] = true
 	return b

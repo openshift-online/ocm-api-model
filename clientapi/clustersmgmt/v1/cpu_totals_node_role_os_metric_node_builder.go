@@ -48,6 +48,9 @@ func (b *CPUTotalsNodeRoleOSMetricNodeBuilder) Empty() bool {
 
 // CPUTotals sets the value of the 'CPU_totals' attribute to the given values.
 func (b *CPUTotalsNodeRoleOSMetricNodeBuilder) CPUTotals(values ...*CPUTotalNodeRoleOSMetricNodeBuilder) *CPUTotalsNodeRoleOSMetricNodeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.cpuTotals = make([]*CPUTotalNodeRoleOSMetricNodeBuilder, len(values))
 	copy(b.cpuTotals, values)
 	b.fieldSet_[0] = true

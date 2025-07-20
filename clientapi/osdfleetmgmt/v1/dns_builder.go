@@ -47,6 +47,9 @@ func (b *DNSBuilder) Empty() bool {
 
 // BaseDomain sets the value of the 'base_domain' attribute to the given value.
 func (b *DNSBuilder) BaseDomain(value string) *DNSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.baseDomain = value
 	b.fieldSet_[0] = true
 	return b

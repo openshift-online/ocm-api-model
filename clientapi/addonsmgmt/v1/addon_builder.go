@@ -58,12 +58,18 @@ func NewAddon() *AddonBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddonBuilder) Link(value bool) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddonBuilder) ID(value string) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -71,6 +77,9 @@ func (b *AddonBuilder) ID(value string) *AddonBuilder {
 
 // HREF sets the link to the object.
 func (b *AddonBuilder) HREF(value string) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -92,6 +101,9 @@ func (b *AddonBuilder) Empty() bool {
 
 // CommonAnnotations sets the value of the 'common_annotations' attribute to the given value.
 func (b *AddonBuilder) CommonAnnotations(value map[string]string) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.commonAnnotations = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -103,6 +115,9 @@ func (b *AddonBuilder) CommonAnnotations(value map[string]string) *AddonBuilder 
 
 // CommonLabels sets the value of the 'common_labels' attribute to the given value.
 func (b *AddonBuilder) CommonLabels(value map[string]string) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.commonLabels = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -117,6 +132,9 @@ func (b *AddonBuilder) CommonLabels(value map[string]string) *AddonBuilder {
 // Representation of an addon config.
 // The attributes under it are to be used by the addon once its installed in the cluster.
 func (b *AddonBuilder) Config(value *AddonConfigBuilder) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.config = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -128,6 +146,9 @@ func (b *AddonBuilder) Config(value *AddonConfigBuilder) *AddonBuilder {
 
 // CredentialsRequests sets the value of the 'credentials_requests' attribute to the given values.
 func (b *AddonBuilder) CredentialsRequests(values ...*CredentialRequestBuilder) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.credentialsRequests = make([]*CredentialRequestBuilder, len(values))
 	copy(b.credentialsRequests, values)
 	b.fieldSet_[6] = true
@@ -136,6 +157,9 @@ func (b *AddonBuilder) CredentialsRequests(values ...*CredentialRequestBuilder) 
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *AddonBuilder) Description(value string) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.description = value
 	b.fieldSet_[7] = true
 	return b
@@ -143,6 +167,9 @@ func (b *AddonBuilder) Description(value string) *AddonBuilder {
 
 // DocsLink sets the value of the 'docs_link' attribute to the given value.
 func (b *AddonBuilder) DocsLink(value string) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.docsLink = value
 	b.fieldSet_[8] = true
 	return b
@@ -150,6 +177,9 @@ func (b *AddonBuilder) DocsLink(value string) *AddonBuilder {
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddonBuilder) Enabled(value bool) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.enabled = value
 	b.fieldSet_[9] = true
 	return b
@@ -157,6 +187,9 @@ func (b *AddonBuilder) Enabled(value bool) *AddonBuilder {
 
 // HasExternalResources sets the value of the 'has_external_resources' attribute to the given value.
 func (b *AddonBuilder) HasExternalResources(value bool) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.hasExternalResources = value
 	b.fieldSet_[10] = true
 	return b
@@ -164,6 +197,9 @@ func (b *AddonBuilder) HasExternalResources(value bool) *AddonBuilder {
 
 // Hidden sets the value of the 'hidden' attribute to the given value.
 func (b *AddonBuilder) Hidden(value bool) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.hidden = value
 	b.fieldSet_[11] = true
 	return b
@@ -171,6 +207,9 @@ func (b *AddonBuilder) Hidden(value bool) *AddonBuilder {
 
 // Icon sets the value of the 'icon' attribute to the given value.
 func (b *AddonBuilder) Icon(value string) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.icon = value
 	b.fieldSet_[12] = true
 	return b
@@ -180,6 +219,9 @@ func (b *AddonBuilder) Icon(value string) *AddonBuilder {
 //
 // Representation of an addon InstallMode field.
 func (b *AddonBuilder) InstallMode(value AddonInstallMode) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.installMode = value
 	b.fieldSet_[13] = true
 	return b
@@ -187,6 +229,9 @@ func (b *AddonBuilder) InstallMode(value AddonInstallMode) *AddonBuilder {
 
 // Label sets the value of the 'label' attribute to the given value.
 func (b *AddonBuilder) Label(value string) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.label = value
 	b.fieldSet_[14] = true
 	return b
@@ -194,6 +239,9 @@ func (b *AddonBuilder) Label(value string) *AddonBuilder {
 
 // ManagedService sets the value of the 'managed_service' attribute to the given value.
 func (b *AddonBuilder) ManagedService(value bool) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.managedService = value
 	b.fieldSet_[15] = true
 	return b
@@ -201,6 +249,9 @@ func (b *AddonBuilder) ManagedService(value bool) *AddonBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AddonBuilder) Name(value string) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.name = value
 	b.fieldSet_[16] = true
 	return b
@@ -208,6 +259,9 @@ func (b *AddonBuilder) Name(value string) *AddonBuilder {
 
 // Namespaces sets the value of the 'namespaces' attribute to the given values.
 func (b *AddonBuilder) Namespaces(values ...*AddonNamespaceBuilder) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.namespaces = make([]*AddonNamespaceBuilder, len(values))
 	copy(b.namespaces, values)
 	b.fieldSet_[17] = true
@@ -216,6 +270,9 @@ func (b *AddonBuilder) Namespaces(values ...*AddonNamespaceBuilder) *AddonBuilde
 
 // OperatorName sets the value of the 'operator_name' attribute to the given value.
 func (b *AddonBuilder) OperatorName(value string) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.operatorName = value
 	b.fieldSet_[18] = true
 	return b
@@ -223,6 +280,9 @@ func (b *AddonBuilder) OperatorName(value string) *AddonBuilder {
 
 // Parameters sets the value of the 'parameters' attribute to the given values.
 func (b *AddonBuilder) Parameters(value *AddonParameterListBuilder) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.parameters = value
 	b.fieldSet_[19] = true
 	return b
@@ -230,6 +290,9 @@ func (b *AddonBuilder) Parameters(value *AddonParameterListBuilder) *AddonBuilde
 
 // Requirements sets the value of the 'requirements' attribute to the given values.
 func (b *AddonBuilder) Requirements(values ...*AddonRequirementBuilder) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.requirements = make([]*AddonRequirementBuilder, len(values))
 	copy(b.requirements, values)
 	b.fieldSet_[20] = true
@@ -238,6 +301,9 @@ func (b *AddonBuilder) Requirements(values ...*AddonRequirementBuilder) *AddonBu
 
 // ResourceCost sets the value of the 'resource_cost' attribute to the given value.
 func (b *AddonBuilder) ResourceCost(value float64) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.resourceCost = value
 	b.fieldSet_[21] = true
 	return b
@@ -245,6 +311,9 @@ func (b *AddonBuilder) ResourceCost(value float64) *AddonBuilder {
 
 // ResourceName sets the value of the 'resource_name' attribute to the given value.
 func (b *AddonBuilder) ResourceName(value string) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.resourceName = value
 	b.fieldSet_[22] = true
 	return b
@@ -252,6 +321,9 @@ func (b *AddonBuilder) ResourceName(value string) *AddonBuilder {
 
 // SubOperators sets the value of the 'sub_operators' attribute to the given values.
 func (b *AddonBuilder) SubOperators(values ...*AddonSubOperatorBuilder) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.subOperators = make([]*AddonSubOperatorBuilder, len(values))
 	copy(b.subOperators, values)
 	b.fieldSet_[23] = true
@@ -260,6 +332,9 @@ func (b *AddonBuilder) SubOperators(values ...*AddonSubOperatorBuilder) *AddonBu
 
 // TargetNamespace sets the value of the 'target_namespace' attribute to the given value.
 func (b *AddonBuilder) TargetNamespace(value string) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.targetNamespace = value
 	b.fieldSet_[24] = true
 	return b
@@ -269,6 +344,9 @@ func (b *AddonBuilder) TargetNamespace(value string) *AddonBuilder {
 //
 // Representation of an addon version.
 func (b *AddonBuilder) Version(value *AddonVersionBuilder) *AddonBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 26)
+	}
 	b.version = value
 	if value != nil {
 		b.fieldSet_[25] = true

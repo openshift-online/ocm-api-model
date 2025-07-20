@@ -46,12 +46,18 @@ func NewNotification() *NotificationBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *NotificationBuilder) Link(value bool) *NotificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *NotificationBuilder) ID(value string) *NotificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -59,6 +65,9 @@ func (b *NotificationBuilder) ID(value string) *NotificationBuilder {
 
 // HREF sets the link to the object.
 func (b *NotificationBuilder) HREF(value string) *NotificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -80,6 +89,9 @@ func (b *NotificationBuilder) Empty() bool {
 
 // Checked sets the value of the 'checked' attribute to the given value.
 func (b *NotificationBuilder) Checked(value bool) *NotificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.checked = value
 	b.fieldSet_[3] = true
 	return b
@@ -87,6 +99,9 @@ func (b *NotificationBuilder) Checked(value bool) *NotificationBuilder {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *NotificationBuilder) CreatedAt(value time.Time) *NotificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.createdAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -94,6 +109,9 @@ func (b *NotificationBuilder) CreatedAt(value time.Time) *NotificationBuilder {
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *NotificationBuilder) DeletedAt(value time.Time) *NotificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.deletedAt = value
 	b.fieldSet_[5] = true
 	return b
@@ -103,6 +121,9 @@ func (b *NotificationBuilder) DeletedAt(value time.Time) *NotificationBuilder {
 //
 // Definition of a Web RCA incident.
 func (b *NotificationBuilder) Incident(value *IncidentBuilder) *NotificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.incident = value
 	if value != nil {
 		b.fieldSet_[6] = true
@@ -114,6 +135,9 @@ func (b *NotificationBuilder) Incident(value *IncidentBuilder) *NotificationBuil
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *NotificationBuilder) Name(value string) *NotificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.name = value
 	b.fieldSet_[7] = true
 	return b
@@ -121,6 +145,9 @@ func (b *NotificationBuilder) Name(value string) *NotificationBuilder {
 
 // Rank sets the value of the 'rank' attribute to the given value.
 func (b *NotificationBuilder) Rank(value int) *NotificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.rank = value
 	b.fieldSet_[8] = true
 	return b
@@ -128,6 +155,9 @@ func (b *NotificationBuilder) Rank(value int) *NotificationBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *NotificationBuilder) UpdatedAt(value time.Time) *NotificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.updatedAt = value
 	b.fieldSet_[9] = true
 	return b

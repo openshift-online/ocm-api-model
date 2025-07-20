@@ -47,12 +47,18 @@ func NewServiceDependency() *ServiceDependencyBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ServiceDependencyBuilder) Link(value bool) *ServiceDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ServiceDependencyBuilder) ID(value string) *ServiceDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -60,6 +66,9 @@ func (b *ServiceDependencyBuilder) ID(value string) *ServiceDependencyBuilder {
 
 // HREF sets the link to the object.
 func (b *ServiceDependencyBuilder) HREF(value string) *ServiceDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -83,6 +92,9 @@ func (b *ServiceDependencyBuilder) Empty() bool {
 //
 // Definition of a Status Board Service.
 func (b *ServiceDependencyBuilder) ChildService(value *ServiceBuilder) *ServiceDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.childService = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -94,6 +106,9 @@ func (b *ServiceDependencyBuilder) ChildService(value *ServiceBuilder) *ServiceD
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ServiceDependencyBuilder) CreatedAt(value time.Time) *ServiceDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.createdAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -101,6 +116,9 @@ func (b *ServiceDependencyBuilder) CreatedAt(value time.Time) *ServiceDependency
 
 // Metadata sets the value of the 'metadata' attribute to the given value.
 func (b *ServiceDependencyBuilder) Metadata(value interface{}) *ServiceDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.metadata = value
 	b.fieldSet_[5] = true
 	return b
@@ -108,6 +126,9 @@ func (b *ServiceDependencyBuilder) Metadata(value interface{}) *ServiceDependenc
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ServiceDependencyBuilder) Name(value string) *ServiceDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.name = value
 	b.fieldSet_[6] = true
 	return b
@@ -115,6 +136,9 @@ func (b *ServiceDependencyBuilder) Name(value string) *ServiceDependencyBuilder 
 
 // Owners sets the value of the 'owners' attribute to the given values.
 func (b *ServiceDependencyBuilder) Owners(values ...*OwnerBuilder) *ServiceDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.owners = make([]*OwnerBuilder, len(values))
 	copy(b.owners, values)
 	b.fieldSet_[7] = true
@@ -125,6 +149,9 @@ func (b *ServiceDependencyBuilder) Owners(values ...*OwnerBuilder) *ServiceDepen
 //
 // Definition of a Status Board Service.
 func (b *ServiceDependencyBuilder) ParentService(value *ServiceBuilder) *ServiceDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.parentService = value
 	if value != nil {
 		b.fieldSet_[8] = true
@@ -136,6 +163,9 @@ func (b *ServiceDependencyBuilder) ParentService(value *ServiceBuilder) *Service
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *ServiceDependencyBuilder) Type(value string) *ServiceDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.type_ = value
 	b.fieldSet_[9] = true
 	return b
@@ -143,6 +173,9 @@ func (b *ServiceDependencyBuilder) Type(value string) *ServiceDependencyBuilder 
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ServiceDependencyBuilder) UpdatedAt(value time.Time) *ServiceDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.updatedAt = value
 	b.fieldSet_[10] = true
 	return b

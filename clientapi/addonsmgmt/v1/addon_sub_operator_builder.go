@@ -53,6 +53,9 @@ func (b *AddonSubOperatorBuilder) Empty() bool {
 //
 // Representation of an addon that can be installed in a cluster.
 func (b *AddonSubOperatorBuilder) Addon(value *AddonBuilder) *AddonSubOperatorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.addon = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -64,6 +67,9 @@ func (b *AddonSubOperatorBuilder) Addon(value *AddonBuilder) *AddonSubOperatorBu
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddonSubOperatorBuilder) Enabled(value bool) *AddonSubOperatorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.enabled = value
 	b.fieldSet_[1] = true
 	return b
@@ -71,6 +77,9 @@ func (b *AddonSubOperatorBuilder) Enabled(value bool) *AddonSubOperatorBuilder {
 
 // OperatorName sets the value of the 'operator_name' attribute to the given value.
 func (b *AddonSubOperatorBuilder) OperatorName(value string) *AddonSubOperatorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.operatorName = value
 	b.fieldSet_[2] = true
 	return b
@@ -78,6 +87,9 @@ func (b *AddonSubOperatorBuilder) OperatorName(value string) *AddonSubOperatorBu
 
 // OperatorNamespace sets the value of the 'operator_namespace' attribute to the given value.
 func (b *AddonSubOperatorBuilder) OperatorNamespace(value string) *AddonSubOperatorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.operatorNamespace = value
 	b.fieldSet_[3] = true
 	return b

@@ -47,6 +47,9 @@ func (b *WifSupportBuilder) Empty() bool {
 
 // Principal sets the value of the 'principal' attribute to the given value.
 func (b *WifSupportBuilder) Principal(value string) *WifSupportBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.principal = value
 	b.fieldSet_[0] = true
 	return b
@@ -54,6 +57,9 @@ func (b *WifSupportBuilder) Principal(value string) *WifSupportBuilder {
 
 // Roles sets the value of the 'roles' attribute to the given values.
 func (b *WifSupportBuilder) Roles(values ...*WifRoleBuilder) *WifSupportBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.roles = make([]*WifRoleBuilder, len(values))
 	copy(b.roles, values)
 	b.fieldSet_[1] = true

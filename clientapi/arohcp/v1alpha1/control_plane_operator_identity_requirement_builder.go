@@ -50,6 +50,9 @@ func (b *ControlPlaneOperatorIdentityRequirementBuilder) Empty() bool {
 
 // MaxOpenShiftVersion sets the value of the 'max_open_shift_version' attribute to the given value.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) MaxOpenShiftVersion(value string) *ControlPlaneOperatorIdentityRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.maxOpenShiftVersion = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *ControlPlaneOperatorIdentityRequirementBuilder) MaxOpenShiftVersion(val
 
 // MinOpenShiftVersion sets the value of the 'min_open_shift_version' attribute to the given value.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) MinOpenShiftVersion(value string) *ControlPlaneOperatorIdentityRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.minOpenShiftVersion = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *ControlPlaneOperatorIdentityRequirementBuilder) MinOpenShiftVersion(val
 
 // OperatorName sets the value of the 'operator_name' attribute to the given value.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) OperatorName(value string) *ControlPlaneOperatorIdentityRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.operatorName = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *ControlPlaneOperatorIdentityRequirementBuilder) OperatorName(value stri
 
 // Required sets the value of the 'required' attribute to the given value.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) Required(value string) *ControlPlaneOperatorIdentityRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.required = value
 	b.fieldSet_[3] = true
 	return b
@@ -78,6 +90,9 @@ func (b *ControlPlaneOperatorIdentityRequirementBuilder) Required(value string) 
 
 // RoleDefinitions sets the value of the 'role_definitions' attribute to the given values.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) RoleDefinitions(values ...*RoleDefinitionOperatorIdentityRequirementBuilder) *ControlPlaneOperatorIdentityRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.roleDefinitions = make([]*RoleDefinitionOperatorIdentityRequirementBuilder, len(values))
 	copy(b.roleDefinitions, values)
 	b.fieldSet_[4] = true

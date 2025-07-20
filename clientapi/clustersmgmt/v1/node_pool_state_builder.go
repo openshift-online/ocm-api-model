@@ -41,12 +41,18 @@ func NewNodePoolState() *NodePoolStateBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *NodePoolStateBuilder) Link(value bool) *NodePoolStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *NodePoolStateBuilder) ID(value string) *NodePoolStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -54,6 +60,9 @@ func (b *NodePoolStateBuilder) ID(value string) *NodePoolStateBuilder {
 
 // HREF sets the link to the object.
 func (b *NodePoolStateBuilder) HREF(value string) *NodePoolStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -75,6 +84,9 @@ func (b *NodePoolStateBuilder) Empty() bool {
 
 // LastUpdatedTimestamp sets the value of the 'last_updated_timestamp' attribute to the given value.
 func (b *NodePoolStateBuilder) LastUpdatedTimestamp(value time.Time) *NodePoolStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.lastUpdatedTimestamp = value
 	b.fieldSet_[3] = true
 	return b
@@ -82,6 +94,9 @@ func (b *NodePoolStateBuilder) LastUpdatedTimestamp(value time.Time) *NodePoolSt
 
 // NodePoolStateValue sets the value of the 'node_pool_state_value' attribute to the given value.
 func (b *NodePoolStateBuilder) NodePoolStateValue(value string) *NodePoolStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.nodePoolStateValue = value
 	b.fieldSet_[4] = true
 	return b

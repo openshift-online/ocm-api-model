@@ -43,12 +43,18 @@ func NewQueue() *QueueBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *QueueBuilder) Link(value bool) *QueueBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *QueueBuilder) ID(value string) *QueueBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -56,6 +62,9 @@ func (b *QueueBuilder) ID(value string) *QueueBuilder {
 
 // HREF sets the link to the object.
 func (b *QueueBuilder) HREF(value string) *QueueBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -77,6 +86,9 @@ func (b *QueueBuilder) Empty() bool {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *QueueBuilder) CreatedAt(value time.Time) *QueueBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.createdAt = value
 	b.fieldSet_[3] = true
 	return b
@@ -84,6 +96,9 @@ func (b *QueueBuilder) CreatedAt(value time.Time) *QueueBuilder {
 
 // MaxAttempts sets the value of the 'max_attempts' attribute to the given value.
 func (b *QueueBuilder) MaxAttempts(value int) *QueueBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.maxAttempts = value
 	b.fieldSet_[4] = true
 	return b
@@ -91,6 +106,9 @@ func (b *QueueBuilder) MaxAttempts(value int) *QueueBuilder {
 
 // MaxRunTime sets the value of the 'max_run_time' attribute to the given value.
 func (b *QueueBuilder) MaxRunTime(value int) *QueueBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.maxRunTime = value
 	b.fieldSet_[5] = true
 	return b
@@ -98,6 +116,9 @@ func (b *QueueBuilder) MaxRunTime(value int) *QueueBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *QueueBuilder) Name(value string) *QueueBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.name = value
 	b.fieldSet_[6] = true
 	return b
@@ -105,6 +126,9 @@ func (b *QueueBuilder) Name(value string) *QueueBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *QueueBuilder) UpdatedAt(value time.Time) *QueueBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.updatedAt = value
 	b.fieldSet_[7] = true
 	return b

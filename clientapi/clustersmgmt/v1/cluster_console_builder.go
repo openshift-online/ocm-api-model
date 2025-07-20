@@ -47,6 +47,9 @@ func (b *ClusterConsoleBuilder) Empty() bool {
 
 // URL sets the value of the 'URL' attribute to the given value.
 func (b *ClusterConsoleBuilder) URL(value string) *ClusterConsoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.url = value
 	b.fieldSet_[0] = true
 	return b

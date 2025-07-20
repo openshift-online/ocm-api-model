@@ -53,12 +53,18 @@ func NewAccount() *AccountBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AccountBuilder) Link(value bool) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AccountBuilder) ID(value string) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -66,6 +72,9 @@ func (b *AccountBuilder) ID(value string) *AccountBuilder {
 
 // HREF sets the link to the object.
 func (b *AccountBuilder) HREF(value string) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -87,6 +96,9 @@ func (b *AccountBuilder) Empty() bool {
 
 // BanCode sets the value of the 'ban_code' attribute to the given value.
 func (b *AccountBuilder) BanCode(value string) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.banCode = value
 	b.fieldSet_[3] = true
 	return b
@@ -94,6 +106,9 @@ func (b *AccountBuilder) BanCode(value string) *AccountBuilder {
 
 // BanDescription sets the value of the 'ban_description' attribute to the given value.
 func (b *AccountBuilder) BanDescription(value string) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.banDescription = value
 	b.fieldSet_[4] = true
 	return b
@@ -101,6 +116,9 @@ func (b *AccountBuilder) BanDescription(value string) *AccountBuilder {
 
 // Banned sets the value of the 'banned' attribute to the given value.
 func (b *AccountBuilder) Banned(value bool) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.banned = value
 	b.fieldSet_[5] = true
 	return b
@@ -108,6 +126,9 @@ func (b *AccountBuilder) Banned(value bool) *AccountBuilder {
 
 // Capabilities sets the value of the 'capabilities' attribute to the given values.
 func (b *AccountBuilder) Capabilities(values ...*CapabilityBuilder) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.capabilities = make([]*CapabilityBuilder, len(values))
 	copy(b.capabilities, values)
 	b.fieldSet_[6] = true
@@ -116,6 +137,9 @@ func (b *AccountBuilder) Capabilities(values ...*CapabilityBuilder) *AccountBuil
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *AccountBuilder) CreatedAt(value time.Time) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.createdAt = value
 	b.fieldSet_[7] = true
 	return b
@@ -123,6 +147,9 @@ func (b *AccountBuilder) CreatedAt(value time.Time) *AccountBuilder {
 
 // Email sets the value of the 'email' attribute to the given value.
 func (b *AccountBuilder) Email(value string) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.email = value
 	b.fieldSet_[8] = true
 	return b
@@ -130,6 +157,9 @@ func (b *AccountBuilder) Email(value string) *AccountBuilder {
 
 // FirstName sets the value of the 'first_name' attribute to the given value.
 func (b *AccountBuilder) FirstName(value string) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.firstName = value
 	b.fieldSet_[9] = true
 	return b
@@ -137,6 +167,9 @@ func (b *AccountBuilder) FirstName(value string) *AccountBuilder {
 
 // Labels sets the value of the 'labels' attribute to the given values.
 func (b *AccountBuilder) Labels(values ...*LabelBuilder) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.labels = make([]*LabelBuilder, len(values))
 	copy(b.labels, values)
 	b.fieldSet_[10] = true
@@ -145,6 +178,9 @@ func (b *AccountBuilder) Labels(values ...*LabelBuilder) *AccountBuilder {
 
 // LastName sets the value of the 'last_name' attribute to the given value.
 func (b *AccountBuilder) LastName(value string) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.lastName = value
 	b.fieldSet_[11] = true
 	return b
@@ -152,6 +188,9 @@ func (b *AccountBuilder) LastName(value string) *AccountBuilder {
 
 // Organization sets the value of the 'organization' attribute to the given value.
 func (b *AccountBuilder) Organization(value *OrganizationBuilder) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.organization = value
 	if value != nil {
 		b.fieldSet_[12] = true
@@ -163,6 +202,9 @@ func (b *AccountBuilder) Organization(value *OrganizationBuilder) *AccountBuilde
 
 // RhitAccountID sets the value of the 'rhit_account_ID' attribute to the given value.
 func (b *AccountBuilder) RhitAccountID(value string) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.rhitAccountID = value
 	b.fieldSet_[13] = true
 	return b
@@ -170,6 +212,9 @@ func (b *AccountBuilder) RhitAccountID(value string) *AccountBuilder {
 
 // RhitWebUserId sets the value of the 'rhit_web_user_id' attribute to the given value.
 func (b *AccountBuilder) RhitWebUserId(value string) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.rhitWebUserId = value
 	b.fieldSet_[14] = true
 	return b
@@ -177,6 +222,9 @@ func (b *AccountBuilder) RhitWebUserId(value string) *AccountBuilder {
 
 // ServiceAccount sets the value of the 'service_account' attribute to the given value.
 func (b *AccountBuilder) ServiceAccount(value bool) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.serviceAccount = value
 	b.fieldSet_[15] = true
 	return b
@@ -184,6 +232,9 @@ func (b *AccountBuilder) ServiceAccount(value bool) *AccountBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *AccountBuilder) UpdatedAt(value time.Time) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.updatedAt = value
 	b.fieldSet_[16] = true
 	return b
@@ -191,6 +242,9 @@ func (b *AccountBuilder) UpdatedAt(value time.Time) *AccountBuilder {
 
 // Username sets the value of the 'username' attribute to the given value.
 func (b *AccountBuilder) Username(value string) *AccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.username = value
 	b.fieldSet_[17] = true
 	return b

@@ -48,6 +48,9 @@ func (b *SocketTotalsNodeRoleOSMetricNodeBuilder) Empty() bool {
 
 // SocketTotals sets the value of the 'socket_totals' attribute to the given values.
 func (b *SocketTotalsNodeRoleOSMetricNodeBuilder) SocketTotals(values ...*SocketTotalNodeRoleOSMetricNodeBuilder) *SocketTotalsNodeRoleOSMetricNodeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.socketTotals = make([]*SocketTotalNodeRoleOSMetricNodeBuilder, len(values))
 	copy(b.socketTotals, values)
 	b.fieldSet_[0] = true

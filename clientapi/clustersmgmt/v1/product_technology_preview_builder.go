@@ -42,12 +42,18 @@ func NewProductTechnologyPreview() *ProductTechnologyPreviewBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ProductTechnologyPreviewBuilder) Link(value bool) *ProductTechnologyPreviewBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ProductTechnologyPreviewBuilder) ID(value string) *ProductTechnologyPreviewBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -55,6 +61,9 @@ func (b *ProductTechnologyPreviewBuilder) ID(value string) *ProductTechnologyPre
 
 // HREF sets the link to the object.
 func (b *ProductTechnologyPreviewBuilder) HREF(value string) *ProductTechnologyPreviewBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -76,6 +85,9 @@ func (b *ProductTechnologyPreviewBuilder) Empty() bool {
 
 // AdditionalText sets the value of the 'additional_text' attribute to the given value.
 func (b *ProductTechnologyPreviewBuilder) AdditionalText(value string) *ProductTechnologyPreviewBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.additionalText = value
 	b.fieldSet_[3] = true
 	return b
@@ -83,6 +95,9 @@ func (b *ProductTechnologyPreviewBuilder) AdditionalText(value string) *ProductT
 
 // EndDate sets the value of the 'end_date' attribute to the given value.
 func (b *ProductTechnologyPreviewBuilder) EndDate(value time.Time) *ProductTechnologyPreviewBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.endDate = value
 	b.fieldSet_[4] = true
 	return b
@@ -90,6 +105,9 @@ func (b *ProductTechnologyPreviewBuilder) EndDate(value time.Time) *ProductTechn
 
 // StartDate sets the value of the 'start_date' attribute to the given value.
 func (b *ProductTechnologyPreviewBuilder) StartDate(value time.Time) *ProductTechnologyPreviewBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.startDate = value
 	b.fieldSet_[5] = true
 	return b

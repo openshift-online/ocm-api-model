@@ -44,12 +44,18 @@ func NewManifest() *ManifestBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ManifestBuilder) Link(value bool) *ManifestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ManifestBuilder) ID(value string) *ManifestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -57,6 +63,9 @@ func (b *ManifestBuilder) ID(value string) *ManifestBuilder {
 
 // HREF sets the link to the object.
 func (b *ManifestBuilder) HREF(value string) *ManifestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -78,6 +87,9 @@ func (b *ManifestBuilder) Empty() bool {
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *ManifestBuilder) CreationTimestamp(value time.Time) *ManifestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.creationTimestamp = value
 	b.fieldSet_[3] = true
 	return b
@@ -85,6 +97,9 @@ func (b *ManifestBuilder) CreationTimestamp(value time.Time) *ManifestBuilder {
 
 // LiveResource sets the value of the 'live_resource' attribute to the given value.
 func (b *ManifestBuilder) LiveResource(value interface{}) *ManifestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.liveResource = value
 	b.fieldSet_[4] = true
 	return b
@@ -92,6 +107,9 @@ func (b *ManifestBuilder) LiveResource(value interface{}) *ManifestBuilder {
 
 // Spec sets the value of the 'spec' attribute to the given value.
 func (b *ManifestBuilder) Spec(value interface{}) *ManifestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.spec = value
 	b.fieldSet_[5] = true
 	return b
@@ -99,6 +117,9 @@ func (b *ManifestBuilder) Spec(value interface{}) *ManifestBuilder {
 
 // UpdatedTimestamp sets the value of the 'updated_timestamp' attribute to the given value.
 func (b *ManifestBuilder) UpdatedTimestamp(value time.Time) *ManifestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.updatedTimestamp = value
 	b.fieldSet_[6] = true
 	return b
@@ -106,6 +127,9 @@ func (b *ManifestBuilder) UpdatedTimestamp(value time.Time) *ManifestBuilder {
 
 // Workloads sets the value of the 'workloads' attribute to the given values.
 func (b *ManifestBuilder) Workloads(values ...interface{}) *ManifestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.workloads = make([]interface{}, len(values))
 	copy(b.workloads, values)
 	b.fieldSet_[7] = true

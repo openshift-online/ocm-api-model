@@ -48,6 +48,9 @@ func (b *ClusterLinkBuilder) Empty() bool {
 
 // HREF sets the value of the 'HREF' attribute to the given value.
 func (b *ClusterLinkBuilder) HREF(value string) *ClusterLinkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.href = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *ClusterLinkBuilder) HREF(value string) *ClusterLinkBuilder {
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *ClusterLinkBuilder) ID(value string) *ClusterLinkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b

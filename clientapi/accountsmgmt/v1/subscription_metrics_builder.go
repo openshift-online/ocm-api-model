@@ -68,6 +68,9 @@ func (b *SubscriptionMetricsBuilder) Empty() bool {
 
 // CloudProvider sets the value of the 'cloud_provider' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) CloudProvider(value string) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.cloudProvider = value
 	b.fieldSet_[0] = true
 	return b
@@ -75,6 +78,9 @@ func (b *SubscriptionMetricsBuilder) CloudProvider(value string) *SubscriptionMe
 
 // ComputeNodesCpu sets the value of the 'compute_nodes_cpu' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) ComputeNodesCpu(value *ClusterResourceBuilder) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.computeNodesCpu = value
 	if value != nil {
 		b.fieldSet_[1] = true
@@ -86,6 +92,9 @@ func (b *SubscriptionMetricsBuilder) ComputeNodesCpu(value *ClusterResourceBuild
 
 // ComputeNodesMemory sets the value of the 'compute_nodes_memory' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) ComputeNodesMemory(value *ClusterResourceBuilder) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.computeNodesMemory = value
 	if value != nil {
 		b.fieldSet_[2] = true
@@ -97,6 +106,9 @@ func (b *SubscriptionMetricsBuilder) ComputeNodesMemory(value *ClusterResourceBu
 
 // ComputeNodesSockets sets the value of the 'compute_nodes_sockets' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) ComputeNodesSockets(value *ClusterResourceBuilder) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.computeNodesSockets = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -108,6 +120,9 @@ func (b *SubscriptionMetricsBuilder) ComputeNodesSockets(value *ClusterResourceB
 
 // ConsoleUrl sets the value of the 'console_url' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) ConsoleUrl(value string) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.consoleUrl = value
 	b.fieldSet_[4] = true
 	return b
@@ -115,6 +130,9 @@ func (b *SubscriptionMetricsBuilder) ConsoleUrl(value string) *SubscriptionMetri
 
 // Cpu sets the value of the 'cpu' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) Cpu(value *ClusterResourceBuilder) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.cpu = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -126,6 +144,9 @@ func (b *SubscriptionMetricsBuilder) Cpu(value *ClusterResourceBuilder) *Subscri
 
 // CriticalAlertsFiring sets the value of the 'critical_alerts_firing' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) CriticalAlertsFiring(value float64) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.criticalAlertsFiring = value
 	b.fieldSet_[6] = true
 	return b
@@ -133,6 +154,9 @@ func (b *SubscriptionMetricsBuilder) CriticalAlertsFiring(value float64) *Subscr
 
 // HealthState sets the value of the 'health_state' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) HealthState(value string) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.healthState = value
 	b.fieldSet_[7] = true
 	return b
@@ -140,6 +164,9 @@ func (b *SubscriptionMetricsBuilder) HealthState(value string) *SubscriptionMetr
 
 // Memory sets the value of the 'memory' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) Memory(value *ClusterResourceBuilder) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.memory = value
 	if value != nil {
 		b.fieldSet_[8] = true
@@ -151,6 +178,9 @@ func (b *SubscriptionMetricsBuilder) Memory(value *ClusterResourceBuilder) *Subs
 
 // Nodes sets the value of the 'nodes' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) Nodes(value *ClusterMetricsNodesBuilder) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.nodes = value
 	if value != nil {
 		b.fieldSet_[9] = true
@@ -162,6 +192,9 @@ func (b *SubscriptionMetricsBuilder) Nodes(value *ClusterMetricsNodesBuilder) *S
 
 // OpenshiftVersion sets the value of the 'openshift_version' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) OpenshiftVersion(value string) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.openshiftVersion = value
 	b.fieldSet_[10] = true
 	return b
@@ -169,6 +202,9 @@ func (b *SubscriptionMetricsBuilder) OpenshiftVersion(value string) *Subscriptio
 
 // OperatingSystem sets the value of the 'operating_system' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) OperatingSystem(value string) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.operatingSystem = value
 	b.fieldSet_[11] = true
 	return b
@@ -176,6 +212,9 @@ func (b *SubscriptionMetricsBuilder) OperatingSystem(value string) *Subscription
 
 // OperatorsConditionFailing sets the value of the 'operators_condition_failing' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) OperatorsConditionFailing(value float64) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.operatorsConditionFailing = value
 	b.fieldSet_[12] = true
 	return b
@@ -183,6 +222,9 @@ func (b *SubscriptionMetricsBuilder) OperatorsConditionFailing(value float64) *S
 
 // Region sets the value of the 'region' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) Region(value string) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.region = value
 	b.fieldSet_[13] = true
 	return b
@@ -190,6 +232,9 @@ func (b *SubscriptionMetricsBuilder) Region(value string) *SubscriptionMetricsBu
 
 // Sockets sets the value of the 'sockets' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) Sockets(value *ClusterResourceBuilder) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.sockets = value
 	if value != nil {
 		b.fieldSet_[14] = true
@@ -201,6 +246,9 @@ func (b *SubscriptionMetricsBuilder) Sockets(value *ClusterResourceBuilder) *Sub
 
 // State sets the value of the 'state' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) State(value string) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.state = value
 	b.fieldSet_[15] = true
 	return b
@@ -208,6 +256,9 @@ func (b *SubscriptionMetricsBuilder) State(value string) *SubscriptionMetricsBui
 
 // StateDescription sets the value of the 'state_description' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) StateDescription(value string) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.stateDescription = value
 	b.fieldSet_[16] = true
 	return b
@@ -215,6 +266,9 @@ func (b *SubscriptionMetricsBuilder) StateDescription(value string) *Subscriptio
 
 // Storage sets the value of the 'storage' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) Storage(value *ClusterResourceBuilder) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.storage = value
 	if value != nil {
 		b.fieldSet_[17] = true
@@ -226,6 +280,9 @@ func (b *SubscriptionMetricsBuilder) Storage(value *ClusterResourceBuilder) *Sub
 
 // SubscriptionCpuTotal sets the value of the 'subscription_cpu_total' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) SubscriptionCpuTotal(value float64) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.subscriptionCpuTotal = value
 	b.fieldSet_[18] = true
 	return b
@@ -233,6 +290,9 @@ func (b *SubscriptionMetricsBuilder) SubscriptionCpuTotal(value float64) *Subscr
 
 // SubscriptionObligationExists sets the value of the 'subscription_obligation_exists' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) SubscriptionObligationExists(value float64) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.subscriptionObligationExists = value
 	b.fieldSet_[19] = true
 	return b
@@ -240,6 +300,9 @@ func (b *SubscriptionMetricsBuilder) SubscriptionObligationExists(value float64)
 
 // SubscriptionSocketTotal sets the value of the 'subscription_socket_total' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) SubscriptionSocketTotal(value float64) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.subscriptionSocketTotal = value
 	b.fieldSet_[20] = true
 	return b
@@ -247,6 +310,9 @@ func (b *SubscriptionMetricsBuilder) SubscriptionSocketTotal(value float64) *Sub
 
 // Upgrade sets the value of the 'upgrade' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) Upgrade(value *ClusterUpgradeBuilder) *SubscriptionMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 22)
+	}
 	b.upgrade = value
 	if value != nil {
 		b.fieldSet_[21] = true

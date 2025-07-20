@@ -49,6 +49,9 @@ func (b *StatefulObjectBuilder) Empty() bool {
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *StatefulObjectBuilder) ID(value string) *StatefulObjectBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *StatefulObjectBuilder) ID(value string) *StatefulObjectBuilder {
 
 // Href sets the value of the 'href' attribute to the given value.
 func (b *StatefulObjectBuilder) Href(value string) *StatefulObjectBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.href = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *StatefulObjectBuilder) Href(value string) *StatefulObjectBuilder {
 
 // Kind sets the value of the 'kind' attribute to the given value.
 func (b *StatefulObjectBuilder) Kind(value string) *StatefulObjectBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.kind = value
 	b.fieldSet_[2] = true
 	return b
@@ -70,6 +79,9 @@ func (b *StatefulObjectBuilder) Kind(value string) *StatefulObjectBuilder {
 
 // State sets the value of the 'state' attribute to the given value.
 func (b *StatefulObjectBuilder) State(value string) *StatefulObjectBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.state = value
 	b.fieldSet_[3] = true
 	return b

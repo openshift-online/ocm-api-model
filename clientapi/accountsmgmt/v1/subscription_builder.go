@@ -73,12 +73,18 @@ func NewSubscription() *SubscriptionBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *SubscriptionBuilder) Link(value bool) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *SubscriptionBuilder) ID(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -86,6 +92,9 @@ func (b *SubscriptionBuilder) ID(value string) *SubscriptionBuilder {
 
 // HREF sets the link to the object.
 func (b *SubscriptionBuilder) HREF(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -107,6 +116,9 @@ func (b *SubscriptionBuilder) Empty() bool {
 
 // BillingMarketplaceAccount sets the value of the 'billing_marketplace_account' attribute to the given value.
 func (b *SubscriptionBuilder) BillingMarketplaceAccount(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.billingMarketplaceAccount = value
 	b.fieldSet_[3] = true
 	return b
@@ -114,6 +126,9 @@ func (b *SubscriptionBuilder) BillingMarketplaceAccount(value string) *Subscript
 
 // Capabilities sets the value of the 'capabilities' attribute to the given values.
 func (b *SubscriptionBuilder) Capabilities(values ...*CapabilityBuilder) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.capabilities = make([]*CapabilityBuilder, len(values))
 	copy(b.capabilities, values)
 	b.fieldSet_[4] = true
@@ -122,6 +137,9 @@ func (b *SubscriptionBuilder) Capabilities(values ...*CapabilityBuilder) *Subscr
 
 // CloudAccountID sets the value of the 'cloud_account_ID' attribute to the given value.
 func (b *SubscriptionBuilder) CloudAccountID(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.cloudAccountID = value
 	b.fieldSet_[5] = true
 	return b
@@ -129,6 +147,9 @@ func (b *SubscriptionBuilder) CloudAccountID(value string) *SubscriptionBuilder 
 
 // CloudProviderID sets the value of the 'cloud_provider_ID' attribute to the given value.
 func (b *SubscriptionBuilder) CloudProviderID(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.cloudProviderID = value
 	b.fieldSet_[6] = true
 	return b
@@ -136,6 +157,9 @@ func (b *SubscriptionBuilder) CloudProviderID(value string) *SubscriptionBuilder
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *SubscriptionBuilder) ClusterID(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.clusterID = value
 	b.fieldSet_[7] = true
 	return b
@@ -145,6 +169,9 @@ func (b *SubscriptionBuilder) ClusterID(value string) *SubscriptionBuilder {
 //
 // Billing model for subscripiton and reserved_resource resources.
 func (b *SubscriptionBuilder) ClusterBillingModel(value BillingModel) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.clusterBillingModel = value
 	b.fieldSet_[8] = true
 	return b
@@ -152,6 +179,9 @@ func (b *SubscriptionBuilder) ClusterBillingModel(value BillingModel) *Subscript
 
 // ConsoleURL sets the value of the 'console_URL' attribute to the given value.
 func (b *SubscriptionBuilder) ConsoleURL(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.consoleURL = value
 	b.fieldSet_[9] = true
 	return b
@@ -159,6 +189,9 @@ func (b *SubscriptionBuilder) ConsoleURL(value string) *SubscriptionBuilder {
 
 // ConsumerUUID sets the value of the 'consumer_UUID' attribute to the given value.
 func (b *SubscriptionBuilder) ConsumerUUID(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.consumerUUID = value
 	b.fieldSet_[10] = true
 	return b
@@ -166,6 +199,9 @@ func (b *SubscriptionBuilder) ConsumerUUID(value string) *SubscriptionBuilder {
 
 // CpuTotal sets the value of the 'cpu_total' attribute to the given value.
 func (b *SubscriptionBuilder) CpuTotal(value int) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.cpuTotal = value
 	b.fieldSet_[11] = true
 	return b
@@ -173,6 +209,9 @@ func (b *SubscriptionBuilder) CpuTotal(value int) *SubscriptionBuilder {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *SubscriptionBuilder) CreatedAt(value time.Time) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.createdAt = value
 	b.fieldSet_[12] = true
 	return b
@@ -180,6 +219,9 @@ func (b *SubscriptionBuilder) CreatedAt(value time.Time) *SubscriptionBuilder {
 
 // Creator sets the value of the 'creator' attribute to the given value.
 func (b *SubscriptionBuilder) Creator(value *AccountBuilder) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.creator = value
 	if value != nil {
 		b.fieldSet_[13] = true
@@ -191,6 +233,9 @@ func (b *SubscriptionBuilder) Creator(value *AccountBuilder) *SubscriptionBuilde
 
 // DisplayName sets the value of the 'display_name' attribute to the given value.
 func (b *SubscriptionBuilder) DisplayName(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.displayName = value
 	b.fieldSet_[14] = true
 	return b
@@ -198,6 +243,9 @@ func (b *SubscriptionBuilder) DisplayName(value string) *SubscriptionBuilder {
 
 // ExternalClusterID sets the value of the 'external_cluster_ID' attribute to the given value.
 func (b *SubscriptionBuilder) ExternalClusterID(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.externalClusterID = value
 	b.fieldSet_[15] = true
 	return b
@@ -205,6 +253,9 @@ func (b *SubscriptionBuilder) ExternalClusterID(value string) *SubscriptionBuild
 
 // Labels sets the value of the 'labels' attribute to the given values.
 func (b *SubscriptionBuilder) Labels(values ...*LabelBuilder) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.labels = make([]*LabelBuilder, len(values))
 	copy(b.labels, values)
 	b.fieldSet_[16] = true
@@ -213,6 +264,9 @@ func (b *SubscriptionBuilder) Labels(values ...*LabelBuilder) *SubscriptionBuild
 
 // LastReconcileDate sets the value of the 'last_reconcile_date' attribute to the given value.
 func (b *SubscriptionBuilder) LastReconcileDate(value time.Time) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.lastReconcileDate = value
 	b.fieldSet_[17] = true
 	return b
@@ -220,6 +274,9 @@ func (b *SubscriptionBuilder) LastReconcileDate(value time.Time) *SubscriptionBu
 
 // LastReleasedAt sets the value of the 'last_released_at' attribute to the given value.
 func (b *SubscriptionBuilder) LastReleasedAt(value time.Time) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.lastReleasedAt = value
 	b.fieldSet_[18] = true
 	return b
@@ -227,6 +284,9 @@ func (b *SubscriptionBuilder) LastReleasedAt(value time.Time) *SubscriptionBuild
 
 // LastTelemetryDate sets the value of the 'last_telemetry_date' attribute to the given value.
 func (b *SubscriptionBuilder) LastTelemetryDate(value time.Time) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.lastTelemetryDate = value
 	b.fieldSet_[19] = true
 	return b
@@ -234,6 +294,9 @@ func (b *SubscriptionBuilder) LastTelemetryDate(value time.Time) *SubscriptionBu
 
 // Managed sets the value of the 'managed' attribute to the given value.
 func (b *SubscriptionBuilder) Managed(value bool) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.managed = value
 	b.fieldSet_[20] = true
 	return b
@@ -241,6 +304,9 @@ func (b *SubscriptionBuilder) Managed(value bool) *SubscriptionBuilder {
 
 // Metrics sets the value of the 'metrics' attribute to the given values.
 func (b *SubscriptionBuilder) Metrics(values ...*SubscriptionMetricsBuilder) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.metrics = make([]*SubscriptionMetricsBuilder, len(values))
 	copy(b.metrics, values)
 	b.fieldSet_[21] = true
@@ -249,6 +315,9 @@ func (b *SubscriptionBuilder) Metrics(values ...*SubscriptionMetricsBuilder) *Su
 
 // NotificationContacts sets the value of the 'notification_contacts' attribute to the given values.
 func (b *SubscriptionBuilder) NotificationContacts(values ...*AccountBuilder) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.notificationContacts = make([]*AccountBuilder, len(values))
 	copy(b.notificationContacts, values)
 	b.fieldSet_[22] = true
@@ -257,6 +326,9 @@ func (b *SubscriptionBuilder) NotificationContacts(values ...*AccountBuilder) *S
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *SubscriptionBuilder) OrganizationID(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.organizationID = value
 	b.fieldSet_[23] = true
 	return b
@@ -264,6 +336,9 @@ func (b *SubscriptionBuilder) OrganizationID(value string) *SubscriptionBuilder 
 
 // Plan sets the value of the 'plan' attribute to the given value.
 func (b *SubscriptionBuilder) Plan(value *PlanBuilder) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.plan = value
 	if value != nil {
 		b.fieldSet_[24] = true
@@ -275,6 +350,9 @@ func (b *SubscriptionBuilder) Plan(value *PlanBuilder) *SubscriptionBuilder {
 
 // ProductBundle sets the value of the 'product_bundle' attribute to the given value.
 func (b *SubscriptionBuilder) ProductBundle(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.productBundle = value
 	b.fieldSet_[25] = true
 	return b
@@ -282,6 +360,9 @@ func (b *SubscriptionBuilder) ProductBundle(value string) *SubscriptionBuilder {
 
 // Provenance sets the value of the 'provenance' attribute to the given value.
 func (b *SubscriptionBuilder) Provenance(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.provenance = value
 	b.fieldSet_[26] = true
 	return b
@@ -289,6 +370,9 @@ func (b *SubscriptionBuilder) Provenance(value string) *SubscriptionBuilder {
 
 // RegionID sets the value of the 'region_ID' attribute to the given value.
 func (b *SubscriptionBuilder) RegionID(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.regionID = value
 	b.fieldSet_[27] = true
 	return b
@@ -296,6 +380,9 @@ func (b *SubscriptionBuilder) RegionID(value string) *SubscriptionBuilder {
 
 // Released sets the value of the 'released' attribute to the given value.
 func (b *SubscriptionBuilder) Released(value bool) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.released = value
 	b.fieldSet_[28] = true
 	return b
@@ -303,6 +390,9 @@ func (b *SubscriptionBuilder) Released(value bool) *SubscriptionBuilder {
 
 // RhRegionID sets the value of the 'rh_region_ID' attribute to the given value.
 func (b *SubscriptionBuilder) RhRegionID(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.rhRegionID = value
 	b.fieldSet_[29] = true
 	return b
@@ -310,6 +400,9 @@ func (b *SubscriptionBuilder) RhRegionID(value string) *SubscriptionBuilder {
 
 // ServiceLevel sets the value of the 'service_level' attribute to the given value.
 func (b *SubscriptionBuilder) ServiceLevel(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.serviceLevel = value
 	b.fieldSet_[30] = true
 	return b
@@ -317,6 +410,9 @@ func (b *SubscriptionBuilder) ServiceLevel(value string) *SubscriptionBuilder {
 
 // SocketTotal sets the value of the 'socket_total' attribute to the given value.
 func (b *SubscriptionBuilder) SocketTotal(value int) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.socketTotal = value
 	b.fieldSet_[31] = true
 	return b
@@ -324,6 +420,9 @@ func (b *SubscriptionBuilder) SocketTotal(value int) *SubscriptionBuilder {
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *SubscriptionBuilder) Status(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.status = value
 	b.fieldSet_[32] = true
 	return b
@@ -331,6 +430,9 @@ func (b *SubscriptionBuilder) Status(value string) *SubscriptionBuilder {
 
 // SupportLevel sets the value of the 'support_level' attribute to the given value.
 func (b *SubscriptionBuilder) SupportLevel(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.supportLevel = value
 	b.fieldSet_[33] = true
 	return b
@@ -338,6 +440,9 @@ func (b *SubscriptionBuilder) SupportLevel(value string) *SubscriptionBuilder {
 
 // SystemUnits sets the value of the 'system_units' attribute to the given value.
 func (b *SubscriptionBuilder) SystemUnits(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.systemUnits = value
 	b.fieldSet_[34] = true
 	return b
@@ -345,6 +450,9 @@ func (b *SubscriptionBuilder) SystemUnits(value string) *SubscriptionBuilder {
 
 // TrialEndDate sets the value of the 'trial_end_date' attribute to the given value.
 func (b *SubscriptionBuilder) TrialEndDate(value time.Time) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.trialEndDate = value
 	b.fieldSet_[35] = true
 	return b
@@ -352,6 +460,9 @@ func (b *SubscriptionBuilder) TrialEndDate(value time.Time) *SubscriptionBuilder
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *SubscriptionBuilder) UpdatedAt(value time.Time) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.updatedAt = value
 	b.fieldSet_[36] = true
 	return b
@@ -359,6 +470,9 @@ func (b *SubscriptionBuilder) UpdatedAt(value time.Time) *SubscriptionBuilder {
 
 // Usage sets the value of the 'usage' attribute to the given value.
 func (b *SubscriptionBuilder) Usage(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 38)
+	}
 	b.usage = value
 	b.fieldSet_[37] = true
 	return b

@@ -49,6 +49,9 @@ func (b *AzureKmsKeyBuilder) Empty() bool {
 
 // KeyName sets the value of the 'key_name' attribute to the given value.
 func (b *AzureKmsKeyBuilder) KeyName(value string) *AzureKmsKeyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.keyName = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *AzureKmsKeyBuilder) KeyName(value string) *AzureKmsKeyBuilder {
 
 // KeyVaultName sets the value of the 'key_vault_name' attribute to the given value.
 func (b *AzureKmsKeyBuilder) KeyVaultName(value string) *AzureKmsKeyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.keyVaultName = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *AzureKmsKeyBuilder) KeyVaultName(value string) *AzureKmsKeyBuilder {
 
 // KeyVersion sets the value of the 'key_version' attribute to the given value.
 func (b *AzureKmsKeyBuilder) KeyVersion(value string) *AzureKmsKeyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.keyVersion = value
 	b.fieldSet_[2] = true
 	return b

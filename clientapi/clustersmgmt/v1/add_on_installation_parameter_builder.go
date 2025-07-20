@@ -36,12 +36,18 @@ func NewAddOnInstallationParameter() *AddOnInstallationParameterBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddOnInstallationParameterBuilder) Link(value bool) *AddOnInstallationParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddOnInstallationParameterBuilder) ID(value string) *AddOnInstallationParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -49,6 +55,9 @@ func (b *AddOnInstallationParameterBuilder) ID(value string) *AddOnInstallationP
 
 // HREF sets the link to the object.
 func (b *AddOnInstallationParameterBuilder) HREF(value string) *AddOnInstallationParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -70,6 +79,9 @@ func (b *AddOnInstallationParameterBuilder) Empty() bool {
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *AddOnInstallationParameterBuilder) Value(value string) *AddOnInstallationParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.value = value
 	b.fieldSet_[3] = true
 	return b

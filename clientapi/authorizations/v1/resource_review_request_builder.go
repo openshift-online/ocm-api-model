@@ -51,6 +51,9 @@ func (b *ResourceReviewRequestBuilder) Empty() bool {
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *ResourceReviewRequestBuilder) AccountUsername(value string) *ResourceReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.accountUsername = value
 	b.fieldSet_[0] = true
 	return b
@@ -58,6 +61,9 @@ func (b *ResourceReviewRequestBuilder) AccountUsername(value string) *ResourceRe
 
 // Action sets the value of the 'action' attribute to the given value.
 func (b *ResourceReviewRequestBuilder) Action(value string) *ResourceReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.action = value
 	b.fieldSet_[1] = true
 	return b
@@ -65,6 +71,9 @@ func (b *ResourceReviewRequestBuilder) Action(value string) *ResourceReviewReque
 
 // ExcludeSubscriptionStatuses sets the value of the 'exclude_subscription_statuses' attribute to the given values.
 func (b *ResourceReviewRequestBuilder) ExcludeSubscriptionStatuses(values ...SubscriptionStatus) *ResourceReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.excludeSubscriptionStatuses = make([]SubscriptionStatus, len(values))
 	copy(b.excludeSubscriptionStatuses, values)
 	b.fieldSet_[2] = true
@@ -73,6 +82,9 @@ func (b *ResourceReviewRequestBuilder) ExcludeSubscriptionStatuses(values ...Sub
 
 // ReduceClusterList sets the value of the 'reduce_cluster_list' attribute to the given value.
 func (b *ResourceReviewRequestBuilder) ReduceClusterList(value bool) *ResourceReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.reduceClusterList = value
 	b.fieldSet_[3] = true
 	return b
@@ -80,6 +92,9 @@ func (b *ResourceReviewRequestBuilder) ReduceClusterList(value bool) *ResourceRe
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *ResourceReviewRequestBuilder) ResourceType(value string) *ResourceReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.resourceType = value
 	b.fieldSet_[4] = true
 	return b

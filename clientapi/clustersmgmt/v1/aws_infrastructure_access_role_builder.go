@@ -38,12 +38,18 @@ func NewAWSInfrastructureAccessRole() *AWSInfrastructureAccessRoleBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AWSInfrastructureAccessRoleBuilder) Link(value bool) *AWSInfrastructureAccessRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AWSInfrastructureAccessRoleBuilder) ID(value string) *AWSInfrastructureAccessRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -51,6 +57,9 @@ func (b *AWSInfrastructureAccessRoleBuilder) ID(value string) *AWSInfrastructure
 
 // HREF sets the link to the object.
 func (b *AWSInfrastructureAccessRoleBuilder) HREF(value string) *AWSInfrastructureAccessRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *AWSInfrastructureAccessRoleBuilder) Empty() bool {
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *AWSInfrastructureAccessRoleBuilder) Description(value string) *AWSInfrastructureAccessRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.description = value
 	b.fieldSet_[3] = true
 	return b
@@ -79,6 +91,9 @@ func (b *AWSInfrastructureAccessRoleBuilder) Description(value string) *AWSInfra
 
 // DisplayName sets the value of the 'display_name' attribute to the given value.
 func (b *AWSInfrastructureAccessRoleBuilder) DisplayName(value string) *AWSInfrastructureAccessRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.displayName = value
 	b.fieldSet_[4] = true
 	return b
@@ -88,6 +103,9 @@ func (b *AWSInfrastructureAccessRoleBuilder) DisplayName(value string) *AWSInfra
 //
 // State of an AWS infrastructure access role.
 func (b *AWSInfrastructureAccessRoleBuilder) State(value AWSInfrastructureAccessRoleState) *AWSInfrastructureAccessRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.state = value
 	b.fieldSet_[5] = true
 	return b

@@ -46,6 +46,9 @@ func (b *ManagementClusterRequestPayloadBuilder) Empty() bool {
 
 // Service_cluster_idService_cluster_idService_cluster_idService_cluster_idId sets the value of the 'service_cluster_id_service_cluster_id_service_cluster_id_service_cluster_id_id' attribute to the given value.
 func (b *ManagementClusterRequestPayloadBuilder) Service_cluster_idService_cluster_idService_cluster_idService_cluster_idId(value string) *ManagementClusterRequestPayloadBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.service_cluster_idService_cluster_idService_cluster_idService_cluster_idId = value
 	b.fieldSet_[0] = true
 	return b

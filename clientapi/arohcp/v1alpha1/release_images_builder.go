@@ -47,6 +47,9 @@ func (b *ReleaseImagesBuilder) Empty() bool {
 
 // ARM64 sets the value of the 'ARM64' attribute to the given value.
 func (b *ReleaseImagesBuilder) ARM64(value *ReleaseImageDetailsBuilder) *ReleaseImagesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.arm64 = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -58,6 +61,9 @@ func (b *ReleaseImagesBuilder) ARM64(value *ReleaseImageDetailsBuilder) *Release
 
 // Multi sets the value of the 'multi' attribute to the given value.
 func (b *ReleaseImagesBuilder) Multi(value *ReleaseImageDetailsBuilder) *ReleaseImagesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.multi = value
 	if value != nil {
 		b.fieldSet_[1] = true

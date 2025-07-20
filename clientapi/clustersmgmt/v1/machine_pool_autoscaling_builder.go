@@ -37,12 +37,18 @@ func NewMachinePoolAutoscaling() *MachinePoolAutoscalingBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *MachinePoolAutoscalingBuilder) Link(value bool) *MachinePoolAutoscalingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *MachinePoolAutoscalingBuilder) ID(value string) *MachinePoolAutoscalingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *MachinePoolAutoscalingBuilder) ID(value string) *MachinePoolAutoscaling
 
 // HREF sets the link to the object.
 func (b *MachinePoolAutoscalingBuilder) HREF(value string) *MachinePoolAutoscalingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *MachinePoolAutoscalingBuilder) Empty() bool {
 
 // MaxReplicas sets the value of the 'max_replicas' attribute to the given value.
 func (b *MachinePoolAutoscalingBuilder) MaxReplicas(value int) *MachinePoolAutoscalingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.maxReplicas = value
 	b.fieldSet_[3] = true
 	return b
@@ -78,6 +90,9 @@ func (b *MachinePoolAutoscalingBuilder) MaxReplicas(value int) *MachinePoolAutos
 
 // MinReplicas sets the value of the 'min_replicas' attribute to the given value.
 func (b *MachinePoolAutoscalingBuilder) MinReplicas(value int) *MachinePoolAutoscalingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.minReplicas = value
 	b.fieldSet_[4] = true
 	return b

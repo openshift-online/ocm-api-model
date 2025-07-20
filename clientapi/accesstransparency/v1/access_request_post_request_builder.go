@@ -53,6 +53,9 @@ func (b *AccessRequestPostRequestBuilder) Empty() bool {
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) ClusterId(value string) *AccessRequestPostRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.clusterId = value
 	b.fieldSet_[0] = true
 	return b
@@ -60,6 +63,9 @@ func (b *AccessRequestPostRequestBuilder) ClusterId(value string) *AccessRequest
 
 // Deadline sets the value of the 'deadline' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) Deadline(value string) *AccessRequestPostRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.deadline = value
 	b.fieldSet_[1] = true
 	return b
@@ -67,6 +73,9 @@ func (b *AccessRequestPostRequestBuilder) Deadline(value string) *AccessRequestP
 
 // Duration sets the value of the 'duration' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) Duration(value string) *AccessRequestPostRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.duration = value
 	b.fieldSet_[2] = true
 	return b
@@ -74,6 +83,9 @@ func (b *AccessRequestPostRequestBuilder) Duration(value string) *AccessRequestP
 
 // InternalSupportCaseId sets the value of the 'internal_support_case_id' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) InternalSupportCaseId(value string) *AccessRequestPostRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.internalSupportCaseId = value
 	b.fieldSet_[3] = true
 	return b
@@ -81,6 +93,9 @@ func (b *AccessRequestPostRequestBuilder) InternalSupportCaseId(value string) *A
 
 // Justification sets the value of the 'justification' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) Justification(value string) *AccessRequestPostRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.justification = value
 	b.fieldSet_[4] = true
 	return b
@@ -88,6 +103,9 @@ func (b *AccessRequestPostRequestBuilder) Justification(value string) *AccessReq
 
 // SubscriptionId sets the value of the 'subscription_id' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) SubscriptionId(value string) *AccessRequestPostRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.subscriptionId = value
 	b.fieldSet_[5] = true
 	return b
@@ -95,6 +113,9 @@ func (b *AccessRequestPostRequestBuilder) SubscriptionId(value string) *AccessRe
 
 // SupportCaseId sets the value of the 'support_case_id' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) SupportCaseId(value string) *AccessRequestPostRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.supportCaseId = value
 	b.fieldSet_[6] = true
 	return b

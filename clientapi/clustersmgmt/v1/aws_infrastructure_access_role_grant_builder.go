@@ -40,12 +40,18 @@ func NewAWSInfrastructureAccessRoleGrant() *AWSInfrastructureAccessRoleGrantBuil
 
 // Link sets the flag that indicates if this is a link.
 func (b *AWSInfrastructureAccessRoleGrantBuilder) Link(value bool) *AWSInfrastructureAccessRoleGrantBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AWSInfrastructureAccessRoleGrantBuilder) ID(value string) *AWSInfrastructureAccessRoleGrantBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -53,6 +59,9 @@ func (b *AWSInfrastructureAccessRoleGrantBuilder) ID(value string) *AWSInfrastru
 
 // HREF sets the link to the object.
 func (b *AWSInfrastructureAccessRoleGrantBuilder) HREF(value string) *AWSInfrastructureAccessRoleGrantBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -74,6 +83,9 @@ func (b *AWSInfrastructureAccessRoleGrantBuilder) Empty() bool {
 
 // ConsoleURL sets the value of the 'console_URL' attribute to the given value.
 func (b *AWSInfrastructureAccessRoleGrantBuilder) ConsoleURL(value string) *AWSInfrastructureAccessRoleGrantBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.consoleURL = value
 	b.fieldSet_[3] = true
 	return b
@@ -83,6 +95,9 @@ func (b *AWSInfrastructureAccessRoleGrantBuilder) ConsoleURL(value string) *AWSI
 //
 // A set of acces permissions for AWS resources
 func (b *AWSInfrastructureAccessRoleGrantBuilder) Role(value *AWSInfrastructureAccessRoleBuilder) *AWSInfrastructureAccessRoleGrantBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.role = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -96,6 +111,9 @@ func (b *AWSInfrastructureAccessRoleGrantBuilder) Role(value *AWSInfrastructureA
 //
 // State of an AWS infrastructure access role grant.
 func (b *AWSInfrastructureAccessRoleGrantBuilder) State(value AWSInfrastructureAccessRoleGrantState) *AWSInfrastructureAccessRoleGrantBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.state = value
 	b.fieldSet_[5] = true
 	return b
@@ -103,6 +121,9 @@ func (b *AWSInfrastructureAccessRoleGrantBuilder) State(value AWSInfrastructureA
 
 // StateDescription sets the value of the 'state_description' attribute to the given value.
 func (b *AWSInfrastructureAccessRoleGrantBuilder) StateDescription(value string) *AWSInfrastructureAccessRoleGrantBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.stateDescription = value
 	b.fieldSet_[6] = true
 	return b
@@ -110,6 +131,9 @@ func (b *AWSInfrastructureAccessRoleGrantBuilder) StateDescription(value string)
 
 // UserARN sets the value of the 'user_ARN' attribute to the given value.
 func (b *AWSInfrastructureAccessRoleGrantBuilder) UserARN(value string) *AWSInfrastructureAccessRoleGrantBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.userARN = value
 	b.fieldSet_[7] = true
 	return b

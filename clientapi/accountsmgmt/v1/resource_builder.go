@@ -41,12 +41,18 @@ func NewResource() *ResourceBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ResourceBuilder) Link(value bool) *ResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ResourceBuilder) ID(value string) *ResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -54,6 +60,9 @@ func (b *ResourceBuilder) ID(value string) *ResourceBuilder {
 
 // HREF sets the link to the object.
 func (b *ResourceBuilder) HREF(value string) *ResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -75,6 +84,9 @@ func (b *ResourceBuilder) Empty() bool {
 
 // BYOC sets the value of the 'BYOC' attribute to the given value.
 func (b *ResourceBuilder) BYOC(value bool) *ResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.byoc = value
 	b.fieldSet_[3] = true
 	return b
@@ -82,6 +94,9 @@ func (b *ResourceBuilder) BYOC(value bool) *ResourceBuilder {
 
 // SKU sets the value of the 'SKU' attribute to the given value.
 func (b *ResourceBuilder) SKU(value string) *ResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.sku = value
 	b.fieldSet_[4] = true
 	return b
@@ -89,6 +104,9 @@ func (b *ResourceBuilder) SKU(value string) *ResourceBuilder {
 
 // Allowed sets the value of the 'allowed' attribute to the given value.
 func (b *ResourceBuilder) Allowed(value int) *ResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.allowed = value
 	b.fieldSet_[5] = true
 	return b
@@ -96,6 +114,9 @@ func (b *ResourceBuilder) Allowed(value int) *ResourceBuilder {
 
 // AvailabilityZoneType sets the value of the 'availability_zone_type' attribute to the given value.
 func (b *ResourceBuilder) AvailabilityZoneType(value string) *ResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.availabilityZoneType = value
 	b.fieldSet_[6] = true
 	return b
@@ -103,6 +124,9 @@ func (b *ResourceBuilder) AvailabilityZoneType(value string) *ResourceBuilder {
 
 // ResourceName sets the value of the 'resource_name' attribute to the given value.
 func (b *ResourceBuilder) ResourceName(value string) *ResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.resourceName = value
 	b.fieldSet_[7] = true
 	return b
@@ -110,6 +134,9 @@ func (b *ResourceBuilder) ResourceName(value string) *ResourceBuilder {
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *ResourceBuilder) ResourceType(value string) *ResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.resourceType = value
 	b.fieldSet_[8] = true
 	return b

@@ -49,6 +49,9 @@ func (b *ProxyBuilder) Empty() bool {
 
 // HTTPProxy sets the value of the 'HTTP_proxy' attribute to the given value.
 func (b *ProxyBuilder) HTTPProxy(value string) *ProxyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.httpProxy = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *ProxyBuilder) HTTPProxy(value string) *ProxyBuilder {
 
 // HTTPSProxy sets the value of the 'HTTPS_proxy' attribute to the given value.
 func (b *ProxyBuilder) HTTPSProxy(value string) *ProxyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.httpsProxy = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *ProxyBuilder) HTTPSProxy(value string) *ProxyBuilder {
 
 // NoProxy sets the value of the 'no_proxy' attribute to the given value.
 func (b *ProxyBuilder) NoProxy(value string) *ProxyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.noProxy = value
 	b.fieldSet_[2] = true
 	return b

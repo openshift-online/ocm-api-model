@@ -48,6 +48,9 @@ func (b *AlertInfoBuilder) Empty() bool {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AlertInfoBuilder) Name(value string) *AlertInfoBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.name = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *AlertInfoBuilder) Name(value string) *AlertInfoBuilder {
 //
 // Severity of a cluster alert received via telemetry.
 func (b *AlertInfoBuilder) Severity(value AlertSeverity) *AlertInfoBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.severity = value
 	b.fieldSet_[1] = true
 	return b

@@ -45,12 +45,18 @@ func NewMachineType() *MachineTypeBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *MachineTypeBuilder) Link(value bool) *MachineTypeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *MachineTypeBuilder) ID(value string) *MachineTypeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -58,6 +64,9 @@ func (b *MachineTypeBuilder) ID(value string) *MachineTypeBuilder {
 
 // HREF sets the link to the object.
 func (b *MachineTypeBuilder) HREF(value string) *MachineTypeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -79,6 +88,9 @@ func (b *MachineTypeBuilder) Empty() bool {
 
 // CCSOnly sets the value of the 'CCS_only' attribute to the given value.
 func (b *MachineTypeBuilder) CCSOnly(value bool) *MachineTypeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.ccsOnly = value
 	b.fieldSet_[3] = true
 	return b
@@ -105,6 +117,9 @@ func (b *MachineTypeBuilder) CCSOnly(value bool) *MachineTypeBuilder {
 // - 1 TiB = 2^40 bytes
 // - 1 PiB = 2^50 bytes
 func (b *MachineTypeBuilder) CPU(value *ValueBuilder) *MachineTypeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.cpu = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -118,6 +133,9 @@ func (b *MachineTypeBuilder) CPU(value *ValueBuilder) *MachineTypeBuilder {
 //
 // Processor type category.
 func (b *MachineTypeBuilder) Architecture(value ProcessorType) *MachineTypeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.architecture = value
 	b.fieldSet_[5] = true
 	return b
@@ -127,6 +145,9 @@ func (b *MachineTypeBuilder) Architecture(value ProcessorType) *MachineTypeBuild
 //
 // Machine type category.
 func (b *MachineTypeBuilder) Category(value MachineTypeCategory) *MachineTypeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.category = value
 	b.fieldSet_[6] = true
 	return b
@@ -136,6 +157,9 @@ func (b *MachineTypeBuilder) Category(value MachineTypeCategory) *MachineTypeBui
 //
 // Cloud provider.
 func (b *MachineTypeBuilder) CloudProvider(value *v1.CloudProviderBuilder) *MachineTypeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.cloudProvider = value
 	if value != nil {
 		b.fieldSet_[7] = true
@@ -147,6 +171,9 @@ func (b *MachineTypeBuilder) CloudProvider(value *v1.CloudProviderBuilder) *Mach
 
 // GenericName sets the value of the 'generic_name' attribute to the given value.
 func (b *MachineTypeBuilder) GenericName(value string) *MachineTypeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.genericName = value
 	b.fieldSet_[8] = true
 	return b
@@ -173,6 +200,9 @@ func (b *MachineTypeBuilder) GenericName(value string) *MachineTypeBuilder {
 // - 1 TiB = 2^40 bytes
 // - 1 PiB = 2^50 bytes
 func (b *MachineTypeBuilder) Memory(value *ValueBuilder) *MachineTypeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.memory = value
 	if value != nil {
 		b.fieldSet_[9] = true
@@ -184,6 +214,9 @@ func (b *MachineTypeBuilder) Memory(value *ValueBuilder) *MachineTypeBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *MachineTypeBuilder) Name(value string) *MachineTypeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.name = value
 	b.fieldSet_[10] = true
 	return b
@@ -193,6 +226,9 @@ func (b *MachineTypeBuilder) Name(value string) *MachineTypeBuilder {
 //
 // Machine type size.
 func (b *MachineTypeBuilder) Size(value MachineTypeSize) *MachineTypeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.size = value
 	b.fieldSet_[11] = true
 	return b

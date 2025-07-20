@@ -52,12 +52,18 @@ func NewEvent() *EventBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *EventBuilder) Link(value bool) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *EventBuilder) ID(value string) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -65,6 +71,9 @@ func (b *EventBuilder) ID(value string) *EventBuilder {
 
 // HREF sets the link to the object.
 func (b *EventBuilder) HREF(value string) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -86,6 +95,9 @@ func (b *EventBuilder) Empty() bool {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *EventBuilder) CreatedAt(value time.Time) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.createdAt = value
 	b.fieldSet_[3] = true
 	return b
@@ -95,6 +107,9 @@ func (b *EventBuilder) CreatedAt(value time.Time) *EventBuilder {
 //
 // Definition of a Web RCA user.
 func (b *EventBuilder) Creator(value *UserBuilder) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.creator = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -106,6 +121,9 @@ func (b *EventBuilder) Creator(value *UserBuilder) *EventBuilder {
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *EventBuilder) DeletedAt(value time.Time) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.deletedAt = value
 	b.fieldSet_[5] = true
 	return b
@@ -115,6 +133,9 @@ func (b *EventBuilder) DeletedAt(value time.Time) *EventBuilder {
 //
 // Definition of a Web RCA escalation.
 func (b *EventBuilder) Escalation(value *EscalationBuilder) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.escalation = value
 	if value != nil {
 		b.fieldSet_[6] = true
@@ -126,6 +147,9 @@ func (b *EventBuilder) Escalation(value *EscalationBuilder) *EventBuilder {
 
 // EventType sets the value of the 'event_type' attribute to the given value.
 func (b *EventBuilder) EventType(value string) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.eventType = value
 	b.fieldSet_[7] = true
 	return b
@@ -133,6 +157,9 @@ func (b *EventBuilder) EventType(value string) *EventBuilder {
 
 // ExternalReferenceUrl sets the value of the 'external_reference_url' attribute to the given value.
 func (b *EventBuilder) ExternalReferenceUrl(value string) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.externalReferenceUrl = value
 	b.fieldSet_[8] = true
 	return b
@@ -142,6 +169,9 @@ func (b *EventBuilder) ExternalReferenceUrl(value string) *EventBuilder {
 //
 // Definition of a Web RCA event.
 func (b *EventBuilder) FollowUp(value *FollowUpBuilder) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.followUp = value
 	if value != nil {
 		b.fieldSet_[9] = true
@@ -155,6 +185,9 @@ func (b *EventBuilder) FollowUp(value *FollowUpBuilder) *EventBuilder {
 //
 // Definition of a Web RCA event.
 func (b *EventBuilder) FollowUpChange(value *FollowUpChangeBuilder) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.followUpChange = value
 	if value != nil {
 		b.fieldSet_[10] = true
@@ -168,6 +201,9 @@ func (b *EventBuilder) FollowUpChange(value *FollowUpChangeBuilder) *EventBuilde
 //
 // Definition of a Web RCA handoff.
 func (b *EventBuilder) Handoff(value *HandoffBuilder) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.handoff = value
 	if value != nil {
 		b.fieldSet_[11] = true
@@ -181,6 +217,9 @@ func (b *EventBuilder) Handoff(value *HandoffBuilder) *EventBuilder {
 //
 // Definition of a Web RCA incident.
 func (b *EventBuilder) Incident(value *IncidentBuilder) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.incident = value
 	if value != nil {
 		b.fieldSet_[12] = true
@@ -192,6 +231,9 @@ func (b *EventBuilder) Incident(value *IncidentBuilder) *EventBuilder {
 
 // Note sets the value of the 'note' attribute to the given value.
 func (b *EventBuilder) Note(value string) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.note = value
 	b.fieldSet_[13] = true
 	return b
@@ -201,6 +243,9 @@ func (b *EventBuilder) Note(value string) *EventBuilder {
 //
 // Definition of a Web RCA event.
 func (b *EventBuilder) StatusChange(value *StatusChangeBuilder) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.statusChange = value
 	if value != nil {
 		b.fieldSet_[14] = true
@@ -212,6 +257,9 @@ func (b *EventBuilder) StatusChange(value *StatusChangeBuilder) *EventBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *EventBuilder) UpdatedAt(value time.Time) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.updatedAt = value
 	b.fieldSet_[15] = true
 	return b

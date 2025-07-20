@@ -48,6 +48,9 @@ func (b *SelfFeatureReviewResponseBuilder) Empty() bool {
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *SelfFeatureReviewResponseBuilder) Enabled(value bool) *SelfFeatureReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.enabled = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *SelfFeatureReviewResponseBuilder) Enabled(value bool) *SelfFeatureRevie
 
 // FeatureID sets the value of the 'feature_ID' attribute to the given value.
 func (b *SelfFeatureReviewResponseBuilder) FeatureID(value string) *SelfFeatureReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.featureID = value
 	b.fieldSet_[1] = true
 	return b

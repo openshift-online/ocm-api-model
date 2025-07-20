@@ -48,6 +48,9 @@ func (b *AWSShardBuilder) Empty() bool {
 
 // ECRRepositoryURLs sets the value of the 'ECR_repository_URLs' attribute to the given values.
 func (b *AWSShardBuilder) ECRRepositoryURLs(values ...string) *AWSShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.ecrRepositoryURLs = make([]string, len(values))
 	copy(b.ecrRepositoryURLs, values)
 	b.fieldSet_[0] = true
@@ -56,6 +59,9 @@ func (b *AWSShardBuilder) ECRRepositoryURLs(values ...string) *AWSShardBuilder {
 
 // BackupConfigs sets the value of the 'backup_configs' attribute to the given values.
 func (b *AWSShardBuilder) BackupConfigs(values ...*AWSBackupConfigBuilder) *AWSShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.backupConfigs = make([]*AWSBackupConfigBuilder, len(values))
 	copy(b.backupConfigs, values)
 	b.fieldSet_[1] = true

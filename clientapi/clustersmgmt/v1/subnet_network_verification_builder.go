@@ -38,12 +38,18 @@ func NewSubnetNetworkVerification() *SubnetNetworkVerificationBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *SubnetNetworkVerificationBuilder) Link(value bool) *SubnetNetworkVerificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *SubnetNetworkVerificationBuilder) ID(value string) *SubnetNetworkVerificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -51,6 +57,9 @@ func (b *SubnetNetworkVerificationBuilder) ID(value string) *SubnetNetworkVerifi
 
 // HREF sets the link to the object.
 func (b *SubnetNetworkVerificationBuilder) HREF(value string) *SubnetNetworkVerificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *SubnetNetworkVerificationBuilder) Empty() bool {
 
 // Details sets the value of the 'details' attribute to the given values.
 func (b *SubnetNetworkVerificationBuilder) Details(values ...string) *SubnetNetworkVerificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.details = make([]string, len(values))
 	copy(b.details, values)
 	b.fieldSet_[3] = true
@@ -82,6 +94,9 @@ func (b *SubnetNetworkVerificationBuilder) Details(values ...string) *SubnetNetw
 //
 // Representation of an platform type field.
 func (b *SubnetNetworkVerificationBuilder) Platform(value Platform) *SubnetNetworkVerificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.platform = value
 	b.fieldSet_[4] = true
 	return b
@@ -89,6 +104,9 @@ func (b *SubnetNetworkVerificationBuilder) Platform(value Platform) *SubnetNetwo
 
 // State sets the value of the 'state' attribute to the given value.
 func (b *SubnetNetworkVerificationBuilder) State(value string) *SubnetNetworkVerificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.state = value
 	b.fieldSet_[5] = true
 	return b
@@ -96,6 +114,9 @@ func (b *SubnetNetworkVerificationBuilder) State(value string) *SubnetNetworkVer
 
 // Tags sets the value of the 'tags' attribute to the given value.
 func (b *SubnetNetworkVerificationBuilder) Tags(value map[string]string) *SubnetNetworkVerificationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.tags = value
 	if value != nil {
 		b.fieldSet_[6] = true

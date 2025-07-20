@@ -48,6 +48,9 @@ func (b *ClientComponentBuilder) Empty() bool {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ClientComponentBuilder) Name(value string) *ClientComponentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.name = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *ClientComponentBuilder) Name(value string) *ClientComponentBuilder {
 
 // Namespace sets the value of the 'namespace' attribute to the given value.
 func (b *ClientComponentBuilder) Namespace(value string) *ClientComponentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.namespace = value
 	b.fieldSet_[1] = true
 	return b

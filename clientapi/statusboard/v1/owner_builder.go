@@ -37,12 +37,18 @@ func NewOwner() *OwnerBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *OwnerBuilder) Link(value bool) *OwnerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *OwnerBuilder) ID(value string) *OwnerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *OwnerBuilder) ID(value string) *OwnerBuilder {
 
 // HREF sets the link to the object.
 func (b *OwnerBuilder) HREF(value string) *OwnerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *OwnerBuilder) Empty() bool {
 
 // Email sets the value of the 'email' attribute to the given value.
 func (b *OwnerBuilder) Email(value string) *OwnerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.email = value
 	b.fieldSet_[3] = true
 	return b
@@ -78,6 +90,9 @@ func (b *OwnerBuilder) Email(value string) *OwnerBuilder {
 
 // Username sets the value of the 'username' attribute to the given value.
 func (b *OwnerBuilder) Username(value string) *OwnerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.username = value
 	b.fieldSet_[4] = true
 	return b

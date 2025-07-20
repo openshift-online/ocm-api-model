@@ -35,12 +35,18 @@ func NewUser() *UserBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *UserBuilder) Link(value bool) *UserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *UserBuilder) ID(value string) *UserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -48,6 +54,9 @@ func (b *UserBuilder) ID(value string) *UserBuilder {
 
 // HREF sets the link to the object.
 func (b *UserBuilder) HREF(value string) *UserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b

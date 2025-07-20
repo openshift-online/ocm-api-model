@@ -53,6 +53,9 @@ func (b *CapabilityReviewRequestBuilder) Empty() bool {
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *CapabilityReviewRequestBuilder) AccountUsername(value string) *CapabilityReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.accountUsername = value
 	b.fieldSet_[0] = true
 	return b
@@ -60,6 +63,9 @@ func (b *CapabilityReviewRequestBuilder) AccountUsername(value string) *Capabili
 
 // Capability sets the value of the 'capability' attribute to the given value.
 func (b *CapabilityReviewRequestBuilder) Capability(value string) *CapabilityReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.capability = value
 	b.fieldSet_[1] = true
 	return b
@@ -67,6 +73,9 @@ func (b *CapabilityReviewRequestBuilder) Capability(value string) *CapabilityRev
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *CapabilityReviewRequestBuilder) ClusterID(value string) *CapabilityReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.clusterID = value
 	b.fieldSet_[2] = true
 	return b
@@ -74,6 +83,9 @@ func (b *CapabilityReviewRequestBuilder) ClusterID(value string) *CapabilityRevi
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *CapabilityReviewRequestBuilder) OrganizationID(value string) *CapabilityReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.organizationID = value
 	b.fieldSet_[3] = true
 	return b
@@ -81,6 +93,9 @@ func (b *CapabilityReviewRequestBuilder) OrganizationID(value string) *Capabilit
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *CapabilityReviewRequestBuilder) ResourceType(value string) *CapabilityReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.resourceType = value
 	b.fieldSet_[4] = true
 	return b
@@ -88,6 +103,9 @@ func (b *CapabilityReviewRequestBuilder) ResourceType(value string) *CapabilityR
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *CapabilityReviewRequestBuilder) SubscriptionID(value string) *CapabilityReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.subscriptionID = value
 	b.fieldSet_[5] = true
 	return b
@@ -95,6 +113,9 @@ func (b *CapabilityReviewRequestBuilder) SubscriptionID(value string) *Capabilit
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *CapabilityReviewRequestBuilder) Type(value string) *CapabilityReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.type_ = value
 	b.fieldSet_[6] = true
 	return b

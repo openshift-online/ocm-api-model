@@ -46,6 +46,9 @@ func (b *PullSecretsRequestBuilder) Empty() bool {
 
 // ExternalResourceId sets the value of the 'external_resource_id' attribute to the given value.
 func (b *PullSecretsRequestBuilder) ExternalResourceId(value string) *PullSecretsRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.externalResourceId = value
 	b.fieldSet_[0] = true
 	return b

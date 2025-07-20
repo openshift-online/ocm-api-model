@@ -53,12 +53,18 @@ func NewProvisionShard() *ProvisionShardBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ProvisionShardBuilder) Link(value bool) *ProvisionShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ProvisionShardBuilder) ID(value string) *ProvisionShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -66,6 +72,9 @@ func (b *ProvisionShardBuilder) ID(value string) *ProvisionShardBuilder {
 
 // HREF sets the link to the object.
 func (b *ProvisionShardBuilder) HREF(value string) *ProvisionShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -89,6 +98,9 @@ func (b *ProvisionShardBuilder) Empty() bool {
 //
 // Representation of a server config
 func (b *ProvisionShardBuilder) AWSAccountOperatorConfig(value *ServerConfigBuilder) *ProvisionShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.awsAccountOperatorConfig = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -100,6 +112,9 @@ func (b *ProvisionShardBuilder) AWSAccountOperatorConfig(value *ServerConfigBuil
 
 // AWSBaseDomain sets the value of the 'AWS_base_domain' attribute to the given value.
 func (b *ProvisionShardBuilder) AWSBaseDomain(value string) *ProvisionShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.awsBaseDomain = value
 	b.fieldSet_[4] = true
 	return b
@@ -107,6 +122,9 @@ func (b *ProvisionShardBuilder) AWSBaseDomain(value string) *ProvisionShardBuild
 
 // GCPBaseDomain sets the value of the 'GCP_base_domain' attribute to the given value.
 func (b *ProvisionShardBuilder) GCPBaseDomain(value string) *ProvisionShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.gcpBaseDomain = value
 	b.fieldSet_[5] = true
 	return b
@@ -116,6 +134,9 @@ func (b *ProvisionShardBuilder) GCPBaseDomain(value string) *ProvisionShardBuild
 //
 // Representation of a server config
 func (b *ProvisionShardBuilder) GCPProjectOperator(value *ServerConfigBuilder) *ProvisionShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.gcpProjectOperator = value
 	if value != nil {
 		b.fieldSet_[6] = true
@@ -129,6 +150,9 @@ func (b *ProvisionShardBuilder) GCPProjectOperator(value *ServerConfigBuilder) *
 //
 // Cloud provider.
 func (b *ProvisionShardBuilder) CloudProvider(value *v1.CloudProviderBuilder) *ProvisionShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.cloudProvider = value
 	if value != nil {
 		b.fieldSet_[7] = true
@@ -140,6 +164,9 @@ func (b *ProvisionShardBuilder) CloudProvider(value *v1.CloudProviderBuilder) *P
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *ProvisionShardBuilder) CreationTimestamp(value time.Time) *ProvisionShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.creationTimestamp = value
 	b.fieldSet_[8] = true
 	return b
@@ -149,6 +176,9 @@ func (b *ProvisionShardBuilder) CreationTimestamp(value time.Time) *ProvisionSha
 //
 // Representation of a server config
 func (b *ProvisionShardBuilder) HiveConfig(value *ServerConfigBuilder) *ProvisionShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.hiveConfig = value
 	if value != nil {
 		b.fieldSet_[9] = true
@@ -162,6 +192,9 @@ func (b *ProvisionShardBuilder) HiveConfig(value *ServerConfigBuilder) *Provisio
 //
 // Representation of a server config
 func (b *ProvisionShardBuilder) HypershiftConfig(value *ServerConfigBuilder) *ProvisionShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.hypershiftConfig = value
 	if value != nil {
 		b.fieldSet_[10] = true
@@ -173,6 +206,9 @@ func (b *ProvisionShardBuilder) HypershiftConfig(value *ServerConfigBuilder) *Pr
 
 // LastUpdateTimestamp sets the value of the 'last_update_timestamp' attribute to the given value.
 func (b *ProvisionShardBuilder) LastUpdateTimestamp(value time.Time) *ProvisionShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.lastUpdateTimestamp = value
 	b.fieldSet_[11] = true
 	return b
@@ -180,6 +216,9 @@ func (b *ProvisionShardBuilder) LastUpdateTimestamp(value time.Time) *ProvisionS
 
 // ManagementCluster sets the value of the 'management_cluster' attribute to the given value.
 func (b *ProvisionShardBuilder) ManagementCluster(value string) *ProvisionShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.managementCluster = value
 	b.fieldSet_[12] = true
 	return b
@@ -189,6 +228,9 @@ func (b *ProvisionShardBuilder) ManagementCluster(value string) *ProvisionShardB
 //
 // Description of a region of a cloud provider.
 func (b *ProvisionShardBuilder) Region(value *v1.CloudRegionBuilder) *ProvisionShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.region = value
 	if value != nil {
 		b.fieldSet_[13] = true
@@ -200,6 +242,9 @@ func (b *ProvisionShardBuilder) Region(value *v1.CloudRegionBuilder) *ProvisionS
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *ProvisionShardBuilder) Status(value string) *ProvisionShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 15)
+	}
 	b.status = value
 	b.fieldSet_[14] = true
 	return b

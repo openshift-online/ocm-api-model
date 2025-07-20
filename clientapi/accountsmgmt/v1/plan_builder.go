@@ -37,12 +37,18 @@ func NewPlan() *PlanBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *PlanBuilder) Link(value bool) *PlanBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *PlanBuilder) ID(value string) *PlanBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *PlanBuilder) ID(value string) *PlanBuilder {
 
 // HREF sets the link to the object.
 func (b *PlanBuilder) HREF(value string) *PlanBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *PlanBuilder) Empty() bool {
 
 // Category sets the value of the 'category' attribute to the given value.
 func (b *PlanBuilder) Category(value string) *PlanBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.category = value
 	b.fieldSet_[3] = true
 	return b
@@ -78,6 +90,9 @@ func (b *PlanBuilder) Category(value string) *PlanBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *PlanBuilder) Name(value string) *PlanBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.name = value
 	b.fieldSet_[4] = true
 	return b
@@ -85,6 +100,9 @@ func (b *PlanBuilder) Name(value string) *PlanBuilder {
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *PlanBuilder) Type(value string) *PlanBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.type_ = value
 	b.fieldSet_[5] = true
 	return b

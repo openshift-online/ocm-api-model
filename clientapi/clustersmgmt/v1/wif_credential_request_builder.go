@@ -47,6 +47,9 @@ func (b *WifCredentialRequestBuilder) Empty() bool {
 
 // SecretRef sets the value of the 'secret_ref' attribute to the given value.
 func (b *WifCredentialRequestBuilder) SecretRef(value *WifSecretRefBuilder) *WifCredentialRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.secretRef = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -58,6 +61,9 @@ func (b *WifCredentialRequestBuilder) SecretRef(value *WifSecretRefBuilder) *Wif
 
 // ServiceAccountNames sets the value of the 'service_account_names' attribute to the given values.
 func (b *WifCredentialRequestBuilder) ServiceAccountNames(values ...string) *WifCredentialRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.serviceAccountNames = make([]string, len(values))
 	copy(b.serviceAccountNames, values)
 	b.fieldSet_[1] = true

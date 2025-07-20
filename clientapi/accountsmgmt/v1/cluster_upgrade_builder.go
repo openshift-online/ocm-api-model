@@ -53,6 +53,9 @@ func (b *ClusterUpgradeBuilder) Empty() bool {
 
 // Available sets the value of the 'available' attribute to the given value.
 func (b *ClusterUpgradeBuilder) Available(value bool) *ClusterUpgradeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.available = value
 	b.fieldSet_[0] = true
 	return b
@@ -60,6 +63,9 @@ func (b *ClusterUpgradeBuilder) Available(value bool) *ClusterUpgradeBuilder {
 
 // State sets the value of the 'state' attribute to the given value.
 func (b *ClusterUpgradeBuilder) State(value string) *ClusterUpgradeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.state = value
 	b.fieldSet_[1] = true
 	return b
@@ -67,6 +73,9 @@ func (b *ClusterUpgradeBuilder) State(value string) *ClusterUpgradeBuilder {
 
 // UpdatedTimestamp sets the value of the 'updated_timestamp' attribute to the given value.
 func (b *ClusterUpgradeBuilder) UpdatedTimestamp(value time.Time) *ClusterUpgradeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.updatedTimestamp = value
 	b.fieldSet_[2] = true
 	return b
@@ -74,6 +83,9 @@ func (b *ClusterUpgradeBuilder) UpdatedTimestamp(value time.Time) *ClusterUpgrad
 
 // Version sets the value of the 'version' attribute to the given value.
 func (b *ClusterUpgradeBuilder) Version(value string) *ClusterUpgradeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.version = value
 	b.fieldSet_[3] = true
 	return b

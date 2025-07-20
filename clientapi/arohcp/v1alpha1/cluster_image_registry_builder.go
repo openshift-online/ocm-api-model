@@ -47,6 +47,9 @@ func (b *ClusterImageRegistryBuilder) Empty() bool {
 
 // State sets the value of the 'state' attribute to the given value.
 func (b *ClusterImageRegistryBuilder) State(value string) *ClusterImageRegistryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.state = value
 	b.fieldSet_[0] = true
 	return b

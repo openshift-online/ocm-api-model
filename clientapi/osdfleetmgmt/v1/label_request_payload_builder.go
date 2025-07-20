@@ -47,6 +47,9 @@ func (b *LabelRequestPayloadBuilder) Empty() bool {
 
 // Key sets the value of the 'key' attribute to the given value.
 func (b *LabelRequestPayloadBuilder) Key(value string) *LabelRequestPayloadBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.key = value
 	b.fieldSet_[0] = true
 	return b
@@ -54,6 +57,9 @@ func (b *LabelRequestPayloadBuilder) Key(value string) *LabelRequestPayloadBuild
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *LabelRequestPayloadBuilder) Value(value string) *LabelRequestPayloadBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.value = value
 	b.fieldSet_[1] = true
 	return b

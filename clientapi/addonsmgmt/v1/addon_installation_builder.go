@@ -52,12 +52,18 @@ func NewAddonInstallation() *AddonInstallationBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddonInstallationBuilder) Link(value bool) *AddonInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddonInstallationBuilder) ID(value string) *AddonInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -65,6 +71,9 @@ func (b *AddonInstallationBuilder) ID(value string) *AddonInstallationBuilder {
 
 // HREF sets the link to the object.
 func (b *AddonInstallationBuilder) HREF(value string) *AddonInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -88,6 +97,9 @@ func (b *AddonInstallationBuilder) Empty() bool {
 //
 // Representation of an addon that can be installed in a cluster.
 func (b *AddonInstallationBuilder) Addon(value *AddonBuilder) *AddonInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.addon = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -101,6 +113,9 @@ func (b *AddonInstallationBuilder) Addon(value *AddonBuilder) *AddonInstallation
 //
 // Representation of an addon version.
 func (b *AddonInstallationBuilder) AddonVersion(value *AddonVersionBuilder) *AddonInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.addonVersion = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -114,6 +129,9 @@ func (b *AddonInstallationBuilder) AddonVersion(value *AddonVersionBuilder) *Add
 //
 // Representation of an add-on installation billing.
 func (b *AddonInstallationBuilder) Billing(value *AddonInstallationBillingBuilder) *AddonInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.billing = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -125,6 +143,9 @@ func (b *AddonInstallationBuilder) Billing(value *AddonInstallationBillingBuilde
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *AddonInstallationBuilder) CreationTimestamp(value time.Time) *AddonInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.creationTimestamp = value
 	b.fieldSet_[6] = true
 	return b
@@ -132,6 +153,9 @@ func (b *AddonInstallationBuilder) CreationTimestamp(value time.Time) *AddonInst
 
 // CsvName sets the value of the 'csv_name' attribute to the given value.
 func (b *AddonInstallationBuilder) CsvName(value string) *AddonInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.csvName = value
 	b.fieldSet_[7] = true
 	return b
@@ -139,6 +163,9 @@ func (b *AddonInstallationBuilder) CsvName(value string) *AddonInstallationBuild
 
 // DeletedTimestamp sets the value of the 'deleted_timestamp' attribute to the given value.
 func (b *AddonInstallationBuilder) DeletedTimestamp(value time.Time) *AddonInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.deletedTimestamp = value
 	b.fieldSet_[8] = true
 	return b
@@ -146,6 +173,9 @@ func (b *AddonInstallationBuilder) DeletedTimestamp(value time.Time) *AddonInsta
 
 // DesiredVersion sets the value of the 'desired_version' attribute to the given value.
 func (b *AddonInstallationBuilder) DesiredVersion(value string) *AddonInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.desiredVersion = value
 	b.fieldSet_[9] = true
 	return b
@@ -153,6 +183,9 @@ func (b *AddonInstallationBuilder) DesiredVersion(value string) *AddonInstallati
 
 // OperatorVersion sets the value of the 'operator_version' attribute to the given value.
 func (b *AddonInstallationBuilder) OperatorVersion(value string) *AddonInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.operatorVersion = value
 	b.fieldSet_[10] = true
 	return b
@@ -160,6 +193,9 @@ func (b *AddonInstallationBuilder) OperatorVersion(value string) *AddonInstallat
 
 // Parameters sets the value of the 'parameters' attribute to the given values.
 func (b *AddonInstallationBuilder) Parameters(value *AddonInstallationParameterListBuilder) *AddonInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.parameters = value
 	b.fieldSet_[11] = true
 	return b
@@ -169,6 +205,9 @@ func (b *AddonInstallationBuilder) Parameters(value *AddonInstallationParameterL
 //
 // representation of addon installation state
 func (b *AddonInstallationBuilder) State(value AddonInstallationState) *AddonInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.state = value
 	b.fieldSet_[12] = true
 	return b
@@ -176,6 +215,9 @@ func (b *AddonInstallationBuilder) State(value AddonInstallationState) *AddonIns
 
 // StateDescription sets the value of the 'state_description' attribute to the given value.
 func (b *AddonInstallationBuilder) StateDescription(value string) *AddonInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.stateDescription = value
 	b.fieldSet_[13] = true
 	return b
@@ -185,6 +227,9 @@ func (b *AddonInstallationBuilder) StateDescription(value string) *AddonInstalla
 //
 // representation of object reference/subscription
 func (b *AddonInstallationBuilder) Subscription(value *ObjectReferenceBuilder) *AddonInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.subscription = value
 	if value != nil {
 		b.fieldSet_[14] = true
@@ -196,6 +241,9 @@ func (b *AddonInstallationBuilder) Subscription(value *ObjectReferenceBuilder) *
 
 // UpdatedTimestamp sets the value of the 'updated_timestamp' attribute to the given value.
 func (b *AddonInstallationBuilder) UpdatedTimestamp(value time.Time) *AddonInstallationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.updatedTimestamp = value
 	b.fieldSet_[15] = true
 	return b

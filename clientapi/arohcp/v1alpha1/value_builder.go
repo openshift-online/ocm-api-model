@@ -65,6 +65,9 @@ func (b *ValueBuilder) Empty() bool {
 
 // Unit sets the value of the 'unit' attribute to the given value.
 func (b *ValueBuilder) Unit(value string) *ValueBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.unit = value
 	b.fieldSet_[0] = true
 	return b
@@ -72,6 +75,9 @@ func (b *ValueBuilder) Unit(value string) *ValueBuilder {
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *ValueBuilder) Value(value float64) *ValueBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.value = value
 	b.fieldSet_[1] = true
 	return b

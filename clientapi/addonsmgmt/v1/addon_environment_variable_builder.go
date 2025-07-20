@@ -50,6 +50,9 @@ func (b *AddonEnvironmentVariableBuilder) Empty() bool {
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *AddonEnvironmentVariableBuilder) ID(value string) *AddonEnvironmentVariableBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *AddonEnvironmentVariableBuilder) ID(value string) *AddonEnvironmentVari
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddonEnvironmentVariableBuilder) Enabled(value bool) *AddonEnvironmentVariableBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.enabled = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *AddonEnvironmentVariableBuilder) Enabled(value bool) *AddonEnvironmentV
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AddonEnvironmentVariableBuilder) Name(value string) *AddonEnvironmentVariableBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.name = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *AddonEnvironmentVariableBuilder) Name(value string) *AddonEnvironmentVa
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *AddonEnvironmentVariableBuilder) Value(value string) *AddonEnvironmentVariableBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.value = value
 	b.fieldSet_[3] = true
 	return b

@@ -36,12 +36,18 @@ func NewGroup() *GroupBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *GroupBuilder) Link(value bool) *GroupBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *GroupBuilder) ID(value string) *GroupBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -49,6 +55,9 @@ func (b *GroupBuilder) ID(value string) *GroupBuilder {
 
 // HREF sets the link to the object.
 func (b *GroupBuilder) HREF(value string) *GroupBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -70,6 +79,9 @@ func (b *GroupBuilder) Empty() bool {
 
 // Users sets the value of the 'users' attribute to the given values.
 func (b *GroupBuilder) Users(value *UserListBuilder) *GroupBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.users = value
 	b.fieldSet_[3] = true
 	return b

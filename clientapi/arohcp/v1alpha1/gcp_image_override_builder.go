@@ -43,12 +43,18 @@ func NewGCPImageOverride() *GCPImageOverrideBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *GCPImageOverrideBuilder) Link(value bool) *GCPImageOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *GCPImageOverrideBuilder) ID(value string) *GCPImageOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -56,6 +62,9 @@ func (b *GCPImageOverrideBuilder) ID(value string) *GCPImageOverrideBuilder {
 
 // HREF sets the link to the object.
 func (b *GCPImageOverrideBuilder) HREF(value string) *GCPImageOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -79,6 +88,9 @@ func (b *GCPImageOverrideBuilder) Empty() bool {
 //
 // BillingModelItem represents a billing model
 func (b *GCPImageOverrideBuilder) BillingModel(value *v1.BillingModelItemBuilder) *GCPImageOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.billingModel = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -90,6 +102,9 @@ func (b *GCPImageOverrideBuilder) BillingModel(value *v1.BillingModelItemBuilder
 
 // ImageID sets the value of the 'image_ID' attribute to the given value.
 func (b *GCPImageOverrideBuilder) ImageID(value string) *GCPImageOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.imageID = value
 	b.fieldSet_[4] = true
 	return b
@@ -99,6 +114,9 @@ func (b *GCPImageOverrideBuilder) ImageID(value string) *GCPImageOverrideBuilder
 //
 // Representation of an product that can be selected as a cluster type.
 func (b *GCPImageOverrideBuilder) Product(value *v1.ProductBuilder) *GCPImageOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.product = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -110,6 +128,9 @@ func (b *GCPImageOverrideBuilder) Product(value *v1.ProductBuilder) *GCPImageOve
 
 // ProjectID sets the value of the 'project_ID' attribute to the given value.
 func (b *GCPImageOverrideBuilder) ProjectID(value string) *GCPImageOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.projectID = value
 	b.fieldSet_[6] = true
 	return b

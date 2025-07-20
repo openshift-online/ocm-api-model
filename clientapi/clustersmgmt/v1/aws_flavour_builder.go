@@ -52,6 +52,9 @@ func (b *AWSFlavourBuilder) Empty() bool {
 
 // ComputeInstanceType sets the value of the 'compute_instance_type' attribute to the given value.
 func (b *AWSFlavourBuilder) ComputeInstanceType(value string) *AWSFlavourBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.computeInstanceType = value
 	b.fieldSet_[0] = true
 	return b
@@ -59,6 +62,9 @@ func (b *AWSFlavourBuilder) ComputeInstanceType(value string) *AWSFlavourBuilder
 
 // InfraInstanceType sets the value of the 'infra_instance_type' attribute to the given value.
 func (b *AWSFlavourBuilder) InfraInstanceType(value string) *AWSFlavourBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.infraInstanceType = value
 	b.fieldSet_[1] = true
 	return b
@@ -68,6 +74,9 @@ func (b *AWSFlavourBuilder) InfraInstanceType(value string) *AWSFlavourBuilder {
 //
 // Holds settings for an AWS storage volume.
 func (b *AWSFlavourBuilder) InfraVolume(value *AWSVolumeBuilder) *AWSFlavourBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.infraVolume = value
 	if value != nil {
 		b.fieldSet_[2] = true
@@ -79,6 +88,9 @@ func (b *AWSFlavourBuilder) InfraVolume(value *AWSVolumeBuilder) *AWSFlavourBuil
 
 // MasterInstanceType sets the value of the 'master_instance_type' attribute to the given value.
 func (b *AWSFlavourBuilder) MasterInstanceType(value string) *AWSFlavourBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.masterInstanceType = value
 	b.fieldSet_[3] = true
 	return b
@@ -88,6 +100,9 @@ func (b *AWSFlavourBuilder) MasterInstanceType(value string) *AWSFlavourBuilder 
 //
 // Holds settings for an AWS storage volume.
 func (b *AWSFlavourBuilder) MasterVolume(value *AWSVolumeBuilder) *AWSFlavourBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.masterVolume = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -101,6 +116,9 @@ func (b *AWSFlavourBuilder) MasterVolume(value *AWSVolumeBuilder) *AWSFlavourBui
 //
 // Holds settings for an AWS storage volume.
 func (b *AWSFlavourBuilder) WorkerVolume(value *AWSVolumeBuilder) *AWSFlavourBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.workerVolume = value
 	if value != nil {
 		b.fieldSet_[5] = true

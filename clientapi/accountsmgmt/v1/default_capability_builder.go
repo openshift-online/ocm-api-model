@@ -47,6 +47,9 @@ func (b *DefaultCapabilityBuilder) Empty() bool {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *DefaultCapabilityBuilder) Name(value string) *DefaultCapabilityBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.name = value
 	b.fieldSet_[0] = true
 	return b
@@ -54,6 +57,9 @@ func (b *DefaultCapabilityBuilder) Name(value string) *DefaultCapabilityBuilder 
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *DefaultCapabilityBuilder) Value(value string) *DefaultCapabilityBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.value = value
 	b.fieldSet_[1] = true
 	return b

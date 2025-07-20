@@ -54,6 +54,9 @@ func (b *CPUTotalNodeRoleOSMetricNodeBuilder) Empty() bool {
 
 // CPUTotal sets the value of the 'CPU_total' attribute to the given value.
 func (b *CPUTotalNodeRoleOSMetricNodeBuilder) CPUTotal(value float64) *CPUTotalNodeRoleOSMetricNodeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.cpuTotal = value
 	b.fieldSet_[0] = true
 	return b
@@ -61,6 +64,9 @@ func (b *CPUTotalNodeRoleOSMetricNodeBuilder) CPUTotal(value float64) *CPUTotalN
 
 // NodeRoles sets the value of the 'node_roles' attribute to the given values.
 func (b *CPUTotalNodeRoleOSMetricNodeBuilder) NodeRoles(values ...string) *CPUTotalNodeRoleOSMetricNodeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.nodeRoles = make([]string, len(values))
 	copy(b.nodeRoles, values)
 	b.fieldSet_[1] = true
@@ -69,6 +75,9 @@ func (b *CPUTotalNodeRoleOSMetricNodeBuilder) NodeRoles(values ...string) *CPUTo
 
 // OperatingSystem sets the value of the 'operating_system' attribute to the given value.
 func (b *CPUTotalNodeRoleOSMetricNodeBuilder) OperatingSystem(value string) *CPUTotalNodeRoleOSMetricNodeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.operatingSystem = value
 	b.fieldSet_[2] = true
 	return b
@@ -76,6 +85,9 @@ func (b *CPUTotalNodeRoleOSMetricNodeBuilder) OperatingSystem(value string) *CPU
 
 // Time sets the value of the 'time' attribute to the given value.
 func (b *CPUTotalNodeRoleOSMetricNodeBuilder) Time(value time.Time) *CPUTotalNodeRoleOSMetricNodeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.time = value
 	b.fieldSet_[3] = true
 	return b

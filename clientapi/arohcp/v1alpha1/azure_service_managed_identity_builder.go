@@ -50,6 +50,9 @@ func (b *AzureServiceManagedIdentityBuilder) Empty() bool {
 
 // ClientID sets the value of the 'client_ID' attribute to the given value.
 func (b *AzureServiceManagedIdentityBuilder) ClientID(value string) *AzureServiceManagedIdentityBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.clientID = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *AzureServiceManagedIdentityBuilder) ClientID(value string) *AzureServic
 
 // PrincipalID sets the value of the 'principal_ID' attribute to the given value.
 func (b *AzureServiceManagedIdentityBuilder) PrincipalID(value string) *AzureServiceManagedIdentityBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.principalID = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *AzureServiceManagedIdentityBuilder) PrincipalID(value string) *AzureSer
 
 // ResourceID sets the value of the 'resource_ID' attribute to the given value.
 func (b *AzureServiceManagedIdentityBuilder) ResourceID(value string) *AzureServiceManagedIdentityBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.resourceID = value
 	b.fieldSet_[2] = true
 	return b

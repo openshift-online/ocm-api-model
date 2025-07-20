@@ -36,12 +36,18 @@ func NewPermission() *PermissionBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *PermissionBuilder) Link(value bool) *PermissionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *PermissionBuilder) ID(value string) *PermissionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -49,6 +55,9 @@ func (b *PermissionBuilder) ID(value string) *PermissionBuilder {
 
 // HREF sets the link to the object.
 func (b *PermissionBuilder) HREF(value string) *PermissionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *PermissionBuilder) Empty() bool {
 //
 // Possible actions for a permission.
 func (b *PermissionBuilder) Action(value Action) *PermissionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.action = value
 	b.fieldSet_[3] = true
 	return b
@@ -79,6 +91,9 @@ func (b *PermissionBuilder) Action(value Action) *PermissionBuilder {
 
 // Resource sets the value of the 'resource' attribute to the given value.
 func (b *PermissionBuilder) Resource(value string) *PermissionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.resource = value
 	b.fieldSet_[4] = true
 	return b

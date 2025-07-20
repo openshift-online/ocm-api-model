@@ -36,12 +36,18 @@ func NewClusterDeployment() *ClusterDeploymentBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ClusterDeploymentBuilder) Link(value bool) *ClusterDeploymentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ClusterDeploymentBuilder) ID(value string) *ClusterDeploymentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -49,6 +55,9 @@ func (b *ClusterDeploymentBuilder) ID(value string) *ClusterDeploymentBuilder {
 
 // HREF sets the link to the object.
 func (b *ClusterDeploymentBuilder) HREF(value string) *ClusterDeploymentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -70,6 +79,9 @@ func (b *ClusterDeploymentBuilder) Empty() bool {
 
 // Content sets the value of the 'content' attribute to the given value.
 func (b *ClusterDeploymentBuilder) Content(value interface{}) *ClusterDeploymentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.content = value
 	b.fieldSet_[3] = true
 	return b

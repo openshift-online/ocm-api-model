@@ -52,6 +52,9 @@ func (b *ContractBuilder) Empty() bool {
 
 // Dimensions sets the value of the 'dimensions' attribute to the given values.
 func (b *ContractBuilder) Dimensions(values ...*ContractDimensionBuilder) *ContractBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.dimensions = make([]*ContractDimensionBuilder, len(values))
 	copy(b.dimensions, values)
 	b.fieldSet_[0] = true
@@ -60,6 +63,9 @@ func (b *ContractBuilder) Dimensions(values ...*ContractDimensionBuilder) *Contr
 
 // EndDate sets the value of the 'end_date' attribute to the given value.
 func (b *ContractBuilder) EndDate(value time.Time) *ContractBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.endDate = value
 	b.fieldSet_[1] = true
 	return b
@@ -67,6 +73,9 @@ func (b *ContractBuilder) EndDate(value time.Time) *ContractBuilder {
 
 // StartDate sets the value of the 'start_date' attribute to the given value.
 func (b *ContractBuilder) StartDate(value time.Time) *ContractBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.startDate = value
 	b.fieldSet_[2] = true
 	return b

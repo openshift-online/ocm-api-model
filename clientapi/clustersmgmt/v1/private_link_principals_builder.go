@@ -36,12 +36,18 @@ func NewPrivateLinkPrincipals() *PrivateLinkPrincipalsBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *PrivateLinkPrincipalsBuilder) Link(value bool) *PrivateLinkPrincipalsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *PrivateLinkPrincipalsBuilder) ID(value string) *PrivateLinkPrincipalsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -49,6 +55,9 @@ func (b *PrivateLinkPrincipalsBuilder) ID(value string) *PrivateLinkPrincipalsBu
 
 // HREF sets the link to the object.
 func (b *PrivateLinkPrincipalsBuilder) HREF(value string) *PrivateLinkPrincipalsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -70,6 +79,9 @@ func (b *PrivateLinkPrincipalsBuilder) Empty() bool {
 
 // Principals sets the value of the 'principals' attribute to the given values.
 func (b *PrivateLinkPrincipalsBuilder) Principals(values ...*PrivateLinkPrincipalBuilder) *PrivateLinkPrincipalsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.principals = make([]*PrivateLinkPrincipalBuilder, len(values))
 	copy(b.principals, values)
 	b.fieldSet_[3] = true
