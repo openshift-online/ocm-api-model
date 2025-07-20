@@ -23,45 +23,14 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 type AWSCapacityReservationBuilder struct {
 	fieldSet_  []bool
 	id         string
-	href       string
-	id         string
 	marketType MarketType
 }
 
 // NewAWSCapacityReservation creates a new builder of 'AWS_capacity_reservation' objects.
 func NewAWSCapacityReservation() *AWSCapacityReservationBuilder {
 	return &AWSCapacityReservationBuilder{
-		fieldSet_: make([]bool, 5),
+		fieldSet_: make([]bool, 2),
 	}
-}
-
-// Link sets the flag that indicates if this is a link.
-func (b *AWSCapacityReservationBuilder) Link(value bool) *AWSCapacityReservationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
-	b.fieldSet_[0] = true
-	return b
-}
-
-// ID sets the identifier of the object.
-func (b *AWSCapacityReservationBuilder) ID(value string) *AWSCapacityReservationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
-	b.id = value
-	b.fieldSet_[1] = true
-	return b
-}
-
-// HREF sets the link to the object.
-func (b *AWSCapacityReservationBuilder) HREF(value string) *AWSCapacityReservationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
-	b.href = value
-	b.fieldSet_[2] = true
-	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
@@ -69,9 +38,8 @@ func (b *AWSCapacityReservationBuilder) Empty() bool {
 	if b == nil || len(b.fieldSet_) == 0 {
 		return true
 	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
+	for _, set := range b.fieldSet_ {
+		if set {
 			return false
 		}
 	}
@@ -81,10 +49,10 @@ func (b *AWSCapacityReservationBuilder) Empty() bool {
 // Id sets the value of the 'id' attribute to the given value.
 func (b *AWSCapacityReservationBuilder) Id(value string) *AWSCapacityReservationBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
+		b.fieldSet_ = make([]bool, 2)
 	}
 	b.id = value
-	b.fieldSet_[3] = true
+	b.fieldSet_[0] = true
 	return b
 }
 
@@ -93,10 +61,10 @@ func (b *AWSCapacityReservationBuilder) Id(value string) *AWSCapacityReservation
 // Market type for AWS Capacity Reservations.
 func (b *AWSCapacityReservationBuilder) MarketType(value MarketType) *AWSCapacityReservationBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
+		b.fieldSet_ = make([]bool, 2)
 	}
 	b.marketType = value
-	b.fieldSet_[4] = true
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -110,8 +78,6 @@ func (b *AWSCapacityReservationBuilder) Copy(object *AWSCapacityReservation) *AW
 		copy(b.fieldSet_, object.fieldSet_)
 	}
 	b.id = object.id
-	b.href = object.href
-	b.id = object.id
 	b.marketType = object.marketType
 	return b
 }
@@ -119,8 +85,6 @@ func (b *AWSCapacityReservationBuilder) Copy(object *AWSCapacityReservation) *AW
 // Build creates a 'AWS_capacity_reservation' object using the configuration stored in the builder.
 func (b *AWSCapacityReservationBuilder) Build() (object *AWSCapacityReservation, err error) {
 	object = new(AWSCapacityReservation)
-	object.id = b.id
-	object.href = b.href
 	if len(b.fieldSet_) > 0 {
 		object.fieldSet_ = make([]bool, len(b.fieldSet_))
 		copy(object.fieldSet_, b.fieldSet_)

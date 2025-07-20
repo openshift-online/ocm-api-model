@@ -41,31 +41,8 @@ func MarshalAWSCapacityReservation(object *AWSCapacityReservation, writer io.Wri
 func WriteAWSCapacityReservation(object *AWSCapacityReservation, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
-	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
-		stream.WriteString(AWSCapacityReservationLinkKind)
-	} else {
-		stream.WriteString(AWSCapacityReservationKind)
-	}
-	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
-		if count > 0 {
-			stream.WriteMore()
-		}
-		stream.WriteObjectField("id")
-		stream.WriteString(object.id)
-		count++
-	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
-		if count > 0 {
-			stream.WriteMore()
-		}
-		stream.WriteObjectField("href")
-		stream.WriteString(object.href)
-		count++
-	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +51,7 @@ func WriteAWSCapacityReservation(object *AWSCapacityReservation, stream *jsonite
 		stream.WriteString(object.id)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -100,7 +77,7 @@ func UnmarshalAWSCapacityReservation(source interface{}) (object *AWSCapacityRes
 // ReadAWSCapacityReservation reads a value of the 'AWS_capacity_reservation' type from the given iterator.
 func ReadAWSCapacityReservation(iterator *jsoniter.Iterator) *AWSCapacityReservation {
 	object := &AWSCapacityReservation{
-		fieldSet_: make([]bool, 5),
+		fieldSet_: make([]bool, 2),
 	}
 	for {
 		field := iterator.ReadObject()
@@ -108,26 +85,15 @@ func ReadAWSCapacityReservation(iterator *jsoniter.Iterator) *AWSCapacityReserva
 			break
 		}
 		switch field {
-		case "kind":
-			value := iterator.ReadString()
-			if value == AWSCapacityReservationLinkKind {
-				object.fieldSet_[0] = true
-			}
-		case "id":
-			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
-		case "href":
-			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.fieldSet_[3] = true
+			object.fieldSet_[0] = true
 		case "market_type":
 			text := iterator.ReadString()
 			value := MarketType(text)
 			object.marketType = value
-			object.fieldSet_[4] = true
+			object.fieldSet_[1] = true
 		default:
 			iterator.ReadAny()
 		}
