@@ -19,79 +19,13 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// AWSCapacityReservationKind is the name of the type used to represent objects
-// of type 'AWS_capacity_reservation'.
-const AWSCapacityReservationKind = "AWSCapacityReservation"
-
-// AWSCapacityReservationLinkKind is the name of the type used to represent links
-// to objects of type 'AWS_capacity_reservation'.
-const AWSCapacityReservationLinkKind = "AWSCapacityReservationLink"
-
-// AWSCapacityReservationNilKind is the name of the type used to nil references
-// to objects of type 'AWS_capacity_reservation'.
-const AWSCapacityReservationNilKind = "AWSCapacityReservationNil"
-
 // AWSCapacityReservation represents the values of the 'AWS_capacity_reservation' type.
 //
 // AWS Capacity Reservation specification.
 type AWSCapacityReservation struct {
 	fieldSet_  []bool
 	id         string
-	href       string
-	id         string
 	marketType MarketType
-}
-
-// Kind returns the name of the type of the object.
-func (o *AWSCapacityReservation) Kind() string {
-	if o == nil {
-		return AWSCapacityReservationNilKind
-	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
-		return AWSCapacityReservationLinkKind
-	}
-	return AWSCapacityReservationKind
-}
-
-// Link returns true if this is a link.
-func (o *AWSCapacityReservation) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
-}
-
-// ID returns the identifier of the object.
-func (o *AWSCapacityReservation) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
-		return o.id
-	}
-	return ""
-}
-
-// GetID returns the identifier of the object and a flag indicating if the
-// identifier has a value.
-func (o *AWSCapacityReservation) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
-	if ok {
-		value = o.id
-	}
-	return
-}
-
-// HREF returns the link to the object.
-func (o *AWSCapacityReservation) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
-		return o.href
-	}
-	return ""
-}
-
-// GetHREF returns the link of the object and a flag indicating if the
-// link has a value.
-func (o *AWSCapacityReservation) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
-	if ok {
-		value = o.href
-	}
-	return
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
@@ -99,10 +33,8 @@ func (o *AWSCapacityReservation) Empty() bool {
 	if o == nil || len(o.fieldSet_) == 0 {
 		return true
 	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
+	for _, set := range o.fieldSet_ {
+		if set {
 			return false
 		}
 	}
@@ -114,7 +46,7 @@ func (o *AWSCapacityReservation) Empty() bool {
 //
 // Specify the target Capacity Reservation in which the EC2 instances will be launched.
 func (o *AWSCapacityReservation) Id() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
 		return o.id
 	}
 	return ""
@@ -125,7 +57,7 @@ func (o *AWSCapacityReservation) Id() string {
 //
 // Specify the target Capacity Reservation in which the EC2 instances will be launched.
 func (o *AWSCapacityReservation) GetId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
 		value = o.id
 	}
@@ -140,7 +72,7 @@ func (o *AWSCapacityReservation) GetId() (value string, ok bool) {
 // "OnDemand": EC2 instances run as standard On-Demand instances.
 // "CapacityBlocks": scheduled pre-purchased compute capacity.
 func (o *AWSCapacityReservation) MarketType() MarketType {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.marketType
 	}
 	return MarketType("")
@@ -154,7 +86,7 @@ func (o *AWSCapacityReservation) MarketType() MarketType {
 // "OnDemand": EC2 instances run as standard On-Demand instances.
 // "CapacityBlocks": scheduled pre-purchased compute capacity.
 func (o *AWSCapacityReservation) GetMarketType() (value MarketType, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.marketType
 	}
@@ -178,40 +110,6 @@ type AWSCapacityReservationList struct {
 	href  string
 	link  bool
 	items []*AWSCapacityReservation
-}
-
-// Kind returns the name of the type of the object.
-func (l *AWSCapacityReservationList) Kind() string {
-	if l == nil {
-		return AWSCapacityReservationListNilKind
-	}
-	if l.link {
-		return AWSCapacityReservationListLinkKind
-	}
-	return AWSCapacityReservationListKind
-}
-
-// Link returns true iif this is a link.
-func (l *AWSCapacityReservationList) Link() bool {
-	return l != nil && l.link
-}
-
-// HREF returns the link to the list.
-func (l *AWSCapacityReservationList) HREF() string {
-	if l != nil {
-		return l.href
-	}
-	return ""
-}
-
-// GetHREF returns the link of the list and a flag indicating if the
-// link has a value.
-func (l *AWSCapacityReservationList) GetHREF() (value string, ok bool) {
-	ok = l != nil && l.href != ""
-	if ok {
-		value = l.href
-	}
-	return
 }
 
 // Len returns the length of the list.

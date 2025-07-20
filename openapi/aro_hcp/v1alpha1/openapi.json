@@ -1408,18 +1408,6 @@
       "AWSCapacityReservation": {
         "description": "AWS Capacity Reservation specification.",
         "properties": {
-          "kind": {
-            "description": "Indicates the type of this object. Will be 'AWSCapacityReservation' if this is a complete object or 'AWSCapacityReservationLink' if it is just a link.",
-            "type": "string"
-          },
-          "id": {
-            "description": "Unique identifier of the object.",
-            "type": "string"
-          },
-          "href": {
-            "description": "Self link.",
-            "type": "string"
-          },
           "id": {
             "description": "Specify the target Capacity Reservation in which the EC2 instances will be launched.",
             "type": "string"
