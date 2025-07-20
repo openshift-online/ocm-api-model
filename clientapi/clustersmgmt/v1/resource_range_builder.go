@@ -47,6 +47,9 @@ func (b *ResourceRangeBuilder) Empty() bool {
 
 // Max sets the value of the 'max' attribute to the given value.
 func (b *ResourceRangeBuilder) Max(value int) *ResourceRangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.max = value
 	b.fieldSet_[0] = true
 	return b
@@ -54,6 +57,9 @@ func (b *ResourceRangeBuilder) Max(value int) *ResourceRangeBuilder {
 
 // Min sets the value of the 'min' attribute to the given value.
 func (b *ResourceRangeBuilder) Min(value int) *ResourceRangeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.min = value
 	b.fieldSet_[1] = true
 	return b

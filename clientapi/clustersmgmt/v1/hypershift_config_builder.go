@@ -49,6 +49,9 @@ func (b *HypershiftConfigBuilder) Empty() bool {
 
 // HCPNamespace sets the value of the 'HCP_namespace' attribute to the given value.
 func (b *HypershiftConfigBuilder) HCPNamespace(value string) *HypershiftConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.hcpNamespace = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *HypershiftConfigBuilder) HCPNamespace(value string) *HypershiftConfigBu
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *HypershiftConfigBuilder) Enabled(value bool) *HypershiftConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.enabled = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *HypershiftConfigBuilder) Enabled(value bool) *HypershiftConfigBuilder {
 
 // ManagementCluster sets the value of the 'management_cluster' attribute to the given value.
 func (b *HypershiftConfigBuilder) ManagementCluster(value string) *HypershiftConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.managementCluster = value
 	b.fieldSet_[2] = true
 	return b

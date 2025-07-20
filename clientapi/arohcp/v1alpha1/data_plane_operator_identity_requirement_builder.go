@@ -51,6 +51,9 @@ func (b *DataPlaneOperatorIdentityRequirementBuilder) Empty() bool {
 
 // MaxOpenShiftVersion sets the value of the 'max_open_shift_version' attribute to the given value.
 func (b *DataPlaneOperatorIdentityRequirementBuilder) MaxOpenShiftVersion(value string) *DataPlaneOperatorIdentityRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.maxOpenShiftVersion = value
 	b.fieldSet_[0] = true
 	return b
@@ -58,6 +61,9 @@ func (b *DataPlaneOperatorIdentityRequirementBuilder) MaxOpenShiftVersion(value 
 
 // MinOpenShiftVersion sets the value of the 'min_open_shift_version' attribute to the given value.
 func (b *DataPlaneOperatorIdentityRequirementBuilder) MinOpenShiftVersion(value string) *DataPlaneOperatorIdentityRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.minOpenShiftVersion = value
 	b.fieldSet_[1] = true
 	return b
@@ -65,6 +71,9 @@ func (b *DataPlaneOperatorIdentityRequirementBuilder) MinOpenShiftVersion(value 
 
 // OperatorName sets the value of the 'operator_name' attribute to the given value.
 func (b *DataPlaneOperatorIdentityRequirementBuilder) OperatorName(value string) *DataPlaneOperatorIdentityRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.operatorName = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *DataPlaneOperatorIdentityRequirementBuilder) OperatorName(value string)
 
 // Required sets the value of the 'required' attribute to the given value.
 func (b *DataPlaneOperatorIdentityRequirementBuilder) Required(value string) *DataPlaneOperatorIdentityRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.required = value
 	b.fieldSet_[3] = true
 	return b
@@ -79,6 +91,9 @@ func (b *DataPlaneOperatorIdentityRequirementBuilder) Required(value string) *Da
 
 // RoleDefinitions sets the value of the 'role_definitions' attribute to the given values.
 func (b *DataPlaneOperatorIdentityRequirementBuilder) RoleDefinitions(values ...*RoleDefinitionOperatorIdentityRequirementBuilder) *DataPlaneOperatorIdentityRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.roleDefinitions = make([]*RoleDefinitionOperatorIdentityRequirementBuilder, len(values))
 	copy(b.roleDefinitions, values)
 	b.fieldSet_[4] = true
@@ -87,6 +102,9 @@ func (b *DataPlaneOperatorIdentityRequirementBuilder) RoleDefinitions(values ...
 
 // ServiceAccounts sets the value of the 'service_accounts' attribute to the given values.
 func (b *DataPlaneOperatorIdentityRequirementBuilder) ServiceAccounts(values ...*K8sServiceAccountOperatorIdentityRequirementBuilder) *DataPlaneOperatorIdentityRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.serviceAccounts = make([]*K8sServiceAccountOperatorIdentityRequirementBuilder, len(values))
 	copy(b.serviceAccounts, values)
 	b.fieldSet_[5] = true

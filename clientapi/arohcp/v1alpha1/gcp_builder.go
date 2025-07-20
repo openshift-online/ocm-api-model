@@ -59,6 +59,9 @@ func (b *GCPBuilder) Empty() bool {
 
 // AuthURI sets the value of the 'auth_URI' attribute to the given value.
 func (b *GCPBuilder) AuthURI(value string) *GCPBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.authURI = value
 	b.fieldSet_[0] = true
 	return b
@@ -66,6 +69,9 @@ func (b *GCPBuilder) AuthURI(value string) *GCPBuilder {
 
 // AuthProviderX509CertURL sets the value of the 'auth_provider_X509_cert_URL' attribute to the given value.
 func (b *GCPBuilder) AuthProviderX509CertURL(value string) *GCPBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.authProviderX509CertURL = value
 	b.fieldSet_[1] = true
 	return b
@@ -75,6 +81,9 @@ func (b *GCPBuilder) AuthProviderX509CertURL(value string) *GCPBuilder {
 //
 // Google cloud platform authentication method of a cluster.
 func (b *GCPBuilder) Authentication(value *GcpAuthenticationBuilder) *GCPBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.authentication = value
 	if value != nil {
 		b.fieldSet_[2] = true
@@ -86,6 +95,9 @@ func (b *GCPBuilder) Authentication(value *GcpAuthenticationBuilder) *GCPBuilder
 
 // ClientID sets the value of the 'client_ID' attribute to the given value.
 func (b *GCPBuilder) ClientID(value string) *GCPBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.clientID = value
 	b.fieldSet_[3] = true
 	return b
@@ -93,6 +105,9 @@ func (b *GCPBuilder) ClientID(value string) *GCPBuilder {
 
 // ClientX509CertURL sets the value of the 'client_X509_cert_URL' attribute to the given value.
 func (b *GCPBuilder) ClientX509CertURL(value string) *GCPBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.clientX509CertURL = value
 	b.fieldSet_[4] = true
 	return b
@@ -100,6 +115,9 @@ func (b *GCPBuilder) ClientX509CertURL(value string) *GCPBuilder {
 
 // ClientEmail sets the value of the 'client_email' attribute to the given value.
 func (b *GCPBuilder) ClientEmail(value string) *GCPBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.clientEmail = value
 	b.fieldSet_[5] = true
 	return b
@@ -107,6 +125,9 @@ func (b *GCPBuilder) ClientEmail(value string) *GCPBuilder {
 
 // PrivateKey sets the value of the 'private_key' attribute to the given value.
 func (b *GCPBuilder) PrivateKey(value string) *GCPBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.privateKey = value
 	b.fieldSet_[6] = true
 	return b
@@ -114,6 +135,9 @@ func (b *GCPBuilder) PrivateKey(value string) *GCPBuilder {
 
 // PrivateKeyID sets the value of the 'private_key_ID' attribute to the given value.
 func (b *GCPBuilder) PrivateKeyID(value string) *GCPBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.privateKeyID = value
 	b.fieldSet_[7] = true
 	return b
@@ -123,6 +147,9 @@ func (b *GCPBuilder) PrivateKeyID(value string) *GCPBuilder {
 //
 // Google cloud platform private service connect configuration of a cluster.
 func (b *GCPBuilder) PrivateServiceConnect(value *GcpPrivateServiceConnectBuilder) *GCPBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.privateServiceConnect = value
 	if value != nil {
 		b.fieldSet_[8] = true
@@ -134,6 +161,9 @@ func (b *GCPBuilder) PrivateServiceConnect(value *GcpPrivateServiceConnectBuilde
 
 // ProjectID sets the value of the 'project_ID' attribute to the given value.
 func (b *GCPBuilder) ProjectID(value string) *GCPBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.projectID = value
 	b.fieldSet_[9] = true
 	return b
@@ -143,6 +173,9 @@ func (b *GCPBuilder) ProjectID(value string) *GCPBuilder {
 //
 // Google cloud platform security settings of a cluster.
 func (b *GCPBuilder) Security(value *GcpSecurityBuilder) *GCPBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.security = value
 	if value != nil {
 		b.fieldSet_[10] = true
@@ -154,6 +187,9 @@ func (b *GCPBuilder) Security(value *GcpSecurityBuilder) *GCPBuilder {
 
 // TokenURI sets the value of the 'token_URI' attribute to the given value.
 func (b *GCPBuilder) TokenURI(value string) *GCPBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.tokenURI = value
 	b.fieldSet_[11] = true
 	return b
@@ -161,6 +197,9 @@ func (b *GCPBuilder) TokenURI(value string) *GCPBuilder {
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *GCPBuilder) Type(value string) *GCPBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.type_ = value
 	b.fieldSet_[12] = true
 	return b

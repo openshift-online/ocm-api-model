@@ -51,6 +51,9 @@ func (b *SubscriptionRegistrationBuilder) Empty() bool {
 
 // ClusterUUID sets the value of the 'cluster_UUID' attribute to the given value.
 func (b *SubscriptionRegistrationBuilder) ClusterUUID(value string) *SubscriptionRegistrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.clusterUUID = value
 	b.fieldSet_[0] = true
 	return b
@@ -58,6 +61,9 @@ func (b *SubscriptionRegistrationBuilder) ClusterUUID(value string) *Subscriptio
 
 // ConsoleURL sets the value of the 'console_URL' attribute to the given value.
 func (b *SubscriptionRegistrationBuilder) ConsoleURL(value string) *SubscriptionRegistrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.consoleURL = value
 	b.fieldSet_[1] = true
 	return b
@@ -65,6 +71,9 @@ func (b *SubscriptionRegistrationBuilder) ConsoleURL(value string) *Subscription
 
 // DisplayName sets the value of the 'display_name' attribute to the given value.
 func (b *SubscriptionRegistrationBuilder) DisplayName(value string) *SubscriptionRegistrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.displayName = value
 	b.fieldSet_[2] = true
 	return b
@@ -74,6 +83,9 @@ func (b *SubscriptionRegistrationBuilder) DisplayName(value string) *Subscriptio
 //
 // Plan ID of subscription.
 func (b *SubscriptionRegistrationBuilder) PlanID(value PlanID) *SubscriptionRegistrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.planID = value
 	b.fieldSet_[3] = true
 	return b
@@ -81,6 +93,9 @@ func (b *SubscriptionRegistrationBuilder) PlanID(value PlanID) *SubscriptionRegi
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *SubscriptionRegistrationBuilder) Status(value string) *SubscriptionRegistrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.status = value
 	b.fieldSet_[4] = true
 	return b

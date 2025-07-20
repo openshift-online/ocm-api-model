@@ -47,6 +47,9 @@ func (b *ReleaseImageDetailsBuilder) Empty() bool {
 
 // AvailableUpgrades sets the value of the 'available_upgrades' attribute to the given values.
 func (b *ReleaseImageDetailsBuilder) AvailableUpgrades(values ...string) *ReleaseImageDetailsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.availableUpgrades = make([]string, len(values))
 	copy(b.availableUpgrades, values)
 	b.fieldSet_[0] = true
@@ -55,6 +58,9 @@ func (b *ReleaseImageDetailsBuilder) AvailableUpgrades(values ...string) *Releas
 
 // ReleaseImage sets the value of the 'release_image' attribute to the given value.
 func (b *ReleaseImageDetailsBuilder) ReleaseImage(value string) *ReleaseImageDetailsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.releaseImage = value
 	b.fieldSet_[1] = true
 	return b

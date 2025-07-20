@@ -37,12 +37,18 @@ func NewLimitedSupportReasonTemplate() *LimitedSupportReasonTemplateBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *LimitedSupportReasonTemplateBuilder) Link(value bool) *LimitedSupportReasonTemplateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *LimitedSupportReasonTemplateBuilder) ID(value string) *LimitedSupportReasonTemplateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *LimitedSupportReasonTemplateBuilder) ID(value string) *LimitedSupportRe
 
 // HREF sets the link to the object.
 func (b *LimitedSupportReasonTemplateBuilder) HREF(value string) *LimitedSupportReasonTemplateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *LimitedSupportReasonTemplateBuilder) Empty() bool {
 
 // Details sets the value of the 'details' attribute to the given value.
 func (b *LimitedSupportReasonTemplateBuilder) Details(value string) *LimitedSupportReasonTemplateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.details = value
 	b.fieldSet_[3] = true
 	return b
@@ -78,6 +90,9 @@ func (b *LimitedSupportReasonTemplateBuilder) Details(value string) *LimitedSupp
 
 // Summary sets the value of the 'summary' attribute to the given value.
 func (b *LimitedSupportReasonTemplateBuilder) Summary(value string) *LimitedSupportReasonTemplateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.summary = value
 	b.fieldSet_[4] = true
 	return b

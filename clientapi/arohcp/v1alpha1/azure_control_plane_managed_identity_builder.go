@@ -50,6 +50,9 @@ func (b *AzureControlPlaneManagedIdentityBuilder) Empty() bool {
 
 // ClientID sets the value of the 'client_ID' attribute to the given value.
 func (b *AzureControlPlaneManagedIdentityBuilder) ClientID(value string) *AzureControlPlaneManagedIdentityBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.clientID = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *AzureControlPlaneManagedIdentityBuilder) ClientID(value string) *AzureC
 
 // PrincipalID sets the value of the 'principal_ID' attribute to the given value.
 func (b *AzureControlPlaneManagedIdentityBuilder) PrincipalID(value string) *AzureControlPlaneManagedIdentityBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.principalID = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *AzureControlPlaneManagedIdentityBuilder) PrincipalID(value string) *Azu
 
 // ResourceID sets the value of the 'resource_ID' attribute to the given value.
 func (b *AzureControlPlaneManagedIdentityBuilder) ResourceID(value string) *AzureControlPlaneManagedIdentityBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.resourceID = value
 	b.fieldSet_[2] = true
 	return b

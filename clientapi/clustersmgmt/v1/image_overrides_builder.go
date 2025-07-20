@@ -37,12 +37,18 @@ func NewImageOverrides() *ImageOverridesBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ImageOverridesBuilder) Link(value bool) *ImageOverridesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ImageOverridesBuilder) ID(value string) *ImageOverridesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *ImageOverridesBuilder) ID(value string) *ImageOverridesBuilder {
 
 // HREF sets the link to the object.
 func (b *ImageOverridesBuilder) HREF(value string) *ImageOverridesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *ImageOverridesBuilder) Empty() bool {
 
 // AWS sets the value of the 'AWS' attribute to the given values.
 func (b *ImageOverridesBuilder) AWS(values ...*AMIOverrideBuilder) *ImageOverridesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.aws = make([]*AMIOverrideBuilder, len(values))
 	copy(b.aws, values)
 	b.fieldSet_[3] = true
@@ -79,6 +91,9 @@ func (b *ImageOverridesBuilder) AWS(values ...*AMIOverrideBuilder) *ImageOverrid
 
 // GCP sets the value of the 'GCP' attribute to the given values.
 func (b *ImageOverridesBuilder) GCP(values ...*GCPImageOverrideBuilder) *ImageOverridesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.gcp = make([]*GCPImageOverrideBuilder, len(values))
 	copy(b.gcp, values)
 	b.fieldSet_[4] = true

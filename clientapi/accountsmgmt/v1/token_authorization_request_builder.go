@@ -46,6 +46,9 @@ func (b *TokenAuthorizationRequestBuilder) Empty() bool {
 
 // AuthorizationToken sets the value of the 'authorization_token' attribute to the given value.
 func (b *TokenAuthorizationRequestBuilder) AuthorizationToken(value string) *TokenAuthorizationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.authorizationToken = value
 	b.fieldSet_[0] = true
 	return b

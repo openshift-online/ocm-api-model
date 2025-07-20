@@ -52,6 +52,9 @@ func (b *AWSSTSRoleBuilder) Empty() bool {
 
 // HcpManagedPolicies sets the value of the 'hcp_managed_policies' attribute to the given value.
 func (b *AWSSTSRoleBuilder) HcpManagedPolicies(value bool) *AWSSTSRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.hcpManagedPolicies = value
 	b.fieldSet_[0] = true
 	return b
@@ -59,6 +62,9 @@ func (b *AWSSTSRoleBuilder) HcpManagedPolicies(value bool) *AWSSTSRoleBuilder {
 
 // IsAdmin sets the value of the 'is_admin' attribute to the given value.
 func (b *AWSSTSRoleBuilder) IsAdmin(value bool) *AWSSTSRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.isAdmin = value
 	b.fieldSet_[1] = true
 	return b
@@ -66,6 +72,9 @@ func (b *AWSSTSRoleBuilder) IsAdmin(value bool) *AWSSTSRoleBuilder {
 
 // ManagedPolicies sets the value of the 'managed_policies' attribute to the given value.
 func (b *AWSSTSRoleBuilder) ManagedPolicies(value bool) *AWSSTSRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.managedPolicies = value
 	b.fieldSet_[2] = true
 	return b
@@ -73,6 +82,9 @@ func (b *AWSSTSRoleBuilder) ManagedPolicies(value bool) *AWSSTSRoleBuilder {
 
 // RoleARN sets the value of the 'role_ARN' attribute to the given value.
 func (b *AWSSTSRoleBuilder) RoleARN(value string) *AWSSTSRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.roleARN = value
 	b.fieldSet_[3] = true
 	return b
@@ -80,6 +92,9 @@ func (b *AWSSTSRoleBuilder) RoleARN(value string) *AWSSTSRoleBuilder {
 
 // RoleType sets the value of the 'role_type' attribute to the given value.
 func (b *AWSSTSRoleBuilder) RoleType(value string) *AWSSTSRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.roleType = value
 	b.fieldSet_[4] = true
 	return b
@@ -87,6 +102,9 @@ func (b *AWSSTSRoleBuilder) RoleType(value string) *AWSSTSRoleBuilder {
 
 // RoleVersion sets the value of the 'role_version' attribute to the given value.
 func (b *AWSSTSRoleBuilder) RoleVersion(value string) *AWSSTSRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.roleVersion = value
 	b.fieldSet_[5] = true
 	return b

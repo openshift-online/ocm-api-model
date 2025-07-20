@@ -48,12 +48,18 @@ func NewLabel() *LabelBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *LabelBuilder) Link(value bool) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *LabelBuilder) ID(value string) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -61,6 +67,9 @@ func (b *LabelBuilder) ID(value string) *LabelBuilder {
 
 // HREF sets the link to the object.
 func (b *LabelBuilder) HREF(value string) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -82,6 +91,9 @@ func (b *LabelBuilder) Empty() bool {
 
 // AccountID sets the value of the 'account_ID' attribute to the given value.
 func (b *LabelBuilder) AccountID(value string) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.accountID = value
 	b.fieldSet_[3] = true
 	return b
@@ -89,6 +101,9 @@ func (b *LabelBuilder) AccountID(value string) *LabelBuilder {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *LabelBuilder) CreatedAt(value time.Time) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.createdAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -96,6 +111,9 @@ func (b *LabelBuilder) CreatedAt(value time.Time) *LabelBuilder {
 
 // Internal sets the value of the 'internal' attribute to the given value.
 func (b *LabelBuilder) Internal(value bool) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.internal = value
 	b.fieldSet_[5] = true
 	return b
@@ -103,6 +121,9 @@ func (b *LabelBuilder) Internal(value bool) *LabelBuilder {
 
 // Key sets the value of the 'key' attribute to the given value.
 func (b *LabelBuilder) Key(value string) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.key = value
 	b.fieldSet_[6] = true
 	return b
@@ -110,6 +131,9 @@ func (b *LabelBuilder) Key(value string) *LabelBuilder {
 
 // ManagedBy sets the value of the 'managed_by' attribute to the given value.
 func (b *LabelBuilder) ManagedBy(value string) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.managedBy = value
 	b.fieldSet_[7] = true
 	return b
@@ -117,6 +141,9 @@ func (b *LabelBuilder) ManagedBy(value string) *LabelBuilder {
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *LabelBuilder) OrganizationID(value string) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.organizationID = value
 	b.fieldSet_[8] = true
 	return b
@@ -124,6 +151,9 @@ func (b *LabelBuilder) OrganizationID(value string) *LabelBuilder {
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *LabelBuilder) SubscriptionID(value string) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.subscriptionID = value
 	b.fieldSet_[9] = true
 	return b
@@ -131,6 +161,9 @@ func (b *LabelBuilder) SubscriptionID(value string) *LabelBuilder {
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *LabelBuilder) Type(value string) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.type_ = value
 	b.fieldSet_[10] = true
 	return b
@@ -138,6 +171,9 @@ func (b *LabelBuilder) Type(value string) *LabelBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *LabelBuilder) UpdatedAt(value time.Time) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.updatedAt = value
 	b.fieldSet_[11] = true
 	return b
@@ -145,6 +181,9 @@ func (b *LabelBuilder) UpdatedAt(value time.Time) *LabelBuilder {
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *LabelBuilder) Value(value string) *LabelBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.value = value
 	b.fieldSet_[12] = true
 	return b

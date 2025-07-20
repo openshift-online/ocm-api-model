@@ -51,6 +51,9 @@ func (b *AddOnRequirementBuilder) Empty() bool {
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *AddOnRequirementBuilder) ID(value string) *AddOnRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[0] = true
 	return b
@@ -58,6 +61,9 @@ func (b *AddOnRequirementBuilder) ID(value string) *AddOnRequirementBuilder {
 
 // Data sets the value of the 'data' attribute to the given value.
 func (b *AddOnRequirementBuilder) Data(value map[string]interface{}) *AddOnRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.data = value
 	if value != nil {
 		b.fieldSet_[1] = true
@@ -69,6 +75,9 @@ func (b *AddOnRequirementBuilder) Data(value map[string]interface{}) *AddOnRequi
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddOnRequirementBuilder) Enabled(value bool) *AddOnRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.enabled = value
 	b.fieldSet_[2] = true
 	return b
@@ -76,6 +85,9 @@ func (b *AddOnRequirementBuilder) Enabled(value bool) *AddOnRequirementBuilder {
 
 // Resource sets the value of the 'resource' attribute to the given value.
 func (b *AddOnRequirementBuilder) Resource(value string) *AddOnRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.resource = value
 	b.fieldSet_[3] = true
 	return b
@@ -85,6 +97,9 @@ func (b *AddOnRequirementBuilder) Resource(value string) *AddOnRequirementBuilde
 //
 // Representation of an add-on requirement status.
 func (b *AddOnRequirementBuilder) Status(value *AddOnRequirementStatusBuilder) *AddOnRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.status = value
 	if value != nil {
 		b.fieldSet_[4] = true

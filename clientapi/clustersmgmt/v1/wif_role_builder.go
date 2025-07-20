@@ -48,6 +48,9 @@ func (b *WifRoleBuilder) Empty() bool {
 
 // Permissions sets the value of the 'permissions' attribute to the given values.
 func (b *WifRoleBuilder) Permissions(values ...string) *WifRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.permissions = make([]string, len(values))
 	copy(b.permissions, values)
 	b.fieldSet_[0] = true
@@ -56,6 +59,9 @@ func (b *WifRoleBuilder) Permissions(values ...string) *WifRoleBuilder {
 
 // Predefined sets the value of the 'predefined' attribute to the given value.
 func (b *WifRoleBuilder) Predefined(value bool) *WifRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.predefined = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *WifRoleBuilder) Predefined(value bool) *WifRoleBuilder {
 
 // RoleId sets the value of the 'role_id' attribute to the given value.
 func (b *WifRoleBuilder) RoleId(value string) *WifRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.roleId = value
 	b.fieldSet_[2] = true
 	return b

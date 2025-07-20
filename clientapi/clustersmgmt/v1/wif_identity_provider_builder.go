@@ -49,6 +49,9 @@ func (b *WifIdentityProviderBuilder) Empty() bool {
 
 // AllowedAudiences sets the value of the 'allowed_audiences' attribute to the given values.
 func (b *WifIdentityProviderBuilder) AllowedAudiences(values ...string) *WifIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.allowedAudiences = make([]string, len(values))
 	copy(b.allowedAudiences, values)
 	b.fieldSet_[0] = true
@@ -57,6 +60,9 @@ func (b *WifIdentityProviderBuilder) AllowedAudiences(values ...string) *WifIden
 
 // IdentityProviderId sets the value of the 'identity_provider_id' attribute to the given value.
 func (b *WifIdentityProviderBuilder) IdentityProviderId(value string) *WifIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.identityProviderId = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *WifIdentityProviderBuilder) IdentityProviderId(value string) *WifIdenti
 
 // IssuerUrl sets the value of the 'issuer_url' attribute to the given value.
 func (b *WifIdentityProviderBuilder) IssuerUrl(value string) *WifIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.issuerUrl = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *WifIdentityProviderBuilder) IssuerUrl(value string) *WifIdentityProvide
 
 // Jwks sets the value of the 'jwks' attribute to the given value.
 func (b *WifIdentityProviderBuilder) Jwks(value string) *WifIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.jwks = value
 	b.fieldSet_[3] = true
 	return b

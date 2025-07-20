@@ -48,6 +48,9 @@ func (b *ServiceInfoBuilder) Empty() bool {
 
 // Fullname sets the value of the 'fullname' attribute to the given value.
 func (b *ServiceInfoBuilder) Fullname(value string) *ServiceInfoBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.fullname = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *ServiceInfoBuilder) Fullname(value string) *ServiceInfoBuilder {
 
 // StatusType sets the value of the 'status_type' attribute to the given value.
 func (b *ServiceInfoBuilder) StatusType(value string) *ServiceInfoBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.statusType = value
 	b.fieldSet_[1] = true
 	return b

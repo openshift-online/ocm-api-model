@@ -50,6 +50,9 @@ func (b *OpenIDClaimsBuilder) Empty() bool {
 
 // Email sets the value of the 'email' attribute to the given values.
 func (b *OpenIDClaimsBuilder) Email(values ...string) *OpenIDClaimsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.email = make([]string, len(values))
 	copy(b.email, values)
 	b.fieldSet_[0] = true
@@ -58,6 +61,9 @@ func (b *OpenIDClaimsBuilder) Email(values ...string) *OpenIDClaimsBuilder {
 
 // Groups sets the value of the 'groups' attribute to the given values.
 func (b *OpenIDClaimsBuilder) Groups(values ...string) *OpenIDClaimsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.groups = make([]string, len(values))
 	copy(b.groups, values)
 	b.fieldSet_[1] = true
@@ -66,6 +72,9 @@ func (b *OpenIDClaimsBuilder) Groups(values ...string) *OpenIDClaimsBuilder {
 
 // Name sets the value of the 'name' attribute to the given values.
 func (b *OpenIDClaimsBuilder) Name(values ...string) *OpenIDClaimsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.name = make([]string, len(values))
 	copy(b.name, values)
 	b.fieldSet_[2] = true
@@ -74,6 +83,9 @@ func (b *OpenIDClaimsBuilder) Name(values ...string) *OpenIDClaimsBuilder {
 
 // PreferredUsername sets the value of the 'preferred_username' attribute to the given values.
 func (b *OpenIDClaimsBuilder) PreferredUsername(values ...string) *OpenIDClaimsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.preferredUsername = make([]string, len(values))
 	copy(b.preferredUsername, values)
 	b.fieldSet_[3] = true

@@ -50,6 +50,9 @@ func (b *ExternalAuthClaimBuilder) Empty() bool {
 //
 // The claim mappings defined for users and groups.
 func (b *ExternalAuthClaimBuilder) Mappings(value *TokenClaimMappingsBuilder) *ExternalAuthClaimBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.mappings = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -61,6 +64,9 @@ func (b *ExternalAuthClaimBuilder) Mappings(value *TokenClaimMappingsBuilder) *E
 
 // ValidationRules sets the value of the 'validation_rules' attribute to the given values.
 func (b *ExternalAuthClaimBuilder) ValidationRules(values ...*TokenClaimValidationRuleBuilder) *ExternalAuthClaimBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.validationRules = make([]*TokenClaimValidationRuleBuilder, len(values))
 	copy(b.validationRules, values)
 	b.fieldSet_[1] = true

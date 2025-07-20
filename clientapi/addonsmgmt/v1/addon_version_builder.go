@@ -49,12 +49,18 @@ func NewAddonVersion() *AddonVersionBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddonVersionBuilder) Link(value bool) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddonVersionBuilder) ID(value string) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -62,6 +68,9 @@ func (b *AddonVersionBuilder) ID(value string) *AddonVersionBuilder {
 
 // HREF sets the link to the object.
 func (b *AddonVersionBuilder) HREF(value string) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -83,6 +92,9 @@ func (b *AddonVersionBuilder) Empty() bool {
 
 // AdditionalCatalogSources sets the value of the 'additional_catalog_sources' attribute to the given values.
 func (b *AddonVersionBuilder) AdditionalCatalogSources(values ...*AdditionalCatalogSourceBuilder) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.additionalCatalogSources = make([]*AdditionalCatalogSourceBuilder, len(values))
 	copy(b.additionalCatalogSources, values)
 	b.fieldSet_[3] = true
@@ -91,6 +103,9 @@ func (b *AddonVersionBuilder) AdditionalCatalogSources(values ...*AdditionalCata
 
 // AvailableUpgrades sets the value of the 'available_upgrades' attribute to the given values.
 func (b *AddonVersionBuilder) AvailableUpgrades(values ...string) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.availableUpgrades = make([]string, len(values))
 	copy(b.availableUpgrades, values)
 	b.fieldSet_[4] = true
@@ -99,6 +114,9 @@ func (b *AddonVersionBuilder) AvailableUpgrades(values ...string) *AddonVersionB
 
 // Channel sets the value of the 'channel' attribute to the given value.
 func (b *AddonVersionBuilder) Channel(value string) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.channel = value
 	b.fieldSet_[5] = true
 	return b
@@ -109,6 +127,9 @@ func (b *AddonVersionBuilder) Channel(value string) *AddonVersionBuilder {
 // Representation of an addon config.
 // The attributes under it are to be used by the addon once its installed in the cluster.
 func (b *AddonVersionBuilder) Config(value *AddonConfigBuilder) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.config = value
 	if value != nil {
 		b.fieldSet_[6] = true
@@ -120,6 +141,9 @@ func (b *AddonVersionBuilder) Config(value *AddonConfigBuilder) *AddonVersionBui
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddonVersionBuilder) Enabled(value bool) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.enabled = value
 	b.fieldSet_[7] = true
 	return b
@@ -129,6 +153,9 @@ func (b *AddonVersionBuilder) Enabled(value bool) *AddonVersionBuilder {
 //
 // Representation of Metrics Federation
 func (b *AddonVersionBuilder) MetricsFederation(value *MetricsFederationBuilder) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.metricsFederation = value
 	if value != nil {
 		b.fieldSet_[8] = true
@@ -142,6 +169,9 @@ func (b *AddonVersionBuilder) MetricsFederation(value *MetricsFederationBuilder)
 //
 // Representation of Monitoring Stack
 func (b *AddonVersionBuilder) MonitoringStack(value *MonitoringStackBuilder) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.monitoringStack = value
 	if value != nil {
 		b.fieldSet_[9] = true
@@ -153,6 +183,9 @@ func (b *AddonVersionBuilder) MonitoringStack(value *MonitoringStackBuilder) *Ad
 
 // PackageImage sets the value of the 'package_image' attribute to the given value.
 func (b *AddonVersionBuilder) PackageImage(value string) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.packageImage = value
 	b.fieldSet_[10] = true
 	return b
@@ -162,6 +195,9 @@ func (b *AddonVersionBuilder) PackageImage(value string) *AddonVersionBuilder {
 //
 // Representation of AddonParameters
 func (b *AddonVersionBuilder) Parameters(value *AddonParametersBuilder) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.parameters = value
 	if value != nil {
 		b.fieldSet_[11] = true
@@ -173,6 +209,9 @@ func (b *AddonVersionBuilder) Parameters(value *AddonParametersBuilder) *AddonVe
 
 // PullSecretName sets the value of the 'pull_secret_name' attribute to the given value.
 func (b *AddonVersionBuilder) PullSecretName(value string) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.pullSecretName = value
 	b.fieldSet_[12] = true
 	return b
@@ -180,6 +219,9 @@ func (b *AddonVersionBuilder) PullSecretName(value string) *AddonVersionBuilder 
 
 // Requirements sets the value of the 'requirements' attribute to the given values.
 func (b *AddonVersionBuilder) Requirements(values ...*AddonRequirementBuilder) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.requirements = make([]*AddonRequirementBuilder, len(values))
 	copy(b.requirements, values)
 	b.fieldSet_[13] = true
@@ -188,6 +230,9 @@ func (b *AddonVersionBuilder) Requirements(values ...*AddonRequirementBuilder) *
 
 // SourceImage sets the value of the 'source_image' attribute to the given value.
 func (b *AddonVersionBuilder) SourceImage(value string) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.sourceImage = value
 	b.fieldSet_[14] = true
 	return b
@@ -195,6 +240,9 @@ func (b *AddonVersionBuilder) SourceImage(value string) *AddonVersionBuilder {
 
 // SubOperators sets the value of the 'sub_operators' attribute to the given values.
 func (b *AddonVersionBuilder) SubOperators(values ...*AddonSubOperatorBuilder) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.subOperators = make([]*AddonSubOperatorBuilder, len(values))
 	copy(b.subOperators, values)
 	b.fieldSet_[15] = true
@@ -203,6 +251,9 @@ func (b *AddonVersionBuilder) SubOperators(values ...*AddonSubOperatorBuilder) *
 
 // UpgradePlansCreated sets the value of the 'upgrade_plans_created' attribute to the given value.
 func (b *AddonVersionBuilder) UpgradePlansCreated(value bool) *AddonVersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.upgradePlansCreated = value
 	b.fieldSet_[16] = true
 	return b

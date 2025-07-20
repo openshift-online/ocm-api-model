@@ -47,6 +47,9 @@ func (b *AlertsInfoBuilder) Empty() bool {
 
 // Alerts sets the value of the 'alerts' attribute to the given values.
 func (b *AlertsInfoBuilder) Alerts(values ...*AlertInfoBuilder) *AlertsInfoBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.alerts = make([]*AlertInfoBuilder, len(values))
 	copy(b.alerts, values)
 	b.fieldSet_[0] = true

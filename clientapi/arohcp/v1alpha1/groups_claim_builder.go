@@ -47,6 +47,9 @@ func (b *GroupsClaimBuilder) Empty() bool {
 
 // Claim sets the value of the 'claim' attribute to the given value.
 func (b *GroupsClaimBuilder) Claim(value string) *GroupsClaimBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.claim = value
 	b.fieldSet_[0] = true
 	return b
@@ -54,6 +57,9 @@ func (b *GroupsClaimBuilder) Claim(value string) *GroupsClaimBuilder {
 
 // Prefix sets the value of the 'prefix' attribute to the given value.
 func (b *GroupsClaimBuilder) Prefix(value string) *GroupsClaimBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.prefix = value
 	b.fieldSet_[1] = true
 	return b

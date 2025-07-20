@@ -52,6 +52,9 @@ func (b *LDAPIdentityProviderBuilder) Empty() bool {
 
 // CA sets the value of the 'CA' attribute to the given value.
 func (b *LDAPIdentityProviderBuilder) CA(value string) *LDAPIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.ca = value
 	b.fieldSet_[0] = true
 	return b
@@ -59,6 +62,9 @@ func (b *LDAPIdentityProviderBuilder) CA(value string) *LDAPIdentityProviderBuil
 
 // URL sets the value of the 'URL' attribute to the given value.
 func (b *LDAPIdentityProviderBuilder) URL(value string) *LDAPIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.url = value
 	b.fieldSet_[1] = true
 	return b
@@ -68,6 +74,9 @@ func (b *LDAPIdentityProviderBuilder) URL(value string) *LDAPIdentityProviderBui
 //
 // LDAP attributes used to configure the LDAP identity provider.
 func (b *LDAPIdentityProviderBuilder) Attributes(value *LDAPAttributesBuilder) *LDAPIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.attributes = value
 	if value != nil {
 		b.fieldSet_[2] = true
@@ -79,6 +88,9 @@ func (b *LDAPIdentityProviderBuilder) Attributes(value *LDAPAttributesBuilder) *
 
 // BindDN sets the value of the 'bind_DN' attribute to the given value.
 func (b *LDAPIdentityProviderBuilder) BindDN(value string) *LDAPIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.bindDN = value
 	b.fieldSet_[3] = true
 	return b
@@ -86,6 +98,9 @@ func (b *LDAPIdentityProviderBuilder) BindDN(value string) *LDAPIdentityProvider
 
 // BindPassword sets the value of the 'bind_password' attribute to the given value.
 func (b *LDAPIdentityProviderBuilder) BindPassword(value string) *LDAPIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.bindPassword = value
 	b.fieldSet_[4] = true
 	return b
@@ -93,6 +108,9 @@ func (b *LDAPIdentityProviderBuilder) BindPassword(value string) *LDAPIdentityPr
 
 // Insecure sets the value of the 'insecure' attribute to the given value.
 func (b *LDAPIdentityProviderBuilder) Insecure(value bool) *LDAPIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.insecure = value
 	b.fieldSet_[5] = true
 	return b

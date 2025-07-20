@@ -48,6 +48,9 @@ func (b *ServiceClusterRequestPayloadBuilder) Empty() bool {
 
 // CloudProvider sets the value of the 'cloud_provider' attribute to the given value.
 func (b *ServiceClusterRequestPayloadBuilder) CloudProvider(value string) *ServiceClusterRequestPayloadBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.cloudProvider = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *ServiceClusterRequestPayloadBuilder) CloudProvider(value string) *Servi
 
 // Labels sets the value of the 'labels' attribute to the given values.
 func (b *ServiceClusterRequestPayloadBuilder) Labels(values ...*LabelRequestPayloadBuilder) *ServiceClusterRequestPayloadBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.labels = make([]*LabelRequestPayloadBuilder, len(values))
 	copy(b.labels, values)
 	b.fieldSet_[1] = true
@@ -63,6 +69,9 @@ func (b *ServiceClusterRequestPayloadBuilder) Labels(values ...*LabelRequestPayl
 
 // Region sets the value of the 'region' attribute to the given value.
 func (b *ServiceClusterRequestPayloadBuilder) Region(value string) *ServiceClusterRequestPayloadBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.region = value
 	b.fieldSet_[2] = true
 	return b

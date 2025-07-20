@@ -49,6 +49,9 @@ func (b *AutoscalerResourceLimitsBuilder) Empty() bool {
 
 // GPUS sets the value of the 'GPUS' attribute to the given values.
 func (b *AutoscalerResourceLimitsBuilder) GPUS(values ...*AutoscalerResourceLimitsGPULimitBuilder) *AutoscalerResourceLimitsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.gpus = make([]*AutoscalerResourceLimitsGPULimitBuilder, len(values))
 	copy(b.gpus, values)
 	b.fieldSet_[0] = true
@@ -57,6 +60,9 @@ func (b *AutoscalerResourceLimitsBuilder) GPUS(values ...*AutoscalerResourceLimi
 
 // Cores sets the value of the 'cores' attribute to the given value.
 func (b *AutoscalerResourceLimitsBuilder) Cores(value *ResourceRangeBuilder) *AutoscalerResourceLimitsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.cores = value
 	if value != nil {
 		b.fieldSet_[1] = true
@@ -68,6 +74,9 @@ func (b *AutoscalerResourceLimitsBuilder) Cores(value *ResourceRangeBuilder) *Au
 
 // MaxNodesTotal sets the value of the 'max_nodes_total' attribute to the given value.
 func (b *AutoscalerResourceLimitsBuilder) MaxNodesTotal(value int) *AutoscalerResourceLimitsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.maxNodesTotal = value
 	b.fieldSet_[2] = true
 	return b
@@ -75,6 +84,9 @@ func (b *AutoscalerResourceLimitsBuilder) MaxNodesTotal(value int) *AutoscalerRe
 
 // Memory sets the value of the 'memory' attribute to the given value.
 func (b *AutoscalerResourceLimitsBuilder) Memory(value *ResourceRangeBuilder) *AutoscalerResourceLimitsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.memory = value
 	if value != nil {
 		b.fieldSet_[3] = true

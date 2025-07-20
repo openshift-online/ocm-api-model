@@ -49,6 +49,9 @@ func (b *TemplateParameterBuilder) Empty() bool {
 
 // Content sets the value of the 'content' attribute to the given value.
 func (b *TemplateParameterBuilder) Content(value string) *TemplateParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.content = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *TemplateParameterBuilder) Content(value string) *TemplateParameterBuild
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *TemplateParameterBuilder) Name(value string) *TemplateParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.name = value
 	b.fieldSet_[1] = true
 	return b

@@ -44,12 +44,18 @@ func NewClusterStatus() *ClusterStatusBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ClusterStatusBuilder) Link(value bool) *ClusterStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ClusterStatusBuilder) ID(value string) *ClusterStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -57,6 +63,9 @@ func (b *ClusterStatusBuilder) ID(value string) *ClusterStatusBuilder {
 
 // HREF sets the link to the object.
 func (b *ClusterStatusBuilder) HREF(value string) *ClusterStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -78,6 +87,9 @@ func (b *ClusterStatusBuilder) Empty() bool {
 
 // DNSReady sets the value of the 'DNS_ready' attribute to the given value.
 func (b *ClusterStatusBuilder) DNSReady(value bool) *ClusterStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.dnsReady = value
 	b.fieldSet_[3] = true
 	return b
@@ -85,6 +97,9 @@ func (b *ClusterStatusBuilder) DNSReady(value bool) *ClusterStatusBuilder {
 
 // OIDCReady sets the value of the 'OIDC_ready' attribute to the given value.
 func (b *ClusterStatusBuilder) OIDCReady(value bool) *ClusterStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.oidcReady = value
 	b.fieldSet_[4] = true
 	return b
@@ -94,6 +109,9 @@ func (b *ClusterStatusBuilder) OIDCReady(value bool) *ClusterStatusBuilder {
 //
 // Configuration mode of a cluster.
 func (b *ClusterStatusBuilder) ConfigurationMode(value ClusterConfigurationMode) *ClusterStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.configurationMode = value
 	b.fieldSet_[5] = true
 	return b
@@ -101,6 +119,9 @@ func (b *ClusterStatusBuilder) ConfigurationMode(value ClusterConfigurationMode)
 
 // CurrentCompute sets the value of the 'current_compute' attribute to the given value.
 func (b *ClusterStatusBuilder) CurrentCompute(value int) *ClusterStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.currentCompute = value
 	b.fieldSet_[6] = true
 	return b
@@ -108,6 +129,9 @@ func (b *ClusterStatusBuilder) CurrentCompute(value int) *ClusterStatusBuilder {
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *ClusterStatusBuilder) Description(value string) *ClusterStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.description = value
 	b.fieldSet_[7] = true
 	return b
@@ -115,6 +139,9 @@ func (b *ClusterStatusBuilder) Description(value string) *ClusterStatusBuilder {
 
 // LimitedSupportReasonCount sets the value of the 'limited_support_reason_count' attribute to the given value.
 func (b *ClusterStatusBuilder) LimitedSupportReasonCount(value int) *ClusterStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.limitedSupportReasonCount = value
 	b.fieldSet_[8] = true
 	return b
@@ -122,6 +149,9 @@ func (b *ClusterStatusBuilder) LimitedSupportReasonCount(value int) *ClusterStat
 
 // ProvisionErrorCode sets the value of the 'provision_error_code' attribute to the given value.
 func (b *ClusterStatusBuilder) ProvisionErrorCode(value string) *ClusterStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.provisionErrorCode = value
 	b.fieldSet_[9] = true
 	return b
@@ -129,6 +159,9 @@ func (b *ClusterStatusBuilder) ProvisionErrorCode(value string) *ClusterStatusBu
 
 // ProvisionErrorMessage sets the value of the 'provision_error_message' attribute to the given value.
 func (b *ClusterStatusBuilder) ProvisionErrorMessage(value string) *ClusterStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.provisionErrorMessage = value
 	b.fieldSet_[10] = true
 	return b
@@ -138,6 +171,9 @@ func (b *ClusterStatusBuilder) ProvisionErrorMessage(value string) *ClusterStatu
 //
 // Overall state of a cluster.
 func (b *ClusterStatusBuilder) State(value ClusterState) *ClusterStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.state = value
 	b.fieldSet_[11] = true
 	return b

@@ -52,6 +52,9 @@ func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) Empty() bool {
 
 // ControlPlaneOperatorsManagedIdentities sets the value of the 'control_plane_operators_managed_identities' attribute to the given value.
 func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) ControlPlaneOperatorsManagedIdentities(value map[string]*AzureControlPlaneManagedIdentityBuilder) *AzureOperatorsAuthenticationManagedIdentitiesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.controlPlaneOperatorsManagedIdentities = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -63,6 +66,9 @@ func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) ControlPlaneOpera
 
 // DataPlaneOperatorsManagedIdentities sets the value of the 'data_plane_operators_managed_identities' attribute to the given value.
 func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) DataPlaneOperatorsManagedIdentities(value map[string]*AzureDataPlaneManagedIdentityBuilder) *AzureOperatorsAuthenticationManagedIdentitiesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.dataPlaneOperatorsManagedIdentities = value
 	if value != nil {
 		b.fieldSet_[1] = true
@@ -74,6 +80,9 @@ func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) DataPlaneOperator
 
 // ManagedIdentitiesDataPlaneIdentityUrl sets the value of the 'managed_identities_data_plane_identity_url' attribute to the given value.
 func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) ManagedIdentitiesDataPlaneIdentityUrl(value string) *AzureOperatorsAuthenticationManagedIdentitiesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.managedIdentitiesDataPlaneIdentityUrl = value
 	b.fieldSet_[2] = true
 	return b
@@ -84,6 +93,9 @@ func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) ManagedIdentities
 // Represents the information associated to an Azure User-Assigned
 // Managed Identity whose purpose is to perform service level actions.
 func (b *AzureOperatorsAuthenticationManagedIdentitiesBuilder) ServiceManagedIdentity(value *AzureServiceManagedIdentityBuilder) *AzureOperatorsAuthenticationManagedIdentitiesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.serviceManagedIdentity = value
 	if value != nil {
 		b.fieldSet_[3] = true

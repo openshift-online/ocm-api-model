@@ -47,6 +47,9 @@ func (b *RoleDefinitionOperatorIdentityRequirementBuilder) Empty() bool {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *RoleDefinitionOperatorIdentityRequirementBuilder) Name(value string) *RoleDefinitionOperatorIdentityRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.name = value
 	b.fieldSet_[0] = true
 	return b
@@ -54,6 +57,9 @@ func (b *RoleDefinitionOperatorIdentityRequirementBuilder) Name(value string) *R
 
 // ResourceId sets the value of the 'resource_id' attribute to the given value.
 func (b *RoleDefinitionOperatorIdentityRequirementBuilder) ResourceId(value string) *RoleDefinitionOperatorIdentityRequirementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.resourceId = value
 	b.fieldSet_[1] = true
 	return b

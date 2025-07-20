@@ -49,6 +49,9 @@ func (b *AdminCredentialsBuilder) Empty() bool {
 
 // Password sets the value of the 'password' attribute to the given value.
 func (b *AdminCredentialsBuilder) Password(value string) *AdminCredentialsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.password = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *AdminCredentialsBuilder) Password(value string) *AdminCredentialsBuilde
 
 // User sets the value of the 'user' attribute to the given value.
 func (b *AdminCredentialsBuilder) User(value string) *AdminCredentialsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.user = value
 	b.fieldSet_[1] = true
 	return b

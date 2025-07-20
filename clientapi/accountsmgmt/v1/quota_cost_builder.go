@@ -52,6 +52,9 @@ func (b *QuotaCostBuilder) Empty() bool {
 
 // Allowed sets the value of the 'allowed' attribute to the given value.
 func (b *QuotaCostBuilder) Allowed(value int) *QuotaCostBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.allowed = value
 	b.fieldSet_[0] = true
 	return b
@@ -59,6 +62,9 @@ func (b *QuotaCostBuilder) Allowed(value int) *QuotaCostBuilder {
 
 // CloudAccounts sets the value of the 'cloud_accounts' attribute to the given values.
 func (b *QuotaCostBuilder) CloudAccounts(values ...*CloudAccountBuilder) *QuotaCostBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.cloudAccounts = make([]*CloudAccountBuilder, len(values))
 	copy(b.cloudAccounts, values)
 	b.fieldSet_[1] = true
@@ -67,6 +73,9 @@ func (b *QuotaCostBuilder) CloudAccounts(values ...*CloudAccountBuilder) *QuotaC
 
 // Consumed sets the value of the 'consumed' attribute to the given value.
 func (b *QuotaCostBuilder) Consumed(value int) *QuotaCostBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.consumed = value
 	b.fieldSet_[2] = true
 	return b
@@ -74,6 +83,9 @@ func (b *QuotaCostBuilder) Consumed(value int) *QuotaCostBuilder {
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *QuotaCostBuilder) OrganizationID(value string) *QuotaCostBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.organizationID = value
 	b.fieldSet_[3] = true
 	return b
@@ -81,6 +93,9 @@ func (b *QuotaCostBuilder) OrganizationID(value string) *QuotaCostBuilder {
 
 // QuotaID sets the value of the 'quota_ID' attribute to the given value.
 func (b *QuotaCostBuilder) QuotaID(value string) *QuotaCostBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.quotaID = value
 	b.fieldSet_[4] = true
 	return b
@@ -88,6 +103,9 @@ func (b *QuotaCostBuilder) QuotaID(value string) *QuotaCostBuilder {
 
 // RelatedResources sets the value of the 'related_resources' attribute to the given values.
 func (b *QuotaCostBuilder) RelatedResources(values ...*RelatedResourceBuilder) *QuotaCostBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.relatedResources = make([]*RelatedResourceBuilder, len(values))
 	copy(b.relatedResources, values)
 	b.fieldSet_[5] = true
@@ -96,6 +114,9 @@ func (b *QuotaCostBuilder) RelatedResources(values ...*RelatedResourceBuilder) *
 
 // Version sets the value of the 'version' attribute to the given value.
 func (b *QuotaCostBuilder) Version(value string) *QuotaCostBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.version = value
 	b.fieldSet_[6] = true
 	return b

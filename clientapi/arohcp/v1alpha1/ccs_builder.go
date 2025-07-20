@@ -36,12 +36,18 @@ func NewCCS() *CCSBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *CCSBuilder) Link(value bool) *CCSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *CCSBuilder) ID(value string) *CCSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -49,6 +55,9 @@ func (b *CCSBuilder) ID(value string) *CCSBuilder {
 
 // HREF sets the link to the object.
 func (b *CCSBuilder) HREF(value string) *CCSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -70,6 +79,9 @@ func (b *CCSBuilder) Empty() bool {
 
 // DisableSCPChecks sets the value of the 'disable_SCP_checks' attribute to the given value.
 func (b *CCSBuilder) DisableSCPChecks(value bool) *CCSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.disableSCPChecks = value
 	b.fieldSet_[3] = true
 	return b
@@ -77,6 +89,9 @@ func (b *CCSBuilder) DisableSCPChecks(value bool) *CCSBuilder {
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *CCSBuilder) Enabled(value bool) *CCSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.enabled = value
 	b.fieldSet_[4] = true
 	return b

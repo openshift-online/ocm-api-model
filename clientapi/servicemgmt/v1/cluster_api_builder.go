@@ -49,6 +49,9 @@ func (b *ClusterAPIBuilder) Empty() bool {
 //
 // Cluster components listening method.
 func (b *ClusterAPIBuilder) Listening(value ListeningMethod) *ClusterAPIBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.listening = value
 	b.fieldSet_[0] = true
 	return b

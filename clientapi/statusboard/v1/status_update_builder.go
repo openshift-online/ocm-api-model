@@ -44,12 +44,18 @@ func NewStatusUpdate() *StatusUpdateBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *StatusUpdateBuilder) Link(value bool) *StatusUpdateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *StatusUpdateBuilder) ID(value string) *StatusUpdateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -57,6 +63,9 @@ func (b *StatusUpdateBuilder) ID(value string) *StatusUpdateBuilder {
 
 // HREF sets the link to the object.
 func (b *StatusUpdateBuilder) HREF(value string) *StatusUpdateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -78,6 +87,9 @@ func (b *StatusUpdateBuilder) Empty() bool {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *StatusUpdateBuilder) CreatedAt(value time.Time) *StatusUpdateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.createdAt = value
 	b.fieldSet_[3] = true
 	return b
@@ -85,6 +97,9 @@ func (b *StatusUpdateBuilder) CreatedAt(value time.Time) *StatusUpdateBuilder {
 
 // Metadata sets the value of the 'metadata' attribute to the given value.
 func (b *StatusUpdateBuilder) Metadata(value interface{}) *StatusUpdateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.metadata = value
 	b.fieldSet_[4] = true
 	return b
@@ -94,6 +109,9 @@ func (b *StatusUpdateBuilder) Metadata(value interface{}) *StatusUpdateBuilder {
 //
 // Definition of a Status Board Service.
 func (b *StatusUpdateBuilder) Service(value *ServiceBuilder) *StatusUpdateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.service = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -107,6 +125,9 @@ func (b *StatusUpdateBuilder) Service(value *ServiceBuilder) *StatusUpdateBuilde
 //
 // Definition of a Status Board service info.
 func (b *StatusUpdateBuilder) ServiceInfo(value *ServiceInfoBuilder) *StatusUpdateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.serviceInfo = value
 	if value != nil {
 		b.fieldSet_[6] = true
@@ -118,6 +139,9 @@ func (b *StatusUpdateBuilder) ServiceInfo(value *ServiceInfoBuilder) *StatusUpda
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *StatusUpdateBuilder) Status(value string) *StatusUpdateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.status = value
 	b.fieldSet_[7] = true
 	return b
@@ -125,6 +149,9 @@ func (b *StatusUpdateBuilder) Status(value string) *StatusUpdateBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *StatusUpdateBuilder) UpdatedAt(value time.Time) *StatusUpdateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.updatedAt = value
 	b.fieldSet_[8] = true
 	return b

@@ -50,6 +50,9 @@ func (b *MetricsFederationBuilder) Empty() bool {
 
 // MatchLabels sets the value of the 'match_labels' attribute to the given value.
 func (b *MetricsFederationBuilder) MatchLabels(value map[string]string) *MetricsFederationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.matchLabels = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -61,6 +64,9 @@ func (b *MetricsFederationBuilder) MatchLabels(value map[string]string) *Metrics
 
 // MatchNames sets the value of the 'match_names' attribute to the given values.
 func (b *MetricsFederationBuilder) MatchNames(values ...string) *MetricsFederationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.matchNames = make([]string, len(values))
 	copy(b.matchNames, values)
 	b.fieldSet_[1] = true
@@ -69,6 +75,9 @@ func (b *MetricsFederationBuilder) MatchNames(values ...string) *MetricsFederati
 
 // Namespace sets the value of the 'namespace' attribute to the given value.
 func (b *MetricsFederationBuilder) Namespace(value string) *MetricsFederationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.namespace = value
 	b.fieldSet_[2] = true
 	return b
@@ -76,6 +85,9 @@ func (b *MetricsFederationBuilder) Namespace(value string) *MetricsFederationBui
 
 // PortName sets the value of the 'port_name' attribute to the given value.
 func (b *MetricsFederationBuilder) PortName(value string) *MetricsFederationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.portName = value
 	b.fieldSet_[3] = true
 	return b

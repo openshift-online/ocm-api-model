@@ -46,6 +46,9 @@ func (b *AccessTokenBuilder) Empty() bool {
 
 // Auths sets the value of the 'auths' attribute to the given value.
 func (b *AccessTokenBuilder) Auths(value map[string]*AccessTokenAuthBuilder) *AccessTokenBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.auths = value
 	if value != nil {
 		b.fieldSet_[0] = true

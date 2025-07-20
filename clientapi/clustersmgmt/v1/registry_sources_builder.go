@@ -51,6 +51,9 @@ func (b *RegistrySourcesBuilder) Empty() bool {
 
 // AllowedRegistries sets the value of the 'allowed_registries' attribute to the given values.
 func (b *RegistrySourcesBuilder) AllowedRegistries(values ...string) *RegistrySourcesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.allowedRegistries = make([]string, len(values))
 	copy(b.allowedRegistries, values)
 	b.fieldSet_[0] = true
@@ -59,6 +62,9 @@ func (b *RegistrySourcesBuilder) AllowedRegistries(values ...string) *RegistrySo
 
 // BlockedRegistries sets the value of the 'blocked_registries' attribute to the given values.
 func (b *RegistrySourcesBuilder) BlockedRegistries(values ...string) *RegistrySourcesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.blockedRegistries = make([]string, len(values))
 	copy(b.blockedRegistries, values)
 	b.fieldSet_[1] = true
@@ -67,6 +73,9 @@ func (b *RegistrySourcesBuilder) BlockedRegistries(values ...string) *RegistrySo
 
 // InsecureRegistries sets the value of the 'insecure_registries' attribute to the given values.
 func (b *RegistrySourcesBuilder) InsecureRegistries(values ...string) *RegistrySourcesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.insecureRegistries = make([]string, len(values))
 	copy(b.insecureRegistries, values)
 	b.fieldSet_[2] = true

@@ -47,6 +47,9 @@ func (b *GcpPrivateServiceConnectBuilder) Empty() bool {
 
 // ServiceAttachmentSubnet sets the value of the 'service_attachment_subnet' attribute to the given value.
 func (b *GcpPrivateServiceConnectBuilder) ServiceAttachmentSubnet(value string) *GcpPrivateServiceConnectBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.serviceAttachmentSubnet = value
 	b.fieldSet_[0] = true
 	return b

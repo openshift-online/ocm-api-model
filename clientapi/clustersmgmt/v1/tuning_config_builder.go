@@ -37,12 +37,18 @@ func NewTuningConfig() *TuningConfigBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *TuningConfigBuilder) Link(value bool) *TuningConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *TuningConfigBuilder) ID(value string) *TuningConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *TuningConfigBuilder) ID(value string) *TuningConfigBuilder {
 
 // HREF sets the link to the object.
 func (b *TuningConfigBuilder) HREF(value string) *TuningConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *TuningConfigBuilder) Empty() bool {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *TuningConfigBuilder) Name(value string) *TuningConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.name = value
 	b.fieldSet_[3] = true
 	return b
@@ -78,6 +90,9 @@ func (b *TuningConfigBuilder) Name(value string) *TuningConfigBuilder {
 
 // Spec sets the value of the 'spec' attribute to the given value.
 func (b *TuningConfigBuilder) Spec(value interface{}) *TuningConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.spec = value
 	b.fieldSet_[4] = true
 	return b

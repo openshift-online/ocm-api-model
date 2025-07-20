@@ -39,12 +39,18 @@ func NewWifConfig() *WifConfigBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *WifConfigBuilder) Link(value bool) *WifConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *WifConfigBuilder) ID(value string) *WifConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -52,6 +58,9 @@ func (b *WifConfigBuilder) ID(value string) *WifConfigBuilder {
 
 // HREF sets the link to the object.
 func (b *WifConfigBuilder) HREF(value string) *WifConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -73,6 +82,9 @@ func (b *WifConfigBuilder) Empty() bool {
 
 // DisplayName sets the value of the 'display_name' attribute to the given value.
 func (b *WifConfigBuilder) DisplayName(value string) *WifConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.displayName = value
 	b.fieldSet_[3] = true
 	return b
@@ -80,6 +92,9 @@ func (b *WifConfigBuilder) DisplayName(value string) *WifConfigBuilder {
 
 // Gcp sets the value of the 'gcp' attribute to the given value.
 func (b *WifConfigBuilder) Gcp(value *WifGcpBuilder) *WifConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.gcp = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -93,6 +108,9 @@ func (b *WifConfigBuilder) Gcp(value *WifGcpBuilder) *WifConfigBuilder {
 //
 // Definition of an organization link.
 func (b *WifConfigBuilder) Organization(value *OrganizationLinkBuilder) *WifConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.organization = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -104,6 +122,9 @@ func (b *WifConfigBuilder) Organization(value *OrganizationLinkBuilder) *WifConf
 
 // WifTemplates sets the value of the 'wif_templates' attribute to the given values.
 func (b *WifConfigBuilder) WifTemplates(values ...string) *WifConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.wifTemplates = make([]string, len(values))
 	copy(b.wifTemplates, values)
 	b.fieldSet_[6] = true

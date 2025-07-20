@@ -52,6 +52,9 @@ func (b *SubnetworkBuilder) Empty() bool {
 
 // CIDRBlock sets the value of the 'CIDR_block' attribute to the given value.
 func (b *SubnetworkBuilder) CIDRBlock(value string) *SubnetworkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.cidrBlock = value
 	b.fieldSet_[0] = true
 	return b
@@ -59,6 +62,9 @@ func (b *SubnetworkBuilder) CIDRBlock(value string) *SubnetworkBuilder {
 
 // AvailabilityZone sets the value of the 'availability_zone' attribute to the given value.
 func (b *SubnetworkBuilder) AvailabilityZone(value string) *SubnetworkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.availabilityZone = value
 	b.fieldSet_[1] = true
 	return b
@@ -66,6 +72,9 @@ func (b *SubnetworkBuilder) AvailabilityZone(value string) *SubnetworkBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *SubnetworkBuilder) Name(value string) *SubnetworkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.name = value
 	b.fieldSet_[2] = true
 	return b
@@ -73,6 +82,9 @@ func (b *SubnetworkBuilder) Name(value string) *SubnetworkBuilder {
 
 // Public sets the value of the 'public' attribute to the given value.
 func (b *SubnetworkBuilder) Public(value bool) *SubnetworkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.public = value
 	b.fieldSet_[3] = true
 	return b
@@ -80,6 +92,9 @@ func (b *SubnetworkBuilder) Public(value bool) *SubnetworkBuilder {
 
 // RedHatManaged sets the value of the 'red_hat_managed' attribute to the given value.
 func (b *SubnetworkBuilder) RedHatManaged(value bool) *SubnetworkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.redHatManaged = value
 	b.fieldSet_[4] = true
 	return b
@@ -87,6 +102,9 @@ func (b *SubnetworkBuilder) RedHatManaged(value bool) *SubnetworkBuilder {
 
 // SubnetID sets the value of the 'subnet_ID' attribute to the given value.
 func (b *SubnetworkBuilder) SubnetID(value string) *SubnetworkBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.subnetID = value
 	b.fieldSet_[5] = true
 	return b

@@ -52,6 +52,9 @@ func (b *GithubIdentityProviderBuilder) Empty() bool {
 
 // CA sets the value of the 'CA' attribute to the given value.
 func (b *GithubIdentityProviderBuilder) CA(value string) *GithubIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.ca = value
 	b.fieldSet_[0] = true
 	return b
@@ -59,6 +62,9 @@ func (b *GithubIdentityProviderBuilder) CA(value string) *GithubIdentityProvider
 
 // ClientID sets the value of the 'client_ID' attribute to the given value.
 func (b *GithubIdentityProviderBuilder) ClientID(value string) *GithubIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.clientID = value
 	b.fieldSet_[1] = true
 	return b
@@ -66,6 +72,9 @@ func (b *GithubIdentityProviderBuilder) ClientID(value string) *GithubIdentityPr
 
 // ClientSecret sets the value of the 'client_secret' attribute to the given value.
 func (b *GithubIdentityProviderBuilder) ClientSecret(value string) *GithubIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.clientSecret = value
 	b.fieldSet_[2] = true
 	return b
@@ -73,6 +82,9 @@ func (b *GithubIdentityProviderBuilder) ClientSecret(value string) *GithubIdenti
 
 // Hostname sets the value of the 'hostname' attribute to the given value.
 func (b *GithubIdentityProviderBuilder) Hostname(value string) *GithubIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.hostname = value
 	b.fieldSet_[3] = true
 	return b
@@ -80,6 +92,9 @@ func (b *GithubIdentityProviderBuilder) Hostname(value string) *GithubIdentityPr
 
 // Organizations sets the value of the 'organizations' attribute to the given values.
 func (b *GithubIdentityProviderBuilder) Organizations(values ...string) *GithubIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.organizations = make([]string, len(values))
 	copy(b.organizations, values)
 	b.fieldSet_[4] = true
@@ -88,6 +103,9 @@ func (b *GithubIdentityProviderBuilder) Organizations(values ...string) *GithubI
 
 // Teams sets the value of the 'teams' attribute to the given values.
 func (b *GithubIdentityProviderBuilder) Teams(values ...string) *GithubIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.teams = make([]string, len(values))
 	copy(b.teams, values)
 	b.fieldSet_[5] = true

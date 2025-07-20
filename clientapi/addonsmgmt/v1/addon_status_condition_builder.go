@@ -50,6 +50,9 @@ func (b *AddonStatusConditionBuilder) Empty() bool {
 
 // Message sets the value of the 'message' attribute to the given value.
 func (b *AddonStatusConditionBuilder) Message(value string) *AddonStatusConditionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.message = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *AddonStatusConditionBuilder) Message(value string) *AddonStatusConditio
 
 // Reason sets the value of the 'reason' attribute to the given value.
 func (b *AddonStatusConditionBuilder) Reason(value string) *AddonStatusConditionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.reason = value
 	b.fieldSet_[1] = true
 	return b
@@ -66,6 +72,9 @@ func (b *AddonStatusConditionBuilder) Reason(value string) *AddonStatusCondition
 //
 // Representation of an addon status condition type field.
 func (b *AddonStatusConditionBuilder) StatusType(value AddonStatusConditionType) *AddonStatusConditionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.statusType = value
 	b.fieldSet_[2] = true
 	return b
@@ -75,6 +84,9 @@ func (b *AddonStatusConditionBuilder) StatusType(value AddonStatusConditionType)
 //
 // Representation of an addon status condition value field.
 func (b *AddonStatusConditionBuilder) StatusValue(value AddonStatusConditionValue) *AddonStatusConditionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.statusValue = value
 	b.fieldSet_[3] = true
 	return b

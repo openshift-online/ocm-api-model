@@ -46,12 +46,18 @@ func NewMachinePool() *MachinePoolBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *MachinePoolBuilder) Link(value bool) *MachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *MachinePoolBuilder) ID(value string) *MachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -59,6 +65,9 @@ func (b *MachinePoolBuilder) ID(value string) *MachinePoolBuilder {
 
 // HREF sets the link to the object.
 func (b *MachinePoolBuilder) HREF(value string) *MachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -82,6 +91,9 @@ func (b *MachinePoolBuilder) Empty() bool {
 //
 // Representation of aws machine pool specific parameters.
 func (b *MachinePoolBuilder) AWS(value *AWSMachinePoolBuilder) *MachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.aws = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -95,6 +107,9 @@ func (b *MachinePoolBuilder) AWS(value *AWSMachinePoolBuilder) *MachinePoolBuild
 //
 // Representation of gcp machine pool specific parameters.
 func (b *MachinePoolBuilder) GCP(value *GCPMachinePoolBuilder) *MachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.gcp = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -108,6 +123,9 @@ func (b *MachinePoolBuilder) GCP(value *GCPMachinePoolBuilder) *MachinePoolBuild
 //
 // Representation of a autoscaling in a machine pool.
 func (b *MachinePoolBuilder) Autoscaling(value *MachinePoolAutoscalingBuilder) *MachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.autoscaling = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -119,6 +137,9 @@ func (b *MachinePoolBuilder) Autoscaling(value *MachinePoolAutoscalingBuilder) *
 
 // AvailabilityZones sets the value of the 'availability_zones' attribute to the given values.
 func (b *MachinePoolBuilder) AvailabilityZones(values ...string) *MachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.availabilityZones = make([]string, len(values))
 	copy(b.availabilityZones, values)
 	b.fieldSet_[6] = true
@@ -127,6 +148,9 @@ func (b *MachinePoolBuilder) AvailabilityZones(values ...string) *MachinePoolBui
 
 // InstanceType sets the value of the 'instance_type' attribute to the given value.
 func (b *MachinePoolBuilder) InstanceType(value string) *MachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.instanceType = value
 	b.fieldSet_[7] = true
 	return b
@@ -134,6 +158,9 @@ func (b *MachinePoolBuilder) InstanceType(value string) *MachinePoolBuilder {
 
 // Labels sets the value of the 'labels' attribute to the given value.
 func (b *MachinePoolBuilder) Labels(value map[string]string) *MachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.labels = value
 	if value != nil {
 		b.fieldSet_[8] = true
@@ -145,6 +172,9 @@ func (b *MachinePoolBuilder) Labels(value map[string]string) *MachinePoolBuilder
 
 // Replicas sets the value of the 'replicas' attribute to the given value.
 func (b *MachinePoolBuilder) Replicas(value int) *MachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.replicas = value
 	b.fieldSet_[9] = true
 	return b
@@ -154,6 +184,9 @@ func (b *MachinePoolBuilder) Replicas(value int) *MachinePoolBuilder {
 //
 // Root volume capabilities.
 func (b *MachinePoolBuilder) RootVolume(value *RootVolumeBuilder) *MachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.rootVolume = value
 	if value != nil {
 		b.fieldSet_[10] = true
@@ -165,6 +198,9 @@ func (b *MachinePoolBuilder) RootVolume(value *RootVolumeBuilder) *MachinePoolBu
 
 // SecurityGroupFilters sets the value of the 'security_group_filters' attribute to the given values.
 func (b *MachinePoolBuilder) SecurityGroupFilters(values ...*MachinePoolSecurityGroupFilterBuilder) *MachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.securityGroupFilters = make([]*MachinePoolSecurityGroupFilterBuilder, len(values))
 	copy(b.securityGroupFilters, values)
 	b.fieldSet_[11] = true
@@ -173,6 +209,9 @@ func (b *MachinePoolBuilder) SecurityGroupFilters(values ...*MachinePoolSecurity
 
 // Subnets sets the value of the 'subnets' attribute to the given values.
 func (b *MachinePoolBuilder) Subnets(values ...string) *MachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.subnets = make([]string, len(values))
 	copy(b.subnets, values)
 	b.fieldSet_[12] = true
@@ -181,6 +220,9 @@ func (b *MachinePoolBuilder) Subnets(values ...string) *MachinePoolBuilder {
 
 // Taints sets the value of the 'taints' attribute to the given values.
 func (b *MachinePoolBuilder) Taints(values ...*TaintBuilder) *MachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.taints = make([]*TaintBuilder, len(values))
 	copy(b.taints, values)
 	b.fieldSet_[13] = true

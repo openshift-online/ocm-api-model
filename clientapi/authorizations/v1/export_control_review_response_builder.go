@@ -46,6 +46,9 @@ func (b *ExportControlReviewResponseBuilder) Empty() bool {
 
 // Restricted sets the value of the 'restricted' attribute to the given value.
 func (b *ExportControlReviewResponseBuilder) Restricted(value bool) *ExportControlReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.restricted = value
 	b.fieldSet_[0] = true
 	return b

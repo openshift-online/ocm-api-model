@@ -50,6 +50,9 @@ func (b *AddonSecretPropagationBuilder) Empty() bool {
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *AddonSecretPropagationBuilder) ID(value string) *AddonSecretPropagationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *AddonSecretPropagationBuilder) ID(value string) *AddonSecretPropagation
 
 // DestinationSecret sets the value of the 'destination_secret' attribute to the given value.
 func (b *AddonSecretPropagationBuilder) DestinationSecret(value string) *AddonSecretPropagationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.destinationSecret = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *AddonSecretPropagationBuilder) DestinationSecret(value string) *AddonSe
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddonSecretPropagationBuilder) Enabled(value bool) *AddonSecretPropagationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.enabled = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *AddonSecretPropagationBuilder) Enabled(value bool) *AddonSecretPropagat
 
 // SourceSecret sets the value of the 'source_secret' attribute to the given value.
 func (b *AddonSecretPropagationBuilder) SourceSecret(value string) *AddonSecretPropagationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.sourceSecret = value
 	b.fieldSet_[3] = true
 	return b

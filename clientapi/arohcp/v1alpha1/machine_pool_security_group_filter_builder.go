@@ -48,6 +48,9 @@ func (b *MachinePoolSecurityGroupFilterBuilder) Empty() bool {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *MachinePoolSecurityGroupFilterBuilder) Name(value string) *MachinePoolSecurityGroupFilterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.name = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *MachinePoolSecurityGroupFilterBuilder) Name(value string) *MachinePoolS
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *MachinePoolSecurityGroupFilterBuilder) Value(value string) *MachinePoolSecurityGroupFilterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.value = value
 	b.fieldSet_[1] = true
 	return b

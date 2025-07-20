@@ -46,12 +46,18 @@ func NewCloudRegion() *CloudRegionBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *CloudRegionBuilder) Link(value bool) *CloudRegionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *CloudRegionBuilder) ID(value string) *CloudRegionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -59,6 +65,9 @@ func (b *CloudRegionBuilder) ID(value string) *CloudRegionBuilder {
 
 // HREF sets the link to the object.
 func (b *CloudRegionBuilder) HREF(value string) *CloudRegionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -80,6 +89,9 @@ func (b *CloudRegionBuilder) Empty() bool {
 
 // CCSOnly sets the value of the 'CCS_only' attribute to the given value.
 func (b *CloudRegionBuilder) CCSOnly(value bool) *CloudRegionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.ccsOnly = value
 	b.fieldSet_[3] = true
 	return b
@@ -87,6 +99,9 @@ func (b *CloudRegionBuilder) CCSOnly(value bool) *CloudRegionBuilder {
 
 // KMSLocationID sets the value of the 'KMS_location_ID' attribute to the given value.
 func (b *CloudRegionBuilder) KMSLocationID(value string) *CloudRegionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.kmsLocationID = value
 	b.fieldSet_[4] = true
 	return b
@@ -94,6 +109,9 @@ func (b *CloudRegionBuilder) KMSLocationID(value string) *CloudRegionBuilder {
 
 // KMSLocationName sets the value of the 'KMS_location_name' attribute to the given value.
 func (b *CloudRegionBuilder) KMSLocationName(value string) *CloudRegionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.kmsLocationName = value
 	b.fieldSet_[5] = true
 	return b
@@ -103,6 +121,9 @@ func (b *CloudRegionBuilder) KMSLocationName(value string) *CloudRegionBuilder {
 //
 // Cloud provider.
 func (b *CloudRegionBuilder) CloudProvider(value *v1.CloudProviderBuilder) *CloudRegionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.cloudProvider = value
 	if value != nil {
 		b.fieldSet_[6] = true
@@ -114,6 +135,9 @@ func (b *CloudRegionBuilder) CloudProvider(value *v1.CloudProviderBuilder) *Clou
 
 // DisplayName sets the value of the 'display_name' attribute to the given value.
 func (b *CloudRegionBuilder) DisplayName(value string) *CloudRegionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.displayName = value
 	b.fieldSet_[7] = true
 	return b
@@ -121,6 +145,9 @@ func (b *CloudRegionBuilder) DisplayName(value string) *CloudRegionBuilder {
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *CloudRegionBuilder) Enabled(value bool) *CloudRegionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.enabled = value
 	b.fieldSet_[8] = true
 	return b
@@ -128,6 +155,9 @@ func (b *CloudRegionBuilder) Enabled(value bool) *CloudRegionBuilder {
 
 // GovCloud sets the value of the 'gov_cloud' attribute to the given value.
 func (b *CloudRegionBuilder) GovCloud(value bool) *CloudRegionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.govCloud = value
 	b.fieldSet_[9] = true
 	return b
@@ -135,6 +165,9 @@ func (b *CloudRegionBuilder) GovCloud(value bool) *CloudRegionBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *CloudRegionBuilder) Name(value string) *CloudRegionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.name = value
 	b.fieldSet_[10] = true
 	return b
@@ -142,6 +175,9 @@ func (b *CloudRegionBuilder) Name(value string) *CloudRegionBuilder {
 
 // SupportsHypershift sets the value of the 'supports_hypershift' attribute to the given value.
 func (b *CloudRegionBuilder) SupportsHypershift(value bool) *CloudRegionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.supportsHypershift = value
 	b.fieldSet_[11] = true
 	return b
@@ -149,6 +185,9 @@ func (b *CloudRegionBuilder) SupportsHypershift(value bool) *CloudRegionBuilder 
 
 // SupportsMultiAZ sets the value of the 'supports_multi_AZ' attribute to the given value.
 func (b *CloudRegionBuilder) SupportsMultiAZ(value bool) *CloudRegionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 13)
+	}
 	b.supportsMultiAZ = value
 	b.fieldSet_[12] = true
 	return b

@@ -47,6 +47,9 @@ func (b *StsSupportJumpRoleBuilder) Empty() bool {
 
 // RoleArn sets the value of the 'role_arn' attribute to the given value.
 func (b *StsSupportJumpRoleBuilder) RoleArn(value string) *StsSupportJumpRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.roleArn = value
 	b.fieldSet_[0] = true
 	return b

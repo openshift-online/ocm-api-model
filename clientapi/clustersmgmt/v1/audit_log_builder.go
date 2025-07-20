@@ -47,6 +47,9 @@ func (b *AuditLogBuilder) Empty() bool {
 
 // RoleArn sets the value of the 'role_arn' attribute to the given value.
 func (b *AuditLogBuilder) RoleArn(value string) *AuditLogBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.roleArn = value
 	b.fieldSet_[0] = true
 	return b

@@ -48,6 +48,9 @@ func (b *AWSVolumeBuilder) Empty() bool {
 
 // IOPS sets the value of the 'IOPS' attribute to the given value.
 func (b *AWSVolumeBuilder) IOPS(value int) *AWSVolumeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.iops = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *AWSVolumeBuilder) IOPS(value int) *AWSVolumeBuilder {
 
 // Size sets the value of the 'size' attribute to the given value.
 func (b *AWSVolumeBuilder) Size(value int) *AWSVolumeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.size = value
 	b.fieldSet_[1] = true
 	return b

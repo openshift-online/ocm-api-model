@@ -38,12 +38,18 @@ func NewGenericNotifyDetailsResponse() *GenericNotifyDetailsResponseBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *GenericNotifyDetailsResponseBuilder) Link(value bool) *GenericNotifyDetailsResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *GenericNotifyDetailsResponseBuilder) ID(value string) *GenericNotifyDetailsResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -51,6 +57,9 @@ func (b *GenericNotifyDetailsResponseBuilder) ID(value string) *GenericNotifyDet
 
 // HREF sets the link to the object.
 func (b *GenericNotifyDetailsResponseBuilder) HREF(value string) *GenericNotifyDetailsResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *GenericNotifyDetailsResponseBuilder) Empty() bool {
 
 // Associates sets the value of the 'associates' attribute to the given values.
 func (b *GenericNotifyDetailsResponseBuilder) Associates(values ...string) *GenericNotifyDetailsResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.associates = make([]string, len(values))
 	copy(b.associates, values)
 	b.fieldSet_[3] = true
@@ -80,6 +92,9 @@ func (b *GenericNotifyDetailsResponseBuilder) Associates(values ...string) *Gene
 
 // Items sets the value of the 'items' attribute to the given values.
 func (b *GenericNotifyDetailsResponseBuilder) Items(values ...*NotificationDetailsResponseBuilder) *GenericNotifyDetailsResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.items = make([]*NotificationDetailsResponseBuilder, len(values))
 	copy(b.items, values)
 	b.fieldSet_[4] = true
@@ -88,6 +103,9 @@ func (b *GenericNotifyDetailsResponseBuilder) Items(values ...*NotificationDetai
 
 // Recipients sets the value of the 'recipients' attribute to the given values.
 func (b *GenericNotifyDetailsResponseBuilder) Recipients(values ...string) *GenericNotifyDetailsResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.recipients = make([]string, len(values))
 	copy(b.recipients, values)
 	b.fieldSet_[5] = true

@@ -53,6 +53,9 @@ func (b *AccessReviewRequestBuilder) Empty() bool {
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *AccessReviewRequestBuilder) AccountUsername(value string) *AccessReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.accountUsername = value
 	b.fieldSet_[0] = true
 	return b
@@ -60,6 +63,9 @@ func (b *AccessReviewRequestBuilder) AccountUsername(value string) *AccessReview
 
 // Action sets the value of the 'action' attribute to the given value.
 func (b *AccessReviewRequestBuilder) Action(value string) *AccessReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.action = value
 	b.fieldSet_[1] = true
 	return b
@@ -67,6 +73,9 @@ func (b *AccessReviewRequestBuilder) Action(value string) *AccessReviewRequestBu
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *AccessReviewRequestBuilder) ClusterID(value string) *AccessReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.clusterID = value
 	b.fieldSet_[2] = true
 	return b
@@ -74,6 +83,9 @@ func (b *AccessReviewRequestBuilder) ClusterID(value string) *AccessReviewReques
 
 // ClusterUUID sets the value of the 'cluster_UUID' attribute to the given value.
 func (b *AccessReviewRequestBuilder) ClusterUUID(value string) *AccessReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.clusterUUID = value
 	b.fieldSet_[3] = true
 	return b
@@ -81,6 +93,9 @@ func (b *AccessReviewRequestBuilder) ClusterUUID(value string) *AccessReviewRequ
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *AccessReviewRequestBuilder) OrganizationID(value string) *AccessReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.organizationID = value
 	b.fieldSet_[4] = true
 	return b
@@ -88,6 +103,9 @@ func (b *AccessReviewRequestBuilder) OrganizationID(value string) *AccessReviewR
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *AccessReviewRequestBuilder) ResourceType(value string) *AccessReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.resourceType = value
 	b.fieldSet_[5] = true
 	return b
@@ -95,6 +113,9 @@ func (b *AccessReviewRequestBuilder) ResourceType(value string) *AccessReviewReq
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *AccessReviewRequestBuilder) SubscriptionID(value string) *AccessReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.subscriptionID = value
 	b.fieldSet_[6] = true
 	return b

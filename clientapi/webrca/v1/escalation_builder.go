@@ -43,12 +43,18 @@ func NewEscalation() *EscalationBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *EscalationBuilder) Link(value bool) *EscalationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *EscalationBuilder) ID(value string) *EscalationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -56,6 +62,9 @@ func (b *EscalationBuilder) ID(value string) *EscalationBuilder {
 
 // HREF sets the link to the object.
 func (b *EscalationBuilder) HREF(value string) *EscalationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -77,6 +86,9 @@ func (b *EscalationBuilder) Empty() bool {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *EscalationBuilder) CreatedAt(value time.Time) *EscalationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.createdAt = value
 	b.fieldSet_[3] = true
 	return b
@@ -84,6 +96,9 @@ func (b *EscalationBuilder) CreatedAt(value time.Time) *EscalationBuilder {
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *EscalationBuilder) DeletedAt(value time.Time) *EscalationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.deletedAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -91,6 +106,9 @@ func (b *EscalationBuilder) DeletedAt(value time.Time) *EscalationBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *EscalationBuilder) UpdatedAt(value time.Time) *EscalationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.updatedAt = value
 	b.fieldSet_[5] = true
 	return b
@@ -100,6 +118,9 @@ func (b *EscalationBuilder) UpdatedAt(value time.Time) *EscalationBuilder {
 //
 // Definition of a Web RCA user.
 func (b *EscalationBuilder) User(value *UserBuilder) *EscalationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.user = value
 	if value != nil {
 		b.fieldSet_[6] = true

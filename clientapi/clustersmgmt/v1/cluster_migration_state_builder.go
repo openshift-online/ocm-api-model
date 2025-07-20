@@ -48,6 +48,9 @@ func (b *ClusterMigrationStateBuilder) Empty() bool {
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *ClusterMigrationStateBuilder) Description(value string) *ClusterMigrationStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.description = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *ClusterMigrationStateBuilder) Description(value string) *ClusterMigrati
 //
 // The state of the cluster migration.
 func (b *ClusterMigrationStateBuilder) Value(value ClusterMigrationStateValue) *ClusterMigrationStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.value = value
 	b.fieldSet_[1] = true
 	return b

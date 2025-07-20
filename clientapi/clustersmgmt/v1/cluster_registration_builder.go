@@ -69,6 +69,9 @@ func (b *ClusterRegistrationBuilder) Empty() bool {
 
 // ConsoleUrl sets the value of the 'console_url' attribute to the given value.
 func (b *ClusterRegistrationBuilder) ConsoleUrl(value string) *ClusterRegistrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.consoleUrl = value
 	b.fieldSet_[0] = true
 	return b
@@ -76,6 +79,9 @@ func (b *ClusterRegistrationBuilder) ConsoleUrl(value string) *ClusterRegistrati
 
 // ExternalID sets the value of the 'external_ID' attribute to the given value.
 func (b *ClusterRegistrationBuilder) ExternalID(value string) *ClusterRegistrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.externalID = value
 	b.fieldSet_[1] = true
 	return b
@@ -83,6 +89,9 @@ func (b *ClusterRegistrationBuilder) ExternalID(value string) *ClusterRegistrati
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *ClusterRegistrationBuilder) OrganizationID(value string) *ClusterRegistrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.organizationID = value
 	b.fieldSet_[2] = true
 	return b
@@ -90,6 +99,9 @@ func (b *ClusterRegistrationBuilder) OrganizationID(value string) *ClusterRegist
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *ClusterRegistrationBuilder) SubscriptionID(value string) *ClusterRegistrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.subscriptionID = value
 	b.fieldSet_[3] = true
 	return b

@@ -48,6 +48,9 @@ func (b *MonitoringStackResourceBuilder) Empty() bool {
 
 // Cpu sets the value of the 'cpu' attribute to the given value.
 func (b *MonitoringStackResourceBuilder) Cpu(value string) *MonitoringStackResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.cpu = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *MonitoringStackResourceBuilder) Cpu(value string) *MonitoringStackResou
 
 // Memory sets the value of the 'memory' attribute to the given value.
 func (b *MonitoringStackResourceBuilder) Memory(value string) *MonitoringStackResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.memory = value
 	b.fieldSet_[1] = true
 	return b

@@ -36,12 +36,18 @@ func NewLimitedSupportReasonOverride() *LimitedSupportReasonOverrideBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *LimitedSupportReasonOverrideBuilder) Link(value bool) *LimitedSupportReasonOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *LimitedSupportReasonOverrideBuilder) ID(value string) *LimitedSupportReasonOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -49,6 +55,9 @@ func (b *LimitedSupportReasonOverrideBuilder) ID(value string) *LimitedSupportRe
 
 // HREF sets the link to the object.
 func (b *LimitedSupportReasonOverrideBuilder) HREF(value string) *LimitedSupportReasonOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -70,6 +79,9 @@ func (b *LimitedSupportReasonOverrideBuilder) Empty() bool {
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *LimitedSupportReasonOverrideBuilder) Enabled(value bool) *LimitedSupportReasonOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.enabled = value
 	b.fieldSet_[3] = true
 	return b

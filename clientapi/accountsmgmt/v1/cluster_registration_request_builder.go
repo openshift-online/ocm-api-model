@@ -47,6 +47,9 @@ func (b *ClusterRegistrationRequestBuilder) Empty() bool {
 
 // AuthorizationToken sets the value of the 'authorization_token' attribute to the given value.
 func (b *ClusterRegistrationRequestBuilder) AuthorizationToken(value string) *ClusterRegistrationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.authorizationToken = value
 	b.fieldSet_[0] = true
 	return b
@@ -54,6 +57,9 @@ func (b *ClusterRegistrationRequestBuilder) AuthorizationToken(value string) *Cl
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *ClusterRegistrationRequestBuilder) ClusterID(value string) *ClusterRegistrationRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.clusterID = value
 	b.fieldSet_[1] = true
 	return b

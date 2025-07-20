@@ -56,6 +56,9 @@ func (b *AccessReviewResponseBuilder) Empty() bool {
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *AccessReviewResponseBuilder) AccountUsername(value string) *AccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.accountUsername = value
 	b.fieldSet_[0] = true
 	return b
@@ -63,6 +66,9 @@ func (b *AccessReviewResponseBuilder) AccountUsername(value string) *AccessRevie
 
 // Action sets the value of the 'action' attribute to the given value.
 func (b *AccessReviewResponseBuilder) Action(value string) *AccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.action = value
 	b.fieldSet_[1] = true
 	return b
@@ -70,6 +76,9 @@ func (b *AccessReviewResponseBuilder) Action(value string) *AccessReviewResponse
 
 // Allowed sets the value of the 'allowed' attribute to the given value.
 func (b *AccessReviewResponseBuilder) Allowed(value bool) *AccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.allowed = value
 	b.fieldSet_[2] = true
 	return b
@@ -77,6 +86,9 @@ func (b *AccessReviewResponseBuilder) Allowed(value bool) *AccessReviewResponseB
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *AccessReviewResponseBuilder) ClusterID(value string) *AccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.clusterID = value
 	b.fieldSet_[3] = true
 	return b
@@ -84,6 +96,9 @@ func (b *AccessReviewResponseBuilder) ClusterID(value string) *AccessReviewRespo
 
 // ClusterUUID sets the value of the 'cluster_UUID' attribute to the given value.
 func (b *AccessReviewResponseBuilder) ClusterUUID(value string) *AccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.clusterUUID = value
 	b.fieldSet_[4] = true
 	return b
@@ -91,6 +106,9 @@ func (b *AccessReviewResponseBuilder) ClusterUUID(value string) *AccessReviewRes
 
 // IsOCMInternal sets the value of the 'is_OCM_internal' attribute to the given value.
 func (b *AccessReviewResponseBuilder) IsOCMInternal(value bool) *AccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.isOCMInternal = value
 	b.fieldSet_[5] = true
 	return b
@@ -98,6 +116,9 @@ func (b *AccessReviewResponseBuilder) IsOCMInternal(value bool) *AccessReviewRes
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *AccessReviewResponseBuilder) OrganizationID(value string) *AccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.organizationID = value
 	b.fieldSet_[6] = true
 	return b
@@ -105,6 +126,9 @@ func (b *AccessReviewResponseBuilder) OrganizationID(value string) *AccessReview
 
 // Reason sets the value of the 'reason' attribute to the given value.
 func (b *AccessReviewResponseBuilder) Reason(value string) *AccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.reason = value
 	b.fieldSet_[7] = true
 	return b
@@ -112,6 +136,9 @@ func (b *AccessReviewResponseBuilder) Reason(value string) *AccessReviewResponse
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *AccessReviewResponseBuilder) ResourceType(value string) *AccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.resourceType = value
 	b.fieldSet_[8] = true
 	return b
@@ -119,6 +146,9 @@ func (b *AccessReviewResponseBuilder) ResourceType(value string) *AccessReviewRe
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *AccessReviewResponseBuilder) SubscriptionID(value string) *AccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.subscriptionID = value
 	b.fieldSet_[9] = true
 	return b

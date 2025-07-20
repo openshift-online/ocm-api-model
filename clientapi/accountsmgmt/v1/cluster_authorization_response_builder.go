@@ -48,6 +48,9 @@ func (b *ClusterAuthorizationResponseBuilder) Empty() bool {
 
 // Allowed sets the value of the 'allowed' attribute to the given value.
 func (b *ClusterAuthorizationResponseBuilder) Allowed(value bool) *ClusterAuthorizationResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.allowed = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *ClusterAuthorizationResponseBuilder) Allowed(value bool) *ClusterAuthor
 
 // ExcessResources sets the value of the 'excess_resources' attribute to the given values.
 func (b *ClusterAuthorizationResponseBuilder) ExcessResources(values ...*ReservedResourceBuilder) *ClusterAuthorizationResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.excessResources = make([]*ReservedResourceBuilder, len(values))
 	copy(b.excessResources, values)
 	b.fieldSet_[1] = true
@@ -63,6 +69,9 @@ func (b *ClusterAuthorizationResponseBuilder) ExcessResources(values ...*Reserve
 
 // Subscription sets the value of the 'subscription' attribute to the given value.
 func (b *ClusterAuthorizationResponseBuilder) Subscription(value *SubscriptionBuilder) *ClusterAuthorizationResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.subscription = value
 	if value != nil {
 		b.fieldSet_[2] = true

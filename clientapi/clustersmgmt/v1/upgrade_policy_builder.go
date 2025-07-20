@@ -46,12 +46,18 @@ func NewUpgradePolicy() *UpgradePolicyBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *UpgradePolicyBuilder) Link(value bool) *UpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *UpgradePolicyBuilder) ID(value string) *UpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -59,6 +65,9 @@ func (b *UpgradePolicyBuilder) ID(value string) *UpgradePolicyBuilder {
 
 // HREF sets the link to the object.
 func (b *UpgradePolicyBuilder) HREF(value string) *UpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -80,6 +89,9 @@ func (b *UpgradePolicyBuilder) Empty() bool {
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *UpgradePolicyBuilder) ClusterID(value string) *UpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.clusterID = value
 	b.fieldSet_[3] = true
 	return b
@@ -87,6 +99,9 @@ func (b *UpgradePolicyBuilder) ClusterID(value string) *UpgradePolicyBuilder {
 
 // EnableMinorVersionUpgrades sets the value of the 'enable_minor_version_upgrades' attribute to the given value.
 func (b *UpgradePolicyBuilder) EnableMinorVersionUpgrades(value bool) *UpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.enableMinorVersionUpgrades = value
 	b.fieldSet_[4] = true
 	return b
@@ -94,6 +109,9 @@ func (b *UpgradePolicyBuilder) EnableMinorVersionUpgrades(value bool) *UpgradePo
 
 // NextRun sets the value of the 'next_run' attribute to the given value.
 func (b *UpgradePolicyBuilder) NextRun(value time.Time) *UpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.nextRun = value
 	b.fieldSet_[5] = true
 	return b
@@ -101,6 +119,9 @@ func (b *UpgradePolicyBuilder) NextRun(value time.Time) *UpgradePolicyBuilder {
 
 // Schedule sets the value of the 'schedule' attribute to the given value.
 func (b *UpgradePolicyBuilder) Schedule(value string) *UpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.schedule = value
 	b.fieldSet_[6] = true
 	return b
@@ -110,6 +131,9 @@ func (b *UpgradePolicyBuilder) Schedule(value string) *UpgradePolicyBuilder {
 //
 // ScheduleType defines which type of scheduling should be used for the upgrade policy.
 func (b *UpgradePolicyBuilder) ScheduleType(value ScheduleType) *UpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.scheduleType = value
 	b.fieldSet_[7] = true
 	return b
@@ -119,6 +143,9 @@ func (b *UpgradePolicyBuilder) ScheduleType(value ScheduleType) *UpgradePolicyBu
 //
 // UpgradeType defines which type of upgrade should be used.
 func (b *UpgradePolicyBuilder) UpgradeType(value UpgradeType) *UpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.upgradeType = value
 	b.fieldSet_[8] = true
 	return b
@@ -126,6 +153,9 @@ func (b *UpgradePolicyBuilder) UpgradeType(value UpgradeType) *UpgradePolicyBuil
 
 // Version sets the value of the 'version' attribute to the given value.
 func (b *UpgradePolicyBuilder) Version(value string) *UpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.version = value
 	b.fieldSet_[9] = true
 	return b

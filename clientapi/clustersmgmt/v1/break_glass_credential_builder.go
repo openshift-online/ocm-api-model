@@ -44,12 +44,18 @@ func NewBreakGlassCredential() *BreakGlassCredentialBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *BreakGlassCredentialBuilder) Link(value bool) *BreakGlassCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *BreakGlassCredentialBuilder) ID(value string) *BreakGlassCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -57,6 +63,9 @@ func (b *BreakGlassCredentialBuilder) ID(value string) *BreakGlassCredentialBuil
 
 // HREF sets the link to the object.
 func (b *BreakGlassCredentialBuilder) HREF(value string) *BreakGlassCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -78,6 +87,9 @@ func (b *BreakGlassCredentialBuilder) Empty() bool {
 
 // ExpirationTimestamp sets the value of the 'expiration_timestamp' attribute to the given value.
 func (b *BreakGlassCredentialBuilder) ExpirationTimestamp(value time.Time) *BreakGlassCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.expirationTimestamp = value
 	b.fieldSet_[3] = true
 	return b
@@ -85,6 +97,9 @@ func (b *BreakGlassCredentialBuilder) ExpirationTimestamp(value time.Time) *Brea
 
 // Kubeconfig sets the value of the 'kubeconfig' attribute to the given value.
 func (b *BreakGlassCredentialBuilder) Kubeconfig(value string) *BreakGlassCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.kubeconfig = value
 	b.fieldSet_[4] = true
 	return b
@@ -92,6 +107,9 @@ func (b *BreakGlassCredentialBuilder) Kubeconfig(value string) *BreakGlassCreden
 
 // RevocationTimestamp sets the value of the 'revocation_timestamp' attribute to the given value.
 func (b *BreakGlassCredentialBuilder) RevocationTimestamp(value time.Time) *BreakGlassCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.revocationTimestamp = value
 	b.fieldSet_[5] = true
 	return b
@@ -101,6 +119,9 @@ func (b *BreakGlassCredentialBuilder) RevocationTimestamp(value time.Time) *Brea
 //
 // Status of the break glass credential.
 func (b *BreakGlassCredentialBuilder) Status(value BreakGlassCredentialStatus) *BreakGlassCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.status = value
 	b.fieldSet_[6] = true
 	return b
@@ -108,6 +129,9 @@ func (b *BreakGlassCredentialBuilder) Status(value BreakGlassCredentialStatus) *
 
 // Username sets the value of the 'username' attribute to the given value.
 func (b *BreakGlassCredentialBuilder) Username(value string) *BreakGlassCredentialBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.username = value
 	b.fieldSet_[7] = true
 	return b

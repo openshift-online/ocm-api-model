@@ -48,6 +48,9 @@ func (b *RolePolicyBuilder) Empty() bool {
 
 // Arn sets the value of the 'arn' attribute to the given value.
 func (b *RolePolicyBuilder) Arn(value string) *RolePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.arn = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *RolePolicyBuilder) Arn(value string) *RolePolicyBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *RolePolicyBuilder) Name(value string) *RolePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.name = value
 	b.fieldSet_[1] = true
 	return b
@@ -62,6 +68,9 @@ func (b *RolePolicyBuilder) Name(value string) *RolePolicyBuilder {
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *RolePolicyBuilder) Type(value string) *RolePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.type_ = value
 	b.fieldSet_[2] = true
 	return b

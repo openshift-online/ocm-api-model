@@ -52,12 +52,18 @@ func NewFollowUp() *FollowUpBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *FollowUpBuilder) Link(value bool) *FollowUpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *FollowUpBuilder) ID(value string) *FollowUpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -65,6 +71,9 @@ func (b *FollowUpBuilder) ID(value string) *FollowUpBuilder {
 
 // HREF sets the link to the object.
 func (b *FollowUpBuilder) HREF(value string) *FollowUpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -86,6 +95,9 @@ func (b *FollowUpBuilder) Empty() bool {
 
 // Archived sets the value of the 'archived' attribute to the given value.
 func (b *FollowUpBuilder) Archived(value bool) *FollowUpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.archived = value
 	b.fieldSet_[3] = true
 	return b
@@ -93,6 +105,9 @@ func (b *FollowUpBuilder) Archived(value bool) *FollowUpBuilder {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *FollowUpBuilder) CreatedAt(value time.Time) *FollowUpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.createdAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -100,6 +115,9 @@ func (b *FollowUpBuilder) CreatedAt(value time.Time) *FollowUpBuilder {
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *FollowUpBuilder) DeletedAt(value time.Time) *FollowUpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.deletedAt = value
 	b.fieldSet_[5] = true
 	return b
@@ -107,6 +125,9 @@ func (b *FollowUpBuilder) DeletedAt(value time.Time) *FollowUpBuilder {
 
 // Done sets the value of the 'done' attribute to the given value.
 func (b *FollowUpBuilder) Done(value bool) *FollowUpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.done = value
 	b.fieldSet_[6] = true
 	return b
@@ -114,6 +135,9 @@ func (b *FollowUpBuilder) Done(value bool) *FollowUpBuilder {
 
 // FollowUpType sets the value of the 'follow_up_type' attribute to the given value.
 func (b *FollowUpBuilder) FollowUpType(value string) *FollowUpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.followUpType = value
 	b.fieldSet_[7] = true
 	return b
@@ -123,6 +147,9 @@ func (b *FollowUpBuilder) FollowUpType(value string) *FollowUpBuilder {
 //
 // Definition of a Web RCA incident.
 func (b *FollowUpBuilder) Incident(value *IncidentBuilder) *FollowUpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.incident = value
 	if value != nil {
 		b.fieldSet_[8] = true
@@ -134,6 +161,9 @@ func (b *FollowUpBuilder) Incident(value *IncidentBuilder) *FollowUpBuilder {
 
 // Owner sets the value of the 'owner' attribute to the given value.
 func (b *FollowUpBuilder) Owner(value string) *FollowUpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.owner = value
 	b.fieldSet_[9] = true
 	return b
@@ -141,6 +171,9 @@ func (b *FollowUpBuilder) Owner(value string) *FollowUpBuilder {
 
 // Priority sets the value of the 'priority' attribute to the given value.
 func (b *FollowUpBuilder) Priority(value string) *FollowUpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.priority = value
 	b.fieldSet_[10] = true
 	return b
@@ -148,6 +181,9 @@ func (b *FollowUpBuilder) Priority(value string) *FollowUpBuilder {
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *FollowUpBuilder) Status(value string) *FollowUpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.status = value
 	b.fieldSet_[11] = true
 	return b
@@ -155,6 +191,9 @@ func (b *FollowUpBuilder) Status(value string) *FollowUpBuilder {
 
 // Title sets the value of the 'title' attribute to the given value.
 func (b *FollowUpBuilder) Title(value string) *FollowUpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.title = value
 	b.fieldSet_[12] = true
 	return b
@@ -162,6 +201,9 @@ func (b *FollowUpBuilder) Title(value string) *FollowUpBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *FollowUpBuilder) UpdatedAt(value time.Time) *FollowUpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.updatedAt = value
 	b.fieldSet_[13] = true
 	return b
@@ -169,6 +211,9 @@ func (b *FollowUpBuilder) UpdatedAt(value time.Time) *FollowUpBuilder {
 
 // Url sets the value of the 'url' attribute to the given value.
 func (b *FollowUpBuilder) Url(value string) *FollowUpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.url = value
 	b.fieldSet_[14] = true
 	return b
@@ -176,6 +221,9 @@ func (b *FollowUpBuilder) Url(value string) *FollowUpBuilder {
 
 // WorkedAt sets the value of the 'worked_at' attribute to the given value.
 func (b *FollowUpBuilder) WorkedAt(value time.Time) *FollowUpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.workedAt = value
 	b.fieldSet_[15] = true
 	return b

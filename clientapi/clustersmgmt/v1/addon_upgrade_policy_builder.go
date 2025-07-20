@@ -46,12 +46,18 @@ func NewAddonUpgradePolicy() *AddonUpgradePolicyBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddonUpgradePolicyBuilder) Link(value bool) *AddonUpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddonUpgradePolicyBuilder) ID(value string) *AddonUpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -59,6 +65,9 @@ func (b *AddonUpgradePolicyBuilder) ID(value string) *AddonUpgradePolicyBuilder 
 
 // HREF sets the link to the object.
 func (b *AddonUpgradePolicyBuilder) HREF(value string) *AddonUpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -80,6 +89,9 @@ func (b *AddonUpgradePolicyBuilder) Empty() bool {
 
 // AddonID sets the value of the 'addon_ID' attribute to the given value.
 func (b *AddonUpgradePolicyBuilder) AddonID(value string) *AddonUpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.addonID = value
 	b.fieldSet_[3] = true
 	return b
@@ -87,6 +99,9 @@ func (b *AddonUpgradePolicyBuilder) AddonID(value string) *AddonUpgradePolicyBui
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *AddonUpgradePolicyBuilder) ClusterID(value string) *AddonUpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.clusterID = value
 	b.fieldSet_[4] = true
 	return b
@@ -94,6 +109,9 @@ func (b *AddonUpgradePolicyBuilder) ClusterID(value string) *AddonUpgradePolicyB
 
 // NextRun sets the value of the 'next_run' attribute to the given value.
 func (b *AddonUpgradePolicyBuilder) NextRun(value time.Time) *AddonUpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.nextRun = value
 	b.fieldSet_[5] = true
 	return b
@@ -101,6 +119,9 @@ func (b *AddonUpgradePolicyBuilder) NextRun(value time.Time) *AddonUpgradePolicy
 
 // Schedule sets the value of the 'schedule' attribute to the given value.
 func (b *AddonUpgradePolicyBuilder) Schedule(value string) *AddonUpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.schedule = value
 	b.fieldSet_[6] = true
 	return b
@@ -108,6 +129,9 @@ func (b *AddonUpgradePolicyBuilder) Schedule(value string) *AddonUpgradePolicyBu
 
 // ScheduleType sets the value of the 'schedule_type' attribute to the given value.
 func (b *AddonUpgradePolicyBuilder) ScheduleType(value string) *AddonUpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.scheduleType = value
 	b.fieldSet_[7] = true
 	return b
@@ -115,6 +139,9 @@ func (b *AddonUpgradePolicyBuilder) ScheduleType(value string) *AddonUpgradePoli
 
 // UpgradeType sets the value of the 'upgrade_type' attribute to the given value.
 func (b *AddonUpgradePolicyBuilder) UpgradeType(value string) *AddonUpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.upgradeType = value
 	b.fieldSet_[8] = true
 	return b
@@ -122,6 +149,9 @@ func (b *AddonUpgradePolicyBuilder) UpgradeType(value string) *AddonUpgradePolic
 
 // Version sets the value of the 'version' attribute to the given value.
 func (b *AddonUpgradePolicyBuilder) Version(value string) *AddonUpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.version = value
 	b.fieldSet_[9] = true
 	return b

@@ -49,6 +49,9 @@ func (b *SdnToOvnClusterMigrationBuilder) Empty() bool {
 
 // JoinIpv4 sets the value of the 'join_ipv_4' attribute to the given value.
 func (b *SdnToOvnClusterMigrationBuilder) JoinIpv4(value string) *SdnToOvnClusterMigrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.joinIpv4 = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *SdnToOvnClusterMigrationBuilder) JoinIpv4(value string) *SdnToOvnCluste
 
 // MasqueradeIpv4 sets the value of the 'masquerade_ipv_4' attribute to the given value.
 func (b *SdnToOvnClusterMigrationBuilder) MasqueradeIpv4(value string) *SdnToOvnClusterMigrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.masqueradeIpv4 = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *SdnToOvnClusterMigrationBuilder) MasqueradeIpv4(value string) *SdnToOvn
 
 // TransitIpv4 sets the value of the 'transit_ipv_4' attribute to the given value.
 func (b *SdnToOvnClusterMigrationBuilder) TransitIpv4(value string) *SdnToOvnClusterMigrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.transitIpv4 = value
 	b.fieldSet_[2] = true
 	return b

@@ -48,12 +48,18 @@ func NewVersionGate() *VersionGateBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *VersionGateBuilder) Link(value bool) *VersionGateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *VersionGateBuilder) ID(value string) *VersionGateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -61,6 +67,9 @@ func (b *VersionGateBuilder) ID(value string) *VersionGateBuilder {
 
 // HREF sets the link to the object.
 func (b *VersionGateBuilder) HREF(value string) *VersionGateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -82,6 +91,9 @@ func (b *VersionGateBuilder) Empty() bool {
 
 // STSOnly sets the value of the 'STS_only' attribute to the given value.
 func (b *VersionGateBuilder) STSOnly(value bool) *VersionGateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.stsOnly = value
 	b.fieldSet_[3] = true
 	return b
@@ -89,6 +101,9 @@ func (b *VersionGateBuilder) STSOnly(value bool) *VersionGateBuilder {
 
 // ClusterCondition sets the value of the 'cluster_condition' attribute to the given value.
 func (b *VersionGateBuilder) ClusterCondition(value string) *VersionGateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.clusterCondition = value
 	b.fieldSet_[4] = true
 	return b
@@ -96,6 +111,9 @@ func (b *VersionGateBuilder) ClusterCondition(value string) *VersionGateBuilder 
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *VersionGateBuilder) CreationTimestamp(value time.Time) *VersionGateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.creationTimestamp = value
 	b.fieldSet_[5] = true
 	return b
@@ -103,6 +121,9 @@ func (b *VersionGateBuilder) CreationTimestamp(value time.Time) *VersionGateBuil
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *VersionGateBuilder) Description(value string) *VersionGateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.description = value
 	b.fieldSet_[6] = true
 	return b
@@ -110,6 +131,9 @@ func (b *VersionGateBuilder) Description(value string) *VersionGateBuilder {
 
 // DocumentationURL sets the value of the 'documentation_URL' attribute to the given value.
 func (b *VersionGateBuilder) DocumentationURL(value string) *VersionGateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.documentationURL = value
 	b.fieldSet_[7] = true
 	return b
@@ -117,6 +141,9 @@ func (b *VersionGateBuilder) DocumentationURL(value string) *VersionGateBuilder 
 
 // Label sets the value of the 'label' attribute to the given value.
 func (b *VersionGateBuilder) Label(value string) *VersionGateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.label = value
 	b.fieldSet_[8] = true
 	return b
@@ -124,6 +151,9 @@ func (b *VersionGateBuilder) Label(value string) *VersionGateBuilder {
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *VersionGateBuilder) Value(value string) *VersionGateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.value = value
 	b.fieldSet_[9] = true
 	return b
@@ -131,6 +161,9 @@ func (b *VersionGateBuilder) Value(value string) *VersionGateBuilder {
 
 // VersionRawIDPrefix sets the value of the 'version_raw_ID_prefix' attribute to the given value.
 func (b *VersionGateBuilder) VersionRawIDPrefix(value string) *VersionGateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.versionRawIDPrefix = value
 	b.fieldSet_[10] = true
 	return b
@@ -138,6 +171,9 @@ func (b *VersionGateBuilder) VersionRawIDPrefix(value string) *VersionGateBuilde
 
 // WarningMessage sets the value of the 'warning_message' attribute to the given value.
 func (b *VersionGateBuilder) WarningMessage(value string) *VersionGateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.warningMessage = value
 	b.fieldSet_[11] = true
 	return b

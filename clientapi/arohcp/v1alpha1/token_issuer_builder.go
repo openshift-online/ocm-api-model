@@ -49,6 +49,9 @@ func (b *TokenIssuerBuilder) Empty() bool {
 
 // CA sets the value of the 'CA' attribute to the given value.
 func (b *TokenIssuerBuilder) CA(value string) *TokenIssuerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.ca = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *TokenIssuerBuilder) CA(value string) *TokenIssuerBuilder {
 
 // URL sets the value of the 'URL' attribute to the given value.
 func (b *TokenIssuerBuilder) URL(value string) *TokenIssuerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.url = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *TokenIssuerBuilder) URL(value string) *TokenIssuerBuilder {
 
 // Audiences sets the value of the 'audiences' attribute to the given values.
 func (b *TokenIssuerBuilder) Audiences(values ...string) *TokenIssuerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.audiences = make([]string, len(values))
 	copy(b.audiences, values)
 	b.fieldSet_[2] = true

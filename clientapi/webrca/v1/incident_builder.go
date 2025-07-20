@@ -53,12 +53,18 @@ func NewIncident() *IncidentBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *IncidentBuilder) Link(value bool) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *IncidentBuilder) ID(value string) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -66,6 +72,9 @@ func (b *IncidentBuilder) ID(value string) *IncidentBuilder {
 
 // HREF sets the link to the object.
 func (b *IncidentBuilder) HREF(value string) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -87,6 +96,9 @@ func (b *IncidentBuilder) Empty() bool {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *IncidentBuilder) CreatedAt(value time.Time) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.createdAt = value
 	b.fieldSet_[3] = true
 	return b
@@ -94,6 +106,9 @@ func (b *IncidentBuilder) CreatedAt(value time.Time) *IncidentBuilder {
 
 // CreatorId sets the value of the 'creator_id' attribute to the given value.
 func (b *IncidentBuilder) CreatorId(value string) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.creatorId = value
 	b.fieldSet_[4] = true
 	return b
@@ -101,6 +116,9 @@ func (b *IncidentBuilder) CreatorId(value string) *IncidentBuilder {
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *IncidentBuilder) DeletedAt(value time.Time) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.deletedAt = value
 	b.fieldSet_[5] = true
 	return b
@@ -108,6 +126,9 @@ func (b *IncidentBuilder) DeletedAt(value time.Time) *IncidentBuilder {
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *IncidentBuilder) Description(value string) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.description = value
 	b.fieldSet_[6] = true
 	return b
@@ -115,6 +136,9 @@ func (b *IncidentBuilder) Description(value string) *IncidentBuilder {
 
 // ExternalCoordination sets the value of the 'external_coordination' attribute to the given values.
 func (b *IncidentBuilder) ExternalCoordination(values ...string) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.externalCoordination = make([]string, len(values))
 	copy(b.externalCoordination, values)
 	b.fieldSet_[7] = true
@@ -123,6 +147,9 @@ func (b *IncidentBuilder) ExternalCoordination(values ...string) *IncidentBuilde
 
 // IncidentId sets the value of the 'incident_id' attribute to the given value.
 func (b *IncidentBuilder) IncidentId(value string) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.incidentId = value
 	b.fieldSet_[8] = true
 	return b
@@ -130,6 +157,9 @@ func (b *IncidentBuilder) IncidentId(value string) *IncidentBuilder {
 
 // IncidentType sets the value of the 'incident_type' attribute to the given value.
 func (b *IncidentBuilder) IncidentType(value string) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.incidentType = value
 	b.fieldSet_[9] = true
 	return b
@@ -137,6 +167,9 @@ func (b *IncidentBuilder) IncidentType(value string) *IncidentBuilder {
 
 // LastUpdated sets the value of the 'last_updated' attribute to the given value.
 func (b *IncidentBuilder) LastUpdated(value time.Time) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.lastUpdated = value
 	b.fieldSet_[10] = true
 	return b
@@ -144,6 +177,9 @@ func (b *IncidentBuilder) LastUpdated(value time.Time) *IncidentBuilder {
 
 // PrimaryTeam sets the value of the 'primary_team' attribute to the given value.
 func (b *IncidentBuilder) PrimaryTeam(value string) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.primaryTeam = value
 	b.fieldSet_[11] = true
 	return b
@@ -151,6 +187,9 @@ func (b *IncidentBuilder) PrimaryTeam(value string) *IncidentBuilder {
 
 // Severity sets the value of the 'severity' attribute to the given value.
 func (b *IncidentBuilder) Severity(value string) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.severity = value
 	b.fieldSet_[12] = true
 	return b
@@ -158,6 +197,9 @@ func (b *IncidentBuilder) Severity(value string) *IncidentBuilder {
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *IncidentBuilder) Status(value string) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.status = value
 	b.fieldSet_[13] = true
 	return b
@@ -165,6 +207,9 @@ func (b *IncidentBuilder) Status(value string) *IncidentBuilder {
 
 // Summary sets the value of the 'summary' attribute to the given value.
 func (b *IncidentBuilder) Summary(value string) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.summary = value
 	b.fieldSet_[14] = true
 	return b
@@ -172,6 +217,9 @@ func (b *IncidentBuilder) Summary(value string) *IncidentBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *IncidentBuilder) UpdatedAt(value time.Time) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.updatedAt = value
 	b.fieldSet_[15] = true
 	return b
@@ -179,6 +227,9 @@ func (b *IncidentBuilder) UpdatedAt(value time.Time) *IncidentBuilder {
 
 // WorkedAt sets the value of the 'worked_at' attribute to the given value.
 func (b *IncidentBuilder) WorkedAt(value time.Time) *IncidentBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.workedAt = value
 	b.fieldSet_[16] = true
 	return b

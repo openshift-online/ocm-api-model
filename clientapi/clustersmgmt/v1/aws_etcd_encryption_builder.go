@@ -47,6 +47,9 @@ func (b *AwsEtcdEncryptionBuilder) Empty() bool {
 
 // KMSKeyARN sets the value of the 'KMS_key_ARN' attribute to the given value.
 func (b *AwsEtcdEncryptionBuilder) KMSKeyARN(value string) *AwsEtcdEncryptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.kmsKeyARN = value
 	b.fieldSet_[0] = true
 	return b

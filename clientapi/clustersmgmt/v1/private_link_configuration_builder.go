@@ -49,6 +49,9 @@ func (b *PrivateLinkConfigurationBuilder) Empty() bool {
 //
 // Contains a list of principals for the Private Link.
 func (b *PrivateLinkConfigurationBuilder) Principals(value *PrivateLinkPrincipalsBuilder) *PrivateLinkConfigurationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.principals = value
 	if value != nil {
 		b.fieldSet_[0] = true

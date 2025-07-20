@@ -48,6 +48,9 @@ func (b *ExternalAuthStatusBuilder) Empty() bool {
 
 // Message sets the value of the 'message' attribute to the given value.
 func (b *ExternalAuthStatusBuilder) Message(value string) *ExternalAuthStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.message = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *ExternalAuthStatusBuilder) Message(value string) *ExternalAuthStatusBui
 //
 // Representation of the state of an external authentication provider.
 func (b *ExternalAuthStatusBuilder) State(value *ExternalAuthStateBuilder) *ExternalAuthStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.state = value
 	if value != nil {
 		b.fieldSet_[1] = true

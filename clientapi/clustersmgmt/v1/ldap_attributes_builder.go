@@ -50,6 +50,9 @@ func (b *LDAPAttributesBuilder) Empty() bool {
 
 // ID sets the value of the 'ID' attribute to the given values.
 func (b *LDAPAttributesBuilder) ID(values ...string) *LDAPAttributesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = make([]string, len(values))
 	copy(b.id, values)
 	b.fieldSet_[0] = true
@@ -58,6 +61,9 @@ func (b *LDAPAttributesBuilder) ID(values ...string) *LDAPAttributesBuilder {
 
 // Email sets the value of the 'email' attribute to the given values.
 func (b *LDAPAttributesBuilder) Email(values ...string) *LDAPAttributesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.email = make([]string, len(values))
 	copy(b.email, values)
 	b.fieldSet_[1] = true
@@ -66,6 +72,9 @@ func (b *LDAPAttributesBuilder) Email(values ...string) *LDAPAttributesBuilder {
 
 // Name sets the value of the 'name' attribute to the given values.
 func (b *LDAPAttributesBuilder) Name(values ...string) *LDAPAttributesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.name = make([]string, len(values))
 	copy(b.name, values)
 	b.fieldSet_[2] = true
@@ -74,6 +83,9 @@ func (b *LDAPAttributesBuilder) Name(values ...string) *LDAPAttributesBuilder {
 
 // PreferredUsername sets the value of the 'preferred_username' attribute to the given values.
 func (b *LDAPAttributesBuilder) PreferredUsername(values ...string) *LDAPAttributesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.preferredUsername = make([]string, len(values))
 	copy(b.preferredUsername, values)
 	b.fieldSet_[3] = true

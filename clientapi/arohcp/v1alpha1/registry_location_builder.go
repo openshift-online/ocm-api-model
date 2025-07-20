@@ -49,6 +49,9 @@ func (b *RegistryLocationBuilder) Empty() bool {
 
 // DomainName sets the value of the 'domain_name' attribute to the given value.
 func (b *RegistryLocationBuilder) DomainName(value string) *RegistryLocationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.domainName = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *RegistryLocationBuilder) DomainName(value string) *RegistryLocationBuil
 
 // Insecure sets the value of the 'insecure' attribute to the given value.
 func (b *RegistryLocationBuilder) Insecure(value bool) *RegistryLocationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.insecure = value
 	b.fieldSet_[1] = true
 	return b

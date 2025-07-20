@@ -52,6 +52,9 @@ func (b *WifGcpBuilder) Empty() bool {
 
 // ImpersonatorEmail sets the value of the 'impersonator_email' attribute to the given value.
 func (b *WifGcpBuilder) ImpersonatorEmail(value string) *WifGcpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.impersonatorEmail = value
 	b.fieldSet_[0] = true
 	return b
@@ -59,6 +62,9 @@ func (b *WifGcpBuilder) ImpersonatorEmail(value string) *WifGcpBuilder {
 
 // ProjectId sets the value of the 'project_id' attribute to the given value.
 func (b *WifGcpBuilder) ProjectId(value string) *WifGcpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.projectId = value
 	b.fieldSet_[1] = true
 	return b
@@ -66,6 +72,9 @@ func (b *WifGcpBuilder) ProjectId(value string) *WifGcpBuilder {
 
 // ProjectNumber sets the value of the 'project_number' attribute to the given value.
 func (b *WifGcpBuilder) ProjectNumber(value string) *WifGcpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.projectNumber = value
 	b.fieldSet_[2] = true
 	return b
@@ -73,6 +82,9 @@ func (b *WifGcpBuilder) ProjectNumber(value string) *WifGcpBuilder {
 
 // RolePrefix sets the value of the 'role_prefix' attribute to the given value.
 func (b *WifGcpBuilder) RolePrefix(value string) *WifGcpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.rolePrefix = value
 	b.fieldSet_[3] = true
 	return b
@@ -80,6 +92,9 @@ func (b *WifGcpBuilder) RolePrefix(value string) *WifGcpBuilder {
 
 // ServiceAccounts sets the value of the 'service_accounts' attribute to the given values.
 func (b *WifGcpBuilder) ServiceAccounts(values ...*WifServiceAccountBuilder) *WifGcpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.serviceAccounts = make([]*WifServiceAccountBuilder, len(values))
 	copy(b.serviceAccounts, values)
 	b.fieldSet_[4] = true
@@ -88,6 +103,9 @@ func (b *WifGcpBuilder) ServiceAccounts(values ...*WifServiceAccountBuilder) *Wi
 
 // Support sets the value of the 'support' attribute to the given value.
 func (b *WifGcpBuilder) Support(value *WifSupportBuilder) *WifGcpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.support = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -99,6 +117,9 @@ func (b *WifGcpBuilder) Support(value *WifSupportBuilder) *WifGcpBuilder {
 
 // WorkloadIdentityPool sets the value of the 'workload_identity_pool' attribute to the given value.
 func (b *WifGcpBuilder) WorkloadIdentityPool(value *WifPoolBuilder) *WifGcpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.workloadIdentityPool = value
 	if value != nil {
 		b.fieldSet_[6] = true

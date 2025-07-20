@@ -39,12 +39,18 @@ func NewBillingModelItem() *BillingModelItemBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *BillingModelItemBuilder) Link(value bool) *BillingModelItemBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *BillingModelItemBuilder) ID(value string) *BillingModelItemBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -52,6 +58,9 @@ func (b *BillingModelItemBuilder) ID(value string) *BillingModelItemBuilder {
 
 // HREF sets the link to the object.
 func (b *BillingModelItemBuilder) HREF(value string) *BillingModelItemBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -73,6 +82,9 @@ func (b *BillingModelItemBuilder) Empty() bool {
 
 // BillingModelType sets the value of the 'billing_model_type' attribute to the given value.
 func (b *BillingModelItemBuilder) BillingModelType(value string) *BillingModelItemBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.billingModelType = value
 	b.fieldSet_[3] = true
 	return b
@@ -80,6 +92,9 @@ func (b *BillingModelItemBuilder) BillingModelType(value string) *BillingModelIt
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *BillingModelItemBuilder) Description(value string) *BillingModelItemBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.description = value
 	b.fieldSet_[4] = true
 	return b
@@ -87,6 +102,9 @@ func (b *BillingModelItemBuilder) Description(value string) *BillingModelItemBui
 
 // DisplayName sets the value of the 'display_name' attribute to the given value.
 func (b *BillingModelItemBuilder) DisplayName(value string) *BillingModelItemBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.displayName = value
 	b.fieldSet_[5] = true
 	return b
@@ -94,6 +112,9 @@ func (b *BillingModelItemBuilder) DisplayName(value string) *BillingModelItemBui
 
 // Marketplace sets the value of the 'marketplace' attribute to the given value.
 func (b *BillingModelItemBuilder) Marketplace(value string) *BillingModelItemBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.marketplace = value
 	b.fieldSet_[6] = true
 	return b

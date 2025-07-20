@@ -51,6 +51,9 @@ func (b *TermsReviewRequestBuilder) Empty() bool {
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *TermsReviewRequestBuilder) AccountUsername(value string) *TermsReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.accountUsername = value
 	b.fieldSet_[0] = true
 	return b
@@ -58,6 +61,9 @@ func (b *TermsReviewRequestBuilder) AccountUsername(value string) *TermsReviewRe
 
 // CheckOptionalTerms sets the value of the 'check_optional_terms' attribute to the given value.
 func (b *TermsReviewRequestBuilder) CheckOptionalTerms(value bool) *TermsReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.checkOptionalTerms = value
 	b.fieldSet_[1] = true
 	return b
@@ -65,6 +71,9 @@ func (b *TermsReviewRequestBuilder) CheckOptionalTerms(value bool) *TermsReviewR
 
 // EventCode sets the value of the 'event_code' attribute to the given value.
 func (b *TermsReviewRequestBuilder) EventCode(value string) *TermsReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.eventCode = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *TermsReviewRequestBuilder) EventCode(value string) *TermsReviewRequestB
 
 // SiteCode sets the value of the 'site_code' attribute to the given value.
 func (b *TermsReviewRequestBuilder) SiteCode(value string) *TermsReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.siteCode = value
 	b.fieldSet_[3] = true
 	return b

@@ -43,12 +43,18 @@ func NewSupportCaseResponse() *SupportCaseResponseBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *SupportCaseResponseBuilder) Link(value bool) *SupportCaseResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *SupportCaseResponseBuilder) ID(value string) *SupportCaseResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -56,6 +62,9 @@ func (b *SupportCaseResponseBuilder) ID(value string) *SupportCaseResponseBuilde
 
 // HREF sets the link to the object.
 func (b *SupportCaseResponseBuilder) HREF(value string) *SupportCaseResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -77,6 +86,9 @@ func (b *SupportCaseResponseBuilder) Empty() bool {
 
 // URI sets the value of the 'URI' attribute to the given value.
 func (b *SupportCaseResponseBuilder) URI(value string) *SupportCaseResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.uri = value
 	b.fieldSet_[3] = true
 	return b
@@ -84,6 +96,9 @@ func (b *SupportCaseResponseBuilder) URI(value string) *SupportCaseResponseBuild
 
 // CaseNumber sets the value of the 'case_number' attribute to the given value.
 func (b *SupportCaseResponseBuilder) CaseNumber(value string) *SupportCaseResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.caseNumber = value
 	b.fieldSet_[4] = true
 	return b
@@ -91,6 +106,9 @@ func (b *SupportCaseResponseBuilder) CaseNumber(value string) *SupportCaseRespon
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *SupportCaseResponseBuilder) ClusterId(value string) *SupportCaseResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.clusterId = value
 	b.fieldSet_[5] = true
 	return b
@@ -98,6 +116,9 @@ func (b *SupportCaseResponseBuilder) ClusterId(value string) *SupportCaseRespons
 
 // ClusterUuid sets the value of the 'cluster_uuid' attribute to the given value.
 func (b *SupportCaseResponseBuilder) ClusterUuid(value string) *SupportCaseResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.clusterUuid = value
 	b.fieldSet_[6] = true
 	return b
@@ -105,6 +126,9 @@ func (b *SupportCaseResponseBuilder) ClusterUuid(value string) *SupportCaseRespo
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *SupportCaseResponseBuilder) Description(value string) *SupportCaseResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.description = value
 	b.fieldSet_[7] = true
 	return b
@@ -112,6 +136,9 @@ func (b *SupportCaseResponseBuilder) Description(value string) *SupportCaseRespo
 
 // Severity sets the value of the 'severity' attribute to the given value.
 func (b *SupportCaseResponseBuilder) Severity(value string) *SupportCaseResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.severity = value
 	b.fieldSet_[8] = true
 	return b
@@ -119,6 +146,9 @@ func (b *SupportCaseResponseBuilder) Severity(value string) *SupportCaseResponse
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *SupportCaseResponseBuilder) Status(value string) *SupportCaseResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.status = value
 	b.fieldSet_[9] = true
 	return b
@@ -126,6 +156,9 @@ func (b *SupportCaseResponseBuilder) Status(value string) *SupportCaseResponseBu
 
 // SubscriptionId sets the value of the 'subscription_id' attribute to the given value.
 func (b *SupportCaseResponseBuilder) SubscriptionId(value string) *SupportCaseResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.subscriptionId = value
 	b.fieldSet_[10] = true
 	return b
@@ -133,6 +166,9 @@ func (b *SupportCaseResponseBuilder) SubscriptionId(value string) *SupportCaseRe
 
 // Summary sets the value of the 'summary' attribute to the given value.
 func (b *SupportCaseResponseBuilder) Summary(value string) *SupportCaseResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.summary = value
 	b.fieldSet_[11] = true
 	return b

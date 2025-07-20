@@ -47,6 +47,9 @@ func (b *AccessTokenAuthBuilder) Empty() bool {
 
 // Auth sets the value of the 'auth' attribute to the given value.
 func (b *AccessTokenAuthBuilder) Auth(value string) *AccessTokenAuthBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.auth = value
 	b.fieldSet_[0] = true
 	return b
@@ -54,6 +57,9 @@ func (b *AccessTokenAuthBuilder) Auth(value string) *AccessTokenAuthBuilder {
 
 // Email sets the value of the 'email' attribute to the given value.
 func (b *AccessTokenAuthBuilder) Email(value string) *AccessTokenAuthBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.email = value
 	b.fieldSet_[1] = true
 	return b

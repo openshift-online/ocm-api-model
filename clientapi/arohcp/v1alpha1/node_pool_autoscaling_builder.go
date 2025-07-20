@@ -37,12 +37,18 @@ func NewNodePoolAutoscaling() *NodePoolAutoscalingBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *NodePoolAutoscalingBuilder) Link(value bool) *NodePoolAutoscalingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *NodePoolAutoscalingBuilder) ID(value string) *NodePoolAutoscalingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *NodePoolAutoscalingBuilder) ID(value string) *NodePoolAutoscalingBuilde
 
 // HREF sets the link to the object.
 func (b *NodePoolAutoscalingBuilder) HREF(value string) *NodePoolAutoscalingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *NodePoolAutoscalingBuilder) Empty() bool {
 
 // MaxReplica sets the value of the 'max_replica' attribute to the given value.
 func (b *NodePoolAutoscalingBuilder) MaxReplica(value int) *NodePoolAutoscalingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.maxReplica = value
 	b.fieldSet_[3] = true
 	return b
@@ -78,6 +90,9 @@ func (b *NodePoolAutoscalingBuilder) MaxReplica(value int) *NodePoolAutoscalingB
 
 // MinReplica sets the value of the 'min_replica' attribute to the given value.
 func (b *NodePoolAutoscalingBuilder) MinReplica(value int) *NodePoolAutoscalingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.minReplica = value
 	b.fieldSet_[4] = true
 	return b

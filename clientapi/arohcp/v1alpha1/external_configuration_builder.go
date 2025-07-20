@@ -53,6 +53,9 @@ func (b *ExternalConfigurationBuilder) Empty() bool {
 
 // Labels sets the value of the 'labels' attribute to the given values.
 func (b *ExternalConfigurationBuilder) Labels(value *v1.LabelListBuilder) *ExternalConfigurationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.labels = value
 	b.fieldSet_[0] = true
 	return b
@@ -60,6 +63,9 @@ func (b *ExternalConfigurationBuilder) Labels(value *v1.LabelListBuilder) *Exter
 
 // Manifests sets the value of the 'manifests' attribute to the given values.
 func (b *ExternalConfigurationBuilder) Manifests(value *v1.ManifestListBuilder) *ExternalConfigurationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.manifests = value
 	b.fieldSet_[1] = true
 	return b
@@ -67,6 +73,9 @@ func (b *ExternalConfigurationBuilder) Manifests(value *v1.ManifestListBuilder) 
 
 // Syncsets sets the value of the 'syncsets' attribute to the given values.
 func (b *ExternalConfigurationBuilder) Syncsets(value *v1.SyncsetListBuilder) *ExternalConfigurationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.syncsets = value
 	b.fieldSet_[2] = true
 	return b

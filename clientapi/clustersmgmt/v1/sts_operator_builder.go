@@ -51,6 +51,9 @@ func (b *STSOperatorBuilder) Empty() bool {
 
 // MaxVersion sets the value of the 'max_version' attribute to the given value.
 func (b *STSOperatorBuilder) MaxVersion(value string) *STSOperatorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.maxVersion = value
 	b.fieldSet_[0] = true
 	return b
@@ -58,6 +61,9 @@ func (b *STSOperatorBuilder) MaxVersion(value string) *STSOperatorBuilder {
 
 // MinVersion sets the value of the 'min_version' attribute to the given value.
 func (b *STSOperatorBuilder) MinVersion(value string) *STSOperatorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.minVersion = value
 	b.fieldSet_[1] = true
 	return b
@@ -65,6 +71,9 @@ func (b *STSOperatorBuilder) MinVersion(value string) *STSOperatorBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *STSOperatorBuilder) Name(value string) *STSOperatorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.name = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *STSOperatorBuilder) Name(value string) *STSOperatorBuilder {
 
 // Namespace sets the value of the 'namespace' attribute to the given value.
 func (b *STSOperatorBuilder) Namespace(value string) *STSOperatorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.namespace = value
 	b.fieldSet_[3] = true
 	return b
@@ -79,6 +91,9 @@ func (b *STSOperatorBuilder) Namespace(value string) *STSOperatorBuilder {
 
 // ServiceAccounts sets the value of the 'service_accounts' attribute to the given values.
 func (b *STSOperatorBuilder) ServiceAccounts(values ...string) *STSOperatorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.serviceAccounts = make([]string, len(values))
 	copy(b.serviceAccounts, values)
 	b.fieldSet_[4] = true

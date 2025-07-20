@@ -50,6 +50,9 @@ func (b *AddOnSubOperatorBuilder) Empty() bool {
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddOnSubOperatorBuilder) Enabled(value bool) *AddOnSubOperatorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.enabled = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *AddOnSubOperatorBuilder) Enabled(value bool) *AddOnSubOperatorBuilder {
 
 // OperatorName sets the value of the 'operator_name' attribute to the given value.
 func (b *AddOnSubOperatorBuilder) OperatorName(value string) *AddOnSubOperatorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.operatorName = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *AddOnSubOperatorBuilder) OperatorName(value string) *AddOnSubOperatorBu
 
 // OperatorNamespace sets the value of the 'operator_namespace' attribute to the given value.
 func (b *AddOnSubOperatorBuilder) OperatorNamespace(value string) *AddOnSubOperatorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.operatorNamespace = value
 	b.fieldSet_[2] = true
 	return b

@@ -46,6 +46,9 @@ func (b *VersionInquiryResponseBuilder) Empty() bool {
 
 // Version sets the value of the 'version' attribute to the given value.
 func (b *VersionInquiryResponseBuilder) Version(value string) *VersionInquiryResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.version = value
 	b.fieldSet_[0] = true
 	return b

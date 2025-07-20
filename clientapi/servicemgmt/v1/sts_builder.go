@@ -52,6 +52,9 @@ func (b *STSBuilder) Empty() bool {
 
 // OIDCEndpointURL sets the value of the 'OIDC_endpoint_URL' attribute to the given value.
 func (b *STSBuilder) OIDCEndpointURL(value string) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.oidcEndpointURL = value
 	b.fieldSet_[0] = true
 	return b
@@ -61,6 +64,9 @@ func (b *STSBuilder) OIDCEndpointURL(value string) *STSBuilder {
 //
 // Contains the necessary attributes to support role-based authentication on AWS.
 func (b *STSBuilder) InstanceIAMRoles(value *InstanceIAMRolesBuilder) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.instanceIAMRoles = value
 	if value != nil {
 		b.fieldSet_[1] = true
@@ -72,6 +78,9 @@ func (b *STSBuilder) InstanceIAMRoles(value *InstanceIAMRolesBuilder) *STSBuilde
 
 // OperatorIAMRoles sets the value of the 'operator_IAM_roles' attribute to the given values.
 func (b *STSBuilder) OperatorIAMRoles(values ...*OperatorIAMRoleBuilder) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.operatorIAMRoles = make([]*OperatorIAMRoleBuilder, len(values))
 	copy(b.operatorIAMRoles, values)
 	b.fieldSet_[2] = true
@@ -80,6 +89,9 @@ func (b *STSBuilder) OperatorIAMRoles(values ...*OperatorIAMRoleBuilder) *STSBui
 
 // OperatorRolePrefix sets the value of the 'operator_role_prefix' attribute to the given value.
 func (b *STSBuilder) OperatorRolePrefix(value string) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.operatorRolePrefix = value
 	b.fieldSet_[3] = true
 	return b
@@ -87,6 +99,9 @@ func (b *STSBuilder) OperatorRolePrefix(value string) *STSBuilder {
 
 // RoleARN sets the value of the 'role_ARN' attribute to the given value.
 func (b *STSBuilder) RoleARN(value string) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.roleARN = value
 	b.fieldSet_[4] = true
 	return b
@@ -94,6 +109,9 @@ func (b *STSBuilder) RoleARN(value string) *STSBuilder {
 
 // SupportRoleARN sets the value of the 'support_role_ARN' attribute to the given value.
 func (b *STSBuilder) SupportRoleARN(value string) *STSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.supportRoleARN = value
 	b.fieldSet_[5] = true
 	return b

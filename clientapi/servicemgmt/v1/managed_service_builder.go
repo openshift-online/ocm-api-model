@@ -48,12 +48,18 @@ func NewManagedService() *ManagedServiceBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ManagedServiceBuilder) Link(value bool) *ManagedServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ManagedServiceBuilder) ID(value string) *ManagedServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -61,6 +67,9 @@ func (b *ManagedServiceBuilder) ID(value string) *ManagedServiceBuilder {
 
 // HREF sets the link to the object.
 func (b *ManagedServiceBuilder) HREF(value string) *ManagedServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -82,6 +91,9 @@ func (b *ManagedServiceBuilder) Empty() bool {
 
 // Addon sets the value of the 'addon' attribute to the given value.
 func (b *ManagedServiceBuilder) Addon(value *StatefulObjectBuilder) *ManagedServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.addon = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -95,6 +107,9 @@ func (b *ManagedServiceBuilder) Addon(value *StatefulObjectBuilder) *ManagedServ
 //
 // This represents the parameters needed by Managed Service to create a cluster.
 func (b *ManagedServiceBuilder) Cluster(value *ClusterBuilder) *ManagedServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.cluster = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -106,6 +121,9 @@ func (b *ManagedServiceBuilder) Cluster(value *ClusterBuilder) *ManagedServiceBu
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ManagedServiceBuilder) CreatedAt(value time.Time) *ManagedServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.createdAt = value
 	b.fieldSet_[5] = true
 	return b
@@ -113,6 +131,9 @@ func (b *ManagedServiceBuilder) CreatedAt(value time.Time) *ManagedServiceBuilde
 
 // ExpiredAt sets the value of the 'expired_at' attribute to the given value.
 func (b *ManagedServiceBuilder) ExpiredAt(value time.Time) *ManagedServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.expiredAt = value
 	b.fieldSet_[6] = true
 	return b
@@ -120,6 +141,9 @@ func (b *ManagedServiceBuilder) ExpiredAt(value time.Time) *ManagedServiceBuilde
 
 // Parameters sets the value of the 'parameters' attribute to the given values.
 func (b *ManagedServiceBuilder) Parameters(values ...*ServiceParameterBuilder) *ManagedServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.parameters = make([]*ServiceParameterBuilder, len(values))
 	copy(b.parameters, values)
 	b.fieldSet_[7] = true
@@ -128,6 +152,9 @@ func (b *ManagedServiceBuilder) Parameters(values ...*ServiceParameterBuilder) *
 
 // Resources sets the value of the 'resources' attribute to the given values.
 func (b *ManagedServiceBuilder) Resources(values ...*StatefulObjectBuilder) *ManagedServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.resources = make([]*StatefulObjectBuilder, len(values))
 	copy(b.resources, values)
 	b.fieldSet_[8] = true
@@ -136,6 +163,9 @@ func (b *ManagedServiceBuilder) Resources(values ...*StatefulObjectBuilder) *Man
 
 // Service sets the value of the 'service' attribute to the given value.
 func (b *ManagedServiceBuilder) Service(value string) *ManagedServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.service = value
 	b.fieldSet_[9] = true
 	return b
@@ -143,6 +173,9 @@ func (b *ManagedServiceBuilder) Service(value string) *ManagedServiceBuilder {
 
 // ServiceState sets the value of the 'service_state' attribute to the given value.
 func (b *ManagedServiceBuilder) ServiceState(value string) *ManagedServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.serviceState = value
 	b.fieldSet_[10] = true
 	return b
@@ -150,6 +183,9 @@ func (b *ManagedServiceBuilder) ServiceState(value string) *ManagedServiceBuilde
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ManagedServiceBuilder) UpdatedAt(value time.Time) *ManagedServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.updatedAt = value
 	b.fieldSet_[11] = true
 	return b

@@ -35,12 +35,18 @@ func NewFeatureToggle() *FeatureToggleBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *FeatureToggleBuilder) Link(value bool) *FeatureToggleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *FeatureToggleBuilder) ID(value string) *FeatureToggleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -48,6 +54,9 @@ func (b *FeatureToggleBuilder) ID(value string) *FeatureToggleBuilder {
 
 // HREF sets the link to the object.
 func (b *FeatureToggleBuilder) HREF(value string) *FeatureToggleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -69,6 +78,9 @@ func (b *FeatureToggleBuilder) Empty() bool {
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *FeatureToggleBuilder) Enabled(value bool) *FeatureToggleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.enabled = value
 	b.fieldSet_[3] = true
 	return b

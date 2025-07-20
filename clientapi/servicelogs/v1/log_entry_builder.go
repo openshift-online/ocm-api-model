@@ -53,12 +53,18 @@ func NewLogEntry() *LogEntryBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *LogEntryBuilder) Link(value bool) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *LogEntryBuilder) ID(value string) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -66,6 +72,9 @@ func (b *LogEntryBuilder) ID(value string) *LogEntryBuilder {
 
 // HREF sets the link to the object.
 func (b *LogEntryBuilder) HREF(value string) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -87,6 +96,9 @@ func (b *LogEntryBuilder) Empty() bool {
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *LogEntryBuilder) ClusterID(value string) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.clusterID = value
 	b.fieldSet_[3] = true
 	return b
@@ -94,6 +106,9 @@ func (b *LogEntryBuilder) ClusterID(value string) *LogEntryBuilder {
 
 // ClusterUUID sets the value of the 'cluster_UUID' attribute to the given value.
 func (b *LogEntryBuilder) ClusterUUID(value string) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.clusterUUID = value
 	b.fieldSet_[4] = true
 	return b
@@ -101,6 +116,9 @@ func (b *LogEntryBuilder) ClusterUUID(value string) *LogEntryBuilder {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *LogEntryBuilder) CreatedAt(value time.Time) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.createdAt = value
 	b.fieldSet_[5] = true
 	return b
@@ -108,6 +126,9 @@ func (b *LogEntryBuilder) CreatedAt(value time.Time) *LogEntryBuilder {
 
 // CreatedBy sets the value of the 'created_by' attribute to the given value.
 func (b *LogEntryBuilder) CreatedBy(value string) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.createdBy = value
 	b.fieldSet_[6] = true
 	return b
@@ -115,6 +136,9 @@ func (b *LogEntryBuilder) CreatedBy(value string) *LogEntryBuilder {
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *LogEntryBuilder) Description(value string) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.description = value
 	b.fieldSet_[7] = true
 	return b
@@ -122,6 +146,9 @@ func (b *LogEntryBuilder) Description(value string) *LogEntryBuilder {
 
 // DocReferences sets the value of the 'doc_references' attribute to the given values.
 func (b *LogEntryBuilder) DocReferences(values ...string) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.docReferences = make([]string, len(values))
 	copy(b.docReferences, values)
 	b.fieldSet_[8] = true
@@ -130,6 +157,9 @@ func (b *LogEntryBuilder) DocReferences(values ...string) *LogEntryBuilder {
 
 // EventStreamID sets the value of the 'event_stream_ID' attribute to the given value.
 func (b *LogEntryBuilder) EventStreamID(value string) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.eventStreamID = value
 	b.fieldSet_[9] = true
 	return b
@@ -137,6 +167,9 @@ func (b *LogEntryBuilder) EventStreamID(value string) *LogEntryBuilder {
 
 // InternalOnly sets the value of the 'internal_only' attribute to the given value.
 func (b *LogEntryBuilder) InternalOnly(value bool) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.internalOnly = value
 	b.fieldSet_[10] = true
 	return b
@@ -146,6 +179,9 @@ func (b *LogEntryBuilder) InternalOnly(value bool) *LogEntryBuilder {
 //
 // Representation of the log type field used in cluster log type model.
 func (b *LogEntryBuilder) LogType(value LogType) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.logType = value
 	b.fieldSet_[11] = true
 	return b
@@ -153,6 +189,9 @@ func (b *LogEntryBuilder) LogType(value LogType) *LogEntryBuilder {
 
 // ServiceName sets the value of the 'service_name' attribute to the given value.
 func (b *LogEntryBuilder) ServiceName(value string) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.serviceName = value
 	b.fieldSet_[12] = true
 	return b
@@ -160,6 +199,9 @@ func (b *LogEntryBuilder) ServiceName(value string) *LogEntryBuilder {
 
 // Severity sets the value of the 'severity' attribute to the given value.
 func (b *LogEntryBuilder) Severity(value Severity) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.severity = value
 	b.fieldSet_[13] = true
 	return b
@@ -167,6 +209,9 @@ func (b *LogEntryBuilder) Severity(value Severity) *LogEntryBuilder {
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *LogEntryBuilder) SubscriptionID(value string) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.subscriptionID = value
 	b.fieldSet_[14] = true
 	return b
@@ -174,6 +219,9 @@ func (b *LogEntryBuilder) SubscriptionID(value string) *LogEntryBuilder {
 
 // Summary sets the value of the 'summary' attribute to the given value.
 func (b *LogEntryBuilder) Summary(value string) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.summary = value
 	b.fieldSet_[15] = true
 	return b
@@ -181,6 +229,9 @@ func (b *LogEntryBuilder) Summary(value string) *LogEntryBuilder {
 
 // Timestamp sets the value of the 'timestamp' attribute to the given value.
 func (b *LogEntryBuilder) Timestamp(value time.Time) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.timestamp = value
 	b.fieldSet_[16] = true
 	return b
@@ -188,6 +239,9 @@ func (b *LogEntryBuilder) Timestamp(value time.Time) *LogEntryBuilder {
 
 // Username sets the value of the 'username' attribute to the given value.
 func (b *LogEntryBuilder) Username(value string) *LogEntryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 18)
+	}
 	b.username = value
 	b.fieldSet_[17] = true
 	return b

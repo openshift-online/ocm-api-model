@@ -47,6 +47,9 @@ func (b *GCPMachinePoolBuilder) Empty() bool {
 
 // SecureBoot sets the value of the 'secure_boot' attribute to the given value.
 func (b *GCPMachinePoolBuilder) SecureBoot(value bool) *GCPMachinePoolBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.secureBoot = value
 	b.fieldSet_[0] = true
 	return b

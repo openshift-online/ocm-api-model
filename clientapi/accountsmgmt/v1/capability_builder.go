@@ -49,6 +49,9 @@ func (b *CapabilityBuilder) Empty() bool {
 
 // Inherited sets the value of the 'inherited' attribute to the given value.
 func (b *CapabilityBuilder) Inherited(value bool) *CapabilityBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.inherited = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *CapabilityBuilder) Inherited(value bool) *CapabilityBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *CapabilityBuilder) Name(value string) *CapabilityBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.name = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *CapabilityBuilder) Name(value string) *CapabilityBuilder {
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *CapabilityBuilder) Value(value string) *CapabilityBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.value = value
 	b.fieldSet_[2] = true
 	return b

@@ -42,12 +42,18 @@ func NewAMIOverride() *AMIOverrideBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AMIOverrideBuilder) Link(value bool) *AMIOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AMIOverrideBuilder) ID(value string) *AMIOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -55,6 +61,9 @@ func (b *AMIOverrideBuilder) ID(value string) *AMIOverrideBuilder {
 
 // HREF sets the link to the object.
 func (b *AMIOverrideBuilder) HREF(value string) *AMIOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -76,6 +85,9 @@ func (b *AMIOverrideBuilder) Empty() bool {
 
 // AMI sets the value of the 'AMI' attribute to the given value.
 func (b *AMIOverrideBuilder) AMI(value string) *AMIOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.ami = value
 	b.fieldSet_[3] = true
 	return b
@@ -85,6 +97,9 @@ func (b *AMIOverrideBuilder) AMI(value string) *AMIOverrideBuilder {
 //
 // Representation of an product that can be selected as a cluster type.
 func (b *AMIOverrideBuilder) Product(value *v1.ProductBuilder) *AMIOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.product = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -98,6 +113,9 @@ func (b *AMIOverrideBuilder) Product(value *v1.ProductBuilder) *AMIOverrideBuild
 //
 // Description of a region of a cloud provider.
 func (b *AMIOverrideBuilder) Region(value *v1.CloudRegionBuilder) *AMIOverrideBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.region = value
 	if value != nil {
 		b.fieldSet_[5] = true

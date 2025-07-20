@@ -44,12 +44,18 @@ func NewResourceQuota() *ResourceQuotaBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ResourceQuotaBuilder) Link(value bool) *ResourceQuotaBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ResourceQuotaBuilder) ID(value string) *ResourceQuotaBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -57,6 +63,9 @@ func (b *ResourceQuotaBuilder) ID(value string) *ResourceQuotaBuilder {
 
 // HREF sets the link to the object.
 func (b *ResourceQuotaBuilder) HREF(value string) *ResourceQuotaBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -78,6 +87,9 @@ func (b *ResourceQuotaBuilder) Empty() bool {
 
 // SKU sets the value of the 'SKU' attribute to the given value.
 func (b *ResourceQuotaBuilder) SKU(value string) *ResourceQuotaBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.sku = value
 	b.fieldSet_[3] = true
 	return b
@@ -85,6 +97,9 @@ func (b *ResourceQuotaBuilder) SKU(value string) *ResourceQuotaBuilder {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ResourceQuotaBuilder) CreatedAt(value time.Time) *ResourceQuotaBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.createdAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -92,6 +107,9 @@ func (b *ResourceQuotaBuilder) CreatedAt(value time.Time) *ResourceQuotaBuilder 
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *ResourceQuotaBuilder) OrganizationID(value string) *ResourceQuotaBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.organizationID = value
 	b.fieldSet_[5] = true
 	return b
@@ -99,6 +117,9 @@ func (b *ResourceQuotaBuilder) OrganizationID(value string) *ResourceQuotaBuilde
 
 // SkuCount sets the value of the 'sku_count' attribute to the given value.
 func (b *ResourceQuotaBuilder) SkuCount(value int) *ResourceQuotaBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.skuCount = value
 	b.fieldSet_[6] = true
 	return b
@@ -106,6 +127,9 @@ func (b *ResourceQuotaBuilder) SkuCount(value int) *ResourceQuotaBuilder {
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *ResourceQuotaBuilder) Type(value string) *ResourceQuotaBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.type_ = value
 	b.fieldSet_[7] = true
 	return b
@@ -113,6 +137,9 @@ func (b *ResourceQuotaBuilder) Type(value string) *ResourceQuotaBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ResourceQuotaBuilder) UpdatedAt(value time.Time) *ResourceQuotaBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.updatedAt = value
 	b.fieldSet_[8] = true
 	return b

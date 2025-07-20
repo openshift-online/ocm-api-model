@@ -47,12 +47,18 @@ func NewApplicationDependency() *ApplicationDependencyBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ApplicationDependencyBuilder) Link(value bool) *ApplicationDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ApplicationDependencyBuilder) ID(value string) *ApplicationDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -60,6 +66,9 @@ func (b *ApplicationDependencyBuilder) ID(value string) *ApplicationDependencyBu
 
 // HREF sets the link to the object.
 func (b *ApplicationDependencyBuilder) HREF(value string) *ApplicationDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -83,6 +92,9 @@ func (b *ApplicationDependencyBuilder) Empty() bool {
 //
 // Definition of a Status Board application.
 func (b *ApplicationDependencyBuilder) Application(value *ApplicationBuilder) *ApplicationDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.application = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -94,6 +106,9 @@ func (b *ApplicationDependencyBuilder) Application(value *ApplicationBuilder) *A
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ApplicationDependencyBuilder) CreatedAt(value time.Time) *ApplicationDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.createdAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -101,6 +116,9 @@ func (b *ApplicationDependencyBuilder) CreatedAt(value time.Time) *ApplicationDe
 
 // Metadata sets the value of the 'metadata' attribute to the given value.
 func (b *ApplicationDependencyBuilder) Metadata(value interface{}) *ApplicationDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.metadata = value
 	b.fieldSet_[5] = true
 	return b
@@ -108,6 +126,9 @@ func (b *ApplicationDependencyBuilder) Metadata(value interface{}) *ApplicationD
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ApplicationDependencyBuilder) Name(value string) *ApplicationDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.name = value
 	b.fieldSet_[6] = true
 	return b
@@ -115,6 +136,9 @@ func (b *ApplicationDependencyBuilder) Name(value string) *ApplicationDependency
 
 // Owners sets the value of the 'owners' attribute to the given values.
 func (b *ApplicationDependencyBuilder) Owners(values ...*OwnerBuilder) *ApplicationDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.owners = make([]*OwnerBuilder, len(values))
 	copy(b.owners, values)
 	b.fieldSet_[7] = true
@@ -125,6 +149,9 @@ func (b *ApplicationDependencyBuilder) Owners(values ...*OwnerBuilder) *Applicat
 //
 // Definition of a Status Board Service.
 func (b *ApplicationDependencyBuilder) Service(value *ServiceBuilder) *ApplicationDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.service = value
 	if value != nil {
 		b.fieldSet_[8] = true
@@ -136,6 +163,9 @@ func (b *ApplicationDependencyBuilder) Service(value *ServiceBuilder) *Applicati
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *ApplicationDependencyBuilder) Type(value string) *ApplicationDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.type_ = value
 	b.fieldSet_[9] = true
 	return b
@@ -143,6 +173,9 @@ func (b *ApplicationDependencyBuilder) Type(value string) *ApplicationDependency
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ApplicationDependencyBuilder) UpdatedAt(value time.Time) *ApplicationDependencyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.updatedAt = value
 	b.fieldSet_[10] = true
 	return b

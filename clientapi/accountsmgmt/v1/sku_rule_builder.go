@@ -38,12 +38,18 @@ func NewSkuRule() *SkuRuleBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *SkuRuleBuilder) Link(value bool) *SkuRuleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *SkuRuleBuilder) ID(value string) *SkuRuleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -51,6 +57,9 @@ func (b *SkuRuleBuilder) ID(value string) *SkuRuleBuilder {
 
 // HREF sets the link to the object.
 func (b *SkuRuleBuilder) HREF(value string) *SkuRuleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *SkuRuleBuilder) Empty() bool {
 
 // Allowed sets the value of the 'allowed' attribute to the given value.
 func (b *SkuRuleBuilder) Allowed(value int) *SkuRuleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.allowed = value
 	b.fieldSet_[3] = true
 	return b
@@ -79,6 +91,9 @@ func (b *SkuRuleBuilder) Allowed(value int) *SkuRuleBuilder {
 
 // QuotaId sets the value of the 'quota_id' attribute to the given value.
 func (b *SkuRuleBuilder) QuotaId(value string) *SkuRuleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.quotaId = value
 	b.fieldSet_[4] = true
 	return b
@@ -86,6 +101,9 @@ func (b *SkuRuleBuilder) QuotaId(value string) *SkuRuleBuilder {
 
 // Sku sets the value of the 'sku' attribute to the given value.
 func (b *SkuRuleBuilder) Sku(value string) *SkuRuleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.sku = value
 	b.fieldSet_[5] = true
 	return b

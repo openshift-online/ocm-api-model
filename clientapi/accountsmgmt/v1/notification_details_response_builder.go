@@ -37,12 +37,18 @@ func NewNotificationDetailsResponse() *NotificationDetailsResponseBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *NotificationDetailsResponseBuilder) Link(value bool) *NotificationDetailsResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *NotificationDetailsResponseBuilder) ID(value string) *NotificationDetailsResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *NotificationDetailsResponseBuilder) ID(value string) *NotificationDetai
 
 // HREF sets the link to the object.
 func (b *NotificationDetailsResponseBuilder) HREF(value string) *NotificationDetailsResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *NotificationDetailsResponseBuilder) Empty() bool {
 
 // Key sets the value of the 'key' attribute to the given value.
 func (b *NotificationDetailsResponseBuilder) Key(value string) *NotificationDetailsResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.key = value
 	b.fieldSet_[3] = true
 	return b
@@ -78,6 +90,9 @@ func (b *NotificationDetailsResponseBuilder) Key(value string) *NotificationDeta
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *NotificationDetailsResponseBuilder) Value(value string) *NotificationDetailsResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.value = value
 	b.fieldSet_[4] = true
 	return b

@@ -46,12 +46,18 @@ func NewApplication() *ApplicationBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ApplicationBuilder) Link(value bool) *ApplicationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ApplicationBuilder) ID(value string) *ApplicationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -59,6 +65,9 @@ func (b *ApplicationBuilder) ID(value string) *ApplicationBuilder {
 
 // HREF sets the link to the object.
 func (b *ApplicationBuilder) HREF(value string) *ApplicationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -80,6 +89,9 @@ func (b *ApplicationBuilder) Empty() bool {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ApplicationBuilder) CreatedAt(value time.Time) *ApplicationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.createdAt = value
 	b.fieldSet_[3] = true
 	return b
@@ -87,6 +99,9 @@ func (b *ApplicationBuilder) CreatedAt(value time.Time) *ApplicationBuilder {
 
 // Fullname sets the value of the 'fullname' attribute to the given value.
 func (b *ApplicationBuilder) Fullname(value string) *ApplicationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.fullname = value
 	b.fieldSet_[4] = true
 	return b
@@ -94,6 +109,9 @@ func (b *ApplicationBuilder) Fullname(value string) *ApplicationBuilder {
 
 // Metadata sets the value of the 'metadata' attribute to the given value.
 func (b *ApplicationBuilder) Metadata(value interface{}) *ApplicationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.metadata = value
 	b.fieldSet_[5] = true
 	return b
@@ -101,6 +119,9 @@ func (b *ApplicationBuilder) Metadata(value interface{}) *ApplicationBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ApplicationBuilder) Name(value string) *ApplicationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.name = value
 	b.fieldSet_[6] = true
 	return b
@@ -108,6 +129,9 @@ func (b *ApplicationBuilder) Name(value string) *ApplicationBuilder {
 
 // Owners sets the value of the 'owners' attribute to the given values.
 func (b *ApplicationBuilder) Owners(values ...*OwnerBuilder) *ApplicationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.owners = make([]*OwnerBuilder, len(values))
 	copy(b.owners, values)
 	b.fieldSet_[7] = true
@@ -118,6 +142,9 @@ func (b *ApplicationBuilder) Owners(values ...*OwnerBuilder) *ApplicationBuilder
 //
 // Definition of a Status Board product.
 func (b *ApplicationBuilder) Product(value *ProductBuilder) *ApplicationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.product = value
 	if value != nil {
 		b.fieldSet_[8] = true
@@ -129,6 +156,9 @@ func (b *ApplicationBuilder) Product(value *ProductBuilder) *ApplicationBuilder 
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ApplicationBuilder) UpdatedAt(value time.Time) *ApplicationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.updatedAt = value
 	b.fieldSet_[9] = true
 	return b

@@ -46,12 +46,18 @@ func NewUser() *UserBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *UserBuilder) Link(value bool) *UserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *UserBuilder) ID(value string) *UserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -59,6 +65,9 @@ func (b *UserBuilder) ID(value string) *UserBuilder {
 
 // HREF sets the link to the object.
 func (b *UserBuilder) HREF(value string) *UserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -80,6 +89,9 @@ func (b *UserBuilder) Empty() bool {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *UserBuilder) CreatedAt(value time.Time) *UserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.createdAt = value
 	b.fieldSet_[3] = true
 	return b
@@ -87,6 +99,9 @@ func (b *UserBuilder) CreatedAt(value time.Time) *UserBuilder {
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *UserBuilder) DeletedAt(value time.Time) *UserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.deletedAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -94,6 +109,9 @@ func (b *UserBuilder) DeletedAt(value time.Time) *UserBuilder {
 
 // Email sets the value of the 'email' attribute to the given value.
 func (b *UserBuilder) Email(value string) *UserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.email = value
 	b.fieldSet_[5] = true
 	return b
@@ -101,6 +119,9 @@ func (b *UserBuilder) Email(value string) *UserBuilder {
 
 // FromAuth sets the value of the 'from_auth' attribute to the given value.
 func (b *UserBuilder) FromAuth(value bool) *UserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.fromAuth = value
 	b.fieldSet_[6] = true
 	return b
@@ -108,6 +129,9 @@ func (b *UserBuilder) FromAuth(value bool) *UserBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *UserBuilder) Name(value string) *UserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.name = value
 	b.fieldSet_[7] = true
 	return b
@@ -115,6 +139,9 @@ func (b *UserBuilder) Name(value string) *UserBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *UserBuilder) UpdatedAt(value time.Time) *UserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.updatedAt = value
 	b.fieldSet_[8] = true
 	return b
@@ -122,6 +149,9 @@ func (b *UserBuilder) UpdatedAt(value time.Time) *UserBuilder {
 
 // Username sets the value of the 'username' attribute to the given value.
 func (b *UserBuilder) Username(value string) *UserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.username = value
 	b.fieldSet_[9] = true
 	return b

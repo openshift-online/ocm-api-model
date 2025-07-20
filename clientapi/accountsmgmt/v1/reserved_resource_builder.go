@@ -59,6 +59,9 @@ func (b *ReservedResourceBuilder) Empty() bool {
 
 // BYOC sets the value of the 'BYOC' attribute to the given value.
 func (b *ReservedResourceBuilder) BYOC(value bool) *ReservedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.byoc = value
 	b.fieldSet_[0] = true
 	return b
@@ -66,6 +69,9 @@ func (b *ReservedResourceBuilder) BYOC(value bool) *ReservedResourceBuilder {
 
 // AvailabilityZoneType sets the value of the 'availability_zone_type' attribute to the given value.
 func (b *ReservedResourceBuilder) AvailabilityZoneType(value string) *ReservedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.availabilityZoneType = value
 	b.fieldSet_[1] = true
 	return b
@@ -73,6 +79,9 @@ func (b *ReservedResourceBuilder) AvailabilityZoneType(value string) *ReservedRe
 
 // BillingMarketplaceAccount sets the value of the 'billing_marketplace_account' attribute to the given value.
 func (b *ReservedResourceBuilder) BillingMarketplaceAccount(value string) *ReservedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.billingMarketplaceAccount = value
 	b.fieldSet_[2] = true
 	return b
@@ -82,6 +91,9 @@ func (b *ReservedResourceBuilder) BillingMarketplaceAccount(value string) *Reser
 //
 // Billing model for subscripiton and reserved_resource resources.
 func (b *ReservedResourceBuilder) BillingModel(value BillingModel) *ReservedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.billingModel = value
 	b.fieldSet_[3] = true
 	return b
@@ -89,6 +101,9 @@ func (b *ReservedResourceBuilder) BillingModel(value BillingModel) *ReservedReso
 
 // Count sets the value of the 'count' attribute to the given value.
 func (b *ReservedResourceBuilder) Count(value int) *ReservedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.count = value
 	b.fieldSet_[4] = true
 	return b
@@ -96,6 +111,9 @@ func (b *ReservedResourceBuilder) Count(value int) *ReservedResourceBuilder {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ReservedResourceBuilder) CreatedAt(value time.Time) *ReservedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.createdAt = value
 	b.fieldSet_[5] = true
 	return b
@@ -103,6 +121,9 @@ func (b *ReservedResourceBuilder) CreatedAt(value time.Time) *ReservedResourceBu
 
 // ResourceName sets the value of the 'resource_name' attribute to the given value.
 func (b *ReservedResourceBuilder) ResourceName(value string) *ReservedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.resourceName = value
 	b.fieldSet_[6] = true
 	return b
@@ -110,6 +131,9 @@ func (b *ReservedResourceBuilder) ResourceName(value string) *ReservedResourceBu
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *ReservedResourceBuilder) ResourceType(value string) *ReservedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.resourceType = value
 	b.fieldSet_[7] = true
 	return b
@@ -117,6 +141,9 @@ func (b *ReservedResourceBuilder) ResourceType(value string) *ReservedResourceBu
 
 // Scope sets the value of the 'scope' attribute to the given value.
 func (b *ReservedResourceBuilder) Scope(value string) *ReservedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.scope = value
 	b.fieldSet_[8] = true
 	return b
@@ -124,6 +151,9 @@ func (b *ReservedResourceBuilder) Scope(value string) *ReservedResourceBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ReservedResourceBuilder) UpdatedAt(value time.Time) *ReservedResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.updatedAt = value
 	b.fieldSet_[9] = true
 	return b

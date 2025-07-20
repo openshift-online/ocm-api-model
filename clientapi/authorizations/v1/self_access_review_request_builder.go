@@ -52,6 +52,9 @@ func (b *SelfAccessReviewRequestBuilder) Empty() bool {
 
 // Action sets the value of the 'action' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) Action(value string) *SelfAccessReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.action = value
 	b.fieldSet_[0] = true
 	return b
@@ -59,6 +62,9 @@ func (b *SelfAccessReviewRequestBuilder) Action(value string) *SelfAccessReviewR
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) ClusterID(value string) *SelfAccessReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.clusterID = value
 	b.fieldSet_[1] = true
 	return b
@@ -66,6 +72,9 @@ func (b *SelfAccessReviewRequestBuilder) ClusterID(value string) *SelfAccessRevi
 
 // ClusterUUID sets the value of the 'cluster_UUID' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) ClusterUUID(value string) *SelfAccessReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.clusterUUID = value
 	b.fieldSet_[2] = true
 	return b
@@ -73,6 +82,9 @@ func (b *SelfAccessReviewRequestBuilder) ClusterUUID(value string) *SelfAccessRe
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) OrganizationID(value string) *SelfAccessReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.organizationID = value
 	b.fieldSet_[3] = true
 	return b
@@ -80,6 +92,9 @@ func (b *SelfAccessReviewRequestBuilder) OrganizationID(value string) *SelfAcces
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) ResourceType(value string) *SelfAccessReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.resourceType = value
 	b.fieldSet_[4] = true
 	return b
@@ -87,6 +102,9 @@ func (b *SelfAccessReviewRequestBuilder) ResourceType(value string) *SelfAccessR
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) SubscriptionID(value string) *SelfAccessReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.subscriptionID = value
 	b.fieldSet_[5] = true
 	return b

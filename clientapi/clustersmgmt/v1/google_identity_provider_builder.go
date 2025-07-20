@@ -49,6 +49,9 @@ func (b *GoogleIdentityProviderBuilder) Empty() bool {
 
 // ClientID sets the value of the 'client_ID' attribute to the given value.
 func (b *GoogleIdentityProviderBuilder) ClientID(value string) *GoogleIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.clientID = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *GoogleIdentityProviderBuilder) ClientID(value string) *GoogleIdentityPr
 
 // ClientSecret sets the value of the 'client_secret' attribute to the given value.
 func (b *GoogleIdentityProviderBuilder) ClientSecret(value string) *GoogleIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.clientSecret = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *GoogleIdentityProviderBuilder) ClientSecret(value string) *GoogleIdenti
 
 // HostedDomain sets the value of the 'hosted_domain' attribute to the given value.
 func (b *GoogleIdentityProviderBuilder) HostedDomain(value string) *GoogleIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.hostedDomain = value
 	b.fieldSet_[2] = true
 	return b

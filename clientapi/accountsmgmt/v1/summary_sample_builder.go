@@ -47,6 +47,9 @@ func (b *SummarySampleBuilder) Empty() bool {
 
 // Time sets the value of the 'time' attribute to the given value.
 func (b *SummarySampleBuilder) Time(value string) *SummarySampleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.time = value
 	b.fieldSet_[0] = true
 	return b
@@ -54,6 +57,9 @@ func (b *SummarySampleBuilder) Time(value string) *SummarySampleBuilder {
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *SummarySampleBuilder) Value(value float64) *SummarySampleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.value = value
 	b.fieldSet_[1] = true
 	return b

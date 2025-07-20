@@ -48,12 +48,18 @@ func NewAddOnParameter() *AddOnParameterBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddOnParameterBuilder) Link(value bool) *AddOnParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddOnParameterBuilder) ID(value string) *AddOnParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -61,6 +67,9 @@ func (b *AddOnParameterBuilder) ID(value string) *AddOnParameterBuilder {
 
 // HREF sets the link to the object.
 func (b *AddOnParameterBuilder) HREF(value string) *AddOnParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -84,6 +93,9 @@ func (b *AddOnParameterBuilder) Empty() bool {
 //
 // Representation of an add-on that can be installed in a cluster.
 func (b *AddOnParameterBuilder) Addon(value *AddOnBuilder) *AddOnParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.addon = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -95,6 +107,9 @@ func (b *AddOnParameterBuilder) Addon(value *AddOnBuilder) *AddOnParameterBuilde
 
 // Conditions sets the value of the 'conditions' attribute to the given values.
 func (b *AddOnParameterBuilder) Conditions(values ...*AddOnRequirementBuilder) *AddOnParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.conditions = make([]*AddOnRequirementBuilder, len(values))
 	copy(b.conditions, values)
 	b.fieldSet_[4] = true
@@ -103,6 +118,9 @@ func (b *AddOnParameterBuilder) Conditions(values ...*AddOnRequirementBuilder) *
 
 // DefaultValue sets the value of the 'default_value' attribute to the given value.
 func (b *AddOnParameterBuilder) DefaultValue(value string) *AddOnParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.defaultValue = value
 	b.fieldSet_[5] = true
 	return b
@@ -110,6 +128,9 @@ func (b *AddOnParameterBuilder) DefaultValue(value string) *AddOnParameterBuilde
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *AddOnParameterBuilder) Description(value string) *AddOnParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.description = value
 	b.fieldSet_[6] = true
 	return b
@@ -117,6 +138,9 @@ func (b *AddOnParameterBuilder) Description(value string) *AddOnParameterBuilder
 
 // Editable sets the value of the 'editable' attribute to the given value.
 func (b *AddOnParameterBuilder) Editable(value bool) *AddOnParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.editable = value
 	b.fieldSet_[7] = true
 	return b
@@ -124,6 +148,9 @@ func (b *AddOnParameterBuilder) Editable(value bool) *AddOnParameterBuilder {
 
 // EditableDirection sets the value of the 'editable_direction' attribute to the given value.
 func (b *AddOnParameterBuilder) EditableDirection(value string) *AddOnParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.editableDirection = value
 	b.fieldSet_[8] = true
 	return b
@@ -131,6 +158,9 @@ func (b *AddOnParameterBuilder) EditableDirection(value string) *AddOnParameterB
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddOnParameterBuilder) Enabled(value bool) *AddOnParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.enabled = value
 	b.fieldSet_[9] = true
 	return b
@@ -138,6 +168,9 @@ func (b *AddOnParameterBuilder) Enabled(value bool) *AddOnParameterBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AddOnParameterBuilder) Name(value string) *AddOnParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.name = value
 	b.fieldSet_[10] = true
 	return b
@@ -145,6 +178,9 @@ func (b *AddOnParameterBuilder) Name(value string) *AddOnParameterBuilder {
 
 // Options sets the value of the 'options' attribute to the given values.
 func (b *AddOnParameterBuilder) Options(values ...*AddOnParameterOptionBuilder) *AddOnParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.options = make([]*AddOnParameterOptionBuilder, len(values))
 	copy(b.options, values)
 	b.fieldSet_[11] = true
@@ -153,6 +189,9 @@ func (b *AddOnParameterBuilder) Options(values ...*AddOnParameterOptionBuilder) 
 
 // Required sets the value of the 'required' attribute to the given value.
 func (b *AddOnParameterBuilder) Required(value bool) *AddOnParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.required = value
 	b.fieldSet_[12] = true
 	return b
@@ -160,6 +199,9 @@ func (b *AddOnParameterBuilder) Required(value bool) *AddOnParameterBuilder {
 
 // Validation sets the value of the 'validation' attribute to the given value.
 func (b *AddOnParameterBuilder) Validation(value string) *AddOnParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.validation = value
 	b.fieldSet_[13] = true
 	return b
@@ -167,6 +209,9 @@ func (b *AddOnParameterBuilder) Validation(value string) *AddOnParameterBuilder 
 
 // ValidationErrMsg sets the value of the 'validation_err_msg' attribute to the given value.
 func (b *AddOnParameterBuilder) ValidationErrMsg(value string) *AddOnParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.validationErrMsg = value
 	b.fieldSet_[14] = true
 	return b
@@ -174,6 +219,9 @@ func (b *AddOnParameterBuilder) ValidationErrMsg(value string) *AddOnParameterBu
 
 // ValueType sets the value of the 'value_type' attribute to the given value.
 func (b *AddOnParameterBuilder) ValueType(value string) *AddOnParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.valueType = value
 	b.fieldSet_[15] = true
 	return b

@@ -44,12 +44,18 @@ func NewProduct() *ProductBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ProductBuilder) Link(value bool) *ProductBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ProductBuilder) ID(value string) *ProductBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -57,6 +63,9 @@ func (b *ProductBuilder) ID(value string) *ProductBuilder {
 
 // HREF sets the link to the object.
 func (b *ProductBuilder) HREF(value string) *ProductBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -78,6 +87,9 @@ func (b *ProductBuilder) Empty() bool {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ProductBuilder) CreatedAt(value time.Time) *ProductBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.createdAt = value
 	b.fieldSet_[3] = true
 	return b
@@ -85,6 +97,9 @@ func (b *ProductBuilder) CreatedAt(value time.Time) *ProductBuilder {
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *ProductBuilder) DeletedAt(value time.Time) *ProductBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.deletedAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -92,6 +107,9 @@ func (b *ProductBuilder) DeletedAt(value time.Time) *ProductBuilder {
 
 // ProductId sets the value of the 'product_id' attribute to the given value.
 func (b *ProductBuilder) ProductId(value string) *ProductBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.productId = value
 	b.fieldSet_[5] = true
 	return b
@@ -99,6 +117,9 @@ func (b *ProductBuilder) ProductId(value string) *ProductBuilder {
 
 // ProductName sets the value of the 'product_name' attribute to the given value.
 func (b *ProductBuilder) ProductName(value string) *ProductBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.productName = value
 	b.fieldSet_[6] = true
 	return b
@@ -106,6 +127,9 @@ func (b *ProductBuilder) ProductName(value string) *ProductBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ProductBuilder) UpdatedAt(value time.Time) *ProductBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.updatedAt = value
 	b.fieldSet_[7] = true
 	return b

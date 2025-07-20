@@ -47,6 +47,9 @@ func (b *SummaryMetricsBuilder) Empty() bool {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *SummaryMetricsBuilder) Name(value string) *SummaryMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.name = value
 	b.fieldSet_[0] = true
 	return b
@@ -54,6 +57,9 @@ func (b *SummaryMetricsBuilder) Name(value string) *SummaryMetricsBuilder {
 
 // Vector sets the value of the 'vector' attribute to the given values.
 func (b *SummaryMetricsBuilder) Vector(values ...*SummarySampleBuilder) *SummaryMetricsBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.vector = make([]*SummarySampleBuilder, len(values))
 	copy(b.vector, values)
 	b.fieldSet_[1] = true

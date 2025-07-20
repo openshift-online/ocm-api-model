@@ -49,6 +49,9 @@ func (b *AzureEtcdDataEncryptionCustomerManagedBuilder) Empty() bool {
 
 // EncryptionType sets the value of the 'encryption_type' attribute to the given value.
 func (b *AzureEtcdDataEncryptionCustomerManagedBuilder) EncryptionType(value string) *AzureEtcdDataEncryptionCustomerManagedBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.encryptionType = value
 	b.fieldSet_[0] = true
 	return b
@@ -58,6 +61,9 @@ func (b *AzureEtcdDataEncryptionCustomerManagedBuilder) EncryptionType(value str
 //
 // Contains the necessary attributes to support KMS encryption for Azure based clusters.
 func (b *AzureEtcdDataEncryptionCustomerManagedBuilder) Kms(value *AzureKmsEncryptionBuilder) *AzureEtcdDataEncryptionCustomerManagedBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.kms = value
 	if value != nil {
 		b.fieldSet_[1] = true

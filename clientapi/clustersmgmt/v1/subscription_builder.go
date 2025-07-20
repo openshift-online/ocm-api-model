@@ -35,12 +35,18 @@ func NewSubscription() *SubscriptionBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *SubscriptionBuilder) Link(value bool) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *SubscriptionBuilder) ID(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -48,6 +54,9 @@ func (b *SubscriptionBuilder) ID(value string) *SubscriptionBuilder {
 
 // HREF sets the link to the object.
 func (b *SubscriptionBuilder) HREF(value string) *SubscriptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b

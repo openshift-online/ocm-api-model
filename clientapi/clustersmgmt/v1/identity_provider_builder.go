@@ -46,12 +46,18 @@ func NewIdentityProvider() *IdentityProviderBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *IdentityProviderBuilder) Link(value bool) *IdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *IdentityProviderBuilder) ID(value string) *IdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -59,6 +65,9 @@ func (b *IdentityProviderBuilder) ID(value string) *IdentityProviderBuilder {
 
 // HREF sets the link to the object.
 func (b *IdentityProviderBuilder) HREF(value string) *IdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -82,6 +91,9 @@ func (b *IdentityProviderBuilder) Empty() bool {
 //
 // Details for `ldap` identity providers.
 func (b *IdentityProviderBuilder) LDAP(value *LDAPIdentityProviderBuilder) *IdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.ldap = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -93,6 +105,9 @@ func (b *IdentityProviderBuilder) LDAP(value *LDAPIdentityProviderBuilder) *Iden
 
 // Challenge sets the value of the 'challenge' attribute to the given value.
 func (b *IdentityProviderBuilder) Challenge(value bool) *IdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.challenge = value
 	b.fieldSet_[4] = true
 	return b
@@ -102,6 +117,9 @@ func (b *IdentityProviderBuilder) Challenge(value bool) *IdentityProviderBuilder
 //
 // Details for `github` identity providers.
 func (b *IdentityProviderBuilder) Github(value *GithubIdentityProviderBuilder) *IdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.github = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -115,6 +133,9 @@ func (b *IdentityProviderBuilder) Github(value *GithubIdentityProviderBuilder) *
 //
 // Details for `gitlab` identity providers.
 func (b *IdentityProviderBuilder) Gitlab(value *GitlabIdentityProviderBuilder) *IdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.gitlab = value
 	if value != nil {
 		b.fieldSet_[6] = true
@@ -128,6 +149,9 @@ func (b *IdentityProviderBuilder) Gitlab(value *GitlabIdentityProviderBuilder) *
 //
 // Details for `google` identity providers.
 func (b *IdentityProviderBuilder) Google(value *GoogleIdentityProviderBuilder) *IdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.google = value
 	if value != nil {
 		b.fieldSet_[7] = true
@@ -141,6 +165,9 @@ func (b *IdentityProviderBuilder) Google(value *GoogleIdentityProviderBuilder) *
 //
 // Details for `htpasswd` identity providers.
 func (b *IdentityProviderBuilder) Htpasswd(value *HTPasswdIdentityProviderBuilder) *IdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.htpasswd = value
 	if value != nil {
 		b.fieldSet_[8] = true
@@ -152,6 +179,9 @@ func (b *IdentityProviderBuilder) Htpasswd(value *HTPasswdIdentityProviderBuilde
 
 // Login sets the value of the 'login' attribute to the given value.
 func (b *IdentityProviderBuilder) Login(value bool) *IdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.login = value
 	b.fieldSet_[9] = true
 	return b
@@ -161,6 +191,9 @@ func (b *IdentityProviderBuilder) Login(value bool) *IdentityProviderBuilder {
 //
 // Controls how mappings are established between provider identities and user objects.
 func (b *IdentityProviderBuilder) MappingMethod(value IdentityProviderMappingMethod) *IdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.mappingMethod = value
 	b.fieldSet_[10] = true
 	return b
@@ -168,6 +201,9 @@ func (b *IdentityProviderBuilder) MappingMethod(value IdentityProviderMappingMet
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *IdentityProviderBuilder) Name(value string) *IdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.name = value
 	b.fieldSet_[11] = true
 	return b
@@ -177,6 +213,9 @@ func (b *IdentityProviderBuilder) Name(value string) *IdentityProviderBuilder {
 //
 // Details for `openid` identity providers.
 func (b *IdentityProviderBuilder) OpenID(value *OpenIDIdentityProviderBuilder) *IdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.openID = value
 	if value != nil {
 		b.fieldSet_[12] = true
@@ -190,6 +229,9 @@ func (b *IdentityProviderBuilder) OpenID(value *OpenIDIdentityProviderBuilder) *
 //
 // Type of identity provider.
 func (b *IdentityProviderBuilder) Type(value IdentityProviderType) *IdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.type_ = value
 	b.fieldSet_[13] = true
 	return b

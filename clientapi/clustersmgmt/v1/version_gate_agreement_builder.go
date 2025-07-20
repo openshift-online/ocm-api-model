@@ -41,12 +41,18 @@ func NewVersionGateAgreement() *VersionGateAgreementBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *VersionGateAgreementBuilder) Link(value bool) *VersionGateAgreementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *VersionGateAgreementBuilder) ID(value string) *VersionGateAgreementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -54,6 +60,9 @@ func (b *VersionGateAgreementBuilder) ID(value string) *VersionGateAgreementBuil
 
 // HREF sets the link to the object.
 func (b *VersionGateAgreementBuilder) HREF(value string) *VersionGateAgreementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -75,6 +84,9 @@ func (b *VersionGateAgreementBuilder) Empty() bool {
 
 // AgreedTimestamp sets the value of the 'agreed_timestamp' attribute to the given value.
 func (b *VersionGateAgreementBuilder) AgreedTimestamp(value time.Time) *VersionGateAgreementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.agreedTimestamp = value
 	b.fieldSet_[3] = true
 	return b
@@ -84,6 +96,9 @@ func (b *VersionGateAgreementBuilder) AgreedTimestamp(value time.Time) *VersionG
 //
 // Representation of an _OpenShift_ version gate.
 func (b *VersionGateAgreementBuilder) VersionGate(value *VersionGateBuilder) *VersionGateAgreementBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.versionGate = value
 	if value != nil {
 		b.fieldSet_[4] = true

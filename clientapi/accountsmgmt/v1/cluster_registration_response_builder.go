@@ -49,6 +49,9 @@ func (b *ClusterRegistrationResponseBuilder) Empty() bool {
 
 // AccountID sets the value of the 'account_ID' attribute to the given value.
 func (b *ClusterRegistrationResponseBuilder) AccountID(value string) *ClusterRegistrationResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.accountID = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *ClusterRegistrationResponseBuilder) AccountID(value string) *ClusterReg
 
 // AuthorizationToken sets the value of the 'authorization_token' attribute to the given value.
 func (b *ClusterRegistrationResponseBuilder) AuthorizationToken(value string) *ClusterRegistrationResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.authorizationToken = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *ClusterRegistrationResponseBuilder) AuthorizationToken(value string) *C
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *ClusterRegistrationResponseBuilder) ClusterID(value string) *ClusterRegistrationResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.clusterID = value
 	b.fieldSet_[2] = true
 	return b
@@ -70,6 +79,9 @@ func (b *ClusterRegistrationResponseBuilder) ClusterID(value string) *ClusterReg
 
 // ExpiresAt sets the value of the 'expires_at' attribute to the given value.
 func (b *ClusterRegistrationResponseBuilder) ExpiresAt(value string) *ClusterRegistrationResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.expiresAt = value
 	b.fieldSet_[3] = true
 	return b

@@ -51,6 +51,9 @@ func (b *AddonInstallationBillingBuilder) Empty() bool {
 
 // BillingMarketplaceAccount sets the value of the 'billing_marketplace_account' attribute to the given value.
 func (b *AddonInstallationBillingBuilder) BillingMarketplaceAccount(value string) *AddonInstallationBillingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.billingMarketplaceAccount = value
 	b.fieldSet_[0] = true
 	return b
@@ -60,6 +63,9 @@ func (b *AddonInstallationBillingBuilder) BillingMarketplaceAccount(value string
 //
 // Representation of an billing model field.
 func (b *AddonInstallationBillingBuilder) BillingModel(value BillingModel) *AddonInstallationBillingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.billingModel = value
 	b.fieldSet_[1] = true
 	return b
@@ -67,6 +73,9 @@ func (b *AddonInstallationBillingBuilder) BillingModel(value BillingModel) *Addo
 
 // Href sets the value of the 'href' attribute to the given value.
 func (b *AddonInstallationBillingBuilder) Href(value string) *AddonInstallationBillingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -74,6 +83,9 @@ func (b *AddonInstallationBillingBuilder) Href(value string) *AddonInstallationB
 
 // Id sets the value of the 'id' attribute to the given value.
 func (b *AddonInstallationBillingBuilder) Id(value string) *AddonInstallationBillingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[3] = true
 	return b
@@ -81,6 +93,9 @@ func (b *AddonInstallationBillingBuilder) Id(value string) *AddonInstallationBil
 
 // Kind sets the value of the 'kind' attribute to the given value.
 func (b *AddonInstallationBillingBuilder) Kind(value string) *AddonInstallationBillingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.kind = value
 	b.fieldSet_[4] = true
 	return b

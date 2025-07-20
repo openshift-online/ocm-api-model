@@ -37,12 +37,18 @@ func NewAddOnInstallationBilling() *AddOnInstallationBillingBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddOnInstallationBillingBuilder) Link(value bool) *AddOnInstallationBillingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddOnInstallationBillingBuilder) ID(value string) *AddOnInstallationBillingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *AddOnInstallationBillingBuilder) ID(value string) *AddOnInstallationBil
 
 // HREF sets the link to the object.
 func (b *AddOnInstallationBillingBuilder) HREF(value string) *AddOnInstallationBillingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *AddOnInstallationBillingBuilder) Empty() bool {
 
 // BillingMarketplaceAccount sets the value of the 'billing_marketplace_account' attribute to the given value.
 func (b *AddOnInstallationBillingBuilder) BillingMarketplaceAccount(value string) *AddOnInstallationBillingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.billingMarketplaceAccount = value
 	b.fieldSet_[3] = true
 	return b
@@ -80,6 +92,9 @@ func (b *AddOnInstallationBillingBuilder) BillingMarketplaceAccount(value string
 //
 // Billing model for cluster resources.
 func (b *AddOnInstallationBillingBuilder) BillingModel(value BillingModel) *AddOnInstallationBillingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.billingModel = value
 	b.fieldSet_[4] = true
 	return b

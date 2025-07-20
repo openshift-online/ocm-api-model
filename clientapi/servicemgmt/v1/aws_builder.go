@@ -55,6 +55,9 @@ func (b *AWSBuilder) Empty() bool {
 //
 // Contains the necessary attributes to support role-based authentication on AWS.
 func (b *AWSBuilder) STS(value *STSBuilder) *AWSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.sts = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -66,6 +69,9 @@ func (b *AWSBuilder) STS(value *STSBuilder) *AWSBuilder {
 
 // AccessKeyID sets the value of the 'access_key_ID' attribute to the given value.
 func (b *AWSBuilder) AccessKeyID(value string) *AWSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.accessKeyID = value
 	b.fieldSet_[1] = true
 	return b
@@ -73,6 +79,9 @@ func (b *AWSBuilder) AccessKeyID(value string) *AWSBuilder {
 
 // AccountID sets the value of the 'account_ID' attribute to the given value.
 func (b *AWSBuilder) AccountID(value string) *AWSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.accountID = value
 	b.fieldSet_[2] = true
 	return b
@@ -80,6 +89,9 @@ func (b *AWSBuilder) AccountID(value string) *AWSBuilder {
 
 // PrivateLink sets the value of the 'private_link' attribute to the given value.
 func (b *AWSBuilder) PrivateLink(value bool) *AWSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.privateLink = value
 	b.fieldSet_[3] = true
 	return b
@@ -87,6 +99,9 @@ func (b *AWSBuilder) PrivateLink(value bool) *AWSBuilder {
 
 // SecretAccessKey sets the value of the 'secret_access_key' attribute to the given value.
 func (b *AWSBuilder) SecretAccessKey(value string) *AWSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.secretAccessKey = value
 	b.fieldSet_[4] = true
 	return b
@@ -94,6 +109,9 @@ func (b *AWSBuilder) SecretAccessKey(value string) *AWSBuilder {
 
 // SubnetIDs sets the value of the 'subnet_IDs' attribute to the given values.
 func (b *AWSBuilder) SubnetIDs(values ...string) *AWSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.subnetIDs = make([]string, len(values))
 	copy(b.subnetIDs, values)
 	b.fieldSet_[5] = true
@@ -102,6 +120,9 @@ func (b *AWSBuilder) SubnetIDs(values ...string) *AWSBuilder {
 
 // Tags sets the value of the 'tags' attribute to the given value.
 func (b *AWSBuilder) Tags(value map[string]string) *AWSBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.tags = value
 	if value != nil {
 		b.fieldSet_[6] = true

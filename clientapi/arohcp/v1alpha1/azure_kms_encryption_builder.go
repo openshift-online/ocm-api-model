@@ -49,6 +49,9 @@ func (b *AzureKmsEncryptionBuilder) Empty() bool {
 //
 // Contains the necessary attributes to support KMS encryption key for Azure based clusters
 func (b *AzureKmsEncryptionBuilder) ActiveKey(value *AzureKmsKeyBuilder) *AzureKmsEncryptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.activeKey = value
 	if value != nil {
 		b.fieldSet_[0] = true

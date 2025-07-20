@@ -53,12 +53,18 @@ func NewService() *ServiceBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ServiceBuilder) Link(value bool) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ServiceBuilder) ID(value string) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -66,6 +72,9 @@ func (b *ServiceBuilder) ID(value string) *ServiceBuilder {
 
 // HREF sets the link to the object.
 func (b *ServiceBuilder) HREF(value string) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -89,6 +98,9 @@ func (b *ServiceBuilder) Empty() bool {
 //
 // Definition of a Status Board application.
 func (b *ServiceBuilder) Application(value *ApplicationBuilder) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.application = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -100,6 +112,9 @@ func (b *ServiceBuilder) Application(value *ApplicationBuilder) *ServiceBuilder 
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ServiceBuilder) CreatedAt(value time.Time) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.createdAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -107,6 +122,9 @@ func (b *ServiceBuilder) CreatedAt(value time.Time) *ServiceBuilder {
 
 // CurrentStatus sets the value of the 'current_status' attribute to the given value.
 func (b *ServiceBuilder) CurrentStatus(value string) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.currentStatus = value
 	b.fieldSet_[5] = true
 	return b
@@ -114,6 +132,9 @@ func (b *ServiceBuilder) CurrentStatus(value string) *ServiceBuilder {
 
 // Fullname sets the value of the 'fullname' attribute to the given value.
 func (b *ServiceBuilder) Fullname(value string) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.fullname = value
 	b.fieldSet_[6] = true
 	return b
@@ -121,6 +142,9 @@ func (b *ServiceBuilder) Fullname(value string) *ServiceBuilder {
 
 // LastPingAt sets the value of the 'last_ping_at' attribute to the given value.
 func (b *ServiceBuilder) LastPingAt(value time.Time) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.lastPingAt = value
 	b.fieldSet_[7] = true
 	return b
@@ -128,6 +152,9 @@ func (b *ServiceBuilder) LastPingAt(value time.Time) *ServiceBuilder {
 
 // Metadata sets the value of the 'metadata' attribute to the given value.
 func (b *ServiceBuilder) Metadata(value interface{}) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.metadata = value
 	b.fieldSet_[8] = true
 	return b
@@ -135,6 +162,9 @@ func (b *ServiceBuilder) Metadata(value interface{}) *ServiceBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ServiceBuilder) Name(value string) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.name = value
 	b.fieldSet_[9] = true
 	return b
@@ -142,6 +172,9 @@ func (b *ServiceBuilder) Name(value string) *ServiceBuilder {
 
 // Owners sets the value of the 'owners' attribute to the given values.
 func (b *ServiceBuilder) Owners(values ...*OwnerBuilder) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.owners = make([]*OwnerBuilder, len(values))
 	copy(b.owners, values)
 	b.fieldSet_[10] = true
@@ -150,6 +183,9 @@ func (b *ServiceBuilder) Owners(values ...*OwnerBuilder) *ServiceBuilder {
 
 // Private sets the value of the 'private' attribute to the given value.
 func (b *ServiceBuilder) Private(value bool) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.private = value
 	b.fieldSet_[11] = true
 	return b
@@ -157,6 +193,9 @@ func (b *ServiceBuilder) Private(value bool) *ServiceBuilder {
 
 // ServiceEndpoint sets the value of the 'service_endpoint' attribute to the given value.
 func (b *ServiceBuilder) ServiceEndpoint(value string) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.serviceEndpoint = value
 	b.fieldSet_[12] = true
 	return b
@@ -164,6 +203,9 @@ func (b *ServiceBuilder) ServiceEndpoint(value string) *ServiceBuilder {
 
 // StatusType sets the value of the 'status_type' attribute to the given value.
 func (b *ServiceBuilder) StatusType(value string) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.statusType = value
 	b.fieldSet_[13] = true
 	return b
@@ -171,6 +213,9 @@ func (b *ServiceBuilder) StatusType(value string) *ServiceBuilder {
 
 // StatusUpdatedAt sets the value of the 'status_updated_at' attribute to the given value.
 func (b *ServiceBuilder) StatusUpdatedAt(value time.Time) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.statusUpdatedAt = value
 	b.fieldSet_[14] = true
 	return b
@@ -178,6 +223,9 @@ func (b *ServiceBuilder) StatusUpdatedAt(value time.Time) *ServiceBuilder {
 
 // Token sets the value of the 'token' attribute to the given value.
 func (b *ServiceBuilder) Token(value string) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.token = value
 	b.fieldSet_[15] = true
 	return b
@@ -185,6 +233,9 @@ func (b *ServiceBuilder) Token(value string) *ServiceBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ServiceBuilder) UpdatedAt(value time.Time) *ServiceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.updatedAt = value
 	b.fieldSet_[16] = true
 	return b

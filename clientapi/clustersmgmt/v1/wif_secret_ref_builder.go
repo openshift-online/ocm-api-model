@@ -47,6 +47,9 @@ func (b *WifSecretRefBuilder) Empty() bool {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *WifSecretRefBuilder) Name(value string) *WifSecretRefBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.name = value
 	b.fieldSet_[0] = true
 	return b
@@ -54,6 +57,9 @@ func (b *WifSecretRefBuilder) Name(value string) *WifSecretRefBuilder {
 
 // Namespace sets the value of the 'namespace' attribute to the given value.
 func (b *WifSecretRefBuilder) Namespace(value string) *WifSecretRefBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.namespace = value
 	b.fieldSet_[1] = true
 	return b

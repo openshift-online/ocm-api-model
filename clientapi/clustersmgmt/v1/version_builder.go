@@ -53,12 +53,18 @@ func NewVersion() *VersionBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *VersionBuilder) Link(value bool) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *VersionBuilder) ID(value string) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -66,6 +72,9 @@ func (b *VersionBuilder) ID(value string) *VersionBuilder {
 
 // HREF sets the link to the object.
 func (b *VersionBuilder) HREF(value string) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -87,6 +96,9 @@ func (b *VersionBuilder) Empty() bool {
 
 // GCPMarketplaceEnabled sets the value of the 'GCP_marketplace_enabled' attribute to the given value.
 func (b *VersionBuilder) GCPMarketplaceEnabled(value bool) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.gcpMarketplaceEnabled = value
 	b.fieldSet_[3] = true
 	return b
@@ -94,6 +106,9 @@ func (b *VersionBuilder) GCPMarketplaceEnabled(value bool) *VersionBuilder {
 
 // ROSAEnabled sets the value of the 'ROSA_enabled' attribute to the given value.
 func (b *VersionBuilder) ROSAEnabled(value bool) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.rosaEnabled = value
 	b.fieldSet_[4] = true
 	return b
@@ -101,6 +116,9 @@ func (b *VersionBuilder) ROSAEnabled(value bool) *VersionBuilder {
 
 // AvailableUpgrades sets the value of the 'available_upgrades' attribute to the given values.
 func (b *VersionBuilder) AvailableUpgrades(values ...string) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.availableUpgrades = make([]string, len(values))
 	copy(b.availableUpgrades, values)
 	b.fieldSet_[5] = true
@@ -109,6 +127,9 @@ func (b *VersionBuilder) AvailableUpgrades(values ...string) *VersionBuilder {
 
 // ChannelGroup sets the value of the 'channel_group' attribute to the given value.
 func (b *VersionBuilder) ChannelGroup(value string) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.channelGroup = value
 	b.fieldSet_[6] = true
 	return b
@@ -116,6 +137,9 @@ func (b *VersionBuilder) ChannelGroup(value string) *VersionBuilder {
 
 // Default sets the value of the 'default' attribute to the given value.
 func (b *VersionBuilder) Default(value bool) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.default_ = value
 	b.fieldSet_[7] = true
 	return b
@@ -123,6 +147,9 @@ func (b *VersionBuilder) Default(value bool) *VersionBuilder {
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *VersionBuilder) Enabled(value bool) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.enabled = value
 	b.fieldSet_[8] = true
 	return b
@@ -130,6 +157,9 @@ func (b *VersionBuilder) Enabled(value bool) *VersionBuilder {
 
 // EndOfLifeTimestamp sets the value of the 'end_of_life_timestamp' attribute to the given value.
 func (b *VersionBuilder) EndOfLifeTimestamp(value time.Time) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.endOfLifeTimestamp = value
 	b.fieldSet_[9] = true
 	return b
@@ -137,6 +167,9 @@ func (b *VersionBuilder) EndOfLifeTimestamp(value time.Time) *VersionBuilder {
 
 // HostedControlPlaneDefault sets the value of the 'hosted_control_plane_default' attribute to the given value.
 func (b *VersionBuilder) HostedControlPlaneDefault(value bool) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.hostedControlPlaneDefault = value
 	b.fieldSet_[10] = true
 	return b
@@ -144,6 +177,9 @@ func (b *VersionBuilder) HostedControlPlaneDefault(value bool) *VersionBuilder {
 
 // HostedControlPlaneEnabled sets the value of the 'hosted_control_plane_enabled' attribute to the given value.
 func (b *VersionBuilder) HostedControlPlaneEnabled(value bool) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.hostedControlPlaneEnabled = value
 	b.fieldSet_[11] = true
 	return b
@@ -153,6 +189,9 @@ func (b *VersionBuilder) HostedControlPlaneEnabled(value bool) *VersionBuilder {
 //
 // ImageOverrides holds the lists of available images per cloud provider.
 func (b *VersionBuilder) ImageOverrides(value *ImageOverridesBuilder) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.imageOverrides = value
 	if value != nil {
 		b.fieldSet_[12] = true
@@ -164,6 +203,9 @@ func (b *VersionBuilder) ImageOverrides(value *ImageOverridesBuilder) *VersionBu
 
 // RawID sets the value of the 'raw_ID' attribute to the given value.
 func (b *VersionBuilder) RawID(value string) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.rawID = value
 	b.fieldSet_[13] = true
 	return b
@@ -171,6 +213,9 @@ func (b *VersionBuilder) RawID(value string) *VersionBuilder {
 
 // ReleaseImage sets the value of the 'release_image' attribute to the given value.
 func (b *VersionBuilder) ReleaseImage(value string) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.releaseImage = value
 	b.fieldSet_[14] = true
 	return b
@@ -178,6 +223,9 @@ func (b *VersionBuilder) ReleaseImage(value string) *VersionBuilder {
 
 // ReleaseImages sets the value of the 'release_images' attribute to the given value.
 func (b *VersionBuilder) ReleaseImages(value *ReleaseImagesBuilder) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.releaseImages = value
 	if value != nil {
 		b.fieldSet_[15] = true
@@ -189,6 +237,9 @@ func (b *VersionBuilder) ReleaseImages(value *ReleaseImagesBuilder) *VersionBuil
 
 // WifEnabled sets the value of the 'wif_enabled' attribute to the given value.
 func (b *VersionBuilder) WifEnabled(value bool) *VersionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
 	b.wifEnabled = value
 	b.fieldSet_[16] = true
 	return b

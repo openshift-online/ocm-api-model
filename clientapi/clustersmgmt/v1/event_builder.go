@@ -48,6 +48,9 @@ func (b *EventBuilder) Empty() bool {
 
 // Body sets the value of the 'body' attribute to the given value.
 func (b *EventBuilder) Body(value map[string]string) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.body = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -59,6 +62,9 @@ func (b *EventBuilder) Body(value map[string]string) *EventBuilder {
 
 // Key sets the value of the 'key' attribute to the given value.
 func (b *EventBuilder) Key(value string) *EventBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.key = value
 	b.fieldSet_[1] = true
 	return b

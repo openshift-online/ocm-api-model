@@ -47,6 +47,9 @@ func (b *ServiceParameterBuilder) Empty() bool {
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *ServiceParameterBuilder) ID(value string) *ServiceParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.id = value
 	b.fieldSet_[0] = true
 	return b
@@ -54,6 +57,9 @@ func (b *ServiceParameterBuilder) ID(value string) *ServiceParameterBuilder {
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *ServiceParameterBuilder) Value(value string) *ServiceParameterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.value = value
 	b.fieldSet_[1] = true
 	return b

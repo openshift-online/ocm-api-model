@@ -52,6 +52,9 @@ func (b *ExternalAuthStateBuilder) Empty() bool {
 
 // LastUpdatedTimestamp sets the value of the 'last_updated_timestamp' attribute to the given value.
 func (b *ExternalAuthStateBuilder) LastUpdatedTimestamp(value time.Time) *ExternalAuthStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.lastUpdatedTimestamp = value
 	b.fieldSet_[0] = true
 	return b
@@ -59,6 +62,9 @@ func (b *ExternalAuthStateBuilder) LastUpdatedTimestamp(value time.Time) *Extern
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *ExternalAuthStateBuilder) Value(value string) *ExternalAuthStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.value = value
 	b.fieldSet_[1] = true
 	return b

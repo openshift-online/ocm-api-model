@@ -50,6 +50,9 @@ func (b *AdditionalCatalogSourceBuilder) Empty() bool {
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *AdditionalCatalogSourceBuilder) ID(value string) *AdditionalCatalogSourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *AdditionalCatalogSourceBuilder) ID(value string) *AdditionalCatalogSour
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AdditionalCatalogSourceBuilder) Enabled(value bool) *AdditionalCatalogSourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.enabled = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *AdditionalCatalogSourceBuilder) Enabled(value bool) *AdditionalCatalogS
 
 // Image sets the value of the 'image' attribute to the given value.
 func (b *AdditionalCatalogSourceBuilder) Image(value string) *AdditionalCatalogSourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.image = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *AdditionalCatalogSourceBuilder) Image(value string) *AdditionalCatalogS
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AdditionalCatalogSourceBuilder) Name(value string) *AdditionalCatalogSourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.name = value
 	b.fieldSet_[3] = true
 	return b

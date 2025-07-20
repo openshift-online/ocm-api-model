@@ -37,12 +37,18 @@ func NewAWSCapacityReservation() *AWSCapacityReservationBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AWSCapacityReservationBuilder) Link(value bool) *AWSCapacityReservationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AWSCapacityReservationBuilder) ID(value string) *AWSCapacityReservationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *AWSCapacityReservationBuilder) ID(value string) *AWSCapacityReservation
 
 // HREF sets the link to the object.
 func (b *AWSCapacityReservationBuilder) HREF(value string) *AWSCapacityReservationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *AWSCapacityReservationBuilder) Empty() bool {
 
 // Id sets the value of the 'id' attribute to the given value.
 func (b *AWSCapacityReservationBuilder) Id(value string) *AWSCapacityReservationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[3] = true
 	return b
@@ -80,6 +92,9 @@ func (b *AWSCapacityReservationBuilder) Id(value string) *AWSCapacityReservation
 //
 // Market type for AWS Capacity Reservations.
 func (b *AWSCapacityReservationBuilder) MarketType(value MarketType) *AWSCapacityReservationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.marketType = value
 	b.fieldSet_[4] = true
 	return b

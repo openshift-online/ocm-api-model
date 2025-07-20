@@ -50,6 +50,9 @@ func (b *RootVolumeBuilder) Empty() bool {
 //
 // Holds settings for an AWS storage volume.
 func (b *RootVolumeBuilder) AWS(value *AWSVolumeBuilder) *RootVolumeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.aws = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -63,6 +66,9 @@ func (b *RootVolumeBuilder) AWS(value *AWSVolumeBuilder) *RootVolumeBuilder {
 //
 // Holds settings for an GCP storage volume.
 func (b *RootVolumeBuilder) GCP(value *GCPVolumeBuilder) *RootVolumeBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.gcp = value
 	if value != nil {
 		b.fieldSet_[1] = true

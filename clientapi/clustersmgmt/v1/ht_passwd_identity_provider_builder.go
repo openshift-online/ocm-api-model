@@ -49,6 +49,9 @@ func (b *HTPasswdIdentityProviderBuilder) Empty() bool {
 
 // Password sets the value of the 'password' attribute to the given value.
 func (b *HTPasswdIdentityProviderBuilder) Password(value string) *HTPasswdIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.password = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *HTPasswdIdentityProviderBuilder) Password(value string) *HTPasswdIdenti
 
 // Username sets the value of the 'username' attribute to the given value.
 func (b *HTPasswdIdentityProviderBuilder) Username(value string) *HTPasswdIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.username = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *HTPasswdIdentityProviderBuilder) Username(value string) *HTPasswdIdenti
 
 // Users sets the value of the 'users' attribute to the given values.
 func (b *HTPasswdIdentityProviderBuilder) Users(value *HTPasswdUserListBuilder) *HTPasswdIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.users = value
 	b.fieldSet_[2] = true
 	return b

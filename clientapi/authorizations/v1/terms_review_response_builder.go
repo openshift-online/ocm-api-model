@@ -52,6 +52,9 @@ func (b *TermsReviewResponseBuilder) Empty() bool {
 
 // AccountId sets the value of the 'account_id' attribute to the given value.
 func (b *TermsReviewResponseBuilder) AccountId(value string) *TermsReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.accountId = value
 	b.fieldSet_[0] = true
 	return b
@@ -59,6 +62,9 @@ func (b *TermsReviewResponseBuilder) AccountId(value string) *TermsReviewRespons
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *TermsReviewResponseBuilder) OrganizationID(value string) *TermsReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.organizationID = value
 	b.fieldSet_[1] = true
 	return b
@@ -66,6 +72,9 @@ func (b *TermsReviewResponseBuilder) OrganizationID(value string) *TermsReviewRe
 
 // RedirectUrl sets the value of the 'redirect_url' attribute to the given value.
 func (b *TermsReviewResponseBuilder) RedirectUrl(value string) *TermsReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.redirectUrl = value
 	b.fieldSet_[2] = true
 	return b
@@ -73,6 +82,9 @@ func (b *TermsReviewResponseBuilder) RedirectUrl(value string) *TermsReviewRespo
 
 // TermsAvailable sets the value of the 'terms_available' attribute to the given value.
 func (b *TermsReviewResponseBuilder) TermsAvailable(value bool) *TermsReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.termsAvailable = value
 	b.fieldSet_[3] = true
 	return b
@@ -80,6 +92,9 @@ func (b *TermsReviewResponseBuilder) TermsAvailable(value bool) *TermsReviewResp
 
 // TermsRequired sets the value of the 'terms_required' attribute to the given value.
 func (b *TermsReviewResponseBuilder) TermsRequired(value bool) *TermsReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.termsRequired = value
 	b.fieldSet_[4] = true
 	return b

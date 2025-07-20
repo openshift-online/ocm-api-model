@@ -49,6 +49,9 @@ func (b *UsernameClaimBuilder) Empty() bool {
 
 // Claim sets the value of the 'claim' attribute to the given value.
 func (b *UsernameClaimBuilder) Claim(value string) *UsernameClaimBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.claim = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *UsernameClaimBuilder) Claim(value string) *UsernameClaimBuilder {
 
 // Prefix sets the value of the 'prefix' attribute to the given value.
 func (b *UsernameClaimBuilder) Prefix(value string) *UsernameClaimBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.prefix = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *UsernameClaimBuilder) Prefix(value string) *UsernameClaimBuilder {
 
 // PrefixPolicy sets the value of the 'prefix_policy' attribute to the given value.
 func (b *UsernameClaimBuilder) PrefixPolicy(value string) *UsernameClaimBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
 	b.prefixPolicy = value
 	b.fieldSet_[2] = true
 	return b

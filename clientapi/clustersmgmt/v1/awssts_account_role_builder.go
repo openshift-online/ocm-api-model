@@ -48,6 +48,9 @@ func (b *AWSSTSAccountRoleBuilder) Empty() bool {
 
 // Items sets the value of the 'items' attribute to the given values.
 func (b *AWSSTSAccountRoleBuilder) Items(values ...*AWSSTSRoleBuilder) *AWSSTSAccountRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.items = make([]*AWSSTSRoleBuilder, len(values))
 	copy(b.items, values)
 	b.fieldSet_[0] = true
@@ -56,6 +59,9 @@ func (b *AWSSTSAccountRoleBuilder) Items(values ...*AWSSTSRoleBuilder) *AWSSTSAc
 
 // Prefix sets the value of the 'prefix' attribute to the given value.
 func (b *AWSSTSAccountRoleBuilder) Prefix(value string) *AWSSTSAccountRoleBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.prefix = value
 	b.fieldSet_[1] = true
 	return b

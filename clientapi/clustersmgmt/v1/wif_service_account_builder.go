@@ -50,6 +50,9 @@ func (b *WifServiceAccountBuilder) Empty() bool {
 
 // AccessMethod sets the value of the 'access_method' attribute to the given value.
 func (b *WifServiceAccountBuilder) AccessMethod(value WifAccessMethod) *WifServiceAccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.accessMethod = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *WifServiceAccountBuilder) AccessMethod(value WifAccessMethod) *WifServi
 
 // CredentialRequest sets the value of the 'credential_request' attribute to the given value.
 func (b *WifServiceAccountBuilder) CredentialRequest(value *WifCredentialRequestBuilder) *WifServiceAccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.credentialRequest = value
 	if value != nil {
 		b.fieldSet_[1] = true
@@ -68,6 +74,9 @@ func (b *WifServiceAccountBuilder) CredentialRequest(value *WifCredentialRequest
 
 // OsdRole sets the value of the 'osd_role' attribute to the given value.
 func (b *WifServiceAccountBuilder) OsdRole(value string) *WifServiceAccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.osdRole = value
 	b.fieldSet_[2] = true
 	return b
@@ -75,6 +84,9 @@ func (b *WifServiceAccountBuilder) OsdRole(value string) *WifServiceAccountBuild
 
 // Roles sets the value of the 'roles' attribute to the given values.
 func (b *WifServiceAccountBuilder) Roles(values ...*WifRoleBuilder) *WifServiceAccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.roles = make([]*WifRoleBuilder, len(values))
 	copy(b.roles, values)
 	b.fieldSet_[3] = true
@@ -83,6 +95,9 @@ func (b *WifServiceAccountBuilder) Roles(values ...*WifRoleBuilder) *WifServiceA
 
 // ServiceAccountId sets the value of the 'service_account_id' attribute to the given value.
 func (b *WifServiceAccountBuilder) ServiceAccountId(value string) *WifServiceAccountBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.serviceAccountId = value
 	b.fieldSet_[4] = true
 	return b

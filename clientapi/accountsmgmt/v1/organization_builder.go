@@ -45,12 +45,18 @@ func NewOrganization() *OrganizationBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *OrganizationBuilder) Link(value bool) *OrganizationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *OrganizationBuilder) ID(value string) *OrganizationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -58,6 +64,9 @@ func (b *OrganizationBuilder) ID(value string) *OrganizationBuilder {
 
 // HREF sets the link to the object.
 func (b *OrganizationBuilder) HREF(value string) *OrganizationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -79,6 +88,9 @@ func (b *OrganizationBuilder) Empty() bool {
 
 // Capabilities sets the value of the 'capabilities' attribute to the given values.
 func (b *OrganizationBuilder) Capabilities(values ...*CapabilityBuilder) *OrganizationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.capabilities = make([]*CapabilityBuilder, len(values))
 	copy(b.capabilities, values)
 	b.fieldSet_[3] = true
@@ -87,6 +99,9 @@ func (b *OrganizationBuilder) Capabilities(values ...*CapabilityBuilder) *Organi
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *OrganizationBuilder) CreatedAt(value time.Time) *OrganizationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.createdAt = value
 	b.fieldSet_[4] = true
 	return b
@@ -94,6 +109,9 @@ func (b *OrganizationBuilder) CreatedAt(value time.Time) *OrganizationBuilder {
 
 // EbsAccountID sets the value of the 'ebs_account_ID' attribute to the given value.
 func (b *OrganizationBuilder) EbsAccountID(value string) *OrganizationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.ebsAccountID = value
 	b.fieldSet_[5] = true
 	return b
@@ -101,6 +119,9 @@ func (b *OrganizationBuilder) EbsAccountID(value string) *OrganizationBuilder {
 
 // ExternalID sets the value of the 'external_ID' attribute to the given value.
 func (b *OrganizationBuilder) ExternalID(value string) *OrganizationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.externalID = value
 	b.fieldSet_[6] = true
 	return b
@@ -108,6 +129,9 @@ func (b *OrganizationBuilder) ExternalID(value string) *OrganizationBuilder {
 
 // Labels sets the value of the 'labels' attribute to the given values.
 func (b *OrganizationBuilder) Labels(values ...*LabelBuilder) *OrganizationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.labels = make([]*LabelBuilder, len(values))
 	copy(b.labels, values)
 	b.fieldSet_[7] = true
@@ -116,6 +140,9 @@ func (b *OrganizationBuilder) Labels(values ...*LabelBuilder) *OrganizationBuild
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *OrganizationBuilder) Name(value string) *OrganizationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.name = value
 	b.fieldSet_[8] = true
 	return b
@@ -123,6 +150,9 @@ func (b *OrganizationBuilder) Name(value string) *OrganizationBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *OrganizationBuilder) UpdatedAt(value time.Time) *OrganizationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
 	b.updatedAt = value
 	b.fieldSet_[9] = true
 	return b

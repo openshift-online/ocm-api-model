@@ -53,6 +53,9 @@ func (b *OpenIDIdentityProviderBuilder) Empty() bool {
 
 // CA sets the value of the 'CA' attribute to the given value.
 func (b *OpenIDIdentityProviderBuilder) CA(value string) *OpenIDIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.ca = value
 	b.fieldSet_[0] = true
 	return b
@@ -62,6 +65,9 @@ func (b *OpenIDIdentityProviderBuilder) CA(value string) *OpenIDIdentityProvider
 //
 // _OpenID_ identity provider claims.
 func (b *OpenIDIdentityProviderBuilder) Claims(value *OpenIDClaimsBuilder) *OpenIDIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.claims = value
 	if value != nil {
 		b.fieldSet_[1] = true
@@ -73,6 +79,9 @@ func (b *OpenIDIdentityProviderBuilder) Claims(value *OpenIDClaimsBuilder) *Open
 
 // ClientID sets the value of the 'client_ID' attribute to the given value.
 func (b *OpenIDIdentityProviderBuilder) ClientID(value string) *OpenIDIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.clientID = value
 	b.fieldSet_[2] = true
 	return b
@@ -80,6 +89,9 @@ func (b *OpenIDIdentityProviderBuilder) ClientID(value string) *OpenIDIdentityPr
 
 // ClientSecret sets the value of the 'client_secret' attribute to the given value.
 func (b *OpenIDIdentityProviderBuilder) ClientSecret(value string) *OpenIDIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.clientSecret = value
 	b.fieldSet_[3] = true
 	return b
@@ -87,6 +99,9 @@ func (b *OpenIDIdentityProviderBuilder) ClientSecret(value string) *OpenIDIdenti
 
 // ExtraAuthorizeParameters sets the value of the 'extra_authorize_parameters' attribute to the given value.
 func (b *OpenIDIdentityProviderBuilder) ExtraAuthorizeParameters(value map[string]string) *OpenIDIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.extraAuthorizeParameters = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -98,6 +113,9 @@ func (b *OpenIDIdentityProviderBuilder) ExtraAuthorizeParameters(value map[strin
 
 // ExtraScopes sets the value of the 'extra_scopes' attribute to the given values.
 func (b *OpenIDIdentityProviderBuilder) ExtraScopes(values ...string) *OpenIDIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.extraScopes = make([]string, len(values))
 	copy(b.extraScopes, values)
 	b.fieldSet_[5] = true
@@ -106,6 +124,9 @@ func (b *OpenIDIdentityProviderBuilder) ExtraScopes(values ...string) *OpenIDIde
 
 // Issuer sets the value of the 'issuer' attribute to the given value.
 func (b *OpenIDIdentityProviderBuilder) Issuer(value string) *OpenIDIdentityProviderBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.issuer = value
 	b.fieldSet_[6] = true
 	return b

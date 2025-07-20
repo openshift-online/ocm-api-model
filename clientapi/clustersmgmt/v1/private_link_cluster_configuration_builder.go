@@ -47,6 +47,9 @@ func (b *PrivateLinkClusterConfigurationBuilder) Empty() bool {
 
 // Principals sets the value of the 'principals' attribute to the given values.
 func (b *PrivateLinkClusterConfigurationBuilder) Principals(values ...*PrivateLinkPrincipalBuilder) *PrivateLinkClusterConfigurationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.principals = make([]*PrivateLinkPrincipalBuilder, len(values))
 	copy(b.principals, values)
 	b.fieldSet_[0] = true

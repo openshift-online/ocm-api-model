@@ -37,12 +37,18 @@ func NewError() *ErrorBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ErrorBuilder) Link(value bool) *ErrorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ErrorBuilder) ID(value string) *ErrorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *ErrorBuilder) ID(value string) *ErrorBuilder {
 
 // HREF sets the link to the object.
 func (b *ErrorBuilder) HREF(value string) *ErrorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *ErrorBuilder) Empty() bool {
 
 // Code sets the value of the 'code' attribute to the given value.
 func (b *ErrorBuilder) Code(value string) *ErrorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.code = value
 	b.fieldSet_[3] = true
 	return b
@@ -78,6 +90,9 @@ func (b *ErrorBuilder) Code(value string) *ErrorBuilder {
 
 // Reason sets the value of the 'reason' attribute to the given value.
 func (b *ErrorBuilder) Reason(value string) *ErrorBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.reason = value
 	b.fieldSet_[4] = true
 	return b

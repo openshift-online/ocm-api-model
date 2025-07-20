@@ -48,6 +48,9 @@ func (b *ClusterManagementReferenceBuilder) Empty() bool {
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *ClusterManagementReferenceBuilder) ClusterId(value string) *ClusterManagementReferenceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.clusterId = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *ClusterManagementReferenceBuilder) ClusterId(value string) *ClusterMana
 
 // Href sets the value of the 'href' attribute to the given value.
 func (b *ClusterManagementReferenceBuilder) Href(value string) *ClusterManagementReferenceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.href = value
 	b.fieldSet_[1] = true
 	return b

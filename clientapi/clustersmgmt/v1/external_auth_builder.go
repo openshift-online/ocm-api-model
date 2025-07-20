@@ -39,12 +39,18 @@ func NewExternalAuth() *ExternalAuthBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ExternalAuthBuilder) Link(value bool) *ExternalAuthBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ExternalAuthBuilder) ID(value string) *ExternalAuthBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -52,6 +58,9 @@ func (b *ExternalAuthBuilder) ID(value string) *ExternalAuthBuilder {
 
 // HREF sets the link to the object.
 func (b *ExternalAuthBuilder) HREF(value string) *ExternalAuthBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -75,6 +84,9 @@ func (b *ExternalAuthBuilder) Empty() bool {
 //
 // The claims and validation rules used in the configuration of the external authentication.
 func (b *ExternalAuthBuilder) Claim(value *ExternalAuthClaimBuilder) *ExternalAuthBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.claim = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -86,6 +98,9 @@ func (b *ExternalAuthBuilder) Claim(value *ExternalAuthClaimBuilder) *ExternalAu
 
 // Clients sets the value of the 'clients' attribute to the given values.
 func (b *ExternalAuthBuilder) Clients(values ...*ExternalAuthClientConfigBuilder) *ExternalAuthBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.clients = make([]*ExternalAuthClientConfigBuilder, len(values))
 	copy(b.clients, values)
 	b.fieldSet_[4] = true
@@ -96,6 +111,9 @@ func (b *ExternalAuthBuilder) Clients(values ...*ExternalAuthClientConfigBuilder
 //
 // Representation of a token issuer used in an external authentication.
 func (b *ExternalAuthBuilder) Issuer(value *TokenIssuerBuilder) *ExternalAuthBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.issuer = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -109,6 +127,9 @@ func (b *ExternalAuthBuilder) Issuer(value *TokenIssuerBuilder) *ExternalAuthBui
 //
 // Representation of the status of an external authentication provider.
 func (b *ExternalAuthBuilder) Status(value *ExternalAuthStatusBuilder) *ExternalAuthBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.status = value
 	if value != nil {
 		b.fieldSet_[6] = true

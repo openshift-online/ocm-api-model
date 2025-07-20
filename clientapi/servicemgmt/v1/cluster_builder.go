@@ -60,6 +60,9 @@ func (b *ClusterBuilder) Empty() bool {
 //
 // Information about the API of a cluster.
 func (b *ClusterBuilder) API(value *ClusterAPIBuilder) *ClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.api = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -73,6 +76,9 @@ func (b *ClusterBuilder) API(value *ClusterAPIBuilder) *ClusterBuilder {
 //
 // _Amazon Web Services_ specific settings of a cluster.
 func (b *ClusterBuilder) AWS(value *AWSBuilder) *ClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.aws = value
 	if value != nil {
 		b.fieldSet_[1] = true
@@ -84,6 +90,9 @@ func (b *ClusterBuilder) AWS(value *AWSBuilder) *ClusterBuilder {
 
 // DisplayName sets the value of the 'display_name' attribute to the given value.
 func (b *ClusterBuilder) DisplayName(value string) *ClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.displayName = value
 	b.fieldSet_[2] = true
 	return b
@@ -91,6 +100,9 @@ func (b *ClusterBuilder) DisplayName(value string) *ClusterBuilder {
 
 // Href sets the value of the 'href' attribute to the given value.
 func (b *ClusterBuilder) Href(value string) *ClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.href = value
 	b.fieldSet_[3] = true
 	return b
@@ -98,6 +110,9 @@ func (b *ClusterBuilder) Href(value string) *ClusterBuilder {
 
 // Id sets the value of the 'id' attribute to the given value.
 func (b *ClusterBuilder) Id(value string) *ClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.id = value
 	b.fieldSet_[4] = true
 	return b
@@ -105,6 +120,9 @@ func (b *ClusterBuilder) Id(value string) *ClusterBuilder {
 
 // MultiAZ sets the value of the 'multi_AZ' attribute to the given value.
 func (b *ClusterBuilder) MultiAZ(value bool) *ClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.multiAZ = value
 	b.fieldSet_[5] = true
 	return b
@@ -112,6 +130,9 @@ func (b *ClusterBuilder) MultiAZ(value bool) *ClusterBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ClusterBuilder) Name(value string) *ClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.name = value
 	b.fieldSet_[6] = true
 	return b
@@ -121,6 +142,9 @@ func (b *ClusterBuilder) Name(value string) *ClusterBuilder {
 //
 // Network configuration of a cluster.
 func (b *ClusterBuilder) Network(value *NetworkBuilder) *ClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.network = value
 	if value != nil {
 		b.fieldSet_[7] = true
@@ -132,6 +156,9 @@ func (b *ClusterBuilder) Network(value *NetworkBuilder) *ClusterBuilder {
 
 // Nodes sets the value of the 'nodes' attribute to the given value.
 func (b *ClusterBuilder) Nodes(value *ClusterNodesBuilder) *ClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.nodes = value
 	if value != nil {
 		b.fieldSet_[8] = true
@@ -143,6 +170,9 @@ func (b *ClusterBuilder) Nodes(value *ClusterNodesBuilder) *ClusterBuilder {
 
 // Properties sets the value of the 'properties' attribute to the given value.
 func (b *ClusterBuilder) Properties(value map[string]string) *ClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.properties = value
 	if value != nil {
 		b.fieldSet_[9] = true
@@ -156,6 +186,9 @@ func (b *ClusterBuilder) Properties(value map[string]string) *ClusterBuilder {
 //
 // Description of a region of a cloud provider.
 func (b *ClusterBuilder) Region(value *CloudRegionBuilder) *ClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.region = value
 	if value != nil {
 		b.fieldSet_[10] = true
@@ -167,6 +200,9 @@ func (b *ClusterBuilder) Region(value *CloudRegionBuilder) *ClusterBuilder {
 
 // State sets the value of the 'state' attribute to the given value.
 func (b *ClusterBuilder) State(value string) *ClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
 	b.state = value
 	b.fieldSet_[11] = true
 	return b

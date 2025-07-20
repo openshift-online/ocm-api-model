@@ -46,6 +46,9 @@ func (b *TokenAuthorizationResponseBuilder) Empty() bool {
 
 // Account sets the value of the 'account' attribute to the given value.
 func (b *TokenAuthorizationResponseBuilder) Account(value *AccountBuilder) *TokenAuthorizationResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.account = value
 	if value != nil {
 		b.fieldSet_[0] = true

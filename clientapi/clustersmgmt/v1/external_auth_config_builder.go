@@ -38,12 +38,18 @@ func NewExternalAuthConfig() *ExternalAuthConfigBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ExternalAuthConfigBuilder) Link(value bool) *ExternalAuthConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ExternalAuthConfigBuilder) ID(value string) *ExternalAuthConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -51,6 +57,9 @@ func (b *ExternalAuthConfigBuilder) ID(value string) *ExternalAuthConfigBuilder 
 
 // HREF sets the link to the object.
 func (b *ExternalAuthConfigBuilder) HREF(value string) *ExternalAuthConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *ExternalAuthConfigBuilder) Empty() bool {
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *ExternalAuthConfigBuilder) Enabled(value bool) *ExternalAuthConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.enabled = value
 	b.fieldSet_[3] = true
 	return b
@@ -79,6 +91,9 @@ func (b *ExternalAuthConfigBuilder) Enabled(value bool) *ExternalAuthConfigBuild
 
 // ExternalAuths sets the value of the 'external_auths' attribute to the given values.
 func (b *ExternalAuthConfigBuilder) ExternalAuths(value *ExternalAuthListBuilder) *ExternalAuthConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.externalAuths = value
 	b.fieldSet_[4] = true
 	return b
@@ -88,6 +103,9 @@ func (b *ExternalAuthConfigBuilder) ExternalAuths(value *ExternalAuthListBuilder
 //
 // Representation of the possible values for the state field of an external authentication configuration
 func (b *ExternalAuthConfigBuilder) State(value ExternalAuthConfigState) *ExternalAuthConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.state = value
 	b.fieldSet_[5] = true
 	return b

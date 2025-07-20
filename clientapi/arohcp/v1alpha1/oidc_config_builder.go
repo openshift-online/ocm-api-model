@@ -61,6 +61,9 @@ func (b *OidcConfigBuilder) Empty() bool {
 
 // HREF sets the value of the 'HREF' attribute to the given value.
 func (b *OidcConfigBuilder) HREF(value string) *OidcConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.href = value
 	b.fieldSet_[0] = true
 	return b
@@ -68,6 +71,9 @@ func (b *OidcConfigBuilder) HREF(value string) *OidcConfigBuilder {
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *OidcConfigBuilder) ID(value string) *OidcConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -75,6 +81,9 @@ func (b *OidcConfigBuilder) ID(value string) *OidcConfigBuilder {
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *OidcConfigBuilder) CreationTimestamp(value time.Time) *OidcConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.creationTimestamp = value
 	b.fieldSet_[2] = true
 	return b
@@ -82,6 +91,9 @@ func (b *OidcConfigBuilder) CreationTimestamp(value time.Time) *OidcConfigBuilde
 
 // InstallerRoleArn sets the value of the 'installer_role_arn' attribute to the given value.
 func (b *OidcConfigBuilder) InstallerRoleArn(value string) *OidcConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.installerRoleArn = value
 	b.fieldSet_[3] = true
 	return b
@@ -89,6 +101,9 @@ func (b *OidcConfigBuilder) InstallerRoleArn(value string) *OidcConfigBuilder {
 
 // IssuerUrl sets the value of the 'issuer_url' attribute to the given value.
 func (b *OidcConfigBuilder) IssuerUrl(value string) *OidcConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.issuerUrl = value
 	b.fieldSet_[4] = true
 	return b
@@ -96,6 +111,9 @@ func (b *OidcConfigBuilder) IssuerUrl(value string) *OidcConfigBuilder {
 
 // LastUpdateTimestamp sets the value of the 'last_update_timestamp' attribute to the given value.
 func (b *OidcConfigBuilder) LastUpdateTimestamp(value time.Time) *OidcConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.lastUpdateTimestamp = value
 	b.fieldSet_[5] = true
 	return b
@@ -103,6 +121,9 @@ func (b *OidcConfigBuilder) LastUpdateTimestamp(value time.Time) *OidcConfigBuil
 
 // LastUsedTimestamp sets the value of the 'last_used_timestamp' attribute to the given value.
 func (b *OidcConfigBuilder) LastUsedTimestamp(value time.Time) *OidcConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.lastUsedTimestamp = value
 	b.fieldSet_[6] = true
 	return b
@@ -110,6 +131,9 @@ func (b *OidcConfigBuilder) LastUsedTimestamp(value time.Time) *OidcConfigBuilde
 
 // Managed sets the value of the 'managed' attribute to the given value.
 func (b *OidcConfigBuilder) Managed(value bool) *OidcConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.managed = value
 	b.fieldSet_[7] = true
 	return b
@@ -117,6 +141,9 @@ func (b *OidcConfigBuilder) Managed(value bool) *OidcConfigBuilder {
 
 // OrganizationId sets the value of the 'organization_id' attribute to the given value.
 func (b *OidcConfigBuilder) OrganizationId(value string) *OidcConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.organizationId = value
 	b.fieldSet_[8] = true
 	return b
@@ -124,6 +151,9 @@ func (b *OidcConfigBuilder) OrganizationId(value string) *OidcConfigBuilder {
 
 // Reusable sets the value of the 'reusable' attribute to the given value.
 func (b *OidcConfigBuilder) Reusable(value bool) *OidcConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.reusable = value
 	b.fieldSet_[9] = true
 	return b
@@ -131,6 +161,9 @@ func (b *OidcConfigBuilder) Reusable(value bool) *OidcConfigBuilder {
 
 // SecretArn sets the value of the 'secret_arn' attribute to the given value.
 func (b *OidcConfigBuilder) SecretArn(value string) *OidcConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.secretArn = value
 	b.fieldSet_[10] = true
 	return b

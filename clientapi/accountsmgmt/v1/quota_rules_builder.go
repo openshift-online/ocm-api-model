@@ -53,6 +53,9 @@ func (b *QuotaRulesBuilder) Empty() bool {
 
 // AvailabilityZone sets the value of the 'availability_zone' attribute to the given value.
 func (b *QuotaRulesBuilder) AvailabilityZone(value string) *QuotaRulesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.availabilityZone = value
 	b.fieldSet_[0] = true
 	return b
@@ -60,6 +63,9 @@ func (b *QuotaRulesBuilder) AvailabilityZone(value string) *QuotaRulesBuilder {
 
 // BillingModel sets the value of the 'billing_model' attribute to the given value.
 func (b *QuotaRulesBuilder) BillingModel(value string) *QuotaRulesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.billingModel = value
 	b.fieldSet_[1] = true
 	return b
@@ -67,6 +73,9 @@ func (b *QuotaRulesBuilder) BillingModel(value string) *QuotaRulesBuilder {
 
 // Byoc sets the value of the 'byoc' attribute to the given value.
 func (b *QuotaRulesBuilder) Byoc(value string) *QuotaRulesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.byoc = value
 	b.fieldSet_[2] = true
 	return b
@@ -74,6 +83,9 @@ func (b *QuotaRulesBuilder) Byoc(value string) *QuotaRulesBuilder {
 
 // Cloud sets the value of the 'cloud' attribute to the given value.
 func (b *QuotaRulesBuilder) Cloud(value string) *QuotaRulesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.cloud = value
 	b.fieldSet_[3] = true
 	return b
@@ -81,6 +93,9 @@ func (b *QuotaRulesBuilder) Cloud(value string) *QuotaRulesBuilder {
 
 // Cost sets the value of the 'cost' attribute to the given value.
 func (b *QuotaRulesBuilder) Cost(value int) *QuotaRulesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.cost = value
 	b.fieldSet_[4] = true
 	return b
@@ -88,6 +103,9 @@ func (b *QuotaRulesBuilder) Cost(value int) *QuotaRulesBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *QuotaRulesBuilder) Name(value string) *QuotaRulesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.name = value
 	b.fieldSet_[5] = true
 	return b
@@ -95,6 +113,9 @@ func (b *QuotaRulesBuilder) Name(value string) *QuotaRulesBuilder {
 
 // Product sets the value of the 'product' attribute to the given value.
 func (b *QuotaRulesBuilder) Product(value string) *QuotaRulesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.product = value
 	b.fieldSet_[6] = true
 	return b
@@ -102,6 +123,9 @@ func (b *QuotaRulesBuilder) Product(value string) *QuotaRulesBuilder {
 
 // QuotaId sets the value of the 'quota_id' attribute to the given value.
 func (b *QuotaRulesBuilder) QuotaId(value string) *QuotaRulesBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 8)
+	}
 	b.quotaId = value
 	b.fieldSet_[7] = true
 	return b

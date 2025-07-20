@@ -48,6 +48,9 @@ func (b *AddOnRequirementStatusBuilder) Empty() bool {
 
 // ErrorMsgs sets the value of the 'error_msgs' attribute to the given values.
 func (b *AddOnRequirementStatusBuilder) ErrorMsgs(values ...string) *AddOnRequirementStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.errorMsgs = make([]string, len(values))
 	copy(b.errorMsgs, values)
 	b.fieldSet_[0] = true
@@ -56,6 +59,9 @@ func (b *AddOnRequirementStatusBuilder) ErrorMsgs(values ...string) *AddOnRequir
 
 // Fulfilled sets the value of the 'fulfilled' attribute to the given value.
 func (b *AddOnRequirementStatusBuilder) Fulfilled(value bool) *AddOnRequirementStatusBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.fulfilled = value
 	b.fieldSet_[1] = true
 	return b

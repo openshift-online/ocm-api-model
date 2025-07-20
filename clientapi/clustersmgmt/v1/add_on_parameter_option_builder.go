@@ -50,6 +50,9 @@ func (b *AddOnParameterOptionBuilder) Empty() bool {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AddOnParameterOptionBuilder) Name(value string) *AddOnParameterOptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.name = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *AddOnParameterOptionBuilder) Name(value string) *AddOnParameterOptionBu
 
 // Rank sets the value of the 'rank' attribute to the given value.
 func (b *AddOnParameterOptionBuilder) Rank(value int) *AddOnParameterOptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.rank = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *AddOnParameterOptionBuilder) Rank(value int) *AddOnParameterOptionBuild
 
 // Requirements sets the value of the 'requirements' attribute to the given values.
 func (b *AddOnParameterOptionBuilder) Requirements(values ...*AddOnRequirementBuilder) *AddOnParameterOptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.requirements = make([]*AddOnRequirementBuilder, len(values))
 	copy(b.requirements, values)
 	b.fieldSet_[2] = true
@@ -72,6 +81,9 @@ func (b *AddOnParameterOptionBuilder) Requirements(values ...*AddOnRequirementBu
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *AddOnParameterOptionBuilder) Value(value string) *AddOnParameterOptionBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.value = value
 	b.fieldSet_[3] = true
 	return b

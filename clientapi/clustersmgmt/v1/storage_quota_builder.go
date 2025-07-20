@@ -48,6 +48,9 @@ func (b *StorageQuotaBuilder) Empty() bool {
 
 // Unit sets the value of the 'unit' attribute to the given value.
 func (b *StorageQuotaBuilder) Unit(value string) *StorageQuotaBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.unit = value
 	b.fieldSet_[0] = true
 	return b
@@ -55,6 +58,9 @@ func (b *StorageQuotaBuilder) Unit(value string) *StorageQuotaBuilder {
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *StorageQuotaBuilder) Value(value float64) *StorageQuotaBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 2)
+	}
 	b.value = value
 	b.fieldSet_[1] = true
 	return b

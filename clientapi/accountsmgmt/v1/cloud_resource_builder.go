@@ -51,12 +51,18 @@ func NewCloudResource() *CloudResourceBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *CloudResourceBuilder) Link(value bool) *CloudResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *CloudResourceBuilder) ID(value string) *CloudResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *CloudResourceBuilder) ID(value string) *CloudResourceBuilder {
 
 // HREF sets the link to the object.
 func (b *CloudResourceBuilder) HREF(value string) *CloudResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -85,6 +94,9 @@ func (b *CloudResourceBuilder) Empty() bool {
 
 // Active sets the value of the 'active' attribute to the given value.
 func (b *CloudResourceBuilder) Active(value bool) *CloudResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.active = value
 	b.fieldSet_[3] = true
 	return b
@@ -92,6 +104,9 @@ func (b *CloudResourceBuilder) Active(value bool) *CloudResourceBuilder {
 
 // Category sets the value of the 'category' attribute to the given value.
 func (b *CloudResourceBuilder) Category(value string) *CloudResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.category = value
 	b.fieldSet_[4] = true
 	return b
@@ -99,6 +114,9 @@ func (b *CloudResourceBuilder) Category(value string) *CloudResourceBuilder {
 
 // CategoryPretty sets the value of the 'category_pretty' attribute to the given value.
 func (b *CloudResourceBuilder) CategoryPretty(value string) *CloudResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.categoryPretty = value
 	b.fieldSet_[5] = true
 	return b
@@ -106,6 +124,9 @@ func (b *CloudResourceBuilder) CategoryPretty(value string) *CloudResourceBuilde
 
 // CloudProvider sets the value of the 'cloud_provider' attribute to the given value.
 func (b *CloudResourceBuilder) CloudProvider(value string) *CloudResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.cloudProvider = value
 	b.fieldSet_[6] = true
 	return b
@@ -113,6 +134,9 @@ func (b *CloudResourceBuilder) CloudProvider(value string) *CloudResourceBuilder
 
 // CpuCores sets the value of the 'cpu_cores' attribute to the given value.
 func (b *CloudResourceBuilder) CpuCores(value int) *CloudResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.cpuCores = value
 	b.fieldSet_[7] = true
 	return b
@@ -120,6 +144,9 @@ func (b *CloudResourceBuilder) CpuCores(value int) *CloudResourceBuilder {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *CloudResourceBuilder) CreatedAt(value time.Time) *CloudResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.createdAt = value
 	b.fieldSet_[8] = true
 	return b
@@ -127,6 +154,9 @@ func (b *CloudResourceBuilder) CreatedAt(value time.Time) *CloudResourceBuilder 
 
 // GenericName sets the value of the 'generic_name' attribute to the given value.
 func (b *CloudResourceBuilder) GenericName(value string) *CloudResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.genericName = value
 	b.fieldSet_[9] = true
 	return b
@@ -134,6 +164,9 @@ func (b *CloudResourceBuilder) GenericName(value string) *CloudResourceBuilder {
 
 // Memory sets the value of the 'memory' attribute to the given value.
 func (b *CloudResourceBuilder) Memory(value int) *CloudResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.memory = value
 	b.fieldSet_[10] = true
 	return b
@@ -141,6 +174,9 @@ func (b *CloudResourceBuilder) Memory(value int) *CloudResourceBuilder {
 
 // MemoryPretty sets the value of the 'memory_pretty' attribute to the given value.
 func (b *CloudResourceBuilder) MemoryPretty(value string) *CloudResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.memoryPretty = value
 	b.fieldSet_[11] = true
 	return b
@@ -148,6 +184,9 @@ func (b *CloudResourceBuilder) MemoryPretty(value string) *CloudResourceBuilder 
 
 // NamePretty sets the value of the 'name_pretty' attribute to the given value.
 func (b *CloudResourceBuilder) NamePretty(value string) *CloudResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.namePretty = value
 	b.fieldSet_[12] = true
 	return b
@@ -155,6 +194,9 @@ func (b *CloudResourceBuilder) NamePretty(value string) *CloudResourceBuilder {
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *CloudResourceBuilder) ResourceType(value string) *CloudResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.resourceType = value
 	b.fieldSet_[13] = true
 	return b
@@ -162,6 +204,9 @@ func (b *CloudResourceBuilder) ResourceType(value string) *CloudResourceBuilder 
 
 // SizePretty sets the value of the 'size_pretty' attribute to the given value.
 func (b *CloudResourceBuilder) SizePretty(value string) *CloudResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.sizePretty = value
 	b.fieldSet_[14] = true
 	return b
@@ -169,6 +214,9 @@ func (b *CloudResourceBuilder) SizePretty(value string) *CloudResourceBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *CloudResourceBuilder) UpdatedAt(value time.Time) *CloudResourceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 16)
+	}
 	b.updatedAt = value
 	b.fieldSet_[15] = true
 	return b

@@ -50,6 +50,9 @@ func (b *AWSSTSPolicyBuilder) Empty() bool {
 
 // ARN sets the value of the 'ARN' attribute to the given value.
 func (b *AWSSTSPolicyBuilder) ARN(value string) *AWSSTSPolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.arn = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *AWSSTSPolicyBuilder) ARN(value string) *AWSSTSPolicyBuilder {
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *AWSSTSPolicyBuilder) ID(value string) *AWSSTSPolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *AWSSTSPolicyBuilder) ID(value string) *AWSSTSPolicyBuilder {
 
 // Details sets the value of the 'details' attribute to the given value.
 func (b *AWSSTSPolicyBuilder) Details(value string) *AWSSTSPolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.details = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *AWSSTSPolicyBuilder) Details(value string) *AWSSTSPolicyBuilder {
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *AWSSTSPolicyBuilder) Type(value string) *AWSSTSPolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.type_ = value
 	b.fieldSet_[3] = true
 	return b

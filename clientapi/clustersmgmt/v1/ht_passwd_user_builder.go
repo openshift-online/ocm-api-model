@@ -49,6 +49,9 @@ func (b *HTPasswdUserBuilder) Empty() bool {
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *HTPasswdUserBuilder) ID(value string) *HTPasswdUserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[0] = true
 	return b
@@ -56,6 +59,9 @@ func (b *HTPasswdUserBuilder) ID(value string) *HTPasswdUserBuilder {
 
 // HashedPassword sets the value of the 'hashed_password' attribute to the given value.
 func (b *HTPasswdUserBuilder) HashedPassword(value string) *HTPasswdUserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.hashedPassword = value
 	b.fieldSet_[1] = true
 	return b
@@ -63,6 +69,9 @@ func (b *HTPasswdUserBuilder) HashedPassword(value string) *HTPasswdUserBuilder 
 
 // Password sets the value of the 'password' attribute to the given value.
 func (b *HTPasswdUserBuilder) Password(value string) *HTPasswdUserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.password = value
 	b.fieldSet_[2] = true
 	return b
@@ -70,6 +79,9 @@ func (b *HTPasswdUserBuilder) Password(value string) *HTPasswdUserBuilder {
 
 // Username sets the value of the 'username' attribute to the given value.
 func (b *HTPasswdUserBuilder) Username(value string) *HTPasswdUserBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.username = value
 	b.fieldSet_[3] = true
 	return b

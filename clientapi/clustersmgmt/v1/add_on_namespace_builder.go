@@ -37,12 +37,18 @@ func NewAddOnNamespace() *AddOnNamespaceBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddOnNamespaceBuilder) Link(value bool) *AddOnNamespaceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddOnNamespaceBuilder) ID(value string) *AddOnNamespaceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *AddOnNamespaceBuilder) ID(value string) *AddOnNamespaceBuilder {
 
 // HREF sets the link to the object.
 func (b *AddOnNamespaceBuilder) HREF(value string) *AddOnNamespaceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *AddOnNamespaceBuilder) Empty() bool {
 
 // Annotations sets the value of the 'annotations' attribute to the given value.
 func (b *AddOnNamespaceBuilder) Annotations(value map[string]string) *AddOnNamespaceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.annotations = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -82,6 +94,9 @@ func (b *AddOnNamespaceBuilder) Annotations(value map[string]string) *AddOnNames
 
 // Labels sets the value of the 'labels' attribute to the given value.
 func (b *AddOnNamespaceBuilder) Labels(value map[string]string) *AddOnNamespaceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.labels = value
 	if value != nil {
 		b.fieldSet_[4] = true
@@ -93,6 +108,9 @@ func (b *AddOnNamespaceBuilder) Labels(value map[string]string) *AddOnNamespaceB
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AddOnNamespaceBuilder) Name(value string) *AddOnNamespaceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 6)
+	}
 	b.name = value
 	b.fieldSet_[5] = true
 	return b

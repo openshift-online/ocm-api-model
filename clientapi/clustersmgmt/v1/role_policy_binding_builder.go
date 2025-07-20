@@ -56,6 +56,9 @@ func (b *RolePolicyBindingBuilder) Empty() bool {
 
 // Arn sets the value of the 'arn' attribute to the given value.
 func (b *RolePolicyBindingBuilder) Arn(value string) *RolePolicyBindingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.arn = value
 	b.fieldSet_[0] = true
 	return b
@@ -63,6 +66,9 @@ func (b *RolePolicyBindingBuilder) Arn(value string) *RolePolicyBindingBuilder {
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *RolePolicyBindingBuilder) CreationTimestamp(value time.Time) *RolePolicyBindingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.creationTimestamp = value
 	b.fieldSet_[1] = true
 	return b
@@ -70,6 +76,9 @@ func (b *RolePolicyBindingBuilder) CreationTimestamp(value time.Time) *RolePolic
 
 // LastUpdateTimestamp sets the value of the 'last_update_timestamp' attribute to the given value.
 func (b *RolePolicyBindingBuilder) LastUpdateTimestamp(value time.Time) *RolePolicyBindingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.lastUpdateTimestamp = value
 	b.fieldSet_[2] = true
 	return b
@@ -77,6 +86,9 @@ func (b *RolePolicyBindingBuilder) LastUpdateTimestamp(value time.Time) *RolePol
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *RolePolicyBindingBuilder) Name(value string) *RolePolicyBindingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.name = value
 	b.fieldSet_[3] = true
 	return b
@@ -84,6 +96,9 @@ func (b *RolePolicyBindingBuilder) Name(value string) *RolePolicyBindingBuilder 
 
 // Policies sets the value of the 'policies' attribute to the given values.
 func (b *RolePolicyBindingBuilder) Policies(values ...*RolePolicyBuilder) *RolePolicyBindingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.policies = make([]*RolePolicyBuilder, len(values))
 	copy(b.policies, values)
 	b.fieldSet_[4] = true
@@ -92,6 +107,9 @@ func (b *RolePolicyBindingBuilder) Policies(values ...*RolePolicyBuilder) *RoleP
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *RolePolicyBindingBuilder) Status(value *RolePolicyBindingStatusBuilder) *RolePolicyBindingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.status = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -103,6 +121,9 @@ func (b *RolePolicyBindingBuilder) Status(value *RolePolicyBindingStatusBuilder)
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *RolePolicyBindingBuilder) Type(value string) *RolePolicyBindingBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 7)
+	}
 	b.type_ = value
 	b.fieldSet_[6] = true
 	return b

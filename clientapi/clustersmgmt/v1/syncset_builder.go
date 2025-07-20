@@ -36,12 +36,18 @@ func NewSyncset() *SyncsetBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *SyncsetBuilder) Link(value bool) *SyncsetBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *SyncsetBuilder) ID(value string) *SyncsetBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -49,6 +55,9 @@ func (b *SyncsetBuilder) ID(value string) *SyncsetBuilder {
 
 // HREF sets the link to the object.
 func (b *SyncsetBuilder) HREF(value string) *SyncsetBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -70,6 +79,9 @@ func (b *SyncsetBuilder) Empty() bool {
 
 // Resources sets the value of the 'resources' attribute to the given values.
 func (b *SyncsetBuilder) Resources(values ...interface{}) *SyncsetBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.resources = make([]interface{}, len(values))
 	copy(b.resources, values)
 	b.fieldSet_[3] = true

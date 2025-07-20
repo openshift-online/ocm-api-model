@@ -37,12 +37,18 @@ func NewUpgradePolicyState() *UpgradePolicyStateBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *UpgradePolicyStateBuilder) Link(value bool) *UpgradePolicyStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *UpgradePolicyStateBuilder) ID(value string) *UpgradePolicyStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *UpgradePolicyStateBuilder) ID(value string) *UpgradePolicyStateBuilder 
 
 // HREF sets the link to the object.
 func (b *UpgradePolicyStateBuilder) HREF(value string) *UpgradePolicyStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *UpgradePolicyStateBuilder) Empty() bool {
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *UpgradePolicyStateBuilder) Description(value string) *UpgradePolicyStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.description = value
 	b.fieldSet_[3] = true
 	return b
@@ -80,6 +92,9 @@ func (b *UpgradePolicyStateBuilder) Description(value string) *UpgradePolicyStat
 //
 // Overall state of a cluster upgrade policy.
 func (b *UpgradePolicyStateBuilder) Value(value UpgradePolicyStateValue) *UpgradePolicyStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.value = value
 	b.fieldSet_[4] = true
 	return b

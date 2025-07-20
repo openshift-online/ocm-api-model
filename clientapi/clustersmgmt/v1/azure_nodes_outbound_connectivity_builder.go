@@ -47,6 +47,9 @@ func (b *AzureNodesOutboundConnectivityBuilder) Empty() bool {
 
 // OutboundType sets the value of the 'outbound_type' attribute to the given value.
 func (b *AzureNodesOutboundConnectivityBuilder) OutboundType(value string) *AzureNodesOutboundConnectivityBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.outboundType = value
 	b.fieldSet_[0] = true
 	return b

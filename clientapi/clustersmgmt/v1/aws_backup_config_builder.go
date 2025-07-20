@@ -51,6 +51,9 @@ func (b *AWSBackupConfigBuilder) Empty() bool {
 
 // S3Bucket sets the value of the 'S3_bucket' attribute to the given value.
 func (b *AWSBackupConfigBuilder) S3Bucket(value string) *AWSBackupConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.s3Bucket = value
 	b.fieldSet_[0] = true
 	return b
@@ -58,6 +61,9 @@ func (b *AWSBackupConfigBuilder) S3Bucket(value string) *AWSBackupConfigBuilder 
 
 // AccountId sets the value of the 'account_id' attribute to the given value.
 func (b *AWSBackupConfigBuilder) AccountId(value string) *AWSBackupConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.accountId = value
 	b.fieldSet_[1] = true
 	return b
@@ -65,6 +71,9 @@ func (b *AWSBackupConfigBuilder) AccountId(value string) *AWSBackupConfigBuilder
 
 // IdentityProviderArn sets the value of the 'identity_provider_arn' attribute to the given value.
 func (b *AWSBackupConfigBuilder) IdentityProviderArn(value string) *AWSBackupConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.identityProviderArn = value
 	b.fieldSet_[2] = true
 	return b
@@ -72,6 +81,9 @@ func (b *AWSBackupConfigBuilder) IdentityProviderArn(value string) *AWSBackupCon
 
 // ManagementCluster sets the value of the 'management_cluster' attribute to the given value.
 func (b *AWSBackupConfigBuilder) ManagementCluster(value string) *AWSBackupConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.managementCluster = value
 	b.fieldSet_[3] = true
 	return b
@@ -79,6 +91,9 @@ func (b *AWSBackupConfigBuilder) ManagementCluster(value string) *AWSBackupConfi
 
 // RoleArn sets the value of the 'role_arn' attribute to the given value.
 func (b *AWSBackupConfigBuilder) RoleArn(value string) *AWSBackupConfigBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.roleArn = value
 	b.fieldSet_[4] = true
 	return b

@@ -37,12 +37,18 @@ func NewAddonUpgradePolicyState() *AddonUpgradePolicyStateBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddonUpgradePolicyStateBuilder) Link(value bool) *AddonUpgradePolicyStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddonUpgradePolicyStateBuilder) ID(value string) *AddonUpgradePolicyStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -50,6 +56,9 @@ func (b *AddonUpgradePolicyStateBuilder) ID(value string) *AddonUpgradePolicySta
 
 // HREF sets the link to the object.
 func (b *AddonUpgradePolicyStateBuilder) HREF(value string) *AddonUpgradePolicyStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *AddonUpgradePolicyStateBuilder) Empty() bool {
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *AddonUpgradePolicyStateBuilder) Description(value string) *AddonUpgradePolicyStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.description = value
 	b.fieldSet_[3] = true
 	return b
@@ -80,6 +92,9 @@ func (b *AddonUpgradePolicyStateBuilder) Description(value string) *AddonUpgrade
 //
 // Overall state of a cluster upgrade policy.
 func (b *AddonUpgradePolicyStateBuilder) Value(value UpgradePolicyStateValue) *AddonUpgradePolicyStateBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 5)
+	}
 	b.value = value
 	b.fieldSet_[4] = true
 	return b

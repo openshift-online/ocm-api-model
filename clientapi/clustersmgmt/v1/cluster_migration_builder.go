@@ -45,12 +45,18 @@ func NewClusterMigration() *ClusterMigrationBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ClusterMigrationBuilder) Link(value bool) *ClusterMigrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ClusterMigrationBuilder) ID(value string) *ClusterMigrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -58,6 +64,9 @@ func (b *ClusterMigrationBuilder) ID(value string) *ClusterMigrationBuilder {
 
 // HREF sets the link to the object.
 func (b *ClusterMigrationBuilder) HREF(value string) *ClusterMigrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -79,6 +88,9 @@ func (b *ClusterMigrationBuilder) Empty() bool {
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *ClusterMigrationBuilder) ClusterID(value string) *ClusterMigrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.clusterID = value
 	b.fieldSet_[3] = true
 	return b
@@ -86,6 +98,9 @@ func (b *ClusterMigrationBuilder) ClusterID(value string) *ClusterMigrationBuild
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *ClusterMigrationBuilder) CreationTimestamp(value time.Time) *ClusterMigrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.creationTimestamp = value
 	b.fieldSet_[4] = true
 	return b
@@ -95,6 +110,9 @@ func (b *ClusterMigrationBuilder) CreationTimestamp(value time.Time) *ClusterMig
 //
 // Details for `SdnToOvn` cluster migrations.
 func (b *ClusterMigrationBuilder) SdnToOvn(value *SdnToOvnClusterMigrationBuilder) *ClusterMigrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.sdnToOvn = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -108,6 +126,9 @@ func (b *ClusterMigrationBuilder) SdnToOvn(value *SdnToOvnClusterMigrationBuilde
 //
 // Representation of a cluster migration state.
 func (b *ClusterMigrationBuilder) State(value *ClusterMigrationStateBuilder) *ClusterMigrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.state = value
 	if value != nil {
 		b.fieldSet_[6] = true
@@ -121,6 +142,9 @@ func (b *ClusterMigrationBuilder) State(value *ClusterMigrationStateBuilder) *Cl
 //
 // Type of cluster migration.
 func (b *ClusterMigrationBuilder) Type(value ClusterMigrationType) *ClusterMigrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.type_ = value
 	b.fieldSet_[7] = true
 	return b
@@ -128,6 +152,9 @@ func (b *ClusterMigrationBuilder) Type(value ClusterMigrationType) *ClusterMigra
 
 // UpdatedTimestamp sets the value of the 'updated_timestamp' attribute to the given value.
 func (b *ClusterMigrationBuilder) UpdatedTimestamp(value time.Time) *ClusterMigrationBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.updatedTimestamp = value
 	b.fieldSet_[8] = true
 	return b

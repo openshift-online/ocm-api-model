@@ -88,12 +88,18 @@ func NewManagementCluster() *ManagementClusterBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ManagementClusterBuilder) Link(value bool) *ManagementClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ManagementClusterBuilder) ID(value string) *ManagementClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -101,6 +107,9 @@ func (b *ManagementClusterBuilder) ID(value string) *ManagementClusterBuilder {
 
 // HREF sets the link to the object.
 func (b *ManagementClusterBuilder) HREF(value string) *ManagementClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -125,6 +134,9 @@ func (b *ManagementClusterBuilder) Empty() bool {
 //
 // DNS settings of the cluster.
 func (b *ManagementClusterBuilder) DNS(value *DNSBuilder) *ManagementClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.dns = value
 	if value != nil {
 		b.fieldSet_[3] = true
@@ -136,6 +148,9 @@ func (b *ManagementClusterBuilder) DNS(value *DNSBuilder) *ManagementClusterBuil
 
 // CloudProvider sets the value of the 'cloud_provider' attribute to the given value.
 func (b *ManagementClusterBuilder) CloudProvider(value string) *ManagementClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.cloudProvider = value
 	b.fieldSet_[4] = true
 	return b
@@ -145,6 +160,9 @@ func (b *ManagementClusterBuilder) CloudProvider(value string) *ManagementCluste
 //
 // Cluster Mgmt reference settings of the cluster.
 func (b *ManagementClusterBuilder) ClusterManagementReference(value *ClusterManagementReferenceBuilder) *ManagementClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.clusterManagementReference = value
 	if value != nil {
 		b.fieldSet_[5] = true
@@ -156,6 +174,9 @@ func (b *ManagementClusterBuilder) ClusterManagementReference(value *ClusterMana
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *ManagementClusterBuilder) CreationTimestamp(value time.Time) *ManagementClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.creationTimestamp = value
 	b.fieldSet_[6] = true
 	return b
@@ -163,6 +184,9 @@ func (b *ManagementClusterBuilder) CreationTimestamp(value time.Time) *Managemen
 
 // Labels sets the value of the 'labels' attribute to the given values.
 func (b *ManagementClusterBuilder) Labels(values ...*LabelBuilder) *ManagementClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.labels = make([]*LabelBuilder, len(values))
 	copy(b.labels, values)
 	b.fieldSet_[7] = true
@@ -171,6 +195,9 @@ func (b *ManagementClusterBuilder) Labels(values ...*LabelBuilder) *ManagementCl
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ManagementClusterBuilder) Name(value string) *ManagementClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.name = value
 	b.fieldSet_[8] = true
 	return b
@@ -180,6 +207,9 @@ func (b *ManagementClusterBuilder) Name(value string) *ManagementClusterBuilder 
 //
 // ManagementClusterParent reference settings of the cluster.
 func (b *ManagementClusterBuilder) Parent(value *ManagementClusterParentBuilder) *ManagementClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.parent = value
 	if value != nil {
 		b.fieldSet_[9] = true
@@ -191,6 +221,9 @@ func (b *ManagementClusterBuilder) Parent(value *ManagementClusterParentBuilder)
 
 // Region sets the value of the 'region' attribute to the given value.
 func (b *ManagementClusterBuilder) Region(value string) *ManagementClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.region = value
 	b.fieldSet_[10] = true
 	return b
@@ -198,6 +231,9 @@ func (b *ManagementClusterBuilder) Region(value string) *ManagementClusterBuilde
 
 // Sector sets the value of the 'sector' attribute to the given value.
 func (b *ManagementClusterBuilder) Sector(value string) *ManagementClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.sector = value
 	b.fieldSet_[11] = true
 	return b
@@ -205,6 +241,9 @@ func (b *ManagementClusterBuilder) Sector(value string) *ManagementClusterBuilde
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *ManagementClusterBuilder) Status(value string) *ManagementClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.status = value
 	b.fieldSet_[12] = true
 	return b
@@ -212,6 +251,9 @@ func (b *ManagementClusterBuilder) Status(value string) *ManagementClusterBuilde
 
 // UpdateTimestamp sets the value of the 'update_timestamp' attribute to the given value.
 func (b *ManagementClusterBuilder) UpdateTimestamp(value time.Time) *ManagementClusterBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
 	b.updateTimestamp = value
 	b.fieldSet_[13] = true
 	return b

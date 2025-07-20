@@ -46,12 +46,18 @@ func NewRegistry() *RegistryBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *RegistryBuilder) Link(value bool) *RegistryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *RegistryBuilder) ID(value string) *RegistryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -59,6 +65,9 @@ func (b *RegistryBuilder) ID(value string) *RegistryBuilder {
 
 // HREF sets the link to the object.
 func (b *RegistryBuilder) HREF(value string) *RegistryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -80,6 +89,9 @@ func (b *RegistryBuilder) Empty() bool {
 
 // URL sets the value of the 'URL' attribute to the given value.
 func (b *RegistryBuilder) URL(value string) *RegistryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.url = value
 	b.fieldSet_[3] = true
 	return b
@@ -87,6 +99,9 @@ func (b *RegistryBuilder) URL(value string) *RegistryBuilder {
 
 // CloudAlias sets the value of the 'cloud_alias' attribute to the given value.
 func (b *RegistryBuilder) CloudAlias(value bool) *RegistryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.cloudAlias = value
 	b.fieldSet_[4] = true
 	return b
@@ -94,6 +109,9 @@ func (b *RegistryBuilder) CloudAlias(value bool) *RegistryBuilder {
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *RegistryBuilder) CreatedAt(value time.Time) *RegistryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.createdAt = value
 	b.fieldSet_[5] = true
 	return b
@@ -101,6 +119,9 @@ func (b *RegistryBuilder) CreatedAt(value time.Time) *RegistryBuilder {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *RegistryBuilder) Name(value string) *RegistryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.name = value
 	b.fieldSet_[6] = true
 	return b
@@ -108,6 +129,9 @@ func (b *RegistryBuilder) Name(value string) *RegistryBuilder {
 
 // OrgName sets the value of the 'org_name' attribute to the given value.
 func (b *RegistryBuilder) OrgName(value string) *RegistryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.orgName = value
 	b.fieldSet_[7] = true
 	return b
@@ -115,6 +139,9 @@ func (b *RegistryBuilder) OrgName(value string) *RegistryBuilder {
 
 // TeamName sets the value of the 'team_name' attribute to the given value.
 func (b *RegistryBuilder) TeamName(value string) *RegistryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.teamName = value
 	b.fieldSet_[8] = true
 	return b
@@ -122,6 +149,9 @@ func (b *RegistryBuilder) TeamName(value string) *RegistryBuilder {
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *RegistryBuilder) Type(value string) *RegistryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.type_ = value
 	b.fieldSet_[9] = true
 	return b
@@ -129,6 +159,9 @@ func (b *RegistryBuilder) Type(value string) *RegistryBuilder {
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *RegistryBuilder) UpdatedAt(value time.Time) *RegistryBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 11)
+	}
 	b.updatedAt = value
 	b.fieldSet_[10] = true
 	return b

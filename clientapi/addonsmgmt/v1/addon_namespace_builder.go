@@ -50,6 +50,9 @@ func (b *AddonNamespaceBuilder) Empty() bool {
 
 // Annotations sets the value of the 'annotations' attribute to the given value.
 func (b *AddonNamespaceBuilder) Annotations(value map[string]string) *AddonNamespaceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.annotations = value
 	if value != nil {
 		b.fieldSet_[0] = true
@@ -61,6 +64,9 @@ func (b *AddonNamespaceBuilder) Annotations(value map[string]string) *AddonNames
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddonNamespaceBuilder) Enabled(value bool) *AddonNamespaceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.enabled = value
 	b.fieldSet_[1] = true
 	return b
@@ -68,6 +74,9 @@ func (b *AddonNamespaceBuilder) Enabled(value bool) *AddonNamespaceBuilder {
 
 // Labels sets the value of the 'labels' attribute to the given value.
 func (b *AddonNamespaceBuilder) Labels(value map[string]string) *AddonNamespaceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.labels = value
 	if value != nil {
 		b.fieldSet_[2] = true
@@ -79,6 +88,9 @@ func (b *AddonNamespaceBuilder) Labels(value map[string]string) *AddonNamespaceB
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AddonNamespaceBuilder) Name(value string) *AddonNamespaceBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.name = value
 	b.fieldSet_[3] = true
 	return b

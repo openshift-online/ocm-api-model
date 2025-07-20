@@ -36,12 +36,18 @@ func NewProduct() *ProductBuilder {
 
 // Link sets the flag that indicates if this is a link.
 func (b *ProductBuilder) Link(value bool) *ProductBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.fieldSet_[0] = true
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ProductBuilder) ID(value string) *ProductBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.id = value
 	b.fieldSet_[1] = true
 	return b
@@ -49,6 +55,9 @@ func (b *ProductBuilder) ID(value string) *ProductBuilder {
 
 // HREF sets the link to the object.
 func (b *ProductBuilder) HREF(value string) *ProductBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.href = value
 	b.fieldSet_[2] = true
 	return b
@@ -70,6 +79,9 @@ func (b *ProductBuilder) Empty() bool {
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ProductBuilder) Name(value string) *ProductBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.name = value
 	b.fieldSet_[3] = true
 	return b

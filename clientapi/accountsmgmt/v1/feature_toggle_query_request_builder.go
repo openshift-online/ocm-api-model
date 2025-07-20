@@ -46,6 +46,9 @@ func (b *FeatureToggleQueryRequestBuilder) Empty() bool {
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *FeatureToggleQueryRequestBuilder) OrganizationID(value string) *FeatureToggleQueryRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.organizationID = value
 	b.fieldSet_[0] = true
 	return b

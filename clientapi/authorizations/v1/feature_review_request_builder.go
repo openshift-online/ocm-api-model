@@ -50,6 +50,9 @@ func (b *FeatureReviewRequestBuilder) Empty() bool {
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *FeatureReviewRequestBuilder) AccountUsername(value string) *FeatureReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.accountUsername = value
 	b.fieldSet_[0] = true
 	return b
@@ -57,6 +60,9 @@ func (b *FeatureReviewRequestBuilder) AccountUsername(value string) *FeatureRevi
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *FeatureReviewRequestBuilder) ClusterId(value string) *FeatureReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.clusterId = value
 	b.fieldSet_[1] = true
 	return b
@@ -64,6 +70,9 @@ func (b *FeatureReviewRequestBuilder) ClusterId(value string) *FeatureReviewRequ
 
 // Feature sets the value of the 'feature' attribute to the given value.
 func (b *FeatureReviewRequestBuilder) Feature(value string) *FeatureReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.feature = value
 	b.fieldSet_[2] = true
 	return b
@@ -71,6 +80,9 @@ func (b *FeatureReviewRequestBuilder) Feature(value string) *FeatureReviewReques
 
 // OrganizationId sets the value of the 'organization_id' attribute to the given value.
 func (b *FeatureReviewRequestBuilder) OrganizationId(value string) *FeatureReviewRequestBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 4)
+	}
 	b.organizationId = value
 	b.fieldSet_[3] = true
 	return b

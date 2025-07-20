@@ -55,6 +55,9 @@ func (b *SelfAccessReviewResponseBuilder) Empty() bool {
 
 // Action sets the value of the 'action' attribute to the given value.
 func (b *SelfAccessReviewResponseBuilder) Action(value string) *SelfAccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.action = value
 	b.fieldSet_[0] = true
 	return b
@@ -62,6 +65,9 @@ func (b *SelfAccessReviewResponseBuilder) Action(value string) *SelfAccessReview
 
 // Allowed sets the value of the 'allowed' attribute to the given value.
 func (b *SelfAccessReviewResponseBuilder) Allowed(value bool) *SelfAccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.allowed = value
 	b.fieldSet_[1] = true
 	return b
@@ -69,6 +75,9 @@ func (b *SelfAccessReviewResponseBuilder) Allowed(value bool) *SelfAccessReviewR
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *SelfAccessReviewResponseBuilder) ClusterID(value string) *SelfAccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.clusterID = value
 	b.fieldSet_[2] = true
 	return b
@@ -76,6 +85,9 @@ func (b *SelfAccessReviewResponseBuilder) ClusterID(value string) *SelfAccessRev
 
 // ClusterUUID sets the value of the 'cluster_UUID' attribute to the given value.
 func (b *SelfAccessReviewResponseBuilder) ClusterUUID(value string) *SelfAccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.clusterUUID = value
 	b.fieldSet_[3] = true
 	return b
@@ -83,6 +95,9 @@ func (b *SelfAccessReviewResponseBuilder) ClusterUUID(value string) *SelfAccessR
 
 // IsOCMInternal sets the value of the 'is_OCM_internal' attribute to the given value.
 func (b *SelfAccessReviewResponseBuilder) IsOCMInternal(value bool) *SelfAccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.isOCMInternal = value
 	b.fieldSet_[4] = true
 	return b
@@ -90,6 +105,9 @@ func (b *SelfAccessReviewResponseBuilder) IsOCMInternal(value bool) *SelfAccessR
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *SelfAccessReviewResponseBuilder) OrganizationID(value string) *SelfAccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.organizationID = value
 	b.fieldSet_[5] = true
 	return b
@@ -97,6 +115,9 @@ func (b *SelfAccessReviewResponseBuilder) OrganizationID(value string) *SelfAcce
 
 // Reason sets the value of the 'reason' attribute to the given value.
 func (b *SelfAccessReviewResponseBuilder) Reason(value string) *SelfAccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.reason = value
 	b.fieldSet_[6] = true
 	return b
@@ -104,6 +125,9 @@ func (b *SelfAccessReviewResponseBuilder) Reason(value string) *SelfAccessReview
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *SelfAccessReviewResponseBuilder) ResourceType(value string) *SelfAccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.resourceType = value
 	b.fieldSet_[7] = true
 	return b
@@ -111,6 +135,9 @@ func (b *SelfAccessReviewResponseBuilder) ResourceType(value string) *SelfAccess
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *SelfAccessReviewResponseBuilder) SubscriptionID(value string) *SelfAccessReviewResponseBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
 	b.subscriptionID = value
 	b.fieldSet_[8] = true
 	return b
