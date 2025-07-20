@@ -16,7 +16,7 @@
 
 .PHONY: build
 build:
-	go build github.com/openshift-online/ocm-api-metamodel/cmd/metamodel
+	go mod tidy && go build github.com/openshift-online/ocm-api-metamodel/cmd/metamodel
 
 .PHONY: clean
 clean:
