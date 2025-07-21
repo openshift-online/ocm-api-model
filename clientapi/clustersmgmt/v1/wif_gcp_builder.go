@@ -20,20 +20,22 @@ limitations under the License.
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
 type WifGcpBuilder struct {
-	fieldSet_            []bool
-	impersonatorEmail    string
-	projectId            string
-	projectNumber        string
-	rolePrefix           string
-	serviceAccounts      []*WifServiceAccountBuilder
-	support              *WifSupportBuilder
-	workloadIdentityPool *WifPoolBuilder
+	fieldSet_              []bool
+	federatedProjectId     string
+	federatedProjectNumber string
+	impersonatorEmail      string
+	projectId              string
+	projectNumber          string
+	rolePrefix             string
+	serviceAccounts        []*WifServiceAccountBuilder
+	support                *WifSupportBuilder
+	workloadIdentityPool   *WifPoolBuilder
 }
 
 // NewWifGcp creates a new builder of 'wif_gcp' objects.
 func NewWifGcp() *WifGcpBuilder {
 	return &WifGcpBuilder{
-		fieldSet_: make([]bool, 7),
+		fieldSet_: make([]bool, 9),
 	}
 }
 
@@ -50,67 +52,87 @@ func (b *WifGcpBuilder) Empty() bool {
 	return true
 }
 
+// FederatedProjectId sets the value of the 'federated_project_id' attribute to the given value.
+func (b *WifGcpBuilder) FederatedProjectId(value string) *WifGcpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
+	b.federatedProjectId = value
+	b.fieldSet_[0] = true
+	return b
+}
+
+// FederatedProjectNumber sets the value of the 'federated_project_number' attribute to the given value.
+func (b *WifGcpBuilder) FederatedProjectNumber(value string) *WifGcpBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 9)
+	}
+	b.federatedProjectNumber = value
+	b.fieldSet_[1] = true
+	return b
+}
+
 // ImpersonatorEmail sets the value of the 'impersonator_email' attribute to the given value.
 func (b *WifGcpBuilder) ImpersonatorEmail(value string) *WifGcpBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
+		b.fieldSet_ = make([]bool, 9)
 	}
 	b.impersonatorEmail = value
-	b.fieldSet_[0] = true
+	b.fieldSet_[2] = true
 	return b
 }
 
 // ProjectId sets the value of the 'project_id' attribute to the given value.
 func (b *WifGcpBuilder) ProjectId(value string) *WifGcpBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
+		b.fieldSet_ = make([]bool, 9)
 	}
 	b.projectId = value
-	b.fieldSet_[1] = true
+	b.fieldSet_[3] = true
 	return b
 }
 
 // ProjectNumber sets the value of the 'project_number' attribute to the given value.
 func (b *WifGcpBuilder) ProjectNumber(value string) *WifGcpBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
+		b.fieldSet_ = make([]bool, 9)
 	}
 	b.projectNumber = value
-	b.fieldSet_[2] = true
+	b.fieldSet_[4] = true
 	return b
 }
 
 // RolePrefix sets the value of the 'role_prefix' attribute to the given value.
 func (b *WifGcpBuilder) RolePrefix(value string) *WifGcpBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
+		b.fieldSet_ = make([]bool, 9)
 	}
 	b.rolePrefix = value
-	b.fieldSet_[3] = true
+	b.fieldSet_[5] = true
 	return b
 }
 
 // ServiceAccounts sets the value of the 'service_accounts' attribute to the given values.
 func (b *WifGcpBuilder) ServiceAccounts(values ...*WifServiceAccountBuilder) *WifGcpBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
+		b.fieldSet_ = make([]bool, 9)
 	}
 	b.serviceAccounts = make([]*WifServiceAccountBuilder, len(values))
 	copy(b.serviceAccounts, values)
-	b.fieldSet_[4] = true
+	b.fieldSet_[6] = true
 	return b
 }
 
 // Support sets the value of the 'support' attribute to the given value.
 func (b *WifGcpBuilder) Support(value *WifSupportBuilder) *WifGcpBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
+		b.fieldSet_ = make([]bool, 9)
 	}
 	b.support = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.fieldSet_[7] = true
 	} else {
-		b.fieldSet_[5] = false
+		b.fieldSet_[7] = false
 	}
 	return b
 }
@@ -118,13 +140,13 @@ func (b *WifGcpBuilder) Support(value *WifSupportBuilder) *WifGcpBuilder {
 // WorkloadIdentityPool sets the value of the 'workload_identity_pool' attribute to the given value.
 func (b *WifGcpBuilder) WorkloadIdentityPool(value *WifPoolBuilder) *WifGcpBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
+		b.fieldSet_ = make([]bool, 9)
 	}
 	b.workloadIdentityPool = value
 	if value != nil {
-		b.fieldSet_[6] = true
+		b.fieldSet_[8] = true
 	} else {
-		b.fieldSet_[6] = false
+		b.fieldSet_[8] = false
 	}
 	return b
 }
@@ -138,6 +160,8 @@ func (b *WifGcpBuilder) Copy(object *WifGcp) *WifGcpBuilder {
 		b.fieldSet_ = make([]bool, len(object.fieldSet_))
 		copy(b.fieldSet_, object.fieldSet_)
 	}
+	b.federatedProjectId = object.federatedProjectId
+	b.federatedProjectNumber = object.federatedProjectNumber
 	b.impersonatorEmail = object.impersonatorEmail
 	b.projectId = object.projectId
 	b.projectNumber = object.projectNumber
@@ -170,6 +194,8 @@ func (b *WifGcpBuilder) Build() (object *WifGcp, err error) {
 		object.fieldSet_ = make([]bool, len(b.fieldSet_))
 		copy(object.fieldSet_, b.fieldSet_)
 	}
+	object.federatedProjectId = b.federatedProjectId
+	object.federatedProjectNumber = b.federatedProjectNumber
 	object.impersonatorEmail = b.impersonatorEmail
 	object.projectId = b.projectId
 	object.projectNumber = b.projectNumber
