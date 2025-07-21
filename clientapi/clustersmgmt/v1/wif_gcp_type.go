@@ -21,14 +21,16 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // WifGcp represents the values of the 'wif_gcp' type.
 type WifGcp struct {
-	fieldSet_            []bool
-	impersonatorEmail    string
-	projectId            string
-	projectNumber        string
-	rolePrefix           string
-	serviceAccounts      []*WifServiceAccount
-	support              *WifSupport
-	workloadIdentityPool *WifPool
+	fieldSet_              []bool
+	federatedProjectId     string
+	federatedProjectNumber string
+	impersonatorEmail      string
+	projectId              string
+	projectNumber          string
+	rolePrefix             string
+	serviceAccounts        []*WifServiceAccount
+	support                *WifSupport
+	workloadIdentityPool   *WifPool
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
@@ -44,12 +46,62 @@ func (o *WifGcp) Empty() bool {
 	return true
 }
 
+// FederatedProjectId returns the value of the 'federated_project_id' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// This represents the GCP project ID in which, when specified,
+// the wif workload WorkloadIdentityPool resources will be configured.
+func (o *WifGcp) FederatedProjectId() string {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+		return o.federatedProjectId
+	}
+	return ""
+}
+
+// GetFederatedProjectId returns the value of the 'federated_project_id' attribute and
+// a flag indicating if the attribute has a value.
+//
+// This represents the GCP project ID in which, when specified,
+// the wif workload WorkloadIdentityPool resources will be configured.
+func (o *WifGcp) GetFederatedProjectId() (value string, ok bool) {
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	if ok {
+		value = o.federatedProjectId
+	}
+	return
+}
+
+// FederatedProjectNumber returns the value of the 'federated_project_number' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// This represents the GCP project number in which, when specified,
+// the wif workload WorkloadIdentityPool resources will be configured.
+func (o *WifGcp) FederatedProjectNumber() string {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+		return o.federatedProjectNumber
+	}
+	return ""
+}
+
+// GetFederatedProjectNumber returns the value of the 'federated_project_number' attribute and
+// a flag indicating if the attribute has a value.
+//
+// This represents the GCP project number in which, when specified,
+// the wif workload WorkloadIdentityPool resources will be configured.
+func (o *WifGcp) GetFederatedProjectNumber() (value string, ok bool) {
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	if ok {
+		value = o.federatedProjectNumber
+	}
+	return
+}
+
 // ImpersonatorEmail returns the value of the 'impersonator_email' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
 // This is the service account email that OCM will use to access other SAs.
 func (o *WifGcp) ImpersonatorEmail() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.impersonatorEmail
 	}
 	return ""
@@ -60,7 +112,7 @@ func (o *WifGcp) ImpersonatorEmail() string {
 //
 // This is the service account email that OCM will use to access other SAs.
 func (o *WifGcp) GetImpersonatorEmail() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.impersonatorEmail
 	}
@@ -72,7 +124,7 @@ func (o *WifGcp) GetImpersonatorEmail() (value string, ok bool) {
 //
 // This represents the GCP project ID in which the wif resources will be configured.
 func (o *WifGcp) ProjectId() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.projectId
 	}
 	return ""
@@ -83,7 +135,7 @@ func (o *WifGcp) ProjectId() string {
 //
 // This represents the GCP project ID in which the wif resources will be configured.
 func (o *WifGcp) GetProjectId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.projectId
 	}
@@ -95,7 +147,7 @@ func (o *WifGcp) GetProjectId() (value string, ok bool) {
 //
 // This represents the GCP project number in which the wif resources will be configured.
 func (o *WifGcp) ProjectNumber() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.projectNumber
 	}
 	return ""
@@ -106,7 +158,7 @@ func (o *WifGcp) ProjectNumber() string {
 //
 // This represents the GCP project number in which the wif resources will be configured.
 func (o *WifGcp) GetProjectNumber() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.projectNumber
 	}
@@ -118,7 +170,7 @@ func (o *WifGcp) GetProjectNumber() (value string, ok bool) {
 //
 // Prefix for naming GCP custom roles configured.
 func (o *WifGcp) RolePrefix() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.rolePrefix
 	}
 	return ""
@@ -129,7 +181,7 @@ func (o *WifGcp) RolePrefix() string {
 //
 // Prefix for naming GCP custom roles configured.
 func (o *WifGcp) GetRolePrefix() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.rolePrefix
 	}
@@ -142,7 +194,7 @@ func (o *WifGcp) GetRolePrefix() (value string, ok bool) {
 // The list of service accounts and their associated roles that will need to be
 // configured on the user's GCP project.
 func (o *WifGcp) ServiceAccounts() []*WifServiceAccount {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.serviceAccounts
 	}
 	return nil
@@ -154,7 +206,7 @@ func (o *WifGcp) ServiceAccounts() []*WifServiceAccount {
 // The list of service accounts and their associated roles that will need to be
 // configured on the user's GCP project.
 func (o *WifGcp) GetServiceAccounts() (value []*WifServiceAccount, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.serviceAccounts
 	}
@@ -166,7 +218,7 @@ func (o *WifGcp) GetServiceAccounts() (value []*WifServiceAccount, ok bool) {
 //
 // Defines the access configuration for support.
 func (o *WifGcp) Support() *WifSupport {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.support
 	}
 	return nil
@@ -177,7 +229,7 @@ func (o *WifGcp) Support() *WifSupport {
 //
 // Defines the access configuration for support.
 func (o *WifGcp) GetSupport() (value *WifSupport, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.support
 	}
@@ -190,7 +242,7 @@ func (o *WifGcp) GetSupport() (value *WifSupport, ok bool) {
 // The workload identity configuration data that will be used to create the
 // workload identity pool on the user's account.
 func (o *WifGcp) WorkloadIdentityPool() *WifPool {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.workloadIdentityPool
 	}
 	return nil
@@ -202,7 +254,7 @@ func (o *WifGcp) WorkloadIdentityPool() *WifPool {
 // The workload identity configuration data that will be used to create the
 // workload identity pool on the user's account.
 func (o *WifGcp) GetWorkloadIdentityPool() (value *WifPool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.workloadIdentityPool
 	}
