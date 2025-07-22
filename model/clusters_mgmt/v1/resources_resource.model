@@ -27,4 +27,10 @@ resource Resources {
         // Retrieved list of currently available resources for a cluster
         target ClusterResources
     }
+
+    // Reference to a specific resource for a cluster
+    locator Resource {
+		target Resource
+        variable ID
+	}
 }
