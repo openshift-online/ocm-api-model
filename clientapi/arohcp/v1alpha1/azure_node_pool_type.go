@@ -28,6 +28,7 @@ type AzureNodePool struct {
 	osDiskStorageAccountType         string
 	vmSize                           string
 	encryptionAtHost                 *AzureNodePoolEncryptionAtHost
+	osDisk                           *AzureNodePoolOsDisk
 	osDiskSseEncryptionSetResourceId string
 	resourceName                     string
 	ephemeralOSDiskEnabled           bool
@@ -199,6 +200,29 @@ func (o *AzureNodePool) GetEphemeralOSDiskEnabled() (value bool, ok bool) {
 	return
 }
 
+// OsDisk returns the value of the 'os_disk' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// The configuration for the OS disk used by the nodes in the Node Pool.
+func (o *AzureNodePool) OsDisk() *AzureNodePoolOsDisk {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+		return o.osDisk
+	}
+	return nil
+}
+
+// GetOsDisk returns the value of the 'os_disk' attribute and
+// a flag indicating if the attribute has a value.
+//
+// The configuration for the OS disk used by the nodes in the Node Pool.
+func (o *AzureNodePool) GetOsDisk() (value *AzureNodePoolOsDisk, ok bool) {
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	if ok {
+		value = o.osDisk
+	}
+	return
+}
+
 // OsDiskSseEncryptionSetResourceId returns the value of the 'os_disk_sse_encryption_set_resource_id' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
@@ -214,7 +238,7 @@ func (o *AzureNodePool) GetEphemeralOSDiskEnabled() (value bool, ok bool) {
 // If not specified, Server-Side Encryption (SSE) on the OS Disks of the Nodes of the Node Pool
 // is performed with platform managed keys.
 func (o *AzureNodePool) OsDiskSseEncryptionSetResourceId() string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.osDiskSseEncryptionSetResourceId
 	}
 	return ""
@@ -235,7 +259,7 @@ func (o *AzureNodePool) OsDiskSseEncryptionSetResourceId() string {
 // If not specified, Server-Side Encryption (SSE) on the OS Disks of the Nodes of the Node Pool
 // is performed with platform managed keys.
 func (o *AzureNodePool) GetOsDiskSseEncryptionSetResourceId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.osDiskSseEncryptionSetResourceId
 	}
@@ -257,7 +281,7 @@ func (o *AzureNodePool) GetOsDiskSseEncryptionSetResourceId() (value string, ok 
 // Required during creation.
 // Immutable.
 func (o *AzureNodePool) ResourceName() string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.resourceName
 	}
 	return ""
@@ -278,7 +302,7 @@ func (o *AzureNodePool) ResourceName() string {
 // Required during creation.
 // Immutable.
 func (o *AzureNodePool) GetResourceName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.resourceName
 	}
