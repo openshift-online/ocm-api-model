@@ -47,6 +47,9 @@ func (b *BackupBuilder) Empty() bool {
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *BackupBuilder) Enabled(value bool) *BackupBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.enabled = value
 	b.fieldSet_[0] = true
 	return b

@@ -49,6 +49,9 @@ func (b *ControlPlaneBuilder) Empty() bool {
 //
 // Representation of a Backup.
 func (b *ControlPlaneBuilder) Backup(value *BackupBuilder) *ControlPlaneBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 1)
+	}
 	b.backup = value
 	if value != nil {
 		b.fieldSet_[0] = true
