@@ -108,6 +108,48 @@ clean:
         clientapi/webrca \
 		$(NULL)
 
+.PHONY: validate-version
+validate-version:
+ifndef VERSION
+	$(error VERSION is required. Usage: make tag VERSION=v0.0.426)
+endif
+	@# Validate that we're on the main branch
+	@CURRENT_BRANCH=$$(git rev-parse --abbrev-ref HEAD); \
+	if [ "$$CURRENT_BRANCH" != "main" ]; then \
+		echo "Error: Tags must be created from the main branch. Currently on $$CURRENT_BRANCH"; \
+		exit 1; \
+	fi
+	@# Validate version format (vX.Y.Z)
+	@if ! echo "$(VERSION)" | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$$' > /dev/null; then \
+		echo "Error: VERSION must follow the format vX.Y.Z (e.g., v0.0.426)"; \
+		exit 1; \
+	fi
+	@# Get the latest tag and compare versions
+	@LATEST_TAG=$$(git tag -l 'v0.*.*' | sort -V | tail -1); \
+	if [ -n "$$LATEST_TAG" ]; then \
+		if ! printf '%s\n%s\n' "$$LATEST_TAG" "$(VERSION)" | sort -V -C; then \
+			echo "Error: VERSION $(VERSION) must be higher than the latest tag $$LATEST_TAG"; \
+			exit 1; \
+		fi; \
+		if [ "$$LATEST_TAG" = "$(VERSION)" ]; then \
+			echo "Error: VERSION $(VERSION) is the same as the latest tag $$LATEST_TAG"; \
+			exit 1; \
+		fi; \
+	fi
+
+MODULES = model clientapi metamodel_generator
+.PHONY: tag-and-push-modules
+tag-and-push-modules: validate-version
+	@for module in $(MODULES); do \
+		git tag -a -m 'Release $(VERSION)' $$module/$(VERSION); \
+		git push upstream $$module/$(VERSION); \
+	done 
+
+.PHONY: release
+release: tag-and-push-modules
+	git tag -a -m 'Release $(VERSION)' $(VERSION) 
+	git push upstream $(VERSION)
+
 .PHONY: goimports-install
 goimports-install:
 	@GOBIN=$(LOCAL_BIN_PATH) go install golang.org/x/tools/cmd/goimports@$(goimports_version)
