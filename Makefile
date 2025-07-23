@@ -108,6 +108,26 @@ clean:
         clientapi/webrca \
 		$(NULL)
 
+.PHONY: tag
+tag:
+ifndef VERSION
+	$(error VERSION is required. Usage: make tag VERSION=v0.0.426)
+endif
+	git tag -a -m 'Release $(VERSION)' model/$(VERSION)
+	git tag -a -m 'Release $(VERSION)' clientapi/$(VERSION)
+	git tag -a -m 'Release $(VERSION)' metamodel_generator/$(VERSION)
+	git tag -a -m 'Release $(VERSION)' $(VERSION)
+
+.PHONY: push-tag
+push-tag:
+ifndef VERSION
+	$(error VERSION is required. Usage: make push-tag VERSION=v0.0.426)
+endif
+	git push upstream model/$(VERSION)
+	git push upstream clientapi/$(VERSION)
+	git push upstream metamodel_generator/$(VERSION)
+	git push upstream $(VERSION)
+
 .PHONY: goimports-install
 goimports-install:
 	@GOBIN=$(LOCAL_BIN_PATH) go install golang.org/x/tools/cmd/goimports@$(goimports_version)
