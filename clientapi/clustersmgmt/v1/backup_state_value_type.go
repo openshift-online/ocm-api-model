@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2025 Red Hat, Inc.
+Copyright (c) 2020 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,8 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of a Backup.
-struct Backup {
-	// Indicates the state of the backup
-	BackupState BackupStateValue
-}
+// IMPORTANT: This file has been generated automatically, refrain from modifying it manually as all
+// your changes will be lost when the file is generated again.
+
+package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
+
+// BackupStateValue represents the values of the 'backup_state_value' enumerated type.
+type BackupStateValue string
+
+const (
+	//
+	BackupStateValueDisabled BackupStateValue = "disabled"
+	//
+	BackupStateValueEnabled BackupStateValue = "enabled"
+)

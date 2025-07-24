@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of a Backup.
-struct Backup {
-	// Indicates the state of the backup
-	BackupState BackupStateValue
+// BackupStateValue represents the state of a backup
+enum BackupStateValue {
+    Enabled
+
+    Disabled
 }

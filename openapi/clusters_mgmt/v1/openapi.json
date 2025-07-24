@@ -15287,11 +15287,19 @@
       "Backup": {
         "description": "Representation of a Backup.",
         "properties": {
-          "enabled": {
-            "description": "Indicates whether the backup is enabled",
-            "type": "boolean"
+          "backup_state": {
+            "description": "Indicates the state of the backup",
+            "$ref": "#/components/schemas/BackupStateValue"
           }
         }
+      },
+      "BackupStateValue": {
+        "description": "BackupStateValue represents the state of a backup",
+        "type": "string",
+        "enum": [
+          "disabled",
+          "enabled"
+        ]
       },
       "BillingModel": {
         "description": "Billing model for cluster resources.",
