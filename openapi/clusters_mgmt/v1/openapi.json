@@ -15293,14 +15293,6 @@
           }
         }
       },
-      "BackupStateValue": {
-        "description": "BackupStateValue represents the state of a backup",
-        "type": "string",
-        "enum": [
-          "disabled",
-          "enabled"
-        ]
-      },
       "BillingModel": {
         "description": "Billing model for cluster resources.",
         "type": "string",
