@@ -42,6 +42,23 @@ also known as the _model_.
 3. Run `make verify`.
 
 
+## Releasing a new OCM API Model version
+
+To use any updates to the [ocm-api-model](https://github.com/openshift-online/ocm-api-model), the version
+must be incremented for consumption in ocm-sdk-go generation. The version is defined by the release.
+
+Once all changes to the OCM API Model have been defined and reviewed the client types for the model need to be generated via `make update` target
+in the `ocm-api-model` project.
+
+Once all changes to the OCM API Model have been committed to the main branch you will need to create a git tag for the changes in the ocm-api-model.
+
+To do that you can use a dedicated make target:
+```
+make release VERSION=<vX.Y.Z>
+```
+
+Please note that not every-one can create tags, only maintainers of the ocm-api-model. Once a new tag is created you will be able to update the ocm-sdk see [here](https://github.com/openshift-online/ocm-sdk-go/blob/main/CONTRIBUTING.md#updating-the-ocm-sdk).
+
 
 ## Concepts
 
