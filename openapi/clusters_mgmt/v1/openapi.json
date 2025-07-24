@@ -15287,7 +15287,7 @@
       "Backup": {
         "description": "Representation of a Backup.",
         "properties": {
-          "backup_state": {
+          "state": {
             "description": "Indicates the state of the backup",
             "$ref": "#/components/schemas/BackupStateValue"
           }

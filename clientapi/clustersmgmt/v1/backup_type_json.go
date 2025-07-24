@@ -47,8 +47,8 @@ func WriteBackup(object *Backup, stream *jsoniter.Stream) {
 		if count > 0 {
 			stream.WriteMore()
 		}
-		stream.WriteObjectField("backup_state")
-		stream.WriteString(string(object.backupState))
+		stream.WriteObjectField("state")
+		stream.WriteString(string(object.state))
 	}
 	stream.WriteObjectEnd()
 }
@@ -76,10 +76,10 @@ func ReadBackup(iterator *jsoniter.Iterator) *Backup {
 			break
 		}
 		switch field {
-		case "backup_state":
+		case "state":
 			text := iterator.ReadString()
 			value := BackupStateValue(text)
-			object.backupState = value
+			object.state = value
 			object.fieldSet_[0] = true
 		default:
 			iterator.ReadAny()

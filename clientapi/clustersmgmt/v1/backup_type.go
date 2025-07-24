@@ -23,8 +23,8 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Representation of a Backup.
 type Backup struct {
-	fieldSet_   []bool
-	backupState BackupStateValue
+	fieldSet_ []bool
+	state     BackupStateValue
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
@@ -40,25 +40,25 @@ func (o *Backup) Empty() bool {
 	return true
 }
 
-// BackupState returns the value of the 'backup_state' attribute, or
+// State returns the value of the 'state' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
 // Indicates the state of the backup
-func (o *Backup) BackupState() BackupStateValue {
+func (o *Backup) State() BackupStateValue {
 	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
-		return o.backupState
+		return o.state
 	}
 	return BackupStateValue("")
 }
 
-// GetBackupState returns the value of the 'backup_state' attribute and
+// GetState returns the value of the 'state' attribute and
 // a flag indicating if the attribute has a value.
 //
 // Indicates the state of the backup
-func (o *Backup) GetBackupState() (value BackupStateValue, ok bool) {
+func (o *Backup) GetState() (value BackupStateValue, ok bool) {
 	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
-		value = o.backupState
+		value = o.state
 	}
 	return
 }

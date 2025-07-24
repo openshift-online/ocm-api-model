@@ -17,5 +17,5 @@ limitations under the License.
 // Representation of a Backup.
 struct Backup {
 	// Indicates the state of the backup
-	BackupState BackupStateValue
+	State BackupStateValue
 }
