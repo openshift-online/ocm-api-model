@@ -16,6 +16,7 @@ limitations under the License.
 
 // Representation of a Backup.
 struct Backup {
-	// Indicates the state of the backup
-	State BackupStateValue
+	// Indicates the state of the backup.
+	// Accepted values are: "enabled", "disabled".
+	State string
 }

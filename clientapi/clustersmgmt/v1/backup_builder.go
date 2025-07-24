@@ -22,7 +22,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 // Representation of a Backup.
 type BackupBuilder struct {
 	fieldSet_ []bool
-	state     BackupStateValue
+	state     string
 }
 
 // NewBackup creates a new builder of 'backup' objects.
@@ -46,9 +46,7 @@ func (b *BackupBuilder) Empty() bool {
 }
 
 // State sets the value of the 'state' attribute to the given value.
-//
-// BackupStateValue represents the state of a backup
-func (b *BackupBuilder) State(value BackupStateValue) *BackupBuilder {
+func (b *BackupBuilder) State(value string) *BackupBuilder {
 	if len(b.fieldSet_) == 0 {
 		b.fieldSet_ = make([]bool, 1)
 	}

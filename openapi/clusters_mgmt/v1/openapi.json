@@ -15288,8 +15288,8 @@
         "description": "Representation of a Backup.",
         "properties": {
           "state": {
-            "description": "Indicates the state of the backup",
-            "$ref": "#/components/schemas/BackupStateValue"
+            "description": "Indicates the state of the backup.\nAccepted values are: \"enabled\", \"disabled\".",
+            "type": "string"
           }
         }
       },
