@@ -21,15 +21,16 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 
 // Information about the API of a cluster.
 type ClusterAPIBuilder struct {
-	fieldSet_ []bool
-	url       string
-	listening ListeningMethod
+	fieldSet_         []bool
+	url               string
+	allowedCIDRBlocks []string
+	listening         ListeningMethod
 }
 
 // NewClusterAPI creates a new builder of 'cluster_API' objects.
 func NewClusterAPI() *ClusterAPIBuilder {
 	return &ClusterAPIBuilder{
-		fieldSet_: make([]bool, 2),
+		fieldSet_: make([]bool, 3),
 	}
 }
 
@@ -49,10 +50,21 @@ func (b *ClusterAPIBuilder) Empty() bool {
 // URL sets the value of the 'URL' attribute to the given value.
 func (b *ClusterAPIBuilder) URL(value string) *ClusterAPIBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
+		b.fieldSet_ = make([]bool, 3)
 	}
 	b.url = value
 	b.fieldSet_[0] = true
+	return b
+}
+
+// AllowedCIDRBlocks sets the value of the 'allowed_CIDR_blocks' attribute to the given values.
+func (b *ClusterAPIBuilder) AllowedCIDRBlocks(values ...string) *ClusterAPIBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
+	b.allowedCIDRBlocks = make([]string, len(values))
+	copy(b.allowedCIDRBlocks, values)
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -61,10 +73,10 @@ func (b *ClusterAPIBuilder) URL(value string) *ClusterAPIBuilder {
 // Cluster components listening method.
 func (b *ClusterAPIBuilder) Listening(value ListeningMethod) *ClusterAPIBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
+		b.fieldSet_ = make([]bool, 3)
 	}
 	b.listening = value
-	b.fieldSet_[1] = true
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -78,6 +90,12 @@ func (b *ClusterAPIBuilder) Copy(object *ClusterAPI) *ClusterAPIBuilder {
 		copy(b.fieldSet_, object.fieldSet_)
 	}
 	b.url = object.url
+	if object.allowedCIDRBlocks != nil {
+		b.allowedCIDRBlocks = make([]string, len(object.allowedCIDRBlocks))
+		copy(b.allowedCIDRBlocks, object.allowedCIDRBlocks)
+	} else {
+		b.allowedCIDRBlocks = nil
+	}
 	b.listening = object.listening
 	return b
 }
@@ -90,6 +108,10 @@ func (b *ClusterAPIBuilder) Build() (object *ClusterAPI, err error) {
 		copy(object.fieldSet_, b.fieldSet_)
 	}
 	object.url = b.url
+	if b.allowedCIDRBlocks != nil {
+		object.allowedCIDRBlocks = make([]string, len(b.allowedCIDRBlocks))
+		copy(object.allowedCIDRBlocks, b.allowedCIDRBlocks)
+	}
 	object.listening = b.listening
 	return
 }

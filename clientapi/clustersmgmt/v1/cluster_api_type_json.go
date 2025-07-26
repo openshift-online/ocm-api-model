@@ -51,7 +51,16 @@ func WriteClusterAPI(object *ClusterAPI, stream *jsoniter.Stream) {
 		stream.WriteString(object.url)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.allowedCIDRBlocks != nil
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
+		stream.WriteObjectField("allowed_cidr_blocks")
+		WriteStringList(object.allowedCIDRBlocks, stream)
+		count++
+	}
+	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -77,7 +86,7 @@ func UnmarshalClusterAPI(source interface{}) (object *ClusterAPI, err error) {
 // ReadClusterAPI reads a value of the 'cluster_API' type from the given iterator.
 func ReadClusterAPI(iterator *jsoniter.Iterator) *ClusterAPI {
 	object := &ClusterAPI{
-		fieldSet_: make([]bool, 2),
+		fieldSet_: make([]bool, 3),
 	}
 	for {
 		field := iterator.ReadObject()
@@ -89,11 +98,15 @@ func ReadClusterAPI(iterator *jsoniter.Iterator) *ClusterAPI {
 			value := iterator.ReadString()
 			object.url = value
 			object.fieldSet_[0] = true
+		case "allowed_cidr_blocks":
+			value := ReadStringList(iterator)
+			object.allowedCIDRBlocks = value
+			object.fieldSet_[1] = true
 		case "listening":
 			text := iterator.ReadString()
 			value := ListeningMethod(text)
 			object.listening = value
-			object.fieldSet_[1] = true
+			object.fieldSet_[2] = true
 		default:
 			iterator.ReadAny()
 		}
