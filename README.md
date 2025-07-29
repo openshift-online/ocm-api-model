@@ -305,6 +305,86 @@ class NodePool {
 This means that now under `Cluster` the `NodePools` field type is linked to the one defined in `/aro_hcp/v1_alpha1` (i.e. `v1alpha.NodePool`) which itself
 references and derived from the `NodePool` type under `/clusters_mgmt/v1`.
 
+### API Deprecation using @deprecated annotation
+
+The `@deprecated` annotation is used to mark API elements as deprecated, indicating that they should no longer be used and may be removed in future versions. This annotation can be applied at different levels depending on the scope of deprecation needed.
+
+#### Resource-level deprecation
+
+When applied to a resource, the `@deprecated` annotation marks the entire endpoint as deprecated, including all its methods:
+
+```
+// Manages legacy cluster operations (deprecated).
+@deprecated
+resource LegacyClusters {
+	// This entire resource and all its methods are deprecated
+	method List {
+		...
+	}
+
+	method Add {
+		...
+	}
+}
+```
+
+#### Method-level deprecation
+
+When applied to a specific method, only that method is marked as deprecated while other methods in the resource remain active:
+
+```
+// Manages the collection of clusters.
+resource Clusters {
+	// Retrieves the list of clusters.
+	method List {
+		...
+	}
+
+	// Legacy method for adding clusters (deprecated).
+	@deprecated
+	method LegacyAdd {
+		...
+	}
+}
+```
+
+#### Class/Struct-level deprecation
+
+When applied to a class or struct, the entire type is marked as deprecated, affecting all uses of that type:
+
+```
+// Legacy cluster definition (deprecated).
+@deprecated
+class LegacyCluster {
+	// Name of the cluster.
+	Name String
+
+	// All fields and usage of this class are deprecated
+	...
+}
+```
+
+#### Field-level deprecation
+
+When applied to individual fields within a class or struct, only those specific fields are marked as deprecated:
+
+```
+// Definition of an OpenShift cluster.
+class Cluster {
+	// Name of the cluster.
+	Name String
+
+	// Legacy identifier field (deprecated).
+	@deprecated
+	LegacyId String
+
+	// Current cluster state.
+	State ClusterState
+}
+```
+
+The `@deprecated` annotation helps API consumers understand which parts of the API are being phased out and should be avoided in new implementations. This information is included in the generated OpenAPI specifications to provide clear deprecation warnings to developers.
+
 ## Documentation
 
 The Go language supports adding documentation in the code itself, using the
