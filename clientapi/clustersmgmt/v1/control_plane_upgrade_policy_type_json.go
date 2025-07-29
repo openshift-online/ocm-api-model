@@ -129,7 +129,16 @@ func WriteControlPlaneUpgradePolicy(object *ControlPlaneUpgradePolicy, stream *j
 		stream.WriteString(string(object.scheduleType))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10] && object.state != nil
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10] && object.skipValidations != nil
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
+		stream.WriteObjectField("skip_validations")
+		WriteStringList(object.skipValidations, stream)
+		count++
+	}
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11] && object.state != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -138,7 +147,7 @@ func WriteControlPlaneUpgradePolicy(object *ControlPlaneUpgradePolicy, stream *j
 		WriteUpgradePolicyState(object.state, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
+	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -147,7 +156,7 @@ func WriteControlPlaneUpgradePolicy(object *ControlPlaneUpgradePolicy, stream *j
 		stream.WriteString(string(object.upgradeType))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
+	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -173,7 +182,7 @@ func UnmarshalControlPlaneUpgradePolicy(source interface{}) (object *ControlPlan
 // ReadControlPlaneUpgradePolicy reads a value of the 'control_plane_upgrade_policy' type from the given iterator.
 func ReadControlPlaneUpgradePolicy(iterator *jsoniter.Iterator) *ControlPlaneUpgradePolicy {
 	object := &ControlPlaneUpgradePolicy{
-		fieldSet_: make([]bool, 13),
+		fieldSet_: make([]bool, 14),
 	}
 	for {
 		field := iterator.ReadObject()
@@ -233,19 +242,23 @@ func ReadControlPlaneUpgradePolicy(iterator *jsoniter.Iterator) *ControlPlaneUpg
 			value := ScheduleType(text)
 			object.scheduleType = value
 			object.fieldSet_[9] = true
+		case "skip_validations":
+			value := ReadStringList(iterator)
+			object.skipValidations = value
+			object.fieldSet_[10] = true
 		case "state":
 			value := ReadUpgradePolicyState(iterator)
 			object.state = value
-			object.fieldSet_[10] = true
+			object.fieldSet_[11] = true
 		case "upgrade_type":
 			text := iterator.ReadString()
 			value := UpgradeType(text)
 			object.upgradeType = value
-			object.fieldSet_[11] = true
+			object.fieldSet_[12] = true
 		case "version":
 			value := iterator.ReadString()
 			object.version = value
-			object.fieldSet_[12] = true
+			object.fieldSet_[13] = true
 		default:
 			iterator.ReadAny()
 		}

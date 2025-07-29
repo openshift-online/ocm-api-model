@@ -48,6 +48,7 @@ type ControlPlaneUpgradePolicy struct {
 	nextRun                    time.Time
 	schedule                   string
 	scheduleType               ScheduleType
+	skipValidations            []string
 	state                      *UpgradePolicyState
 	upgradeType                UpgradeType
 	version                    string
@@ -282,12 +283,35 @@ func (o *ControlPlaneUpgradePolicy) GetScheduleType() (value ScheduleType, ok bo
 	return
 }
 
+// SkipValidations returns the value of the 'skip_validations' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// Validations skipped before upgrade
+func (o *ControlPlaneUpgradePolicy) SkipValidations() []string {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+		return o.skipValidations
+	}
+	return nil
+}
+
+// GetSkipValidations returns the value of the 'skip_validations' attribute and
+// a flag indicating if the attribute has a value.
+//
+// Validations skipped before upgrade
+func (o *ControlPlaneUpgradePolicy) GetSkipValidations() (value []string, ok bool) {
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	if ok {
+		value = o.skipValidations
+	}
+	return
+}
+
 // State returns the value of the 'state' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
 // State of the upgrade policy for the hosted control plane.
 func (o *ControlPlaneUpgradePolicy) State() *UpgradePolicyState {
-	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.state
 	}
 	return nil
@@ -298,7 +322,7 @@ func (o *ControlPlaneUpgradePolicy) State() *UpgradePolicyState {
 //
 // State of the upgrade policy for the hosted control plane.
 func (o *ControlPlaneUpgradePolicy) GetState() (value *UpgradePolicyState, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.state
 	}
@@ -310,7 +334,7 @@ func (o *ControlPlaneUpgradePolicy) GetState() (value *UpgradePolicyState, ok bo
 //
 // Upgrade type of the control plane.
 func (o *ControlPlaneUpgradePolicy) UpgradeType() UpgradeType {
-	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
+	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
 		return o.upgradeType
 	}
 	return UpgradeType("")
@@ -321,7 +345,7 @@ func (o *ControlPlaneUpgradePolicy) UpgradeType() UpgradeType {
 //
 // Upgrade type of the control plane.
 func (o *ControlPlaneUpgradePolicy) GetUpgradeType() (value UpgradeType, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
+	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
 	if ok {
 		value = o.upgradeType
 	}
@@ -333,7 +357,7 @@ func (o *ControlPlaneUpgradePolicy) GetUpgradeType() (value UpgradeType, ok bool
 //
 // Version is the desired upgrade version.
 func (o *ControlPlaneUpgradePolicy) Version() string {
-	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
+	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
 		return o.version
 	}
 	return ""
@@ -344,7 +368,7 @@ func (o *ControlPlaneUpgradePolicy) Version() string {
 //
 // Version is the desired upgrade version.
 func (o *ControlPlaneUpgradePolicy) GetVersion() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
+	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
 	if ok {
 		value = o.version
 	}

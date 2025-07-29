@@ -45,4 +45,7 @@ class ControlPlaneUpgradePolicy {
 
 	// State of the upgrade policy for the hosted control plane.
 	State UpgradePolicyState
+
+	// Validations skipped before upgrade
+	SkipValidations []String
 }

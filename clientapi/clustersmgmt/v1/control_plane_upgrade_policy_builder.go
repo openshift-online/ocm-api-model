@@ -34,6 +34,7 @@ type ControlPlaneUpgradePolicyBuilder struct {
 	nextRun                    time.Time
 	schedule                   string
 	scheduleType               ScheduleType
+	skipValidations            []string
 	state                      *UpgradePolicyStateBuilder
 	upgradeType                UpgradeType
 	version                    string
@@ -43,14 +44,14 @@ type ControlPlaneUpgradePolicyBuilder struct {
 // NewControlPlaneUpgradePolicy creates a new builder of 'control_plane_upgrade_policy' objects.
 func NewControlPlaneUpgradePolicy() *ControlPlaneUpgradePolicyBuilder {
 	return &ControlPlaneUpgradePolicyBuilder{
-		fieldSet_: make([]bool, 13),
+		fieldSet_: make([]bool, 14),
 	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ControlPlaneUpgradePolicyBuilder) Link(value bool) *ControlPlaneUpgradePolicyBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
+		b.fieldSet_ = make([]bool, 14)
 	}
 	b.fieldSet_[0] = true
 	return b
@@ -59,7 +60,7 @@ func (b *ControlPlaneUpgradePolicyBuilder) Link(value bool) *ControlPlaneUpgrade
 // ID sets the identifier of the object.
 func (b *ControlPlaneUpgradePolicyBuilder) ID(value string) *ControlPlaneUpgradePolicyBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
+		b.fieldSet_ = make([]bool, 14)
 	}
 	b.id = value
 	b.fieldSet_[1] = true
@@ -69,7 +70,7 @@ func (b *ControlPlaneUpgradePolicyBuilder) ID(value string) *ControlPlaneUpgrade
 // HREF sets the link to the object.
 func (b *ControlPlaneUpgradePolicyBuilder) HREF(value string) *ControlPlaneUpgradePolicyBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
+		b.fieldSet_ = make([]bool, 14)
 	}
 	b.href = value
 	b.fieldSet_[2] = true
@@ -93,7 +94,7 @@ func (b *ControlPlaneUpgradePolicyBuilder) Empty() bool {
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *ControlPlaneUpgradePolicyBuilder) ClusterID(value string) *ControlPlaneUpgradePolicyBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
+		b.fieldSet_ = make([]bool, 14)
 	}
 	b.clusterID = value
 	b.fieldSet_[3] = true
@@ -103,7 +104,7 @@ func (b *ControlPlaneUpgradePolicyBuilder) ClusterID(value string) *ControlPlane
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *ControlPlaneUpgradePolicyBuilder) CreationTimestamp(value time.Time) *ControlPlaneUpgradePolicyBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
+		b.fieldSet_ = make([]bool, 14)
 	}
 	b.creationTimestamp = value
 	b.fieldSet_[4] = true
@@ -113,7 +114,7 @@ func (b *ControlPlaneUpgradePolicyBuilder) CreationTimestamp(value time.Time) *C
 // EnableMinorVersionUpgrades sets the value of the 'enable_minor_version_upgrades' attribute to the given value.
 func (b *ControlPlaneUpgradePolicyBuilder) EnableMinorVersionUpgrades(value bool) *ControlPlaneUpgradePolicyBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
+		b.fieldSet_ = make([]bool, 14)
 	}
 	b.enableMinorVersionUpgrades = value
 	b.fieldSet_[5] = true
@@ -123,7 +124,7 @@ func (b *ControlPlaneUpgradePolicyBuilder) EnableMinorVersionUpgrades(value bool
 // LastUpdateTimestamp sets the value of the 'last_update_timestamp' attribute to the given value.
 func (b *ControlPlaneUpgradePolicyBuilder) LastUpdateTimestamp(value time.Time) *ControlPlaneUpgradePolicyBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
+		b.fieldSet_ = make([]bool, 14)
 	}
 	b.lastUpdateTimestamp = value
 	b.fieldSet_[6] = true
@@ -133,7 +134,7 @@ func (b *ControlPlaneUpgradePolicyBuilder) LastUpdateTimestamp(value time.Time) 
 // NextRun sets the value of the 'next_run' attribute to the given value.
 func (b *ControlPlaneUpgradePolicyBuilder) NextRun(value time.Time) *ControlPlaneUpgradePolicyBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
+		b.fieldSet_ = make([]bool, 14)
 	}
 	b.nextRun = value
 	b.fieldSet_[7] = true
@@ -143,7 +144,7 @@ func (b *ControlPlaneUpgradePolicyBuilder) NextRun(value time.Time) *ControlPlan
 // Schedule sets the value of the 'schedule' attribute to the given value.
 func (b *ControlPlaneUpgradePolicyBuilder) Schedule(value string) *ControlPlaneUpgradePolicyBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
+		b.fieldSet_ = make([]bool, 14)
 	}
 	b.schedule = value
 	b.fieldSet_[8] = true
@@ -155,10 +156,21 @@ func (b *ControlPlaneUpgradePolicyBuilder) Schedule(value string) *ControlPlaneU
 // ScheduleType defines which type of scheduling should be used for the upgrade policy.
 func (b *ControlPlaneUpgradePolicyBuilder) ScheduleType(value ScheduleType) *ControlPlaneUpgradePolicyBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
+		b.fieldSet_ = make([]bool, 14)
 	}
 	b.scheduleType = value
 	b.fieldSet_[9] = true
+	return b
+}
+
+// SkipValidations sets the value of the 'skip_validations' attribute to the given values.
+func (b *ControlPlaneUpgradePolicyBuilder) SkipValidations(values ...string) *ControlPlaneUpgradePolicyBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 14)
+	}
+	b.skipValidations = make([]string, len(values))
+	copy(b.skipValidations, values)
+	b.fieldSet_[10] = true
 	return b
 }
 
@@ -167,13 +179,13 @@ func (b *ControlPlaneUpgradePolicyBuilder) ScheduleType(value ScheduleType) *Con
 // Representation of an upgrade policy state that that is set for a cluster.
 func (b *ControlPlaneUpgradePolicyBuilder) State(value *UpgradePolicyStateBuilder) *ControlPlaneUpgradePolicyBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
+		b.fieldSet_ = make([]bool, 14)
 	}
 	b.state = value
 	if value != nil {
-		b.fieldSet_[10] = true
+		b.fieldSet_[11] = true
 	} else {
-		b.fieldSet_[10] = false
+		b.fieldSet_[11] = false
 	}
 	return b
 }
@@ -183,20 +195,20 @@ func (b *ControlPlaneUpgradePolicyBuilder) State(value *UpgradePolicyStateBuilde
 // UpgradeType defines which type of upgrade should be used.
 func (b *ControlPlaneUpgradePolicyBuilder) UpgradeType(value UpgradeType) *ControlPlaneUpgradePolicyBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
+		b.fieldSet_ = make([]bool, 14)
 	}
 	b.upgradeType = value
-	b.fieldSet_[11] = true
+	b.fieldSet_[12] = true
 	return b
 }
 
 // Version sets the value of the 'version' attribute to the given value.
 func (b *ControlPlaneUpgradePolicyBuilder) Version(value string) *ControlPlaneUpgradePolicyBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
+		b.fieldSet_ = make([]bool, 14)
 	}
 	b.version = value
-	b.fieldSet_[12] = true
+	b.fieldSet_[13] = true
 	return b
 }
 
@@ -218,6 +230,12 @@ func (b *ControlPlaneUpgradePolicyBuilder) Copy(object *ControlPlaneUpgradePolic
 	b.nextRun = object.nextRun
 	b.schedule = object.schedule
 	b.scheduleType = object.scheduleType
+	if object.skipValidations != nil {
+		b.skipValidations = make([]string, len(object.skipValidations))
+		copy(b.skipValidations, object.skipValidations)
+	} else {
+		b.skipValidations = nil
+	}
 	if object.state != nil {
 		b.state = NewUpgradePolicyState().Copy(object.state)
 	} else {
@@ -244,6 +262,10 @@ func (b *ControlPlaneUpgradePolicyBuilder) Build() (object *ControlPlaneUpgradeP
 	object.nextRun = b.nextRun
 	object.schedule = b.schedule
 	object.scheduleType = b.scheduleType
+	if b.skipValidations != nil {
+		object.skipValidations = make([]string, len(b.skipValidations))
+		copy(object.skipValidations, b.skipValidations)
+	}
 	if b.state != nil {
 		object.state, err = b.state.Build()
 		if err != nil {
