@@ -1789,6 +1789,23 @@
           }
         }
       },
+      "AutoNodeMode": {
+        "description": "The configured mode of operation for AutoNode in the Cluster.",
+        "type": "string",
+        "enum": [
+          "Disabled",
+          "Enabled"
+        ]
+      },
+      "AwsAutoNodeConfiguration": {
+        "description": "AWS provider configuration settings when using AutoNode on a ROSA HCP Cluster",
+        "properties": {
+          "role_arn": {
+            "description": "The AWS ARN of the IAM Role that has the permissions required for the AutoNode\ncontroller.\nThe role must exist prior to enabling AutoNode on the cluster.",
+            "type": "string"
+          }
+        }
+      },
       "AwsEtcdEncryption": {
         "description": "Contains the necessary attributes to support etcd encryption for AWS based clusters.",
         "properties": {
@@ -2249,6 +2266,10 @@
               "$ref": "#/components/schemas/AddOnInstallation"
             }
           },
+          "auto_node": {
+            "description": "The AutoNode settings for this cluster.\nThis is currently only supported for ROSA HCP",
+            "$ref": "#/components/schemas/ClusterAutoNode"
+          },
           "autoscaler": {
             "description": "Link to an optional _ClusterAutoscaler_ that is coupled with the cluster.",
             "$ref": "#/components/schemas/ClusterAutoscaler"
@@ -2481,6 +2502,29 @@
           "listening": {
             "description": "The listening method of the API server.",
             "$ref": "#/components/schemas/ListeningMethod"
+          }
+        }
+      },
+      "ClusterAutoNode": {
+        "description": "The AutoNode configuration for the Cluster.",
+        "properties": {
+          "aws": {
+            "$ref": "#/components/schemas/AwsAutoNodeConfiguration"
+          },
+          "mode": {
+            "$ref": "#/components/schemas/AutoNodeMode"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ClusterAutoNodeStatus"
+          }
+        }
+      },
+      "ClusterAutoNodeStatus": {
+        "description": "Additional status information on the AutoNode configuration on this Cluster",
+        "properties": {
+          "message": {
+            "description": "Messages relating to the status of the AutoNode installation on this Cluster",
+            "type": "string"
           }
         }
       },
