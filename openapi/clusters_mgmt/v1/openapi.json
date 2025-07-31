@@ -14949,6 +14949,14 @@
           }
         }
       },
+      "AutoNodeMode": {
+        "description": "The configured mode of operation for AutoNode in the Cluster.",
+        "type": "string",
+        "enum": [
+          "Disabled",
+          "Enabled"
+        ]
+      },
       "AutoscalerResourceLimits": {
         "properties": {
           "gpus": {
@@ -15008,6 +15016,15 @@
           },
           "utilization_threshold": {
             "description": "Node utilization level, defined as sum of requested resources divided by capacity, below which a node can be considered for scale down.",
+            "type": "string"
+          }
+        }
+      },
+      "AwsAutoNodeConfiguration": {
+        "description": "AWS provider configuration settings when using AutoNode on a ROSA HCP Cluster",
+        "properties": {
+          "role_arn": {
+            "description": "The AWS ARN of the IAM Role that has the permissions required for the AutoNode\ncontroller.\nThe role must exist prior to enabling AutoNode on the cluster.",
             "type": "string"
           }
         }
@@ -15657,6 +15674,10 @@
               "$ref": "#/components/schemas/AddOnInstallation"
             }
           },
+          "auto_node": {
+            "description": "The AutoNode settings for this cluster.\nThis is currently only supported for ROSA HCP",
+            "$ref": "#/components/schemas/ClusterAutoNode"
+          },
           "autoscaler": {
             "description": "Link to an optional _ClusterAutoscaler_ that is coupled with the cluster.",
             "$ref": "#/components/schemas/ClusterAutoscaler"
@@ -15899,6 +15920,29 @@
           "classic",
           "hcp"
         ]
+      },
+      "ClusterAutoNode": {
+        "description": "The AutoNode configuration for the Cluster.",
+        "properties": {
+          "aws": {
+            "$ref": "#/components/schemas/AwsAutoNodeConfiguration"
+          },
+          "mode": {
+            "$ref": "#/components/schemas/AutoNodeMode"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ClusterAutoNodeStatus"
+          }
+        }
+      },
+      "ClusterAutoNodeStatus": {
+        "description": "Additional status information on the AutoNode configuration on this Cluster",
+        "properties": {
+          "message": {
+            "description": "Messages relating to the status of the AutoNode installation on this Cluster",
+            "type": "string"
+          }
+        }
       },
       "ClusterAutoscaler": {
         "description": "Cluster-wide autoscaling configuration.",
