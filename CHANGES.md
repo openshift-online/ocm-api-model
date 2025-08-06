@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.427 Aug 06 2025
+- Remove `osDiskSseEncryptionSetResourceId` field from type `AzureNodePoolOsDisk`
+- Add methods to enable/disable backups of control planes
+- Fix aws capacity reservation class to struct 
+- Adds the `federatedProjectId` and `federatedProjectNumber` fields to support federated project
+
 ## 0.0.421 Jul 10 2025
 - added `ManagementCluster` field to `AWSBackupConfig` type and changed `BackupConfigs` field from map to list in `AWSShard`
 
