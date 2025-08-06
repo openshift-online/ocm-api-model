@@ -1958,10 +1958,6 @@
             "description": "The configuration for the OS disk used by the nodes in the Node Pool.",
             "$ref": "#/components/schemas/AzureNodePoolOsDisk"
           },
-          "os_disk_sse_encryption_set_resource_id": {
-            "description": "The Azure Resource ID of a pre-existing Azure Disk Encryption Set (DES).\nWhen provided, Server-Side Encryption (SSE) on the OS Disks of the Nodes of the Node Pool\nis performed using the provided Disk Encryption Set.\nIt must be located in the same Azure location as the parent Cluster.  \nIt must be located in the same Azure Subscription as the parent Cluster.\nThe Azure Resource Group Name specified as part of it must be a different resource group name\nthan the one specified in the parent Cluster's `managed_resource_group_name`.\nThe Azure Resource Group Name specified as part of it can be the same, or a different one\nthan the one specified in the parent Cluster's `resource_group_name`.\nIf not specified, Server-Side Encryption (SSE) on the OS Disks of the Nodes of the Node Pool \nis performed with platform managed keys.",
-            "type": "string"
-          },
           "resource_name": {
             "description": "ResourceName is the Azure Resource Name of the NodePool.\nResourceName must be within the Azure Resource Group Name of the parent\nCluster it belongs to.\nResourceName must be located in the same Azure Location as the parent\nCluster it belongs to.\nResourceName must be located in the same Azure Subscription as the parent\nCluster it belongs to.\nResourceName must belong to the same Microsoft Entra Tenant ID as the parent\nCluster it belongs to.\nRequired during creation.\nImmutable.",
             "type": "string"

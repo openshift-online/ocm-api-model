@@ -101,15 +101,6 @@ func WriteAzureNodePool(object *AzureNodePool, stream *jsoniter.Stream) {
 		if count > 0 {
 			stream.WriteMore()
 		}
-		stream.WriteObjectField("os_disk_sse_encryption_set_resource_id")
-		stream.WriteString(object.osDiskSseEncryptionSetResourceId)
-		count++
-	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
-	if present_ {
-		if count > 0 {
-			stream.WriteMore()
-		}
 		stream.WriteObjectField("resource_name")
 		stream.WriteString(object.resourceName)
 	}
@@ -131,7 +122,7 @@ func UnmarshalAzureNodePool(source interface{}) (object *AzureNodePool, err erro
 // ReadAzureNodePool reads a value of the 'azure_node_pool' type from the given iterator.
 func ReadAzureNodePool(iterator *jsoniter.Iterator) *AzureNodePool {
 	object := &AzureNodePool{
-		fieldSet_: make([]bool, 8),
+		fieldSet_: make([]bool, 7),
 	}
 	for {
 		field := iterator.ReadObject()
@@ -163,14 +154,10 @@ func ReadAzureNodePool(iterator *jsoniter.Iterator) *AzureNodePool {
 			value := ReadAzureNodePoolOsDisk(iterator)
 			object.osDisk = value
 			object.fieldSet_[5] = true
-		case "os_disk_sse_encryption_set_resource_id":
-			value := iterator.ReadString()
-			object.osDiskSseEncryptionSetResourceId = value
-			object.fieldSet_[6] = true
 		case "resource_name":
 			value := iterator.ReadString()
 			object.resourceName = value
-			object.fieldSet_[7] = true
+			object.fieldSet_[6] = true
 		default:
 			iterator.ReadAny()
 		}
