@@ -62,19 +62,6 @@ struct AzureNodePool {
     // If not specified, Encryption at Host is not enabled.
     // Immutable.
     EncryptionAtHost AzureNodePoolEncryptionAtHost
-    
-    // The Azure Resource ID of a pre-existing Azure Disk Encryption Set (DES).
-    // When provided, Server-Side Encryption (SSE) on the OS Disks of the Nodes of the Node Pool
-    // is performed using the provided Disk Encryption Set.
-    // It must be located in the same Azure location as the parent Cluster.  
-    // It must be located in the same Azure Subscription as the parent Cluster.
-    // The Azure Resource Group Name specified as part of it must be a different resource group name
-    // than the one specified in the parent Cluster's `managed_resource_group_name`.
-    // The Azure Resource Group Name specified as part of it can be the same, or a different one
-    // than the one specified in the parent Cluster's `resource_group_name`.
-    // If not specified, Server-Side Encryption (SSE) on the OS Disks of the Nodes of the Node Pool 
-    // is performed with platform managed keys.
-    OsDiskSseEncryptionSetResourceId String
 
     // The configuration for the OS disk used by the nodes in the Node Pool.
     OsDisk AzureNodePoolOsDisk

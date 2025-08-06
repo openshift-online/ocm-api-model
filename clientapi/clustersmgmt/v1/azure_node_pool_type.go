@@ -23,15 +23,14 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Representation of azure node pool specific parameters.
 type AzureNodePool struct {
-	fieldSet_                        []bool
-	osDiskSizeGibibytes              int
-	osDiskStorageAccountType         string
-	vmSize                           string
-	encryptionAtHost                 *AzureNodePoolEncryptionAtHost
-	osDisk                           *AzureNodePoolOsDisk
-	osDiskSseEncryptionSetResourceId string
-	resourceName                     string
-	ephemeralOSDiskEnabled           bool
+	fieldSet_                []bool
+	osDiskSizeGibibytes      int
+	osDiskStorageAccountType string
+	vmSize                   string
+	encryptionAtHost         *AzureNodePoolEncryptionAtHost
+	osDisk                   *AzureNodePoolOsDisk
+	resourceName             string
+	ephemeralOSDiskEnabled   bool
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
@@ -223,49 +222,6 @@ func (o *AzureNodePool) GetOsDisk() (value *AzureNodePoolOsDisk, ok bool) {
 	return
 }
 
-// OsDiskSseEncryptionSetResourceId returns the value of the 'os_disk_sse_encryption_set_resource_id' attribute, or
-// the zero value of the type if the attribute doesn't have a value.
-//
-// The Azure Resource ID of a pre-existing Azure Disk Encryption Set (DES).
-// When provided, Server-Side Encryption (SSE) on the OS Disks of the Nodes of the Node Pool
-// is performed using the provided Disk Encryption Set.
-// It must be located in the same Azure location as the parent Cluster.
-// It must be located in the same Azure Subscription as the parent Cluster.
-// The Azure Resource Group Name specified as part of it must be a different resource group name
-// than the one specified in the parent Cluster's `managed_resource_group_name`.
-// The Azure Resource Group Name specified as part of it can be the same, or a different one
-// than the one specified in the parent Cluster's `resource_group_name`.
-// If not specified, Server-Side Encryption (SSE) on the OS Disks of the Nodes of the Node Pool
-// is performed with platform managed keys.
-func (o *AzureNodePool) OsDiskSseEncryptionSetResourceId() string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
-		return o.osDiskSseEncryptionSetResourceId
-	}
-	return ""
-}
-
-// GetOsDiskSseEncryptionSetResourceId returns the value of the 'os_disk_sse_encryption_set_resource_id' attribute and
-// a flag indicating if the attribute has a value.
-//
-// The Azure Resource ID of a pre-existing Azure Disk Encryption Set (DES).
-// When provided, Server-Side Encryption (SSE) on the OS Disks of the Nodes of the Node Pool
-// is performed using the provided Disk Encryption Set.
-// It must be located in the same Azure location as the parent Cluster.
-// It must be located in the same Azure Subscription as the parent Cluster.
-// The Azure Resource Group Name specified as part of it must be a different resource group name
-// than the one specified in the parent Cluster's `managed_resource_group_name`.
-// The Azure Resource Group Name specified as part of it can be the same, or a different one
-// than the one specified in the parent Cluster's `resource_group_name`.
-// If not specified, Server-Side Encryption (SSE) on the OS Disks of the Nodes of the Node Pool
-// is performed with platform managed keys.
-func (o *AzureNodePool) GetOsDiskSseEncryptionSetResourceId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
-	if ok {
-		value = o.osDiskSseEncryptionSetResourceId
-	}
-	return
-}
-
 // ResourceName returns the value of the 'resource_name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
@@ -281,7 +237,7 @@ func (o *AzureNodePool) GetOsDiskSseEncryptionSetResourceId() (value string, ok 
 // Required during creation.
 // Immutable.
 func (o *AzureNodePool) ResourceName() string {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.resourceName
 	}
 	return ""
@@ -302,7 +258,7 @@ func (o *AzureNodePool) ResourceName() string {
 // Required during creation.
 // Immutable.
 func (o *AzureNodePool) GetResourceName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.resourceName
 	}
