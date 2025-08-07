@@ -78,7 +78,7 @@ type ClusterBuilder struct {
 	gcpNetwork                        *GCPNetworkBuilder
 	additionalTrustBundle             string
 	addons                            *v1.AddOnInstallationListBuilder
-	autoscaler                        *v1.ClusterAutoscalerBuilder
+	autoscaler                        *ClusterAutoscalerBuilder
 	azure                             *AzureBuilder
 	billingModel                      BillingModel
 	byoOidc                           *ByoOidcBuilder
@@ -334,7 +334,7 @@ func (b *ClusterBuilder) Addons(value *v1.AddOnInstallationListBuilder) *Cluster
 // Autoscaler sets the value of the 'autoscaler' attribute to the given value.
 //
 // Cluster-wide autoscaling configuration.
-func (b *ClusterBuilder) Autoscaler(value *v1.ClusterAutoscalerBuilder) *ClusterBuilder {
+func (b *ClusterBuilder) Autoscaler(value *ClusterAutoscalerBuilder) *ClusterBuilder {
 	if len(b.fieldSet_) == 0 {
 		b.fieldSet_ = make([]bool, 63)
 	}
@@ -1098,7 +1098,7 @@ func (b *ClusterBuilder) Copy(object *Cluster) *ClusterBuilder {
 		b.addons = nil
 	}
 	if object.autoscaler != nil {
-		b.autoscaler = v1.NewClusterAutoscaler().Copy(object.autoscaler)
+		b.autoscaler = NewClusterAutoscaler().Copy(object.autoscaler)
 	} else {
 		b.autoscaler = nil
 	}

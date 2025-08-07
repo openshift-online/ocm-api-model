@@ -179,7 +179,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 			stream.WriteMore()
 		}
 		stream.WriteObjectField("autoscaler")
-		v1.WriteClusterAutoscaler(object.autoscaler, stream)
+		WriteClusterAutoscaler(object.autoscaler, stream)
 		count++
 	}
 	present_ = len(object.fieldSet_) > 15 && object.fieldSet_[15] && object.azure != nil
@@ -767,7 +767,7 @@ func ReadCluster(iterator *jsoniter.Iterator) *Cluster {
 			object.addons = value
 			object.fieldSet_[13] = true
 		case "autoscaler":
-			value := v1.ReadClusterAutoscaler(iterator)
+			value := ReadClusterAutoscaler(iterator)
 			object.autoscaler = value
 			object.fieldSet_[14] = true
 		case "azure":
