@@ -124,7 +124,16 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		WriteAuditLog(object.auditLog, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9] && object.autoNode != nil
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
+		stream.WriteObjectField("auto_node")
+		WriteAwsAutoNode(object.autoNode, stream)
+		count++
+	}
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -133,7 +142,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.billingAccountID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -142,7 +151,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.ec2MetadataHttpTokens))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11] && object.etcdEncryption != nil
+	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12] && object.etcdEncryption != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -151,7 +160,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		WriteAwsEtcdEncryption(object.etcdEncryption, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
+	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -160,7 +169,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.hcpInternalCommunicationHostedZoneId)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13]
+	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -169,7 +178,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.privateHostedZoneID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14]
+	present_ = len(object.fieldSet_) > 15 && object.fieldSet_[15]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -178,7 +187,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.privateHostedZoneRoleARN)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 15 && object.fieldSet_[15]
+	present_ = len(object.fieldSet_) > 16 && object.fieldSet_[16]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -187,7 +196,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteBool(object.privateLink)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 16 && object.fieldSet_[16] && object.privateLinkConfiguration != nil
+	present_ = len(object.fieldSet_) > 17 && object.fieldSet_[17] && object.privateLinkConfiguration != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -196,7 +205,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		WritePrivateLinkClusterConfiguration(object.privateLinkConfiguration, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 17 && object.fieldSet_[17]
+	present_ = len(object.fieldSet_) > 18 && object.fieldSet_[18]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -205,7 +214,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.secretAccessKey)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 18 && object.fieldSet_[18] && object.subnetIDs != nil
+	present_ = len(object.fieldSet_) > 19 && object.fieldSet_[19] && object.subnetIDs != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -214,7 +223,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		WriteStringList(object.subnetIDs, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 19 && object.fieldSet_[19] && object.tags != nil
+	present_ = len(object.fieldSet_) > 20 && object.fieldSet_[20] && object.tags != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -243,7 +252,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = len(object.fieldSet_) > 20 && object.fieldSet_[20]
+	present_ = len(object.fieldSet_) > 21 && object.fieldSet_[21]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -269,7 +278,7 @@ func UnmarshalAWS(source interface{}) (object *AWS, err error) {
 // ReadAWS reads a value of the 'AWS' type from the given iterator.
 func ReadAWS(iterator *jsoniter.Iterator) *AWS {
 	object := &AWS{
-		fieldSet_: make([]bool, 21),
+		fieldSet_: make([]bool, 22),
 	}
 	for {
 		field := iterator.ReadObject()
@@ -313,47 +322,51 @@ func ReadAWS(iterator *jsoniter.Iterator) *AWS {
 			value := ReadAuditLog(iterator)
 			object.auditLog = value
 			object.fieldSet_[8] = true
+		case "auto_node":
+			value := ReadAwsAutoNode(iterator)
+			object.autoNode = value
+			object.fieldSet_[9] = true
 		case "billing_account_id":
 			value := iterator.ReadString()
 			object.billingAccountID = value
-			object.fieldSet_[9] = true
+			object.fieldSet_[10] = true
 		case "ec2_metadata_http_tokens":
 			text := iterator.ReadString()
 			value := Ec2MetadataHttpTokens(text)
 			object.ec2MetadataHttpTokens = value
-			object.fieldSet_[10] = true
+			object.fieldSet_[11] = true
 		case "etcd_encryption":
 			value := ReadAwsEtcdEncryption(iterator)
 			object.etcdEncryption = value
-			object.fieldSet_[11] = true
+			object.fieldSet_[12] = true
 		case "hcp_internal_communication_hosted_zone_id":
 			value := iterator.ReadString()
 			object.hcpInternalCommunicationHostedZoneId = value
-			object.fieldSet_[12] = true
+			object.fieldSet_[13] = true
 		case "private_hosted_zone_id":
 			value := iterator.ReadString()
 			object.privateHostedZoneID = value
-			object.fieldSet_[13] = true
+			object.fieldSet_[14] = true
 		case "private_hosted_zone_role_arn":
 			value := iterator.ReadString()
 			object.privateHostedZoneRoleARN = value
-			object.fieldSet_[14] = true
+			object.fieldSet_[15] = true
 		case "private_link":
 			value := iterator.ReadBool()
 			object.privateLink = value
-			object.fieldSet_[15] = true
+			object.fieldSet_[16] = true
 		case "private_link_configuration":
 			value := ReadPrivateLinkClusterConfiguration(iterator)
 			object.privateLinkConfiguration = value
-			object.fieldSet_[16] = true
+			object.fieldSet_[17] = true
 		case "secret_access_key":
 			value := iterator.ReadString()
 			object.secretAccessKey = value
-			object.fieldSet_[17] = true
+			object.fieldSet_[18] = true
 		case "subnet_ids":
 			value := ReadStringList(iterator)
 			object.subnetIDs = value
-			object.fieldSet_[18] = true
+			object.fieldSet_[19] = true
 		case "tags":
 			value := map[string]string{}
 			for {
@@ -365,11 +378,11 @@ func ReadAWS(iterator *jsoniter.Iterator) *AWS {
 				value[key] = item
 			}
 			object.tags = value
-			object.fieldSet_[19] = true
+			object.fieldSet_[20] = true
 		case "vpc_endpoint_role_arn":
 			value := iterator.ReadString()
 			object.vpcEndpointRoleArn = value
-			object.fieldSet_[20] = true
+			object.fieldSet_[21] = true
 		default:
 			iterator.ReadAny()
 		}
