@@ -23,9 +23,10 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Information about the API of a cluster.
 type ClusterAPI struct {
-	fieldSet_ []bool
-	url       string
-	listening ListeningMethod
+	fieldSet_       []bool
+	cidrBlockAccess *CIDRBlockAccess
+	url             string
+	listening       ListeningMethod
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
@@ -41,12 +42,35 @@ func (o *ClusterAPI) Empty() bool {
 	return true
 }
 
+// CIDRBlockAccess returns the value of the 'CIDR_block_access' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// Describes the CIDR Block access policy to the Kubernetes API server.
+func (o *ClusterAPI) CIDRBlockAccess() *CIDRBlockAccess {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+		return o.cidrBlockAccess
+	}
+	return nil
+}
+
+// GetCIDRBlockAccess returns the value of the 'CIDR_block_access' attribute and
+// a flag indicating if the attribute has a value.
+//
+// Describes the CIDR Block access policy to the Kubernetes API server.
+func (o *ClusterAPI) GetCIDRBlockAccess() (value *CIDRBlockAccess, ok bool) {
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	if ok {
+		value = o.cidrBlockAccess
+	}
+	return
+}
+
 // URL returns the value of the 'URL' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
 // The URL of the API server of the cluster.
 func (o *ClusterAPI) URL() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.url
 	}
 	return ""
@@ -57,7 +81,7 @@ func (o *ClusterAPI) URL() string {
 //
 // The URL of the API server of the cluster.
 func (o *ClusterAPI) GetURL() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.url
 	}
@@ -69,7 +93,7 @@ func (o *ClusterAPI) GetURL() (value string, ok bool) {
 //
 // The listening method of the API server.
 func (o *ClusterAPI) Listening() ListeningMethod {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.listening
 	}
 	return ListeningMethod("")
@@ -80,7 +104,7 @@ func (o *ClusterAPI) Listening() ListeningMethod {
 //
 // The listening method of the API server.
 func (o *ClusterAPI) GetListening() (value ListeningMethod, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.listening
 	}

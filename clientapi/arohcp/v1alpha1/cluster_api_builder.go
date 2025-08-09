@@ -21,15 +21,16 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 
 // Information about the API of a cluster.
 type ClusterAPIBuilder struct {
-	fieldSet_ []bool
-	url       string
-	listening ListeningMethod
+	fieldSet_       []bool
+	cidrBlockAccess *CIDRBlockAccessBuilder
+	url             string
+	listening       ListeningMethod
 }
 
 // NewClusterAPI creates a new builder of 'cluster_API' objects.
 func NewClusterAPI() *ClusterAPIBuilder {
 	return &ClusterAPIBuilder{
-		fieldSet_: make([]bool, 2),
+		fieldSet_: make([]bool, 3),
 	}
 }
 
@@ -46,13 +47,31 @@ func (b *ClusterAPIBuilder) Empty() bool {
 	return true
 }
 
+// CIDRBlockAccess sets the value of the 'CIDR_block_access' attribute to the given value.
+//
+// Describes the CIDR Block access policy to the Kubernetes API server.
+// Currently, only supported for ARO-HCP based clusters.
+// The default policy mode is "allow_all" that is, all access is allowed.
+func (b *ClusterAPIBuilder) CIDRBlockAccess(value *CIDRBlockAccessBuilder) *ClusterAPIBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 3)
+	}
+	b.cidrBlockAccess = value
+	if value != nil {
+		b.fieldSet_[0] = true
+	} else {
+		b.fieldSet_[0] = false
+	}
+	return b
+}
+
 // URL sets the value of the 'URL' attribute to the given value.
 func (b *ClusterAPIBuilder) URL(value string) *ClusterAPIBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
+		b.fieldSet_ = make([]bool, 3)
 	}
 	b.url = value
-	b.fieldSet_[0] = true
+	b.fieldSet_[1] = true
 	return b
 }
 
@@ -61,10 +80,10 @@ func (b *ClusterAPIBuilder) URL(value string) *ClusterAPIBuilder {
 // Cluster components listening method.
 func (b *ClusterAPIBuilder) Listening(value ListeningMethod) *ClusterAPIBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
+		b.fieldSet_ = make([]bool, 3)
 	}
 	b.listening = value
-	b.fieldSet_[1] = true
+	b.fieldSet_[2] = true
 	return b
 }
 
@@ -77,6 +96,11 @@ func (b *ClusterAPIBuilder) Copy(object *ClusterAPI) *ClusterAPIBuilder {
 		b.fieldSet_ = make([]bool, len(object.fieldSet_))
 		copy(b.fieldSet_, object.fieldSet_)
 	}
+	if object.cidrBlockAccess != nil {
+		b.cidrBlockAccess = NewCIDRBlockAccess().Copy(object.cidrBlockAccess)
+	} else {
+		b.cidrBlockAccess = nil
+	}
 	b.url = object.url
 	b.listening = object.listening
 	return b
@@ -88,6 +112,12 @@ func (b *ClusterAPIBuilder) Build() (object *ClusterAPI, err error) {
 	if len(b.fieldSet_) > 0 {
 		object.fieldSet_ = make([]bool, len(b.fieldSet_))
 		copy(object.fieldSet_, b.fieldSet_)
+	}
+	if b.cidrBlockAccess != nil {
+		object.cidrBlockAccess, err = b.cidrBlockAccess.Build()
+		if err != nil {
+			return
+		}
 	}
 	object.url = b.url
 	object.listening = b.listening
