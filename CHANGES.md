@@ -2,6 +2,29 @@
 
 This document describes the relevant changes between releases of the API model.
 
+ ## 0.0.426 Jul 23 2025
+ - no changes
+
+ ## 0.0.425 Jul 23 2025
+ - [ARO-19918] Restructure OS disk attributes under a single section for ARO-HCP NodePool
+ - [OCM-15598] Add fields for federated project (WIF)
+ - Update metamodel version
+
+## 0.0.424 Jul 20 2025
+ - [OCM-17005] Fix AWS capability handling
+
+## 0.0.423 Jul 15 2025
+- Update the model to use the latest metamodel generator
+- Update metamodel generator makefile to also run `go mod tidy`
+- Bump metamodel version to v0.0.71
+- [ARO-19120] Cluster image registry - improve documentation
+- [OCM-17005] Define capacity reservation parameters in the `AWSNodePool` type
+- [ARO-19122] Remove `ClusterCapabilities` field from cluster spec
+
+## 0.0.422 Jul 12 2025
+- Fix documentation
+- Bump metamodel to latest v0.0.70
+
 ## 0.0.421 Jul 10 2025
 - added `ManagementCluster` field to `AWSBackupConfig` type and changed `BackupConfigs` field from map to list in `AWSShard`
 
