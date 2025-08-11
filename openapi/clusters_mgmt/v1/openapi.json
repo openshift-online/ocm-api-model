@@ -13269,6 +13269,10 @@
             "description": "Audit log forwarding configuration",
             "$ref": "#/components/schemas/AuditLog"
           },
+          "auto_node": {
+            "description": "AWS specific configuration for AutoNode",
+            "$ref": "#/components/schemas/AwsAutoNode"
+          },
           "billing_account_id": {
             "description": "BillingAccountID is the account used for billing subscriptions purchased via the marketplace",
             "type": "string"
@@ -15012,6 +15016,15 @@
           }
         }
       },
+      "AwsAutoNode": {
+        "description": "AWS provider configuration settings when using AutoNode on a ROSA HCP Cluster",
+        "properties": {
+          "role_arn": {
+            "description": "The AWS ARN of the IAM Role that has the permissions required for the AutoNode\ncontroller.\nThe role must exist prior to enabling AutoNode on the cluster.",
+            "type": "string"
+          }
+        }
+      },
       "AwsEtcdEncryption": {
         "description": "Contains the necessary attributes to support etcd encryption for AWS based clusters.",
         "properties": {
@@ -15653,6 +15666,10 @@
               "$ref": "#/components/schemas/AddOnInstallation"
             }
           },
+          "auto_node": {
+            "description": "The AutoNode settings for this cluster.\nThis is currently only supported for ROSA HCP",
+            "$ref": "#/components/schemas/ClusterAutoNode"
+          },
           "autoscaler": {
             "description": "Link to an optional _ClusterAutoscaler_ that is coupled with the cluster.",
             "$ref": "#/components/schemas/ClusterAutoscaler"
@@ -15895,6 +15912,27 @@
           "classic",
           "hcp"
         ]
+      },
+      "ClusterAutoNode": {
+        "description": "The AutoNode configuration for the Cluster.",
+        "properties": {
+          "mode": {
+            "description": "Mode indicates the current state of AutoNode on this cluster.\nValid values: \"enabled\", \"disabled\".",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ClusterAutoNodeStatus"
+          }
+        }
+      },
+      "ClusterAutoNodeStatus": {
+        "description": "Additional status information on the AutoNode configuration on this Cluster",
+        "properties": {
+          "message": {
+            "description": "Messages relating to the status of the AutoNode installation on this Cluster",
+            "type": "string"
+          }
+        }
       },
       "ClusterAutoscaler": {
         "description": "Cluster-wide autoscaling configuration.",

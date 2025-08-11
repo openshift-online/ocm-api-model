@@ -257,4 +257,8 @@ class Cluster {
 	// It provides an internal, integrated container image registry to locally manage images.
 	// For non ARO-HCP clusters, it is readonly and always enabled
 	ImageRegistry ClusterImageRegistry
+
+	// The AutoNode settings for this cluster.
+	// This is currently only supported for ROSA HCP
+	AutoNode ClusterAutoNode
 }

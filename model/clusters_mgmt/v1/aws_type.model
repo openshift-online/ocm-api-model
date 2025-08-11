@@ -79,4 +79,7 @@ struct AWS {
 
 	// Additional allowed principal ARNs to be added to the hosted control plane's VPC Endpoint Service.
 	AdditionalAllowedPrincipals []String
+
+    // AWS specific configuration for AutoNode
+	AutoNode AwsAutoNode
 }
