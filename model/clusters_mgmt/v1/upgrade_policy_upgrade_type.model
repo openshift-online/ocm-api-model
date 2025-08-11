@@ -31,4 +31,8 @@ enum UpgradeType {
 	// Upgrade of an AddOn
 	@json(name = "ADDON")
 	AddOn
+
+	// An upgrade required for security reasons.
+	@json(name = "ControlPlaneCVE")
+	ControlPlaneCVE
 }

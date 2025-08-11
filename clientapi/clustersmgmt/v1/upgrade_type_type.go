@@ -29,6 +29,8 @@ const (
 	UpgradeTypeAddOn UpgradeType = "ADDON"
 	// Control plane upgrade, relevant only for hosted control plane clusters.
 	UpgradeTypeControlPlane UpgradeType = "ControlPlane"
+	// An upgrade required for security reasons.
+	UpgradeTypeControlPlaneCVE UpgradeType = "ControlPlaneCVE"
 	// Node pool upgrade, relevant only for hosted control plane clusters.
 	UpgradeTypeNodePool UpgradeType = "NodePool"
 )
