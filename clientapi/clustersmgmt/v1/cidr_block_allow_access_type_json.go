@@ -26,10 +26,10 @@ import (
 	"github.com/openshift-online/ocm-api-model/clientapi/helpers"
 )
 
-// MarshalClusterAPI writes a value of the 'cluster_API' type to the given writer.
-func MarshalClusterAPI(object *ClusterAPI, writer io.Writer) error {
+// MarshalCIDRBlockAllowAccess writes a value of the 'CIDR_block_allow_access' type to the given writer.
+func MarshalCIDRBlockAllowAccess(object *CIDRBlockAllowAccess, writer io.Writer) error {
 	stream := helpers.NewStream(writer)
-	WriteClusterAPI(object, stream)
+	WriteCIDRBlockAllowAccess(object, stream)
 	err := stream.Flush()
 	if err != nil {
 		return err
@@ -37,56 +37,47 @@ func MarshalClusterAPI(object *ClusterAPI, writer io.Writer) error {
 	return stream.Error
 }
 
-// WriteClusterAPI writes a value of the 'cluster_API' type to the given stream.
-func WriteClusterAPI(object *ClusterAPI, stream *jsoniter.Stream) {
+// WriteCIDRBlockAllowAccess writes a value of the 'CIDR_block_allow_access' type to the given stream.
+func WriteCIDRBlockAllowAccess(object *CIDRBlockAllowAccess, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.cidrBlockAccess != nil
+	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
 		}
-		stream.WriteObjectField("cidr_block_access")
-		WriteCIDRBlockAccess(object.cidrBlockAccess, stream)
+		stream.WriteObjectField("mode")
+		stream.WriteString(object.mode)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.values != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
 		}
-		stream.WriteObjectField("url")
-		stream.WriteString(object.url)
-		count++
-	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
-	if present_ {
-		if count > 0 {
-			stream.WriteMore()
-		}
-		stream.WriteObjectField("listening")
-		stream.WriteString(string(object.listening))
+		stream.WriteObjectField("values")
+		WriteStringList(object.values, stream)
 	}
 	stream.WriteObjectEnd()
 }
 
-// UnmarshalClusterAPI reads a value of the 'cluster_API' type from the given
+// UnmarshalCIDRBlockAllowAccess reads a value of the 'CIDR_block_allow_access' type from the given
 // source, which can be an slice of bytes, a string or a reader.
-func UnmarshalClusterAPI(source interface{}) (object *ClusterAPI, err error) {
+func UnmarshalCIDRBlockAllowAccess(source interface{}) (object *CIDRBlockAllowAccess, err error) {
 	iterator, err := helpers.NewIterator(source)
 	if err != nil {
 		return
 	}
-	object = ReadClusterAPI(iterator)
+	object = ReadCIDRBlockAllowAccess(iterator)
 	err = iterator.Error
 	return
 }
 
-// ReadClusterAPI reads a value of the 'cluster_API' type from the given iterator.
-func ReadClusterAPI(iterator *jsoniter.Iterator) *ClusterAPI {
-	object := &ClusterAPI{
-		fieldSet_: make([]bool, 3),
+// ReadCIDRBlockAllowAccess reads a value of the 'CIDR_block_allow_access' type from the given iterator.
+func ReadCIDRBlockAllowAccess(iterator *jsoniter.Iterator) *CIDRBlockAllowAccess {
+	object := &CIDRBlockAllowAccess{
+		fieldSet_: make([]bool, 2),
 	}
 	for {
 		field := iterator.ReadObject()
@@ -94,19 +85,14 @@ func ReadClusterAPI(iterator *jsoniter.Iterator) *ClusterAPI {
 			break
 		}
 		switch field {
-		case "cidr_block_access":
-			value := ReadCIDRBlockAccess(iterator)
-			object.cidrBlockAccess = value
-			object.fieldSet_[0] = true
-		case "url":
+		case "mode":
 			value := iterator.ReadString()
-			object.url = value
+			object.mode = value
+			object.fieldSet_[0] = true
+		case "values":
+			value := ReadStringList(iterator)
+			object.values = value
 			object.fieldSet_[1] = true
-		case "listening":
-			text := iterator.ReadString()
-			value := ListeningMethod(text)
-			object.listening = value
-			object.fieldSet_[2] = true
 		default:
 			iterator.ReadAny()
 		}
