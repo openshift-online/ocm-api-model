@@ -2,16 +2,22 @@
 
 This document describes the relevant changes between releases of the API model.
 
- ## 0.0.426 Jul 23 2025
- - no changes
+## 0.0.427 Aug 06 2025
+- Remove `osDiskSseEncryptionSetResourceId` field from type `AzureNodePoolOsDisk`
+- Add methods to enable/disable backups of control planes
+- Fix aws capacity reservation class to struct 
+- Adds the `federatedProjectId` and `federatedProjectNumber` fields to support federated project
 
- ## 0.0.425 Jul 23 2025
- - [ARO-19918] Restructure OS disk attributes under a single section for ARO-HCP NodePool
- - [OCM-15598] Add fields for federated project (WIF)
- - Update metamodel version
+## 0.0.426 Jul 23 2025
+- no changes
+
+## 0.0.425 Jul 23 2025
+- [ARO-19918] Restructure OS disk attributes under a single section for ARO-HCP NodePool
+- [OCM-15598] Add fields for federated project (WIF)
+- Update metamodel version
 
 ## 0.0.424 Jul 20 2025
- - [OCM-17005] Fix AWS capability handling
+- [OCM-17005] Fix AWS capability handling
 
 ## 0.0.423 Jul 15 2025
 - Update the model to use the latest metamodel generator
