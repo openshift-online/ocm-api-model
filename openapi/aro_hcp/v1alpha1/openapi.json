@@ -3539,8 +3539,8 @@
         "description": "Market type for AWS Capacity Reservations.",
         "type": "string",
         "enum": [
-          "capacity_blocks",
-          "on_demand"
+          "CapacityBlocks",
+          "OnDemand"
         ]
       },
       "Network": {
