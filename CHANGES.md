@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.430 Aug 19 2025
+- update MarketType enum to match the camelcase values expected by CS
+- deprecate os disk configuration old design
+- Add API endpoints for cluster autoscaler in ARO HCP
+
 ## 0.0.427 Aug 06 2025
 - Remove `osDiskSseEncryptionSetResourceId` field from type `AzureNodePoolOsDisk`
 - Add methods to enable/disable backups of control planes
