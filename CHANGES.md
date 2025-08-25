@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.431 Aug 25 2025
+- [OCM-17787] Add `ImageMirror` resource and type for ROSA HCP
+- Add API endpoints for image mirros for ROSA HCP
+
 ## 0.0.430 Aug 19 2025
 - update MarketType enum to match the camelcase values expected by CS
 - deprecate os disk configuration old design
