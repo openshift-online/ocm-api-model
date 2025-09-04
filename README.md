@@ -6,17 +6,19 @@ This project contains the specification of the OpenShift cluster manager API,
 also known as the _model_.
 
 ## How to make a change
+
 ### Structure
+
 1. `model` is a submodule that contains the API definitions that are described below.
    It is a submodule so that dependencies can be expressed in golang tooling to ensure the ability to match.
    It must forever be a zero dep golang module to eliminate diamond dependency problems.
 2. `clientapi` is a submodule that contains the generated serialization types for the ocm-sdk-go client.
    Having these generated here allows the ocm-api-model repo to be a place where we can also collect server-side
    representations of APIs that already exist and allows us to write fuzzers for determining mutual compatibility.
-   We cannot do this ocm-sdk-go due to cyclical dependency concerns.
-   It is important that `clientapi` is a low-dep submodule to easy diamond dep problems.
+   We cannot do this in ocm-sdk-go due to cyclical dependency concerns.
+   It is important that `clientapi` is a low-dep submodule to ease diamond dep problems.
    It must never depend on the `metamodel_generator` because there is no need to produce the diamond dep problems associated with it.
-   It must always depend on the `model` submodule to ensure that its possible for those depending on `clientapi` and `model`
+   It must always depend on the `model` submodule to ensure that it's possible for those depending on `clientapi` and `model`
    to find matching levels with golang tooling.
 3. `metamodel_generator` is a submodule that takes a dependency on the `ocm-api-metamodel`.
    We use it to have automated tooling for dependency management and development-time replacement of trial versions
@@ -24,41 +26,43 @@ also known as the _model_.
    This allows other libraries generating against the `clientapi` package to use exactly the same generator.
 
 ### Modify the API Flow
+
 1. Update the `model`
 2. Run `make update`.
-   This will build the `metamodel` binary, update the `clientapi`, and update the `openapi` 
+   This will build the `metamodel` binary, update the `clientapi`, and update the `openapi`
 3. Run `make verify`
    This verifies that the current code in `clientapi` and `openapi` matches the expected.
 
 ### Update the `metamodel` Generator Flow
+
 1. Update the `ocm-api-metamodel` version in the `metamodel_generator` `go mod` file.
 2. Run `cd metamodel_generator && go mod tidy` to download the required version and fix `go.sum` file.
 3. Run `make update`.
 4. Run `make verify`.
 
 ### Update the `metamodel` Generator Flow to a Dev Branch
+
 1. Use the `replace` directive in the `ocm-api-metamodel` version in the `metamodel_generator` `go mod` file.
 2. Run `make update`.
 3. Run `make verify`.
-
 
 ## Releasing a new OCM API Model version
 
 To use any updates to the [ocm-api-model](https://github.com/openshift-online/ocm-api-model), the version
 must be incremented for consumption in ocm-sdk-go generation. The version is defined by the release.
 
-Once all changes to the OCM API Model have been defined and reviewed the client types for the model need to be generated via `make update` target
+Once all changes to the OCM API Model have been defined and reviewed, the client types for the model need to be generated via the `make update` target
 in the `ocm-api-model` project.
 
-Once all changes to the OCM API Model have been committed to the main branch you will need to create a git tag for the changes in the ocm-api-model.
+Once all changes to the OCM API Model have been committed to the main branch, you will need to create a git tag for the changes in the ocm-api-model.
 
 To do that you can use a dedicated make target:
+
 ```
 make release VERSION=<vX.Y.Z>
 ```
 
-Please note that not every-one can create tags, only maintainers of the ocm-api-model. Once a new tag is created you will be able to update the ocm-sdk see [here](https://github.com/openshift-online/ocm-sdk-go/blob/main/CONTRIBUTING.md#updating-the-ocm-sdk).
-
+Please note that not everyone can create tags, only maintainers of the ocm-api-model. Once a new tag is created, you will be able to update the ocm-sdk see [here](https://github.com/openshift-online/ocm-sdk-go/blob/main/CONTRIBUTING.md#updating-the-ocm-sdk).
 
 ## Concepts
 
@@ -80,13 +84,13 @@ in a file within the `clusters_mgmt/v1` directory, should be named
 ```
 // Definition of an _OpenShift_ cluster.
 class Cluster {
-	// Name of the cluster.
-	Name String
+ // Name of the cluster.
+ Name String
 
-	// Link to the _flavour_ that was used to create the cluster.
-	link Flavour Flavour
+ // Link to the _flavour_ that was used to create the cluster.
+ link Flavour Flavour
 
-	...
+ ...
 }
 ```
 
@@ -131,17 +135,17 @@ be located in a file within the `clusters_mgmt/v1` directory, should be named
 ```
 // Manages the collection of clusters.
 resource Clusters {
-	// Retrieves the list of clusters.
-	method List {
-		...
-	}
+ // Retrieves the list of clusters.
+ method List {
+  ...
+ }
 
-	// Provision a new cluster and add it to the collection of clusters.
-	method Add {
-		...
-	}
+ // Provision a new cluster and add it to the collection of clusters.
+ method Add {
+  ...
+ }
 
-	...
+ ...
 }
 ```
 
@@ -154,30 +158,30 @@ resource:
 ```
 // Retrieves the list of clusters.
 method List {
-	// Index of the requested page, where one corresponds to the first page.
-	in out Page Integer
+ // Index of the requested page, where one corresponds to the first page.
+ in out Page Integer
 
-	// Maximum number of items that will be contained in the returned page.
-	in out Size Integer
+ // Maximum number of items that will be contained in the returned page.
+ in out Size Integer
 
-	// Search criteria.
-	in Search String
+ // Search criteria.
+ in Search String
 
-	// Order criteria.
-	in Order String
+ // Order criteria.
+ in Order String
 
-	// Total number of items of the collection that match the search criteria,
-	// regardless of the size of the page.
-	out Total Integer
+ // Total number of items of the collection that match the search criteria,
+ // regardless of the size of the page.
+ out Total Integer
 
-	// Retrieved list of clusters.
-	out Items []Cluster
+ // Retrieved list of clusters.
+ out Items []Cluster
 }
 ```
 
 Methods have _parameters_ defined by their direction (_in_ or _out_), their
 name and their type. In the above example there are four input parameters
-(named `Page`, `Size`, `Search` and `Order`) and four output parameter (named
+(named `Page`, `Size`, `Search` and `Order`) and four output parameters (named
 `Page`, `Size`, `Total` and `Items`).
 
 - "List" conceptual method is implemented by HTTP GET method, with
@@ -185,9 +189,9 @@ name and their type. In the above example there are four input parameters
   (with names converted from _CamelCase_ to _snake_case_).
 
   `cluster_mgmt` API supports an alternative way to List — as HTTP
-  POST method, with a `method=get` query parameter and _in_ paramaters
+  POST method, with a `method=get` query parameter and _in_ parameters
   sent as fields of a JSON request body (again, with _snake_case_ names).
- 
+
   _Out_ parameters become top-level fields in the JSON response body
   (again, with _snake_case_ names).
   An additional `kind` field is added automatically (set to the type's
@@ -196,23 +200,23 @@ name and their type. In the above example there are four input parameters
 - "Get" is regular HTTP GET method, declared with single _out_ parameter
   representing the JSON response body.
 
-- "Add" is performed by HTTP POST method, declared with single _in
+- "Add" is performed by HTTP POST method, declared with a single _in
   out_ parameter representing the JSON request body — as well as the
   response body.
 
 - "Delete" is performed by HTTP DELETE method, with no parameters.
 
-In addition to methods resources also have _locators_, defined by nested
+In addition to methods, resources also have _locators_, defined by nested
 `locator` blocks. Locators represent the relationships between resources. For
 example, the resource that manages the collection of clusters knows how to
 _locate_ the resource that manages a specific cluster. That is represented in
 the model language with a `locator` block like this:
 
 ```
-// Returns a reference to the service that manages an specific cluster.
+// Returns a reference to the service that manages a specific cluster.
 locator Cluster {
-	target Cluster
-	variable ID
+ target Cluster
+ variable ID
 }
 ```
 
@@ -221,22 +225,22 @@ the `target` keyword and the name of the resource.
 
 There are two kinds of resource locators: with and without variable.
 
-Locators with variable are intended for collections, where location a
-sub-resource resource requires specifying the identifier of that object that is
+Locators with variable are intended for collections, where locating a
+sub-resource requires specifying the identifier of that object that is
 managed by that sub-resource. For example, to locate the sub-resource that
 manages a specific cluster it is necessary to provide the identifier of that
-cluster.  That identifier is the _variable_. These kind of locators are defined
+cluster. That identifier is the _variable_. These kinds of locators are defined
 using the `variable` keyword and the name of the variable, like in the previous
 example.
 
-Locators without variable are intended for cases where no additional
+Locators without variables are intended for cases where no additional
 information is needed to identify the sub-resource. For example, the locator
 for the credentials sub-resource of a cluster can be defined like this:
 
 ```
 // Reference to the resource that manages the credentials of the cluster.
 locator Credentials {
-	target Credentials
+ target Credentials
 }
 ```
 
@@ -254,7 +258,7 @@ credentials resource:
 Root -> Clusters -> Cluster(123) -> Credentials
 ```
 
-Each link in that chain of locators is translated into an URL path segment
+Each link in that chain of locators is translated into a URL path segment
 using the following rules:
 
 - The root resource corresponds to the root of the service/version. For
@@ -277,6 +281,7 @@ would be the following:
 ```
 
 ### Class references using @ref annotation
+
 One can define a class reference inside a service such that it will inherit its content from
 another service using the special `@ref` annotation, for example:
 
@@ -287,7 +292,7 @@ class Cluster {
 }
 ```
 
-The above decelaration will inherit its content from the `Cluster` class under the `/clusters_mgmt/v1` service.
+The above declaration will inherit its content from the `Cluster` class under the `/clusters_mgmt/v1` service.
 This means that any changes made in `Cluster` class will be reflected under this derived type as well.
 
 Links to other resources are preserved as they are.
@@ -302,8 +307,8 @@ class NodePool {
 }
 ```
 
-This means that now under `Cluster` the `NodePools` field type is linked to the one defined in `/aro_hcp/v1_alpha1` (i.e. `v1alpha.NodePool`) which itself
-references and derived from the `NodePool` type under `/clusters_mgmt/v1`.
+This means that now under `Cluster`, the `NodePools` field type is linked to the one defined in `/aro_hcp/v1_alpha1` (i.e. `v1alpha.NodePool`) which itself
+references and is derived from the `NodePool` type under `/clusters_mgmt/v1`.
 
 ### API Deprecation using @deprecated annotation
 
@@ -317,14 +322,14 @@ When applied to a resource, the `@deprecated` annotation marks the entire endpoi
 // Manages legacy cluster operations (deprecated).
 @deprecated
 resource LegacyClusters {
-	// This entire resource and all its methods are deprecated
-	method List {
-		...
-	}
+ // This entire resource and all its methods are deprecated
+ method List {
+  ...
+ }
 
-	method Add {
-		...
-	}
+ method Add {
+  ...
+ }
 }
 ```
 
@@ -335,16 +340,16 @@ When applied to a specific method, only that method is marked as deprecated whil
 ```
 // Manages the collection of clusters.
 resource Clusters {
-	// Retrieves the list of clusters.
-	method List {
-		...
-	}
+ // Retrieves the list of clusters.
+ method List {
+  ...
+ }
 
-	// Legacy method for adding clusters (deprecated).
-	@deprecated
-	method LegacyAdd {
-		...
-	}
+ // Legacy method for adding clusters (deprecated).
+ @deprecated
+ method LegacyAdd {
+  ...
+ }
 }
 ```
 
@@ -356,11 +361,11 @@ When applied to a class or struct, the entire type is marked as deprecated, affe
 // Legacy cluster definition (deprecated).
 @deprecated
 class LegacyCluster {
-	// Name of the cluster.
-	Name String
+ // Name of the cluster.
+ Name String
 
-	// All fields and usage of this class are deprecated
-	...
+ // All fields and usage of this class are deprecated
+ ...
 }
 ```
 
@@ -371,15 +376,15 @@ When applied to individual fields within a class or struct, only those specific 
 ```
 // Definition of an OpenShift cluster.
 class Cluster {
-	// Name of the cluster.
-	Name String
+ // Name of the cluster.
+ Name String
 
-	// Legacy identifier field (deprecated).
-	@deprecated
-	LegacyId String
+ // Legacy identifier field (deprecated).
+ @deprecated
+ LegacyId String
 
-	// Current cluster state.
-	State ClusterState
+ // Current cluster state.
+ State ClusterState
 }
 ```
 
@@ -426,19 +431,19 @@ like this:
 //
 // The region attribute is mandatory when a cluster is created.
 //
-// The `aws.access_key_id`, `aws.secret_access_key` and `dns.base_domain`
-// attributes are mandatory when creation a cluster with your own Amazon Web
+// The `aws.access_key_id`, `aws.secret_access_key`, and `dns.base_domain`
+// attributes are mandatory when creating a cluster with your own Amazon Web
 // Services account.
 class Cluster {
-	...
+ ...
 }
 ```
 
 Unlike Go the format of this documentation isn't plain text, but
 [Markdown](https://daringfireball.net/projects/markdown/syntax).
 
-Attributes of types, methods of resources and parameters of methods can all be
-documented in a similar way, just placing documentation comment before the
+Attributes of types, methods of resources, and parameters of methods can all be
+documented in a similar way, just placing a documentation comment before the
 definition of the item. For example, to document the `Search` parameter of the
 `List` method of the `Clusters` resource the following documentation comment
 could be used:
