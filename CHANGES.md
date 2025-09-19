@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.433 Sep 19 2025
+
+- [OCM-689] Added AccountGroup and AccountGroupAssignment APIs for RBAC
+
 ## 0.0.432 Aug 28 2025
 
 - Add resource-scoped permissions for WIF configurations
