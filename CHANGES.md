@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.434 Oct 20 2025
+
+- Split/Duplicate ARO-HCP models. From this point on, the ARO-HCP models
+  become independent from the clusters_mgmt models
+
 ## 0.0.433 Sep 19 2025
 
 - [OCM-689] Added AccountGroup and AccountGroupAssignment APIs for RBAC
