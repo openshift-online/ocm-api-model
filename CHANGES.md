@@ -2,6 +2,13 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.435 Oct 21 2025
+
+- Update deprecation message for DisableUserWorkloadMonitoring field in
+  model/clusters_mgmt
+- update some code comments mentioning clusters_mgmt to aro_hcp in
+  model/aro_hcp
+
 ## 0.0.434 Oct 20 2025
 
 - Split/Duplicate ARO-HCP models. From this point on, the ARO-HCP models
