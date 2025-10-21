@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Root of the tree of resources of the clusters management service.
+// Root of the tree of resources of the aro_hcp service.
 resource Root {
 	// Reference to the resource that manages the collection of clusters.
 	locator Clusters {
