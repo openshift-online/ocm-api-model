@@ -17474,6 +17474,14 @@
           }
         }
       },
+      "ImageType": {
+        "description": "Image Type (AMI) to use for running the associated NodePool",
+        "type": "string",
+        "enum": [
+          "Default",
+          "Windows"
+        ]
+      },
       "InflightCheck": {
         "description": "Representation of check running before the cluster is provisioned.",
         "properties": {
@@ -18164,6 +18172,10 @@
           "azure_node_pool": {
             "description": "Azure specific parameters.",
             "$ref": "#/components/schemas/AzureNodePool"
+          },
+          "image_type": {
+            "description": "Type of Image used to run the nodes (i.e. Windows or Default/Linux)",
+            "$ref": "#/components/schemas/ImageType"
           },
           "kubelet_configs": {
             "description": "The names of the KubeletConfigs for this node pool.",
