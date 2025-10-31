@@ -17971,6 +17971,10 @@
             "description": "Link to the cloud provider that the machine type belongs to.",
             "$ref": "#/components/schemas/CloudProvider"
           },
+          "features": {
+            "description": "Features available to the particular MachineType",
+            "$ref": "#/components/schemas/MachineTypeFeatures"
+          },
           "generic_name": {
             "description": "Generic name for quota purposes, for example `highmem-4`.\nCloud provider agnostic - many values are shared between \"similar\"\nmachine types on different providers.\nCorresponds to `resource_name` values in \"compute.node\"  quota cost data.",
             "type": "string"
@@ -17998,6 +18002,14 @@
           "general_purpose",
           "memory_optimized"
         ]
+      },
+      "MachineTypeFeatures": {
+        "description": "Defines the features enabled or disabled on a particular machine type",
+        "properties": {
+          "win_li": {
+            "type": "boolean"
+          }
+        }
       },
       "MachineTypeSize": {
         "description": "Machine type size.",
