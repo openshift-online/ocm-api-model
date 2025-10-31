@@ -9,6 +9,11 @@ approvers:
 - crizzo71
 - tzvatot
 - vkareh
+# ARO approvers
+- miguelsorianod
+# ROSA approvers
+- robpblake
+- lucasponce
 reviewers:
 - ahitacat
 - ciaranRoche
