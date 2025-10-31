@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.436 Oct 30 2025
+
+- Add ImageType enum to the NodePool model
+- Add Preference enum field to the AwsCapacityReservation model
+- Add Features sub-object to the MachineType model
+
 ## 0.0.435 Oct 21 2025
 
 - Update deprecation message for DisableUserWorkloadMonitoring field in
