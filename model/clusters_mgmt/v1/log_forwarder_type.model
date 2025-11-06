@@ -14,12 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of a Control Plane
-struct ControlPlane {
-	// Information about the backup of the control plane
-	Backup Backup
+// Representation of a log forwarder configuration for a cluster.
+class LogForwarder {
+    // Identifier of the cluster.
+    ClusterID String
 
-	// Control plane log forwarders configuration.
-	// This can be set during cluster creation to configure control plane log forwarders.
-	link LogForwarders []LogForwarder
+    // S3 configuration for log forwarding destination.
+    S3 LogForwarderS3Config
+
+    // CloudWatch configuration for log forwarding destination.
+    CloudWatch LogForwarderCloudWatchConfig
+
+    // List of additional applications to forward logs for.
+    Applications []String
+
+    // List of log forwarder groups.
+    Groups []LogForwarderGroup
+
+    // Status of the log forwarder.
+    Status LogForwarderStatus
 }

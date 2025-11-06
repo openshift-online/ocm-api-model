@@ -19,17 +19,17 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// ControlPlane represents the values of the 'control_plane' type.
+// LogForwarderGroup represents the values of the 'log_forwarder_group' type.
 //
-// Representation of a Control Plane
-type ControlPlane struct {
-	fieldSet_     []bool
-	backup        *Backup
-	logForwarders *LogForwarderList
+// Represents a log forwarder group.
+type LogForwarderGroup struct {
+	fieldSet_ []bool
+	id        string
+	version   string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
-func (o *ControlPlane) Empty() bool {
+func (o *LogForwarderGroup) Empty() bool {
 	if o == nil || len(o.fieldSet_) == 0 {
 		return true
 	}
@@ -41,75 +41,73 @@ func (o *ControlPlane) Empty() bool {
 	return true
 }
 
-// Backup returns the value of the 'backup' attribute, or
+// ID returns the value of the 'ID' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
-// Information about the backup of the control plane
-func (o *ControlPlane) Backup() *Backup {
+// The identifier of the log forwarder group.
+func (o *LogForwarderGroup) ID() string {
 	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
-		return o.backup
+		return o.id
 	}
-	return nil
+	return ""
 }
 
-// GetBackup returns the value of the 'backup' attribute and
+// GetID returns the value of the 'ID' attribute and
 // a flag indicating if the attribute has a value.
 //
-// Information about the backup of the control plane
-func (o *ControlPlane) GetBackup() (value *Backup, ok bool) {
+// The identifier of the log forwarder group.
+func (o *LogForwarderGroup) GetID() (value string, ok bool) {
 	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
 	if ok {
-		value = o.backup
+		value = o.id
 	}
 	return
 }
 
-// LogForwarders returns the value of the 'log_forwarders' attribute, or
+// Version returns the value of the 'version' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
-// Control plane log forwarders configuration.
-// This can be set during cluster creation to configure control plane log forwarders.
-func (o *ControlPlane) LogForwarders() *LogForwarderList {
+// The version of the log forwarder group.
+func (o *LogForwarderGroup) Version() string {
 	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
-		return o.logForwarders
+		return o.version
 	}
-	return nil
+	return ""
 }
 
-// GetLogForwarders returns the value of the 'log_forwarders' attribute and
+// GetVersion returns the value of the 'version' attribute and
 // a flag indicating if the attribute has a value.
 //
-// Control plane log forwarders configuration.
-// This can be set during cluster creation to configure control plane log forwarders.
-func (o *ControlPlane) GetLogForwarders() (value *LogForwarderList, ok bool) {
+// The version of the log forwarder group.
+func (o *LogForwarderGroup) GetVersion() (value string, ok bool) {
 	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
-		value = o.logForwarders
+		value = o.version
 	}
 	return
 }
 
-// ControlPlaneListKind is the name of the type used to represent list of objects of
-// type 'control_plane'.
-const ControlPlaneListKind = "ControlPlaneList"
+// LogForwarderGroupListKind is the name of the type used to represent list of objects of
+// type 'log_forwarder_group'.
+const LogForwarderGroupListKind = "LogForwarderGroupList"
 
-// ControlPlaneListLinkKind is the name of the type used to represent links to list
-// of objects of type 'control_plane'.
-const ControlPlaneListLinkKind = "ControlPlaneListLink"
+// LogForwarderGroupListLinkKind is the name of the type used to represent links to list
+// of objects of type 'log_forwarder_group'.
+const LogForwarderGroupListLinkKind = "LogForwarderGroupListLink"
 
-// ControlPlaneNilKind is the name of the type used to nil lists of objects of
-// type 'control_plane'.
-const ControlPlaneListNilKind = "ControlPlaneListNil"
+// LogForwarderGroupNilKind is the name of the type used to nil lists of objects of
+// type 'log_forwarder_group'.
+const LogForwarderGroupListNilKind = "LogForwarderGroupListNil"
 
-// ControlPlaneList is a list of values of the 'control_plane' type.
-type ControlPlaneList struct {
+// LogForwarderGroupList is a list of values of the 'log_forwarder_group' type.
+type LogForwarderGroupList struct {
 	href  string
 	link  bool
-	items []*ControlPlane
+	items []*LogForwarderGroup
 }
 
 // Len returns the length of the list.
-func (l *ControlPlaneList) Len() int {
+func (l *LogForwarderGroupList) Len() int {
 	if l == nil {
 		return 0
 	}
@@ -117,22 +115,22 @@ func (l *ControlPlaneList) Len() int {
 }
 
 // Items sets the items of the list.
-func (l *ControlPlaneList) SetLink(link bool) {
+func (l *LogForwarderGroupList) SetLink(link bool) {
 	l.link = link
 }
 
 // Items sets the items of the list.
-func (l *ControlPlaneList) SetHREF(href string) {
+func (l *LogForwarderGroupList) SetHREF(href string) {
 	l.href = href
 }
 
 // Items sets the items of the list.
-func (l *ControlPlaneList) SetItems(items []*ControlPlane) {
+func (l *LogForwarderGroupList) SetItems(items []*LogForwarderGroup) {
 	l.items = items
 }
 
 // Items returns the items of the list.
-func (l *ControlPlaneList) Items() []*ControlPlane {
+func (l *LogForwarderGroupList) Items() []*LogForwarderGroup {
 	if l == nil {
 		return nil
 	}
@@ -140,13 +138,13 @@ func (l *ControlPlaneList) Items() []*ControlPlane {
 }
 
 // Empty returns true if the list is empty.
-func (l *ControlPlaneList) Empty() bool {
+func (l *LogForwarderGroupList) Empty() bool {
 	return l == nil || len(l.items) == 0
 }
 
 // Get returns the item of the list with the given index. If there is no item with
 // that index it returns nil.
-func (l *ControlPlaneList) Get(i int) *ControlPlane {
+func (l *LogForwarderGroupList) Get(i int) *LogForwarderGroup {
 	if l == nil || i < 0 || i >= len(l.items) {
 		return nil
 	}
@@ -159,12 +157,12 @@ func (l *ControlPlaneList) Get(i int) *ControlPlane {
 //
 // If you don't need to modify the returned slice consider using the Each or Range
 // functions, as they don't need to allocate a new slice.
-func (l *ControlPlaneList) Slice() []*ControlPlane {
-	var slice []*ControlPlane
+func (l *LogForwarderGroupList) Slice() []*LogForwarderGroup {
+	var slice []*LogForwarderGroup
 	if l == nil {
-		slice = make([]*ControlPlane, 0)
+		slice = make([]*LogForwarderGroup, 0)
 	} else {
-		slice = make([]*ControlPlane, len(l.items))
+		slice = make([]*LogForwarderGroup, len(l.items))
 		copy(slice, l.items)
 	}
 	return slice
@@ -173,7 +171,7 @@ func (l *ControlPlaneList) Slice() []*ControlPlane {
 // Each runs the given function for each item of the list, in order. If the function
 // returns false the iteration stops, otherwise it continues till all the elements
 // of the list have been processed.
-func (l *ControlPlaneList) Each(f func(item *ControlPlane) bool) {
+func (l *LogForwarderGroupList) Each(f func(item *LogForwarderGroup) bool) {
 	if l == nil {
 		return
 	}
@@ -187,7 +185,7 @@ func (l *ControlPlaneList) Each(f func(item *ControlPlane) bool) {
 // Range runs the given function for each index and item of the list, in order. If
 // the function returns false the iteration stops, otherwise it continues till all
 // the elements of the list have been processed.
-func (l *ControlPlaneList) Range(f func(index int, item *ControlPlane) bool) {
+func (l *LogForwarderGroupList) Range(f func(index int, item *LogForwarderGroup) bool) {
 	if l == nil {
 		return
 	}

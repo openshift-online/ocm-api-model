@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of a Control Plane
-struct ControlPlane {
-	// Information about the backup of the control plane
-	Backup Backup
+// CloudWatch configuration for log forwarding.
+struct LogForwarderCloudWatchConfig {
+    // The ARN of the IAM role for log distribution.
+    LogDistributionRoleArn String
 
-	// Control plane log forwarders configuration.
-	// This can be set during cluster creation to configure control plane log forwarders.
-	link LogForwarders []LogForwarder
+    // The name of the CloudWatch log group.
+    LogGroupName String
 }

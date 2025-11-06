@@ -14,12 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of a Control Plane
-struct ControlPlane {
-	// Information about the backup of the control plane
-	Backup Backup
+// Manages a specific log forwarder.
+resource LogForwarder {
+	// Retrieves the details of the log forwarder.
+	method Get {
+		out Body LogForwarder
+	}
 
-	// Control plane log forwarders configuration.
-	// This can be set during cluster creation to configure control plane log forwarders.
-	link LogForwarders []LogForwarder
+	// Updates the log forwarder.
+	method Update {
+		in out Body LogForwarder
+	}
+
+	// Deletes the log forwarder.
+	method Delete {
+	}
 }

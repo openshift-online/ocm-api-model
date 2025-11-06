@@ -81,6 +81,10 @@ class Cluster {
 	// Information about the API of the cluster.
 	API ClusterAPI
 
+	// Control plane configuration for the cluster.
+	// This can be set during cluster creation to configure the control plane.
+	link ControlPlane ControlPlane
+
 	// Link to the cloud provider region where the cluster is installed.
 	link Region CloudRegion
 
