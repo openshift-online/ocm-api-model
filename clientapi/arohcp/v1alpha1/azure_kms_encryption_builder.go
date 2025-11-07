@@ -19,44 +19,33 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// AzureKmsEncryptionBuilder contains the data and logic needed to build 'azure_kms_encryption' objects.
+//
 // Contains the necessary attributes to support KMS encryption for Azure based clusters.
 type AzureKmsEncryptionBuilder struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	activeKey *AzureKmsKeyBuilder
 }
 
 // NewAzureKmsEncryption creates a new builder of 'azure_kms_encryption' objects.
 func NewAzureKmsEncryption() *AzureKmsEncryptionBuilder {
-	return &AzureKmsEncryptionBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &AzureKmsEncryptionBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AzureKmsEncryptionBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ActiveKey sets the value of the 'active_key' attribute to the given value.
 //
 // Contains the necessary attributes to support KMS encryption key for Azure based clusters
 func (b *AzureKmsEncryptionBuilder) ActiveKey(value *AzureKmsKeyBuilder) *AzureKmsEncryptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.activeKey = value
 	if value != nil {
-		b.fieldSet_[0] = true
+		b.bitmap_ |= 1
 	} else {
-		b.fieldSet_[0] = false
+		b.bitmap_ &^= 1
 	}
 	return b
 }
@@ -66,10 +55,7 @@ func (b *AzureKmsEncryptionBuilder) Copy(object *AzureKmsEncryption) *AzureKmsEn
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.activeKey != nil {
 		b.activeKey = NewAzureKmsKey().Copy(object.activeKey)
 	} else {
@@ -81,10 +67,7 @@ func (b *AzureKmsEncryptionBuilder) Copy(object *AzureKmsEncryption) *AzureKmsEn
 // Build creates a 'azure_kms_encryption' object using the configuration stored in the builder.
 func (b *AzureKmsEncryptionBuilder) Build() (object *AzureKmsEncryption, err error) {
 	object = new(AzureKmsEncryption)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.activeKey != nil {
 		object.activeKey, err = b.activeKey.Build()
 		if err != nil {

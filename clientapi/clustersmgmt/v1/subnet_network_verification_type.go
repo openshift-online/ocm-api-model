@@ -33,13 +33,13 @@ const SubnetNetworkVerificationNilKind = "SubnetNetworkVerificationNil"
 
 // SubnetNetworkVerification represents the values of the 'subnet_network_verification' type.
 type SubnetNetworkVerification struct {
-	fieldSet_ []bool
-	id        string
-	href      string
-	details   []string
-	platform  Platform
-	state     string
-	tags      map[string]string
+	bitmap_  uint32
+	id       string
+	href     string
+	details  []string
+	platform Platform
+	state    string
+	tags     map[string]string
 }
 
 // Kind returns the name of the type of the object.
@@ -47,7 +47,7 @@ func (o *SubnetNetworkVerification) Kind() string {
 	if o == nil {
 		return SubnetNetworkVerificationNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return SubnetNetworkVerificationLinkKind
 	}
 	return SubnetNetworkVerificationKind
@@ -55,12 +55,12 @@ func (o *SubnetNetworkVerification) Kind() string {
 
 // Link returns true if this is a link.
 func (o *SubnetNetworkVerification) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *SubnetNetworkVerification) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -69,7 +69,7 @@ func (o *SubnetNetworkVerification) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *SubnetNetworkVerification) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -78,7 +78,7 @@ func (o *SubnetNetworkVerification) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *SubnetNetworkVerification) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -87,7 +87,7 @@ func (o *SubnetNetworkVerification) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *SubnetNetworkVerification) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -96,17 +96,7 @@ func (o *SubnetNetworkVerification) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *SubnetNetworkVerification) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // Details returns the value of the 'details' attribute, or
@@ -114,7 +104,7 @@ func (o *SubnetNetworkVerification) Empty() bool {
 //
 // Slice of failures that happened during a subnet network verification.
 func (o *SubnetNetworkVerification) Details() []string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.details
 	}
 	return nil
@@ -125,7 +115,7 @@ func (o *SubnetNetworkVerification) Details() []string {
 //
 // Slice of failures that happened during a subnet network verification.
 func (o *SubnetNetworkVerification) GetDetails() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.details
 	}
@@ -137,7 +127,7 @@ func (o *SubnetNetworkVerification) GetDetails() (value []string, ok bool) {
 //
 // Platform supplied to the network verifier for this subnet.
 func (o *SubnetNetworkVerification) Platform() Platform {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.platform
 	}
 	return Platform("")
@@ -148,7 +138,7 @@ func (o *SubnetNetworkVerification) Platform() Platform {
 //
 // Platform supplied to the network verifier for this subnet.
 func (o *SubnetNetworkVerification) GetPlatform() (value Platform, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.platform
 	}
@@ -160,7 +150,7 @@ func (o *SubnetNetworkVerification) GetPlatform() (value Platform, ok bool) {
 //
 // State of the subnet network verification.
 func (o *SubnetNetworkVerification) State() string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.state
 	}
 	return ""
@@ -171,7 +161,7 @@ func (o *SubnetNetworkVerification) State() string {
 //
 // State of the subnet network verification.
 func (o *SubnetNetworkVerification) GetState() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.state
 	}
@@ -183,7 +173,7 @@ func (o *SubnetNetworkVerification) GetState() (value string, ok bool) {
 //
 // Tags supplied to the network verifier for this subnet.
 func (o *SubnetNetworkVerification) Tags() map[string]string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.tags
 	}
 	return nil
@@ -194,7 +184,7 @@ func (o *SubnetNetworkVerification) Tags() map[string]string {
 //
 // Tags supplied to the network verifier for this subnet.
 func (o *SubnetNetworkVerification) GetTags() (value map[string]string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.tags
 	}

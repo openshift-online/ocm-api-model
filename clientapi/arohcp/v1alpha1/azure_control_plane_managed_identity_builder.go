@@ -19,10 +19,12 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// AzureControlPlaneManagedIdentityBuilder contains the data and logic needed to build 'azure_control_plane_managed_identity' objects.
+//
 // Represents the information associated to an Azure User-Assigned
 // Managed Identity belonging to the Control Plane of the cluster.
 type AzureControlPlaneManagedIdentityBuilder struct {
-	fieldSet_   []bool
+	bitmap_     uint32
 	clientID    string
 	principalID string
 	resourceID  string
@@ -30,51 +32,32 @@ type AzureControlPlaneManagedIdentityBuilder struct {
 
 // NewAzureControlPlaneManagedIdentity creates a new builder of 'azure_control_plane_managed_identity' objects.
 func NewAzureControlPlaneManagedIdentity() *AzureControlPlaneManagedIdentityBuilder {
-	return &AzureControlPlaneManagedIdentityBuilder{
-		fieldSet_: make([]bool, 3),
-	}
+	return &AzureControlPlaneManagedIdentityBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AzureControlPlaneManagedIdentityBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ClientID sets the value of the 'client_ID' attribute to the given value.
 func (b *AzureControlPlaneManagedIdentityBuilder) ClientID(value string) *AzureControlPlaneManagedIdentityBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.clientID = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // PrincipalID sets the value of the 'principal_ID' attribute to the given value.
 func (b *AzureControlPlaneManagedIdentityBuilder) PrincipalID(value string) *AzureControlPlaneManagedIdentityBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.principalID = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // ResourceID sets the value of the 'resource_ID' attribute to the given value.
 func (b *AzureControlPlaneManagedIdentityBuilder) ResourceID(value string) *AzureControlPlaneManagedIdentityBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.resourceID = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
@@ -83,10 +66,7 @@ func (b *AzureControlPlaneManagedIdentityBuilder) Copy(object *AzureControlPlane
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.clientID = object.clientID
 	b.principalID = object.principalID
 	b.resourceID = object.resourceID
@@ -96,10 +76,7 @@ func (b *AzureControlPlaneManagedIdentityBuilder) Copy(object *AzureControlPlane
 // Build creates a 'azure_control_plane_managed_identity' object using the configuration stored in the builder.
 func (b *AzureControlPlaneManagedIdentityBuilder) Build() (object *AzureControlPlaneManagedIdentity, err error) {
 	object = new(AzureControlPlaneManagedIdentity)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.clientID = b.clientID
 	object.principalID = b.principalID
 	object.resourceID = b.resourceID

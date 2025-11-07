@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// OidcThumbprintBuilder contains the data and logic needed to build 'oidc_thumbprint' objects.
+//
 // Contains the necessary attributes to support oidc configuration thumbprint operations such as fetching/creation of a thumbprint
 type OidcThumbprintBuilder struct {
-	fieldSet_    []bool
+	bitmap_      uint32
 	href         string
 	clusterId    string
 	kind         string
@@ -31,71 +33,46 @@ type OidcThumbprintBuilder struct {
 
 // NewOidcThumbprint creates a new builder of 'oidc_thumbprint' objects.
 func NewOidcThumbprint() *OidcThumbprintBuilder {
-	return &OidcThumbprintBuilder{
-		fieldSet_: make([]bool, 5),
-	}
+	return &OidcThumbprintBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *OidcThumbprintBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // HREF sets the value of the 'HREF' attribute to the given value.
 func (b *OidcThumbprintBuilder) HREF(value string) *OidcThumbprintBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.href = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *OidcThumbprintBuilder) ClusterId(value string) *OidcThumbprintBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.clusterId = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Kind sets the value of the 'kind' attribute to the given value.
 func (b *OidcThumbprintBuilder) Kind(value string) *OidcThumbprintBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.kind = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // OidcConfigId sets the value of the 'oidc_config_id' attribute to the given value.
 func (b *OidcThumbprintBuilder) OidcConfigId(value string) *OidcThumbprintBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.oidcConfigId = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // Thumbprint sets the value of the 'thumbprint' attribute to the given value.
 func (b *OidcThumbprintBuilder) Thumbprint(value string) *OidcThumbprintBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.thumbprint = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -104,10 +81,7 @@ func (b *OidcThumbprintBuilder) Copy(object *OidcThumbprint) *OidcThumbprintBuil
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.href = object.href
 	b.clusterId = object.clusterId
 	b.kind = object.kind
@@ -119,10 +93,7 @@ func (b *OidcThumbprintBuilder) Copy(object *OidcThumbprint) *OidcThumbprintBuil
 // Build creates a 'oidc_thumbprint' object using the configuration stored in the builder.
 func (b *OidcThumbprintBuilder) Build() (object *OidcThumbprint, err error) {
 	object = new(OidcThumbprint)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.href = b.href
 	object.clusterId = b.clusterId
 	object.kind = b.kind

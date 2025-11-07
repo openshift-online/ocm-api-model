@@ -43,7 +43,7 @@ func WriteRolePolicyBinding(object *RolePolicyBinding, stream *jsoniter.Stream) 
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -52,7 +52,7 @@ func WriteRolePolicyBinding(object *RolePolicyBinding, stream *jsoniter.Stream) 
 		stream.WriteString(object.arn)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -61,7 +61,7 @@ func WriteRolePolicyBinding(object *RolePolicyBinding, stream *jsoniter.Stream) 
 		stream.WriteString((object.creationTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -70,7 +70,7 @@ func WriteRolePolicyBinding(object *RolePolicyBinding, stream *jsoniter.Stream) 
 		stream.WriteString((object.lastUpdateTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -79,7 +79,7 @@ func WriteRolePolicyBinding(object *RolePolicyBinding, stream *jsoniter.Stream) 
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.policies != nil
+	present_ = object.bitmap_&16 != 0 && object.policies != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -88,7 +88,7 @@ func WriteRolePolicyBinding(object *RolePolicyBinding, stream *jsoniter.Stream) 
 		WriteRolePolicyList(object.policies, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.status != nil
+	present_ = object.bitmap_&32 != 0 && object.status != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -97,7 +97,7 @@ func WriteRolePolicyBinding(object *RolePolicyBinding, stream *jsoniter.Stream) 
 		WriteRolePolicyBindingStatus(object.status, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -122,9 +122,7 @@ func UnmarshalRolePolicyBinding(source interface{}) (object *RolePolicyBinding, 
 
 // ReadRolePolicyBinding reads a value of the 'role_policy_binding' type from the given iterator.
 func ReadRolePolicyBinding(iterator *jsoniter.Iterator) *RolePolicyBinding {
-	object := &RolePolicyBinding{
-		fieldSet_: make([]bool, 7),
-	}
+	object := &RolePolicyBinding{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -134,7 +132,7 @@ func ReadRolePolicyBinding(iterator *jsoniter.Iterator) *RolePolicyBinding {
 		case "arn":
 			value := iterator.ReadString()
 			object.arn = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "creation_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -142,7 +140,7 @@ func ReadRolePolicyBinding(iterator *jsoniter.Iterator) *RolePolicyBinding {
 				iterator.ReportError("", err.Error())
 			}
 			object.creationTimestamp = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "last_update_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -150,23 +148,23 @@ func ReadRolePolicyBinding(iterator *jsoniter.Iterator) *RolePolicyBinding {
 				iterator.ReportError("", err.Error())
 			}
 			object.lastUpdateTimestamp = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "policies":
 			value := ReadRolePolicyList(iterator)
 			object.policies = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "status":
 			value := ReadRolePolicyBindingStatus(iterator)
 			object.status = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "type":
 			value := iterator.ReadString()
 			object.type_ = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		default:
 			iterator.ReadAny()
 		}

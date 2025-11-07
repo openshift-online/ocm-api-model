@@ -19,49 +19,34 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
+// AccessTokenAuthBuilder contains the data and logic needed to build 'access_token_auth' objects.
 type AccessTokenAuthBuilder struct {
-	fieldSet_ []bool
-	auth      string
-	email     string
+	bitmap_ uint32
+	auth    string
+	email   string
 }
 
 // NewAccessTokenAuth creates a new builder of 'access_token_auth' objects.
 func NewAccessTokenAuth() *AccessTokenAuthBuilder {
-	return &AccessTokenAuthBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &AccessTokenAuthBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AccessTokenAuthBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Auth sets the value of the 'auth' attribute to the given value.
 func (b *AccessTokenAuthBuilder) Auth(value string) *AccessTokenAuthBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.auth = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Email sets the value of the 'email' attribute to the given value.
 func (b *AccessTokenAuthBuilder) Email(value string) *AccessTokenAuthBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.email = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -70,10 +55,7 @@ func (b *AccessTokenAuthBuilder) Copy(object *AccessTokenAuth) *AccessTokenAuthB
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.auth = object.auth
 	b.email = object.email
 	return b
@@ -82,10 +64,7 @@ func (b *AccessTokenAuthBuilder) Copy(object *AccessTokenAuth) *AccessTokenAuthB
 // Build creates a 'access_token_auth' object using the configuration stored in the builder.
 func (b *AccessTokenAuthBuilder) Build() (object *AccessTokenAuth, err error) {
 	object = new(AccessTokenAuth)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.auth = b.auth
 	object.email = b.email
 	return

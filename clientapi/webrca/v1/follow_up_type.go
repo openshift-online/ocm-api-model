@@ -39,7 +39,7 @@ const FollowUpNilKind = "FollowUpNil"
 //
 // Definition of a Web RCA event.
 type FollowUp struct {
-	fieldSet_    []bool
+	bitmap_      uint32
 	id           string
 	href         string
 	createdAt    time.Time
@@ -62,7 +62,7 @@ func (o *FollowUp) Kind() string {
 	if o == nil {
 		return FollowUpNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return FollowUpLinkKind
 	}
 	return FollowUpKind
@@ -70,12 +70,12 @@ func (o *FollowUp) Kind() string {
 
 // Link returns true if this is a link.
 func (o *FollowUp) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *FollowUp) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -84,7 +84,7 @@ func (o *FollowUp) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *FollowUp) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -93,7 +93,7 @@ func (o *FollowUp) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *FollowUp) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -102,7 +102,7 @@ func (o *FollowUp) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *FollowUp) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -111,23 +111,13 @@ func (o *FollowUp) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *FollowUp) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // Archived returns the value of the 'archived' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *FollowUp) Archived() bool {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.archived
 	}
 	return false
@@ -136,7 +126,7 @@ func (o *FollowUp) Archived() bool {
 // GetArchived returns the value of the 'archived' attribute and
 // a flag indicating if the attribute has a value.
 func (o *FollowUp) GetArchived() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.archived
 	}
@@ -148,7 +138,7 @@ func (o *FollowUp) GetArchived() (value bool, ok bool) {
 //
 // Object creation timestamp.
 func (o *FollowUp) CreatedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -159,7 +149,7 @@ func (o *FollowUp) CreatedAt() time.Time {
 //
 // Object creation timestamp.
 func (o *FollowUp) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.createdAt
 	}
@@ -171,7 +161,7 @@ func (o *FollowUp) GetCreatedAt() (value time.Time, ok bool) {
 //
 // Object deletion timestamp.
 func (o *FollowUp) DeletedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.deletedAt
 	}
 	return time.Time{}
@@ -182,7 +172,7 @@ func (o *FollowUp) DeletedAt() time.Time {
 //
 // Object deletion timestamp.
 func (o *FollowUp) GetDeletedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.deletedAt
 	}
@@ -192,7 +182,7 @@ func (o *FollowUp) GetDeletedAt() (value time.Time, ok bool) {
 // Done returns the value of the 'done' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *FollowUp) Done() bool {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.done
 	}
 	return false
@@ -201,7 +191,7 @@ func (o *FollowUp) Done() bool {
 // GetDone returns the value of the 'done' attribute and
 // a flag indicating if the attribute has a value.
 func (o *FollowUp) GetDone() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.done
 	}
@@ -211,7 +201,7 @@ func (o *FollowUp) GetDone() (value bool, ok bool) {
 // FollowUpType returns the value of the 'follow_up_type' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *FollowUp) FollowUpType() string {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.followUpType
 	}
 	return ""
@@ -220,7 +210,7 @@ func (o *FollowUp) FollowUpType() string {
 // GetFollowUpType returns the value of the 'follow_up_type' attribute and
 // a flag indicating if the attribute has a value.
 func (o *FollowUp) GetFollowUpType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.followUpType
 	}
@@ -230,7 +220,7 @@ func (o *FollowUp) GetFollowUpType() (value string, ok bool) {
 // Incident returns the value of the 'incident' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *FollowUp) Incident() *Incident {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.incident
 	}
 	return nil
@@ -239,7 +229,7 @@ func (o *FollowUp) Incident() *Incident {
 // GetIncident returns the value of the 'incident' attribute and
 // a flag indicating if the attribute has a value.
 func (o *FollowUp) GetIncident() (value *Incident, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.incident
 	}
@@ -249,7 +239,7 @@ func (o *FollowUp) GetIncident() (value *Incident, ok bool) {
 // Owner returns the value of the 'owner' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *FollowUp) Owner() string {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && o.bitmap_&512 != 0 {
 		return o.owner
 	}
 	return ""
@@ -258,7 +248,7 @@ func (o *FollowUp) Owner() string {
 // GetOwner returns the value of the 'owner' attribute and
 // a flag indicating if the attribute has a value.
 func (o *FollowUp) GetOwner() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && o.bitmap_&512 != 0
 	if ok {
 		value = o.owner
 	}
@@ -268,7 +258,7 @@ func (o *FollowUp) GetOwner() (value string, ok bool) {
 // Priority returns the value of the 'priority' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *FollowUp) Priority() string {
-	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+	if o != nil && o.bitmap_&1024 != 0 {
 		return o.priority
 	}
 	return ""
@@ -277,7 +267,7 @@ func (o *FollowUp) Priority() string {
 // GetPriority returns the value of the 'priority' attribute and
 // a flag indicating if the attribute has a value.
 func (o *FollowUp) GetPriority() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	ok = o != nil && o.bitmap_&1024 != 0
 	if ok {
 		value = o.priority
 	}
@@ -287,7 +277,7 @@ func (o *FollowUp) GetPriority() (value string, ok bool) {
 // Status returns the value of the 'status' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *FollowUp) Status() string {
-	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
+	if o != nil && o.bitmap_&2048 != 0 {
 		return o.status
 	}
 	return ""
@@ -296,7 +286,7 @@ func (o *FollowUp) Status() string {
 // GetStatus returns the value of the 'status' attribute and
 // a flag indicating if the attribute has a value.
 func (o *FollowUp) GetStatus() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
+	ok = o != nil && o.bitmap_&2048 != 0
 	if ok {
 		value = o.status
 	}
@@ -306,7 +296,7 @@ func (o *FollowUp) GetStatus() (value string, ok bool) {
 // Title returns the value of the 'title' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *FollowUp) Title() string {
-	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
+	if o != nil && o.bitmap_&4096 != 0 {
 		return o.title
 	}
 	return ""
@@ -315,7 +305,7 @@ func (o *FollowUp) Title() string {
 // GetTitle returns the value of the 'title' attribute and
 // a flag indicating if the attribute has a value.
 func (o *FollowUp) GetTitle() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
+	ok = o != nil && o.bitmap_&4096 != 0
 	if ok {
 		value = o.title
 	}
@@ -327,7 +317,7 @@ func (o *FollowUp) GetTitle() (value string, ok bool) {
 //
 // Object modification timestamp.
 func (o *FollowUp) UpdatedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
+	if o != nil && o.bitmap_&8192 != 0 {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -338,7 +328,7 @@ func (o *FollowUp) UpdatedAt() time.Time {
 //
 // Object modification timestamp.
 func (o *FollowUp) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
+	ok = o != nil && o.bitmap_&8192 != 0
 	if ok {
 		value = o.updatedAt
 	}
@@ -348,7 +338,7 @@ func (o *FollowUp) GetUpdatedAt() (value time.Time, ok bool) {
 // Url returns the value of the 'url' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *FollowUp) Url() string {
-	if o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14] {
+	if o != nil && o.bitmap_&16384 != 0 {
 		return o.url
 	}
 	return ""
@@ -357,7 +347,7 @@ func (o *FollowUp) Url() string {
 // GetUrl returns the value of the 'url' attribute and
 // a flag indicating if the attribute has a value.
 func (o *FollowUp) GetUrl() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14]
+	ok = o != nil && o.bitmap_&16384 != 0
 	if ok {
 		value = o.url
 	}
@@ -367,7 +357,7 @@ func (o *FollowUp) GetUrl() (value string, ok bool) {
 // WorkedAt returns the value of the 'worked_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *FollowUp) WorkedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15] {
+	if o != nil && o.bitmap_&32768 != 0 {
 		return o.workedAt
 	}
 	return time.Time{}
@@ -376,7 +366,7 @@ func (o *FollowUp) WorkedAt() time.Time {
 // GetWorkedAt returns the value of the 'worked_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *FollowUp) GetWorkedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15]
+	ok = o != nil && o.bitmap_&32768 != 0
 	if ok {
 		value = o.workedAt
 	}

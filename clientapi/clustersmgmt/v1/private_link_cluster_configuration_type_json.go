@@ -42,7 +42,7 @@ func WritePrivateLinkClusterConfiguration(object *PrivateLinkClusterConfiguratio
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.principals != nil
+	present_ = object.bitmap_&1 != 0 && object.principals != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalPrivateLinkClusterConfiguration(source interface{}) (object *Priva
 
 // ReadPrivateLinkClusterConfiguration reads a value of the 'private_link_cluster_configuration' type from the given iterator.
 func ReadPrivateLinkClusterConfiguration(iterator *jsoniter.Iterator) *PrivateLinkClusterConfiguration {
-	object := &PrivateLinkClusterConfiguration{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &PrivateLinkClusterConfiguration{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadPrivateLinkClusterConfiguration(iterator *jsoniter.Iterator) *PrivateLi
 		case "principals":
 			value := ReadPrivateLinkPrincipalList(iterator)
 			object.principals = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

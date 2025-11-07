@@ -19,40 +19,29 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// AzureDataPlaneManagedIdentityBuilder contains the data and logic needed to build 'azure_data_plane_managed_identity' objects.
+//
 // Represents the information associated to an Azure User-Assigned
 // Managed Identity belonging to the Data Plane of the cluster.
 type AzureDataPlaneManagedIdentityBuilder struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	resourceID string
 }
 
 // NewAzureDataPlaneManagedIdentity creates a new builder of 'azure_data_plane_managed_identity' objects.
 func NewAzureDataPlaneManagedIdentity() *AzureDataPlaneManagedIdentityBuilder {
-	return &AzureDataPlaneManagedIdentityBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &AzureDataPlaneManagedIdentityBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AzureDataPlaneManagedIdentityBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ResourceID sets the value of the 'resource_ID' attribute to the given value.
 func (b *AzureDataPlaneManagedIdentityBuilder) ResourceID(value string) *AzureDataPlaneManagedIdentityBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.resourceID = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -61,10 +50,7 @@ func (b *AzureDataPlaneManagedIdentityBuilder) Copy(object *AzureDataPlaneManage
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.resourceID = object.resourceID
 	return b
 }
@@ -72,10 +58,7 @@ func (b *AzureDataPlaneManagedIdentityBuilder) Copy(object *AzureDataPlaneManage
 // Build creates a 'azure_data_plane_managed_identity' object using the configuration stored in the builder.
 func (b *AzureDataPlaneManagedIdentityBuilder) Build() (object *AzureDataPlaneManagedIdentity, err error) {
 	object = new(AzureDataPlaneManagedIdentity)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.resourceID = b.resourceID
 	return
 }

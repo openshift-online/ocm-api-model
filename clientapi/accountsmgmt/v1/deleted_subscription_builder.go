@@ -23,8 +23,9 @@ import (
 	time "time"
 )
 
+// DeletedSubscriptionBuilder contains the data and logic needed to build 'deleted_subscription' objects.
 type DeletedSubscriptionBuilder struct {
-	fieldSet_                 []bool
+	bitmap_                   uint64
 	id                        string
 	href                      string
 	billingExpirationDate     time.Time
@@ -63,101 +64,66 @@ type DeletedSubscriptionBuilder struct {
 
 // NewDeletedSubscription creates a new builder of 'deleted_subscription' objects.
 func NewDeletedSubscription() *DeletedSubscriptionBuilder {
-	return &DeletedSubscriptionBuilder{
-		fieldSet_: make([]bool, 35),
-	}
+	return &DeletedSubscriptionBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *DeletedSubscriptionBuilder) Link(value bool) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *DeletedSubscriptionBuilder) ID(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *DeletedSubscriptionBuilder) HREF(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *DeletedSubscriptionBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // BillingExpirationDate sets the value of the 'billing_expiration_date' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) BillingExpirationDate(value time.Time) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.billingExpirationDate = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // BillingMarketplaceAccount sets the value of the 'billing_marketplace_account' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) BillingMarketplaceAccount(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.billingMarketplaceAccount = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // CloudAccountID sets the value of the 'cloud_account_ID' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) CloudAccountID(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.cloudAccountID = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // CloudProviderID sets the value of the 'cloud_provider_ID' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) CloudProviderID(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.cloudProviderID = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) ClusterID(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.clusterID = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
@@ -165,271 +131,190 @@ func (b *DeletedSubscriptionBuilder) ClusterID(value string) *DeletedSubscriptio
 //
 // Billing model for subscripiton and reserved_resource resources.
 func (b *DeletedSubscriptionBuilder) ClusterBillingModel(value BillingModel) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.clusterBillingModel = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // ConsoleURL sets the value of the 'console_URL' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) ConsoleURL(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.consoleURL = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // ConsumerUUID sets the value of the 'consumer_UUID' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) ConsumerUUID(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.consumerUUID = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
 // CpuTotal sets the value of the 'cpu_total' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) CpuTotal(value int) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.cpuTotal = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) CreatedAt(value time.Time) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.createdAt = value
-	b.fieldSet_[12] = true
+	b.bitmap_ |= 4096
 	return b
 }
 
 // CreatorId sets the value of the 'creator_id' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) CreatorId(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.creatorId = value
-	b.fieldSet_[13] = true
+	b.bitmap_ |= 8192
 	return b
 }
 
 // DisplayName sets the value of the 'display_name' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) DisplayName(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.displayName = value
-	b.fieldSet_[14] = true
+	b.bitmap_ |= 16384
 	return b
 }
 
 // ExternalClusterID sets the value of the 'external_cluster_ID' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) ExternalClusterID(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.externalClusterID = value
-	b.fieldSet_[15] = true
+	b.bitmap_ |= 32768
 	return b
 }
 
 // LastReconcileDate sets the value of the 'last_reconcile_date' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) LastReconcileDate(value time.Time) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.lastReconcileDate = value
-	b.fieldSet_[16] = true
+	b.bitmap_ |= 65536
 	return b
 }
 
 // LastReleasedAt sets the value of the 'last_released_at' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) LastReleasedAt(value time.Time) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.lastReleasedAt = value
-	b.fieldSet_[17] = true
+	b.bitmap_ |= 131072
 	return b
 }
 
 // LastTelemetryDate sets the value of the 'last_telemetry_date' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) LastTelemetryDate(value time.Time) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.lastTelemetryDate = value
-	b.fieldSet_[18] = true
+	b.bitmap_ |= 262144
 	return b
 }
 
 // Managed sets the value of the 'managed' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) Managed(value bool) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.managed = value
-	b.fieldSet_[19] = true
+	b.bitmap_ |= 524288
 	return b
 }
 
 // Metrics sets the value of the 'metrics' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) Metrics(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.metrics = value
-	b.fieldSet_[20] = true
+	b.bitmap_ |= 1048576
 	return b
 }
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) OrganizationID(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.organizationID = value
-	b.fieldSet_[21] = true
+	b.bitmap_ |= 2097152
 	return b
 }
 
 // PlanID sets the value of the 'plan_ID' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) PlanID(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.planID = value
-	b.fieldSet_[22] = true
+	b.bitmap_ |= 4194304
 	return b
 }
 
 // ProductBundle sets the value of the 'product_bundle' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) ProductBundle(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.productBundle = value
-	b.fieldSet_[23] = true
+	b.bitmap_ |= 8388608
 	return b
 }
 
 // Provenance sets the value of the 'provenance' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) Provenance(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.provenance = value
-	b.fieldSet_[24] = true
+	b.bitmap_ |= 16777216
 	return b
 }
 
 // QueryTimestamp sets the value of the 'query_timestamp' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) QueryTimestamp(value time.Time) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.queryTimestamp = value
-	b.fieldSet_[25] = true
+	b.bitmap_ |= 33554432
 	return b
 }
 
 // RegionID sets the value of the 'region_ID' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) RegionID(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.regionID = value
-	b.fieldSet_[26] = true
+	b.bitmap_ |= 67108864
 	return b
 }
 
 // Released sets the value of the 'released' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) Released(value bool) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.released = value
-	b.fieldSet_[27] = true
+	b.bitmap_ |= 134217728
 	return b
 }
 
 // ServiceLevel sets the value of the 'service_level' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) ServiceLevel(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.serviceLevel = value
-	b.fieldSet_[28] = true
+	b.bitmap_ |= 268435456
 	return b
 }
 
 // SocketTotal sets the value of the 'socket_total' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) SocketTotal(value int) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.socketTotal = value
-	b.fieldSet_[29] = true
+	b.bitmap_ |= 536870912
 	return b
 }
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) Status(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.status = value
-	b.fieldSet_[30] = true
+	b.bitmap_ |= 1073741824
 	return b
 }
 
 // SupportLevel sets the value of the 'support_level' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) SupportLevel(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.supportLevel = value
-	b.fieldSet_[31] = true
+	b.bitmap_ |= 2147483648
 	return b
 }
 
 // SystemUnits sets the value of the 'system_units' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) SystemUnits(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.systemUnits = value
-	b.fieldSet_[32] = true
+	b.bitmap_ |= 4294967296
 	return b
 }
 
 // TrialEndDate sets the value of the 'trial_end_date' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) TrialEndDate(value time.Time) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.trialEndDate = value
-	b.fieldSet_[33] = true
+	b.bitmap_ |= 8589934592
 	return b
 }
 
 // Usage sets the value of the 'usage' attribute to the given value.
 func (b *DeletedSubscriptionBuilder) Usage(value string) *DeletedSubscriptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 35)
-	}
 	b.usage = value
-	b.fieldSet_[34] = true
+	b.bitmap_ |= 17179869184
 	return b
 }
 
@@ -438,10 +323,7 @@ func (b *DeletedSubscriptionBuilder) Copy(object *DeletedSubscription) *DeletedS
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.billingExpirationDate = object.billingExpirationDate
@@ -484,10 +366,7 @@ func (b *DeletedSubscriptionBuilder) Build() (object *DeletedSubscription, err e
 	object = new(DeletedSubscription)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.billingExpirationDate = b.billingExpirationDate
 	object.billingMarketplaceAccount = b.billingMarketplaceAccount
 	object.cloudAccountID = b.cloudAccountID

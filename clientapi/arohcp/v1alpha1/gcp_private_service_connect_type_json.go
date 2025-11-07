@@ -42,7 +42,7 @@ func WriteGcpPrivateServiceConnect(object *GcpPrivateServiceConnect, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalGcpPrivateServiceConnect(source interface{}) (object *GcpPrivateSe
 
 // ReadGcpPrivateServiceConnect reads a value of the 'gcp_private_service_connect' type from the given iterator.
 func ReadGcpPrivateServiceConnect(iterator *jsoniter.Iterator) *GcpPrivateServiceConnect {
-	object := &GcpPrivateServiceConnect{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &GcpPrivateServiceConnect{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadGcpPrivateServiceConnect(iterator *jsoniter.Iterator) *GcpPrivateServic
 		case "service_attachment_subnet":
 			value := iterator.ReadString()
 			object.serviceAttachmentSubnet = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

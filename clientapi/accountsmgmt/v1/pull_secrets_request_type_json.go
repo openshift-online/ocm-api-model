@@ -42,7 +42,7 @@ func WritePullSecretsRequest(object *PullSecretsRequest, stream *jsoniter.Stream
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalPullSecretsRequest(source interface{}) (object *PullSecretsRequest
 
 // ReadPullSecretsRequest reads a value of the 'pull_secrets_request' type from the given iterator.
 func ReadPullSecretsRequest(iterator *jsoniter.Iterator) *PullSecretsRequest {
-	object := &PullSecretsRequest{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &PullSecretsRequest{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadPullSecretsRequest(iterator *jsoniter.Iterator) *PullSecretsRequest {
 		case "external_resource_id":
 			value := iterator.ReadString()
 			object.externalResourceId = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

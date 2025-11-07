@@ -21,22 +21,14 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // ReleaseImages represents the values of the 'release_images' type.
 type ReleaseImages struct {
-	fieldSet_ []bool
-	arm64     *ReleaseImageDetails
-	multi     *ReleaseImageDetails
+	bitmap_ uint32
+	arm64   *ReleaseImageDetails
+	multi   *ReleaseImageDetails
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ReleaseImages) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // ARM64 returns the value of the 'ARM64' attribute, or
@@ -44,7 +36,7 @@ func (o *ReleaseImages) Empty() bool {
 //
 // Arm64 will contain the reference for the arm64 image which will be used for cluster deployments
 func (o *ReleaseImages) ARM64() *ReleaseImageDetails {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.arm64
 	}
 	return nil
@@ -55,7 +47,7 @@ func (o *ReleaseImages) ARM64() *ReleaseImageDetails {
 //
 // Arm64 will contain the reference for the arm64 image which will be used for cluster deployments
 func (o *ReleaseImages) GetARM64() (value *ReleaseImageDetails, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.arm64
 	}
@@ -67,7 +59,7 @@ func (o *ReleaseImages) GetARM64() (value *ReleaseImageDetails, ok bool) {
 //
 // Multi will contain the reference for the multi image which will be used for cluster deployments
 func (o *ReleaseImages) Multi() *ReleaseImageDetails {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.multi
 	}
 	return nil
@@ -78,7 +70,7 @@ func (o *ReleaseImages) Multi() *ReleaseImageDetails {
 //
 // Multi will contain the reference for the multi image which will be used for cluster deployments
 func (o *ReleaseImages) GetMulti() (value *ReleaseImageDetails, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.multi
 	}

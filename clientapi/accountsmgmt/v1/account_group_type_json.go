@@ -43,13 +43,13 @@ func WriteAccountGroup(object *AccountGroup, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(AccountGroupLinkKind)
 	} else {
 		stream.WriteString(AccountGroupKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteAccountGroup(object *AccountGroup, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteAccountGroup(object *AccountGroup, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteAccountGroup(object *AccountGroup, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteAccountGroup(object *AccountGroup, stream *jsoniter.Stream) {
 		stream.WriteString(object.description)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteAccountGroup(object *AccountGroup, stream *jsoniter.Stream) {
 		stream.WriteString(object.externalID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteAccountGroup(object *AccountGroup, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.managedBy))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = object.bitmap_&128 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteAccountGroup(object *AccountGroup, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
+	present_ = object.bitmap_&256 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -120,7 +120,7 @@ func WriteAccountGroup(object *AccountGroup, stream *jsoniter.Stream) {
 		stream.WriteString(object.organizationID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = object.bitmap_&512 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -145,9 +145,7 @@ func UnmarshalAccountGroup(source interface{}) (object *AccountGroup, err error)
 
 // ReadAccountGroup reads a value of the 'account_group' type from the given iterator.
 func ReadAccountGroup(iterator *jsoniter.Iterator) *AccountGroup {
-	object := &AccountGroup{
-		fieldSet_: make([]bool, 10),
-	}
+	object := &AccountGroup{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -157,14 +155,14 @@ func ReadAccountGroup(iterator *jsoniter.Iterator) *AccountGroup {
 		case "kind":
 			value := iterator.ReadString()
 			if value == AccountGroupLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -172,28 +170,28 @@ func ReadAccountGroup(iterator *jsoniter.Iterator) *AccountGroup {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "description":
 			value := iterator.ReadString()
 			object.description = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "external_id":
 			value := iterator.ReadString()
 			object.externalID = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "managed_by":
 			text := iterator.ReadString()
 			value := AccountGroupManagedBy(text)
 			object.managedBy = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		case "organization_id":
 			value := iterator.ReadString()
 			object.organizationID = value
-			object.fieldSet_[8] = true
+			object.bitmap_ |= 256
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -201,7 +199,7 @@ func ReadAccountGroup(iterator *jsoniter.Iterator) *AccountGroup {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.fieldSet_[9] = true
+			object.bitmap_ |= 512
 		default:
 			iterator.ReadAny()
 		}

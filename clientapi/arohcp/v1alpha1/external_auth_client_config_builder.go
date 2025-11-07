@@ -19,10 +19,12 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// ExternalAuthClientConfigBuilder contains the data and logic needed to build 'external_auth_client_config' objects.
+//
 // ExternalAuthClientConfig contains configuration for the platform's clients that
 // need to request tokens from the issuer.
 type ExternalAuthClientConfigBuilder struct {
-	fieldSet_   []bool
+	bitmap_     uint32
 	id          string
 	component   *ClientComponentBuilder
 	extraScopes []string
@@ -32,31 +34,18 @@ type ExternalAuthClientConfigBuilder struct {
 
 // NewExternalAuthClientConfig creates a new builder of 'external_auth_client_config' objects.
 func NewExternalAuthClientConfig() *ExternalAuthClientConfigBuilder {
-	return &ExternalAuthClientConfigBuilder{
-		fieldSet_: make([]bool, 5),
-	}
+	return &ExternalAuthClientConfigBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ExternalAuthClientConfigBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *ExternalAuthClientConfigBuilder) ID(value string) *ExternalAuthClientConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.id = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -64,36 +53,27 @@ func (b *ExternalAuthClientConfigBuilder) ID(value string) *ExternalAuthClientCo
 //
 // The reference of a component that will consume the client configuration.
 func (b *ExternalAuthClientConfigBuilder) Component(value *ClientComponentBuilder) *ExternalAuthClientConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.component = value
 	if value != nil {
-		b.fieldSet_[1] = true
+		b.bitmap_ |= 2
 	} else {
-		b.fieldSet_[1] = false
+		b.bitmap_ &^= 2
 	}
 	return b
 }
 
 // ExtraScopes sets the value of the 'extra_scopes' attribute to the given values.
 func (b *ExternalAuthClientConfigBuilder) ExtraScopes(values ...string) *ExternalAuthClientConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.extraScopes = make([]string, len(values))
 	copy(b.extraScopes, values)
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Secret sets the value of the 'secret' attribute to the given value.
 func (b *ExternalAuthClientConfigBuilder) Secret(value string) *ExternalAuthClientConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.secret = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -101,11 +81,8 @@ func (b *ExternalAuthClientConfigBuilder) Secret(value string) *ExternalAuthClie
 //
 // Representation of the possible values of an external authentication client's type
 func (b *ExternalAuthClientConfigBuilder) Type(value ExternalAuthClientType) *ExternalAuthClientConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.type_ = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -114,10 +91,7 @@ func (b *ExternalAuthClientConfigBuilder) Copy(object *ExternalAuthClientConfig)
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	if object.component != nil {
 		b.component = NewClientComponent().Copy(object.component)
@@ -138,10 +112,7 @@ func (b *ExternalAuthClientConfigBuilder) Copy(object *ExternalAuthClientConfig)
 // Build creates a 'external_auth_client_config' object using the configuration stored in the builder.
 func (b *ExternalAuthClientConfigBuilder) Build() (object *ExternalAuthClientConfig, err error) {
 	object = new(ExternalAuthClientConfig)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.id = b.id
 	if b.component != nil {
 		object.component, err = b.component.Build()

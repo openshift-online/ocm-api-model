@@ -42,7 +42,7 @@ func WriteWifResourceBinding(object *WifResourceBinding, stream *jsoniter.Stream
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteWifResourceBinding(object *WifResourceBinding, stream *jsoniter.Stream
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalWifResourceBinding(source interface{}) (object *WifResourceBinding
 
 // ReadWifResourceBinding reads a value of the 'wif_resource_binding' type from the given iterator.
 func ReadWifResourceBinding(iterator *jsoniter.Iterator) *WifResourceBinding {
-	object := &WifResourceBinding{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &WifResourceBinding{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadWifResourceBinding(iterator *jsoniter.Iterator) *WifResourceBinding {
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "type":
 			value := iterator.ReadString()
 			object.type_ = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

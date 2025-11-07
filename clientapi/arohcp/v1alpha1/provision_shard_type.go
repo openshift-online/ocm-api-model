@@ -39,7 +39,7 @@ const ProvisionShardNilKind = "ProvisionShardNil"
 //
 // Contains the properties of the provision shard, including AWS and GCP related configurations
 type ProvisionShard struct {
-	fieldSet_                []bool
+	bitmap_                  uint32
 	id                       string
 	href                     string
 	awsAccountOperatorConfig *ServerConfig
@@ -61,7 +61,7 @@ func (o *ProvisionShard) Kind() string {
 	if o == nil {
 		return ProvisionShardNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return ProvisionShardLinkKind
 	}
 	return ProvisionShardKind
@@ -69,12 +69,12 @@ func (o *ProvisionShard) Kind() string {
 
 // Link returns true if this is a link.
 func (o *ProvisionShard) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *ProvisionShard) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -83,7 +83,7 @@ func (o *ProvisionShard) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *ProvisionShard) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -92,7 +92,7 @@ func (o *ProvisionShard) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *ProvisionShard) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -101,7 +101,7 @@ func (o *ProvisionShard) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *ProvisionShard) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -110,17 +110,7 @@ func (o *ProvisionShard) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ProvisionShard) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // AWSAccountOperatorConfig returns the value of the 'AWS_account_operator_config' attribute, or
@@ -128,7 +118,7 @@ func (o *ProvisionShard) Empty() bool {
 //
 // Contains the configuration for the AWS account operator.
 func (o *ProvisionShard) AWSAccountOperatorConfig() *ServerConfig {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.awsAccountOperatorConfig
 	}
 	return nil
@@ -139,7 +129,7 @@ func (o *ProvisionShard) AWSAccountOperatorConfig() *ServerConfig {
 //
 // Contains the configuration for the AWS account operator.
 func (o *ProvisionShard) GetAWSAccountOperatorConfig() (value *ServerConfig, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.awsAccountOperatorConfig
 	}
@@ -151,7 +141,7 @@ func (o *ProvisionShard) GetAWSAccountOperatorConfig() (value *ServerConfig, ok 
 //
 // Contains the AWS base domain.
 func (o *ProvisionShard) AWSBaseDomain() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.awsBaseDomain
 	}
 	return ""
@@ -162,7 +152,7 @@ func (o *ProvisionShard) AWSBaseDomain() string {
 //
 // Contains the AWS base domain.
 func (o *ProvisionShard) GetAWSBaseDomain() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.awsBaseDomain
 	}
@@ -174,7 +164,7 @@ func (o *ProvisionShard) GetAWSBaseDomain() (value string, ok bool) {
 //
 // Contains the GCP base domain.
 func (o *ProvisionShard) GCPBaseDomain() string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.gcpBaseDomain
 	}
 	return ""
@@ -185,7 +175,7 @@ func (o *ProvisionShard) GCPBaseDomain() string {
 //
 // Contains the GCP base domain.
 func (o *ProvisionShard) GetGCPBaseDomain() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.gcpBaseDomain
 	}
@@ -197,7 +187,7 @@ func (o *ProvisionShard) GetGCPBaseDomain() (value string, ok bool) {
 //
 // Contains the configuration for the GCP project operator.
 func (o *ProvisionShard) GCPProjectOperator() *ServerConfig {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.gcpProjectOperator
 	}
 	return nil
@@ -208,7 +198,7 @@ func (o *ProvisionShard) GCPProjectOperator() *ServerConfig {
 //
 // Contains the configuration for the GCP project operator.
 func (o *ProvisionShard) GetGCPProjectOperator() (value *ServerConfig, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.gcpProjectOperator
 	}
@@ -220,7 +210,7 @@ func (o *ProvisionShard) GetGCPProjectOperator() (value *ServerConfig, ok bool) 
 //
 // Contains the cloud provider name.
 func (o *ProvisionShard) CloudProvider() *CloudProvider {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.cloudProvider
 	}
 	return nil
@@ -231,7 +221,7 @@ func (o *ProvisionShard) CloudProvider() *CloudProvider {
 //
 // Contains the cloud provider name.
 func (o *ProvisionShard) GetCloudProvider() (value *CloudProvider, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.cloudProvider
 	}
@@ -244,7 +234,7 @@ func (o *ProvisionShard) GetCloudProvider() (value *CloudProvider, ok bool) {
 // Date and time when the provision shard was initially created, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *ProvisionShard) CreationTimestamp() time.Time {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.creationTimestamp
 	}
 	return time.Time{}
@@ -256,7 +246,7 @@ func (o *ProvisionShard) CreationTimestamp() time.Time {
 // Date and time when the provision shard was initially created, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *ProvisionShard) GetCreationTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.creationTimestamp
 	}
@@ -268,7 +258,7 @@ func (o *ProvisionShard) GetCreationTimestamp() (value time.Time, ok bool) {
 //
 // Contains the configuration for Hive.
 func (o *ProvisionShard) HiveConfig() *ServerConfig {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && o.bitmap_&512 != 0 {
 		return o.hiveConfig
 	}
 	return nil
@@ -279,7 +269,7 @@ func (o *ProvisionShard) HiveConfig() *ServerConfig {
 //
 // Contains the configuration for Hive.
 func (o *ProvisionShard) GetHiveConfig() (value *ServerConfig, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && o.bitmap_&512 != 0
 	if ok {
 		value = o.hiveConfig
 	}
@@ -291,7 +281,7 @@ func (o *ProvisionShard) GetHiveConfig() (value *ServerConfig, ok bool) {
 //
 // Contains the configuration for Hypershift.
 func (o *ProvisionShard) HypershiftConfig() *ServerConfig {
-	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+	if o != nil && o.bitmap_&1024 != 0 {
 		return o.hypershiftConfig
 	}
 	return nil
@@ -302,7 +292,7 @@ func (o *ProvisionShard) HypershiftConfig() *ServerConfig {
 //
 // Contains the configuration for Hypershift.
 func (o *ProvisionShard) GetHypershiftConfig() (value *ServerConfig, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	ok = o != nil && o.bitmap_&1024 != 0
 	if ok {
 		value = o.hypershiftConfig
 	}
@@ -315,7 +305,7 @@ func (o *ProvisionShard) GetHypershiftConfig() (value *ServerConfig, ok bool) {
 // Date and time when the provision shard was last updated, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *ProvisionShard) LastUpdateTimestamp() time.Time {
-	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
+	if o != nil && o.bitmap_&2048 != 0 {
 		return o.lastUpdateTimestamp
 	}
 	return time.Time{}
@@ -327,7 +317,7 @@ func (o *ProvisionShard) LastUpdateTimestamp() time.Time {
 // Date and time when the provision shard was last updated, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *ProvisionShard) GetLastUpdateTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
+	ok = o != nil && o.bitmap_&2048 != 0
 	if ok {
 		value = o.lastUpdateTimestamp
 	}
@@ -340,7 +330,7 @@ func (o *ProvisionShard) GetLastUpdateTimestamp() (value time.Time, ok bool) {
 // Contains the name of the management cluster for Hypershift clusters that are assigned to this shard.
 // This field is populated by OCM, and must not be overwritten via API.
 func (o *ProvisionShard) ManagementCluster() string {
-	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
+	if o != nil && o.bitmap_&4096 != 0 {
 		return o.managementCluster
 	}
 	return ""
@@ -352,7 +342,7 @@ func (o *ProvisionShard) ManagementCluster() string {
 // Contains the name of the management cluster for Hypershift clusters that are assigned to this shard.
 // This field is populated by OCM, and must not be overwritten via API.
 func (o *ProvisionShard) GetManagementCluster() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
+	ok = o != nil && o.bitmap_&4096 != 0
 	if ok {
 		value = o.managementCluster
 	}
@@ -364,7 +354,7 @@ func (o *ProvisionShard) GetManagementCluster() (value string, ok bool) {
 //
 // Contains the cloud-provider region in which the provisioner spins up the cluster.
 func (o *ProvisionShard) Region() *CloudRegion {
-	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
+	if o != nil && o.bitmap_&8192 != 0 {
 		return o.region
 	}
 	return nil
@@ -375,7 +365,7 @@ func (o *ProvisionShard) Region() *CloudRegion {
 //
 // Contains the cloud-provider region in which the provisioner spins up the cluster.
 func (o *ProvisionShard) GetRegion() (value *CloudRegion, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
+	ok = o != nil && o.bitmap_&8192 != 0
 	if ok {
 		value = o.region
 	}
@@ -387,7 +377,7 @@ func (o *ProvisionShard) GetRegion() (value *CloudRegion, ok bool) {
 //
 // Status of the provision shard. Possible values: active/maintenance/offline.
 func (o *ProvisionShard) Status() string {
-	if o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14] {
+	if o != nil && o.bitmap_&16384 != 0 {
 		return o.status
 	}
 	return ""
@@ -398,7 +388,7 @@ func (o *ProvisionShard) Status() string {
 //
 // Status of the provision shard. Possible values: active/maintenance/offline.
 func (o *ProvisionShard) GetStatus() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14]
+	ok = o != nil && o.bitmap_&16384 != 0
 	if ok {
 		value = o.status
 	}

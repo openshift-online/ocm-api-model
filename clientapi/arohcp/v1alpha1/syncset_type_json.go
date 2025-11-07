@@ -42,13 +42,13 @@ func WriteSyncset(object *Syncset, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(SyncsetLinkKind)
 	} else {
 		stream.WriteString(SyncsetKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteSyncset(object *Syncset, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteSyncset(object *Syncset, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.resources != nil
+	present_ = object.bitmap_&8 != 0 && object.resources != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -90,9 +90,7 @@ func UnmarshalSyncset(source interface{}) (object *Syncset, err error) {
 
 // ReadSyncset reads a value of the 'syncset' type from the given iterator.
 func ReadSyncset(iterator *jsoniter.Iterator) *Syncset {
-	object := &Syncset{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &Syncset{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -102,18 +100,18 @@ func ReadSyncset(iterator *jsoniter.Iterator) *Syncset {
 		case "kind":
 			value := iterator.ReadString()
 			if value == SyncsetLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "resources":
 			value := ReadInterfaceList(iterator)
 			object.resources = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

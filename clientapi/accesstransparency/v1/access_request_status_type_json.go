@@ -43,7 +43,7 @@ func WriteAccessRequestStatus(object *AccessRequestStatus, stream *jsoniter.Stre
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -52,7 +52,7 @@ func WriteAccessRequestStatus(object *AccessRequestStatus, stream *jsoniter.Stre
 		stream.WriteString((object.expiresAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -77,9 +77,7 @@ func UnmarshalAccessRequestStatus(source interface{}) (object *AccessRequestStat
 
 // ReadAccessRequestStatus reads a value of the 'access_request_status' type from the given iterator.
 func ReadAccessRequestStatus(iterator *jsoniter.Iterator) *AccessRequestStatus {
-	object := &AccessRequestStatus{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &AccessRequestStatus{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -93,12 +91,12 @@ func ReadAccessRequestStatus(iterator *jsoniter.Iterator) *AccessRequestStatus {
 				iterator.ReportError("", err.Error())
 			}
 			object.expiresAt = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "state":
 			text := iterator.ReadString()
 			value := AccessRequestState(text)
 			object.state = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

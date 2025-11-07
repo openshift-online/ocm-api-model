@@ -23,40 +23,29 @@ import (
 	time "time"
 )
 
+// AccessRequestStatusBuilder contains the data and logic needed to build 'access_request_status' objects.
+//
 // Representation of an access request status.
 type AccessRequestStatusBuilder struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	expiresAt time.Time
 	state     AccessRequestState
 }
 
 // NewAccessRequestStatus creates a new builder of 'access_request_status' objects.
 func NewAccessRequestStatus() *AccessRequestStatusBuilder {
-	return &AccessRequestStatusBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &AccessRequestStatusBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AccessRequestStatusBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ExpiresAt sets the value of the 'expires_at' attribute to the given value.
 func (b *AccessRequestStatusBuilder) ExpiresAt(value time.Time) *AccessRequestStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.expiresAt = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -64,11 +53,8 @@ func (b *AccessRequestStatusBuilder) ExpiresAt(value time.Time) *AccessRequestSt
 //
 // Possible states to an access request status.
 func (b *AccessRequestStatusBuilder) State(value AccessRequestState) *AccessRequestStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.state = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -77,10 +63,7 @@ func (b *AccessRequestStatusBuilder) Copy(object *AccessRequestStatus) *AccessRe
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.expiresAt = object.expiresAt
 	b.state = object.state
 	return b
@@ -89,10 +72,7 @@ func (b *AccessRequestStatusBuilder) Copy(object *AccessRequestStatus) *AccessRe
 // Build creates a 'access_request_status' object using the configuration stored in the builder.
 func (b *AccessRequestStatusBuilder) Build() (object *AccessRequestStatus, err error) {
 	object = new(AccessRequestStatus)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.expiresAt = b.expiresAt
 	object.state = b.state
 	return

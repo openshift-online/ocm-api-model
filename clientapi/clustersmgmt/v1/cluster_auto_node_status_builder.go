@@ -19,39 +19,28 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// ClusterAutoNodeStatusBuilder contains the data and logic needed to build 'cluster_auto_node_status' objects.
+//
 // Additional status information on the AutoNode configuration on this Cluster
 type ClusterAutoNodeStatusBuilder struct {
-	fieldSet_ []bool
-	message   string
+	bitmap_ uint32
+	message string
 }
 
 // NewClusterAutoNodeStatus creates a new builder of 'cluster_auto_node_status' objects.
 func NewClusterAutoNodeStatus() *ClusterAutoNodeStatusBuilder {
-	return &ClusterAutoNodeStatusBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &ClusterAutoNodeStatusBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterAutoNodeStatusBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Message sets the value of the 'message' attribute to the given value.
 func (b *ClusterAutoNodeStatusBuilder) Message(value string) *ClusterAutoNodeStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.message = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -60,10 +49,7 @@ func (b *ClusterAutoNodeStatusBuilder) Copy(object *ClusterAutoNodeStatus) *Clus
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.message = object.message
 	return b
 }
@@ -71,10 +57,7 @@ func (b *ClusterAutoNodeStatusBuilder) Copy(object *ClusterAutoNodeStatus) *Clus
 // Build creates a 'cluster_auto_node_status' object using the configuration stored in the builder.
 func (b *ClusterAutoNodeStatusBuilder) Build() (object *ClusterAutoNodeStatus, err error) {
 	object = new(ClusterAutoNodeStatus)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.message = b.message
 	return
 }

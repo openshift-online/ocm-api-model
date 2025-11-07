@@ -23,8 +23,9 @@ import (
 	time "time"
 )
 
+// LogEntryBuilder contains the data and logic needed to build 'log_entry' objects.
 type LogEntryBuilder struct {
-	fieldSet_      []bool
+	bitmap_        uint32
 	id             string
 	href           string
 	clusterID      string
@@ -46,132 +47,88 @@ type LogEntryBuilder struct {
 
 // NewLogEntry creates a new builder of 'log_entry' objects.
 func NewLogEntry() *LogEntryBuilder {
-	return &LogEntryBuilder{
-		fieldSet_: make([]bool, 18),
-	}
+	return &LogEntryBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *LogEntryBuilder) Link(value bool) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *LogEntryBuilder) ID(value string) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *LogEntryBuilder) HREF(value string) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *LogEntryBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *LogEntryBuilder) ClusterID(value string) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.clusterID = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // ClusterUUID sets the value of the 'cluster_UUID' attribute to the given value.
 func (b *LogEntryBuilder) ClusterUUID(value string) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.clusterUUID = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *LogEntryBuilder) CreatedAt(value time.Time) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.createdAt = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // CreatedBy sets the value of the 'created_by' attribute to the given value.
 func (b *LogEntryBuilder) CreatedBy(value string) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.createdBy = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *LogEntryBuilder) Description(value string) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.description = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // DocReferences sets the value of the 'doc_references' attribute to the given values.
 func (b *LogEntryBuilder) DocReferences(values ...string) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.docReferences = make([]string, len(values))
 	copy(b.docReferences, values)
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // EventStreamID sets the value of the 'event_stream_ID' attribute to the given value.
 func (b *LogEntryBuilder) EventStreamID(value string) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.eventStreamID = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // InternalOnly sets the value of the 'internal_only' attribute to the given value.
 func (b *LogEntryBuilder) InternalOnly(value bool) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.internalOnly = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
@@ -179,71 +136,50 @@ func (b *LogEntryBuilder) InternalOnly(value bool) *LogEntryBuilder {
 //
 // Representation of the log type field used in cluster log type model.
 func (b *LogEntryBuilder) LogType(value LogType) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.logType = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
 // ServiceName sets the value of the 'service_name' attribute to the given value.
 func (b *LogEntryBuilder) ServiceName(value string) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.serviceName = value
-	b.fieldSet_[12] = true
+	b.bitmap_ |= 4096
 	return b
 }
 
 // Severity sets the value of the 'severity' attribute to the given value.
 func (b *LogEntryBuilder) Severity(value Severity) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.severity = value
-	b.fieldSet_[13] = true
+	b.bitmap_ |= 8192
 	return b
 }
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *LogEntryBuilder) SubscriptionID(value string) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.subscriptionID = value
-	b.fieldSet_[14] = true
+	b.bitmap_ |= 16384
 	return b
 }
 
 // Summary sets the value of the 'summary' attribute to the given value.
 func (b *LogEntryBuilder) Summary(value string) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.summary = value
-	b.fieldSet_[15] = true
+	b.bitmap_ |= 32768
 	return b
 }
 
 // Timestamp sets the value of the 'timestamp' attribute to the given value.
 func (b *LogEntryBuilder) Timestamp(value time.Time) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.timestamp = value
-	b.fieldSet_[16] = true
+	b.bitmap_ |= 65536
 	return b
 }
 
 // Username sets the value of the 'username' attribute to the given value.
 func (b *LogEntryBuilder) Username(value string) *LogEntryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.username = value
-	b.fieldSet_[17] = true
+	b.bitmap_ |= 131072
 	return b
 }
 
@@ -252,10 +188,7 @@ func (b *LogEntryBuilder) Copy(object *LogEntry) *LogEntryBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.clusterID = object.clusterID
@@ -286,10 +219,7 @@ func (b *LogEntryBuilder) Build() (object *LogEntry, err error) {
 	object = new(LogEntry)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.clusterID = b.clusterID
 	object.clusterUUID = b.clusterUUID
 	object.createdAt = b.createdAt

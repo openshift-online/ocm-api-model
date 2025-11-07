@@ -43,13 +43,13 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(ProvisionShardLinkKind)
 	} else {
 		stream.WriteString(ProvisionShardKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.awsAccountOperatorConfig != nil
+	present_ = object.bitmap_&8 != 0 && object.awsAccountOperatorConfig != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		WriteServerConfig(object.awsAccountOperatorConfig, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		stream.WriteString(object.awsBaseDomain)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		stream.WriteString(object.gcpBaseDomain)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.gcpProjectOperator != nil
+	present_ = object.bitmap_&64 != 0 && object.gcpProjectOperator != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		WriteServerConfig(object.gcpProjectOperator, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7] && object.cloudProvider != nil
+	present_ = object.bitmap_&128 != 0 && object.cloudProvider != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		WriteCloudProvider(object.cloudProvider, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
+	present_ = object.bitmap_&256 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -120,7 +120,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		stream.WriteString((object.creationTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9] && object.hiveConfig != nil
+	present_ = object.bitmap_&512 != 0 && object.hiveConfig != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -129,7 +129,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		WriteServerConfig(object.hiveConfig, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10] && object.hypershiftConfig != nil
+	present_ = object.bitmap_&1024 != 0 && object.hypershiftConfig != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -138,7 +138,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		WriteServerConfig(object.hypershiftConfig, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
+	present_ = object.bitmap_&2048 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -147,7 +147,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		stream.WriteString((object.lastUpdateTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
+	present_ = object.bitmap_&4096 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -156,7 +156,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		stream.WriteString(object.managementCluster)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13] && object.region != nil
+	present_ = object.bitmap_&8192 != 0 && object.region != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -165,7 +165,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		WriteCloudRegion(object.region, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14]
+	present_ = object.bitmap_&16384 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -190,9 +190,7 @@ func UnmarshalProvisionShard(source interface{}) (object *ProvisionShard, err er
 
 // ReadProvisionShard reads a value of the 'provision_shard' type from the given iterator.
 func ReadProvisionShard(iterator *jsoniter.Iterator) *ProvisionShard {
-	object := &ProvisionShard{
-		fieldSet_: make([]bool, 15),
-	}
+	object := &ProvisionShard{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -202,34 +200,34 @@ func ReadProvisionShard(iterator *jsoniter.Iterator) *ProvisionShard {
 		case "kind":
 			value := iterator.ReadString()
 			if value == ProvisionShardLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "aws_account_operator_config":
 			value := ReadServerConfig(iterator)
 			object.awsAccountOperatorConfig = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "aws_base_domain":
 			value := iterator.ReadString()
 			object.awsBaseDomain = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "gcp_base_domain":
 			value := iterator.ReadString()
 			object.gcpBaseDomain = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "gcp_project_operator":
 			value := ReadServerConfig(iterator)
 			object.gcpProjectOperator = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "cloud_provider":
 			value := ReadCloudProvider(iterator)
 			object.cloudProvider = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		case "creation_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -237,15 +235,15 @@ func ReadProvisionShard(iterator *jsoniter.Iterator) *ProvisionShard {
 				iterator.ReportError("", err.Error())
 			}
 			object.creationTimestamp = value
-			object.fieldSet_[8] = true
+			object.bitmap_ |= 256
 		case "hive_config":
 			value := ReadServerConfig(iterator)
 			object.hiveConfig = value
-			object.fieldSet_[9] = true
+			object.bitmap_ |= 512
 		case "hypershift_config":
 			value := ReadServerConfig(iterator)
 			object.hypershiftConfig = value
-			object.fieldSet_[10] = true
+			object.bitmap_ |= 1024
 		case "last_update_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -253,19 +251,19 @@ func ReadProvisionShard(iterator *jsoniter.Iterator) *ProvisionShard {
 				iterator.ReportError("", err.Error())
 			}
 			object.lastUpdateTimestamp = value
-			object.fieldSet_[11] = true
+			object.bitmap_ |= 2048
 		case "management_cluster":
 			value := iterator.ReadString()
 			object.managementCluster = value
-			object.fieldSet_[12] = true
+			object.bitmap_ |= 4096
 		case "region":
 			value := ReadCloudRegion(iterator)
 			object.region = value
-			object.fieldSet_[13] = true
+			object.bitmap_ |= 8192
 		case "status":
 			value := iterator.ReadString()
 			object.status = value
-			object.fieldSet_[14] = true
+			object.bitmap_ |= 16384
 		default:
 			iterator.ReadAny()
 		}

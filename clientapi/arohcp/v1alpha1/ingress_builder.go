@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// IngressBuilder contains the data and logic needed to build 'ingress' objects.
+//
 // Representation of an ingress.
 type IngressBuilder struct {
-	fieldSet_                     []bool
+	bitmap_                       uint32
 	id                            string
 	href                          string
 	dnsName                       string
@@ -39,116 +41,78 @@ type IngressBuilder struct {
 
 // NewIngress creates a new builder of 'ingress' objects.
 func NewIngress() *IngressBuilder {
-	return &IngressBuilder{
-		fieldSet_: make([]bool, 14),
-	}
+	return &IngressBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *IngressBuilder) Link(value bool) *IngressBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *IngressBuilder) ID(value string) *IngressBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *IngressBuilder) HREF(value string) *IngressBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *IngressBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // DNSName sets the value of the 'DNS_name' attribute to the given value.
 func (b *IngressBuilder) DNSName(value string) *IngressBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.dnsName = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // ClusterRoutesHostname sets the value of the 'cluster_routes_hostname' attribute to the given value.
 func (b *IngressBuilder) ClusterRoutesHostname(value string) *IngressBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.clusterRoutesHostname = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // ClusterRoutesTlsSecretRef sets the value of the 'cluster_routes_tls_secret_ref' attribute to the given value.
 func (b *IngressBuilder) ClusterRoutesTlsSecretRef(value string) *IngressBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.clusterRoutesTlsSecretRef = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // ComponentRoutes sets the value of the 'component_routes' attribute to the given value.
 func (b *IngressBuilder) ComponentRoutes(value map[string]*ComponentRouteBuilder) *IngressBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.componentRoutes = value
 	if value != nil {
-		b.fieldSet_[6] = true
+		b.bitmap_ |= 64
 	} else {
-		b.fieldSet_[6] = false
+		b.bitmap_ &^= 64
 	}
 	return b
 }
 
 // Default sets the value of the 'default' attribute to the given value.
 func (b *IngressBuilder) Default(value bool) *IngressBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.default_ = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // ExcludedNamespaces sets the value of the 'excluded_namespaces' attribute to the given values.
 func (b *IngressBuilder) ExcludedNamespaces(values ...string) *IngressBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.excludedNamespaces = make([]string, len(values))
 	copy(b.excludedNamespaces, values)
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
@@ -156,11 +120,8 @@ func (b *IngressBuilder) ExcludedNamespaces(values ...string) *IngressBuilder {
 //
 // Cluster components listening method.
 func (b *IngressBuilder) Listening(value ListeningMethod) *IngressBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.listening = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
@@ -168,11 +129,8 @@ func (b *IngressBuilder) Listening(value ListeningMethod) *IngressBuilder {
 //
 // Type of load balancer for AWS cloud provider parameters.
 func (b *IngressBuilder) LoadBalancerType(value LoadBalancerFlavor) *IngressBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.loadBalancerType = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
@@ -180,24 +138,18 @@ func (b *IngressBuilder) LoadBalancerType(value LoadBalancerFlavor) *IngressBuil
 //
 // Type of Namespace Ownership Policy.
 func (b *IngressBuilder) RouteNamespaceOwnershipPolicy(value NamespaceOwnershipPolicy) *IngressBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.routeNamespaceOwnershipPolicy = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
 // RouteSelectors sets the value of the 'route_selectors' attribute to the given value.
 func (b *IngressBuilder) RouteSelectors(value map[string]string) *IngressBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.routeSelectors = value
 	if value != nil {
-		b.fieldSet_[12] = true
+		b.bitmap_ |= 4096
 	} else {
-		b.fieldSet_[12] = false
+		b.bitmap_ &^= 4096
 	}
 	return b
 }
@@ -206,11 +158,8 @@ func (b *IngressBuilder) RouteSelectors(value map[string]string) *IngressBuilder
 //
 // Type of wildcard policy.
 func (b *IngressBuilder) RouteWildcardPolicy(value WildcardPolicy) *IngressBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.routeWildcardPolicy = value
-	b.fieldSet_[13] = true
+	b.bitmap_ |= 8192
 	return b
 }
 
@@ -219,10 +168,7 @@ func (b *IngressBuilder) Copy(object *Ingress) *IngressBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.dnsName = object.dnsName
@@ -263,10 +209,7 @@ func (b *IngressBuilder) Build() (object *Ingress, err error) {
 	object = new(Ingress)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.dnsName = b.dnsName
 	object.clusterRoutesHostname = b.clusterRoutesHostname
 	object.clusterRoutesTlsSecretRef = b.clusterRoutesTlsSecretRef

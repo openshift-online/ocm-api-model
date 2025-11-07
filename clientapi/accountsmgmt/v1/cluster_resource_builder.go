@@ -23,8 +23,9 @@ import (
 	time "time"
 )
 
+// ClusterResourceBuilder contains the data and logic needed to build 'cluster_resource' objects.
 type ClusterResourceBuilder struct {
-	fieldSet_        []bool
+	bitmap_          uint32
 	total            *ValueUnitBuilder
 	updatedTimestamp time.Time
 	used             *ValueUnitBuilder
@@ -32,58 +33,39 @@ type ClusterResourceBuilder struct {
 
 // NewClusterResource creates a new builder of 'cluster_resource' objects.
 func NewClusterResource() *ClusterResourceBuilder {
-	return &ClusterResourceBuilder{
-		fieldSet_: make([]bool, 3),
-	}
+	return &ClusterResourceBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterResourceBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Total sets the value of the 'total' attribute to the given value.
 func (b *ClusterResourceBuilder) Total(value *ValueUnitBuilder) *ClusterResourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.total = value
 	if value != nil {
-		b.fieldSet_[0] = true
+		b.bitmap_ |= 1
 	} else {
-		b.fieldSet_[0] = false
+		b.bitmap_ &^= 1
 	}
 	return b
 }
 
 // UpdatedTimestamp sets the value of the 'updated_timestamp' attribute to the given value.
 func (b *ClusterResourceBuilder) UpdatedTimestamp(value time.Time) *ClusterResourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.updatedTimestamp = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Used sets the value of the 'used' attribute to the given value.
 func (b *ClusterResourceBuilder) Used(value *ValueUnitBuilder) *ClusterResourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.used = value
 	if value != nil {
-		b.fieldSet_[2] = true
+		b.bitmap_ |= 4
 	} else {
-		b.fieldSet_[2] = false
+		b.bitmap_ &^= 4
 	}
 	return b
 }
@@ -93,10 +75,7 @@ func (b *ClusterResourceBuilder) Copy(object *ClusterResource) *ClusterResourceB
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.total != nil {
 		b.total = NewValueUnit().Copy(object.total)
 	} else {
@@ -114,10 +93,7 @@ func (b *ClusterResourceBuilder) Copy(object *ClusterResource) *ClusterResourceB
 // Build creates a 'cluster_resource' object using the configuration stored in the builder.
 func (b *ClusterResourceBuilder) Build() (object *ClusterResource, err error) {
 	object = new(ClusterResource)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.total != nil {
 		object.total, err = b.total.Build()
 		if err != nil {

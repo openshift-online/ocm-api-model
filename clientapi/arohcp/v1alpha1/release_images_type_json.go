@@ -42,7 +42,7 @@ func WriteReleaseImages(object *ReleaseImages, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.arm64 != nil
+	present_ = object.bitmap_&1 != 0 && object.arm64 != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteReleaseImages(object *ReleaseImages, stream *jsoniter.Stream) {
 		WriteReleaseImageDetails(object.arm64, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.multi != nil
+	present_ = object.bitmap_&2 != 0 && object.multi != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalReleaseImages(source interface{}) (object *ReleaseImages, err erro
 
 // ReadReleaseImages reads a value of the 'release_images' type from the given iterator.
 func ReadReleaseImages(iterator *jsoniter.Iterator) *ReleaseImages {
-	object := &ReleaseImages{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &ReleaseImages{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadReleaseImages(iterator *jsoniter.Iterator) *ReleaseImages {
 		case "arm64":
 			value := ReadReleaseImageDetails(iterator)
 			object.arm64 = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "multi":
 			value := ReadReleaseImageDetails(iterator)
 			object.multi = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

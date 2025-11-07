@@ -44,13 +44,13 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(ClusterLinkKind)
 	} else {
 		stream.WriteString(ClusterKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -58,7 +58,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -67,7 +67,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.api != nil
+	present_ = object.bitmap_&8 != 0 && object.api != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,7 +76,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteClusterAPI(object.api, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.aws != nil
+	present_ = object.bitmap_&16 != 0 && object.aws != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,7 +85,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteAWS(object.aws, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.awsInfrastructureAccessRoleGrants != nil
+	present_ = object.bitmap_&32 != 0 && object.awsInfrastructureAccessRoleGrants != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -97,7 +97,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteObjectEnd()
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.ccs != nil
+	present_ = object.bitmap_&64 != 0 && object.ccs != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -106,7 +106,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteCCS(object.ccs, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7] && object.dns != nil
+	present_ = object.bitmap_&128 != 0 && object.dns != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -115,7 +115,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteDNS(object.dns, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
+	present_ = object.bitmap_&256 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -124,7 +124,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteBool(object.fips)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9] && object.gcp != nil
+	present_ = object.bitmap_&512 != 0 && object.gcp != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -133,7 +133,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteGCP(object.gcp, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10] && object.gcpEncryptionKey != nil
+	present_ = object.bitmap_&1024 != 0 && object.gcpEncryptionKey != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -142,7 +142,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteGCPEncryptionKey(object.gcpEncryptionKey, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11] && object.gcpNetwork != nil
+	present_ = object.bitmap_&2048 != 0 && object.gcpNetwork != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -151,7 +151,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteGCPNetwork(object.gcpNetwork, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
+	present_ = object.bitmap_&4096 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -160,7 +160,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteString(object.additionalTrustBundle)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13] && object.addons != nil
+	present_ = object.bitmap_&8192 != 0 && object.addons != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -172,7 +172,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteObjectEnd()
 		count++
 	}
-	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14] && object.autoNode != nil
+	present_ = object.bitmap_&16384 != 0 && object.autoNode != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -181,7 +181,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteClusterAutoNode(object.autoNode, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 15 && object.fieldSet_[15] && object.autoscaler != nil
+	present_ = object.bitmap_&32768 != 0 && object.autoscaler != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -190,7 +190,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteClusterAutoscaler(object.autoscaler, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 16 && object.fieldSet_[16] && object.azure != nil
+	present_ = object.bitmap_&65536 != 0 && object.azure != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -199,7 +199,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteAzure(object.azure, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 17 && object.fieldSet_[17]
+	present_ = object.bitmap_&131072 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -208,7 +208,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.billingModel))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 18 && object.fieldSet_[18] && object.byoOidc != nil
+	present_ = object.bitmap_&262144 != 0 && object.byoOidc != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -217,7 +217,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteByoOidc(object.byoOidc, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 19 && object.fieldSet_[19] && object.cloudProvider != nil
+	present_ = object.bitmap_&524288 != 0 && object.cloudProvider != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -226,7 +226,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteCloudProvider(object.cloudProvider, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 20 && object.fieldSet_[20] && object.console != nil
+	present_ = object.bitmap_&1048576 != 0 && object.console != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -235,7 +235,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteClusterConsole(object.console, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 21 && object.fieldSet_[21]
+	present_ = object.bitmap_&2097152 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -244,7 +244,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteString((object.creationTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 22 && object.fieldSet_[22] && object.deleteProtection != nil
+	present_ = object.bitmap_&4194304 != 0 && object.deleteProtection != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -253,7 +253,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteDeleteProtection(object.deleteProtection, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 23 && object.fieldSet_[23]
+	present_ = object.bitmap_&8388608 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -262,7 +262,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteBool(object.disableUserWorkloadMonitoring)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 24 && object.fieldSet_[24]
+	present_ = object.bitmap_&16777216 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -271,7 +271,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteString(object.domainPrefix)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 25 && object.fieldSet_[25]
+	present_ = object.bitmap_&33554432 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -280,7 +280,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteBool(object.etcdEncryption)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 26 && object.fieldSet_[26]
+	present_ = object.bitmap_&67108864 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -289,7 +289,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteString((object.expirationTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 27 && object.fieldSet_[27]
+	present_ = object.bitmap_&134217728 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -298,7 +298,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteString(object.externalID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 28 && object.fieldSet_[28] && object.externalAuthConfig != nil
+	present_ = object.bitmap_&268435456 != 0 && object.externalAuthConfig != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -307,7 +307,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteExternalAuthConfig(object.externalAuthConfig, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 29 && object.fieldSet_[29] && object.externalConfiguration != nil
+	present_ = object.bitmap_&536870912 != 0 && object.externalConfiguration != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -316,7 +316,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteExternalConfiguration(object.externalConfiguration, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 30 && object.fieldSet_[30] && object.flavour != nil
+	present_ = object.bitmap_&1073741824 != 0 && object.flavour != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -325,7 +325,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteFlavour(object.flavour, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 31 && object.fieldSet_[31] && object.groups != nil
+	present_ = object.bitmap_&2147483648 != 0 && object.groups != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -337,7 +337,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteObjectEnd()
 		count++
 	}
-	present_ = len(object.fieldSet_) > 32 && object.fieldSet_[32]
+	present_ = object.bitmap_&4294967296 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -346,7 +346,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.healthState))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 33 && object.fieldSet_[33] && object.htpasswd != nil
+	present_ = object.bitmap_&8589934592 != 0 && object.htpasswd != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -355,7 +355,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteHTPasswdIdentityProvider(object.htpasswd, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 34 && object.fieldSet_[34] && object.hypershift != nil
+	present_ = object.bitmap_&17179869184 != 0 && object.hypershift != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -364,7 +364,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteHypershift(object.hypershift, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 35 && object.fieldSet_[35] && object.identityProviders != nil
+	present_ = object.bitmap_&34359738368 != 0 && object.identityProviders != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -376,7 +376,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteObjectEnd()
 		count++
 	}
-	present_ = len(object.fieldSet_) > 36 && object.fieldSet_[36] && object.imageRegistry != nil
+	present_ = object.bitmap_&68719476736 != 0 && object.imageRegistry != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -385,7 +385,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteClusterImageRegistry(object.imageRegistry, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 37 && object.fieldSet_[37] && object.inflightChecks != nil
+	present_ = object.bitmap_&137438953472 != 0 && object.inflightChecks != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -397,7 +397,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteObjectEnd()
 		count++
 	}
-	present_ = len(object.fieldSet_) > 38 && object.fieldSet_[38]
+	present_ = object.bitmap_&274877906944 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -406,7 +406,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteString(object.infraID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 39 && object.fieldSet_[39] && object.ingresses != nil
+	present_ = object.bitmap_&549755813888 != 0 && object.ingresses != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -418,7 +418,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteObjectEnd()
 		count++
 	}
-	present_ = len(object.fieldSet_) > 40 && object.fieldSet_[40] && object.kubeletConfig != nil
+	present_ = object.bitmap_&1099511627776 != 0 && object.kubeletConfig != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -427,7 +427,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteKubeletConfig(object.kubeletConfig, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 41 && object.fieldSet_[41]
+	present_ = object.bitmap_&2199023255552 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -436,7 +436,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteInt(object.loadBalancerQuota)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 42 && object.fieldSet_[42] && object.machinePools != nil
+	present_ = object.bitmap_&4398046511104 != 0 && object.machinePools != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -448,7 +448,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteObjectEnd()
 		count++
 	}
-	present_ = len(object.fieldSet_) > 43 && object.fieldSet_[43]
+	present_ = object.bitmap_&8796093022208 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -457,7 +457,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteBool(object.managed)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 44 && object.fieldSet_[44] && object.managedService != nil
+	present_ = object.bitmap_&17592186044416 != 0 && object.managedService != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -466,7 +466,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteManagedService(object.managedService, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 45 && object.fieldSet_[45]
+	present_ = object.bitmap_&35184372088832 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -475,7 +475,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteBool(object.multiAZ)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 46 && object.fieldSet_[46]
+	present_ = object.bitmap_&70368744177664 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -484,7 +484,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteBool(object.multiArchEnabled)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 47 && object.fieldSet_[47]
+	present_ = object.bitmap_&140737488355328 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -493,7 +493,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 48 && object.fieldSet_[48] && object.network != nil
+	present_ = object.bitmap_&281474976710656 != 0 && object.network != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -502,7 +502,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteNetwork(object.network, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 49 && object.fieldSet_[49] && object.nodeDrainGracePeriod != nil
+	present_ = object.bitmap_&562949953421312 != 0 && object.nodeDrainGracePeriod != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -511,7 +511,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteValue(object.nodeDrainGracePeriod, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 50 && object.fieldSet_[50] && object.nodePools != nil
+	present_ = object.bitmap_&1125899906842624 != 0 && object.nodePools != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -523,7 +523,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteObjectEnd()
 		count++
 	}
-	present_ = len(object.fieldSet_) > 51 && object.fieldSet_[51] && object.nodes != nil
+	present_ = object.bitmap_&2251799813685248 != 0 && object.nodes != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -532,7 +532,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteClusterNodes(object.nodes, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 52 && object.fieldSet_[52]
+	present_ = object.bitmap_&4503599627370496 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -541,7 +541,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteString(object.openshiftVersion)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 53 && object.fieldSet_[53] && object.product != nil
+	present_ = object.bitmap_&9007199254740992 != 0 && object.product != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -550,7 +550,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteProduct(object.product, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 54 && object.fieldSet_[54] && object.properties != nil
+	present_ = object.bitmap_&18014398509481984 != 0 && object.properties != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -579,7 +579,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = len(object.fieldSet_) > 55 && object.fieldSet_[55] && object.provisionShard != nil
+	present_ = object.bitmap_&36028797018963968 != 0 && object.provisionShard != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -588,7 +588,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteProvisionShard(object.provisionShard, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 56 && object.fieldSet_[56] && object.proxy != nil
+	present_ = object.bitmap_&72057594037927936 != 0 && object.proxy != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -597,7 +597,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteProxy(object.proxy, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 57 && object.fieldSet_[57] && object.region != nil
+	present_ = object.bitmap_&144115188075855872 != 0 && object.region != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -606,7 +606,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteCloudRegion(object.region, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 58 && object.fieldSet_[58] && object.registryConfig != nil
+	present_ = object.bitmap_&288230376151711744 != 0 && object.registryConfig != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -615,7 +615,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteClusterRegistryConfig(object.registryConfig, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 59 && object.fieldSet_[59]
+	present_ = object.bitmap_&576460752303423488 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -624,7 +624,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.state))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 60 && object.fieldSet_[60] && object.status != nil
+	present_ = object.bitmap_&1152921504606846976 != 0 && object.status != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -633,7 +633,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteClusterStatus(object.status, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 61 && object.fieldSet_[61] && object.storageQuota != nil
+	present_ = object.bitmap_&2305843009213693952 != 0 && object.storageQuota != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -642,7 +642,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteValue(object.storageQuota, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 62 && object.fieldSet_[62] && object.subscription != nil
+	present_ = object.bitmap_&4611686018427387904 != 0 && object.subscription != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -651,7 +651,7 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		WriteSubscription(object.subscription, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 63 && object.fieldSet_[63] && object.version != nil
+	present_ = object.bitmap_&-9223372036854775808 != 0 && object.version != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -676,9 +676,7 @@ func UnmarshalCluster(source interface{}) (object *Cluster, err error) {
 
 // ReadCluster reads a value of the 'cluster' type from the given iterator.
 func ReadCluster(iterator *jsoniter.Iterator) *Cluster {
-	object := &Cluster{
-		fieldSet_: make([]bool, 64),
-	}
+	object := &Cluster{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -688,22 +686,22 @@ func ReadCluster(iterator *jsoniter.Iterator) *Cluster {
 		case "kind":
 			value := iterator.ReadString()
 			if value == ClusterLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "api":
 			value := ReadClusterAPI(iterator)
 			object.api = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "aws":
 			value := ReadAWS(iterator)
 			object.aws = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "aws_infrastructure_access_role_grants":
 			value := &AWSInfrastructureAccessRoleGrantList{}
 			for {
@@ -724,35 +722,35 @@ func ReadCluster(iterator *jsoniter.Iterator) *Cluster {
 				}
 			}
 			object.awsInfrastructureAccessRoleGrants = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "ccs":
 			value := ReadCCS(iterator)
 			object.ccs = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "dns":
 			value := ReadDNS(iterator)
 			object.dns = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		case "fips":
 			value := iterator.ReadBool()
 			object.fips = value
-			object.fieldSet_[8] = true
+			object.bitmap_ |= 256
 		case "gcp":
 			value := ReadGCP(iterator)
 			object.gcp = value
-			object.fieldSet_[9] = true
+			object.bitmap_ |= 512
 		case "gcp_encryption_key":
 			value := ReadGCPEncryptionKey(iterator)
 			object.gcpEncryptionKey = value
-			object.fieldSet_[10] = true
+			object.bitmap_ |= 1024
 		case "gcp_network":
 			value := ReadGCPNetwork(iterator)
 			object.gcpNetwork = value
-			object.fieldSet_[11] = true
+			object.bitmap_ |= 2048
 		case "additional_trust_bundle":
 			value := iterator.ReadString()
 			object.additionalTrustBundle = value
-			object.fieldSet_[12] = true
+			object.bitmap_ |= 4096
 		case "addons":
 			value := &AddOnInstallationList{}
 			for {
@@ -773,36 +771,36 @@ func ReadCluster(iterator *jsoniter.Iterator) *Cluster {
 				}
 			}
 			object.addons = value
-			object.fieldSet_[13] = true
+			object.bitmap_ |= 8192
 		case "auto_node":
 			value := ReadClusterAutoNode(iterator)
 			object.autoNode = value
-			object.fieldSet_[14] = true
+			object.bitmap_ |= 16384
 		case "autoscaler":
 			value := ReadClusterAutoscaler(iterator)
 			object.autoscaler = value
-			object.fieldSet_[15] = true
+			object.bitmap_ |= 32768
 		case "azure":
 			value := ReadAzure(iterator)
 			object.azure = value
-			object.fieldSet_[16] = true
+			object.bitmap_ |= 65536
 		case "billing_model":
 			text := iterator.ReadString()
 			value := BillingModel(text)
 			object.billingModel = value
-			object.fieldSet_[17] = true
+			object.bitmap_ |= 131072
 		case "byo_oidc":
 			value := ReadByoOidc(iterator)
 			object.byoOidc = value
-			object.fieldSet_[18] = true
+			object.bitmap_ |= 262144
 		case "cloud_provider":
 			value := ReadCloudProvider(iterator)
 			object.cloudProvider = value
-			object.fieldSet_[19] = true
+			object.bitmap_ |= 524288
 		case "console":
 			value := ReadClusterConsole(iterator)
 			object.console = value
-			object.fieldSet_[20] = true
+			object.bitmap_ |= 1048576
 		case "creation_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -810,23 +808,23 @@ func ReadCluster(iterator *jsoniter.Iterator) *Cluster {
 				iterator.ReportError("", err.Error())
 			}
 			object.creationTimestamp = value
-			object.fieldSet_[21] = true
+			object.bitmap_ |= 2097152
 		case "delete_protection":
 			value := ReadDeleteProtection(iterator)
 			object.deleteProtection = value
-			object.fieldSet_[22] = true
+			object.bitmap_ |= 4194304
 		case "disable_user_workload_monitoring":
 			value := iterator.ReadBool()
 			object.disableUserWorkloadMonitoring = value
-			object.fieldSet_[23] = true
+			object.bitmap_ |= 8388608
 		case "domain_prefix":
 			value := iterator.ReadString()
 			object.domainPrefix = value
-			object.fieldSet_[24] = true
+			object.bitmap_ |= 16777216
 		case "etcd_encryption":
 			value := iterator.ReadBool()
 			object.etcdEncryption = value
-			object.fieldSet_[25] = true
+			object.bitmap_ |= 33554432
 		case "expiration_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -834,23 +832,23 @@ func ReadCluster(iterator *jsoniter.Iterator) *Cluster {
 				iterator.ReportError("", err.Error())
 			}
 			object.expirationTimestamp = value
-			object.fieldSet_[26] = true
+			object.bitmap_ |= 67108864
 		case "external_id":
 			value := iterator.ReadString()
 			object.externalID = value
-			object.fieldSet_[27] = true
+			object.bitmap_ |= 134217728
 		case "external_auth_config":
 			value := ReadExternalAuthConfig(iterator)
 			object.externalAuthConfig = value
-			object.fieldSet_[28] = true
+			object.bitmap_ |= 268435456
 		case "external_configuration":
 			value := ReadExternalConfiguration(iterator)
 			object.externalConfiguration = value
-			object.fieldSet_[29] = true
+			object.bitmap_ |= 536870912
 		case "flavour":
 			value := ReadFlavour(iterator)
 			object.flavour = value
-			object.fieldSet_[30] = true
+			object.bitmap_ |= 1073741824
 		case "groups":
 			value := &GroupList{}
 			for {
@@ -871,20 +869,20 @@ func ReadCluster(iterator *jsoniter.Iterator) *Cluster {
 				}
 			}
 			object.groups = value
-			object.fieldSet_[31] = true
+			object.bitmap_ |= 2147483648
 		case "health_state":
 			text := iterator.ReadString()
 			value := ClusterHealthState(text)
 			object.healthState = value
-			object.fieldSet_[32] = true
+			object.bitmap_ |= 4294967296
 		case "htpasswd":
 			value := ReadHTPasswdIdentityProvider(iterator)
 			object.htpasswd = value
-			object.fieldSet_[33] = true
+			object.bitmap_ |= 8589934592
 		case "hypershift":
 			value := ReadHypershift(iterator)
 			object.hypershift = value
-			object.fieldSet_[34] = true
+			object.bitmap_ |= 17179869184
 		case "identity_providers":
 			value := &IdentityProviderList{}
 			for {
@@ -905,11 +903,11 @@ func ReadCluster(iterator *jsoniter.Iterator) *Cluster {
 				}
 			}
 			object.identityProviders = value
-			object.fieldSet_[35] = true
+			object.bitmap_ |= 34359738368
 		case "image_registry":
 			value := ReadClusterImageRegistry(iterator)
 			object.imageRegistry = value
-			object.fieldSet_[36] = true
+			object.bitmap_ |= 68719476736
 		case "inflight_checks":
 			value := &InflightCheckList{}
 			for {
@@ -930,11 +928,11 @@ func ReadCluster(iterator *jsoniter.Iterator) *Cluster {
 				}
 			}
 			object.inflightChecks = value
-			object.fieldSet_[37] = true
+			object.bitmap_ |= 137438953472
 		case "infra_id":
 			value := iterator.ReadString()
 			object.infraID = value
-			object.fieldSet_[38] = true
+			object.bitmap_ |= 274877906944
 		case "ingresses":
 			value := &IngressList{}
 			for {
@@ -955,15 +953,15 @@ func ReadCluster(iterator *jsoniter.Iterator) *Cluster {
 				}
 			}
 			object.ingresses = value
-			object.fieldSet_[39] = true
+			object.bitmap_ |= 549755813888
 		case "kubelet_config":
 			value := ReadKubeletConfig(iterator)
 			object.kubeletConfig = value
-			object.fieldSet_[40] = true
+			object.bitmap_ |= 1099511627776
 		case "load_balancer_quota":
 			value := iterator.ReadInt()
 			object.loadBalancerQuota = value
-			object.fieldSet_[41] = true
+			object.bitmap_ |= 2199023255552
 		case "machine_pools":
 			value := &MachinePoolList{}
 			for {
@@ -984,35 +982,35 @@ func ReadCluster(iterator *jsoniter.Iterator) *Cluster {
 				}
 			}
 			object.machinePools = value
-			object.fieldSet_[42] = true
+			object.bitmap_ |= 4398046511104
 		case "managed":
 			value := iterator.ReadBool()
 			object.managed = value
-			object.fieldSet_[43] = true
+			object.bitmap_ |= 8796093022208
 		case "managed_service":
 			value := ReadManagedService(iterator)
 			object.managedService = value
-			object.fieldSet_[44] = true
+			object.bitmap_ |= 17592186044416
 		case "multi_az":
 			value := iterator.ReadBool()
 			object.multiAZ = value
-			object.fieldSet_[45] = true
+			object.bitmap_ |= 35184372088832
 		case "multi_arch_enabled":
 			value := iterator.ReadBool()
 			object.multiArchEnabled = value
-			object.fieldSet_[46] = true
+			object.bitmap_ |= 70368744177664
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[47] = true
+			object.bitmap_ |= 140737488355328
 		case "network":
 			value := ReadNetwork(iterator)
 			object.network = value
-			object.fieldSet_[48] = true
+			object.bitmap_ |= 281474976710656
 		case "node_drain_grace_period":
 			value := ReadValue(iterator)
 			object.nodeDrainGracePeriod = value
-			object.fieldSet_[49] = true
+			object.bitmap_ |= 562949953421312
 		case "node_pools":
 			value := &NodePoolList{}
 			for {
@@ -1033,19 +1031,19 @@ func ReadCluster(iterator *jsoniter.Iterator) *Cluster {
 				}
 			}
 			object.nodePools = value
-			object.fieldSet_[50] = true
+			object.bitmap_ |= 1125899906842624
 		case "nodes":
 			value := ReadClusterNodes(iterator)
 			object.nodes = value
-			object.fieldSet_[51] = true
+			object.bitmap_ |= 2251799813685248
 		case "openshift_version":
 			value := iterator.ReadString()
 			object.openshiftVersion = value
-			object.fieldSet_[52] = true
+			object.bitmap_ |= 4503599627370496
 		case "product":
 			value := ReadProduct(iterator)
 			object.product = value
-			object.fieldSet_[53] = true
+			object.bitmap_ |= 9007199254740992
 		case "properties":
 			value := map[string]string{}
 			for {
@@ -1057,44 +1055,44 @@ func ReadCluster(iterator *jsoniter.Iterator) *Cluster {
 				value[key] = item
 			}
 			object.properties = value
-			object.fieldSet_[54] = true
+			object.bitmap_ |= 18014398509481984
 		case "provision_shard":
 			value := ReadProvisionShard(iterator)
 			object.provisionShard = value
-			object.fieldSet_[55] = true
+			object.bitmap_ |= 36028797018963968
 		case "proxy":
 			value := ReadProxy(iterator)
 			object.proxy = value
-			object.fieldSet_[56] = true
+			object.bitmap_ |= 72057594037927936
 		case "region":
 			value := ReadCloudRegion(iterator)
 			object.region = value
-			object.fieldSet_[57] = true
+			object.bitmap_ |= 144115188075855872
 		case "registry_config":
 			value := ReadClusterRegistryConfig(iterator)
 			object.registryConfig = value
-			object.fieldSet_[58] = true
+			object.bitmap_ |= 288230376151711744
 		case "state":
 			text := iterator.ReadString()
 			value := ClusterState(text)
 			object.state = value
-			object.fieldSet_[59] = true
+			object.bitmap_ |= 576460752303423488
 		case "status":
 			value := ReadClusterStatus(iterator)
 			object.status = value
-			object.fieldSet_[60] = true
+			object.bitmap_ |= 1152921504606846976
 		case "storage_quota":
 			value := ReadValue(iterator)
 			object.storageQuota = value
-			object.fieldSet_[61] = true
+			object.bitmap_ |= 2305843009213693952
 		case "subscription":
 			value := ReadSubscription(iterator)
 			object.subscription = value
-			object.fieldSet_[62] = true
+			object.bitmap_ |= 4611686018427387904
 		case "version":
 			value := ReadVersion(iterator)
 			object.version = value
-			object.fieldSet_[63] = true
+			object.bitmap_ |= -9223372036854775808
 		default:
 			iterator.ReadAny()
 		}

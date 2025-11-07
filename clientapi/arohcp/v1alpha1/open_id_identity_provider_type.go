@@ -23,7 +23,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Details for `openid` identity providers.
 type OpenIDIdentityProvider struct {
-	fieldSet_                []bool
+	bitmap_                  uint32
 	ca                       string
 	claims                   *OpenIDClaims
 	clientID                 string
@@ -35,15 +35,7 @@ type OpenIDIdentityProvider struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *OpenIDIdentityProvider) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // CA returns the value of the 'CA' attribute, or
@@ -51,7 +43,7 @@ func (o *OpenIDIdentityProvider) Empty() bool {
 //
 // Certificate bunde to use to validate server certificates for the configured URL.
 func (o *OpenIDIdentityProvider) CA() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.ca
 	}
 	return ""
@@ -62,7 +54,7 @@ func (o *OpenIDIdentityProvider) CA() string {
 //
 // Certificate bunde to use to validate server certificates for the configured URL.
 func (o *OpenIDIdentityProvider) GetCA() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.ca
 	}
@@ -74,7 +66,7 @@ func (o *OpenIDIdentityProvider) GetCA() (value string, ok bool) {
 //
 // Claims used to configure the provider.
 func (o *OpenIDIdentityProvider) Claims() *OpenIDClaims {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.claims
 	}
 	return nil
@@ -85,7 +77,7 @@ func (o *OpenIDIdentityProvider) Claims() *OpenIDClaims {
 //
 // Claims used to configure the provider.
 func (o *OpenIDIdentityProvider) GetClaims() (value *OpenIDClaims, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.claims
 	}
@@ -97,7 +89,7 @@ func (o *OpenIDIdentityProvider) GetClaims() (value *OpenIDClaims, ok bool) {
 //
 // Identifier of a client registered with the _OpenID_ provider.
 func (o *OpenIDIdentityProvider) ClientID() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.clientID
 	}
 	return ""
@@ -108,7 +100,7 @@ func (o *OpenIDIdentityProvider) ClientID() string {
 //
 // Identifier of a client registered with the _OpenID_ provider.
 func (o *OpenIDIdentityProvider) GetClientID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.clientID
 	}
@@ -120,7 +112,7 @@ func (o *OpenIDIdentityProvider) GetClientID() (value string, ok bool) {
 //
 // Client secret.
 func (o *OpenIDIdentityProvider) ClientSecret() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.clientSecret
 	}
 	return ""
@@ -131,7 +123,7 @@ func (o *OpenIDIdentityProvider) ClientSecret() string {
 //
 // Client secret.
 func (o *OpenIDIdentityProvider) GetClientSecret() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.clientSecret
 	}
@@ -143,7 +135,7 @@ func (o *OpenIDIdentityProvider) GetClientSecret() (value string, ok bool) {
 //
 // Optional map of extra parameters to add to the authorization token request.
 func (o *OpenIDIdentityProvider) ExtraAuthorizeParameters() map[string]string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.extraAuthorizeParameters
 	}
 	return nil
@@ -154,7 +146,7 @@ func (o *OpenIDIdentityProvider) ExtraAuthorizeParameters() map[string]string {
 //
 // Optional map of extra parameters to add to the authorization token request.
 func (o *OpenIDIdentityProvider) GetExtraAuthorizeParameters() (value map[string]string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.extraAuthorizeParameters
 	}
@@ -167,7 +159,7 @@ func (o *OpenIDIdentityProvider) GetExtraAuthorizeParameters() (value map[string
 // Optional list of scopes to request, in addition to the `openid` scope, during the
 // authorization token request.
 func (o *OpenIDIdentityProvider) ExtraScopes() []string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.extraScopes
 	}
 	return nil
@@ -179,7 +171,7 @@ func (o *OpenIDIdentityProvider) ExtraScopes() []string {
 // Optional list of scopes to request, in addition to the `openid` scope, during the
 // authorization token request.
 func (o *OpenIDIdentityProvider) GetExtraScopes() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.extraScopes
 	}
@@ -191,7 +183,7 @@ func (o *OpenIDIdentityProvider) GetExtraScopes() (value []string, ok bool) {
 //
 // The URL that the OpenID Provider asserts as the Issuer Identifier
 func (o *OpenIDIdentityProvider) Issuer() string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.issuer
 	}
 	return ""
@@ -202,7 +194,7 @@ func (o *OpenIDIdentityProvider) Issuer() string {
 //
 // The URL that the OpenID Provider asserts as the Issuer Identifier
 func (o *OpenIDIdentityProvider) GetIssuer() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.issuer
 	}

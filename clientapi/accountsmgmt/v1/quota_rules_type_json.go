@@ -42,7 +42,7 @@ func WriteQuotaRules(object *QuotaRules, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteQuotaRules(object *QuotaRules, stream *jsoniter.Stream) {
 		stream.WriteString(object.availabilityZone)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteQuotaRules(object *QuotaRules, stream *jsoniter.Stream) {
 		stream.WriteString(object.billingModel)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteQuotaRules(object *QuotaRules, stream *jsoniter.Stream) {
 		stream.WriteString(object.byoc)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteQuotaRules(object *QuotaRules, stream *jsoniter.Stream) {
 		stream.WriteString(object.cloud)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteQuotaRules(object *QuotaRules, stream *jsoniter.Stream) {
 		stream.WriteInt(object.cost)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -96,7 +96,7 @@ func WriteQuotaRules(object *QuotaRules, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -105,7 +105,7 @@ func WriteQuotaRules(object *QuotaRules, stream *jsoniter.Stream) {
 		stream.WriteString(object.product)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = object.bitmap_&128 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -130,9 +130,7 @@ func UnmarshalQuotaRules(source interface{}) (object *QuotaRules, err error) {
 
 // ReadQuotaRules reads a value of the 'quota_rules' type from the given iterator.
 func ReadQuotaRules(iterator *jsoniter.Iterator) *QuotaRules {
-	object := &QuotaRules{
-		fieldSet_: make([]bool, 8),
-	}
+	object := &QuotaRules{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -142,35 +140,35 @@ func ReadQuotaRules(iterator *jsoniter.Iterator) *QuotaRules {
 		case "availability_zone":
 			value := iterator.ReadString()
 			object.availabilityZone = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "billing_model":
 			value := iterator.ReadString()
 			object.billingModel = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "byoc":
 			value := iterator.ReadString()
 			object.byoc = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "cloud":
 			value := iterator.ReadString()
 			object.cloud = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "cost":
 			value := iterator.ReadInt()
 			object.cost = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "product":
 			value := iterator.ReadString()
 			object.product = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "quota_id":
 			value := iterator.ReadString()
 			object.quotaId = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		default:
 			iterator.ReadAny()
 		}

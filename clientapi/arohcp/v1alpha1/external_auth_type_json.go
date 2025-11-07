@@ -42,13 +42,13 @@ func WriteExternalAuth(object *ExternalAuth, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(ExternalAuthLinkKind)
 	} else {
 		stream.WriteString(ExternalAuthKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteExternalAuth(object *ExternalAuth, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteExternalAuth(object *ExternalAuth, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.claim != nil
+	present_ = object.bitmap_&8 != 0 && object.claim != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteExternalAuth(object *ExternalAuth, stream *jsoniter.Stream) {
 		WriteExternalAuthClaim(object.claim, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.clients != nil
+	present_ = object.bitmap_&16 != 0 && object.clients != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteExternalAuth(object *ExternalAuth, stream *jsoniter.Stream) {
 		WriteExternalAuthClientConfigList(object.clients, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.issuer != nil
+	present_ = object.bitmap_&32 != 0 && object.issuer != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -92,7 +92,7 @@ func WriteExternalAuth(object *ExternalAuth, stream *jsoniter.Stream) {
 		WriteTokenIssuer(object.issuer, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.status != nil
+	present_ = object.bitmap_&64 != 0 && object.status != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -117,9 +117,7 @@ func UnmarshalExternalAuth(source interface{}) (object *ExternalAuth, err error)
 
 // ReadExternalAuth reads a value of the 'external_auth' type from the given iterator.
 func ReadExternalAuth(iterator *jsoniter.Iterator) *ExternalAuth {
-	object := &ExternalAuth{
-		fieldSet_: make([]bool, 7),
-	}
+	object := &ExternalAuth{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -129,30 +127,30 @@ func ReadExternalAuth(iterator *jsoniter.Iterator) *ExternalAuth {
 		case "kind":
 			value := iterator.ReadString()
 			if value == ExternalAuthLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "claim":
 			value := ReadExternalAuthClaim(iterator)
 			object.claim = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "clients":
 			value := ReadExternalAuthClientConfigList(iterator)
 			object.clients = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "issuer":
 			value := ReadTokenIssuer(iterator)
 			object.issuer = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "status":
 			value := ReadExternalAuthStatus(iterator)
 			object.status = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		default:
 			iterator.ReadAny()
 		}

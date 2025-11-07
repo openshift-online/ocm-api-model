@@ -24,7 +24,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 // Representation of an addon sub operator. A sub operator is an operator
 // who's life cycle is controlled by the addon umbrella operator.
 type AddonSubOperator struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	addon             *Addon
 	operatorName      string
 	operatorNamespace string
@@ -33,21 +33,13 @@ type AddonSubOperator struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddonSubOperator) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Addon returns the value of the 'addon' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *AddonSubOperator) Addon() *Addon {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.addon
 	}
 	return nil
@@ -56,7 +48,7 @@ func (o *AddonSubOperator) Addon() *Addon {
 // GetAddon returns the value of the 'addon' attribute and
 // a flag indicating if the attribute has a value.
 func (o *AddonSubOperator) GetAddon() (value *Addon, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.addon
 	}
@@ -68,7 +60,7 @@ func (o *AddonSubOperator) GetAddon() (value *Addon, ok bool) {
 //
 // Indicates if the sub operator is enabled for the addon
 func (o *AddonSubOperator) Enabled() bool {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.enabled
 	}
 	return false
@@ -79,7 +71,7 @@ func (o *AddonSubOperator) Enabled() bool {
 //
 // Indicates if the sub operator is enabled for the addon
 func (o *AddonSubOperator) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.enabled
 	}
@@ -91,7 +83,7 @@ func (o *AddonSubOperator) GetEnabled() (value bool, ok bool) {
 //
 // Name of the addon sub operator
 func (o *AddonSubOperator) OperatorName() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.operatorName
 	}
 	return ""
@@ -102,7 +94,7 @@ func (o *AddonSubOperator) OperatorName() string {
 //
 // Name of the addon sub operator
 func (o *AddonSubOperator) GetOperatorName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.operatorName
 	}
@@ -114,7 +106,7 @@ func (o *AddonSubOperator) GetOperatorName() (value string, ok bool) {
 //
 // Namespace of the addon sub operator
 func (o *AddonSubOperator) OperatorNamespace() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.operatorNamespace
 	}
 	return ""
@@ -125,7 +117,7 @@ func (o *AddonSubOperator) OperatorNamespace() string {
 //
 // Namespace of the addon sub operator
 func (o *AddonSubOperator) GetOperatorNamespace() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.operatorNamespace
 	}

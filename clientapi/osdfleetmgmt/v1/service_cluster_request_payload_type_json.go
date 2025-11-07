@@ -42,7 +42,7 @@ func WriteServiceClusterRequestPayload(object *ServiceClusterRequestPayload, str
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteServiceClusterRequestPayload(object *ServiceClusterRequestPayload, str
 		stream.WriteString(object.cloudProvider)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.labels != nil
+	present_ = object.bitmap_&2 != 0 && object.labels != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteServiceClusterRequestPayload(object *ServiceClusterRequestPayload, str
 		WriteLabelRequestPayloadList(object.labels, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,9 +85,7 @@ func UnmarshalServiceClusterRequestPayload(source interface{}) (object *ServiceC
 
 // ReadServiceClusterRequestPayload reads a value of the 'service_cluster_request_payload' type from the given iterator.
 func ReadServiceClusterRequestPayload(iterator *jsoniter.Iterator) *ServiceClusterRequestPayload {
-	object := &ServiceClusterRequestPayload{
-		fieldSet_: make([]bool, 3),
-	}
+	object := &ServiceClusterRequestPayload{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -97,15 +95,15 @@ func ReadServiceClusterRequestPayload(iterator *jsoniter.Iterator) *ServiceClust
 		case "cloud_provider":
 			value := iterator.ReadString()
 			object.cloudProvider = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "labels":
 			value := ReadLabelRequestPayloadList(iterator)
 			object.labels = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "region":
 			value := iterator.ReadString()
 			object.region = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		default:
 			iterator.ReadAny()
 		}

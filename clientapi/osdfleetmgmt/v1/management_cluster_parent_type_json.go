@@ -42,7 +42,7 @@ func WriteManagementClusterParent(object *ManagementClusterParent, stream *jsoni
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteManagementClusterParent(object *ManagementClusterParent, stream *jsoni
 		stream.WriteString(object.clusterId)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteManagementClusterParent(object *ManagementClusterParent, stream *jsoni
 		stream.WriteString(object.href)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteManagementClusterParent(object *ManagementClusterParent, stream *jsoni
 		stream.WriteString(object.kind)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,9 +94,7 @@ func UnmarshalManagementClusterParent(source interface{}) (object *ManagementClu
 
 // ReadManagementClusterParent reads a value of the 'management_cluster_parent' type from the given iterator.
 func ReadManagementClusterParent(iterator *jsoniter.Iterator) *ManagementClusterParent {
-	object := &ManagementClusterParent{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &ManagementClusterParent{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -106,19 +104,19 @@ func ReadManagementClusterParent(iterator *jsoniter.Iterator) *ManagementCluster
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterId = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "href":
 			value := iterator.ReadString()
 			object.href = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "kind":
 			value := iterator.ReadString()
 			object.kind = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

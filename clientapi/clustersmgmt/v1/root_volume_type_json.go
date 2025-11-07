@@ -42,7 +42,7 @@ func WriteRootVolume(object *RootVolume, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.aws != nil
+	present_ = object.bitmap_&1 != 0 && object.aws != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteRootVolume(object *RootVolume, stream *jsoniter.Stream) {
 		WriteAWSVolume(object.aws, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.gcp != nil
+	present_ = object.bitmap_&2 != 0 && object.gcp != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalRootVolume(source interface{}) (object *RootVolume, err error) {
 
 // ReadRootVolume reads a value of the 'root_volume' type from the given iterator.
 func ReadRootVolume(iterator *jsoniter.Iterator) *RootVolume {
-	object := &RootVolume{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &RootVolume{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadRootVolume(iterator *jsoniter.Iterator) *RootVolume {
 		case "aws":
 			value := ReadAWSVolume(iterator)
 			object.aws = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "gcp":
 			value := ReadGCPVolume(iterator)
 			object.gcp = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

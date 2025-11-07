@@ -24,7 +24,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 // This struct is a request to get a templated email to a user related to this.
 // subscription/cluster.
 type NotificationDetailsRequest struct {
-	fieldSet_               []bool
+	bitmap_                 uint32
 	bccAddress              string
 	clusterID               string
 	clusterUUID             string
@@ -37,15 +37,7 @@ type NotificationDetailsRequest struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *NotificationDetailsRequest) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // BccAddress returns the value of the 'bcc_address' attribute, or
@@ -53,7 +45,7 @@ func (o *NotificationDetailsRequest) Empty() bool {
 //
 // The BCC address to be included on the email that is sent.
 func (o *NotificationDetailsRequest) BccAddress() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.bccAddress
 	}
 	return ""
@@ -64,7 +56,7 @@ func (o *NotificationDetailsRequest) BccAddress() string {
 //
 // The BCC address to be included on the email that is sent.
 func (o *NotificationDetailsRequest) GetBccAddress() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.bccAddress
 	}
@@ -76,7 +68,7 @@ func (o *NotificationDetailsRequest) GetBccAddress() (value string, ok bool) {
 //
 // Indicates which Cluster (internal id) the resource type belongs to.
 func (o *NotificationDetailsRequest) ClusterID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.clusterID
 	}
 	return ""
@@ -87,7 +79,7 @@ func (o *NotificationDetailsRequest) ClusterID() string {
 //
 // Indicates which Cluster (internal id) the resource type belongs to.
 func (o *NotificationDetailsRequest) GetClusterID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.clusterID
 	}
@@ -99,7 +91,7 @@ func (o *NotificationDetailsRequest) GetClusterID() (value string, ok bool) {
 //
 // Indicates which Cluster (external id) the resource type belongs to.
 func (o *NotificationDetailsRequest) ClusterUUID() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.clusterUUID
 	}
 	return ""
@@ -110,7 +102,7 @@ func (o *NotificationDetailsRequest) ClusterUUID() string {
 //
 // Indicates which Cluster (external id) the resource type belongs to.
 func (o *NotificationDetailsRequest) GetClusterUUID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.clusterUUID
 	}
@@ -122,7 +114,7 @@ func (o *NotificationDetailsRequest) GetClusterUUID() (value string, ok bool) {
 //
 // Indicates whether to include red hat associates in the email notification.
 func (o *NotificationDetailsRequest) IncludeRedHatAssociates() bool {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.includeRedHatAssociates
 	}
 	return false
@@ -133,7 +125,7 @@ func (o *NotificationDetailsRequest) IncludeRedHatAssociates() bool {
 //
 // Indicates whether to include red hat associates in the email notification.
 func (o *NotificationDetailsRequest) GetIncludeRedHatAssociates() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.includeRedHatAssociates
 	}
@@ -145,7 +137,7 @@ func (o *NotificationDetailsRequest) GetIncludeRedHatAssociates() (value bool, o
 //
 // Indicates whether the service log is internal only to RH.
 func (o *NotificationDetailsRequest) InternalOnly() bool {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.internalOnly
 	}
 	return false
@@ -156,7 +148,7 @@ func (o *NotificationDetailsRequest) InternalOnly() bool {
 //
 // Indicates whether the service log is internal only to RH.
 func (o *NotificationDetailsRequest) GetInternalOnly() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.internalOnly
 	}
@@ -168,7 +160,7 @@ func (o *NotificationDetailsRequest) GetInternalOnly() (value bool, ok bool) {
 //
 // Indicates the type of the service log.
 func (o *NotificationDetailsRequest) LogType() string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.logType
 	}
 	return ""
@@ -179,7 +171,7 @@ func (o *NotificationDetailsRequest) LogType() string {
 //
 // Indicates the type of the service log.
 func (o *NotificationDetailsRequest) GetLogType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.logType
 	}
@@ -191,7 +183,7 @@ func (o *NotificationDetailsRequest) GetLogType() (value string, ok bool) {
 //
 // The email subject.
 func (o *NotificationDetailsRequest) Subject() string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.subject
 	}
 	return ""
@@ -202,7 +194,7 @@ func (o *NotificationDetailsRequest) Subject() string {
 //
 // The email subject.
 func (o *NotificationDetailsRequest) GetSubject() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.subject
 	}
@@ -214,7 +206,7 @@ func (o *NotificationDetailsRequest) GetSubject() (value string, ok bool) {
 //
 // Indicates which Subscription the resource type belongs to.
 func (o *NotificationDetailsRequest) SubscriptionID() string {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.subscriptionID
 	}
 	return ""
@@ -225,7 +217,7 @@ func (o *NotificationDetailsRequest) SubscriptionID() string {
 //
 // Indicates which Subscription the resource type belongs to.
 func (o *NotificationDetailsRequest) GetSubscriptionID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.subscriptionID
 	}

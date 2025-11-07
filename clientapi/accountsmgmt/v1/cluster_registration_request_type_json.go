@@ -42,7 +42,7 @@ func WriteClusterRegistrationRequest(object *ClusterRegistrationRequest, stream 
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteClusterRegistrationRequest(object *ClusterRegistrationRequest, stream 
 		stream.WriteString(object.authorizationToken)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalClusterRegistrationRequest(source interface{}) (object *ClusterReg
 
 // ReadClusterRegistrationRequest reads a value of the 'cluster_registration_request' type from the given iterator.
 func ReadClusterRegistrationRequest(iterator *jsoniter.Iterator) *ClusterRegistrationRequest {
-	object := &ClusterRegistrationRequest{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &ClusterRegistrationRequest{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadClusterRegistrationRequest(iterator *jsoniter.Iterator) *ClusterRegistr
 		case "authorization_token":
 			value := iterator.ReadString()
 			object.authorizationToken = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterID = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

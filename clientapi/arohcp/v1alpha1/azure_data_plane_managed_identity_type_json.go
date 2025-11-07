@@ -42,7 +42,7 @@ func WriteAzureDataPlaneManagedIdentity(object *AzureDataPlaneManagedIdentity, s
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalAzureDataPlaneManagedIdentity(source interface{}) (object *AzureDa
 
 // ReadAzureDataPlaneManagedIdentity reads a value of the 'azure_data_plane_managed_identity' type from the given iterator.
 func ReadAzureDataPlaneManagedIdentity(iterator *jsoniter.Iterator) *AzureDataPlaneManagedIdentity {
-	object := &AzureDataPlaneManagedIdentity{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &AzureDataPlaneManagedIdentity{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadAzureDataPlaneManagedIdentity(iterator *jsoniter.Iterator) *AzureDataPl
 		case "resource_id":
 			value := iterator.ReadString()
 			object.resourceID = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

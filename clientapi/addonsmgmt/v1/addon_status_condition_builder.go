@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
+// AddonStatusConditionBuilder contains the data and logic needed to build 'addon_status_condition' objects.
+//
 // Representation of an addon status condition type.
 type AddonStatusConditionBuilder struct {
-	fieldSet_   []bool
+	bitmap_     uint32
 	message     string
 	reason      string
 	statusType  AddonStatusConditionType
@@ -30,41 +32,25 @@ type AddonStatusConditionBuilder struct {
 
 // NewAddonStatusCondition creates a new builder of 'addon_status_condition' objects.
 func NewAddonStatusCondition() *AddonStatusConditionBuilder {
-	return &AddonStatusConditionBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &AddonStatusConditionBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddonStatusConditionBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Message sets the value of the 'message' attribute to the given value.
 func (b *AddonStatusConditionBuilder) Message(value string) *AddonStatusConditionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.message = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Reason sets the value of the 'reason' attribute to the given value.
 func (b *AddonStatusConditionBuilder) Reason(value string) *AddonStatusConditionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.reason = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -72,11 +58,8 @@ func (b *AddonStatusConditionBuilder) Reason(value string) *AddonStatusCondition
 //
 // Representation of an addon status condition type field.
 func (b *AddonStatusConditionBuilder) StatusType(value AddonStatusConditionType) *AddonStatusConditionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.statusType = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
@@ -84,11 +67,8 @@ func (b *AddonStatusConditionBuilder) StatusType(value AddonStatusConditionType)
 //
 // Representation of an addon status condition value field.
 func (b *AddonStatusConditionBuilder) StatusValue(value AddonStatusConditionValue) *AddonStatusConditionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.statusValue = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -97,10 +77,7 @@ func (b *AddonStatusConditionBuilder) Copy(object *AddonStatusCondition) *AddonS
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.message = object.message
 	b.reason = object.reason
 	b.statusType = object.statusType
@@ -111,10 +88,7 @@ func (b *AddonStatusConditionBuilder) Copy(object *AddonStatusCondition) *AddonS
 // Build creates a 'addon_status_condition' object using the configuration stored in the builder.
 func (b *AddonStatusConditionBuilder) Build() (object *AddonStatusCondition, err error) {
 	object = new(AddonStatusCondition)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.message = b.message
 	object.reason = b.reason
 	object.statusType = b.statusType

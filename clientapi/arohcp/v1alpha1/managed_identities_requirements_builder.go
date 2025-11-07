@@ -19,6 +19,8 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// ManagedIdentitiesRequirementsBuilder contains the data and logic needed to build 'managed_identities_requirements' objects.
+//
 // Representation of managed identities requirements.
 // When creating ARO-HCP Clusters, the end-users will need to pre-create the set of Managed Identities
 // required by the clusters.
@@ -30,7 +32,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 // Additionally, the Managed Identities that the end-users will need to precreate will have to have a
 // set of required permissions assigned to them which also have to be returned to the end users.
 type ManagedIdentitiesRequirementsBuilder struct {
-	fieldSet_                       []bool
+	bitmap_                         uint32
 	id                              string
 	href                            string
 	controlPlaneOperatorsIdentities []*ControlPlaneOperatorIdentityRequirementBuilder
@@ -39,73 +41,47 @@ type ManagedIdentitiesRequirementsBuilder struct {
 
 // NewManagedIdentitiesRequirements creates a new builder of 'managed_identities_requirements' objects.
 func NewManagedIdentitiesRequirements() *ManagedIdentitiesRequirementsBuilder {
-	return &ManagedIdentitiesRequirementsBuilder{
-		fieldSet_: make([]bool, 5),
-	}
+	return &ManagedIdentitiesRequirementsBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ManagedIdentitiesRequirementsBuilder) Link(value bool) *ManagedIdentitiesRequirementsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ManagedIdentitiesRequirementsBuilder) ID(value string) *ManagedIdentitiesRequirementsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ManagedIdentitiesRequirementsBuilder) HREF(value string) *ManagedIdentitiesRequirementsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ManagedIdentitiesRequirementsBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // ControlPlaneOperatorsIdentities sets the value of the 'control_plane_operators_identities' attribute to the given values.
 func (b *ManagedIdentitiesRequirementsBuilder) ControlPlaneOperatorsIdentities(values ...*ControlPlaneOperatorIdentityRequirementBuilder) *ManagedIdentitiesRequirementsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.controlPlaneOperatorsIdentities = make([]*ControlPlaneOperatorIdentityRequirementBuilder, len(values))
 	copy(b.controlPlaneOperatorsIdentities, values)
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // DataPlaneOperatorsIdentities sets the value of the 'data_plane_operators_identities' attribute to the given values.
 func (b *ManagedIdentitiesRequirementsBuilder) DataPlaneOperatorsIdentities(values ...*DataPlaneOperatorIdentityRequirementBuilder) *ManagedIdentitiesRequirementsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.dataPlaneOperatorsIdentities = make([]*DataPlaneOperatorIdentityRequirementBuilder, len(values))
 	copy(b.dataPlaneOperatorsIdentities, values)
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -114,10 +90,7 @@ func (b *ManagedIdentitiesRequirementsBuilder) Copy(object *ManagedIdentitiesReq
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.controlPlaneOperatorsIdentities != nil {
@@ -144,10 +117,7 @@ func (b *ManagedIdentitiesRequirementsBuilder) Build() (object *ManagedIdentitie
 	object = new(ManagedIdentitiesRequirements)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.controlPlaneOperatorsIdentities != nil {
 		object.controlPlaneOperatorsIdentities = make([]*ControlPlaneOperatorIdentityRequirement, len(b.controlPlaneOperatorsIdentities))
 		for i, v := range b.controlPlaneOperatorsIdentities {

@@ -23,7 +23,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // AWS security group object
 type SecurityGroup struct {
-	fieldSet_     []bool
+	bitmap_       uint32
 	id            string
 	name          string
 	redHatManaged bool
@@ -31,15 +31,7 @@ type SecurityGroup struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *SecurityGroup) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // ID returns the value of the 'ID' attribute, or
@@ -47,7 +39,7 @@ func (o *SecurityGroup) Empty() bool {
 //
 // The security group ID.
 func (o *SecurityGroup) ID() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.id
 	}
 	return ""
@@ -58,7 +50,7 @@ func (o *SecurityGroup) ID() string {
 //
 // The security group ID.
 func (o *SecurityGroup) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.id
 	}
@@ -70,7 +62,7 @@ func (o *SecurityGroup) GetID() (value string, ok bool) {
 //
 // Name of the security group according to its `Name` tag on AWS.
 func (o *SecurityGroup) Name() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.name
 	}
 	return ""
@@ -81,7 +73,7 @@ func (o *SecurityGroup) Name() string {
 //
 // Name of the security group according to its `Name` tag on AWS.
 func (o *SecurityGroup) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.name
 	}
@@ -93,7 +85,7 @@ func (o *SecurityGroup) GetName() (value string, ok bool) {
 //
 // If the resource is RH managed.
 func (o *SecurityGroup) RedHatManaged() bool {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.redHatManaged
 	}
 	return false
@@ -104,7 +96,7 @@ func (o *SecurityGroup) RedHatManaged() bool {
 //
 // If the resource is RH managed.
 func (o *SecurityGroup) GetRedHatManaged() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.redHatManaged
 	}

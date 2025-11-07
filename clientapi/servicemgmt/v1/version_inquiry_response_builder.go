@@ -19,38 +19,26 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 
+// VersionInquiryResponseBuilder contains the data and logic needed to build 'version_inquiry_response' objects.
 type VersionInquiryResponseBuilder struct {
-	fieldSet_ []bool
-	version   string
+	bitmap_ uint32
+	version string
 }
 
 // NewVersionInquiryResponse creates a new builder of 'version_inquiry_response' objects.
 func NewVersionInquiryResponse() *VersionInquiryResponseBuilder {
-	return &VersionInquiryResponseBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &VersionInquiryResponseBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *VersionInquiryResponseBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Version sets the value of the 'version' attribute to the given value.
 func (b *VersionInquiryResponseBuilder) Version(value string) *VersionInquiryResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.version = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -59,10 +47,7 @@ func (b *VersionInquiryResponseBuilder) Copy(object *VersionInquiryResponse) *Ve
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.version = object.version
 	return b
 }
@@ -70,10 +55,7 @@ func (b *VersionInquiryResponseBuilder) Copy(object *VersionInquiryResponse) *Ve
 // Build creates a 'version_inquiry_response' object using the configuration stored in the builder.
 func (b *VersionInquiryResponseBuilder) Build() (object *VersionInquiryResponse, err error) {
 	object = new(VersionInquiryResponse)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.version = b.version
 	return
 }

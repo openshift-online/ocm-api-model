@@ -21,7 +21,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 
 // AutoscalerScaleDownConfig represents the values of the 'autoscaler_scale_down_config' type.
 type AutoscalerScaleDownConfig struct {
-	fieldSet_            []bool
+	bitmap_              uint32
 	delayAfterAdd        string
 	delayAfterDelete     string
 	delayAfterFailure    string
@@ -32,15 +32,7 @@ type AutoscalerScaleDownConfig struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AutoscalerScaleDownConfig) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // DelayAfterAdd returns the value of the 'delay_after_add' attribute, or
@@ -48,7 +40,7 @@ func (o *AutoscalerScaleDownConfig) Empty() bool {
 //
 // How long after scale up that scale down evaluation resumes.
 func (o *AutoscalerScaleDownConfig) DelayAfterAdd() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.delayAfterAdd
 	}
 	return ""
@@ -59,7 +51,7 @@ func (o *AutoscalerScaleDownConfig) DelayAfterAdd() string {
 //
 // How long after scale up that scale down evaluation resumes.
 func (o *AutoscalerScaleDownConfig) GetDelayAfterAdd() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.delayAfterAdd
 	}
@@ -71,7 +63,7 @@ func (o *AutoscalerScaleDownConfig) GetDelayAfterAdd() (value string, ok bool) {
 //
 // How long after node deletion that scale down evaluation resumes, defaults to scan-interval.
 func (o *AutoscalerScaleDownConfig) DelayAfterDelete() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.delayAfterDelete
 	}
 	return ""
@@ -82,7 +74,7 @@ func (o *AutoscalerScaleDownConfig) DelayAfterDelete() string {
 //
 // How long after node deletion that scale down evaluation resumes, defaults to scan-interval.
 func (o *AutoscalerScaleDownConfig) GetDelayAfterDelete() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.delayAfterDelete
 	}
@@ -94,7 +86,7 @@ func (o *AutoscalerScaleDownConfig) GetDelayAfterDelete() (value string, ok bool
 //
 // How long after scale down failure that scale down evaluation resumes.
 func (o *AutoscalerScaleDownConfig) DelayAfterFailure() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.delayAfterFailure
 	}
 	return ""
@@ -105,7 +97,7 @@ func (o *AutoscalerScaleDownConfig) DelayAfterFailure() string {
 //
 // How long after scale down failure that scale down evaluation resumes.
 func (o *AutoscalerScaleDownConfig) GetDelayAfterFailure() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.delayAfterFailure
 	}
@@ -117,7 +109,7 @@ func (o *AutoscalerScaleDownConfig) GetDelayAfterFailure() (value string, ok boo
 //
 // Should cluster-autoscaler scale down the cluster.
 func (o *AutoscalerScaleDownConfig) Enabled() bool {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.enabled
 	}
 	return false
@@ -128,7 +120,7 @@ func (o *AutoscalerScaleDownConfig) Enabled() bool {
 //
 // Should cluster-autoscaler scale down the cluster.
 func (o *AutoscalerScaleDownConfig) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.enabled
 	}
@@ -140,7 +132,7 @@ func (o *AutoscalerScaleDownConfig) GetEnabled() (value bool, ok bool) {
 //
 // How long a node should be unneeded before it is eligible for scale down.
 func (o *AutoscalerScaleDownConfig) UnneededTime() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.unneededTime
 	}
 	return ""
@@ -151,7 +143,7 @@ func (o *AutoscalerScaleDownConfig) UnneededTime() string {
 //
 // How long a node should be unneeded before it is eligible for scale down.
 func (o *AutoscalerScaleDownConfig) GetUnneededTime() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.unneededTime
 	}
@@ -163,7 +155,7 @@ func (o *AutoscalerScaleDownConfig) GetUnneededTime() (value string, ok bool) {
 //
 // Node utilization level, defined as sum of requested resources divided by capacity, below which a node can be considered for scale down.
 func (o *AutoscalerScaleDownConfig) UtilizationThreshold() string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.utilizationThreshold
 	}
 	return ""
@@ -174,7 +166,7 @@ func (o *AutoscalerScaleDownConfig) UtilizationThreshold() string {
 //
 // Node utilization level, defined as sum of requested resources divided by capacity, below which a node can be considered for scale down.
 func (o *AutoscalerScaleDownConfig) GetUtilizationThreshold() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.utilizationThreshold
 	}

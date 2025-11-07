@@ -23,27 +23,19 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Provides information about the nodes in the cluster.
 type NodesInfo struct {
-	fieldSet_ []bool
-	nodes     []*NodeInfo
+	bitmap_ uint32
+	nodes   []*NodeInfo
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *NodesInfo) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Nodes returns the value of the 'nodes' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *NodesInfo) Nodes() []*NodeInfo {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.nodes
 	}
 	return nil
@@ -52,7 +44,7 @@ func (o *NodesInfo) Nodes() []*NodeInfo {
 // GetNodes returns the value of the 'nodes' attribute and
 // a flag indicating if the attribute has a value.
 func (o *NodesInfo) GetNodes() (value []*NodeInfo, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.nodes
 	}

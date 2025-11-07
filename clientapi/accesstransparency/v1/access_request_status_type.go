@@ -27,22 +27,14 @@ import (
 //
 // Representation of an access request status.
 type AccessRequestStatus struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	expiresAt time.Time
 	state     AccessRequestState
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AccessRequestStatus) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // ExpiresAt returns the value of the 'expires_at' attribute, or
@@ -51,7 +43,7 @@ func (o *AccessRequestStatus) Empty() bool {
 // Date and time when the access request will expire, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *AccessRequestStatus) ExpiresAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.expiresAt
 	}
 	return time.Time{}
@@ -63,7 +55,7 @@ func (o *AccessRequestStatus) ExpiresAt() time.Time {
 // Date and time when the access request will expire, using the
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 func (o *AccessRequestStatus) GetExpiresAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.expiresAt
 	}
@@ -75,7 +67,7 @@ func (o *AccessRequestStatus) GetExpiresAt() (value time.Time, ok bool) {
 //
 // Current state of the Access Request.
 func (o *AccessRequestStatus) State() AccessRequestState {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.state
 	}
 	return AccessRequestState("")
@@ -86,7 +78,7 @@ func (o *AccessRequestStatus) State() AccessRequestState {
 //
 // Current state of the Access Request.
 func (o *AccessRequestStatus) GetState() (value AccessRequestState, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.state
 	}

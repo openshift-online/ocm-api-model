@@ -33,7 +33,7 @@ const RoleNilKind = "RoleNil"
 
 // Role represents the values of the 'role' type.
 type Role struct {
-	fieldSet_   []bool
+	bitmap_     uint32
 	id          string
 	href        string
 	name        string
@@ -45,7 +45,7 @@ func (o *Role) Kind() string {
 	if o == nil {
 		return RoleNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return RoleLinkKind
 	}
 	return RoleKind
@@ -53,12 +53,12 @@ func (o *Role) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Role) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *Role) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -67,7 +67,7 @@ func (o *Role) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Role) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -76,7 +76,7 @@ func (o *Role) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Role) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -85,7 +85,7 @@ func (o *Role) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Role) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -94,23 +94,13 @@ func (o *Role) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Role) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // Name returns the value of the 'name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Role) Name() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.name
 	}
 	return ""
@@ -119,7 +109,7 @@ func (o *Role) Name() string {
 // GetName returns the value of the 'name' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Role) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.name
 	}
@@ -129,7 +119,7 @@ func (o *Role) GetName() (value string, ok bool) {
 // Permissions returns the value of the 'permissions' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Role) Permissions() []*Permission {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.permissions
 	}
 	return nil
@@ -138,7 +128,7 @@ func (o *Role) Permissions() []*Permission {
 // GetPermissions returns the value of the 'permissions' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Role) GetPermissions() (value []*Permission, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.permissions
 	}

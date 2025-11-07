@@ -19,8 +19,9 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// ControlPlaneOperatorIdentityRequirementBuilder contains the data and logic needed to build 'control_plane_operator_identity_requirement' objects.
 type ControlPlaneOperatorIdentityRequirementBuilder struct {
-	fieldSet_           []bool
+	bitmap_             uint32
 	maxOpenShiftVersion string
 	minOpenShiftVersion string
 	operatorName        string
@@ -30,72 +31,47 @@ type ControlPlaneOperatorIdentityRequirementBuilder struct {
 
 // NewControlPlaneOperatorIdentityRequirement creates a new builder of 'control_plane_operator_identity_requirement' objects.
 func NewControlPlaneOperatorIdentityRequirement() *ControlPlaneOperatorIdentityRequirementBuilder {
-	return &ControlPlaneOperatorIdentityRequirementBuilder{
-		fieldSet_: make([]bool, 5),
-	}
+	return &ControlPlaneOperatorIdentityRequirementBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // MaxOpenShiftVersion sets the value of the 'max_open_shift_version' attribute to the given value.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) MaxOpenShiftVersion(value string) *ControlPlaneOperatorIdentityRequirementBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.maxOpenShiftVersion = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // MinOpenShiftVersion sets the value of the 'min_open_shift_version' attribute to the given value.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) MinOpenShiftVersion(value string) *ControlPlaneOperatorIdentityRequirementBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.minOpenShiftVersion = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // OperatorName sets the value of the 'operator_name' attribute to the given value.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) OperatorName(value string) *ControlPlaneOperatorIdentityRequirementBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.operatorName = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Required sets the value of the 'required' attribute to the given value.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) Required(value string) *ControlPlaneOperatorIdentityRequirementBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.required = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // RoleDefinitions sets the value of the 'role_definitions' attribute to the given values.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) RoleDefinitions(values ...*RoleDefinitionOperatorIdentityRequirementBuilder) *ControlPlaneOperatorIdentityRequirementBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.roleDefinitions = make([]*RoleDefinitionOperatorIdentityRequirementBuilder, len(values))
 	copy(b.roleDefinitions, values)
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -104,10 +80,7 @@ func (b *ControlPlaneOperatorIdentityRequirementBuilder) Copy(object *ControlPla
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.maxOpenShiftVersion = object.maxOpenShiftVersion
 	b.minOpenShiftVersion = object.minOpenShiftVersion
 	b.operatorName = object.operatorName
@@ -126,10 +99,7 @@ func (b *ControlPlaneOperatorIdentityRequirementBuilder) Copy(object *ControlPla
 // Build creates a 'control_plane_operator_identity_requirement' object using the configuration stored in the builder.
 func (b *ControlPlaneOperatorIdentityRequirementBuilder) Build() (object *ControlPlaneOperatorIdentityRequirement, err error) {
 	object = new(ControlPlaneOperatorIdentityRequirement)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.maxOpenShiftVersion = b.maxOpenShiftVersion
 	object.minOpenShiftVersion = b.minOpenShiftVersion
 	object.operatorName = b.operatorName

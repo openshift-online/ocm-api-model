@@ -43,13 +43,13 @@ func WriteStatusChange(object *StatusChange, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(StatusChangeLinkKind)
 	} else {
 		stream.WriteString(StatusChangeKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteStatusChange(object *StatusChange, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteStatusChange(object *StatusChange, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteStatusChange(object *StatusChange, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteStatusChange(object *StatusChange, stream *jsoniter.Stream) {
 		stream.WriteString((object.deletedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteStatusChange(object *StatusChange, stream *jsoniter.Stream) {
 		stream.WriteVal(object.status)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteStatusChange(object *StatusChange, stream *jsoniter.Stream) {
 		stream.WriteString(object.statusId)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = object.bitmap_&128 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -127,9 +127,7 @@ func UnmarshalStatusChange(source interface{}) (object *StatusChange, err error)
 
 // ReadStatusChange reads a value of the 'status_change' type from the given iterator.
 func ReadStatusChange(iterator *jsoniter.Iterator) *StatusChange {
-	object := &StatusChange{
-		fieldSet_: make([]bool, 8),
-	}
+	object := &StatusChange{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -139,14 +137,14 @@ func ReadStatusChange(iterator *jsoniter.Iterator) *StatusChange {
 		case "kind":
 			value := iterator.ReadString()
 			if value == StatusChangeLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -154,7 +152,7 @@ func ReadStatusChange(iterator *jsoniter.Iterator) *StatusChange {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "deleted_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -162,16 +160,16 @@ func ReadStatusChange(iterator *jsoniter.Iterator) *StatusChange {
 				iterator.ReportError("", err.Error())
 			}
 			object.deletedAt = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "status":
 			var value interface{}
 			iterator.ReadVal(&value)
 			object.status = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "status_id":
 			value := iterator.ReadString()
 			object.statusId = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -179,7 +177,7 @@ func ReadStatusChange(iterator *jsoniter.Iterator) *StatusChange {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		default:
 			iterator.ReadAny()
 		}

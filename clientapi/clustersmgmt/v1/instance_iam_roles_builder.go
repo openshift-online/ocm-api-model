@@ -19,50 +19,36 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// InstanceIAMRolesBuilder contains the data and logic needed to build 'instance_IAM_roles' objects.
+//
 // Contains the necessary attributes to support role-based authentication on AWS.
 type InstanceIAMRolesBuilder struct {
-	fieldSet_     []bool
+	bitmap_       uint32
 	masterRoleARN string
 	workerRoleARN string
 }
 
 // NewInstanceIAMRoles creates a new builder of 'instance_IAM_roles' objects.
 func NewInstanceIAMRoles() *InstanceIAMRolesBuilder {
-	return &InstanceIAMRolesBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &InstanceIAMRolesBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *InstanceIAMRolesBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // MasterRoleARN sets the value of the 'master_role_ARN' attribute to the given value.
 func (b *InstanceIAMRolesBuilder) MasterRoleARN(value string) *InstanceIAMRolesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.masterRoleARN = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // WorkerRoleARN sets the value of the 'worker_role_ARN' attribute to the given value.
 func (b *InstanceIAMRolesBuilder) WorkerRoleARN(value string) *InstanceIAMRolesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.workerRoleARN = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -71,10 +57,7 @@ func (b *InstanceIAMRolesBuilder) Copy(object *InstanceIAMRoles) *InstanceIAMRol
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.masterRoleARN = object.masterRoleARN
 	b.workerRoleARN = object.workerRoleARN
 	return b
@@ -83,10 +66,7 @@ func (b *InstanceIAMRolesBuilder) Copy(object *InstanceIAMRoles) *InstanceIAMRol
 // Build creates a 'instance_IAM_roles' object using the configuration stored in the builder.
 func (b *InstanceIAMRolesBuilder) Build() (object *InstanceIAMRoles, err error) {
 	object = new(InstanceIAMRoles)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.masterRoleARN = b.masterRoleARN
 	object.workerRoleARN = b.workerRoleARN
 	return

@@ -19,8 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
+// CloudAccountBuilder contains the data and logic needed to build 'cloud_account' objects.
 type CloudAccountBuilder struct {
-	fieldSet_       []bool
+	bitmap_         uint32
 	cloudAccountID  string
 	cloudProviderID string
 	contracts       []*ContractBuilder
@@ -28,52 +29,33 @@ type CloudAccountBuilder struct {
 
 // NewCloudAccount creates a new builder of 'cloud_account' objects.
 func NewCloudAccount() *CloudAccountBuilder {
-	return &CloudAccountBuilder{
-		fieldSet_: make([]bool, 3),
-	}
+	return &CloudAccountBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *CloudAccountBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // CloudAccountID sets the value of the 'cloud_account_ID' attribute to the given value.
 func (b *CloudAccountBuilder) CloudAccountID(value string) *CloudAccountBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.cloudAccountID = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // CloudProviderID sets the value of the 'cloud_provider_ID' attribute to the given value.
 func (b *CloudAccountBuilder) CloudProviderID(value string) *CloudAccountBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.cloudProviderID = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Contracts sets the value of the 'contracts' attribute to the given values.
 func (b *CloudAccountBuilder) Contracts(values ...*ContractBuilder) *CloudAccountBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.contracts = make([]*ContractBuilder, len(values))
 	copy(b.contracts, values)
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
@@ -82,10 +64,7 @@ func (b *CloudAccountBuilder) Copy(object *CloudAccount) *CloudAccountBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.cloudAccountID = object.cloudAccountID
 	b.cloudProviderID = object.cloudProviderID
 	if object.contracts != nil {
@@ -102,10 +81,7 @@ func (b *CloudAccountBuilder) Copy(object *CloudAccount) *CloudAccountBuilder {
 // Build creates a 'cloud_account' object using the configuration stored in the builder.
 func (b *CloudAccountBuilder) Build() (object *CloudAccount, err error) {
 	object = new(CloudAccount)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.cloudAccountID = b.cloudAccountID
 	object.cloudProviderID = b.cloudProviderID
 	if b.contracts != nil {

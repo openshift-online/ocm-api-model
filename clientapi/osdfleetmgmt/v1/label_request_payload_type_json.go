@@ -42,7 +42,7 @@ func WriteLabelRequestPayload(object *LabelRequestPayload, stream *jsoniter.Stre
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteLabelRequestPayload(object *LabelRequestPayload, stream *jsoniter.Stre
 		stream.WriteString(object.key)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalLabelRequestPayload(source interface{}) (object *LabelRequestPaylo
 
 // ReadLabelRequestPayload reads a value of the 'label_request_payload' type from the given iterator.
 func ReadLabelRequestPayload(iterator *jsoniter.Iterator) *LabelRequestPayload {
-	object := &LabelRequestPayload{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &LabelRequestPayload{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadLabelRequestPayload(iterator *jsoniter.Iterator) *LabelRequestPayload {
 		case "key":
 			value := iterator.ReadString()
 			object.key = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "value":
 			value := iterator.ReadString()
 			object.value = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Details for `ldap` identity providers.
 type LDAPIdentityProvider struct {
-	fieldSet_    []bool
+	bitmap_      uint32
 	ca           string
 	url          string
 	attributes   *LDAPAttributes
@@ -34,15 +34,7 @@ type LDAPIdentityProvider struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *LDAPIdentityProvider) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // CA returns the value of the 'CA' attribute, or
@@ -50,7 +42,7 @@ func (o *LDAPIdentityProvider) Empty() bool {
 //
 // Certificate bundle to use to validate server certificates for the configured URL.
 func (o *LDAPIdentityProvider) CA() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.ca
 	}
 	return ""
@@ -61,7 +53,7 @@ func (o *LDAPIdentityProvider) CA() string {
 //
 // Certificate bundle to use to validate server certificates for the configured URL.
 func (o *LDAPIdentityProvider) GetCA() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.ca
 	}
@@ -74,7 +66,7 @@ func (o *LDAPIdentityProvider) GetCA() (value string, ok bool) {
 // An https://tools.ietf.org/html/rfc2255[RFC 2255] URL which specifies the LDAP host and
 // search parameters to use.
 func (o *LDAPIdentityProvider) URL() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.url
 	}
 	return ""
@@ -86,7 +78,7 @@ func (o *LDAPIdentityProvider) URL() string {
 // An https://tools.ietf.org/html/rfc2255[RFC 2255] URL which specifies the LDAP host and
 // search parameters to use.
 func (o *LDAPIdentityProvider) GetURL() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.url
 	}
@@ -98,7 +90,7 @@ func (o *LDAPIdentityProvider) GetURL() (value string, ok bool) {
 //
 // LDAP attributes used to configure the provider.
 func (o *LDAPIdentityProvider) Attributes() *LDAPAttributes {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.attributes
 	}
 	return nil
@@ -109,7 +101,7 @@ func (o *LDAPIdentityProvider) Attributes() *LDAPAttributes {
 //
 // LDAP attributes used to configure the provider.
 func (o *LDAPIdentityProvider) GetAttributes() (value *LDAPAttributes, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.attributes
 	}
@@ -121,7 +113,7 @@ func (o *LDAPIdentityProvider) GetAttributes() (value *LDAPAttributes, ok bool) 
 //
 // Optional distinguished name to use to bind during the search phase.
 func (o *LDAPIdentityProvider) BindDN() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.bindDN
 	}
 	return ""
@@ -132,7 +124,7 @@ func (o *LDAPIdentityProvider) BindDN() string {
 //
 // Optional distinguished name to use to bind during the search phase.
 func (o *LDAPIdentityProvider) GetBindDN() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.bindDN
 	}
@@ -144,7 +136,7 @@ func (o *LDAPIdentityProvider) GetBindDN() (value string, ok bool) {
 //
 // Optional password to use to bind during the search phase.
 func (o *LDAPIdentityProvider) BindPassword() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.bindPassword
 	}
 	return ""
@@ -155,7 +147,7 @@ func (o *LDAPIdentityProvider) BindPassword() string {
 //
 // Optional password to use to bind during the search phase.
 func (o *LDAPIdentityProvider) GetBindPassword() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.bindPassword
 	}
@@ -168,7 +160,7 @@ func (o *LDAPIdentityProvider) GetBindPassword() (value string, ok bool) {
 // When `true` no TLS connection is made to the server. When `false` `ldaps://...` URLs
 // connect using TLS and `ldap://...` are upgraded to TLS.
 func (o *LDAPIdentityProvider) Insecure() bool {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.insecure
 	}
 	return false
@@ -180,7 +172,7 @@ func (o *LDAPIdentityProvider) Insecure() bool {
 // When `true` no TLS connection is made to the server. When `false` `ldaps://...` URLs
 // connect using TLS and `ldap://...` are upgraded to TLS.
 func (o *LDAPIdentityProvider) GetInsecure() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.insecure
 	}

@@ -19,39 +19,28 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// MachineTypeFeaturesBuilder contains the data and logic needed to build 'machine_type_features' objects.
+//
 // Defines the features enabled or disabled on a particular machine type
 type MachineTypeFeaturesBuilder struct {
-	fieldSet_ []bool
-	winLI     bool
+	bitmap_ uint32
+	winLI   bool
 }
 
 // NewMachineTypeFeatures creates a new builder of 'machine_type_features' objects.
 func NewMachineTypeFeatures() *MachineTypeFeaturesBuilder {
-	return &MachineTypeFeaturesBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &MachineTypeFeaturesBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *MachineTypeFeaturesBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // WinLI sets the value of the 'win_LI' attribute to the given value.
 func (b *MachineTypeFeaturesBuilder) WinLI(value bool) *MachineTypeFeaturesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.winLI = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -60,10 +49,7 @@ func (b *MachineTypeFeaturesBuilder) Copy(object *MachineTypeFeatures) *MachineT
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.winLI = object.winLI
 	return b
 }
@@ -71,10 +57,7 @@ func (b *MachineTypeFeaturesBuilder) Copy(object *MachineTypeFeatures) *MachineT
 // Build creates a 'machine_type_features' object using the configuration stored in the builder.
 func (b *MachineTypeFeaturesBuilder) Build() (object *MachineTypeFeatures, err error) {
 	object = new(MachineTypeFeatures)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.winLI = b.winLI
 	return
 }

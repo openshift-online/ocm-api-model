@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// StatusBuilder contains the data and logic needed to build 'status' objects.
+//
 // Definition of a Status Board status.
 type StatusBuilder struct {
-	fieldSet_   []bool
+	bitmap_     uint32
 	id          string
 	href        string
 	createdAt   time.Time
@@ -38,71 +40,45 @@ type StatusBuilder struct {
 
 // NewStatus creates a new builder of 'status' objects.
 func NewStatus() *StatusBuilder {
-	return &StatusBuilder{
-		fieldSet_: make([]bool, 9),
-	}
+	return &StatusBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *StatusBuilder) Link(value bool) *StatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *StatusBuilder) ID(value string) *StatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *StatusBuilder) HREF(value string) *StatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *StatusBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *StatusBuilder) CreatedAt(value time.Time) *StatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.createdAt = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // Metadata sets the value of the 'metadata' attribute to the given value.
 func (b *StatusBuilder) Metadata(value interface{}) *StatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.metadata = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -110,14 +86,11 @@ func (b *StatusBuilder) Metadata(value interface{}) *StatusBuilder {
 //
 // Definition of a Status Board Service.
 func (b *StatusBuilder) Service(value *ServiceBuilder) *StatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.service = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
@@ -126,35 +99,26 @@ func (b *StatusBuilder) Service(value *ServiceBuilder) *StatusBuilder {
 //
 // Definition of a Status Board service info.
 func (b *StatusBuilder) ServiceInfo(value *ServiceInfoBuilder) *StatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.serviceInfo = value
 	if value != nil {
-		b.fieldSet_[6] = true
+		b.bitmap_ |= 64
 	} else {
-		b.fieldSet_[6] = false
+		b.bitmap_ &^= 64
 	}
 	return b
 }
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *StatusBuilder) Status(value string) *StatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.status = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *StatusBuilder) UpdatedAt(value time.Time) *StatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.updatedAt = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
@@ -163,10 +127,7 @@ func (b *StatusBuilder) Copy(object *Status) *StatusBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.createdAt = object.createdAt
@@ -191,10 +152,7 @@ func (b *StatusBuilder) Build() (object *Status, err error) {
 	object = new(Status)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.createdAt = b.createdAt
 	object.metadata = b.metadata
 	if b.service != nil {

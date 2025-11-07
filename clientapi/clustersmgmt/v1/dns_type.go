@@ -23,21 +23,13 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // DNS settings of the cluster.
 type DNS struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	baseDomain string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *DNS) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // BaseDomain returns the value of the 'base_domain' attribute, or
@@ -88,7 +80,7 @@ func (o *DNS) Empty() bool {
 // When the cluster is created in Amazon Web Services it is necessary to create this base
 // DNS domain in advance, using AWS Route53 (https://console.aws.amazon.com/route53).
 func (o *DNS) BaseDomain() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.baseDomain
 	}
 	return ""
@@ -142,7 +134,7 @@ func (o *DNS) BaseDomain() string {
 // When the cluster is created in Amazon Web Services it is necessary to create this base
 // DNS domain in advance, using AWS Route53 (https://console.aws.amazon.com/route53).
 func (o *DNS) GetBaseDomain() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.baseDomain
 	}

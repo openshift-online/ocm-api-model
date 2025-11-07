@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
+// SubscriptionMetricsBuilder contains the data and logic needed to build 'subscription_metrics' objects.
+//
 // Each field is a metric fetched for a specific Subscription's cluster.
 type SubscriptionMetricsBuilder struct {
-	fieldSet_                    []bool
+	bitmap_                      uint32
 	cloudProvider                string
 	computeNodesCpu              *ClusterResourceBuilder
 	computeNodesMemory           *ClusterResourceBuilder
@@ -48,276 +50,200 @@ type SubscriptionMetricsBuilder struct {
 
 // NewSubscriptionMetrics creates a new builder of 'subscription_metrics' objects.
 func NewSubscriptionMetrics() *SubscriptionMetricsBuilder {
-	return &SubscriptionMetricsBuilder{
-		fieldSet_: make([]bool, 22),
-	}
+	return &SubscriptionMetricsBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SubscriptionMetricsBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // CloudProvider sets the value of the 'cloud_provider' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) CloudProvider(value string) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.cloudProvider = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ComputeNodesCpu sets the value of the 'compute_nodes_cpu' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) ComputeNodesCpu(value *ClusterResourceBuilder) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.computeNodesCpu = value
 	if value != nil {
-		b.fieldSet_[1] = true
+		b.bitmap_ |= 2
 	} else {
-		b.fieldSet_[1] = false
+		b.bitmap_ &^= 2
 	}
 	return b
 }
 
 // ComputeNodesMemory sets the value of the 'compute_nodes_memory' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) ComputeNodesMemory(value *ClusterResourceBuilder) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.computeNodesMemory = value
 	if value != nil {
-		b.fieldSet_[2] = true
+		b.bitmap_ |= 4
 	} else {
-		b.fieldSet_[2] = false
+		b.bitmap_ &^= 4
 	}
 	return b
 }
 
 // ComputeNodesSockets sets the value of the 'compute_nodes_sockets' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) ComputeNodesSockets(value *ClusterResourceBuilder) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.computeNodesSockets = value
 	if value != nil {
-		b.fieldSet_[3] = true
+		b.bitmap_ |= 8
 	} else {
-		b.fieldSet_[3] = false
+		b.bitmap_ &^= 8
 	}
 	return b
 }
 
 // ConsoleUrl sets the value of the 'console_url' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) ConsoleUrl(value string) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.consoleUrl = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // Cpu sets the value of the 'cpu' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) Cpu(value *ClusterResourceBuilder) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.cpu = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
 
 // CriticalAlertsFiring sets the value of the 'critical_alerts_firing' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) CriticalAlertsFiring(value float64) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.criticalAlertsFiring = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // HealthState sets the value of the 'health_state' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) HealthState(value string) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.healthState = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // Memory sets the value of the 'memory' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) Memory(value *ClusterResourceBuilder) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.memory = value
 	if value != nil {
-		b.fieldSet_[8] = true
+		b.bitmap_ |= 256
 	} else {
-		b.fieldSet_[8] = false
+		b.bitmap_ &^= 256
 	}
 	return b
 }
 
 // Nodes sets the value of the 'nodes' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) Nodes(value *ClusterMetricsNodesBuilder) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.nodes = value
 	if value != nil {
-		b.fieldSet_[9] = true
+		b.bitmap_ |= 512
 	} else {
-		b.fieldSet_[9] = false
+		b.bitmap_ &^= 512
 	}
 	return b
 }
 
 // OpenshiftVersion sets the value of the 'openshift_version' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) OpenshiftVersion(value string) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.openshiftVersion = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
 // OperatingSystem sets the value of the 'operating_system' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) OperatingSystem(value string) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.operatingSystem = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
 // OperatorsConditionFailing sets the value of the 'operators_condition_failing' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) OperatorsConditionFailing(value float64) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.operatorsConditionFailing = value
-	b.fieldSet_[12] = true
+	b.bitmap_ |= 4096
 	return b
 }
 
 // Region sets the value of the 'region' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) Region(value string) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.region = value
-	b.fieldSet_[13] = true
+	b.bitmap_ |= 8192
 	return b
 }
 
 // Sockets sets the value of the 'sockets' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) Sockets(value *ClusterResourceBuilder) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.sockets = value
 	if value != nil {
-		b.fieldSet_[14] = true
+		b.bitmap_ |= 16384
 	} else {
-		b.fieldSet_[14] = false
+		b.bitmap_ &^= 16384
 	}
 	return b
 }
 
 // State sets the value of the 'state' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) State(value string) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.state = value
-	b.fieldSet_[15] = true
+	b.bitmap_ |= 32768
 	return b
 }
 
 // StateDescription sets the value of the 'state_description' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) StateDescription(value string) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.stateDescription = value
-	b.fieldSet_[16] = true
+	b.bitmap_ |= 65536
 	return b
 }
 
 // Storage sets the value of the 'storage' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) Storage(value *ClusterResourceBuilder) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.storage = value
 	if value != nil {
-		b.fieldSet_[17] = true
+		b.bitmap_ |= 131072
 	} else {
-		b.fieldSet_[17] = false
+		b.bitmap_ &^= 131072
 	}
 	return b
 }
 
 // SubscriptionCpuTotal sets the value of the 'subscription_cpu_total' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) SubscriptionCpuTotal(value float64) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.subscriptionCpuTotal = value
-	b.fieldSet_[18] = true
+	b.bitmap_ |= 262144
 	return b
 }
 
 // SubscriptionObligationExists sets the value of the 'subscription_obligation_exists' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) SubscriptionObligationExists(value float64) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.subscriptionObligationExists = value
-	b.fieldSet_[19] = true
+	b.bitmap_ |= 524288
 	return b
 }
 
 // SubscriptionSocketTotal sets the value of the 'subscription_socket_total' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) SubscriptionSocketTotal(value float64) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.subscriptionSocketTotal = value
-	b.fieldSet_[20] = true
+	b.bitmap_ |= 1048576
 	return b
 }
 
 // Upgrade sets the value of the 'upgrade' attribute to the given value.
 func (b *SubscriptionMetricsBuilder) Upgrade(value *ClusterUpgradeBuilder) *SubscriptionMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 22)
-	}
 	b.upgrade = value
 	if value != nil {
-		b.fieldSet_[21] = true
+		b.bitmap_ |= 2097152
 	} else {
-		b.fieldSet_[21] = false
+		b.bitmap_ &^= 2097152
 	}
 	return b
 }
@@ -327,10 +253,7 @@ func (b *SubscriptionMetricsBuilder) Copy(object *SubscriptionMetrics) *Subscrip
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.cloudProvider = object.cloudProvider
 	if object.computeNodesCpu != nil {
 		b.computeNodesCpu = NewClusterResource().Copy(object.computeNodesCpu)
@@ -395,10 +318,7 @@ func (b *SubscriptionMetricsBuilder) Copy(object *SubscriptionMetrics) *Subscrip
 // Build creates a 'subscription_metrics' object using the configuration stored in the builder.
 func (b *SubscriptionMetricsBuilder) Build() (object *SubscriptionMetrics, err error) {
 	object = new(SubscriptionMetrics)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.cloudProvider = b.cloudProvider
 	if b.computeNodesCpu != nil {
 		object.computeNodesCpu, err = b.computeNodesCpu.Build()

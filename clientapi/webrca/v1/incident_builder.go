@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// IncidentBuilder contains the data and logic needed to build 'incident' objects.
+//
 // Definition of a Web RCA incident.
 type IncidentBuilder struct {
-	fieldSet_            []bool
+	bitmap_              uint32
 	id                   string
 	href                 string
 	createdAt            time.Time
@@ -46,192 +48,130 @@ type IncidentBuilder struct {
 
 // NewIncident creates a new builder of 'incident' objects.
 func NewIncident() *IncidentBuilder {
-	return &IncidentBuilder{
-		fieldSet_: make([]bool, 17),
-	}
+	return &IncidentBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *IncidentBuilder) Link(value bool) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *IncidentBuilder) ID(value string) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *IncidentBuilder) HREF(value string) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *IncidentBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *IncidentBuilder) CreatedAt(value time.Time) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.createdAt = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // CreatorId sets the value of the 'creator_id' attribute to the given value.
 func (b *IncidentBuilder) CreatorId(value string) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.creatorId = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *IncidentBuilder) DeletedAt(value time.Time) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.deletedAt = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *IncidentBuilder) Description(value string) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.description = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // ExternalCoordination sets the value of the 'external_coordination' attribute to the given values.
 func (b *IncidentBuilder) ExternalCoordination(values ...string) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.externalCoordination = make([]string, len(values))
 	copy(b.externalCoordination, values)
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // IncidentId sets the value of the 'incident_id' attribute to the given value.
 func (b *IncidentBuilder) IncidentId(value string) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.incidentId = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // IncidentType sets the value of the 'incident_type' attribute to the given value.
 func (b *IncidentBuilder) IncidentType(value string) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.incidentType = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // LastUpdated sets the value of the 'last_updated' attribute to the given value.
 func (b *IncidentBuilder) LastUpdated(value time.Time) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.lastUpdated = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
 // PrimaryTeam sets the value of the 'primary_team' attribute to the given value.
 func (b *IncidentBuilder) PrimaryTeam(value string) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.primaryTeam = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
 // Severity sets the value of the 'severity' attribute to the given value.
 func (b *IncidentBuilder) Severity(value string) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.severity = value
-	b.fieldSet_[12] = true
+	b.bitmap_ |= 4096
 	return b
 }
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *IncidentBuilder) Status(value string) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.status = value
-	b.fieldSet_[13] = true
+	b.bitmap_ |= 8192
 	return b
 }
 
 // Summary sets the value of the 'summary' attribute to the given value.
 func (b *IncidentBuilder) Summary(value string) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.summary = value
-	b.fieldSet_[14] = true
+	b.bitmap_ |= 16384
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *IncidentBuilder) UpdatedAt(value time.Time) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.updatedAt = value
-	b.fieldSet_[15] = true
+	b.bitmap_ |= 32768
 	return b
 }
 
 // WorkedAt sets the value of the 'worked_at' attribute to the given value.
 func (b *IncidentBuilder) WorkedAt(value time.Time) *IncidentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.workedAt = value
-	b.fieldSet_[16] = true
+	b.bitmap_ |= 65536
 	return b
 }
 
@@ -240,10 +180,7 @@ func (b *IncidentBuilder) Copy(object *Incident) *IncidentBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.createdAt = object.createdAt
@@ -273,10 +210,7 @@ func (b *IncidentBuilder) Build() (object *Incident, err error) {
 	object = new(Incident)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.createdAt = b.createdAt
 	object.creatorId = b.creatorId
 	object.deletedAt = b.deletedAt

@@ -42,7 +42,7 @@ func WriteAWSCapacityReservation(object *AWSCapacityReservation, stream *jsonite
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAWSCapacityReservation(object *AWSCapacityReservation, stream *jsonite
 		stream.WriteString(object.id)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalAWSCapacityReservation(source interface{}) (object *AWSCapacityRes
 
 // ReadAWSCapacityReservation reads a value of the 'AWS_capacity_reservation' type from the given iterator.
 func ReadAWSCapacityReservation(iterator *jsoniter.Iterator) *AWSCapacityReservation {
-	object := &AWSCapacityReservation{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &AWSCapacityReservation{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,12 +86,12 @@ func ReadAWSCapacityReservation(iterator *jsoniter.Iterator) *AWSCapacityReserva
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "market_type":
 			text := iterator.ReadString()
 			value := MarketType(text)
 			object.marketType = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

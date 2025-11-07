@@ -23,7 +23,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Representation of an sts operator
 type STSOperator struct {
-	fieldSet_       []bool
+	bitmap_         uint32
 	maxVersion      string
 	minVersion      string
 	name            string
@@ -33,15 +33,7 @@ type STSOperator struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *STSOperator) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // MaxVersion returns the value of the 'max_version' attribute, or
@@ -49,7 +41,7 @@ func (o *STSOperator) Empty() bool {
 //
 // Maximum ocp version supported
 func (o *STSOperator) MaxVersion() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.maxVersion
 	}
 	return ""
@@ -60,7 +52,7 @@ func (o *STSOperator) MaxVersion() string {
 //
 // Maximum ocp version supported
 func (o *STSOperator) GetMaxVersion() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.maxVersion
 	}
@@ -72,7 +64,7 @@ func (o *STSOperator) GetMaxVersion() (value string, ok bool) {
 //
 // Minimum ocp version supported
 func (o *STSOperator) MinVersion() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.minVersion
 	}
 	return ""
@@ -83,7 +75,7 @@ func (o *STSOperator) MinVersion() string {
 //
 // Minimum ocp version supported
 func (o *STSOperator) GetMinVersion() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.minVersion
 	}
@@ -95,7 +87,7 @@ func (o *STSOperator) GetMinVersion() (value string, ok bool) {
 //
 // Operator Name
 func (o *STSOperator) Name() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.name
 	}
 	return ""
@@ -106,7 +98,7 @@ func (o *STSOperator) Name() string {
 //
 // Operator Name
 func (o *STSOperator) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.name
 	}
@@ -118,7 +110,7 @@ func (o *STSOperator) GetName() (value string, ok bool) {
 //
 // Operator Namespace
 func (o *STSOperator) Namespace() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.namespace
 	}
 	return ""
@@ -129,7 +121,7 @@ func (o *STSOperator) Namespace() string {
 //
 // Operator Namespace
 func (o *STSOperator) GetNamespace() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.namespace
 	}
@@ -141,7 +133,7 @@ func (o *STSOperator) GetNamespace() (value string, ok bool) {
 //
 // Service Accounts
 func (o *STSOperator) ServiceAccounts() []string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.serviceAccounts
 	}
 	return nil
@@ -152,7 +144,7 @@ func (o *STSOperator) ServiceAccounts() []string {
 //
 // Service Accounts
 func (o *STSOperator) GetServiceAccounts() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.serviceAccounts
 	}

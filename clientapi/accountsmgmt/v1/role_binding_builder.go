@@ -23,8 +23,9 @@ import (
 	time "time"
 )
 
+// RoleBindingBuilder contains the data and logic needed to build 'role_binding' objects.
 type RoleBindingBuilder struct {
-	fieldSet_      []bool
+	bitmap_        uint32
 	id             string
 	href           string
 	account        *AccountBuilder
@@ -46,221 +47,156 @@ type RoleBindingBuilder struct {
 
 // NewRoleBinding creates a new builder of 'role_binding' objects.
 func NewRoleBinding() *RoleBindingBuilder {
-	return &RoleBindingBuilder{
-		fieldSet_: make([]bool, 18),
-	}
+	return &RoleBindingBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *RoleBindingBuilder) Link(value bool) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *RoleBindingBuilder) ID(value string) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *RoleBindingBuilder) HREF(value string) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *RoleBindingBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // Account sets the value of the 'account' attribute to the given value.
 func (b *RoleBindingBuilder) Account(value *AccountBuilder) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.account = value
 	if value != nil {
-		b.fieldSet_[3] = true
+		b.bitmap_ |= 8
 	} else {
-		b.fieldSet_[3] = false
+		b.bitmap_ &^= 8
 	}
 	return b
 }
 
 // AccountID sets the value of the 'account_ID' attribute to the given value.
 func (b *RoleBindingBuilder) AccountID(value string) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.accountID = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // AccountGroup sets the value of the 'account_group' attribute to the given value.
 func (b *RoleBindingBuilder) AccountGroup(value *AccountGroupBuilder) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.accountGroup = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
 
 // AccountGroupID sets the value of the 'account_group_ID' attribute to the given value.
 func (b *RoleBindingBuilder) AccountGroupID(value string) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.accountGroupID = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // ConfigManaged sets the value of the 'config_managed' attribute to the given value.
 func (b *RoleBindingBuilder) ConfigManaged(value bool) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.configManaged = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *RoleBindingBuilder) CreatedAt(value time.Time) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.createdAt = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // ManagedBy sets the value of the 'managed_by' attribute to the given value.
 func (b *RoleBindingBuilder) ManagedBy(value string) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.managedBy = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // Organization sets the value of the 'organization' attribute to the given value.
 func (b *RoleBindingBuilder) Organization(value *OrganizationBuilder) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.organization = value
 	if value != nil {
-		b.fieldSet_[10] = true
+		b.bitmap_ |= 1024
 	} else {
-		b.fieldSet_[10] = false
+		b.bitmap_ &^= 1024
 	}
 	return b
 }
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *RoleBindingBuilder) OrganizationID(value string) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.organizationID = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
 // Role sets the value of the 'role' attribute to the given value.
 func (b *RoleBindingBuilder) Role(value *RoleBuilder) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.role = value
 	if value != nil {
-		b.fieldSet_[12] = true
+		b.bitmap_ |= 4096
 	} else {
-		b.fieldSet_[12] = false
+		b.bitmap_ &^= 4096
 	}
 	return b
 }
 
 // RoleID sets the value of the 'role_ID' attribute to the given value.
 func (b *RoleBindingBuilder) RoleID(value string) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.roleID = value
-	b.fieldSet_[13] = true
+	b.bitmap_ |= 8192
 	return b
 }
 
 // Subscription sets the value of the 'subscription' attribute to the given value.
 func (b *RoleBindingBuilder) Subscription(value *SubscriptionBuilder) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.subscription = value
 	if value != nil {
-		b.fieldSet_[14] = true
+		b.bitmap_ |= 16384
 	} else {
-		b.fieldSet_[14] = false
+		b.bitmap_ &^= 16384
 	}
 	return b
 }
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *RoleBindingBuilder) SubscriptionID(value string) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.subscriptionID = value
-	b.fieldSet_[15] = true
+	b.bitmap_ |= 32768
 	return b
 }
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *RoleBindingBuilder) Type(value string) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.type_ = value
-	b.fieldSet_[16] = true
+	b.bitmap_ |= 65536
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *RoleBindingBuilder) UpdatedAt(value time.Time) *RoleBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 18)
-	}
 	b.updatedAt = value
-	b.fieldSet_[17] = true
+	b.bitmap_ |= 131072
 	return b
 }
 
@@ -269,10 +205,7 @@ func (b *RoleBindingBuilder) Copy(object *RoleBinding) *RoleBindingBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.account != nil {
@@ -318,10 +251,7 @@ func (b *RoleBindingBuilder) Build() (object *RoleBinding, err error) {
 	object = new(RoleBinding)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.account != nil {
 		object.account, err = b.account.Build()
 		if err != nil {

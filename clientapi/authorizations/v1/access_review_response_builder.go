@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
+// AccessReviewResponseBuilder contains the data and logic needed to build 'access_review_response' objects.
+//
 // Representation of an access review response
 type AccessReviewResponseBuilder struct {
-	fieldSet_       []bool
+	bitmap_         uint32
 	accountUsername string
 	action          string
 	clusterID       string
@@ -36,121 +38,81 @@ type AccessReviewResponseBuilder struct {
 
 // NewAccessReviewResponse creates a new builder of 'access_review_response' objects.
 func NewAccessReviewResponse() *AccessReviewResponseBuilder {
-	return &AccessReviewResponseBuilder{
-		fieldSet_: make([]bool, 10),
-	}
+	return &AccessReviewResponseBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AccessReviewResponseBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *AccessReviewResponseBuilder) AccountUsername(value string) *AccessReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.accountUsername = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Action sets the value of the 'action' attribute to the given value.
 func (b *AccessReviewResponseBuilder) Action(value string) *AccessReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.action = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Allowed sets the value of the 'allowed' attribute to the given value.
 func (b *AccessReviewResponseBuilder) Allowed(value bool) *AccessReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.allowed = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *AccessReviewResponseBuilder) ClusterID(value string) *AccessReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.clusterID = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // ClusterUUID sets the value of the 'cluster_UUID' attribute to the given value.
 func (b *AccessReviewResponseBuilder) ClusterUUID(value string) *AccessReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.clusterUUID = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // IsOCMInternal sets the value of the 'is_OCM_internal' attribute to the given value.
 func (b *AccessReviewResponseBuilder) IsOCMInternal(value bool) *AccessReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.isOCMInternal = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *AccessReviewResponseBuilder) OrganizationID(value string) *AccessReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.organizationID = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // Reason sets the value of the 'reason' attribute to the given value.
 func (b *AccessReviewResponseBuilder) Reason(value string) *AccessReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.reason = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *AccessReviewResponseBuilder) ResourceType(value string) *AccessReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.resourceType = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *AccessReviewResponseBuilder) SubscriptionID(value string) *AccessReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.subscriptionID = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
@@ -159,10 +121,7 @@ func (b *AccessReviewResponseBuilder) Copy(object *AccessReviewResponse) *Access
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.accountUsername = object.accountUsername
 	b.action = object.action
 	b.allowed = object.allowed
@@ -179,10 +138,7 @@ func (b *AccessReviewResponseBuilder) Copy(object *AccessReviewResponse) *Access
 // Build creates a 'access_review_response' object using the configuration stored in the builder.
 func (b *AccessReviewResponseBuilder) Build() (object *AccessReviewResponse, err error) {
 	object = new(AccessReviewResponse)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.accountUsername = b.accountUsername
 	object.action = b.action
 	object.allowed = b.allowed

@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// ProxyBuilder contains the data and logic needed to build 'proxy' objects.
+//
 // Proxy configuration of a cluster.
 type ProxyBuilder struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	httpProxy  string
 	httpsProxy string
 	noProxy    string
@@ -29,51 +31,32 @@ type ProxyBuilder struct {
 
 // NewProxy creates a new builder of 'proxy' objects.
 func NewProxy() *ProxyBuilder {
-	return &ProxyBuilder{
-		fieldSet_: make([]bool, 3),
-	}
+	return &ProxyBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ProxyBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // HTTPProxy sets the value of the 'HTTP_proxy' attribute to the given value.
 func (b *ProxyBuilder) HTTPProxy(value string) *ProxyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.httpProxy = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // HTTPSProxy sets the value of the 'HTTPS_proxy' attribute to the given value.
 func (b *ProxyBuilder) HTTPSProxy(value string) *ProxyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.httpsProxy = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // NoProxy sets the value of the 'no_proxy' attribute to the given value.
 func (b *ProxyBuilder) NoProxy(value string) *ProxyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.noProxy = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
@@ -82,10 +65,7 @@ func (b *ProxyBuilder) Copy(object *Proxy) *ProxyBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.httpProxy = object.httpProxy
 	b.httpsProxy = object.httpsProxy
 	b.noProxy = object.noProxy
@@ -95,10 +75,7 @@ func (b *ProxyBuilder) Copy(object *Proxy) *ProxyBuilder {
 // Build creates a 'proxy' object using the configuration stored in the builder.
 func (b *ProxyBuilder) Build() (object *Proxy, err error) {
 	object = new(Proxy)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.httpProxy = b.httpProxy
 	object.httpsProxy = b.httpsProxy
 	object.noProxy = b.noProxy

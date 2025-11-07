@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
+// AddonSecretPropagationBuilder contains the data and logic needed to build 'addon_secret_propagation' objects.
+//
 // Representation of an addon secret propagation
 type AddonSecretPropagationBuilder struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	id                string
 	destinationSecret string
 	sourceSecret      string
@@ -30,61 +32,39 @@ type AddonSecretPropagationBuilder struct {
 
 // NewAddonSecretPropagation creates a new builder of 'addon_secret_propagation' objects.
 func NewAddonSecretPropagation() *AddonSecretPropagationBuilder {
-	return &AddonSecretPropagationBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &AddonSecretPropagationBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddonSecretPropagationBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *AddonSecretPropagationBuilder) ID(value string) *AddonSecretPropagationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.id = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // DestinationSecret sets the value of the 'destination_secret' attribute to the given value.
 func (b *AddonSecretPropagationBuilder) DestinationSecret(value string) *AddonSecretPropagationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.destinationSecret = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddonSecretPropagationBuilder) Enabled(value bool) *AddonSecretPropagationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.enabled = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // SourceSecret sets the value of the 'source_secret' attribute to the given value.
 func (b *AddonSecretPropagationBuilder) SourceSecret(value string) *AddonSecretPropagationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.sourceSecret = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -93,10 +73,7 @@ func (b *AddonSecretPropagationBuilder) Copy(object *AddonSecretPropagation) *Ad
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.destinationSecret = object.destinationSecret
 	b.enabled = object.enabled
@@ -107,10 +84,7 @@ func (b *AddonSecretPropagationBuilder) Copy(object *AddonSecretPropagation) *Ad
 // Build creates a 'addon_secret_propagation' object using the configuration stored in the builder.
 func (b *AddonSecretPropagationBuilder) Build() (object *AddonSecretPropagation, err error) {
 	object = new(AddonSecretPropagation)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.id = b.id
 	object.destinationSecret = b.destinationSecret
 	object.enabled = b.enabled

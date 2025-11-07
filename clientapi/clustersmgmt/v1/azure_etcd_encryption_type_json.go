@@ -42,7 +42,7 @@ func WriteAzureEtcdEncryption(object *AzureEtcdEncryption, stream *jsoniter.Stre
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.dataEncryption != nil
+	present_ = object.bitmap_&1 != 0 && object.dataEncryption != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalAzureEtcdEncryption(source interface{}) (object *AzureEtcdEncrypti
 
 // ReadAzureEtcdEncryption reads a value of the 'azure_etcd_encryption' type from the given iterator.
 func ReadAzureEtcdEncryption(iterator *jsoniter.Iterator) *AzureEtcdEncryption {
-	object := &AzureEtcdEncryption{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &AzureEtcdEncryption{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadAzureEtcdEncryption(iterator *jsoniter.Iterator) *AzureEtcdEncryption {
 		case "data_encryption":
 			value := ReadAzureEtcdDataEncryption(iterator)
 			object.dataEncryption = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

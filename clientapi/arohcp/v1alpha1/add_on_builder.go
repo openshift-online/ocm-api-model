@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// AddOnBuilder contains the data and logic needed to build 'add_on' objects.
+//
 // Representation of an add-on that can be installed in a cluster.
 type AddOnBuilder struct {
-	fieldSet_            []bool
+	bitmap_              uint32
 	id                   string
 	href                 string
 	commonAnnotations    map[string]string
@@ -51,78 +53,52 @@ type AddOnBuilder struct {
 
 // NewAddOn creates a new builder of 'add_on' objects.
 func NewAddOn() *AddOnBuilder {
-	return &AddOnBuilder{
-		fieldSet_: make([]bool, 26),
-	}
+	return &AddOnBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddOnBuilder) Link(value bool) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddOnBuilder) ID(value string) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AddOnBuilder) HREF(value string) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddOnBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // CommonAnnotations sets the value of the 'common_annotations' attribute to the given value.
 func (b *AddOnBuilder) CommonAnnotations(value map[string]string) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.commonAnnotations = value
 	if value != nil {
-		b.fieldSet_[3] = true
+		b.bitmap_ |= 8
 	} else {
-		b.fieldSet_[3] = false
+		b.bitmap_ &^= 8
 	}
 	return b
 }
 
 // CommonLabels sets the value of the 'common_labels' attribute to the given value.
 func (b *AddOnBuilder) CommonLabels(value map[string]string) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.commonLabels = value
 	if value != nil {
-		b.fieldSet_[4] = true
+		b.bitmap_ |= 16
 	} else {
-		b.fieldSet_[4] = false
+		b.bitmap_ &^= 16
 	}
 	return b
 }
@@ -132,86 +108,62 @@ func (b *AddOnBuilder) CommonLabels(value map[string]string) *AddOnBuilder {
 // Representation of an add-on config.
 // The attributes under it are to be used by the addon once its installed in the cluster.
 func (b *AddOnBuilder) Config(value *AddOnConfigBuilder) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.config = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
 
 // CredentialsRequests sets the value of the 'credentials_requests' attribute to the given values.
 func (b *AddOnBuilder) CredentialsRequests(values ...*CredentialRequestBuilder) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.credentialsRequests = make([]*CredentialRequestBuilder, len(values))
 	copy(b.credentialsRequests, values)
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *AddOnBuilder) Description(value string) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.description = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // DocsLink sets the value of the 'docs_link' attribute to the given value.
 func (b *AddOnBuilder) DocsLink(value string) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.docsLink = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddOnBuilder) Enabled(value bool) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.enabled = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // HasExternalResources sets the value of the 'has_external_resources' attribute to the given value.
 func (b *AddOnBuilder) HasExternalResources(value bool) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.hasExternalResources = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
 // Hidden sets the value of the 'hidden' attribute to the given value.
 func (b *AddOnBuilder) Hidden(value bool) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.hidden = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
 // Icon sets the value of the 'icon' attribute to the given value.
 func (b *AddOnBuilder) Icon(value string) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.icon = value
-	b.fieldSet_[12] = true
+	b.bitmap_ |= 4096
 	return b
 }
 
@@ -219,124 +171,88 @@ func (b *AddOnBuilder) Icon(value string) *AddOnBuilder {
 //
 // Representation of an add-on InstallMode field.
 func (b *AddOnBuilder) InstallMode(value AddOnInstallMode) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.installMode = value
-	b.fieldSet_[13] = true
+	b.bitmap_ |= 8192
 	return b
 }
 
 // Label sets the value of the 'label' attribute to the given value.
 func (b *AddOnBuilder) Label(value string) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.label = value
-	b.fieldSet_[14] = true
+	b.bitmap_ |= 16384
 	return b
 }
 
 // ManagedService sets the value of the 'managed_service' attribute to the given value.
 func (b *AddOnBuilder) ManagedService(value bool) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.managedService = value
-	b.fieldSet_[15] = true
+	b.bitmap_ |= 32768
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AddOnBuilder) Name(value string) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.name = value
-	b.fieldSet_[16] = true
+	b.bitmap_ |= 65536
 	return b
 }
 
 // Namespaces sets the value of the 'namespaces' attribute to the given values.
 func (b *AddOnBuilder) Namespaces(values ...*AddOnNamespaceBuilder) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.namespaces = make([]*AddOnNamespaceBuilder, len(values))
 	copy(b.namespaces, values)
-	b.fieldSet_[17] = true
+	b.bitmap_ |= 131072
 	return b
 }
 
 // OperatorName sets the value of the 'operator_name' attribute to the given value.
 func (b *AddOnBuilder) OperatorName(value string) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.operatorName = value
-	b.fieldSet_[18] = true
+	b.bitmap_ |= 262144
 	return b
 }
 
 // Parameters sets the value of the 'parameters' attribute to the given values.
 func (b *AddOnBuilder) Parameters(value *AddOnParameterListBuilder) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.parameters = value
-	b.fieldSet_[19] = true
+	b.bitmap_ |= 524288
 	return b
 }
 
 // Requirements sets the value of the 'requirements' attribute to the given values.
 func (b *AddOnBuilder) Requirements(values ...*AddOnRequirementBuilder) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.requirements = make([]*AddOnRequirementBuilder, len(values))
 	copy(b.requirements, values)
-	b.fieldSet_[20] = true
+	b.bitmap_ |= 1048576
 	return b
 }
 
 // ResourceCost sets the value of the 'resource_cost' attribute to the given value.
 func (b *AddOnBuilder) ResourceCost(value float64) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.resourceCost = value
-	b.fieldSet_[21] = true
+	b.bitmap_ |= 2097152
 	return b
 }
 
 // ResourceName sets the value of the 'resource_name' attribute to the given value.
 func (b *AddOnBuilder) ResourceName(value string) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.resourceName = value
-	b.fieldSet_[22] = true
+	b.bitmap_ |= 4194304
 	return b
 }
 
 // SubOperators sets the value of the 'sub_operators' attribute to the given values.
 func (b *AddOnBuilder) SubOperators(values ...*AddOnSubOperatorBuilder) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.subOperators = make([]*AddOnSubOperatorBuilder, len(values))
 	copy(b.subOperators, values)
-	b.fieldSet_[23] = true
+	b.bitmap_ |= 8388608
 	return b
 }
 
 // TargetNamespace sets the value of the 'target_namespace' attribute to the given value.
 func (b *AddOnBuilder) TargetNamespace(value string) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.targetNamespace = value
-	b.fieldSet_[24] = true
+	b.bitmap_ |= 16777216
 	return b
 }
 
@@ -344,14 +260,11 @@ func (b *AddOnBuilder) TargetNamespace(value string) *AddOnBuilder {
 //
 // Representation of an add-on version.
 func (b *AddOnBuilder) Version(value *AddOnVersionBuilder) *AddOnBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 26)
-	}
 	b.version = value
 	if value != nil {
-		b.fieldSet_[25] = true
+		b.bitmap_ |= 33554432
 	} else {
-		b.fieldSet_[25] = false
+		b.bitmap_ &^= 33554432
 	}
 	return b
 }
@@ -361,10 +274,7 @@ func (b *AddOnBuilder) Copy(object *AddOn) *AddOnBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if len(object.commonAnnotations) > 0 {
@@ -452,10 +362,7 @@ func (b *AddOnBuilder) Build() (object *AddOn, err error) {
 	object = new(AddOn)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.commonAnnotations != nil {
 		object.commonAnnotations = make(map[string]string)
 		for k, v := range b.commonAnnotations {

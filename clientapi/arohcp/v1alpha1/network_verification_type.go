@@ -21,7 +21,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 
 // NetworkVerification represents the values of the 'network_verification' type.
 type NetworkVerification struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	cloudProviderData *CloudProviderData
 	clusterId         string
 	items             []*SubnetNetworkVerification
@@ -31,15 +31,7 @@ type NetworkVerification struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *NetworkVerification) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // CloudProviderData returns the value of the 'cloud_provider_data' attribute, or
@@ -47,7 +39,7 @@ func (o *NetworkVerification) Empty() bool {
 //
 // Cloud provider data to execute the network verification.
 func (o *NetworkVerification) CloudProviderData() *CloudProviderData {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.cloudProviderData
 	}
 	return nil
@@ -58,7 +50,7 @@ func (o *NetworkVerification) CloudProviderData() *CloudProviderData {
 //
 // Cloud provider data to execute the network verification.
 func (o *NetworkVerification) GetCloudProviderData() (value *CloudProviderData, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.cloudProviderData
 	}
@@ -70,7 +62,7 @@ func (o *NetworkVerification) GetCloudProviderData() (value *CloudProviderData, 
 //
 // Cluster ID needed to execute the network verification.
 func (o *NetworkVerification) ClusterId() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.clusterId
 	}
 	return ""
@@ -81,7 +73,7 @@ func (o *NetworkVerification) ClusterId() string {
 //
 // Cluster ID needed to execute the network verification.
 func (o *NetworkVerification) GetClusterId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.clusterId
 	}
@@ -93,7 +85,7 @@ func (o *NetworkVerification) GetClusterId() (value string, ok bool) {
 //
 // Details about each subnet network verification.
 func (o *NetworkVerification) Items() []*SubnetNetworkVerification {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.items
 	}
 	return nil
@@ -104,7 +96,7 @@ func (o *NetworkVerification) Items() []*SubnetNetworkVerification {
 //
 // Details about each subnet network verification.
 func (o *NetworkVerification) GetItems() (value []*SubnetNetworkVerification, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.items
 	}
@@ -116,7 +108,7 @@ func (o *NetworkVerification) GetItems() (value []*SubnetNetworkVerification, ok
 //
 // Platform needed to execute the network verification.
 func (o *NetworkVerification) Platform() Platform {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.platform
 	}
 	return Platform("")
@@ -127,7 +119,7 @@ func (o *NetworkVerification) Platform() Platform {
 //
 // Platform needed to execute the network verification.
 func (o *NetworkVerification) GetPlatform() (value Platform, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.platform
 	}
@@ -139,7 +131,7 @@ func (o *NetworkVerification) GetPlatform() (value Platform, ok bool) {
 //
 // Amount of network verifier executions started.
 func (o *NetworkVerification) Total() int {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.total
 	}
 	return 0
@@ -150,7 +142,7 @@ func (o *NetworkVerification) Total() int {
 //
 // Amount of network verifier executions started.
 func (o *NetworkVerification) GetTotal() (value int, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.total
 	}

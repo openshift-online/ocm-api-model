@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 //
 // _Amazon Web Services_ specific settings of a cluster.
 type AWS struct {
-	fieldSet_       []bool
+	bitmap_         uint32
 	sts             *STS
 	accessKeyID     string
 	accountID       string
@@ -35,15 +35,7 @@ type AWS struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AWS) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // STS returns the value of the 'STS' attribute, or
@@ -51,7 +43,7 @@ func (o *AWS) Empty() bool {
 //
 // Contains the necessary attributes to support role-based authentication on AWS.
 func (o *AWS) STS() *STS {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.sts
 	}
 	return nil
@@ -62,7 +54,7 @@ func (o *AWS) STS() *STS {
 //
 // Contains the necessary attributes to support role-based authentication on AWS.
 func (o *AWS) GetSTS() (value *STS, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.sts
 	}
@@ -74,7 +66,7 @@ func (o *AWS) GetSTS() (value *STS, ok bool) {
 //
 // AWS access key identifier.
 func (o *AWS) AccessKeyID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.accessKeyID
 	}
 	return ""
@@ -85,7 +77,7 @@ func (o *AWS) AccessKeyID() string {
 //
 // AWS access key identifier.
 func (o *AWS) GetAccessKeyID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.accessKeyID
 	}
@@ -97,7 +89,7 @@ func (o *AWS) GetAccessKeyID() (value string, ok bool) {
 //
 // AWS account identifier.
 func (o *AWS) AccountID() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.accountID
 	}
 	return ""
@@ -108,7 +100,7 @@ func (o *AWS) AccountID() string {
 //
 // AWS account identifier.
 func (o *AWS) GetAccountID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.accountID
 	}
@@ -120,7 +112,7 @@ func (o *AWS) GetAccountID() (value string, ok bool) {
 //
 // For PrivateLink-enabled clusters
 func (o *AWS) PrivateLink() bool {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.privateLink
 	}
 	return false
@@ -131,7 +123,7 @@ func (o *AWS) PrivateLink() bool {
 //
 // For PrivateLink-enabled clusters
 func (o *AWS) GetPrivateLink() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.privateLink
 	}
@@ -143,7 +135,7 @@ func (o *AWS) GetPrivateLink() (value bool, ok bool) {
 //
 // AWS secret access key.
 func (o *AWS) SecretAccessKey() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.secretAccessKey
 	}
 	return ""
@@ -154,7 +146,7 @@ func (o *AWS) SecretAccessKey() string {
 //
 // AWS secret access key.
 func (o *AWS) GetSecretAccessKey() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.secretAccessKey
 	}
@@ -166,7 +158,7 @@ func (o *AWS) GetSecretAccessKey() (value string, ok bool) {
 //
 // The subnet ids to be used when installing the cluster.
 func (o *AWS) SubnetIDs() []string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.subnetIDs
 	}
 	return nil
@@ -177,7 +169,7 @@ func (o *AWS) SubnetIDs() []string {
 //
 // The subnet ids to be used when installing the cluster.
 func (o *AWS) GetSubnetIDs() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.subnetIDs
 	}
@@ -189,7 +181,7 @@ func (o *AWS) GetSubnetIDs() (value []string, ok bool) {
 //
 // Optional keys and values that the installer will add as tags to all AWS resources it creates
 func (o *AWS) Tags() map[string]string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.tags
 	}
 	return nil
@@ -200,7 +192,7 @@ func (o *AWS) Tags() map[string]string {
 //
 // Optional keys and values that the installer will add as tags to all AWS resources it creates
 func (o *AWS) GetTags() (value map[string]string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.tags
 	}

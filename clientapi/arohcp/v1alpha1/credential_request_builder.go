@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// CredentialRequestBuilder contains the data and logic needed to build 'credential_request' objects.
+//
 // Contains the necessary attributes to allow each operator to access the necessary AWS resources
 type CredentialRequestBuilder struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	name              string
 	namespace         string
 	policyPermissions []string
@@ -30,62 +32,40 @@ type CredentialRequestBuilder struct {
 
 // NewCredentialRequest creates a new builder of 'credential_request' objects.
 func NewCredentialRequest() *CredentialRequestBuilder {
-	return &CredentialRequestBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &CredentialRequestBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *CredentialRequestBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *CredentialRequestBuilder) Name(value string) *CredentialRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.name = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Namespace sets the value of the 'namespace' attribute to the given value.
 func (b *CredentialRequestBuilder) Namespace(value string) *CredentialRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.namespace = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // PolicyPermissions sets the value of the 'policy_permissions' attribute to the given values.
 func (b *CredentialRequestBuilder) PolicyPermissions(values ...string) *CredentialRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.policyPermissions = make([]string, len(values))
 	copy(b.policyPermissions, values)
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // ServiceAccount sets the value of the 'service_account' attribute to the given value.
 func (b *CredentialRequestBuilder) ServiceAccount(value string) *CredentialRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.serviceAccount = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -94,10 +74,7 @@ func (b *CredentialRequestBuilder) Copy(object *CredentialRequest) *CredentialRe
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.name = object.name
 	b.namespace = object.namespace
 	if object.policyPermissions != nil {
@@ -113,10 +90,7 @@ func (b *CredentialRequestBuilder) Copy(object *CredentialRequest) *CredentialRe
 // Build creates a 'credential_request' object using the configuration stored in the builder.
 func (b *CredentialRequestBuilder) Build() (object *CredentialRequest, err error) {
 	object = new(CredentialRequest)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.name = b.name
 	object.namespace = b.namespace
 	if b.policyPermissions != nil {

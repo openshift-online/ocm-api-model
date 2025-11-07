@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// DNSDomainBuilder contains the data and logic needed to build 'DNS_domain' objects.
+//
 // Contains the properties of a DNS domain.
 type DNSDomainBuilder struct {
-	fieldSet_           []bool
+	bitmap_             uint32
 	id                  string
 	href                string
 	cluster             *ClusterLinkBuilder
@@ -37,66 +39,43 @@ type DNSDomainBuilder struct {
 
 // NewDNSDomain creates a new builder of 'DNS_domain' objects.
 func NewDNSDomain() *DNSDomainBuilder {
-	return &DNSDomainBuilder{
-		fieldSet_: make([]bool, 8),
-	}
+	return &DNSDomainBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *DNSDomainBuilder) Link(value bool) *DNSDomainBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *DNSDomainBuilder) ID(value string) *DNSDomainBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *DNSDomainBuilder) HREF(value string) *DNSDomainBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *DNSDomainBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // Cluster sets the value of the 'cluster' attribute to the given value.
 //
 // Definition of a cluster link.
 func (b *DNSDomainBuilder) Cluster(value *ClusterLinkBuilder) *DNSDomainBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.cluster = value
 	if value != nil {
-		b.fieldSet_[3] = true
+		b.bitmap_ |= 8
 	} else {
-		b.fieldSet_[3] = false
+		b.bitmap_ &^= 8
 	}
 	return b
 }
@@ -105,11 +84,8 @@ func (b *DNSDomainBuilder) Cluster(value *ClusterLinkBuilder) *DNSDomainBuilder 
 //
 // Possible cluster architectures.
 func (b *DNSDomainBuilder) ClusterArch(value ClusterArchitecture) *DNSDomainBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.clusterArch = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -117,35 +93,26 @@ func (b *DNSDomainBuilder) ClusterArch(value ClusterArchitecture) *DNSDomainBuil
 //
 // Definition of an organization link.
 func (b *DNSDomainBuilder) Organization(value *OrganizationLinkBuilder) *DNSDomainBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.organization = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
 
 // ReservedAtTimestamp sets the value of the 'reserved_at_timestamp' attribute to the given value.
 func (b *DNSDomainBuilder) ReservedAtTimestamp(value time.Time) *DNSDomainBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.reservedAtTimestamp = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // UserDefined sets the value of the 'user_defined' attribute to the given value.
 func (b *DNSDomainBuilder) UserDefined(value bool) *DNSDomainBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.userDefined = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
@@ -154,10 +121,7 @@ func (b *DNSDomainBuilder) Copy(object *DNSDomain) *DNSDomainBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.cluster != nil {
@@ -181,10 +145,7 @@ func (b *DNSDomainBuilder) Build() (object *DNSDomain, err error) {
 	object = new(DNSDomain)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.cluster != nil {
 		object.cluster, err = b.cluster.Build()
 		if err != nil {

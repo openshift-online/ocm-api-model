@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Representation of azure node pool specific parameters.
 type AzureNodePool struct {
-	fieldSet_        []bool
+	bitmap_          uint32
 	vmSize           string
 	encryptionAtHost *AzureNodePoolEncryptionAtHost
 	osDisk           *AzureNodePoolOsDisk
@@ -32,15 +32,7 @@ type AzureNodePool struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AzureNodePool) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // VMSize returns the value of the 'VM_size' attribute, or
@@ -52,7 +44,7 @@ func (o *AzureNodePool) Empty() bool {
 // of the parent Cluster.
 // Required during creation.
 func (o *AzureNodePool) VMSize() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.vmSize
 	}
 	return ""
@@ -67,7 +59,7 @@ func (o *AzureNodePool) VMSize() string {
 // of the parent Cluster.
 // Required during creation.
 func (o *AzureNodePool) GetVMSize() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.vmSize
 	}
@@ -83,7 +75,7 @@ func (o *AzureNodePool) GetVMSize() (value string, ok bool) {
 // If not specified, Encryption at Host is not enabled.
 // Immutable.
 func (o *AzureNodePool) EncryptionAtHost() *AzureNodePoolEncryptionAtHost {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.encryptionAtHost
 	}
 	return nil
@@ -98,7 +90,7 @@ func (o *AzureNodePool) EncryptionAtHost() *AzureNodePoolEncryptionAtHost {
 // If not specified, Encryption at Host is not enabled.
 // Immutable.
 func (o *AzureNodePool) GetEncryptionAtHost() (value *AzureNodePoolEncryptionAtHost, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.encryptionAtHost
 	}
@@ -110,7 +102,7 @@ func (o *AzureNodePool) GetEncryptionAtHost() (value *AzureNodePoolEncryptionAtH
 //
 // The configuration for the OS disk used by the nodes in the Node Pool.
 func (o *AzureNodePool) OsDisk() *AzureNodePoolOsDisk {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.osDisk
 	}
 	return nil
@@ -121,7 +113,7 @@ func (o *AzureNodePool) OsDisk() *AzureNodePoolOsDisk {
 //
 // The configuration for the OS disk used by the nodes in the Node Pool.
 func (o *AzureNodePool) GetOsDisk() (value *AzureNodePoolOsDisk, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.osDisk
 	}
@@ -143,7 +135,7 @@ func (o *AzureNodePool) GetOsDisk() (value *AzureNodePoolOsDisk, ok bool) {
 // Required during creation.
 // Immutable.
 func (o *AzureNodePool) ResourceName() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.resourceName
 	}
 	return ""
@@ -164,7 +156,7 @@ func (o *AzureNodePool) ResourceName() string {
 // Required during creation.
 // Immutable.
 func (o *AzureNodePool) GetResourceName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.resourceName
 	}

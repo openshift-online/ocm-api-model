@@ -43,7 +43,7 @@ func WriteClusterResource(object *ClusterResource, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.total != nil
+	present_ = object.bitmap_&1 != 0 && object.total != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -52,7 +52,7 @@ func WriteClusterResource(object *ClusterResource, stream *jsoniter.Stream) {
 		WriteValueUnit(object.total, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -61,7 +61,7 @@ func WriteClusterResource(object *ClusterResource, stream *jsoniter.Stream) {
 		stream.WriteString((object.updatedTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.used != nil
+	present_ = object.bitmap_&4 != 0 && object.used != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -86,9 +86,7 @@ func UnmarshalClusterResource(source interface{}) (object *ClusterResource, err 
 
 // ReadClusterResource reads a value of the 'cluster_resource' type from the given iterator.
 func ReadClusterResource(iterator *jsoniter.Iterator) *ClusterResource {
-	object := &ClusterResource{
-		fieldSet_: make([]bool, 3),
-	}
+	object := &ClusterResource{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -98,7 +96,7 @@ func ReadClusterResource(iterator *jsoniter.Iterator) *ClusterResource {
 		case "total":
 			value := ReadValueUnit(iterator)
 			object.total = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "updated_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -106,11 +104,11 @@ func ReadClusterResource(iterator *jsoniter.Iterator) *ClusterResource {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedTimestamp = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "used":
 			value := ReadValueUnit(iterator)
 			object.used = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		default:
 			iterator.ReadAny()
 		}

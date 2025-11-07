@@ -21,28 +21,20 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // WifCredentialRequest represents the values of the 'wif_credential_request' type.
 type WifCredentialRequest struct {
-	fieldSet_           []bool
+	bitmap_             uint32
 	secretRef           *WifSecretRef
 	serviceAccountNames []string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *WifCredentialRequest) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // SecretRef returns the value of the 'secret_ref' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifCredentialRequest) SecretRef() *WifSecretRef {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.secretRef
 	}
 	return nil
@@ -51,7 +43,7 @@ func (o *WifCredentialRequest) SecretRef() *WifSecretRef {
 // GetSecretRef returns the value of the 'secret_ref' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifCredentialRequest) GetSecretRef() (value *WifSecretRef, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.secretRef
 	}
@@ -61,7 +53,7 @@ func (o *WifCredentialRequest) GetSecretRef() (value *WifSecretRef, ok bool) {
 // ServiceAccountNames returns the value of the 'service_account_names' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifCredentialRequest) ServiceAccountNames() []string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.serviceAccountNames
 	}
 	return nil
@@ -70,7 +62,7 @@ func (o *WifCredentialRequest) ServiceAccountNames() []string {
 // GetServiceAccountNames returns the value of the 'service_account_names' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifCredentialRequest) GetServiceAccountNames() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.serviceAccountNames
 	}

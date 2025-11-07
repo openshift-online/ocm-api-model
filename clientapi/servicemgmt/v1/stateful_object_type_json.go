@@ -42,7 +42,7 @@ func WriteStatefulObject(object *StatefulObject, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteStatefulObject(object *StatefulObject, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteStatefulObject(object *StatefulObject, stream *jsoniter.Stream) {
 		stream.WriteString(object.href)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteStatefulObject(object *StatefulObject, stream *jsoniter.Stream) {
 		stream.WriteString(object.kind)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,9 +94,7 @@ func UnmarshalStatefulObject(source interface{}) (object *StatefulObject, err er
 
 // ReadStatefulObject reads a value of the 'stateful_object' type from the given iterator.
 func ReadStatefulObject(iterator *jsoniter.Iterator) *StatefulObject {
-	object := &StatefulObject{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &StatefulObject{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -106,19 +104,19 @@ func ReadStatefulObject(iterator *jsoniter.Iterator) *StatefulObject {
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "href":
 			value := iterator.ReadString()
 			object.href = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "kind":
 			value := iterator.ReadString()
 			object.kind = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "state":
 			value := iterator.ReadString()
 			object.state = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

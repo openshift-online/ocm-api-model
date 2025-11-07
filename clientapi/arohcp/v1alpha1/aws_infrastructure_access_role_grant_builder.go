@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// AWSInfrastructureAccessRoleGrantBuilder contains the data and logic needed to build 'AWS_infrastructure_access_role_grant' objects.
+//
 // Representation of an AWS infrastructure access role grant.
 type AWSInfrastructureAccessRoleGrantBuilder struct {
-	fieldSet_        []bool
+	bitmap_          uint32
 	id               string
 	href             string
 	consoleURL       string
@@ -33,61 +35,38 @@ type AWSInfrastructureAccessRoleGrantBuilder struct {
 
 // NewAWSInfrastructureAccessRoleGrant creates a new builder of 'AWS_infrastructure_access_role_grant' objects.
 func NewAWSInfrastructureAccessRoleGrant() *AWSInfrastructureAccessRoleGrantBuilder {
-	return &AWSInfrastructureAccessRoleGrantBuilder{
-		fieldSet_: make([]bool, 8),
-	}
+	return &AWSInfrastructureAccessRoleGrantBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AWSInfrastructureAccessRoleGrantBuilder) Link(value bool) *AWSInfrastructureAccessRoleGrantBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AWSInfrastructureAccessRoleGrantBuilder) ID(value string) *AWSInfrastructureAccessRoleGrantBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AWSInfrastructureAccessRoleGrantBuilder) HREF(value string) *AWSInfrastructureAccessRoleGrantBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AWSInfrastructureAccessRoleGrantBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // ConsoleURL sets the value of the 'console_URL' attribute to the given value.
 func (b *AWSInfrastructureAccessRoleGrantBuilder) ConsoleURL(value string) *AWSInfrastructureAccessRoleGrantBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.consoleURL = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -95,14 +74,11 @@ func (b *AWSInfrastructureAccessRoleGrantBuilder) ConsoleURL(value string) *AWSI
 //
 // A set of acces permissions for AWS resources
 func (b *AWSInfrastructureAccessRoleGrantBuilder) Role(value *AWSInfrastructureAccessRoleBuilder) *AWSInfrastructureAccessRoleGrantBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.role = value
 	if value != nil {
-		b.fieldSet_[4] = true
+		b.bitmap_ |= 16
 	} else {
-		b.fieldSet_[4] = false
+		b.bitmap_ &^= 16
 	}
 	return b
 }
@@ -111,31 +87,22 @@ func (b *AWSInfrastructureAccessRoleGrantBuilder) Role(value *AWSInfrastructureA
 //
 // State of an AWS infrastructure access role grant.
 func (b *AWSInfrastructureAccessRoleGrantBuilder) State(value AWSInfrastructureAccessRoleGrantState) *AWSInfrastructureAccessRoleGrantBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.state = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // StateDescription sets the value of the 'state_description' attribute to the given value.
 func (b *AWSInfrastructureAccessRoleGrantBuilder) StateDescription(value string) *AWSInfrastructureAccessRoleGrantBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.stateDescription = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // UserARN sets the value of the 'user_ARN' attribute to the given value.
 func (b *AWSInfrastructureAccessRoleGrantBuilder) UserARN(value string) *AWSInfrastructureAccessRoleGrantBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.userARN = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
@@ -144,10 +111,7 @@ func (b *AWSInfrastructureAccessRoleGrantBuilder) Copy(object *AWSInfrastructure
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.consoleURL = object.consoleURL
@@ -167,10 +131,7 @@ func (b *AWSInfrastructureAccessRoleGrantBuilder) Build() (object *AWSInfrastruc
 	object = new(AWSInfrastructureAccessRoleGrant)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.consoleURL = b.consoleURL
 	if b.role != nil {
 		object.role, err = b.role.Build()

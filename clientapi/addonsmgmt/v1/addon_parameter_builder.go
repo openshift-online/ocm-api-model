@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
+// AddonParameterBuilder contains the data and logic needed to build 'addon_parameter' objects.
+//
 // Representation of an addon parameter.
 type AddonParameterBuilder struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	id                string
 	addon             *AddonBuilder
 	conditions        []*AddonRequirementBuilder
@@ -41,31 +43,18 @@ type AddonParameterBuilder struct {
 
 // NewAddonParameter creates a new builder of 'addon_parameter' objects.
 func NewAddonParameter() *AddonParameterBuilder {
-	return &AddonParameterBuilder{
-		fieldSet_: make([]bool, 15),
-	}
+	return &AddonParameterBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddonParameterBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *AddonParameterBuilder) ID(value string) *AddonParameterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
-	}
 	b.id = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -73,137 +62,98 @@ func (b *AddonParameterBuilder) ID(value string) *AddonParameterBuilder {
 //
 // Representation of an addon that can be installed in a cluster.
 func (b *AddonParameterBuilder) Addon(value *AddonBuilder) *AddonParameterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
-	}
 	b.addon = value
 	if value != nil {
-		b.fieldSet_[1] = true
+		b.bitmap_ |= 2
 	} else {
-		b.fieldSet_[1] = false
+		b.bitmap_ &^= 2
 	}
 	return b
 }
 
 // Conditions sets the value of the 'conditions' attribute to the given values.
 func (b *AddonParameterBuilder) Conditions(values ...*AddonRequirementBuilder) *AddonParameterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
-	}
 	b.conditions = make([]*AddonRequirementBuilder, len(values))
 	copy(b.conditions, values)
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // DefaultValue sets the value of the 'default_value' attribute to the given value.
 func (b *AddonParameterBuilder) DefaultValue(value string) *AddonParameterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
-	}
 	b.defaultValue = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *AddonParameterBuilder) Description(value string) *AddonParameterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
-	}
 	b.description = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // Editable sets the value of the 'editable' attribute to the given value.
 func (b *AddonParameterBuilder) Editable(value bool) *AddonParameterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
-	}
 	b.editable = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // EditableDirection sets the value of the 'editable_direction' attribute to the given value.
 func (b *AddonParameterBuilder) EditableDirection(value string) *AddonParameterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
-	}
 	b.editableDirection = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddonParameterBuilder) Enabled(value bool) *AddonParameterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
-	}
 	b.enabled = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AddonParameterBuilder) Name(value string) *AddonParameterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
-	}
 	b.name = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // Options sets the value of the 'options' attribute to the given values.
 func (b *AddonParameterBuilder) Options(values ...*AddonParameterOptionBuilder) *AddonParameterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
-	}
 	b.options = make([]*AddonParameterOptionBuilder, len(values))
 	copy(b.options, values)
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // Order sets the value of the 'order' attribute to the given value.
 func (b *AddonParameterBuilder) Order(value int) *AddonParameterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
-	}
 	b.order = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
 // Required sets the value of the 'required' attribute to the given value.
 func (b *AddonParameterBuilder) Required(value bool) *AddonParameterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
-	}
 	b.required = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
 // Validation sets the value of the 'validation' attribute to the given value.
 func (b *AddonParameterBuilder) Validation(value string) *AddonParameterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
-	}
 	b.validation = value
-	b.fieldSet_[12] = true
+	b.bitmap_ |= 4096
 	return b
 }
 
 // ValidationErrMsg sets the value of the 'validation_err_msg' attribute to the given value.
 func (b *AddonParameterBuilder) ValidationErrMsg(value string) *AddonParameterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
-	}
 	b.validationErrMsg = value
-	b.fieldSet_[13] = true
+	b.bitmap_ |= 8192
 	return b
 }
 
@@ -211,11 +161,8 @@ func (b *AddonParameterBuilder) ValidationErrMsg(value string) *AddonParameterBu
 //
 // Representation of the value type for this specific addon parameter
 func (b *AddonParameterBuilder) ValueType(value AddonParameterValueType) *AddonParameterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
-	}
 	b.valueType = value
-	b.fieldSet_[14] = true
+	b.bitmap_ |= 16384
 	return b
 }
 
@@ -224,10 +171,7 @@ func (b *AddonParameterBuilder) Copy(object *AddonParameter) *AddonParameterBuil
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	if object.addon != nil {
 		b.addon = NewAddon().Copy(object.addon)
@@ -267,10 +211,7 @@ func (b *AddonParameterBuilder) Copy(object *AddonParameter) *AddonParameterBuil
 // Build creates a 'addon_parameter' object using the configuration stored in the builder.
 func (b *AddonParameterBuilder) Build() (object *AddonParameter, err error) {
 	object = new(AddonParameter)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.id = b.id
 	if b.addon != nil {
 		object.addon, err = b.addon.Build()

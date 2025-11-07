@@ -19,39 +19,28 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/osdfleetmgmt/v1
 
+// DNSBuilder contains the data and logic needed to build 'DNS' objects.
+//
 // DNS settings of the cluster.
 type DNSBuilder struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	baseDomain string
 }
 
 // NewDNS creates a new builder of 'DNS' objects.
 func NewDNS() *DNSBuilder {
-	return &DNSBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &DNSBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *DNSBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // BaseDomain sets the value of the 'base_domain' attribute to the given value.
 func (b *DNSBuilder) BaseDomain(value string) *DNSBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.baseDomain = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -60,10 +49,7 @@ func (b *DNSBuilder) Copy(object *DNS) *DNSBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.baseDomain = object.baseDomain
 	return b
 }
@@ -71,10 +57,7 @@ func (b *DNSBuilder) Copy(object *DNS) *DNSBuilder {
 // Build creates a 'DNS' object using the configuration stored in the builder.
 func (b *DNSBuilder) Build() (object *DNS, err error) {
 	object = new(DNS)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.baseDomain = b.baseDomain
 	return
 }

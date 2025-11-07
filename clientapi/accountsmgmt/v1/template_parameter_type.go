@@ -24,22 +24,14 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 // A template parameter is used in an email to replace placeholder content with
 // values specific to the email recipient.
 type TemplateParameter struct {
-	fieldSet_ []bool
-	content   string
-	name      string
+	bitmap_ uint32
+	content string
+	name    string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *TemplateParameter) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Content returns the value of the 'content' attribute, or
@@ -47,7 +39,7 @@ func (o *TemplateParameter) Empty() bool {
 //
 // The content that will replace the template parameter in the email
 func (o *TemplateParameter) Content() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.content
 	}
 	return ""
@@ -58,7 +50,7 @@ func (o *TemplateParameter) Content() string {
 //
 // The content that will replace the template parameter in the email
 func (o *TemplateParameter) GetContent() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.content
 	}
@@ -70,7 +62,7 @@ func (o *TemplateParameter) GetContent() (value string, ok bool) {
 //
 // Name of the value to be replaced
 func (o *TemplateParameter) Name() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.name
 	}
 	return ""
@@ -81,7 +73,7 @@ func (o *TemplateParameter) Name() string {
 //
 // Name of the value to be replaced
 func (o *TemplateParameter) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.name
 	}

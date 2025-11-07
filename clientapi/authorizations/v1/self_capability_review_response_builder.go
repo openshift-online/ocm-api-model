@@ -19,39 +19,28 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
+// SelfCapabilityReviewResponseBuilder contains the data and logic needed to build 'self_capability_review_response' objects.
+//
 // Representation of a capability review response.
 type SelfCapabilityReviewResponseBuilder struct {
-	fieldSet_ []bool
-	result    string
+	bitmap_ uint32
+	result  string
 }
 
 // NewSelfCapabilityReviewResponse creates a new builder of 'self_capability_review_response' objects.
 func NewSelfCapabilityReviewResponse() *SelfCapabilityReviewResponseBuilder {
-	return &SelfCapabilityReviewResponseBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &SelfCapabilityReviewResponseBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SelfCapabilityReviewResponseBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Result sets the value of the 'result' attribute to the given value.
 func (b *SelfCapabilityReviewResponseBuilder) Result(value string) *SelfCapabilityReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.result = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -60,10 +49,7 @@ func (b *SelfCapabilityReviewResponseBuilder) Copy(object *SelfCapabilityReviewR
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.result = object.result
 	return b
 }
@@ -71,10 +57,7 @@ func (b *SelfCapabilityReviewResponseBuilder) Copy(object *SelfCapabilityReviewR
 // Build creates a 'self_capability_review_response' object using the configuration stored in the builder.
 func (b *SelfCapabilityReviewResponseBuilder) Build() (object *SelfCapabilityReviewResponse, err error) {
 	object = new(SelfCapabilityReviewResponse)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.result = b.result
 	return
 }

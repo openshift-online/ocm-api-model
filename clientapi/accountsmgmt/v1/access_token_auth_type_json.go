@@ -42,7 +42,7 @@ func WriteAccessTokenAuth(object *AccessTokenAuth, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAccessTokenAuth(object *AccessTokenAuth, stream *jsoniter.Stream) {
 		stream.WriteString(object.auth)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalAccessTokenAuth(source interface{}) (object *AccessTokenAuth, err 
 
 // ReadAccessTokenAuth reads a value of the 'access_token_auth' type from the given iterator.
 func ReadAccessTokenAuth(iterator *jsoniter.Iterator) *AccessTokenAuth {
-	object := &AccessTokenAuth{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &AccessTokenAuth{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadAccessTokenAuth(iterator *jsoniter.Iterator) *AccessTokenAuth {
 		case "auth":
 			value := iterator.ReadString()
 			object.auth = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "email":
 			value := iterator.ReadString()
 			object.email = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

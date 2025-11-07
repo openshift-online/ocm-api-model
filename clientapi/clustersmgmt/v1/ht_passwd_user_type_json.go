@@ -42,7 +42,7 @@ func WriteHTPasswdUser(object *HTPasswdUser, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteHTPasswdUser(object *HTPasswdUser, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteHTPasswdUser(object *HTPasswdUser, stream *jsoniter.Stream) {
 		stream.WriteString(object.hashedPassword)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteHTPasswdUser(object *HTPasswdUser, stream *jsoniter.Stream) {
 		stream.WriteString(object.password)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,9 +94,7 @@ func UnmarshalHTPasswdUser(source interface{}) (object *HTPasswdUser, err error)
 
 // ReadHTPasswdUser reads a value of the 'HT_passwd_user' type from the given iterator.
 func ReadHTPasswdUser(iterator *jsoniter.Iterator) *HTPasswdUser {
-	object := &HTPasswdUser{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &HTPasswdUser{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -106,19 +104,19 @@ func ReadHTPasswdUser(iterator *jsoniter.Iterator) *HTPasswdUser {
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "hashed_password":
 			value := iterator.ReadString()
 			object.hashedPassword = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "password":
 			value := iterator.ReadString()
 			object.password = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "username":
 			value := iterator.ReadString()
 			object.username = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

@@ -23,22 +23,14 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Representation of an sts account role for a rosa cluster
 type AWSSTSAccountRole struct {
-	fieldSet_ []bool
-	items     []*AWSSTSRole
-	prefix    string
+	bitmap_ uint32
+	items   []*AWSSTSRole
+	prefix  string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AWSSTSAccountRole) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Items returns the value of the 'items' attribute, or
@@ -46,7 +38,7 @@ func (o *AWSSTSAccountRole) Empty() bool {
 //
 // The list of STS Roles for this Account Role
 func (o *AWSSTSAccountRole) Items() []*AWSSTSRole {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.items
 	}
 	return nil
@@ -57,7 +49,7 @@ func (o *AWSSTSAccountRole) Items() []*AWSSTSRole {
 //
 // The list of STS Roles for this Account Role
 func (o *AWSSTSAccountRole) GetItems() (value []*AWSSTSRole, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.items
 	}
@@ -69,7 +61,7 @@ func (o *AWSSTSAccountRole) GetItems() (value []*AWSSTSRole, ok bool) {
 //
 // The Prefix for this Account Role
 func (o *AWSSTSAccountRole) Prefix() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.prefix
 	}
 	return ""
@@ -80,7 +72,7 @@ func (o *AWSSTSAccountRole) Prefix() string {
 //
 // The Prefix for this Account Role
 func (o *AWSSTSAccountRole) GetPrefix() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.prefix
 	}

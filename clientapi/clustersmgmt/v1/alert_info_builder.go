@@ -19,40 +19,29 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// AlertInfoBuilder contains the data and logic needed to build 'alert_info' objects.
+//
 // Provides information about a single alert firing on the cluster.
 type AlertInfoBuilder struct {
-	fieldSet_ []bool
-	name      string
-	severity  AlertSeverity
+	bitmap_  uint32
+	name     string
+	severity AlertSeverity
 }
 
 // NewAlertInfo creates a new builder of 'alert_info' objects.
 func NewAlertInfo() *AlertInfoBuilder {
-	return &AlertInfoBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &AlertInfoBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AlertInfoBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AlertInfoBuilder) Name(value string) *AlertInfoBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.name = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -60,11 +49,8 @@ func (b *AlertInfoBuilder) Name(value string) *AlertInfoBuilder {
 //
 // Severity of a cluster alert received via telemetry.
 func (b *AlertInfoBuilder) Severity(value AlertSeverity) *AlertInfoBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.severity = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -73,10 +59,7 @@ func (b *AlertInfoBuilder) Copy(object *AlertInfo) *AlertInfoBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.name = object.name
 	b.severity = object.severity
 	return b
@@ -85,10 +68,7 @@ func (b *AlertInfoBuilder) Copy(object *AlertInfo) *AlertInfoBuilder {
 // Build creates a 'alert_info' object using the configuration stored in the builder.
 func (b *AlertInfoBuilder) Build() (object *AlertInfo, err error) {
 	object = new(AlertInfo)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.name = b.name
 	object.severity = b.severity
 	return

@@ -19,38 +19,26 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 
+// VersionInquiryRequestBuilder contains the data and logic needed to build 'version_inquiry_request' objects.
 type VersionInquiryRequestBuilder struct {
-	fieldSet_   []bool
+	bitmap_     uint32
 	serviceType string
 }
 
 // NewVersionInquiryRequest creates a new builder of 'version_inquiry_request' objects.
 func NewVersionInquiryRequest() *VersionInquiryRequestBuilder {
-	return &VersionInquiryRequestBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &VersionInquiryRequestBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *VersionInquiryRequestBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ServiceType sets the value of the 'service_type' attribute to the given value.
 func (b *VersionInquiryRequestBuilder) ServiceType(value string) *VersionInquiryRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.serviceType = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -59,10 +47,7 @@ func (b *VersionInquiryRequestBuilder) Copy(object *VersionInquiryRequest) *Vers
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.serviceType = object.serviceType
 	return b
 }
@@ -70,10 +55,7 @@ func (b *VersionInquiryRequestBuilder) Copy(object *VersionInquiryRequest) *Vers
 // Build creates a 'version_inquiry_request' object using the configuration stored in the builder.
 func (b *VersionInquiryRequestBuilder) Build() (object *VersionInquiryRequest, err error) {
 	object = new(VersionInquiryRequest)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.serviceType = b.serviceType
 	return
 }

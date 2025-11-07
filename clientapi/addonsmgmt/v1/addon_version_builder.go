@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
+// AddonVersionBuilder contains the data and logic needed to build 'addon_version' objects.
+//
 // Representation of an addon version.
 type AddonVersionBuilder struct {
-	fieldSet_                []bool
+	bitmap_                  uint32
 	id                       string
 	href                     string
 	additionalCatalogSources []*AdditionalCatalogSourceBuilder
@@ -42,83 +44,54 @@ type AddonVersionBuilder struct {
 
 // NewAddonVersion creates a new builder of 'addon_version' objects.
 func NewAddonVersion() *AddonVersionBuilder {
-	return &AddonVersionBuilder{
-		fieldSet_: make([]bool, 17),
-	}
+	return &AddonVersionBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddonVersionBuilder) Link(value bool) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddonVersionBuilder) ID(value string) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AddonVersionBuilder) HREF(value string) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddonVersionBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // AdditionalCatalogSources sets the value of the 'additional_catalog_sources' attribute to the given values.
 func (b *AddonVersionBuilder) AdditionalCatalogSources(values ...*AdditionalCatalogSourceBuilder) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.additionalCatalogSources = make([]*AdditionalCatalogSourceBuilder, len(values))
 	copy(b.additionalCatalogSources, values)
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // AvailableUpgrades sets the value of the 'available_upgrades' attribute to the given values.
 func (b *AddonVersionBuilder) AvailableUpgrades(values ...string) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.availableUpgrades = make([]string, len(values))
 	copy(b.availableUpgrades, values)
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // Channel sets the value of the 'channel' attribute to the given value.
 func (b *AddonVersionBuilder) Channel(value string) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.channel = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
@@ -127,25 +100,19 @@ func (b *AddonVersionBuilder) Channel(value string) *AddonVersionBuilder {
 // Representation of an addon config.
 // The attributes under it are to be used by the addon once its installed in the cluster.
 func (b *AddonVersionBuilder) Config(value *AddonConfigBuilder) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.config = value
 	if value != nil {
-		b.fieldSet_[6] = true
+		b.bitmap_ |= 64
 	} else {
-		b.fieldSet_[6] = false
+		b.bitmap_ &^= 64
 	}
 	return b
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddonVersionBuilder) Enabled(value bool) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.enabled = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
@@ -153,14 +120,11 @@ func (b *AddonVersionBuilder) Enabled(value bool) *AddonVersionBuilder {
 //
 // Representation of Metrics Federation
 func (b *AddonVersionBuilder) MetricsFederation(value *MetricsFederationBuilder) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.metricsFederation = value
 	if value != nil {
-		b.fieldSet_[8] = true
+		b.bitmap_ |= 256
 	} else {
-		b.fieldSet_[8] = false
+		b.bitmap_ &^= 256
 	}
 	return b
 }
@@ -169,25 +133,19 @@ func (b *AddonVersionBuilder) MetricsFederation(value *MetricsFederationBuilder)
 //
 // Representation of Monitoring Stack
 func (b *AddonVersionBuilder) MonitoringStack(value *MonitoringStackBuilder) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.monitoringStack = value
 	if value != nil {
-		b.fieldSet_[9] = true
+		b.bitmap_ |= 512
 	} else {
-		b.fieldSet_[9] = false
+		b.bitmap_ &^= 512
 	}
 	return b
 }
 
 // PackageImage sets the value of the 'package_image' attribute to the given value.
 func (b *AddonVersionBuilder) PackageImage(value string) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.packageImage = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
@@ -195,67 +153,49 @@ func (b *AddonVersionBuilder) PackageImage(value string) *AddonVersionBuilder {
 //
 // Representation of AddonParameters
 func (b *AddonVersionBuilder) Parameters(value *AddonParametersBuilder) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.parameters = value
 	if value != nil {
-		b.fieldSet_[11] = true
+		b.bitmap_ |= 2048
 	} else {
-		b.fieldSet_[11] = false
+		b.bitmap_ &^= 2048
 	}
 	return b
 }
 
 // PullSecretName sets the value of the 'pull_secret_name' attribute to the given value.
 func (b *AddonVersionBuilder) PullSecretName(value string) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.pullSecretName = value
-	b.fieldSet_[12] = true
+	b.bitmap_ |= 4096
 	return b
 }
 
 // Requirements sets the value of the 'requirements' attribute to the given values.
 func (b *AddonVersionBuilder) Requirements(values ...*AddonRequirementBuilder) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.requirements = make([]*AddonRequirementBuilder, len(values))
 	copy(b.requirements, values)
-	b.fieldSet_[13] = true
+	b.bitmap_ |= 8192
 	return b
 }
 
 // SourceImage sets the value of the 'source_image' attribute to the given value.
 func (b *AddonVersionBuilder) SourceImage(value string) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.sourceImage = value
-	b.fieldSet_[14] = true
+	b.bitmap_ |= 16384
 	return b
 }
 
 // SubOperators sets the value of the 'sub_operators' attribute to the given values.
 func (b *AddonVersionBuilder) SubOperators(values ...*AddonSubOperatorBuilder) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.subOperators = make([]*AddonSubOperatorBuilder, len(values))
 	copy(b.subOperators, values)
-	b.fieldSet_[15] = true
+	b.bitmap_ |= 32768
 	return b
 }
 
 // UpgradePlansCreated sets the value of the 'upgrade_plans_created' attribute to the given value.
 func (b *AddonVersionBuilder) UpgradePlansCreated(value bool) *AddonVersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.upgradePlansCreated = value
-	b.fieldSet_[16] = true
+	b.bitmap_ |= 65536
 	return b
 }
 
@@ -264,10 +204,7 @@ func (b *AddonVersionBuilder) Copy(object *AddonVersion) *AddonVersionBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.additionalCatalogSources != nil {
@@ -334,10 +271,7 @@ func (b *AddonVersionBuilder) Build() (object *AddonVersion, err error) {
 	object = new(AddonVersion)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.additionalCatalogSources != nil {
 		object.additionalCatalogSources = make([]*AdditionalCatalogSource, len(b.additionalCatalogSources))
 		for i, v := range b.additionalCatalogSources {

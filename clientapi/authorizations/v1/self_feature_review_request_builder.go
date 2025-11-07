@@ -19,39 +19,28 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
+// SelfFeatureReviewRequestBuilder contains the data and logic needed to build 'self_feature_review_request' objects.
+//
 // Representation of a feature review performed against oneself
 type SelfFeatureReviewRequestBuilder struct {
-	fieldSet_ []bool
-	feature   string
+	bitmap_ uint32
+	feature string
 }
 
 // NewSelfFeatureReviewRequest creates a new builder of 'self_feature_review_request' objects.
 func NewSelfFeatureReviewRequest() *SelfFeatureReviewRequestBuilder {
-	return &SelfFeatureReviewRequestBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &SelfFeatureReviewRequestBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SelfFeatureReviewRequestBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Feature sets the value of the 'feature' attribute to the given value.
 func (b *SelfFeatureReviewRequestBuilder) Feature(value string) *SelfFeatureReviewRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.feature = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -60,10 +49,7 @@ func (b *SelfFeatureReviewRequestBuilder) Copy(object *SelfFeatureReviewRequest)
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.feature = object.feature
 	return b
 }
@@ -71,10 +57,7 @@ func (b *SelfFeatureReviewRequestBuilder) Copy(object *SelfFeatureReviewRequest)
 // Build creates a 'self_feature_review_request' object using the configuration stored in the builder.
 func (b *SelfFeatureReviewRequestBuilder) Build() (object *SelfFeatureReviewRequest, err error) {
 	object = new(SelfFeatureReviewRequest)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.feature = b.feature
 	return
 }

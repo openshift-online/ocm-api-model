@@ -23,10 +23,12 @@ import (
 	time "time"
 )
 
+// SocketTotalNodeRoleOSMetricNodeBuilder contains the data and logic needed to build 'socket_total_node_role_OS_metric_node' objects.
+//
 // Representation of information from telemetry about a the socket capacity
 // by node role and OS.
 type SocketTotalNodeRoleOSMetricNodeBuilder struct {
-	fieldSet_       []bool
+	bitmap_         uint32
 	nodeRoles       []string
 	operatingSystem string
 	socketTotal     float64
@@ -35,62 +37,40 @@ type SocketTotalNodeRoleOSMetricNodeBuilder struct {
 
 // NewSocketTotalNodeRoleOSMetricNode creates a new builder of 'socket_total_node_role_OS_metric_node' objects.
 func NewSocketTotalNodeRoleOSMetricNode() *SocketTotalNodeRoleOSMetricNodeBuilder {
-	return &SocketTotalNodeRoleOSMetricNodeBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &SocketTotalNodeRoleOSMetricNodeBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SocketTotalNodeRoleOSMetricNodeBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // NodeRoles sets the value of the 'node_roles' attribute to the given values.
 func (b *SocketTotalNodeRoleOSMetricNodeBuilder) NodeRoles(values ...string) *SocketTotalNodeRoleOSMetricNodeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.nodeRoles = make([]string, len(values))
 	copy(b.nodeRoles, values)
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // OperatingSystem sets the value of the 'operating_system' attribute to the given value.
 func (b *SocketTotalNodeRoleOSMetricNodeBuilder) OperatingSystem(value string) *SocketTotalNodeRoleOSMetricNodeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.operatingSystem = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // SocketTotal sets the value of the 'socket_total' attribute to the given value.
 func (b *SocketTotalNodeRoleOSMetricNodeBuilder) SocketTotal(value float64) *SocketTotalNodeRoleOSMetricNodeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.socketTotal = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Time sets the value of the 'time' attribute to the given value.
 func (b *SocketTotalNodeRoleOSMetricNodeBuilder) Time(value time.Time) *SocketTotalNodeRoleOSMetricNodeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.time = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -99,10 +79,7 @@ func (b *SocketTotalNodeRoleOSMetricNodeBuilder) Copy(object *SocketTotalNodeRol
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.nodeRoles != nil {
 		b.nodeRoles = make([]string, len(object.nodeRoles))
 		copy(b.nodeRoles, object.nodeRoles)
@@ -118,10 +95,7 @@ func (b *SocketTotalNodeRoleOSMetricNodeBuilder) Copy(object *SocketTotalNodeRol
 // Build creates a 'socket_total_node_role_OS_metric_node' object using the configuration stored in the builder.
 func (b *SocketTotalNodeRoleOSMetricNodeBuilder) Build() (object *SocketTotalNodeRoleOSMetricNode, err error) {
 	object = new(SocketTotalNodeRoleOSMetricNode)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.nodeRoles != nil {
 		object.nodeRoles = make([]string, len(b.nodeRoles))
 		copy(object.nodeRoles, b.nodeRoles)

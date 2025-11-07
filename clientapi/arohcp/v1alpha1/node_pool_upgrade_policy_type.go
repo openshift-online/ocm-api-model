@@ -39,7 +39,7 @@ const NodePoolUpgradePolicyNilKind = "NodePoolUpgradePolicyNil"
 //
 // Representation of an upgrade policy that can be set for a node pool.
 type NodePoolUpgradePolicy struct {
-	fieldSet_                  []bool
+	bitmap_                    uint32
 	id                         string
 	href                       string
 	clusterID                  string
@@ -60,7 +60,7 @@ func (o *NodePoolUpgradePolicy) Kind() string {
 	if o == nil {
 		return NodePoolUpgradePolicyNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return NodePoolUpgradePolicyLinkKind
 	}
 	return NodePoolUpgradePolicyKind
@@ -68,12 +68,12 @@ func (o *NodePoolUpgradePolicy) Kind() string {
 
 // Link returns true if this is a link.
 func (o *NodePoolUpgradePolicy) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *NodePoolUpgradePolicy) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -82,7 +82,7 @@ func (o *NodePoolUpgradePolicy) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *NodePoolUpgradePolicy) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -91,7 +91,7 @@ func (o *NodePoolUpgradePolicy) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *NodePoolUpgradePolicy) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -100,7 +100,7 @@ func (o *NodePoolUpgradePolicy) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *NodePoolUpgradePolicy) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -109,17 +109,7 @@ func (o *NodePoolUpgradePolicy) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *NodePoolUpgradePolicy) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // ClusterID returns the value of the 'cluster_ID' attribute, or
@@ -127,7 +117,7 @@ func (o *NodePoolUpgradePolicy) Empty() bool {
 //
 // Cluster ID this upgrade policy for node pool is defined for.
 func (o *NodePoolUpgradePolicy) ClusterID() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.clusterID
 	}
 	return ""
@@ -138,7 +128,7 @@ func (o *NodePoolUpgradePolicy) ClusterID() string {
 //
 // Cluster ID this upgrade policy for node pool is defined for.
 func (o *NodePoolUpgradePolicy) GetClusterID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.clusterID
 	}
@@ -150,7 +140,7 @@ func (o *NodePoolUpgradePolicy) GetClusterID() (value string, ok bool) {
 //
 // Timestamp for creation of resource.
 func (o *NodePoolUpgradePolicy) CreationTimestamp() time.Time {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.creationTimestamp
 	}
 	return time.Time{}
@@ -161,7 +151,7 @@ func (o *NodePoolUpgradePolicy) CreationTimestamp() time.Time {
 //
 // Timestamp for creation of resource.
 func (o *NodePoolUpgradePolicy) GetCreationTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.creationTimestamp
 	}
@@ -173,7 +163,7 @@ func (o *NodePoolUpgradePolicy) GetCreationTimestamp() (value time.Time, ok bool
 //
 // Indicates if minor version upgrades are allowed for automatic upgrades (for manual it's always allowed).
 func (o *NodePoolUpgradePolicy) EnableMinorVersionUpgrades() bool {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.enableMinorVersionUpgrades
 	}
 	return false
@@ -184,7 +174,7 @@ func (o *NodePoolUpgradePolicy) EnableMinorVersionUpgrades() bool {
 //
 // Indicates if minor version upgrades are allowed for automatic upgrades (for manual it's always allowed).
 func (o *NodePoolUpgradePolicy) GetEnableMinorVersionUpgrades() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.enableMinorVersionUpgrades
 	}
@@ -196,7 +186,7 @@ func (o *NodePoolUpgradePolicy) GetEnableMinorVersionUpgrades() (value bool, ok 
 //
 // Timestamp for last update that happened to resource.
 func (o *NodePoolUpgradePolicy) LastUpdateTimestamp() time.Time {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.lastUpdateTimestamp
 	}
 	return time.Time{}
@@ -207,7 +197,7 @@ func (o *NodePoolUpgradePolicy) LastUpdateTimestamp() time.Time {
 //
 // Timestamp for last update that happened to resource.
 func (o *NodePoolUpgradePolicy) GetLastUpdateTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.lastUpdateTimestamp
 	}
@@ -219,7 +209,7 @@ func (o *NodePoolUpgradePolicy) GetLastUpdateTimestamp() (value time.Time, ok bo
 //
 // Next time the upgrade should run.
 func (o *NodePoolUpgradePolicy) NextRun() time.Time {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.nextRun
 	}
 	return time.Time{}
@@ -230,7 +220,7 @@ func (o *NodePoolUpgradePolicy) NextRun() time.Time {
 //
 // Next time the upgrade should run.
 func (o *NodePoolUpgradePolicy) GetNextRun() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.nextRun
 	}
@@ -242,7 +232,7 @@ func (o *NodePoolUpgradePolicy) GetNextRun() (value time.Time, ok bool) {
 //
 // Node Pool ID this upgrade policy is defined for.
 func (o *NodePoolUpgradePolicy) NodePoolID() string {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.nodePoolID
 	}
 	return ""
@@ -253,7 +243,7 @@ func (o *NodePoolUpgradePolicy) NodePoolID() string {
 //
 // Node Pool ID this upgrade policy is defined for.
 func (o *NodePoolUpgradePolicy) GetNodePoolID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.nodePoolID
 	}
@@ -265,7 +255,7 @@ func (o *NodePoolUpgradePolicy) GetNodePoolID() (value string, ok bool) {
 //
 // Schedule cron expression that defines automatic upgrade scheduling.
 func (o *NodePoolUpgradePolicy) Schedule() string {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && o.bitmap_&512 != 0 {
 		return o.schedule
 	}
 	return ""
@@ -276,7 +266,7 @@ func (o *NodePoolUpgradePolicy) Schedule() string {
 //
 // Schedule cron expression that defines automatic upgrade scheduling.
 func (o *NodePoolUpgradePolicy) GetSchedule() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && o.bitmap_&512 != 0
 	if ok {
 		value = o.schedule
 	}
@@ -288,7 +278,7 @@ func (o *NodePoolUpgradePolicy) GetSchedule() (value string, ok bool) {
 //
 // Schedule type of the upgrade.
 func (o *NodePoolUpgradePolicy) ScheduleType() ScheduleType {
-	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+	if o != nil && o.bitmap_&1024 != 0 {
 		return o.scheduleType
 	}
 	return ScheduleType("")
@@ -299,7 +289,7 @@ func (o *NodePoolUpgradePolicy) ScheduleType() ScheduleType {
 //
 // Schedule type of the upgrade.
 func (o *NodePoolUpgradePolicy) GetScheduleType() (value ScheduleType, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	ok = o != nil && o.bitmap_&1024 != 0
 	if ok {
 		value = o.scheduleType
 	}
@@ -311,7 +301,7 @@ func (o *NodePoolUpgradePolicy) GetScheduleType() (value ScheduleType, ok bool) 
 //
 // State of the upgrade policy for the node pool.
 func (o *NodePoolUpgradePolicy) State() *UpgradePolicyState {
-	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
+	if o != nil && o.bitmap_&2048 != 0 {
 		return o.state
 	}
 	return nil
@@ -322,7 +312,7 @@ func (o *NodePoolUpgradePolicy) State() *UpgradePolicyState {
 //
 // State of the upgrade policy for the node pool.
 func (o *NodePoolUpgradePolicy) GetState() (value *UpgradePolicyState, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
+	ok = o != nil && o.bitmap_&2048 != 0
 	if ok {
 		value = o.state
 	}
@@ -334,7 +324,7 @@ func (o *NodePoolUpgradePolicy) GetState() (value *UpgradePolicyState, ok bool) 
 //
 // Upgrade type of the node pool.
 func (o *NodePoolUpgradePolicy) UpgradeType() UpgradeType {
-	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
+	if o != nil && o.bitmap_&4096 != 0 {
 		return o.upgradeType
 	}
 	return UpgradeType("")
@@ -345,7 +335,7 @@ func (o *NodePoolUpgradePolicy) UpgradeType() UpgradeType {
 //
 // Upgrade type of the node pool.
 func (o *NodePoolUpgradePolicy) GetUpgradeType() (value UpgradeType, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
+	ok = o != nil && o.bitmap_&4096 != 0
 	if ok {
 		value = o.upgradeType
 	}
@@ -357,7 +347,7 @@ func (o *NodePoolUpgradePolicy) GetUpgradeType() (value UpgradeType, ok bool) {
 //
 // Version is the desired upgrade version.
 func (o *NodePoolUpgradePolicy) Version() string {
-	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
+	if o != nil && o.bitmap_&8192 != 0 {
 		return o.version
 	}
 	return ""
@@ -368,7 +358,7 @@ func (o *NodePoolUpgradePolicy) Version() string {
 //
 // Version is the desired upgrade version.
 func (o *NodePoolUpgradePolicy) GetVersion() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
+	ok = o != nil && o.bitmap_&8192 != 0
 	if ok {
 		value = o.version
 	}

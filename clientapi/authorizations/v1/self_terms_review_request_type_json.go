@@ -42,7 +42,7 @@ func WriteSelfTermsReviewRequest(object *SelfTermsReviewRequest, stream *jsonite
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteSelfTermsReviewRequest(object *SelfTermsReviewRequest, stream *jsonite
 		stream.WriteString(object.eventCode)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalSelfTermsReviewRequest(source interface{}) (object *SelfTermsRevie
 
 // ReadSelfTermsReviewRequest reads a value of the 'self_terms_review_request' type from the given iterator.
 func ReadSelfTermsReviewRequest(iterator *jsoniter.Iterator) *SelfTermsReviewRequest {
-	object := &SelfTermsReviewRequest{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &SelfTermsReviewRequest{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadSelfTermsReviewRequest(iterator *jsoniter.Iterator) *SelfTermsReviewReq
 		case "event_code":
 			value := iterator.ReadString()
 			object.eventCode = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "site_code":
 			value := iterator.ReadString()
 			object.siteCode = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

@@ -42,7 +42,7 @@ func WriteCloudRegion(object *CloudRegion, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalCloudRegion(source interface{}) (object *CloudRegion, err error) {
 
 // ReadCloudRegion reads a value of the 'cloud_region' type from the given iterator.
 func ReadCloudRegion(iterator *jsoniter.Iterator) *CloudRegion {
-	object := &CloudRegion{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &CloudRegion{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadCloudRegion(iterator *jsoniter.Iterator) *CloudRegion {
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

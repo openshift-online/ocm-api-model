@@ -19,39 +19,28 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// GcpSecurityBuilder contains the data and logic needed to build 'gcp_security' objects.
+//
 // Google cloud platform security settings of a cluster.
 type GcpSecurityBuilder struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	secureBoot bool
 }
 
 // NewGcpSecurity creates a new builder of 'gcp_security' objects.
 func NewGcpSecurity() *GcpSecurityBuilder {
-	return &GcpSecurityBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &GcpSecurityBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GcpSecurityBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // SecureBoot sets the value of the 'secure_boot' attribute to the given value.
 func (b *GcpSecurityBuilder) SecureBoot(value bool) *GcpSecurityBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.secureBoot = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -60,10 +49,7 @@ func (b *GcpSecurityBuilder) Copy(object *GcpSecurity) *GcpSecurityBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.secureBoot = object.secureBoot
 	return b
 }
@@ -71,10 +57,7 @@ func (b *GcpSecurityBuilder) Copy(object *GcpSecurity) *GcpSecurityBuilder {
 // Build creates a 'gcp_security' object using the configuration stored in the builder.
 func (b *GcpSecurityBuilder) Build() (object *GcpSecurity, err error) {
 	object = new(GcpSecurity)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.secureBoot = b.secureBoot
 	return
 }

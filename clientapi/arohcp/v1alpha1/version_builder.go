@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// VersionBuilder contains the data and logic needed to build 'version' objects.
+//
 // Representation of an _OpenShift_ version.
 type VersionBuilder struct {
-	fieldSet_                 []bool
+	bitmap_                   uint32
 	id                        string
 	href                      string
 	availableUpgrades         []string
@@ -46,142 +48,95 @@ type VersionBuilder struct {
 
 // NewVersion creates a new builder of 'version' objects.
 func NewVersion() *VersionBuilder {
-	return &VersionBuilder{
-		fieldSet_: make([]bool, 17),
-	}
+	return &VersionBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *VersionBuilder) Link(value bool) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *VersionBuilder) ID(value string) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *VersionBuilder) HREF(value string) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *VersionBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // GCPMarketplaceEnabled sets the value of the 'GCP_marketplace_enabled' attribute to the given value.
 func (b *VersionBuilder) GCPMarketplaceEnabled(value bool) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.gcpMarketplaceEnabled = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // ROSAEnabled sets the value of the 'ROSA_enabled' attribute to the given value.
 func (b *VersionBuilder) ROSAEnabled(value bool) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.rosaEnabled = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // AvailableUpgrades sets the value of the 'available_upgrades' attribute to the given values.
 func (b *VersionBuilder) AvailableUpgrades(values ...string) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.availableUpgrades = make([]string, len(values))
 	copy(b.availableUpgrades, values)
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // ChannelGroup sets the value of the 'channel_group' attribute to the given value.
 func (b *VersionBuilder) ChannelGroup(value string) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.channelGroup = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // Default sets the value of the 'default' attribute to the given value.
 func (b *VersionBuilder) Default(value bool) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.default_ = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *VersionBuilder) Enabled(value bool) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.enabled = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // EndOfLifeTimestamp sets the value of the 'end_of_life_timestamp' attribute to the given value.
 func (b *VersionBuilder) EndOfLifeTimestamp(value time.Time) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.endOfLifeTimestamp = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // HostedControlPlaneDefault sets the value of the 'hosted_control_plane_default' attribute to the given value.
 func (b *VersionBuilder) HostedControlPlaneDefault(value bool) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.hostedControlPlaneDefault = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
 // HostedControlPlaneEnabled sets the value of the 'hosted_control_plane_enabled' attribute to the given value.
 func (b *VersionBuilder) HostedControlPlaneEnabled(value bool) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.hostedControlPlaneEnabled = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
@@ -189,59 +144,44 @@ func (b *VersionBuilder) HostedControlPlaneEnabled(value bool) *VersionBuilder {
 //
 // ImageOverrides holds the lists of available images per cloud provider.
 func (b *VersionBuilder) ImageOverrides(value *ImageOverridesBuilder) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.imageOverrides = value
 	if value != nil {
-		b.fieldSet_[12] = true
+		b.bitmap_ |= 4096
 	} else {
-		b.fieldSet_[12] = false
+		b.bitmap_ &^= 4096
 	}
 	return b
 }
 
 // RawID sets the value of the 'raw_ID' attribute to the given value.
 func (b *VersionBuilder) RawID(value string) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.rawID = value
-	b.fieldSet_[13] = true
+	b.bitmap_ |= 8192
 	return b
 }
 
 // ReleaseImage sets the value of the 'release_image' attribute to the given value.
 func (b *VersionBuilder) ReleaseImage(value string) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.releaseImage = value
-	b.fieldSet_[14] = true
+	b.bitmap_ |= 16384
 	return b
 }
 
 // ReleaseImages sets the value of the 'release_images' attribute to the given value.
 func (b *VersionBuilder) ReleaseImages(value *ReleaseImagesBuilder) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.releaseImages = value
 	if value != nil {
-		b.fieldSet_[15] = true
+		b.bitmap_ |= 32768
 	} else {
-		b.fieldSet_[15] = false
+		b.bitmap_ &^= 32768
 	}
 	return b
 }
 
 // WifEnabled sets the value of the 'wif_enabled' attribute to the given value.
 func (b *VersionBuilder) WifEnabled(value bool) *VersionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.wifEnabled = value
-	b.fieldSet_[16] = true
+	b.bitmap_ |= 65536
 	return b
 }
 
@@ -250,10 +190,7 @@ func (b *VersionBuilder) Copy(object *Version) *VersionBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.gcpMarketplaceEnabled = object.gcpMarketplaceEnabled
@@ -291,10 +228,7 @@ func (b *VersionBuilder) Build() (object *Version, err error) {
 	object = new(Version)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.gcpMarketplaceEnabled = b.gcpMarketplaceEnabled
 	object.rosaEnabled = b.rosaEnabled
 	if b.availableUpgrades != nil {

@@ -42,7 +42,7 @@ func WriteHypershift(object *Hypershift, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalHypershift(source interface{}) (object *Hypershift, err error) {
 
 // ReadHypershift reads a value of the 'hypershift' type from the given iterator.
 func ReadHypershift(iterator *jsoniter.Iterator) *Hypershift {
-	object := &Hypershift{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &Hypershift{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadHypershift(iterator *jsoniter.Iterator) *Hypershift {
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

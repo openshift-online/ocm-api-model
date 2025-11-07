@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// ClusterCredentialsBuilder contains the data and logic needed to build 'cluster_credentials' objects.
+//
 // Credentials of the a cluster.
 type ClusterCredentialsBuilder struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	id         string
 	href       string
 	kubeconfig string
@@ -29,61 +31,38 @@ type ClusterCredentialsBuilder struct {
 
 // NewClusterCredentials creates a new builder of 'cluster_credentials' objects.
 func NewClusterCredentials() *ClusterCredentialsBuilder {
-	return &ClusterCredentialsBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &ClusterCredentialsBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ClusterCredentialsBuilder) Link(value bool) *ClusterCredentialsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ClusterCredentialsBuilder) ID(value string) *ClusterCredentialsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ClusterCredentialsBuilder) HREF(value string) *ClusterCredentialsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterCredentialsBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // Kubeconfig sets the value of the 'kubeconfig' attribute to the given value.
 func (b *ClusterCredentialsBuilder) Kubeconfig(value string) *ClusterCredentialsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.kubeconfig = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -92,10 +71,7 @@ func (b *ClusterCredentialsBuilder) Copy(object *ClusterCredentials) *ClusterCre
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.kubeconfig = object.kubeconfig
@@ -107,10 +83,7 @@ func (b *ClusterCredentialsBuilder) Build() (object *ClusterCredentials, err err
 	object = new(ClusterCredentials)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.kubeconfig = b.kubeconfig
 	return
 }

@@ -23,8 +23,9 @@ import (
 	time "time"
 )
 
+// ClusterUpgradeBuilder contains the data and logic needed to build 'cluster_upgrade' objects.
 type ClusterUpgradeBuilder struct {
-	fieldSet_        []bool
+	bitmap_          uint32
 	state            string
 	updatedTimestamp time.Time
 	version          string
@@ -33,61 +34,39 @@ type ClusterUpgradeBuilder struct {
 
 // NewClusterUpgrade creates a new builder of 'cluster_upgrade' objects.
 func NewClusterUpgrade() *ClusterUpgradeBuilder {
-	return &ClusterUpgradeBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &ClusterUpgradeBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterUpgradeBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Available sets the value of the 'available' attribute to the given value.
 func (b *ClusterUpgradeBuilder) Available(value bool) *ClusterUpgradeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.available = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // State sets the value of the 'state' attribute to the given value.
 func (b *ClusterUpgradeBuilder) State(value string) *ClusterUpgradeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.state = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // UpdatedTimestamp sets the value of the 'updated_timestamp' attribute to the given value.
 func (b *ClusterUpgradeBuilder) UpdatedTimestamp(value time.Time) *ClusterUpgradeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.updatedTimestamp = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Version sets the value of the 'version' attribute to the given value.
 func (b *ClusterUpgradeBuilder) Version(value string) *ClusterUpgradeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.version = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -96,10 +75,7 @@ func (b *ClusterUpgradeBuilder) Copy(object *ClusterUpgrade) *ClusterUpgradeBuil
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.available = object.available
 	b.state = object.state
 	b.updatedTimestamp = object.updatedTimestamp
@@ -110,10 +86,7 @@ func (b *ClusterUpgradeBuilder) Copy(object *ClusterUpgrade) *ClusterUpgradeBuil
 // Build creates a 'cluster_upgrade' object using the configuration stored in the builder.
 func (b *ClusterUpgradeBuilder) Build() (object *ClusterUpgrade, err error) {
 	object = new(ClusterUpgrade)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.available = b.available
 	object.state = b.state
 	object.updatedTimestamp = b.updatedTimestamp

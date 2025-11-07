@@ -43,7 +43,7 @@ func WriteClusterUpgrade(object *ClusterUpgrade, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -52,7 +52,7 @@ func WriteClusterUpgrade(object *ClusterUpgrade, stream *jsoniter.Stream) {
 		stream.WriteBool(object.available)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -61,7 +61,7 @@ func WriteClusterUpgrade(object *ClusterUpgrade, stream *jsoniter.Stream) {
 		stream.WriteString(object.state)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -70,7 +70,7 @@ func WriteClusterUpgrade(object *ClusterUpgrade, stream *jsoniter.Stream) {
 		stream.WriteString((object.updatedTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -95,9 +95,7 @@ func UnmarshalClusterUpgrade(source interface{}) (object *ClusterUpgrade, err er
 
 // ReadClusterUpgrade reads a value of the 'cluster_upgrade' type from the given iterator.
 func ReadClusterUpgrade(iterator *jsoniter.Iterator) *ClusterUpgrade {
-	object := &ClusterUpgrade{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &ClusterUpgrade{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -107,11 +105,11 @@ func ReadClusterUpgrade(iterator *jsoniter.Iterator) *ClusterUpgrade {
 		case "available":
 			value := iterator.ReadBool()
 			object.available = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "state":
 			value := iterator.ReadString()
 			object.state = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "updated_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -119,11 +117,11 @@ func ReadClusterUpgrade(iterator *jsoniter.Iterator) *ClusterUpgrade {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedTimestamp = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "version":
 			value := iterator.ReadString()
 			object.version = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

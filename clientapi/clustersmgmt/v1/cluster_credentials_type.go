@@ -35,7 +35,7 @@ const ClusterCredentialsNilKind = "ClusterCredentialsNil"
 //
 // Credentials of the a cluster.
 type ClusterCredentials struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	id         string
 	href       string
 	kubeconfig string
@@ -46,7 +46,7 @@ func (o *ClusterCredentials) Kind() string {
 	if o == nil {
 		return ClusterCredentialsNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return ClusterCredentialsLinkKind
 	}
 	return ClusterCredentialsKind
@@ -54,12 +54,12 @@ func (o *ClusterCredentials) Kind() string {
 
 // Link returns true if this is a link.
 func (o *ClusterCredentials) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *ClusterCredentials) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -68,7 +68,7 @@ func (o *ClusterCredentials) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *ClusterCredentials) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -77,7 +77,7 @@ func (o *ClusterCredentials) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *ClusterCredentials) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -86,7 +86,7 @@ func (o *ClusterCredentials) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *ClusterCredentials) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -95,17 +95,7 @@ func (o *ClusterCredentials) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterCredentials) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // Kubeconfig returns the value of the 'kubeconfig' attribute, or
@@ -113,7 +103,7 @@ func (o *ClusterCredentials) Empty() bool {
 //
 // Administrator _kubeconfig_ file for the cluster.
 func (o *ClusterCredentials) Kubeconfig() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.kubeconfig
 	}
 	return ""
@@ -124,7 +114,7 @@ func (o *ClusterCredentials) Kubeconfig() string {
 //
 // Administrator _kubeconfig_ file for the cluster.
 func (o *ClusterCredentials) GetKubeconfig() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.kubeconfig
 	}

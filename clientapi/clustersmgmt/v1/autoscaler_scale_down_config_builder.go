@@ -19,8 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// AutoscalerScaleDownConfigBuilder contains the data and logic needed to build 'autoscaler_scale_down_config' objects.
 type AutoscalerScaleDownConfigBuilder struct {
-	fieldSet_            []bool
+	bitmap_              uint32
 	delayAfterAdd        string
 	delayAfterDelete     string
 	delayAfterFailure    string
@@ -31,81 +32,53 @@ type AutoscalerScaleDownConfigBuilder struct {
 
 // NewAutoscalerScaleDownConfig creates a new builder of 'autoscaler_scale_down_config' objects.
 func NewAutoscalerScaleDownConfig() *AutoscalerScaleDownConfigBuilder {
-	return &AutoscalerScaleDownConfigBuilder{
-		fieldSet_: make([]bool, 6),
-	}
+	return &AutoscalerScaleDownConfigBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AutoscalerScaleDownConfigBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // DelayAfterAdd sets the value of the 'delay_after_add' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) DelayAfterAdd(value string) *AutoscalerScaleDownConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.delayAfterAdd = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // DelayAfterDelete sets the value of the 'delay_after_delete' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) DelayAfterDelete(value string) *AutoscalerScaleDownConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.delayAfterDelete = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // DelayAfterFailure sets the value of the 'delay_after_failure' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) DelayAfterFailure(value string) *AutoscalerScaleDownConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.delayAfterFailure = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) Enabled(value bool) *AutoscalerScaleDownConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.enabled = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // UnneededTime sets the value of the 'unneeded_time' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) UnneededTime(value string) *AutoscalerScaleDownConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.unneededTime = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // UtilizationThreshold sets the value of the 'utilization_threshold' attribute to the given value.
 func (b *AutoscalerScaleDownConfigBuilder) UtilizationThreshold(value string) *AutoscalerScaleDownConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.utilizationThreshold = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
@@ -114,10 +87,7 @@ func (b *AutoscalerScaleDownConfigBuilder) Copy(object *AutoscalerScaleDownConfi
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.delayAfterAdd = object.delayAfterAdd
 	b.delayAfterDelete = object.delayAfterDelete
 	b.delayAfterFailure = object.delayAfterFailure
@@ -130,10 +100,7 @@ func (b *AutoscalerScaleDownConfigBuilder) Copy(object *AutoscalerScaleDownConfi
 // Build creates a 'autoscaler_scale_down_config' object using the configuration stored in the builder.
 func (b *AutoscalerScaleDownConfigBuilder) Build() (object *AutoscalerScaleDownConfig, err error) {
 	object = new(AutoscalerScaleDownConfig)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.delayAfterAdd = b.delayAfterAdd
 	object.delayAfterDelete = b.delayAfterDelete
 	object.delayAfterFailure = b.delayAfterFailure

@@ -19,44 +19,33 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// AzureEtcdEncryptionBuilder contains the data and logic needed to build 'azure_etcd_encryption' objects.
+//
 // Contains the necessary attributes to support etcd encryption for Azure based clusters.
 type AzureEtcdEncryptionBuilder struct {
-	fieldSet_      []bool
+	bitmap_        uint32
 	dataEncryption *AzureEtcdDataEncryptionBuilder
 }
 
 // NewAzureEtcdEncryption creates a new builder of 'azure_etcd_encryption' objects.
 func NewAzureEtcdEncryption() *AzureEtcdEncryptionBuilder {
-	return &AzureEtcdEncryptionBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &AzureEtcdEncryptionBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AzureEtcdEncryptionBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // DataEncryption sets the value of the 'data_encryption' attribute to the given value.
 //
 // Contains the necessary attributes to support data encryption for Azure based clusters.
 func (b *AzureEtcdEncryptionBuilder) DataEncryption(value *AzureEtcdDataEncryptionBuilder) *AzureEtcdEncryptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.dataEncryption = value
 	if value != nil {
-		b.fieldSet_[0] = true
+		b.bitmap_ |= 1
 	} else {
-		b.fieldSet_[0] = false
+		b.bitmap_ &^= 1
 	}
 	return b
 }
@@ -66,10 +55,7 @@ func (b *AzureEtcdEncryptionBuilder) Copy(object *AzureEtcdEncryption) *AzureEtc
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.dataEncryption != nil {
 		b.dataEncryption = NewAzureEtcdDataEncryption().Copy(object.dataEncryption)
 	} else {
@@ -81,10 +67,7 @@ func (b *AzureEtcdEncryptionBuilder) Copy(object *AzureEtcdEncryption) *AzureEtc
 // Build creates a 'azure_etcd_encryption' object using the configuration stored in the builder.
 func (b *AzureEtcdEncryptionBuilder) Build() (object *AzureEtcdEncryption, err error) {
 	object = new(AzureEtcdEncryption)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.dataEncryption != nil {
 		object.dataEncryption, err = b.dataEncryption.Build()
 		if err != nil {

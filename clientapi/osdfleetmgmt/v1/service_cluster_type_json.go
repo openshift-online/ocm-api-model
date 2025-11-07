@@ -42,13 +42,13 @@ func WriteServiceCluster(object *ServiceCluster, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(ServiceClusterLinkKind)
 	} else {
 		stream.WriteString(ServiceClusterKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteServiceCluster(object *ServiceCluster, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteServiceCluster(object *ServiceCluster, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.dns != nil
+	present_ = object.bitmap_&8 != 0 && object.dns != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteServiceCluster(object *ServiceCluster, stream *jsoniter.Stream) {
 		WriteDNS(object.dns, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteServiceCluster(object *ServiceCluster, stream *jsoniter.Stream) {
 		stream.WriteString(object.cloudProvider)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.clusterManagementReference != nil
+	present_ = object.bitmap_&32 != 0 && object.clusterManagementReference != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -92,7 +92,7 @@ func WriteServiceCluster(object *ServiceCluster, stream *jsoniter.Stream) {
 		WriteClusterManagementReference(object.clusterManagementReference, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.labels != nil
+	present_ = object.bitmap_&64 != 0 && object.labels != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -101,7 +101,7 @@ func WriteServiceCluster(object *ServiceCluster, stream *jsoniter.Stream) {
 		WriteLabelList(object.labels, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = object.bitmap_&128 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -110,7 +110,7 @@ func WriteServiceCluster(object *ServiceCluster, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8] && object.provisionShardReference != nil
+	present_ = object.bitmap_&256 != 0 && object.provisionShardReference != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -119,7 +119,7 @@ func WriteServiceCluster(object *ServiceCluster, stream *jsoniter.Stream) {
 		WriteProvisionShardReference(object.provisionShardReference, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = object.bitmap_&512 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -128,7 +128,7 @@ func WriteServiceCluster(object *ServiceCluster, stream *jsoniter.Stream) {
 		stream.WriteString(object.region)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
+	present_ = object.bitmap_&1024 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -137,7 +137,7 @@ func WriteServiceCluster(object *ServiceCluster, stream *jsoniter.Stream) {
 		stream.WriteString(object.sector)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
+	present_ = object.bitmap_&2048 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -162,9 +162,7 @@ func UnmarshalServiceCluster(source interface{}) (object *ServiceCluster, err er
 
 // ReadServiceCluster reads a value of the 'service_cluster' type from the given iterator.
 func ReadServiceCluster(iterator *jsoniter.Iterator) *ServiceCluster {
-	object := &ServiceCluster{
-		fieldSet_: make([]bool, 12),
-	}
+	object := &ServiceCluster{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -174,50 +172,50 @@ func ReadServiceCluster(iterator *jsoniter.Iterator) *ServiceCluster {
 		case "kind":
 			value := iterator.ReadString()
 			if value == ServiceClusterLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "dns":
 			value := ReadDNS(iterator)
 			object.dns = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "cloud_provider":
 			value := iterator.ReadString()
 			object.cloudProvider = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "cluster_management_reference":
 			value := ReadClusterManagementReference(iterator)
 			object.clusterManagementReference = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "labels":
 			value := ReadLabelList(iterator)
 			object.labels = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		case "provision_shard_reference":
 			value := ReadProvisionShardReference(iterator)
 			object.provisionShardReference = value
-			object.fieldSet_[8] = true
+			object.bitmap_ |= 256
 		case "region":
 			value := iterator.ReadString()
 			object.region = value
-			object.fieldSet_[9] = true
+			object.bitmap_ |= 512
 		case "sector":
 			value := iterator.ReadString()
 			object.sector = value
-			object.fieldSet_[10] = true
+			object.bitmap_ |= 1024
 		case "status":
 			value := iterator.ReadString()
 			object.status = value
-			object.fieldSet_[11] = true
+			object.bitmap_ |= 2048
 		default:
 			iterator.ReadAny()
 		}

@@ -19,10 +19,12 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// KubeletConfigBuilder contains the data and logic needed to build 'kubelet_config' objects.
+//
 // OCM representation of KubeletConfig, exposing the fields of Kubernetes
 // KubeletConfig that can be managed by users
 type KubeletConfigBuilder struct {
-	fieldSet_    []bool
+	bitmap_      uint32
 	id           string
 	href         string
 	name         string
@@ -31,71 +33,45 @@ type KubeletConfigBuilder struct {
 
 // NewKubeletConfig creates a new builder of 'kubelet_config' objects.
 func NewKubeletConfig() *KubeletConfigBuilder {
-	return &KubeletConfigBuilder{
-		fieldSet_: make([]bool, 5),
-	}
+	return &KubeletConfigBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *KubeletConfigBuilder) Link(value bool) *KubeletConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *KubeletConfigBuilder) ID(value string) *KubeletConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *KubeletConfigBuilder) HREF(value string) *KubeletConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *KubeletConfigBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *KubeletConfigBuilder) Name(value string) *KubeletConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.name = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // PodPidsLimit sets the value of the 'pod_pids_limit' attribute to the given value.
 func (b *KubeletConfigBuilder) PodPidsLimit(value int) *KubeletConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.podPidsLimit = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -104,10 +80,7 @@ func (b *KubeletConfigBuilder) Copy(object *KubeletConfig) *KubeletConfigBuilder
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.name = object.name
@@ -120,10 +93,7 @@ func (b *KubeletConfigBuilder) Build() (object *KubeletConfig, err error) {
 	object = new(KubeletConfig)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.name = b.name
 	object.podPidsLimit = b.podPidsLimit
 	return

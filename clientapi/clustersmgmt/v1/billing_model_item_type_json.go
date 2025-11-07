@@ -42,13 +42,13 @@ func WriteBillingModelItem(object *BillingModelItem, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(BillingModelItemLinkKind)
 	} else {
 		stream.WriteString(BillingModelItemKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteBillingModelItem(object *BillingModelItem, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteBillingModelItem(object *BillingModelItem, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteBillingModelItem(object *BillingModelItem, stream *jsoniter.Stream) {
 		stream.WriteString(object.billingModelType)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteBillingModelItem(object *BillingModelItem, stream *jsoniter.Stream) {
 		stream.WriteString(object.description)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -92,7 +92,7 @@ func WriteBillingModelItem(object *BillingModelItem, stream *jsoniter.Stream) {
 		stream.WriteString(object.displayName)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -117,9 +117,7 @@ func UnmarshalBillingModelItem(source interface{}) (object *BillingModelItem, er
 
 // ReadBillingModelItem reads a value of the 'billing_model_item' type from the given iterator.
 func ReadBillingModelItem(iterator *jsoniter.Iterator) *BillingModelItem {
-	object := &BillingModelItem{
-		fieldSet_: make([]bool, 7),
-	}
+	object := &BillingModelItem{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -129,30 +127,30 @@ func ReadBillingModelItem(iterator *jsoniter.Iterator) *BillingModelItem {
 		case "kind":
 			value := iterator.ReadString()
 			if value == BillingModelItemLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "billing_model_type":
 			value := iterator.ReadString()
 			object.billingModelType = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "description":
 			value := iterator.ReadString()
 			object.description = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "display_name":
 			value := iterator.ReadString()
 			object.displayName = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "marketplace":
 			value := iterator.ReadString()
 			object.marketplace = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		default:
 			iterator.ReadAny()
 		}

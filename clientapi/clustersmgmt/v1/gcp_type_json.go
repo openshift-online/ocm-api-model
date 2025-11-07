@@ -42,7 +42,7 @@ func WriteGCP(object *GCP, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteGCP(object *GCP, stream *jsoniter.Stream) {
 		stream.WriteString(object.authURI)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteGCP(object *GCP, stream *jsoniter.Stream) {
 		stream.WriteString(object.authProviderX509CertURL)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.authentication != nil
+	present_ = object.bitmap_&4 != 0 && object.authentication != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteGCP(object *GCP, stream *jsoniter.Stream) {
 		WriteGcpAuthentication(object.authentication, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteGCP(object *GCP, stream *jsoniter.Stream) {
 		stream.WriteString(object.clientID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteGCP(object *GCP, stream *jsoniter.Stream) {
 		stream.WriteString(object.clientX509CertURL)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -96,7 +96,7 @@ func WriteGCP(object *GCP, stream *jsoniter.Stream) {
 		stream.WriteString(object.clientEmail)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -105,7 +105,7 @@ func WriteGCP(object *GCP, stream *jsoniter.Stream) {
 		stream.WriteString(object.privateKey)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = object.bitmap_&128 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -114,7 +114,7 @@ func WriteGCP(object *GCP, stream *jsoniter.Stream) {
 		stream.WriteString(object.privateKeyID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8] && object.privateServiceConnect != nil
+	present_ = object.bitmap_&256 != 0 && object.privateServiceConnect != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -123,7 +123,7 @@ func WriteGCP(object *GCP, stream *jsoniter.Stream) {
 		WriteGcpPrivateServiceConnect(object.privateServiceConnect, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = object.bitmap_&512 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -132,7 +132,7 @@ func WriteGCP(object *GCP, stream *jsoniter.Stream) {
 		stream.WriteString(object.projectID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10] && object.security != nil
+	present_ = object.bitmap_&1024 != 0 && object.security != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -141,7 +141,7 @@ func WriteGCP(object *GCP, stream *jsoniter.Stream) {
 		WriteGcpSecurity(object.security, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
+	present_ = object.bitmap_&2048 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -150,7 +150,7 @@ func WriteGCP(object *GCP, stream *jsoniter.Stream) {
 		stream.WriteString(object.tokenURI)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
+	present_ = object.bitmap_&4096 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -175,9 +175,7 @@ func UnmarshalGCP(source interface{}) (object *GCP, err error) {
 
 // ReadGCP reads a value of the 'GCP' type from the given iterator.
 func ReadGCP(iterator *jsoniter.Iterator) *GCP {
-	object := &GCP{
-		fieldSet_: make([]bool, 13),
-	}
+	object := &GCP{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -187,55 +185,55 @@ func ReadGCP(iterator *jsoniter.Iterator) *GCP {
 		case "auth_uri":
 			value := iterator.ReadString()
 			object.authURI = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "auth_provider_x509_cert_url":
 			value := iterator.ReadString()
 			object.authProviderX509CertURL = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "authentication":
 			value := ReadGcpAuthentication(iterator)
 			object.authentication = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "client_id":
 			value := iterator.ReadString()
 			object.clientID = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "client_x509_cert_url":
 			value := iterator.ReadString()
 			object.clientX509CertURL = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "client_email":
 			value := iterator.ReadString()
 			object.clientEmail = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "private_key":
 			value := iterator.ReadString()
 			object.privateKey = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "private_key_id":
 			value := iterator.ReadString()
 			object.privateKeyID = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		case "private_service_connect":
 			value := ReadGcpPrivateServiceConnect(iterator)
 			object.privateServiceConnect = value
-			object.fieldSet_[8] = true
+			object.bitmap_ |= 256
 		case "project_id":
 			value := iterator.ReadString()
 			object.projectID = value
-			object.fieldSet_[9] = true
+			object.bitmap_ |= 512
 		case "security":
 			value := ReadGcpSecurity(iterator)
 			object.security = value
-			object.fieldSet_[10] = true
+			object.bitmap_ |= 1024
 		case "token_uri":
 			value := iterator.ReadString()
 			object.tokenURI = value
-			object.fieldSet_[11] = true
+			object.bitmap_ |= 2048
 		case "type":
 			value := iterator.ReadString()
 			object.type_ = value
-			object.fieldSet_[12] = true
+			object.bitmap_ |= 4096
 		default:
 			iterator.ReadAny()
 		}

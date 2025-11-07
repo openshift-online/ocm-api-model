@@ -35,7 +35,7 @@ const MachineTypeNilKind = "MachineTypeNil"
 //
 // Machine type.
 type MachineType struct {
-	fieldSet_     []bool
+	bitmap_       uint32
 	id            string
 	href          string
 	cpu           *Value
@@ -54,7 +54,7 @@ func (o *MachineType) Kind() string {
 	if o == nil {
 		return MachineTypeNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return MachineTypeLinkKind
 	}
 	return MachineTypeKind
@@ -62,12 +62,12 @@ func (o *MachineType) Kind() string {
 
 // Link returns true if this is a link.
 func (o *MachineType) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *MachineType) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -76,7 +76,7 @@ func (o *MachineType) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *MachineType) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -85,7 +85,7 @@ func (o *MachineType) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *MachineType) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -94,7 +94,7 @@ func (o *MachineType) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *MachineType) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -103,17 +103,7 @@ func (o *MachineType) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *MachineType) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // CCSOnly returns the value of the 'CCS_only' attribute, or
@@ -121,7 +111,7 @@ func (o *MachineType) Empty() bool {
 //
 // 'true' if the instance type is supported only for CCS clusters, 'false' otherwise.
 func (o *MachineType) CCSOnly() bool {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.ccsOnly
 	}
 	return false
@@ -132,7 +122,7 @@ func (o *MachineType) CCSOnly() bool {
 //
 // 'true' if the instance type is supported only for CCS clusters, 'false' otherwise.
 func (o *MachineType) GetCCSOnly() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.ccsOnly
 	}
@@ -144,7 +134,7 @@ func (o *MachineType) GetCCSOnly() (value bool, ok bool) {
 //
 // The amount of cpu's of the machine type.
 func (o *MachineType) CPU() *Value {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.cpu
 	}
 	return nil
@@ -155,7 +145,7 @@ func (o *MachineType) CPU() *Value {
 //
 // The amount of cpu's of the machine type.
 func (o *MachineType) GetCPU() (value *Value, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.cpu
 	}
@@ -167,7 +157,7 @@ func (o *MachineType) GetCPU() (value *Value, ok bool) {
 //
 // The architecture of the machine type.
 func (o *MachineType) Architecture() ProcessorType {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.architecture
 	}
 	return ProcessorType("")
@@ -178,7 +168,7 @@ func (o *MachineType) Architecture() ProcessorType {
 //
 // The architecture of the machine type.
 func (o *MachineType) GetArchitecture() (value ProcessorType, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.architecture
 	}
@@ -190,7 +180,7 @@ func (o *MachineType) GetArchitecture() (value ProcessorType, ok bool) {
 //
 // The category which the machine type is suitable for.
 func (o *MachineType) Category() MachineTypeCategory {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.category
 	}
 	return MachineTypeCategory("")
@@ -201,7 +191,7 @@ func (o *MachineType) Category() MachineTypeCategory {
 //
 // The category which the machine type is suitable for.
 func (o *MachineType) GetCategory() (value MachineTypeCategory, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.category
 	}
@@ -213,7 +203,7 @@ func (o *MachineType) GetCategory() (value MachineTypeCategory, ok bool) {
 //
 // Link to the cloud provider that the machine type belongs to.
 func (o *MachineType) CloudProvider() *CloudProvider {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.cloudProvider
 	}
 	return nil
@@ -224,7 +214,7 @@ func (o *MachineType) CloudProvider() *CloudProvider {
 //
 // Link to the cloud provider that the machine type belongs to.
 func (o *MachineType) GetCloudProvider() (value *CloudProvider, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.cloudProvider
 	}
@@ -239,7 +229,7 @@ func (o *MachineType) GetCloudProvider() (value *CloudProvider, ok bool) {
 // machine types on different providers.
 // Corresponds to `resource_name` values in "compute.node"  quota cost data.
 func (o *MachineType) GenericName() string {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.genericName
 	}
 	return ""
@@ -253,7 +243,7 @@ func (o *MachineType) GenericName() string {
 // machine types on different providers.
 // Corresponds to `resource_name` values in "compute.node"  quota cost data.
 func (o *MachineType) GetGenericName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.genericName
 	}
@@ -265,7 +255,7 @@ func (o *MachineType) GetGenericName() (value string, ok bool) {
 //
 // The amount of memory of the machine type.
 func (o *MachineType) Memory() *Value {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && o.bitmap_&512 != 0 {
 		return o.memory
 	}
 	return nil
@@ -276,7 +266,7 @@ func (o *MachineType) Memory() *Value {
 //
 // The amount of memory of the machine type.
 func (o *MachineType) GetMemory() (value *Value, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && o.bitmap_&512 != 0
 	if ok {
 		value = o.memory
 	}
@@ -288,7 +278,7 @@ func (o *MachineType) GetMemory() (value *Value, ok bool) {
 //
 // Human friendly identifier of the machine type, for example `r5.xlarge - Memory Optimized`.
 func (o *MachineType) Name() string {
-	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+	if o != nil && o.bitmap_&1024 != 0 {
 		return o.name
 	}
 	return ""
@@ -299,7 +289,7 @@ func (o *MachineType) Name() string {
 //
 // Human friendly identifier of the machine type, for example `r5.xlarge - Memory Optimized`.
 func (o *MachineType) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	ok = o != nil && o.bitmap_&1024 != 0
 	if ok {
 		value = o.name
 	}
@@ -311,7 +301,7 @@ func (o *MachineType) GetName() (value string, ok bool) {
 //
 // The size of the machine type.
 func (o *MachineType) Size() MachineTypeSize {
-	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
+	if o != nil && o.bitmap_&2048 != 0 {
 		return o.size
 	}
 	return MachineTypeSize("")
@@ -322,7 +312,7 @@ func (o *MachineType) Size() MachineTypeSize {
 //
 // The size of the machine type.
 func (o *MachineType) GetSize() (value MachineTypeSize, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
+	ok = o != nil && o.bitmap_&2048 != 0
 	if ok {
 		value = o.size
 	}

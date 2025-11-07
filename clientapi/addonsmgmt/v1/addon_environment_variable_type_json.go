@@ -42,7 +42,7 @@ func WriteAddonEnvironmentVariable(object *AddonEnvironmentVariable, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAddonEnvironmentVariable(object *AddonEnvironmentVariable, stream *jso
 		stream.WriteString(object.id)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteAddonEnvironmentVariable(object *AddonEnvironmentVariable, stream *jso
 		stream.WriteBool(object.enabled)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteAddonEnvironmentVariable(object *AddonEnvironmentVariable, stream *jso
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,9 +94,7 @@ func UnmarshalAddonEnvironmentVariable(source interface{}) (object *AddonEnviron
 
 // ReadAddonEnvironmentVariable reads a value of the 'addon_environment_variable' type from the given iterator.
 func ReadAddonEnvironmentVariable(iterator *jsoniter.Iterator) *AddonEnvironmentVariable {
-	object := &AddonEnvironmentVariable{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &AddonEnvironmentVariable{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -106,19 +104,19 @@ func ReadAddonEnvironmentVariable(iterator *jsoniter.Iterator) *AddonEnvironment
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "value":
 			value := iterator.ReadString()
 			object.value = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

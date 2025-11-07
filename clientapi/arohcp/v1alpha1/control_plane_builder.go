@@ -19,44 +19,33 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// ControlPlaneBuilder contains the data and logic needed to build 'control_plane' objects.
+//
 // Representation of a Control Plane
 type ControlPlaneBuilder struct {
-	fieldSet_ []bool
-	backup    *BackupBuilder
+	bitmap_ uint32
+	backup  *BackupBuilder
 }
 
 // NewControlPlane creates a new builder of 'control_plane' objects.
 func NewControlPlane() *ControlPlaneBuilder {
-	return &ControlPlaneBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &ControlPlaneBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ControlPlaneBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Backup sets the value of the 'backup' attribute to the given value.
 //
 // Representation of a Backup.
 func (b *ControlPlaneBuilder) Backup(value *BackupBuilder) *ControlPlaneBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.backup = value
 	if value != nil {
-		b.fieldSet_[0] = true
+		b.bitmap_ |= 1
 	} else {
-		b.fieldSet_[0] = false
+		b.bitmap_ &^= 1
 	}
 	return b
 }
@@ -66,10 +55,7 @@ func (b *ControlPlaneBuilder) Copy(object *ControlPlane) *ControlPlaneBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.backup != nil {
 		b.backup = NewBackup().Copy(object.backup)
 	} else {
@@ -81,10 +67,7 @@ func (b *ControlPlaneBuilder) Copy(object *ControlPlane) *ControlPlaneBuilder {
 // Build creates a 'control_plane' object using the configuration stored in the builder.
 func (b *ControlPlaneBuilder) Build() (object *ControlPlane, err error) {
 	object = new(ControlPlane)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.backup != nil {
 		object.backup, err = b.backup.Build()
 		if err != nil {

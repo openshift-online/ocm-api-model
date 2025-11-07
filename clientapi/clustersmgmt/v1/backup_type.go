@@ -23,21 +23,13 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Representation of a Backup.
 type Backup struct {
-	fieldSet_ []bool
-	state     string
+	bitmap_ uint32
+	state   string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Backup) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // State returns the value of the 'state' attribute, or
@@ -46,7 +38,7 @@ func (o *Backup) Empty() bool {
 // Indicates the state of the backup.
 // Accepted values are: "enabled", "disabled".
 func (o *Backup) State() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.state
 	}
 	return ""
@@ -58,7 +50,7 @@ func (o *Backup) State() string {
 // Indicates the state of the backup.
 // Accepted values are: "enabled", "disabled".
 func (o *Backup) GetState() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.state
 	}

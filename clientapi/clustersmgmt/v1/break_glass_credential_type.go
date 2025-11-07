@@ -39,7 +39,7 @@ const BreakGlassCredentialNilKind = "BreakGlassCredentialNil"
 //
 // Representation of a break glass credential.
 type BreakGlassCredential struct {
-	fieldSet_           []bool
+	bitmap_             uint32
 	id                  string
 	href                string
 	expirationTimestamp time.Time
@@ -54,7 +54,7 @@ func (o *BreakGlassCredential) Kind() string {
 	if o == nil {
 		return BreakGlassCredentialNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return BreakGlassCredentialLinkKind
 	}
 	return BreakGlassCredentialKind
@@ -62,12 +62,12 @@ func (o *BreakGlassCredential) Kind() string {
 
 // Link returns true if this is a link.
 func (o *BreakGlassCredential) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *BreakGlassCredential) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -76,7 +76,7 @@ func (o *BreakGlassCredential) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *BreakGlassCredential) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -85,7 +85,7 @@ func (o *BreakGlassCredential) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *BreakGlassCredential) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -94,7 +94,7 @@ func (o *BreakGlassCredential) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *BreakGlassCredential) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -103,17 +103,7 @@ func (o *BreakGlassCredential) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *BreakGlassCredential) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // ExpirationTimestamp returns the value of the 'expiration_timestamp' attribute, or
@@ -121,7 +111,7 @@ func (o *BreakGlassCredential) Empty() bool {
 //
 // ExpirationTimestamp is the date and time when the credential will expire.
 func (o *BreakGlassCredential) ExpirationTimestamp() time.Time {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.expirationTimestamp
 	}
 	return time.Time{}
@@ -132,7 +122,7 @@ func (o *BreakGlassCredential) ExpirationTimestamp() time.Time {
 //
 // ExpirationTimestamp is the date and time when the credential will expire.
 func (o *BreakGlassCredential) GetExpirationTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.expirationTimestamp
 	}
@@ -144,7 +134,7 @@ func (o *BreakGlassCredential) GetExpirationTimestamp() (value time.Time, ok boo
 //
 // Kubeconfig is the generated kubeconfig for this credential. It is only stored in memory
 func (o *BreakGlassCredential) Kubeconfig() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.kubeconfig
 	}
 	return ""
@@ -155,7 +145,7 @@ func (o *BreakGlassCredential) Kubeconfig() string {
 //
 // Kubeconfig is the generated kubeconfig for this credential. It is only stored in memory
 func (o *BreakGlassCredential) GetKubeconfig() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.kubeconfig
 	}
@@ -167,7 +157,7 @@ func (o *BreakGlassCredential) GetKubeconfig() (value string, ok bool) {
 //
 // RevocationTimestamp is the date and time when the credential has been revoked.
 func (o *BreakGlassCredential) RevocationTimestamp() time.Time {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.revocationTimestamp
 	}
 	return time.Time{}
@@ -178,7 +168,7 @@ func (o *BreakGlassCredential) RevocationTimestamp() time.Time {
 //
 // RevocationTimestamp is the date and time when the credential has been revoked.
 func (o *BreakGlassCredential) GetRevocationTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.revocationTimestamp
 	}
@@ -190,7 +180,7 @@ func (o *BreakGlassCredential) GetRevocationTimestamp() (value time.Time, ok boo
 //
 // Status is the status of this credential
 func (o *BreakGlassCredential) Status() BreakGlassCredentialStatus {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.status
 	}
 	return BreakGlassCredentialStatus("")
@@ -201,7 +191,7 @@ func (o *BreakGlassCredential) Status() BreakGlassCredentialStatus {
 //
 // Status is the status of this credential
 func (o *BreakGlassCredential) GetStatus() (value BreakGlassCredentialStatus, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.status
 	}
@@ -213,7 +203,7 @@ func (o *BreakGlassCredential) GetStatus() (value BreakGlassCredentialStatus, ok
 //
 // Username is the user which will be used for this credential.
 func (o *BreakGlassCredential) Username() string {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.username
 	}
 	return ""
@@ -224,7 +214,7 @@ func (o *BreakGlassCredential) Username() string {
 //
 // Username is the user which will be used for this credential.
 func (o *BreakGlassCredential) GetUsername() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.username
 	}

@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// ClusterResourcesBuilder contains the data and logic needed to build 'cluster_resources' objects.
+//
 // Cluster Resource which belongs to a cluster, example Cluster Deployment.
 type ClusterResourcesBuilder struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	id                string
 	href              string
 	clusterID         string
@@ -35,84 +37,55 @@ type ClusterResourcesBuilder struct {
 
 // NewClusterResources creates a new builder of 'cluster_resources' objects.
 func NewClusterResources() *ClusterResourcesBuilder {
-	return &ClusterResourcesBuilder{
-		fieldSet_: make([]bool, 6),
-	}
+	return &ClusterResourcesBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ClusterResourcesBuilder) Link(value bool) *ClusterResourcesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ClusterResourcesBuilder) ID(value string) *ClusterResourcesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ClusterResourcesBuilder) HREF(value string) *ClusterResourcesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterResourcesBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *ClusterResourcesBuilder) ClusterID(value string) *ClusterResourcesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.clusterID = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *ClusterResourcesBuilder) CreationTimestamp(value time.Time) *ClusterResourcesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.creationTimestamp = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // Resources sets the value of the 'resources' attribute to the given value.
 func (b *ClusterResourcesBuilder) Resources(value map[string]string) *ClusterResourcesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.resources = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
@@ -122,10 +95,7 @@ func (b *ClusterResourcesBuilder) Copy(object *ClusterResources) *ClusterResourc
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.clusterID = object.clusterID
@@ -146,10 +116,7 @@ func (b *ClusterResourcesBuilder) Build() (object *ClusterResources, err error) 
 	object = new(ClusterResources)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.clusterID = b.clusterID
 	object.creationTimestamp = b.creationTimestamp
 	if b.resources != nil {

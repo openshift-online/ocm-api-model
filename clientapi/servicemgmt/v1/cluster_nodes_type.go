@@ -21,27 +21,19 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 
 // ClusterNodes represents the values of the 'cluster_nodes' type.
 type ClusterNodes struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	availabilityZones []string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterNodes) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // AvailabilityZones returns the value of the 'availability_zones' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterNodes) AvailabilityZones() []string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.availabilityZones
 	}
 	return nil
@@ -50,7 +42,7 @@ func (o *ClusterNodes) AvailabilityZones() []string {
 // GetAvailabilityZones returns the value of the 'availability_zones' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterNodes) GetAvailabilityZones() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.availabilityZones
 	}

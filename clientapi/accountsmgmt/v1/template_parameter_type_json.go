@@ -42,7 +42,7 @@ func WriteTemplateParameter(object *TemplateParameter, stream *jsoniter.Stream) 
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteTemplateParameter(object *TemplateParameter, stream *jsoniter.Stream) 
 		stream.WriteString(object.content)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalTemplateParameter(source interface{}) (object *TemplateParameter, 
 
 // ReadTemplateParameter reads a value of the 'template_parameter' type from the given iterator.
 func ReadTemplateParameter(iterator *jsoniter.Iterator) *TemplateParameter {
-	object := &TemplateParameter{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &TemplateParameter{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadTemplateParameter(iterator *jsoniter.Iterator) *TemplateParameter {
 		case "content":
 			value := iterator.ReadString()
 			object.content = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

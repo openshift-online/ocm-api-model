@@ -43,13 +43,13 @@ func WriteProductMinimalVersion(object *ProductMinimalVersion, stream *jsoniter.
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(ProductMinimalVersionLinkKind)
 	} else {
 		stream.WriteString(ProductMinimalVersionKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteProductMinimalVersion(object *ProductMinimalVersion, stream *jsoniter.
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteProductMinimalVersion(object *ProductMinimalVersion, stream *jsoniter.
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteProductMinimalVersion(object *ProductMinimalVersion, stream *jsoniter.
 		stream.WriteString(object.rosaCli)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -100,9 +100,7 @@ func UnmarshalProductMinimalVersion(source interface{}) (object *ProductMinimalV
 
 // ReadProductMinimalVersion reads a value of the 'product_minimal_version' type from the given iterator.
 func ReadProductMinimalVersion(iterator *jsoniter.Iterator) *ProductMinimalVersion {
-	object := &ProductMinimalVersion{
-		fieldSet_: make([]bool, 5),
-	}
+	object := &ProductMinimalVersion{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -112,18 +110,18 @@ func ReadProductMinimalVersion(iterator *jsoniter.Iterator) *ProductMinimalVersi
 		case "kind":
 			value := iterator.ReadString()
 			if value == ProductMinimalVersionLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "rosa_cli":
 			value := iterator.ReadString()
 			object.rosaCli = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "start_date":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -131,7 +129,7 @@ func ReadProductMinimalVersion(iterator *jsoniter.Iterator) *ProductMinimalVersi
 				iterator.ReportError("", err.Error())
 			}
 			object.startDate = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		default:
 			iterator.ReadAny()
 		}

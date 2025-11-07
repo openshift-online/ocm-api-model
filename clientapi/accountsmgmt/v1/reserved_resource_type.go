@@ -25,7 +25,7 @@ import (
 
 // ReservedResource represents the values of the 'reserved_resource' type.
 type ReservedResource struct {
-	fieldSet_                 []bool
+	bitmap_                   uint32
 	availabilityZoneType      string
 	billingMarketplaceAccount string
 	billingModel              BillingModel
@@ -40,21 +40,13 @@ type ReservedResource struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ReservedResource) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // BYOC returns the value of the 'BYOC' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ReservedResource) BYOC() bool {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.byoc
 	}
 	return false
@@ -63,7 +55,7 @@ func (o *ReservedResource) BYOC() bool {
 // GetBYOC returns the value of the 'BYOC' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ReservedResource) GetBYOC() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.byoc
 	}
@@ -73,7 +65,7 @@ func (o *ReservedResource) GetBYOC() (value bool, ok bool) {
 // AvailabilityZoneType returns the value of the 'availability_zone_type' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ReservedResource) AvailabilityZoneType() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.availabilityZoneType
 	}
 	return ""
@@ -82,7 +74,7 @@ func (o *ReservedResource) AvailabilityZoneType() string {
 // GetAvailabilityZoneType returns the value of the 'availability_zone_type' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ReservedResource) GetAvailabilityZoneType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.availabilityZoneType
 	}
@@ -92,7 +84,7 @@ func (o *ReservedResource) GetAvailabilityZoneType() (value string, ok bool) {
 // BillingMarketplaceAccount returns the value of the 'billing_marketplace_account' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ReservedResource) BillingMarketplaceAccount() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.billingMarketplaceAccount
 	}
 	return ""
@@ -101,7 +93,7 @@ func (o *ReservedResource) BillingMarketplaceAccount() string {
 // GetBillingMarketplaceAccount returns the value of the 'billing_marketplace_account' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ReservedResource) GetBillingMarketplaceAccount() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.billingMarketplaceAccount
 	}
@@ -111,7 +103,7 @@ func (o *ReservedResource) GetBillingMarketplaceAccount() (value string, ok bool
 // BillingModel returns the value of the 'billing_model' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ReservedResource) BillingModel() BillingModel {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.billingModel
 	}
 	return BillingModel("")
@@ -120,7 +112,7 @@ func (o *ReservedResource) BillingModel() BillingModel {
 // GetBillingModel returns the value of the 'billing_model' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ReservedResource) GetBillingModel() (value BillingModel, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.billingModel
 	}
@@ -130,7 +122,7 @@ func (o *ReservedResource) GetBillingModel() (value BillingModel, ok bool) {
 // Count returns the value of the 'count' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ReservedResource) Count() int {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.count
 	}
 	return 0
@@ -139,7 +131,7 @@ func (o *ReservedResource) Count() int {
 // GetCount returns the value of the 'count' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ReservedResource) GetCount() (value int, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.count
 	}
@@ -149,7 +141,7 @@ func (o *ReservedResource) GetCount() (value int, ok bool) {
 // CreatedAt returns the value of the 'created_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ReservedResource) CreatedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -158,7 +150,7 @@ func (o *ReservedResource) CreatedAt() time.Time {
 // GetCreatedAt returns the value of the 'created_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ReservedResource) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.createdAt
 	}
@@ -168,7 +160,7 @@ func (o *ReservedResource) GetCreatedAt() (value time.Time, ok bool) {
 // ResourceName returns the value of the 'resource_name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ReservedResource) ResourceName() string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.resourceName
 	}
 	return ""
@@ -177,7 +169,7 @@ func (o *ReservedResource) ResourceName() string {
 // GetResourceName returns the value of the 'resource_name' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ReservedResource) GetResourceName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.resourceName
 	}
@@ -187,7 +179,7 @@ func (o *ReservedResource) GetResourceName() (value string, ok bool) {
 // ResourceType returns the value of the 'resource_type' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ReservedResource) ResourceType() string {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.resourceType
 	}
 	return ""
@@ -196,7 +188,7 @@ func (o *ReservedResource) ResourceType() string {
 // GetResourceType returns the value of the 'resource_type' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ReservedResource) GetResourceType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.resourceType
 	}
@@ -206,7 +198,7 @@ func (o *ReservedResource) GetResourceType() (value string, ok bool) {
 // Scope returns the value of the 'scope' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ReservedResource) Scope() string {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.scope
 	}
 	return ""
@@ -215,7 +207,7 @@ func (o *ReservedResource) Scope() string {
 // GetScope returns the value of the 'scope' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ReservedResource) GetScope() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.scope
 	}
@@ -225,7 +217,7 @@ func (o *ReservedResource) GetScope() (value string, ok bool) {
 // UpdatedAt returns the value of the 'updated_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ReservedResource) UpdatedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && o.bitmap_&512 != 0 {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -234,7 +226,7 @@ func (o *ReservedResource) UpdatedAt() time.Time {
 // GetUpdatedAt returns the value of the 'updated_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ReservedResource) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && o.bitmap_&512 != 0
 	if ok {
 		value = o.updatedAt
 	}

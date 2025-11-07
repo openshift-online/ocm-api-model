@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // GCP Encryption Key for CCS clusters.
 type GCPEncryptionKey struct {
-	fieldSet_            []bool
+	bitmap_              uint32
 	kmsKeyServiceAccount string
 	keyLocation          string
 	keyName              string
@@ -32,15 +32,7 @@ type GCPEncryptionKey struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *GCPEncryptionKey) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // KMSKeyServiceAccount returns the value of the 'KMS_key_service_account' attribute, or
@@ -48,7 +40,7 @@ func (o *GCPEncryptionKey) Empty() bool {
 //
 // Service account used to access the KMS key
 func (o *GCPEncryptionKey) KMSKeyServiceAccount() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.kmsKeyServiceAccount
 	}
 	return ""
@@ -59,7 +51,7 @@ func (o *GCPEncryptionKey) KMSKeyServiceAccount() string {
 //
 // Service account used to access the KMS key
 func (o *GCPEncryptionKey) GetKMSKeyServiceAccount() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.kmsKeyServiceAccount
 	}
@@ -71,7 +63,7 @@ func (o *GCPEncryptionKey) GetKMSKeyServiceAccount() (value string, ok bool) {
 //
 // Location of the encryption key ring
 func (o *GCPEncryptionKey) KeyLocation() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.keyLocation
 	}
 	return ""
@@ -82,7 +74,7 @@ func (o *GCPEncryptionKey) KeyLocation() string {
 //
 // Location of the encryption key ring
 func (o *GCPEncryptionKey) GetKeyLocation() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.keyLocation
 	}
@@ -94,7 +86,7 @@ func (o *GCPEncryptionKey) GetKeyLocation() (value string, ok bool) {
 //
 // Name of the encryption key
 func (o *GCPEncryptionKey) KeyName() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.keyName
 	}
 	return ""
@@ -105,7 +97,7 @@ func (o *GCPEncryptionKey) KeyName() string {
 //
 // Name of the encryption key
 func (o *GCPEncryptionKey) GetKeyName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.keyName
 	}
@@ -117,7 +109,7 @@ func (o *GCPEncryptionKey) GetKeyName() (value string, ok bool) {
 //
 // Name of the key ring the encryption key is located on
 func (o *GCPEncryptionKey) KeyRing() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.keyRing
 	}
 	return ""
@@ -128,7 +120,7 @@ func (o *GCPEncryptionKey) KeyRing() string {
 //
 // Name of the key ring the encryption key is located on
 func (o *GCPEncryptionKey) GetKeyRing() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.keyRing
 	}

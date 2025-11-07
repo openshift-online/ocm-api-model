@@ -23,21 +23,13 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Representation of gcp machine pool specific parameters.
 type GCPMachinePool struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	secureBoot bool
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *GCPMachinePool) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // SecureBoot returns the value of the 'secure_boot' attribute, or
@@ -51,7 +43,7 @@ func (o *GCPMachinePool) Empty() bool {
 // the machine pool.
 // Immutable.
 func (o *GCPMachinePool) SecureBoot() bool {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.secureBoot
 	}
 	return false
@@ -68,7 +60,7 @@ func (o *GCPMachinePool) SecureBoot() bool {
 // the machine pool.
 // Immutable.
 func (o *GCPMachinePool) GetSecureBoot() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.secureBoot
 	}

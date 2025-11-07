@@ -23,22 +23,14 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // AWS Capacity Reservation specification.
 type AWSCapacityReservation struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	id         string
 	marketType MarketType
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AWSCapacityReservation) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Id returns the value of the 'id' attribute, or
@@ -46,7 +38,7 @@ func (o *AWSCapacityReservation) Empty() bool {
 //
 // Specify the target Capacity Reservation in which the EC2 instances will be launched.
 func (o *AWSCapacityReservation) Id() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.id
 	}
 	return ""
@@ -57,7 +49,7 @@ func (o *AWSCapacityReservation) Id() string {
 //
 // Specify the target Capacity Reservation in which the EC2 instances will be launched.
 func (o *AWSCapacityReservation) GetId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.id
 	}
@@ -72,7 +64,7 @@ func (o *AWSCapacityReservation) GetId() (value string, ok bool) {
 // "OnDemand": EC2 instances run as standard On-Demand instances.
 // "CapacityBlocks": scheduled pre-purchased compute capacity.
 func (o *AWSCapacityReservation) MarketType() MarketType {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.marketType
 	}
 	return MarketType("")
@@ -86,7 +78,7 @@ func (o *AWSCapacityReservation) MarketType() MarketType {
 // "OnDemand": EC2 instances run as standard On-Demand instances.
 // "CapacityBlocks": scheduled pre-purchased compute capacity.
 func (o *AWSCapacityReservation) GetMarketType() (value MarketType, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.marketType
 	}

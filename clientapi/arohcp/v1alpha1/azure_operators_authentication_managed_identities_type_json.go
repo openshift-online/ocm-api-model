@@ -43,7 +43,7 @@ func WriteAzureOperatorsAuthenticationManagedIdentities(object *AzureOperatorsAu
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.controlPlaneOperatorsManagedIdentities != nil
+	present_ = object.bitmap_&1 != 0 && object.controlPlaneOperatorsManagedIdentities != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -72,7 +72,7 @@ func WriteAzureOperatorsAuthenticationManagedIdentities(object *AzureOperatorsAu
 		}
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.dataPlaneOperatorsManagedIdentities != nil
+	present_ = object.bitmap_&2 != 0 && object.dataPlaneOperatorsManagedIdentities != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -101,7 +101,7 @@ func WriteAzureOperatorsAuthenticationManagedIdentities(object *AzureOperatorsAu
 		}
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -110,7 +110,7 @@ func WriteAzureOperatorsAuthenticationManagedIdentities(object *AzureOperatorsAu
 		stream.WriteString(object.managedIdentitiesDataPlaneIdentityUrl)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.serviceManagedIdentity != nil
+	present_ = object.bitmap_&8 != 0 && object.serviceManagedIdentity != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -135,9 +135,7 @@ func UnmarshalAzureOperatorsAuthenticationManagedIdentities(source interface{}) 
 
 // ReadAzureOperatorsAuthenticationManagedIdentities reads a value of the 'azure_operators_authentication_managed_identities' type from the given iterator.
 func ReadAzureOperatorsAuthenticationManagedIdentities(iterator *jsoniter.Iterator) *AzureOperatorsAuthenticationManagedIdentities {
-	object := &AzureOperatorsAuthenticationManagedIdentities{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &AzureOperatorsAuthenticationManagedIdentities{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -155,7 +153,7 @@ func ReadAzureOperatorsAuthenticationManagedIdentities(iterator *jsoniter.Iterat
 				value[key] = item
 			}
 			object.controlPlaneOperatorsManagedIdentities = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "data_plane_operators_managed_identities":
 			value := map[string]*AzureDataPlaneManagedIdentity{}
 			for {
@@ -167,15 +165,15 @@ func ReadAzureOperatorsAuthenticationManagedIdentities(iterator *jsoniter.Iterat
 				value[key] = item
 			}
 			object.dataPlaneOperatorsManagedIdentities = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "managed_identities_data_plane_identity_url":
 			value := iterator.ReadString()
 			object.managedIdentitiesDataPlaneIdentityUrl = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "service_managed_identity":
 			value := ReadAzureServiceManagedIdentity(iterator)
 			object.serviceManagedIdentity = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

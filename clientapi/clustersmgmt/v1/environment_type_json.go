@@ -43,7 +43,7 @@ func WriteEnvironment(object *Environment, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -52,7 +52,7 @@ func WriteEnvironment(object *Environment, stream *jsoniter.Stream) {
 		stream.WriteString(object.backplaneURL)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -61,7 +61,7 @@ func WriteEnvironment(object *Environment, stream *jsoniter.Stream) {
 		stream.WriteString((object.lastLimitedSupportCheck).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -70,7 +70,7 @@ func WriteEnvironment(object *Environment, stream *jsoniter.Stream) {
 		stream.WriteString((object.lastUpgradeAvailableCheck).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -95,9 +95,7 @@ func UnmarshalEnvironment(source interface{}) (object *Environment, err error) {
 
 // ReadEnvironment reads a value of the 'environment' type from the given iterator.
 func ReadEnvironment(iterator *jsoniter.Iterator) *Environment {
-	object := &Environment{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &Environment{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -107,7 +105,7 @@ func ReadEnvironment(iterator *jsoniter.Iterator) *Environment {
 		case "backplane_url":
 			value := iterator.ReadString()
 			object.backplaneURL = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "last_limited_support_check":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -115,7 +113,7 @@ func ReadEnvironment(iterator *jsoniter.Iterator) *Environment {
 				iterator.ReportError("", err.Error())
 			}
 			object.lastLimitedSupportCheck = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "last_upgrade_available_check":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -123,11 +121,11 @@ func ReadEnvironment(iterator *jsoniter.Iterator) *Environment {
 				iterator.ReportError("", err.Error())
 			}
 			object.lastUpgradeAvailableCheck = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

@@ -23,21 +23,13 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations
 //
 // Representation of a feature review performed against oneself
 type SelfFeatureReviewRequest struct {
-	fieldSet_ []bool
-	feature   string
+	bitmap_ uint32
+	feature string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *SelfFeatureReviewRequest) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Feature returns the value of the 'feature' attribute, or
@@ -45,7 +37,7 @@ func (o *SelfFeatureReviewRequest) Empty() bool {
 //
 // Indicates the feature which can be toggled
 func (o *SelfFeatureReviewRequest) Feature() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.feature
 	}
 	return ""
@@ -56,7 +48,7 @@ func (o *SelfFeatureReviewRequest) Feature() string {
 //
 // Indicates the feature which can be toggled
 func (o *SelfFeatureReviewRequest) GetFeature() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.feature
 	}

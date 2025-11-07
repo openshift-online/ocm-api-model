@@ -23,28 +23,20 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Security Group Filter object, containing name of the filter tag and value of the filter tag
 type MachinePoolSecurityGroupFilter struct {
-	fieldSet_ []bool
-	name      string
-	value     string
+	bitmap_ uint32
+	name    string
+	value   string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *MachinePoolSecurityGroupFilter) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Name returns the value of the 'name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *MachinePoolSecurityGroupFilter) Name() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.name
 	}
 	return ""
@@ -53,7 +45,7 @@ func (o *MachinePoolSecurityGroupFilter) Name() string {
 // GetName returns the value of the 'name' attribute and
 // a flag indicating if the attribute has a value.
 func (o *MachinePoolSecurityGroupFilter) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.name
 	}
@@ -63,7 +55,7 @@ func (o *MachinePoolSecurityGroupFilter) GetName() (value string, ok bool) {
 // Value returns the value of the 'value' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *MachinePoolSecurityGroupFilter) Value() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.value
 	}
 	return ""
@@ -72,7 +64,7 @@ func (o *MachinePoolSecurityGroupFilter) Value() string {
 // GetValue returns the value of the 'value' attribute and
 // a flag indicating if the attribute has a value.
 func (o *MachinePoolSecurityGroupFilter) GetValue() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.value
 	}

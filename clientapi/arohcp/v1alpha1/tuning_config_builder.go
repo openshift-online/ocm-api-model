@@ -19,82 +19,58 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// TuningConfigBuilder contains the data and logic needed to build 'tuning_config' objects.
+//
 // Representation of a tuning config.
 type TuningConfigBuilder struct {
-	fieldSet_ []bool
-	id        string
-	href      string
-	name      string
-	spec      interface{}
+	bitmap_ uint32
+	id      string
+	href    string
+	name    string
+	spec    interface{}
 }
 
 // NewTuningConfig creates a new builder of 'tuning_config' objects.
 func NewTuningConfig() *TuningConfigBuilder {
-	return &TuningConfigBuilder{
-		fieldSet_: make([]bool, 5),
-	}
+	return &TuningConfigBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *TuningConfigBuilder) Link(value bool) *TuningConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *TuningConfigBuilder) ID(value string) *TuningConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *TuningConfigBuilder) HREF(value string) *TuningConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *TuningConfigBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *TuningConfigBuilder) Name(value string) *TuningConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.name = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // Spec sets the value of the 'spec' attribute to the given value.
 func (b *TuningConfigBuilder) Spec(value interface{}) *TuningConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.spec = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -103,10 +79,7 @@ func (b *TuningConfigBuilder) Copy(object *TuningConfig) *TuningConfigBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.name = object.name
@@ -119,10 +92,7 @@ func (b *TuningConfigBuilder) Build() (object *TuningConfig, err error) {
 	object = new(TuningConfig)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.name = b.name
 	object.spec = b.spec
 	return

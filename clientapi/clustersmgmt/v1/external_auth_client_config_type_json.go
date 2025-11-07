@@ -42,7 +42,7 @@ func WriteExternalAuthClientConfig(object *ExternalAuthClientConfig, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteExternalAuthClientConfig(object *ExternalAuthClientConfig, stream *jso
 		stream.WriteString(object.id)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.component != nil
+	present_ = object.bitmap_&2 != 0 && object.component != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteExternalAuthClientConfig(object *ExternalAuthClientConfig, stream *jso
 		WriteClientComponent(object.component, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.extraScopes != nil
+	present_ = object.bitmap_&4 != 0 && object.extraScopes != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteExternalAuthClientConfig(object *ExternalAuthClientConfig, stream *jso
 		WriteStringList(object.extraScopes, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteExternalAuthClientConfig(object *ExternalAuthClientConfig, stream *jso
 		stream.WriteString(object.secret)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -103,9 +103,7 @@ func UnmarshalExternalAuthClientConfig(source interface{}) (object *ExternalAuth
 
 // ReadExternalAuthClientConfig reads a value of the 'external_auth_client_config' type from the given iterator.
 func ReadExternalAuthClientConfig(iterator *jsoniter.Iterator) *ExternalAuthClientConfig {
-	object := &ExternalAuthClientConfig{
-		fieldSet_: make([]bool, 5),
-	}
+	object := &ExternalAuthClientConfig{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -115,24 +113,24 @@ func ReadExternalAuthClientConfig(iterator *jsoniter.Iterator) *ExternalAuthClie
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "component":
 			value := ReadClientComponent(iterator)
 			object.component = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "extra_scopes":
 			value := ReadStringList(iterator)
 			object.extraScopes = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "secret":
 			value := iterator.ReadString()
 			object.secret = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "type":
 			text := iterator.ReadString()
 			value := ExternalAuthClientType(text)
 			object.type_ = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		default:
 			iterator.ReadAny()
 		}

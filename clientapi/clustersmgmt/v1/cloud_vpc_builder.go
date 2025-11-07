@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// CloudVPCBuilder contains the data and logic needed to build 'cloud_VPC' objects.
+//
 // Description of a cloud provider virtual private cloud.
 type CloudVPCBuilder struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	awsSecurityGroups []*SecurityGroupBuilder
 	awsSubnets        []*SubnetworkBuilder
 	cidrBlock         string
@@ -33,94 +35,63 @@ type CloudVPCBuilder struct {
 
 // NewCloudVPC creates a new builder of 'cloud_VPC' objects.
 func NewCloudVPC() *CloudVPCBuilder {
-	return &CloudVPCBuilder{
-		fieldSet_: make([]bool, 7),
-	}
+	return &CloudVPCBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *CloudVPCBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // AWSSecurityGroups sets the value of the 'AWS_security_groups' attribute to the given values.
 func (b *CloudVPCBuilder) AWSSecurityGroups(values ...*SecurityGroupBuilder) *CloudVPCBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.awsSecurityGroups = make([]*SecurityGroupBuilder, len(values))
 	copy(b.awsSecurityGroups, values)
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // AWSSubnets sets the value of the 'AWS_subnets' attribute to the given values.
 func (b *CloudVPCBuilder) AWSSubnets(values ...*SubnetworkBuilder) *CloudVPCBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.awsSubnets = make([]*SubnetworkBuilder, len(values))
 	copy(b.awsSubnets, values)
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // CIDRBlock sets the value of the 'CIDR_block' attribute to the given value.
 func (b *CloudVPCBuilder) CIDRBlock(value string) *CloudVPCBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.cidrBlock = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *CloudVPCBuilder) ID(value string) *CloudVPCBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.id = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *CloudVPCBuilder) Name(value string) *CloudVPCBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.name = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // RedHatManaged sets the value of the 'red_hat_managed' attribute to the given value.
 func (b *CloudVPCBuilder) RedHatManaged(value bool) *CloudVPCBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.redHatManaged = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // Subnets sets the value of the 'subnets' attribute to the given values.
 func (b *CloudVPCBuilder) Subnets(values ...string) *CloudVPCBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.subnets = make([]string, len(values))
 	copy(b.subnets, values)
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
@@ -129,10 +100,7 @@ func (b *CloudVPCBuilder) Copy(object *CloudVPC) *CloudVPCBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.awsSecurityGroups != nil {
 		b.awsSecurityGroups = make([]*SecurityGroupBuilder, len(object.awsSecurityGroups))
 		for i, v := range object.awsSecurityGroups {
@@ -165,10 +133,7 @@ func (b *CloudVPCBuilder) Copy(object *CloudVPC) *CloudVPCBuilder {
 // Build creates a 'cloud_VPC' object using the configuration stored in the builder.
 func (b *CloudVPCBuilder) Build() (object *CloudVPC, err error) {
 	object = new(CloudVPC)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.awsSecurityGroups != nil {
 		object.awsSecurityGroups = make([]*SecurityGroup, len(b.awsSecurityGroups))
 		for i, v := range b.awsSecurityGroups {

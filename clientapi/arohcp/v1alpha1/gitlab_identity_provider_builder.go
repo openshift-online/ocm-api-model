@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// GitlabIdentityProviderBuilder contains the data and logic needed to build 'gitlab_identity_provider' objects.
+//
 // Details for `gitlab` identity providers.
 type GitlabIdentityProviderBuilder struct {
-	fieldSet_    []bool
+	bitmap_      uint32
 	ca           string
 	url          string
 	clientID     string
@@ -30,61 +32,39 @@ type GitlabIdentityProviderBuilder struct {
 
 // NewGitlabIdentityProvider creates a new builder of 'gitlab_identity_provider' objects.
 func NewGitlabIdentityProvider() *GitlabIdentityProviderBuilder {
-	return &GitlabIdentityProviderBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &GitlabIdentityProviderBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GitlabIdentityProviderBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // CA sets the value of the 'CA' attribute to the given value.
 func (b *GitlabIdentityProviderBuilder) CA(value string) *GitlabIdentityProviderBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.ca = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // URL sets the value of the 'URL' attribute to the given value.
 func (b *GitlabIdentityProviderBuilder) URL(value string) *GitlabIdentityProviderBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.url = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // ClientID sets the value of the 'client_ID' attribute to the given value.
 func (b *GitlabIdentityProviderBuilder) ClientID(value string) *GitlabIdentityProviderBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.clientID = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // ClientSecret sets the value of the 'client_secret' attribute to the given value.
 func (b *GitlabIdentityProviderBuilder) ClientSecret(value string) *GitlabIdentityProviderBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.clientSecret = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -93,10 +73,7 @@ func (b *GitlabIdentityProviderBuilder) Copy(object *GitlabIdentityProvider) *Gi
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.ca = object.ca
 	b.url = object.url
 	b.clientID = object.clientID
@@ -107,10 +84,7 @@ func (b *GitlabIdentityProviderBuilder) Copy(object *GitlabIdentityProvider) *Gi
 // Build creates a 'gitlab_identity_provider' object using the configuration stored in the builder.
 func (b *GitlabIdentityProviderBuilder) Build() (object *GitlabIdentityProvider, err error) {
 	object = new(GitlabIdentityProvider)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.ca = b.ca
 	object.url = b.url
 	object.clientID = b.clientID

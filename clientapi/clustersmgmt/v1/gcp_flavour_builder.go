@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// GCPFlavourBuilder contains the data and logic needed to build 'GCP_flavour' objects.
+//
 // Specification for different classes of nodes inside a flavour.
 type GCPFlavourBuilder struct {
-	fieldSet_           []bool
+	bitmap_             uint32
 	computeInstanceType string
 	infraInstanceType   string
 	infraVolume         *GCPVolumeBuilder
@@ -32,41 +34,25 @@ type GCPFlavourBuilder struct {
 
 // NewGCPFlavour creates a new builder of 'GCP_flavour' objects.
 func NewGCPFlavour() *GCPFlavourBuilder {
-	return &GCPFlavourBuilder{
-		fieldSet_: make([]bool, 6),
-	}
+	return &GCPFlavourBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GCPFlavourBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ComputeInstanceType sets the value of the 'compute_instance_type' attribute to the given value.
 func (b *GCPFlavourBuilder) ComputeInstanceType(value string) *GCPFlavourBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.computeInstanceType = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // InfraInstanceType sets the value of the 'infra_instance_type' attribute to the given value.
 func (b *GCPFlavourBuilder) InfraInstanceType(value string) *GCPFlavourBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.infraInstanceType = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -74,25 +60,19 @@ func (b *GCPFlavourBuilder) InfraInstanceType(value string) *GCPFlavourBuilder {
 //
 // Holds settings for an GCP storage volume.
 func (b *GCPFlavourBuilder) InfraVolume(value *GCPVolumeBuilder) *GCPFlavourBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.infraVolume = value
 	if value != nil {
-		b.fieldSet_[2] = true
+		b.bitmap_ |= 4
 	} else {
-		b.fieldSet_[2] = false
+		b.bitmap_ &^= 4
 	}
 	return b
 }
 
 // MasterInstanceType sets the value of the 'master_instance_type' attribute to the given value.
 func (b *GCPFlavourBuilder) MasterInstanceType(value string) *GCPFlavourBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.masterInstanceType = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -100,14 +80,11 @@ func (b *GCPFlavourBuilder) MasterInstanceType(value string) *GCPFlavourBuilder 
 //
 // Holds settings for an GCP storage volume.
 func (b *GCPFlavourBuilder) MasterVolume(value *GCPVolumeBuilder) *GCPFlavourBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.masterVolume = value
 	if value != nil {
-		b.fieldSet_[4] = true
+		b.bitmap_ |= 16
 	} else {
-		b.fieldSet_[4] = false
+		b.bitmap_ &^= 16
 	}
 	return b
 }
@@ -116,14 +93,11 @@ func (b *GCPFlavourBuilder) MasterVolume(value *GCPVolumeBuilder) *GCPFlavourBui
 //
 // Holds settings for an GCP storage volume.
 func (b *GCPFlavourBuilder) WorkerVolume(value *GCPVolumeBuilder) *GCPFlavourBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.workerVolume = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
@@ -133,10 +107,7 @@ func (b *GCPFlavourBuilder) Copy(object *GCPFlavour) *GCPFlavourBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.computeInstanceType = object.computeInstanceType
 	b.infraInstanceType = object.infraInstanceType
 	if object.infraVolume != nil {
@@ -161,10 +132,7 @@ func (b *GCPFlavourBuilder) Copy(object *GCPFlavour) *GCPFlavourBuilder {
 // Build creates a 'GCP_flavour' object using the configuration stored in the builder.
 func (b *GCPFlavourBuilder) Build() (object *GCPFlavour, err error) {
 	object = new(GCPFlavour)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.computeInstanceType = b.computeInstanceType
 	object.infraInstanceType = b.infraInstanceType
 	if b.infraVolume != nil {

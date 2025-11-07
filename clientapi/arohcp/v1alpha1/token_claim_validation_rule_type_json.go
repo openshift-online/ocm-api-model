@@ -42,7 +42,7 @@ func WriteTokenClaimValidationRule(object *TokenClaimValidationRule, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteTokenClaimValidationRule(object *TokenClaimValidationRule, stream *jso
 		stream.WriteString(object.claim)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalTokenClaimValidationRule(source interface{}) (object *TokenClaimVa
 
 // ReadTokenClaimValidationRule reads a value of the 'token_claim_validation_rule' type from the given iterator.
 func ReadTokenClaimValidationRule(iterator *jsoniter.Iterator) *TokenClaimValidationRule {
-	object := &TokenClaimValidationRule{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &TokenClaimValidationRule{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadTokenClaimValidationRule(iterator *jsoniter.Iterator) *TokenClaimValida
 		case "claim":
 			value := iterator.ReadString()
 			object.claim = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "required_value":
 			value := iterator.ReadString()
 			object.requiredValue = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

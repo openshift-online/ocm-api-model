@@ -21,28 +21,20 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 
 // WifSecretRef represents the values of the 'wif_secret_ref' type.
 type WifSecretRef struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	name      string
 	namespace string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *WifSecretRef) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Name returns the value of the 'name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifSecretRef) Name() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.name
 	}
 	return ""
@@ -51,7 +43,7 @@ func (o *WifSecretRef) Name() string {
 // GetName returns the value of the 'name' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifSecretRef) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.name
 	}
@@ -61,7 +53,7 @@ func (o *WifSecretRef) GetName() (value string, ok bool) {
 // Namespace returns the value of the 'namespace' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifSecretRef) Namespace() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.namespace
 	}
 	return ""
@@ -70,7 +62,7 @@ func (o *WifSecretRef) Namespace() string {
 // GetNamespace returns the value of the 'namespace' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifSecretRef) GetNamespace() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.namespace
 	}

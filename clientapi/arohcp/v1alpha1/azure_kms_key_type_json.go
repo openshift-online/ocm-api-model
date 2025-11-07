@@ -42,7 +42,7 @@ func WriteAzureKmsKey(object *AzureKmsKey, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAzureKmsKey(object *AzureKmsKey, stream *jsoniter.Stream) {
 		stream.WriteString(object.keyName)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteAzureKmsKey(object *AzureKmsKey, stream *jsoniter.Stream) {
 		stream.WriteString(object.keyVaultName)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,9 +85,7 @@ func UnmarshalAzureKmsKey(source interface{}) (object *AzureKmsKey, err error) {
 
 // ReadAzureKmsKey reads a value of the 'azure_kms_key' type from the given iterator.
 func ReadAzureKmsKey(iterator *jsoniter.Iterator) *AzureKmsKey {
-	object := &AzureKmsKey{
-		fieldSet_: make([]bool, 3),
-	}
+	object := &AzureKmsKey{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -97,15 +95,15 @@ func ReadAzureKmsKey(iterator *jsoniter.Iterator) *AzureKmsKey {
 		case "key_name":
 			value := iterator.ReadString()
 			object.keyName = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "key_vault_name":
 			value := iterator.ReadString()
 			object.keyVaultName = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "key_version":
 			value := iterator.ReadString()
 			object.keyVersion = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		default:
 			iterator.ReadAny()
 		}

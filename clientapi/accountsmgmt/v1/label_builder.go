@@ -23,8 +23,9 @@ import (
 	time "time"
 )
 
+// LabelBuilder contains the data and logic needed to build 'label' objects.
 type LabelBuilder struct {
-	fieldSet_      []bool
+	bitmap_        uint32
 	id             string
 	href           string
 	accountID      string
@@ -41,151 +42,101 @@ type LabelBuilder struct {
 
 // NewLabel creates a new builder of 'label' objects.
 func NewLabel() *LabelBuilder {
-	return &LabelBuilder{
-		fieldSet_: make([]bool, 13),
-	}
+	return &LabelBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *LabelBuilder) Link(value bool) *LabelBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *LabelBuilder) ID(value string) *LabelBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *LabelBuilder) HREF(value string) *LabelBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *LabelBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // AccountID sets the value of the 'account_ID' attribute to the given value.
 func (b *LabelBuilder) AccountID(value string) *LabelBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.accountID = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *LabelBuilder) CreatedAt(value time.Time) *LabelBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.createdAt = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // Internal sets the value of the 'internal' attribute to the given value.
 func (b *LabelBuilder) Internal(value bool) *LabelBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.internal = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // Key sets the value of the 'key' attribute to the given value.
 func (b *LabelBuilder) Key(value string) *LabelBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.key = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // ManagedBy sets the value of the 'managed_by' attribute to the given value.
 func (b *LabelBuilder) ManagedBy(value string) *LabelBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.managedBy = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *LabelBuilder) OrganizationID(value string) *LabelBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.organizationID = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *LabelBuilder) SubscriptionID(value string) *LabelBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.subscriptionID = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *LabelBuilder) Type(value string) *LabelBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.type_ = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *LabelBuilder) UpdatedAt(value time.Time) *LabelBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.updatedAt = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *LabelBuilder) Value(value string) *LabelBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.value = value
-	b.fieldSet_[12] = true
+	b.bitmap_ |= 4096
 	return b
 }
 
@@ -194,10 +145,7 @@ func (b *LabelBuilder) Copy(object *Label) *LabelBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.accountID = object.accountID
@@ -218,10 +166,7 @@ func (b *LabelBuilder) Build() (object *Label, err error) {
 	object = new(Label)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.accountID = b.accountID
 	object.createdAt = b.createdAt
 	object.internal = b.internal

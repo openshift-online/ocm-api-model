@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accesstranspar
 //
 // Representation of an access request post request.
 type AccessRequestPostRequest struct {
-	fieldSet_             []bool
+	bitmap_               uint32
 	clusterId             string
 	deadline              string
 	duration              string
@@ -35,15 +35,7 @@ type AccessRequestPostRequest struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AccessRequestPostRequest) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // ClusterId returns the value of the 'cluster_id' attribute, or
@@ -51,7 +43,7 @@ func (o *AccessRequestPostRequest) Empty() bool {
 //
 // Cluster from which the Access Request belongs to.
 func (o *AccessRequestPostRequest) ClusterId() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.clusterId
 	}
 	return ""
@@ -62,7 +54,7 @@ func (o *AccessRequestPostRequest) ClusterId() string {
 //
 // Cluster from which the Access Request belongs to.
 func (o *AccessRequestPostRequest) GetClusterId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.clusterId
 	}
@@ -74,7 +66,7 @@ func (o *AccessRequestPostRequest) GetClusterId() (value string, ok bool) {
 //
 // How long the Access Request can be in pending state waiting for a customer decision.
 func (o *AccessRequestPostRequest) Deadline() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.deadline
 	}
 	return ""
@@ -85,7 +77,7 @@ func (o *AccessRequestPostRequest) Deadline() string {
 //
 // How long the Access Request can be in pending state waiting for a customer decision.
 func (o *AccessRequestPostRequest) GetDeadline() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.deadline
 	}
@@ -97,7 +89,7 @@ func (o *AccessRequestPostRequest) GetDeadline() (value string, ok bool) {
 //
 // How long the access will last after it's been approved.
 func (o *AccessRequestPostRequest) Duration() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.duration
 	}
 	return ""
@@ -108,7 +100,7 @@ func (o *AccessRequestPostRequest) Duration() string {
 //
 // How long the access will last after it's been approved.
 func (o *AccessRequestPostRequest) GetDuration() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.duration
 	}
@@ -120,7 +112,7 @@ func (o *AccessRequestPostRequest) GetDuration() (value string, ok bool) {
 //
 // Internal support case id linking to jira ticket.
 func (o *AccessRequestPostRequest) InternalSupportCaseId() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.internalSupportCaseId
 	}
 	return ""
@@ -131,7 +123,7 @@ func (o *AccessRequestPostRequest) InternalSupportCaseId() string {
 //
 // Internal support case id linking to jira ticket.
 func (o *AccessRequestPostRequest) GetInternalSupportCaseId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.internalSupportCaseId
 	}
@@ -143,7 +135,7 @@ func (o *AccessRequestPostRequest) GetInternalSupportCaseId() (value string, ok 
 //
 // Justification of the Access Request.
 func (o *AccessRequestPostRequest) Justification() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.justification
 	}
 	return ""
@@ -154,7 +146,7 @@ func (o *AccessRequestPostRequest) Justification() string {
 //
 // Justification of the Access Request.
 func (o *AccessRequestPostRequest) GetJustification() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.justification
 	}
@@ -166,7 +158,7 @@ func (o *AccessRequestPostRequest) GetJustification() (value string, ok bool) {
 //
 // Subscription from which the Access Request belongs to.
 func (o *AccessRequestPostRequest) SubscriptionId() string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.subscriptionId
 	}
 	return ""
@@ -177,7 +169,7 @@ func (o *AccessRequestPostRequest) SubscriptionId() string {
 //
 // Subscription from which the Access Request belongs to.
 func (o *AccessRequestPostRequest) GetSubscriptionId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.subscriptionId
 	}
@@ -189,7 +181,7 @@ func (o *AccessRequestPostRequest) GetSubscriptionId() (value string, ok bool) {
 //
 // Support case ID linking to JIRA ticket.
 func (o *AccessRequestPostRequest) SupportCaseId() string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.supportCaseId
 	}
 	return ""
@@ -200,7 +192,7 @@ func (o *AccessRequestPostRequest) SupportCaseId() string {
 //
 // Support case ID linking to JIRA ticket.
 func (o *AccessRequestPostRequest) GetSupportCaseId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.supportCaseId
 	}

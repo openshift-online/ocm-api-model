@@ -21,28 +21,20 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 
 // SummaryMetrics represents the values of the 'summary_metrics' type.
 type SummaryMetrics struct {
-	fieldSet_ []bool
-	name      string
-	vector    []*SummarySample
+	bitmap_ uint32
+	name    string
+	vector  []*SummarySample
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *SummaryMetrics) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Name returns the value of the 'name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *SummaryMetrics) Name() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.name
 	}
 	return ""
@@ -51,7 +43,7 @@ func (o *SummaryMetrics) Name() string {
 // GetName returns the value of the 'name' attribute and
 // a flag indicating if the attribute has a value.
 func (o *SummaryMetrics) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.name
 	}
@@ -61,7 +53,7 @@ func (o *SummaryMetrics) GetName() (value string, ok bool) {
 // Vector returns the value of the 'vector' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *SummaryMetrics) Vector() []*SummarySample {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.vector
 	}
 	return nil
@@ -70,7 +62,7 @@ func (o *SummaryMetrics) Vector() []*SummarySample {
 // GetVector returns the value of the 'vector' attribute and
 // a flag indicating if the attribute has a value.
 func (o *SummaryMetrics) GetVector() (value []*SummarySample, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.vector
 	}

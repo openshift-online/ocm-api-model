@@ -42,7 +42,7 @@ func WriteResourceReviewRequest(object *ResourceReviewRequest, stream *jsoniter.
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteResourceReviewRequest(object *ResourceReviewRequest, stream *jsoniter.
 		stream.WriteString(object.accountUsername)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteResourceReviewRequest(object *ResourceReviewRequest, stream *jsoniter.
 		stream.WriteString(object.action)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.excludeSubscriptionStatuses != nil
+	present_ = object.bitmap_&4 != 0 && object.excludeSubscriptionStatuses != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteResourceReviewRequest(object *ResourceReviewRequest, stream *jsoniter.
 		WriteSubscriptionStatusList(object.excludeSubscriptionStatuses, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteResourceReviewRequest(object *ResourceReviewRequest, stream *jsoniter.
 		stream.WriteBool(object.reduceClusterList)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -103,9 +103,7 @@ func UnmarshalResourceReviewRequest(source interface{}) (object *ResourceReviewR
 
 // ReadResourceReviewRequest reads a value of the 'resource_review_request' type from the given iterator.
 func ReadResourceReviewRequest(iterator *jsoniter.Iterator) *ResourceReviewRequest {
-	object := &ResourceReviewRequest{
-		fieldSet_: make([]bool, 5),
-	}
+	object := &ResourceReviewRequest{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -115,23 +113,23 @@ func ReadResourceReviewRequest(iterator *jsoniter.Iterator) *ResourceReviewReque
 		case "account_username":
 			value := iterator.ReadString()
 			object.accountUsername = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "action":
 			value := iterator.ReadString()
 			object.action = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "exclude_subscription_statuses":
 			value := ReadSubscriptionStatusList(iterator)
 			object.excludeSubscriptionStatuses = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "reduce_cluster_list":
 			value := iterator.ReadBool()
 			object.reduceClusterList = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "resource_type":
 			value := iterator.ReadString()
 			object.resourceType = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		default:
 			iterator.ReadAny()
 		}

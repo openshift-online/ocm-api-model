@@ -42,7 +42,7 @@ func WriteCIDRBlockAccess(object *CIDRBlockAccess, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.allow != nil
+	present_ = object.bitmap_&1 != 0 && object.allow != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalCIDRBlockAccess(source interface{}) (object *CIDRBlockAccess, err 
 
 // ReadCIDRBlockAccess reads a value of the 'CIDR_block_access' type from the given iterator.
 func ReadCIDRBlockAccess(iterator *jsoniter.Iterator) *CIDRBlockAccess {
-	object := &CIDRBlockAccess{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &CIDRBlockAccess{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadCIDRBlockAccess(iterator *jsoniter.Iterator) *CIDRBlockAccess {
 		case "allow":
 			value := ReadCIDRBlockAllowAccess(iterator)
 			object.allow = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

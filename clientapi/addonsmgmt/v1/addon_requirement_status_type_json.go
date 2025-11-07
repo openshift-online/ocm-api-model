@@ -42,7 +42,7 @@ func WriteAddonRequirementStatus(object *AddonRequirementStatus, stream *jsonite
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.errorMsgs != nil
+	present_ = object.bitmap_&1 != 0 && object.errorMsgs != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAddonRequirementStatus(object *AddonRequirementStatus, stream *jsonite
 		WriteStringList(object.errorMsgs, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalAddonRequirementStatus(source interface{}) (object *AddonRequireme
 
 // ReadAddonRequirementStatus reads a value of the 'addon_requirement_status' type from the given iterator.
 func ReadAddonRequirementStatus(iterator *jsoniter.Iterator) *AddonRequirementStatus {
-	object := &AddonRequirementStatus{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &AddonRequirementStatus{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadAddonRequirementStatus(iterator *jsoniter.Iterator) *AddonRequirementSt
 		case "error_msgs":
 			value := ReadStringList(iterator)
 			object.errorMsgs = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "fulfilled":
 			value := iterator.ReadBool()
 			object.fulfilled = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

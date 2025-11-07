@@ -43,13 +43,13 @@ func WriteIngress(object *Ingress, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(IngressLinkKind)
 	} else {
 		stream.WriteString(IngressKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteIngress(object *Ingress, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteIngress(object *Ingress, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteIngress(object *Ingress, stream *jsoniter.Stream) {
 		stream.WriteString(object.dnsName)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteIngress(object *Ingress, stream *jsoniter.Stream) {
 		stream.WriteString(object.clusterRoutesHostname)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteIngress(object *Ingress, stream *jsoniter.Stream) {
 		stream.WriteString(object.clusterRoutesTlsSecretRef)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.componentRoutes != nil
+	present_ = object.bitmap_&64 != 0 && object.componentRoutes != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -122,7 +122,7 @@ func WriteIngress(object *Ingress, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = object.bitmap_&128 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -131,7 +131,7 @@ func WriteIngress(object *Ingress, stream *jsoniter.Stream) {
 		stream.WriteBool(object.default_)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8] && object.excludedNamespaces != nil
+	present_ = object.bitmap_&256 != 0 && object.excludedNamespaces != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -140,7 +140,7 @@ func WriteIngress(object *Ingress, stream *jsoniter.Stream) {
 		WriteStringList(object.excludedNamespaces, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = object.bitmap_&512 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -149,7 +149,7 @@ func WriteIngress(object *Ingress, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.listening))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
+	present_ = object.bitmap_&1024 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -158,7 +158,7 @@ func WriteIngress(object *Ingress, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.loadBalancerType))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
+	present_ = object.bitmap_&2048 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -167,7 +167,7 @@ func WriteIngress(object *Ingress, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.routeNamespaceOwnershipPolicy))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12] && object.routeSelectors != nil
+	present_ = object.bitmap_&4096 != 0 && object.routeSelectors != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -196,7 +196,7 @@ func WriteIngress(object *Ingress, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13]
+	present_ = object.bitmap_&8192 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -221,9 +221,7 @@ func UnmarshalIngress(source interface{}) (object *Ingress, err error) {
 
 // ReadIngress reads a value of the 'ingress' type from the given iterator.
 func ReadIngress(iterator *jsoniter.Iterator) *Ingress {
-	object := &Ingress{
-		fieldSet_: make([]bool, 14),
-	}
+	object := &Ingress{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -233,26 +231,26 @@ func ReadIngress(iterator *jsoniter.Iterator) *Ingress {
 		case "kind":
 			value := iterator.ReadString()
 			if value == IngressLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "dns_name":
 			value := iterator.ReadString()
 			object.dnsName = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "cluster_routes_hostname":
 			value := iterator.ReadString()
 			object.clusterRoutesHostname = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "cluster_routes_tls_secret_ref":
 			value := iterator.ReadString()
 			object.clusterRoutesTlsSecretRef = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "component_routes":
 			value := map[string]*ComponentRoute{}
 			for {
@@ -264,30 +262,30 @@ func ReadIngress(iterator *jsoniter.Iterator) *Ingress {
 				value[key] = item
 			}
 			object.componentRoutes = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "default":
 			value := iterator.ReadBool()
 			object.default_ = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		case "excluded_namespaces":
 			value := ReadStringList(iterator)
 			object.excludedNamespaces = value
-			object.fieldSet_[8] = true
+			object.bitmap_ |= 256
 		case "listening":
 			text := iterator.ReadString()
 			value := ListeningMethod(text)
 			object.listening = value
-			object.fieldSet_[9] = true
+			object.bitmap_ |= 512
 		case "load_balancer_type":
 			text := iterator.ReadString()
 			value := LoadBalancerFlavor(text)
 			object.loadBalancerType = value
-			object.fieldSet_[10] = true
+			object.bitmap_ |= 1024
 		case "route_namespace_ownership_policy":
 			text := iterator.ReadString()
 			value := NamespaceOwnershipPolicy(text)
 			object.routeNamespaceOwnershipPolicy = value
-			object.fieldSet_[11] = true
+			object.bitmap_ |= 2048
 		case "route_selectors":
 			value := map[string]string{}
 			for {
@@ -299,12 +297,12 @@ func ReadIngress(iterator *jsoniter.Iterator) *Ingress {
 				value[key] = item
 			}
 			object.routeSelectors = value
-			object.fieldSet_[12] = true
+			object.bitmap_ |= 4096
 		case "route_wildcard_policy":
 			text := iterator.ReadString()
 			value := WildcardPolicy(text)
 			object.routeWildcardPolicy = value
-			object.fieldSet_[13] = true
+			object.bitmap_ |= 8192
 		default:
 			iterator.ReadAny()
 		}

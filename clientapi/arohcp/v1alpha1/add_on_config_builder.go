@@ -19,10 +19,12 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// AddOnConfigBuilder contains the data and logic needed to build 'add_on_config' objects.
+//
 // Representation of an add-on config.
 // The attributes under it are to be used by the addon once its installed in the cluster.
 type AddOnConfigBuilder struct {
-	fieldSet_                 []bool
+	bitmap_                   uint32
 	id                        string
 	href                      string
 	addOnEnvironmentVariables []*AddOnEnvironmentVariableBuilder
@@ -31,73 +33,47 @@ type AddOnConfigBuilder struct {
 
 // NewAddOnConfig creates a new builder of 'add_on_config' objects.
 func NewAddOnConfig() *AddOnConfigBuilder {
-	return &AddOnConfigBuilder{
-		fieldSet_: make([]bool, 5),
-	}
+	return &AddOnConfigBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddOnConfigBuilder) Link(value bool) *AddOnConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddOnConfigBuilder) ID(value string) *AddOnConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AddOnConfigBuilder) HREF(value string) *AddOnConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddOnConfigBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // AddOnEnvironmentVariables sets the value of the 'add_on_environment_variables' attribute to the given values.
 func (b *AddOnConfigBuilder) AddOnEnvironmentVariables(values ...*AddOnEnvironmentVariableBuilder) *AddOnConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.addOnEnvironmentVariables = make([]*AddOnEnvironmentVariableBuilder, len(values))
 	copy(b.addOnEnvironmentVariables, values)
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // SecretPropagations sets the value of the 'secret_propagations' attribute to the given values.
 func (b *AddOnConfigBuilder) SecretPropagations(values ...*AddOnSecretPropagationBuilder) *AddOnConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.secretPropagations = make([]*AddOnSecretPropagationBuilder, len(values))
 	copy(b.secretPropagations, values)
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -106,10 +82,7 @@ func (b *AddOnConfigBuilder) Copy(object *AddOnConfig) *AddOnConfigBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.addOnEnvironmentVariables != nil {
@@ -136,10 +109,7 @@ func (b *AddOnConfigBuilder) Build() (object *AddOnConfig, err error) {
 	object = new(AddOnConfig)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.addOnEnvironmentVariables != nil {
 		object.addOnEnvironmentVariables = make([]*AddOnEnvironmentVariable, len(b.addOnEnvironmentVariables))
 		for i, v := range b.addOnEnvironmentVariables {

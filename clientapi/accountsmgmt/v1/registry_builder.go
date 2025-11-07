@@ -23,8 +23,9 @@ import (
 	time "time"
 )
 
+// RegistryBuilder contains the data and logic needed to build 'registry' objects.
 type RegistryBuilder struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	id         string
 	href       string
 	url        string
@@ -39,131 +40,87 @@ type RegistryBuilder struct {
 
 // NewRegistry creates a new builder of 'registry' objects.
 func NewRegistry() *RegistryBuilder {
-	return &RegistryBuilder{
-		fieldSet_: make([]bool, 11),
-	}
+	return &RegistryBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *RegistryBuilder) Link(value bool) *RegistryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *RegistryBuilder) ID(value string) *RegistryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *RegistryBuilder) HREF(value string) *RegistryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *RegistryBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // URL sets the value of the 'URL' attribute to the given value.
 func (b *RegistryBuilder) URL(value string) *RegistryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.url = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // CloudAlias sets the value of the 'cloud_alias' attribute to the given value.
 func (b *RegistryBuilder) CloudAlias(value bool) *RegistryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.cloudAlias = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *RegistryBuilder) CreatedAt(value time.Time) *RegistryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.createdAt = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *RegistryBuilder) Name(value string) *RegistryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.name = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // OrgName sets the value of the 'org_name' attribute to the given value.
 func (b *RegistryBuilder) OrgName(value string) *RegistryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.orgName = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // TeamName sets the value of the 'team_name' attribute to the given value.
 func (b *RegistryBuilder) TeamName(value string) *RegistryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.teamName = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *RegistryBuilder) Type(value string) *RegistryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.type_ = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *RegistryBuilder) UpdatedAt(value time.Time) *RegistryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.updatedAt = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
@@ -172,10 +129,7 @@ func (b *RegistryBuilder) Copy(object *Registry) *RegistryBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.url = object.url
@@ -194,10 +148,7 @@ func (b *RegistryBuilder) Build() (object *Registry, err error) {
 	object = new(Registry)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.url = b.url
 	object.cloudAlias = b.cloudAlias
 	object.createdAt = b.createdAt

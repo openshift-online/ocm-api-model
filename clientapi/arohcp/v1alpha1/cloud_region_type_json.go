@@ -42,13 +42,13 @@ func WriteCloudRegion(object *CloudRegion, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(CloudRegionLinkKind)
 	} else {
 		stream.WriteString(CloudRegionKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteCloudRegion(object *CloudRegion, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteCloudRegion(object *CloudRegion, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteCloudRegion(object *CloudRegion, stream *jsoniter.Stream) {
 		stream.WriteBool(object.ccsOnly)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteCloudRegion(object *CloudRegion, stream *jsoniter.Stream) {
 		stream.WriteString(object.kmsLocationID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -92,7 +92,7 @@ func WriteCloudRegion(object *CloudRegion, stream *jsoniter.Stream) {
 		stream.WriteString(object.kmsLocationName)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.cloudProvider != nil
+	present_ = object.bitmap_&64 != 0 && object.cloudProvider != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -101,7 +101,7 @@ func WriteCloudRegion(object *CloudRegion, stream *jsoniter.Stream) {
 		WriteCloudProvider(object.cloudProvider, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = object.bitmap_&128 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -110,7 +110,7 @@ func WriteCloudRegion(object *CloudRegion, stream *jsoniter.Stream) {
 		stream.WriteString(object.displayName)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
+	present_ = object.bitmap_&256 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -119,7 +119,7 @@ func WriteCloudRegion(object *CloudRegion, stream *jsoniter.Stream) {
 		stream.WriteBool(object.enabled)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = object.bitmap_&512 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -128,7 +128,7 @@ func WriteCloudRegion(object *CloudRegion, stream *jsoniter.Stream) {
 		stream.WriteBool(object.govCloud)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
+	present_ = object.bitmap_&1024 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -137,7 +137,7 @@ func WriteCloudRegion(object *CloudRegion, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
+	present_ = object.bitmap_&2048 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -146,7 +146,7 @@ func WriteCloudRegion(object *CloudRegion, stream *jsoniter.Stream) {
 		stream.WriteBool(object.supportsHypershift)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
+	present_ = object.bitmap_&4096 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -171,9 +171,7 @@ func UnmarshalCloudRegion(source interface{}) (object *CloudRegion, err error) {
 
 // ReadCloudRegion reads a value of the 'cloud_region' type from the given iterator.
 func ReadCloudRegion(iterator *jsoniter.Iterator) *CloudRegion {
-	object := &CloudRegion{
-		fieldSet_: make([]bool, 13),
-	}
+	object := &CloudRegion{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -183,54 +181,54 @@ func ReadCloudRegion(iterator *jsoniter.Iterator) *CloudRegion {
 		case "kind":
 			value := iterator.ReadString()
 			if value == CloudRegionLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "ccs_only":
 			value := iterator.ReadBool()
 			object.ccsOnly = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "kms_location_id":
 			value := iterator.ReadString()
 			object.kmsLocationID = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "kms_location_name":
 			value := iterator.ReadString()
 			object.kmsLocationName = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "cloud_provider":
 			value := ReadCloudProvider(iterator)
 			object.cloudProvider = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "display_name":
 			value := iterator.ReadString()
 			object.displayName = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.fieldSet_[8] = true
+			object.bitmap_ |= 256
 		case "govcloud":
 			value := iterator.ReadBool()
 			object.govCloud = value
-			object.fieldSet_[9] = true
+			object.bitmap_ |= 512
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[10] = true
+			object.bitmap_ |= 1024
 		case "supports_hypershift":
 			value := iterator.ReadBool()
 			object.supportsHypershift = value
-			object.fieldSet_[11] = true
+			object.bitmap_ |= 2048
 		case "supports_multi_az":
 			value := iterator.ReadBool()
 			object.supportsMultiAZ = value
-			object.fieldSet_[12] = true
+			object.bitmap_ |= 4096
 		default:
 			iterator.ReadAny()
 		}

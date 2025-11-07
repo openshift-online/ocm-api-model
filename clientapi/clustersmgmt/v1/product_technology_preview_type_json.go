@@ -43,13 +43,13 @@ func WriteProductTechnologyPreview(object *ProductTechnologyPreview, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(ProductTechnologyPreviewLinkKind)
 	} else {
 		stream.WriteString(ProductTechnologyPreviewKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteProductTechnologyPreview(object *ProductTechnologyPreview, stream *jso
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteProductTechnologyPreview(object *ProductTechnologyPreview, stream *jso
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteProductTechnologyPreview(object *ProductTechnologyPreview, stream *jso
 		stream.WriteString(object.additionalText)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteProductTechnologyPreview(object *ProductTechnologyPreview, stream *jso
 		stream.WriteString((object.endDate).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -109,9 +109,7 @@ func UnmarshalProductTechnologyPreview(source interface{}) (object *ProductTechn
 
 // ReadProductTechnologyPreview reads a value of the 'product_technology_preview' type from the given iterator.
 func ReadProductTechnologyPreview(iterator *jsoniter.Iterator) *ProductTechnologyPreview {
-	object := &ProductTechnologyPreview{
-		fieldSet_: make([]bool, 6),
-	}
+	object := &ProductTechnologyPreview{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -121,18 +119,18 @@ func ReadProductTechnologyPreview(iterator *jsoniter.Iterator) *ProductTechnolog
 		case "kind":
 			value := iterator.ReadString()
 			if value == ProductTechnologyPreviewLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "additional_text":
 			value := iterator.ReadString()
 			object.additionalText = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "end_date":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -140,7 +138,7 @@ func ReadProductTechnologyPreview(iterator *jsoniter.Iterator) *ProductTechnolog
 				iterator.ReportError("", err.Error())
 			}
 			object.endDate = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "start_date":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -148,7 +146,7 @@ func ReadProductTechnologyPreview(iterator *jsoniter.Iterator) *ProductTechnolog
 				iterator.ReportError("", err.Error())
 			}
 			object.startDate = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		default:
 			iterator.ReadAny()
 		}

@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// GCPNetworkBuilder contains the data and logic needed to build 'GCP_network' objects.
+//
 // GCP Network configuration of a cluster.
 type GCPNetworkBuilder struct {
-	fieldSet_          []bool
+	bitmap_            uint32
 	vpcName            string
 	vpcProjectID       string
 	computeSubnet      string
@@ -30,61 +32,39 @@ type GCPNetworkBuilder struct {
 
 // NewGCPNetwork creates a new builder of 'GCP_network' objects.
 func NewGCPNetwork() *GCPNetworkBuilder {
-	return &GCPNetworkBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &GCPNetworkBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GCPNetworkBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // VPCName sets the value of the 'VPC_name' attribute to the given value.
 func (b *GCPNetworkBuilder) VPCName(value string) *GCPNetworkBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.vpcName = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // VPCProjectID sets the value of the 'VPC_project_ID' attribute to the given value.
 func (b *GCPNetworkBuilder) VPCProjectID(value string) *GCPNetworkBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.vpcProjectID = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // ComputeSubnet sets the value of the 'compute_subnet' attribute to the given value.
 func (b *GCPNetworkBuilder) ComputeSubnet(value string) *GCPNetworkBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.computeSubnet = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // ControlPlaneSubnet sets the value of the 'control_plane_subnet' attribute to the given value.
 func (b *GCPNetworkBuilder) ControlPlaneSubnet(value string) *GCPNetworkBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.controlPlaneSubnet = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -93,10 +73,7 @@ func (b *GCPNetworkBuilder) Copy(object *GCPNetwork) *GCPNetworkBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.vpcName = object.vpcName
 	b.vpcProjectID = object.vpcProjectID
 	b.computeSubnet = object.computeSubnet
@@ -107,10 +84,7 @@ func (b *GCPNetworkBuilder) Copy(object *GCPNetwork) *GCPNetworkBuilder {
 // Build creates a 'GCP_network' object using the configuration stored in the builder.
 func (b *GCPNetworkBuilder) Build() (object *GCPNetwork, err error) {
 	object = new(GCPNetwork)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.vpcName = b.vpcName
 	object.vpcProjectID = b.vpcProjectID
 	object.computeSubnet = b.computeSubnet

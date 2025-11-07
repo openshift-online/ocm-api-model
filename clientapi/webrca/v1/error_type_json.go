@@ -42,13 +42,13 @@ func WriteError(object *Error, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(ErrorLinkKind)
 	} else {
 		stream.WriteString(ErrorKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteError(object *Error, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteError(object *Error, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteError(object *Error, stream *jsoniter.Stream) {
 		stream.WriteString(object.code)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -99,9 +99,7 @@ func UnmarshalError(source interface{}) (object *Error, err error) {
 
 // ReadError reads a value of the 'error' type from the given iterator.
 func ReadError(iterator *jsoniter.Iterator) *Error {
-	object := &Error{
-		fieldSet_: make([]bool, 5),
-	}
+	object := &Error{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -111,22 +109,22 @@ func ReadError(iterator *jsoniter.Iterator) *Error {
 		case "kind":
 			value := iterator.ReadString()
 			if value == ErrorLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "code":
 			value := iterator.ReadString()
 			object.code = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "reason":
 			value := iterator.ReadString()
 			object.reason = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		default:
 			iterator.ReadAny()
 		}

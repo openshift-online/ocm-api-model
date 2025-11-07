@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// CloudProviderDataBuilder contains the data and logic needed to build 'cloud_provider_data' objects.
+//
 // Description of a cloud provider data used for cloud provider inquiries.
 type CloudProviderDataBuilder struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	aws               *AWSBuilder
 	gcp               *GCPBuilder
 	availabilityZones []string
@@ -35,36 +37,23 @@ type CloudProviderDataBuilder struct {
 
 // NewCloudProviderData creates a new builder of 'cloud_provider_data' objects.
 func NewCloudProviderData() *CloudProviderDataBuilder {
-	return &CloudProviderDataBuilder{
-		fieldSet_: make([]bool, 9),
-	}
+	return &CloudProviderDataBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *CloudProviderDataBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // AWS sets the value of the 'AWS' attribute to the given value.
 //
 // _Amazon Web Services_ specific settings of a cluster.
 func (b *CloudProviderDataBuilder) AWS(value *AWSBuilder) *CloudProviderDataBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.aws = value
 	if value != nil {
-		b.fieldSet_[0] = true
+		b.bitmap_ |= 1
 	} else {
-		b.fieldSet_[0] = false
+		b.bitmap_ &^= 1
 	}
 	return b
 }
@@ -73,46 +62,34 @@ func (b *CloudProviderDataBuilder) AWS(value *AWSBuilder) *CloudProviderDataBuil
 //
 // Google cloud platform settings of a cluster.
 func (b *CloudProviderDataBuilder) GCP(value *GCPBuilder) *CloudProviderDataBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.gcp = value
 	if value != nil {
-		b.fieldSet_[1] = true
+		b.bitmap_ |= 2
 	} else {
-		b.fieldSet_[1] = false
+		b.bitmap_ &^= 2
 	}
 	return b
 }
 
 // AvailabilityZones sets the value of the 'availability_zones' attribute to the given values.
 func (b *CloudProviderDataBuilder) AvailabilityZones(values ...string) *CloudProviderDataBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.availabilityZones = make([]string, len(values))
 	copy(b.availabilityZones, values)
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // KeyLocation sets the value of the 'key_location' attribute to the given value.
 func (b *CloudProviderDataBuilder) KeyLocation(value string) *CloudProviderDataBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.keyLocation = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // KeyRingName sets the value of the 'key_ring_name' attribute to the given value.
 func (b *CloudProviderDataBuilder) KeyRingName(value string) *CloudProviderDataBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.keyRingName = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -120,26 +97,20 @@ func (b *CloudProviderDataBuilder) KeyRingName(value string) *CloudProviderDataB
 //
 // Description of a region of a cloud provider.
 func (b *CloudProviderDataBuilder) Region(value *CloudRegionBuilder) *CloudProviderDataBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.region = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
 
 // Subnets sets the value of the 'subnets' attribute to the given values.
 func (b *CloudProviderDataBuilder) Subnets(values ...string) *CloudProviderDataBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.subnets = make([]string, len(values))
 	copy(b.subnets, values)
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
@@ -147,26 +118,20 @@ func (b *CloudProviderDataBuilder) Subnets(values ...string) *CloudProviderDataB
 //
 // Representation of an _OpenShift_ version.
 func (b *CloudProviderDataBuilder) Version(value *VersionBuilder) *CloudProviderDataBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.version = value
 	if value != nil {
-		b.fieldSet_[7] = true
+		b.bitmap_ |= 128
 	} else {
-		b.fieldSet_[7] = false
+		b.bitmap_ &^= 128
 	}
 	return b
 }
 
 // VpcIds sets the value of the 'vpc_ids' attribute to the given values.
 func (b *CloudProviderDataBuilder) VpcIds(values ...string) *CloudProviderDataBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.vpcIds = make([]string, len(values))
 	copy(b.vpcIds, values)
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
@@ -175,10 +140,7 @@ func (b *CloudProviderDataBuilder) Copy(object *CloudProviderData) *CloudProvide
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.aws != nil {
 		b.aws = NewAWS().Copy(object.aws)
 	} else {
@@ -225,10 +187,7 @@ func (b *CloudProviderDataBuilder) Copy(object *CloudProviderData) *CloudProvide
 // Build creates a 'cloud_provider_data' object using the configuration stored in the builder.
 func (b *CloudProviderDataBuilder) Build() (object *CloudProviderData, err error) {
 	object = new(CloudProviderData)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.aws != nil {
 		object.aws, err = b.aws.Build()
 		if err != nil {

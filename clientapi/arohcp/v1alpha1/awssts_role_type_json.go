@@ -42,7 +42,7 @@ func WriteAWSSTSRole(object *AWSSTSRole, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAWSSTSRole(object *AWSSTSRole, stream *jsoniter.Stream) {
 		stream.WriteBool(object.hcpManagedPolicies)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteAWSSTSRole(object *AWSSTSRole, stream *jsoniter.Stream) {
 		stream.WriteBool(object.isAdmin)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteAWSSTSRole(object *AWSSTSRole, stream *jsoniter.Stream) {
 		stream.WriteBool(object.managedPolicies)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteAWSSTSRole(object *AWSSTSRole, stream *jsoniter.Stream) {
 		stream.WriteString(object.roleARN)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteAWSSTSRole(object *AWSSTSRole, stream *jsoniter.Stream) {
 		stream.WriteString(object.roleType)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -112,9 +112,7 @@ func UnmarshalAWSSTSRole(source interface{}) (object *AWSSTSRole, err error) {
 
 // ReadAWSSTSRole reads a value of the 'AWSSTS_role' type from the given iterator.
 func ReadAWSSTSRole(iterator *jsoniter.Iterator) *AWSSTSRole {
-	object := &AWSSTSRole{
-		fieldSet_: make([]bool, 6),
-	}
+	object := &AWSSTSRole{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -124,27 +122,27 @@ func ReadAWSSTSRole(iterator *jsoniter.Iterator) *AWSSTSRole {
 		case "hcpManagedPolicies":
 			value := iterator.ReadBool()
 			object.hcpManagedPolicies = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "isAdmin":
 			value := iterator.ReadBool()
 			object.isAdmin = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "managedPolicies":
 			value := iterator.ReadBool()
 			object.managedPolicies = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "arn":
 			value := iterator.ReadString()
 			object.roleARN = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "type":
 			value := iterator.ReadString()
 			object.roleType = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "roleVersion":
 			value := iterator.ReadString()
 			object.roleVersion = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		default:
 			iterator.ReadAny()
 		}

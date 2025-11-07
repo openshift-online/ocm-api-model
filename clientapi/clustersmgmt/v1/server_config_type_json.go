@@ -42,13 +42,13 @@ func WriteServerConfig(object *ServerConfig, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(ServerConfigLinkKind)
 	} else {
 		stream.WriteString(ServerConfigKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteServerConfig(object *ServerConfig, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteServerConfig(object *ServerConfig, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.awsShard != nil
+	present_ = object.bitmap_&8 != 0 && object.awsShard != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteServerConfig(object *ServerConfig, stream *jsoniter.Stream) {
 		WriteAWSShard(object.awsShard, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteServerConfig(object *ServerConfig, stream *jsoniter.Stream) {
 		stream.WriteString(object.kubeconfig)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -92,7 +92,7 @@ func WriteServerConfig(object *ServerConfig, stream *jsoniter.Stream) {
 		stream.WriteString(object.server)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -117,9 +117,7 @@ func UnmarshalServerConfig(source interface{}) (object *ServerConfig, err error)
 
 // ReadServerConfig reads a value of the 'server_config' type from the given iterator.
 func ReadServerConfig(iterator *jsoniter.Iterator) *ServerConfig {
-	object := &ServerConfig{
-		fieldSet_: make([]bool, 7),
-	}
+	object := &ServerConfig{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -129,31 +127,31 @@ func ReadServerConfig(iterator *jsoniter.Iterator) *ServerConfig {
 		case "kind":
 			value := iterator.ReadString()
 			if value == ServerConfigLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "aws_shard":
 			value := ReadAWSShard(iterator)
 			object.awsShard = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "kubeconfig":
 			value := iterator.ReadString()
 			object.kubeconfig = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "server":
 			value := iterator.ReadString()
 			object.server = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "topology":
 			text := iterator.ReadString()
 			value := ProvisionShardTopology(text)
 			object.topology = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		default:
 			iterator.ReadAny()
 		}

@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// ClusterNodesBuilder contains the data and logic needed to build 'cluster_nodes' objects.
+//
 // Counts of different classes of nodes inside a cluster.
 type ClusterNodesBuilder struct {
-	fieldSet_            []bool
+	bitmap_              uint32
 	autoscaleCompute     *MachinePoolAutoscalingBuilder
 	availabilityZones    []string
 	compute              int
@@ -38,71 +40,49 @@ type ClusterNodesBuilder struct {
 
 // NewClusterNodes creates a new builder of 'cluster_nodes' objects.
 func NewClusterNodes() *ClusterNodesBuilder {
-	return &ClusterNodesBuilder{
-		fieldSet_: make([]bool, 12),
-	}
+	return &ClusterNodesBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterNodesBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // AutoscaleCompute sets the value of the 'autoscale_compute' attribute to the given value.
 //
 // Representation of a autoscaling in a machine pool.
 func (b *ClusterNodesBuilder) AutoscaleCompute(value *MachinePoolAutoscalingBuilder) *ClusterNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.autoscaleCompute = value
 	if value != nil {
-		b.fieldSet_[0] = true
+		b.bitmap_ |= 1
 	} else {
-		b.fieldSet_[0] = false
+		b.bitmap_ &^= 1
 	}
 	return b
 }
 
 // AvailabilityZones sets the value of the 'availability_zones' attribute to the given values.
 func (b *ClusterNodesBuilder) AvailabilityZones(values ...string) *ClusterNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.availabilityZones = make([]string, len(values))
 	copy(b.availabilityZones, values)
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Compute sets the value of the 'compute' attribute to the given value.
 func (b *ClusterNodesBuilder) Compute(value int) *ClusterNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.compute = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // ComputeLabels sets the value of the 'compute_labels' attribute to the given value.
 func (b *ClusterNodesBuilder) ComputeLabels(value map[string]string) *ClusterNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.computeLabels = value
 	if value != nil {
-		b.fieldSet_[3] = true
+		b.bitmap_ |= 8
 	} else {
-		b.fieldSet_[3] = false
+		b.bitmap_ &^= 8
 	}
 	return b
 }
@@ -111,14 +91,11 @@ func (b *ClusterNodesBuilder) ComputeLabels(value map[string]string) *ClusterNod
 //
 // Machine type.
 func (b *ClusterNodesBuilder) ComputeMachineType(value *MachineTypeBuilder) *ClusterNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.computeMachineType = value
 	if value != nil {
-		b.fieldSet_[4] = true
+		b.bitmap_ |= 16
 	} else {
-		b.fieldSet_[4] = false
+		b.bitmap_ &^= 16
 	}
 	return b
 }
@@ -127,25 +104,19 @@ func (b *ClusterNodesBuilder) ComputeMachineType(value *MachineTypeBuilder) *Clu
 //
 // Root volume capabilities.
 func (b *ClusterNodesBuilder) ComputeRootVolume(value *RootVolumeBuilder) *ClusterNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.computeRootVolume = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
 
 // Infra sets the value of the 'infra' attribute to the given value.
 func (b *ClusterNodesBuilder) Infra(value int) *ClusterNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.infra = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
@@ -153,25 +124,19 @@ func (b *ClusterNodesBuilder) Infra(value int) *ClusterNodesBuilder {
 //
 // Machine type.
 func (b *ClusterNodesBuilder) InfraMachineType(value *MachineTypeBuilder) *ClusterNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.infraMachineType = value
 	if value != nil {
-		b.fieldSet_[7] = true
+		b.bitmap_ |= 128
 	} else {
-		b.fieldSet_[7] = false
+		b.bitmap_ &^= 128
 	}
 	return b
 }
 
 // Master sets the value of the 'master' attribute to the given value.
 func (b *ClusterNodesBuilder) Master(value int) *ClusterNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.master = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
@@ -179,36 +144,27 @@ func (b *ClusterNodesBuilder) Master(value int) *ClusterNodesBuilder {
 //
 // Machine type.
 func (b *ClusterNodesBuilder) MasterMachineType(value *MachineTypeBuilder) *ClusterNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.masterMachineType = value
 	if value != nil {
-		b.fieldSet_[9] = true
+		b.bitmap_ |= 512
 	} else {
-		b.fieldSet_[9] = false
+		b.bitmap_ &^= 512
 	}
 	return b
 }
 
 // SecurityGroupFilters sets the value of the 'security_group_filters' attribute to the given values.
 func (b *ClusterNodesBuilder) SecurityGroupFilters(values ...*MachinePoolSecurityGroupFilterBuilder) *ClusterNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.securityGroupFilters = make([]*MachinePoolSecurityGroupFilterBuilder, len(values))
 	copy(b.securityGroupFilters, values)
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
 // Total sets the value of the 'total' attribute to the given value.
 func (b *ClusterNodesBuilder) Total(value int) *ClusterNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.total = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
@@ -217,10 +173,7 @@ func (b *ClusterNodesBuilder) Copy(object *ClusterNodes) *ClusterNodesBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.autoscaleCompute != nil {
 		b.autoscaleCompute = NewMachinePoolAutoscaling().Copy(object.autoscaleCompute)
 	} else {
@@ -278,10 +231,7 @@ func (b *ClusterNodesBuilder) Copy(object *ClusterNodes) *ClusterNodesBuilder {
 // Build creates a 'cluster_nodes' object using the configuration stored in the builder.
 func (b *ClusterNodesBuilder) Build() (object *ClusterNodes, err error) {
 	object = new(ClusterNodes)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.autoscaleCompute != nil {
 		object.autoscaleCompute, err = b.autoscaleCompute.Build()
 		if err != nil {

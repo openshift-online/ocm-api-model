@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// STSBuilder contains the data and logic needed to build 'STS' objects.
+//
 // Contains the necessary attributes to support role-based authentication on AWS.
 type STSBuilder struct {
-	fieldSet_          []bool
+	bitmap_            uint32
 	oidcEndpointURL    string
 	externalID         string
 	instanceIAMRoles   *InstanceIAMRolesBuilder
@@ -38,61 +40,39 @@ type STSBuilder struct {
 
 // NewSTS creates a new builder of 'STS' objects.
 func NewSTS() *STSBuilder {
-	return &STSBuilder{
-		fieldSet_: make([]bool, 12),
-	}
+	return &STSBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *STSBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // OIDCEndpointURL sets the value of the 'OIDC_endpoint_URL' attribute to the given value.
 func (b *STSBuilder) OIDCEndpointURL(value string) *STSBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.oidcEndpointURL = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // AutoMode sets the value of the 'auto_mode' attribute to the given value.
 func (b *STSBuilder) AutoMode(value bool) *STSBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.autoMode = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *STSBuilder) Enabled(value bool) *STSBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.enabled = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // ExternalID sets the value of the 'external_ID' attribute to the given value.
 func (b *STSBuilder) ExternalID(value string) *STSBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.externalID = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -100,25 +80,19 @@ func (b *STSBuilder) ExternalID(value string) *STSBuilder {
 //
 // Contains the necessary attributes to support role-based authentication on AWS.
 func (b *STSBuilder) InstanceIAMRoles(value *InstanceIAMRolesBuilder) *STSBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.instanceIAMRoles = value
 	if value != nil {
-		b.fieldSet_[4] = true
+		b.bitmap_ |= 16
 	} else {
-		b.fieldSet_[4] = false
+		b.bitmap_ &^= 16
 	}
 	return b
 }
 
 // ManagedPolicies sets the value of the 'managed_policies' attribute to the given value.
 func (b *STSBuilder) ManagedPolicies(value bool) *STSBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.managedPolicies = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
@@ -126,66 +100,48 @@ func (b *STSBuilder) ManagedPolicies(value bool) *STSBuilder {
 //
 // Contains the necessary attributes to support oidc configuration hosting under Red Hat or registering a Customer's byo oidc config.
 func (b *STSBuilder) OidcConfig(value *OidcConfigBuilder) *STSBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.oidcConfig = value
 	if value != nil {
-		b.fieldSet_[6] = true
+		b.bitmap_ |= 64
 	} else {
-		b.fieldSet_[6] = false
+		b.bitmap_ &^= 64
 	}
 	return b
 }
 
 // OperatorIAMRoles sets the value of the 'operator_IAM_roles' attribute to the given values.
 func (b *STSBuilder) OperatorIAMRoles(values ...*OperatorIAMRoleBuilder) *STSBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.operatorIAMRoles = make([]*OperatorIAMRoleBuilder, len(values))
 	copy(b.operatorIAMRoles, values)
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // OperatorRolePrefix sets the value of the 'operator_role_prefix' attribute to the given value.
 func (b *STSBuilder) OperatorRolePrefix(value string) *STSBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.operatorRolePrefix = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // PermissionBoundary sets the value of the 'permission_boundary' attribute to the given value.
 func (b *STSBuilder) PermissionBoundary(value string) *STSBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.permissionBoundary = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // RoleARN sets the value of the 'role_ARN' attribute to the given value.
 func (b *STSBuilder) RoleARN(value string) *STSBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.roleARN = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
 // SupportRoleARN sets the value of the 'support_role_ARN' attribute to the given value.
 func (b *STSBuilder) SupportRoleARN(value string) *STSBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.supportRoleARN = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
@@ -194,10 +150,7 @@ func (b *STSBuilder) Copy(object *STS) *STSBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.oidcEndpointURL = object.oidcEndpointURL
 	b.autoMode = object.autoMode
 	b.enabled = object.enabled
@@ -231,10 +184,7 @@ func (b *STSBuilder) Copy(object *STS) *STSBuilder {
 // Build creates a 'STS' object using the configuration stored in the builder.
 func (b *STSBuilder) Build() (object *STS, err error) {
 	object = new(STS)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.oidcEndpointURL = b.oidcEndpointURL
 	object.autoMode = b.autoMode
 	object.enabled = b.enabled

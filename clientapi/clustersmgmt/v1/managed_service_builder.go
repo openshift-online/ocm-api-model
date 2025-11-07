@@ -19,39 +19,28 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// ManagedServiceBuilder contains the data and logic needed to build 'managed_service' objects.
+//
 // Contains the necessary attributes to support role-based authentication on AWS.
 type ManagedServiceBuilder struct {
-	fieldSet_ []bool
-	enabled   bool
+	bitmap_ uint32
+	enabled bool
 }
 
 // NewManagedService creates a new builder of 'managed_service' objects.
 func NewManagedService() *ManagedServiceBuilder {
-	return &ManagedServiceBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &ManagedServiceBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ManagedServiceBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *ManagedServiceBuilder) Enabled(value bool) *ManagedServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.enabled = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -60,10 +49,7 @@ func (b *ManagedServiceBuilder) Copy(object *ManagedService) *ManagedServiceBuil
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.enabled = object.enabled
 	return b
 }
@@ -71,10 +57,7 @@ func (b *ManagedServiceBuilder) Copy(object *ManagedService) *ManagedServiceBuil
 // Build creates a 'managed_service' object using the configuration stored in the builder.
 func (b *ManagedServiceBuilder) Build() (object *ManagedService, err error) {
 	object = new(ManagedService)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.enabled = b.enabled
 	return
 }

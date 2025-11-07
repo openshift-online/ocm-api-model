@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// AddOnInstallationBuilder contains the data and logic needed to build 'add_on_installation' objects.
+//
 // Representation of an add-on installation in a cluster.
 type AddOnInstallationBuilder struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	id                string
 	href              string
 	addon             *AddOnBuilder
@@ -41,66 +43,43 @@ type AddOnInstallationBuilder struct {
 
 // NewAddOnInstallation creates a new builder of 'add_on_installation' objects.
 func NewAddOnInstallation() *AddOnInstallationBuilder {
-	return &AddOnInstallationBuilder{
-		fieldSet_: make([]bool, 12),
-	}
+	return &AddOnInstallationBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddOnInstallationBuilder) Link(value bool) *AddOnInstallationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddOnInstallationBuilder) ID(value string) *AddOnInstallationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AddOnInstallationBuilder) HREF(value string) *AddOnInstallationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddOnInstallationBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // Addon sets the value of the 'addon' attribute to the given value.
 //
 // Representation of an add-on that can be installed in a cluster.
 func (b *AddOnInstallationBuilder) Addon(value *AddOnBuilder) *AddOnInstallationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.addon = value
 	if value != nil {
-		b.fieldSet_[3] = true
+		b.bitmap_ |= 8
 	} else {
-		b.fieldSet_[3] = false
+		b.bitmap_ &^= 8
 	}
 	return b
 }
@@ -109,14 +88,11 @@ func (b *AddOnInstallationBuilder) Addon(value *AddOnBuilder) *AddOnInstallation
 //
 // Representation of an add-on version.
 func (b *AddOnInstallationBuilder) AddonVersion(value *AddOnVersionBuilder) *AddOnInstallationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.addonVersion = value
 	if value != nil {
-		b.fieldSet_[4] = true
+		b.bitmap_ |= 16
 	} else {
-		b.fieldSet_[4] = false
+		b.bitmap_ &^= 16
 	}
 	return b
 }
@@ -125,45 +101,33 @@ func (b *AddOnInstallationBuilder) AddonVersion(value *AddOnVersionBuilder) *Add
 //
 // Representation of an add-on installation billing.
 func (b *AddOnInstallationBuilder) Billing(value *AddOnInstallationBillingBuilder) *AddOnInstallationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.billing = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *AddOnInstallationBuilder) CreationTimestamp(value time.Time) *AddOnInstallationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.creationTimestamp = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // OperatorVersion sets the value of the 'operator_version' attribute to the given value.
 func (b *AddOnInstallationBuilder) OperatorVersion(value string) *AddOnInstallationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.operatorVersion = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // Parameters sets the value of the 'parameters' attribute to the given values.
 func (b *AddOnInstallationBuilder) Parameters(value *AddOnInstallationParameterListBuilder) *AddOnInstallationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.parameters = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
@@ -171,31 +135,22 @@ func (b *AddOnInstallationBuilder) Parameters(value *AddOnInstallationParameterL
 //
 // Representation of an add-on installation State field.
 func (b *AddOnInstallationBuilder) State(value AddOnInstallationState) *AddOnInstallationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.state = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // StateDescription sets the value of the 'state_description' attribute to the given value.
 func (b *AddOnInstallationBuilder) StateDescription(value string) *AddOnInstallationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.stateDescription = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
 // UpdatedTimestamp sets the value of the 'updated_timestamp' attribute to the given value.
 func (b *AddOnInstallationBuilder) UpdatedTimestamp(value time.Time) *AddOnInstallationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.updatedTimestamp = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
@@ -204,10 +159,7 @@ func (b *AddOnInstallationBuilder) Copy(object *AddOnInstallation) *AddOnInstall
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.addon != nil {
@@ -243,10 +195,7 @@ func (b *AddOnInstallationBuilder) Build() (object *AddOnInstallation, err error
 	object = new(AddOnInstallation)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.addon != nil {
 		object.addon, err = b.addon.Build()
 		if err != nil {

@@ -19,49 +19,34 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// WifResourceBindingBuilder contains the data and logic needed to build 'wif_resource_binding' objects.
 type WifResourceBindingBuilder struct {
-	fieldSet_ []bool
-	name      string
-	type_     string
+	bitmap_ uint32
+	name    string
+	type_   string
 }
 
 // NewWifResourceBinding creates a new builder of 'wif_resource_binding' objects.
 func NewWifResourceBinding() *WifResourceBindingBuilder {
-	return &WifResourceBindingBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &WifResourceBindingBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *WifResourceBindingBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *WifResourceBindingBuilder) Name(value string) *WifResourceBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.name = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *WifResourceBindingBuilder) Type(value string) *WifResourceBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.type_ = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -70,10 +55,7 @@ func (b *WifResourceBindingBuilder) Copy(object *WifResourceBinding) *WifResourc
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.name = object.name
 	b.type_ = object.type_
 	return b
@@ -82,10 +64,7 @@ func (b *WifResourceBindingBuilder) Copy(object *WifResourceBinding) *WifResourc
 // Build creates a 'wif_resource_binding' object using the configuration stored in the builder.
 func (b *WifResourceBindingBuilder) Build() (object *WifResourceBinding, err error) {
 	object = new(WifResourceBinding)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.name = b.name
 	object.type_ = b.type_
 	return

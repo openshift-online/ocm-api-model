@@ -42,7 +42,7 @@ func WriteTaint(object *Taint, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteTaint(object *Taint, stream *jsoniter.Stream) {
 		stream.WriteString(object.effect)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteTaint(object *Taint, stream *jsoniter.Stream) {
 		stream.WriteString(object.key)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,9 +85,7 @@ func UnmarshalTaint(source interface{}) (object *Taint, err error) {
 
 // ReadTaint reads a value of the 'taint' type from the given iterator.
 func ReadTaint(iterator *jsoniter.Iterator) *Taint {
-	object := &Taint{
-		fieldSet_: make([]bool, 3),
-	}
+	object := &Taint{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -97,15 +95,15 @@ func ReadTaint(iterator *jsoniter.Iterator) *Taint {
 		case "effect":
 			value := iterator.ReadString()
 			object.effect = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "key":
 			value := iterator.ReadString()
 			object.key = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "value":
 			value := iterator.ReadString()
 			object.value = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		default:
 			iterator.ReadAny()
 		}

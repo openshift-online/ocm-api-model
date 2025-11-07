@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
+// ResourceReviewBuilder contains the data and logic needed to build 'resource_review' objects.
+//
 // Contains the result of performing a resource access review.
 type ResourceReviewBuilder struct {
-	fieldSet_       []bool
+	bitmap_         uint32
 	accountUsername string
 	action          string
 	clusterIDs      []string
@@ -33,95 +35,64 @@ type ResourceReviewBuilder struct {
 
 // NewResourceReview creates a new builder of 'resource_review' objects.
 func NewResourceReview() *ResourceReviewBuilder {
-	return &ResourceReviewBuilder{
-		fieldSet_: make([]bool, 7),
-	}
+	return &ResourceReviewBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ResourceReviewBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *ResourceReviewBuilder) AccountUsername(value string) *ResourceReviewBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.accountUsername = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Action sets the value of the 'action' attribute to the given value.
 func (b *ResourceReviewBuilder) Action(value string) *ResourceReviewBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.action = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // ClusterIDs sets the value of the 'cluster_IDs' attribute to the given values.
 func (b *ResourceReviewBuilder) ClusterIDs(values ...string) *ResourceReviewBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.clusterIDs = make([]string, len(values))
 	copy(b.clusterIDs, values)
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // ClusterUUIDs sets the value of the 'cluster_UUIDs' attribute to the given values.
 func (b *ResourceReviewBuilder) ClusterUUIDs(values ...string) *ResourceReviewBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.clusterUUIDs = make([]string, len(values))
 	copy(b.clusterUUIDs, values)
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // OrganizationIDs sets the value of the 'organization_IDs' attribute to the given values.
 func (b *ResourceReviewBuilder) OrganizationIDs(values ...string) *ResourceReviewBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.organizationIDs = make([]string, len(values))
 	copy(b.organizationIDs, values)
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *ResourceReviewBuilder) ResourceType(value string) *ResourceReviewBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.resourceType = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // SubscriptionIDs sets the value of the 'subscription_IDs' attribute to the given values.
 func (b *ResourceReviewBuilder) SubscriptionIDs(values ...string) *ResourceReviewBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.subscriptionIDs = make([]string, len(values))
 	copy(b.subscriptionIDs, values)
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
@@ -130,10 +101,7 @@ func (b *ResourceReviewBuilder) Copy(object *ResourceReview) *ResourceReviewBuil
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.accountUsername = object.accountUsername
 	b.action = object.action
 	if object.clusterIDs != nil {
@@ -167,10 +135,7 @@ func (b *ResourceReviewBuilder) Copy(object *ResourceReview) *ResourceReviewBuil
 // Build creates a 'resource_review' object using the configuration stored in the builder.
 func (b *ResourceReviewBuilder) Build() (object *ResourceReview, err error) {
 	object = new(ResourceReview)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.accountUsername = b.accountUsername
 	object.action = b.action
 	if b.clusterIDs != nil {

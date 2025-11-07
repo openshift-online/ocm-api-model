@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// GoogleIdentityProviderBuilder contains the data and logic needed to build 'google_identity_provider' objects.
+//
 // Details for `google` identity providers.
 type GoogleIdentityProviderBuilder struct {
-	fieldSet_    []bool
+	bitmap_      uint32
 	clientID     string
 	clientSecret string
 	hostedDomain string
@@ -29,51 +31,32 @@ type GoogleIdentityProviderBuilder struct {
 
 // NewGoogleIdentityProvider creates a new builder of 'google_identity_provider' objects.
 func NewGoogleIdentityProvider() *GoogleIdentityProviderBuilder {
-	return &GoogleIdentityProviderBuilder{
-		fieldSet_: make([]bool, 3),
-	}
+	return &GoogleIdentityProviderBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GoogleIdentityProviderBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ClientID sets the value of the 'client_ID' attribute to the given value.
 func (b *GoogleIdentityProviderBuilder) ClientID(value string) *GoogleIdentityProviderBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.clientID = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ClientSecret sets the value of the 'client_secret' attribute to the given value.
 func (b *GoogleIdentityProviderBuilder) ClientSecret(value string) *GoogleIdentityProviderBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.clientSecret = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HostedDomain sets the value of the 'hosted_domain' attribute to the given value.
 func (b *GoogleIdentityProviderBuilder) HostedDomain(value string) *GoogleIdentityProviderBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.hostedDomain = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
@@ -82,10 +65,7 @@ func (b *GoogleIdentityProviderBuilder) Copy(object *GoogleIdentityProvider) *Go
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.clientID = object.clientID
 	b.clientSecret = object.clientSecret
 	b.hostedDomain = object.hostedDomain
@@ -95,10 +75,7 @@ func (b *GoogleIdentityProviderBuilder) Copy(object *GoogleIdentityProvider) *Go
 // Build creates a 'google_identity_provider' object using the configuration stored in the builder.
 func (b *GoogleIdentityProviderBuilder) Build() (object *GoogleIdentityProvider, err error) {
 	object = new(GoogleIdentityProvider)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.clientID = b.clientID
 	object.clientSecret = b.clientSecret
 	object.hostedDomain = b.hostedDomain

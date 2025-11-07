@@ -43,13 +43,13 @@ func WritePendingDeleteCluster(object *PendingDeleteCluster, stream *jsoniter.St
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(PendingDeleteClusterLinkKind)
 	} else {
 		stream.WriteString(PendingDeleteClusterKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WritePendingDeleteCluster(object *PendingDeleteCluster, stream *jsoniter.St
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WritePendingDeleteCluster(object *PendingDeleteCluster, stream *jsoniter.St
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WritePendingDeleteCluster(object *PendingDeleteCluster, stream *jsoniter.St
 		stream.WriteBool(object.bestEffort)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.cluster != nil
+	present_ = object.bitmap_&16 != 0 && object.cluster != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WritePendingDeleteCluster(object *PendingDeleteCluster, stream *jsoniter.St
 		WriteCluster(object.cluster, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -109,9 +109,7 @@ func UnmarshalPendingDeleteCluster(source interface{}) (object *PendingDeleteClu
 
 // ReadPendingDeleteCluster reads a value of the 'pending_delete_cluster' type from the given iterator.
 func ReadPendingDeleteCluster(iterator *jsoniter.Iterator) *PendingDeleteCluster {
-	object := &PendingDeleteCluster{
-		fieldSet_: make([]bool, 6),
-	}
+	object := &PendingDeleteCluster{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -121,22 +119,22 @@ func ReadPendingDeleteCluster(iterator *jsoniter.Iterator) *PendingDeleteCluster
 		case "kind":
 			value := iterator.ReadString()
 			if value == PendingDeleteClusterLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "best_effort":
 			value := iterator.ReadBool()
 			object.bestEffort = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "cluster":
 			value := ReadCluster(iterator)
 			object.cluster = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "creation_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -144,7 +142,7 @@ func ReadPendingDeleteCluster(iterator *jsoniter.Iterator) *PendingDeleteCluster
 				iterator.ReportError("", err.Error())
 			}
 			object.creationTimestamp = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		default:
 			iterator.ReadAny()
 		}

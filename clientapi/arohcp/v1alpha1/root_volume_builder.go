@@ -19,45 +19,34 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// RootVolumeBuilder contains the data and logic needed to build 'root_volume' objects.
+//
 // Root volume capabilities.
 type RootVolumeBuilder struct {
-	fieldSet_ []bool
-	aws       *AWSVolumeBuilder
-	gcp       *GCPVolumeBuilder
+	bitmap_ uint32
+	aws     *AWSVolumeBuilder
+	gcp     *GCPVolumeBuilder
 }
 
 // NewRootVolume creates a new builder of 'root_volume' objects.
 func NewRootVolume() *RootVolumeBuilder {
-	return &RootVolumeBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &RootVolumeBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *RootVolumeBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // AWS sets the value of the 'AWS' attribute to the given value.
 //
 // Holds settings for an AWS storage volume.
 func (b *RootVolumeBuilder) AWS(value *AWSVolumeBuilder) *RootVolumeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.aws = value
 	if value != nil {
-		b.fieldSet_[0] = true
+		b.bitmap_ |= 1
 	} else {
-		b.fieldSet_[0] = false
+		b.bitmap_ &^= 1
 	}
 	return b
 }
@@ -66,14 +55,11 @@ func (b *RootVolumeBuilder) AWS(value *AWSVolumeBuilder) *RootVolumeBuilder {
 //
 // Holds settings for an GCP storage volume.
 func (b *RootVolumeBuilder) GCP(value *GCPVolumeBuilder) *RootVolumeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.gcp = value
 	if value != nil {
-		b.fieldSet_[1] = true
+		b.bitmap_ |= 2
 	} else {
-		b.fieldSet_[1] = false
+		b.bitmap_ &^= 2
 	}
 	return b
 }
@@ -83,10 +69,7 @@ func (b *RootVolumeBuilder) Copy(object *RootVolume) *RootVolumeBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.aws != nil {
 		b.aws = NewAWSVolume().Copy(object.aws)
 	} else {
@@ -103,10 +86,7 @@ func (b *RootVolumeBuilder) Copy(object *RootVolume) *RootVolumeBuilder {
 // Build creates a 'root_volume' object using the configuration stored in the builder.
 func (b *RootVolumeBuilder) Build() (object *RootVolume, err error) {
 	object = new(RootVolume)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.aws != nil {
 		object.aws, err = b.aws.Build()
 		if err != nil {

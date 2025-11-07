@@ -39,7 +39,7 @@ const LimitedSupportReasonNilKind = "LimitedSupportReasonNil"
 //
 // A reason that a cluster is in limited support.
 type LimitedSupportReason struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	id                string
 	href              string
 	creationTimestamp time.Time
@@ -55,7 +55,7 @@ func (o *LimitedSupportReason) Kind() string {
 	if o == nil {
 		return LimitedSupportReasonNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return LimitedSupportReasonLinkKind
 	}
 	return LimitedSupportReasonKind
@@ -63,12 +63,12 @@ func (o *LimitedSupportReason) Kind() string {
 
 // Link returns true if this is a link.
 func (o *LimitedSupportReason) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *LimitedSupportReason) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -77,7 +77,7 @@ func (o *LimitedSupportReason) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *LimitedSupportReason) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -86,7 +86,7 @@ func (o *LimitedSupportReason) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *LimitedSupportReason) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -95,7 +95,7 @@ func (o *LimitedSupportReason) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *LimitedSupportReason) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -104,17 +104,7 @@ func (o *LimitedSupportReason) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *LimitedSupportReason) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // CreationTimestamp returns the value of the 'creation_timestamp' attribute, or
@@ -122,7 +112,7 @@ func (o *LimitedSupportReason) Empty() bool {
 //
 // The time the reason was detected.
 func (o *LimitedSupportReason) CreationTimestamp() time.Time {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.creationTimestamp
 	}
 	return time.Time{}
@@ -133,7 +123,7 @@ func (o *LimitedSupportReason) CreationTimestamp() time.Time {
 //
 // The time the reason was detected.
 func (o *LimitedSupportReason) GetCreationTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.creationTimestamp
 	}
@@ -145,7 +135,7 @@ func (o *LimitedSupportReason) GetCreationTimestamp() (value time.Time, ok bool)
 //
 // URL with a link to a detailed description of the reason.
 func (o *LimitedSupportReason) Details() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.details
 	}
 	return ""
@@ -156,7 +146,7 @@ func (o *LimitedSupportReason) Details() string {
 //
 // URL with a link to a detailed description of the reason.
 func (o *LimitedSupportReason) GetDetails() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.details
 	}
@@ -169,7 +159,7 @@ func (o *LimitedSupportReason) GetDetails() (value string, ok bool) {
 // Indicates if the reason was detected automatically or manually.
 // When creating a new reason this field should be empty or "manual".
 func (o *LimitedSupportReason) DetectionType() DetectionType {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.detectionType
 	}
 	return DetectionType("")
@@ -181,7 +171,7 @@ func (o *LimitedSupportReason) DetectionType() DetectionType {
 // Indicates if the reason was detected automatically or manually.
 // When creating a new reason this field should be empty or "manual".
 func (o *LimitedSupportReason) GetDetectionType() (value DetectionType, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.detectionType
 	}
@@ -193,7 +183,7 @@ func (o *LimitedSupportReason) GetDetectionType() (value DetectionType, ok bool)
 //
 // Indicates if the override is enabled
 func (o *LimitedSupportReason) Override() *LimitedSupportReasonOverride {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.override
 	}
 	return nil
@@ -204,7 +194,7 @@ func (o *LimitedSupportReason) Override() *LimitedSupportReasonOverride {
 //
 // Indicates if the override is enabled
 func (o *LimitedSupportReason) GetOverride() (value *LimitedSupportReasonOverride, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.override
 	}
@@ -216,7 +206,7 @@ func (o *LimitedSupportReason) GetOverride() (value *LimitedSupportReasonOverrid
 //
 // Summary of the reason.
 func (o *LimitedSupportReason) Summary() string {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.summary
 	}
 	return ""
@@ -227,7 +217,7 @@ func (o *LimitedSupportReason) Summary() string {
 //
 // Summary of the reason.
 func (o *LimitedSupportReason) GetSummary() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.summary
 	}
@@ -239,7 +229,7 @@ func (o *LimitedSupportReason) GetSummary() (value string, ok bool) {
 //
 // Optional link to a template with summary and details.
 func (o *LimitedSupportReason) Template() *LimitedSupportReasonTemplate {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.template
 	}
 	return nil
@@ -250,7 +240,7 @@ func (o *LimitedSupportReason) Template() *LimitedSupportReasonTemplate {
 //
 // Optional link to a template with summary and details.
 func (o *LimitedSupportReason) GetTemplate() (value *LimitedSupportReasonTemplate, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.template
 	}

@@ -42,7 +42,7 @@ func WriteRoleDefinitionOperatorIdentityRequirement(object *RoleDefinitionOperat
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteRoleDefinitionOperatorIdentityRequirement(object *RoleDefinitionOperat
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalRoleDefinitionOperatorIdentityRequirement(source interface{}) (obj
 
 // ReadRoleDefinitionOperatorIdentityRequirement reads a value of the 'role_definition_operator_identity_requirement' type from the given iterator.
 func ReadRoleDefinitionOperatorIdentityRequirement(iterator *jsoniter.Iterator) *RoleDefinitionOperatorIdentityRequirement {
-	object := &RoleDefinitionOperatorIdentityRequirement{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &RoleDefinitionOperatorIdentityRequirement{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadRoleDefinitionOperatorIdentityRequirement(iterator *jsoniter.Iterator) 
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "resource_id":
 			value := iterator.ReadString()
 			object.resourceId = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

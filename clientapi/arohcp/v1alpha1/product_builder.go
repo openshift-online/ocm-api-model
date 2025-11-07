@@ -19,71 +19,50 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// ProductBuilder contains the data and logic needed to build 'product' objects.
+//
 // Representation of an product that can be selected as a cluster type.
 type ProductBuilder struct {
-	fieldSet_ []bool
-	id        string
-	href      string
-	name      string
+	bitmap_ uint32
+	id      string
+	href    string
+	name    string
 }
 
 // NewProduct creates a new builder of 'product' objects.
 func NewProduct() *ProductBuilder {
-	return &ProductBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &ProductBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ProductBuilder) Link(value bool) *ProductBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ProductBuilder) ID(value string) *ProductBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ProductBuilder) HREF(value string) *ProductBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ProductBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ProductBuilder) Name(value string) *ProductBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.name = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -92,10 +71,7 @@ func (b *ProductBuilder) Copy(object *Product) *ProductBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.name = object.name
@@ -107,10 +83,7 @@ func (b *ProductBuilder) Build() (object *Product, err error) {
 	object = new(Product)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.name = b.name
 	return
 }

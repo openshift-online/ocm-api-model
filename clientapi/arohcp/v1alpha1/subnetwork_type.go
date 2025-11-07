@@ -23,7 +23,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // AWS subnetwork object to be used while installing a cluster
 type Subnetwork struct {
-	fieldSet_        []bool
+	bitmap_          uint32
 	cidrBlock        string
 	availabilityZone string
 	name             string
@@ -34,15 +34,7 @@ type Subnetwork struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Subnetwork) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // CIDRBlock returns the value of the 'CIDR_block' attribute, or
@@ -50,7 +42,7 @@ func (o *Subnetwork) Empty() bool {
 //
 // The CIDR Block of the subnet.
 func (o *Subnetwork) CIDRBlock() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.cidrBlock
 	}
 	return ""
@@ -61,7 +53,7 @@ func (o *Subnetwork) CIDRBlock() string {
 //
 // The CIDR Block of the subnet.
 func (o *Subnetwork) GetCIDRBlock() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.cidrBlock
 	}
@@ -73,7 +65,7 @@ func (o *Subnetwork) GetCIDRBlock() (value string, ok bool) {
 //
 // The availability zone to which the subnet is related.
 func (o *Subnetwork) AvailabilityZone() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.availabilityZone
 	}
 	return ""
@@ -84,7 +76,7 @@ func (o *Subnetwork) AvailabilityZone() string {
 //
 // The availability zone to which the subnet is related.
 func (o *Subnetwork) GetAvailabilityZone() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.availabilityZone
 	}
@@ -96,7 +88,7 @@ func (o *Subnetwork) GetAvailabilityZone() (value string, ok bool) {
 //
 // Name of the subnet according to its `Name` tag on AWS.
 func (o *Subnetwork) Name() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.name
 	}
 	return ""
@@ -107,7 +99,7 @@ func (o *Subnetwork) Name() string {
 //
 // Name of the subnet according to its `Name` tag on AWS.
 func (o *Subnetwork) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.name
 	}
@@ -119,7 +111,7 @@ func (o *Subnetwork) GetName() (value string, ok bool) {
 //
 // Whether or not it is a public subnet.
 func (o *Subnetwork) Public() bool {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.public
 	}
 	return false
@@ -130,7 +122,7 @@ func (o *Subnetwork) Public() bool {
 //
 // Whether or not it is a public subnet.
 func (o *Subnetwork) GetPublic() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.public
 	}
@@ -142,7 +134,7 @@ func (o *Subnetwork) GetPublic() (value bool, ok bool) {
 //
 // If the resource is RH managed.
 func (o *Subnetwork) RedHatManaged() bool {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.redHatManaged
 	}
 	return false
@@ -153,7 +145,7 @@ func (o *Subnetwork) RedHatManaged() bool {
 //
 // If the resource is RH managed.
 func (o *Subnetwork) GetRedHatManaged() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.redHatManaged
 	}
@@ -165,7 +157,7 @@ func (o *Subnetwork) GetRedHatManaged() (value bool, ok bool) {
 //
 // The subnet ID to be used while installing a cluster.
 func (o *Subnetwork) SubnetID() string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.subnetID
 	}
 	return ""
@@ -176,7 +168,7 @@ func (o *Subnetwork) SubnetID() string {
 //
 // The subnet ID to be used while installing a cluster.
 func (o *Subnetwork) GetSubnetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.subnetID
 	}

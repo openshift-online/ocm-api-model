@@ -42,7 +42,7 @@ func WriteCPUTotalsNodeRoleOSMetricNode(object *CPUTotalsNodeRoleOSMetricNode, s
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.cpuTotals != nil
+	present_ = object.bitmap_&1 != 0 && object.cpuTotals != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalCPUTotalsNodeRoleOSMetricNode(source interface{}) (object *CPUTota
 
 // ReadCPUTotalsNodeRoleOSMetricNode reads a value of the 'CPU_totals_node_role_OS_metric_node' type from the given iterator.
 func ReadCPUTotalsNodeRoleOSMetricNode(iterator *jsoniter.Iterator) *CPUTotalsNodeRoleOSMetricNode {
-	object := &CPUTotalsNodeRoleOSMetricNode{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &CPUTotalsNodeRoleOSMetricNode{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadCPUTotalsNodeRoleOSMetricNode(iterator *jsoniter.Iterator) *CPUTotalsNo
 		case "cpu_totals":
 			value := ReadCPUTotalNodeRoleOSMetricNodeList(iterator)
 			object.cpuTotals = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

@@ -19,50 +19,36 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// OidcThumbprintInputBuilder contains the data and logic needed to build 'oidc_thumbprint_input' objects.
+//
 // Contains the necessary attributes to fetch an OIDC Configuration thumbprint
 type OidcThumbprintInputBuilder struct {
-	fieldSet_    []bool
+	bitmap_      uint32
 	clusterId    string
 	oidcConfigId string
 }
 
 // NewOidcThumbprintInput creates a new builder of 'oidc_thumbprint_input' objects.
 func NewOidcThumbprintInput() *OidcThumbprintInputBuilder {
-	return &OidcThumbprintInputBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &OidcThumbprintInputBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *OidcThumbprintInputBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *OidcThumbprintInputBuilder) ClusterId(value string) *OidcThumbprintInputBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.clusterId = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // OidcConfigId sets the value of the 'oidc_config_id' attribute to the given value.
 func (b *OidcThumbprintInputBuilder) OidcConfigId(value string) *OidcThumbprintInputBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.oidcConfigId = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -71,10 +57,7 @@ func (b *OidcThumbprintInputBuilder) Copy(object *OidcThumbprintInput) *OidcThum
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.clusterId = object.clusterId
 	b.oidcConfigId = object.oidcConfigId
 	return b
@@ -83,10 +66,7 @@ func (b *OidcThumbprintInputBuilder) Copy(object *OidcThumbprintInput) *OidcThum
 // Build creates a 'oidc_thumbprint_input' object using the configuration stored in the builder.
 func (b *OidcThumbprintInputBuilder) Build() (object *OidcThumbprintInput, err error) {
 	object = new(OidcThumbprintInput)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.clusterId = b.clusterId
 	object.oidcConfigId = b.oidcConfigId
 	return

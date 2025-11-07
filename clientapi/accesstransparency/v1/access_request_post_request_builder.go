@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accesstransparency/v1
 
+// AccessRequestPostRequestBuilder contains the data and logic needed to build 'access_request_post_request' objects.
+//
 // Representation of an access request post request.
 type AccessRequestPostRequestBuilder struct {
-	fieldSet_             []bool
+	bitmap_               uint32
 	clusterId             string
 	deadline              string
 	duration              string
@@ -33,91 +35,60 @@ type AccessRequestPostRequestBuilder struct {
 
 // NewAccessRequestPostRequest creates a new builder of 'access_request_post_request' objects.
 func NewAccessRequestPostRequest() *AccessRequestPostRequestBuilder {
-	return &AccessRequestPostRequestBuilder{
-		fieldSet_: make([]bool, 7),
-	}
+	return &AccessRequestPostRequestBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AccessRequestPostRequestBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) ClusterId(value string) *AccessRequestPostRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.clusterId = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Deadline sets the value of the 'deadline' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) Deadline(value string) *AccessRequestPostRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.deadline = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Duration sets the value of the 'duration' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) Duration(value string) *AccessRequestPostRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.duration = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // InternalSupportCaseId sets the value of the 'internal_support_case_id' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) InternalSupportCaseId(value string) *AccessRequestPostRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.internalSupportCaseId = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // Justification sets the value of the 'justification' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) Justification(value string) *AccessRequestPostRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.justification = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // SubscriptionId sets the value of the 'subscription_id' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) SubscriptionId(value string) *AccessRequestPostRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.subscriptionId = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // SupportCaseId sets the value of the 'support_case_id' attribute to the given value.
 func (b *AccessRequestPostRequestBuilder) SupportCaseId(value string) *AccessRequestPostRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.supportCaseId = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
@@ -126,10 +97,7 @@ func (b *AccessRequestPostRequestBuilder) Copy(object *AccessRequestPostRequest)
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.clusterId = object.clusterId
 	b.deadline = object.deadline
 	b.duration = object.duration
@@ -143,10 +111,7 @@ func (b *AccessRequestPostRequestBuilder) Copy(object *AccessRequestPostRequest)
 // Build creates a 'access_request_post_request' object using the configuration stored in the builder.
 func (b *AccessRequestPostRequestBuilder) Build() (object *AccessRequestPostRequest, err error) {
 	object = new(AccessRequestPostRequest)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.clusterId = b.clusterId
 	object.deadline = b.deadline
 	object.duration = b.duration

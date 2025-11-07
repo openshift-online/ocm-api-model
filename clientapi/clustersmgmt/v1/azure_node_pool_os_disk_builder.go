@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// AzureNodePoolOsDiskBuilder contains the data and logic needed to build 'azure_node_pool_os_disk' objects.
+//
 // Defines the configuration of a Node Pool's OS disk.
 type AzureNodePoolOsDiskBuilder struct {
-	fieldSet_                  []bool
+	bitmap_                    uint32
 	persistence                string
 	sizeGibibytes              int
 	sseEncryptionSetResourceId string
@@ -30,61 +32,39 @@ type AzureNodePoolOsDiskBuilder struct {
 
 // NewAzureNodePoolOsDisk creates a new builder of 'azure_node_pool_os_disk' objects.
 func NewAzureNodePoolOsDisk() *AzureNodePoolOsDiskBuilder {
-	return &AzureNodePoolOsDiskBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &AzureNodePoolOsDiskBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AzureNodePoolOsDiskBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Persistence sets the value of the 'persistence' attribute to the given value.
 func (b *AzureNodePoolOsDiskBuilder) Persistence(value string) *AzureNodePoolOsDiskBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.persistence = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // SizeGibibytes sets the value of the 'size_gibibytes' attribute to the given value.
 func (b *AzureNodePoolOsDiskBuilder) SizeGibibytes(value int) *AzureNodePoolOsDiskBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.sizeGibibytes = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // SseEncryptionSetResourceId sets the value of the 'sse_encryption_set_resource_id' attribute to the given value.
 func (b *AzureNodePoolOsDiskBuilder) SseEncryptionSetResourceId(value string) *AzureNodePoolOsDiskBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.sseEncryptionSetResourceId = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // StorageAccountType sets the value of the 'storage_account_type' attribute to the given value.
 func (b *AzureNodePoolOsDiskBuilder) StorageAccountType(value string) *AzureNodePoolOsDiskBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.storageAccountType = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -93,10 +73,7 @@ func (b *AzureNodePoolOsDiskBuilder) Copy(object *AzureNodePoolOsDisk) *AzureNod
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.persistence = object.persistence
 	b.sizeGibibytes = object.sizeGibibytes
 	b.sseEncryptionSetResourceId = object.sseEncryptionSetResourceId
@@ -107,10 +84,7 @@ func (b *AzureNodePoolOsDiskBuilder) Copy(object *AzureNodePoolOsDisk) *AzureNod
 // Build creates a 'azure_node_pool_os_disk' object using the configuration stored in the builder.
 func (b *AzureNodePoolOsDiskBuilder) Build() (object *AzureNodePoolOsDisk, err error) {
 	object = new(AzureNodePoolOsDisk)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.persistence = b.persistence
 	object.sizeGibibytes = b.sizeGibibytes
 	object.sseEncryptionSetResourceId = b.sseEncryptionSetResourceId

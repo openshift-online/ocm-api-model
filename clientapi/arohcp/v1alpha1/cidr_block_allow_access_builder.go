@@ -19,50 +19,35 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// CIDRBlockAllowAccessBuilder contains the data and logic needed to build 'CIDR_block_allow_access' objects.
 type CIDRBlockAllowAccessBuilder struct {
-	fieldSet_ []bool
-	mode      string
-	values    []string
+	bitmap_ uint32
+	mode    string
+	values  []string
 }
 
 // NewCIDRBlockAllowAccess creates a new builder of 'CIDR_block_allow_access' objects.
 func NewCIDRBlockAllowAccess() *CIDRBlockAllowAccessBuilder {
-	return &CIDRBlockAllowAccessBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &CIDRBlockAllowAccessBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *CIDRBlockAllowAccessBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Mode sets the value of the 'mode' attribute to the given value.
 func (b *CIDRBlockAllowAccessBuilder) Mode(value string) *CIDRBlockAllowAccessBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.mode = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Values sets the value of the 'values' attribute to the given values.
 func (b *CIDRBlockAllowAccessBuilder) Values(values ...string) *CIDRBlockAllowAccessBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.values = make([]string, len(values))
 	copy(b.values, values)
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -71,10 +56,7 @@ func (b *CIDRBlockAllowAccessBuilder) Copy(object *CIDRBlockAllowAccess) *CIDRBl
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.mode = object.mode
 	if object.values != nil {
 		b.values = make([]string, len(object.values))
@@ -88,10 +70,7 @@ func (b *CIDRBlockAllowAccessBuilder) Copy(object *CIDRBlockAllowAccess) *CIDRBl
 // Build creates a 'CIDR_block_allow_access' object using the configuration stored in the builder.
 func (b *CIDRBlockAllowAccessBuilder) Build() (object *CIDRBlockAllowAccess, err error) {
 	object = new(CIDRBlockAllowAccess)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.mode = b.mode
 	if b.values != nil {
 		object.values = make([]string, len(b.values))

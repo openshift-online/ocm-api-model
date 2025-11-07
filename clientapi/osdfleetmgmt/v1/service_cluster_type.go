@@ -73,7 +73,7 @@ const ServiceClusterNilKind = "ServiceClusterNil"
 // attributes are mandatory when creation a cluster with your own Amazon Web
 // Services account.
 type ServiceCluster struct {
-	fieldSet_                  []bool
+	bitmap_                    uint32
 	id                         string
 	href                       string
 	dns                        *DNS
@@ -92,7 +92,7 @@ func (o *ServiceCluster) Kind() string {
 	if o == nil {
 		return ServiceClusterNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return ServiceClusterLinkKind
 	}
 	return ServiceClusterKind
@@ -100,12 +100,12 @@ func (o *ServiceCluster) Kind() string {
 
 // Link returns true if this is a link.
 func (o *ServiceCluster) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *ServiceCluster) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -114,7 +114,7 @@ func (o *ServiceCluster) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *ServiceCluster) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -123,7 +123,7 @@ func (o *ServiceCluster) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *ServiceCluster) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -132,7 +132,7 @@ func (o *ServiceCluster) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *ServiceCluster) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -141,17 +141,7 @@ func (o *ServiceCluster) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ServiceCluster) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // DNS returns the value of the 'DNS' attribute, or
@@ -159,7 +149,7 @@ func (o *ServiceCluster) Empty() bool {
 //
 // DNS settings of the cluster.
 func (o *ServiceCluster) DNS() *DNS {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.dns
 	}
 	return nil
@@ -170,7 +160,7 @@ func (o *ServiceCluster) DNS() *DNS {
 //
 // DNS settings of the cluster.
 func (o *ServiceCluster) GetDNS() (value *DNS, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.dns
 	}
@@ -182,7 +172,7 @@ func (o *ServiceCluster) GetDNS() (value *DNS, ok bool) {
 //
 // Cloud provider where the cluster is installed.
 func (o *ServiceCluster) CloudProvider() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.cloudProvider
 	}
 	return ""
@@ -193,7 +183,7 @@ func (o *ServiceCluster) CloudProvider() string {
 //
 // Cloud provider where the cluster is installed.
 func (o *ServiceCluster) GetCloudProvider() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.cloudProvider
 	}
@@ -205,7 +195,7 @@ func (o *ServiceCluster) GetCloudProvider() (value string, ok bool) {
 //
 // Cluster mgmt reference
 func (o *ServiceCluster) ClusterManagementReference() *ClusterManagementReference {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.clusterManagementReference
 	}
 	return nil
@@ -216,7 +206,7 @@ func (o *ServiceCluster) ClusterManagementReference() *ClusterManagementReferenc
 //
 // Cluster mgmt reference
 func (o *ServiceCluster) GetClusterManagementReference() (value *ClusterManagementReference, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.clusterManagementReference
 	}
@@ -228,7 +218,7 @@ func (o *ServiceCluster) GetClusterManagementReference() (value *ClusterManageme
 //
 // Labels on service cluster
 func (o *ServiceCluster) Labels() []*Label {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.labels
 	}
 	return nil
@@ -239,7 +229,7 @@ func (o *ServiceCluster) Labels() []*Label {
 //
 // Labels on service cluster
 func (o *ServiceCluster) GetLabels() (value []*Label, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.labels
 	}
@@ -251,7 +241,7 @@ func (o *ServiceCluster) GetLabels() (value []*Label, ok bool) {
 //
 // Cluster name
 func (o *ServiceCluster) Name() string {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.name
 	}
 	return ""
@@ -262,7 +252,7 @@ func (o *ServiceCluster) Name() string {
 //
 // Cluster name
 func (o *ServiceCluster) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.name
 	}
@@ -274,7 +264,7 @@ func (o *ServiceCluster) GetName() (value string, ok bool) {
 //
 // Provision shard reference for the service cluster
 func (o *ServiceCluster) ProvisionShardReference() *ProvisionShardReference {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.provisionShardReference
 	}
 	return nil
@@ -285,7 +275,7 @@ func (o *ServiceCluster) ProvisionShardReference() *ProvisionShardReference {
 //
 // Provision shard reference for the service cluster
 func (o *ServiceCluster) GetProvisionShardReference() (value *ProvisionShardReference, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.provisionShardReference
 	}
@@ -297,7 +287,7 @@ func (o *ServiceCluster) GetProvisionShardReference() (value *ProvisionShardRefe
 //
 // Cloud provider region where the cluster is installed.
 func (o *ServiceCluster) Region() string {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && o.bitmap_&512 != 0 {
 		return o.region
 	}
 	return ""
@@ -308,7 +298,7 @@ func (o *ServiceCluster) Region() string {
 //
 // Cloud provider region where the cluster is installed.
 func (o *ServiceCluster) GetRegion() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && o.bitmap_&512 != 0
 	if ok {
 		value = o.region
 	}
@@ -320,7 +310,7 @@ func (o *ServiceCluster) GetRegion() (value string, ok bool) {
 //
 // Sector of cluster
 func (o *ServiceCluster) Sector() string {
-	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+	if o != nil && o.bitmap_&1024 != 0 {
 		return o.sector
 	}
 	return ""
@@ -331,7 +321,7 @@ func (o *ServiceCluster) Sector() string {
 //
 // Sector of cluster
 func (o *ServiceCluster) GetSector() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	ok = o != nil && o.bitmap_&1024 != 0
 	if ok {
 		value = o.sector
 	}
@@ -343,7 +333,7 @@ func (o *ServiceCluster) GetSector() (value string, ok bool) {
 //
 // Status of cluster
 func (o *ServiceCluster) Status() string {
-	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
+	if o != nil && o.bitmap_&2048 != 0 {
 		return o.status
 	}
 	return ""
@@ -354,7 +344,7 @@ func (o *ServiceCluster) Status() string {
 //
 // Status of cluster
 func (o *ServiceCluster) GetStatus() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
+	ok = o != nil && o.bitmap_&2048 != 0
 	if ok {
 		value = o.status
 	}

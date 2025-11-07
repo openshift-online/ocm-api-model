@@ -19,91 +19,67 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// ExternalAuthBuilder contains the data and logic needed to build 'external_auth' objects.
+//
 // Representation of an external authentication provider.
 type ExternalAuthBuilder struct {
-	fieldSet_ []bool
-	id        string
-	href      string
-	claim     *ExternalAuthClaimBuilder
-	clients   []*ExternalAuthClientConfigBuilder
-	issuer    *TokenIssuerBuilder
-	status    *ExternalAuthStatusBuilder
+	bitmap_ uint32
+	id      string
+	href    string
+	claim   *ExternalAuthClaimBuilder
+	clients []*ExternalAuthClientConfigBuilder
+	issuer  *TokenIssuerBuilder
+	status  *ExternalAuthStatusBuilder
 }
 
 // NewExternalAuth creates a new builder of 'external_auth' objects.
 func NewExternalAuth() *ExternalAuthBuilder {
-	return &ExternalAuthBuilder{
-		fieldSet_: make([]bool, 7),
-	}
+	return &ExternalAuthBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ExternalAuthBuilder) Link(value bool) *ExternalAuthBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ExternalAuthBuilder) ID(value string) *ExternalAuthBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ExternalAuthBuilder) HREF(value string) *ExternalAuthBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ExternalAuthBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // Claim sets the value of the 'claim' attribute to the given value.
 //
 // The claims and validation rules used in the configuration of the external authentication.
 func (b *ExternalAuthBuilder) Claim(value *ExternalAuthClaimBuilder) *ExternalAuthBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.claim = value
 	if value != nil {
-		b.fieldSet_[3] = true
+		b.bitmap_ |= 8
 	} else {
-		b.fieldSet_[3] = false
+		b.bitmap_ &^= 8
 	}
 	return b
 }
 
 // Clients sets the value of the 'clients' attribute to the given values.
 func (b *ExternalAuthBuilder) Clients(values ...*ExternalAuthClientConfigBuilder) *ExternalAuthBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.clients = make([]*ExternalAuthClientConfigBuilder, len(values))
 	copy(b.clients, values)
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -111,14 +87,11 @@ func (b *ExternalAuthBuilder) Clients(values ...*ExternalAuthClientConfigBuilder
 //
 // Representation of a token issuer used in an external authentication.
 func (b *ExternalAuthBuilder) Issuer(value *TokenIssuerBuilder) *ExternalAuthBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.issuer = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
@@ -127,14 +100,11 @@ func (b *ExternalAuthBuilder) Issuer(value *TokenIssuerBuilder) *ExternalAuthBui
 //
 // Representation of the status of an external authentication provider.
 func (b *ExternalAuthBuilder) Status(value *ExternalAuthStatusBuilder) *ExternalAuthBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.status = value
 	if value != nil {
-		b.fieldSet_[6] = true
+		b.bitmap_ |= 64
 	} else {
-		b.fieldSet_[6] = false
+		b.bitmap_ &^= 64
 	}
 	return b
 }
@@ -144,10 +114,7 @@ func (b *ExternalAuthBuilder) Copy(object *ExternalAuth) *ExternalAuthBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.claim != nil {
@@ -181,10 +148,7 @@ func (b *ExternalAuthBuilder) Build() (object *ExternalAuth, err error) {
 	object = new(ExternalAuth)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.claim != nil {
 		object.claim, err = b.claim.Build()
 		if err != nil {

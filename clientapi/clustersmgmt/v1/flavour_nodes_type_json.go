@@ -42,7 +42,7 @@ func WriteFlavourNodes(object *FlavourNodes, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalFlavourNodes(source interface{}) (object *FlavourNodes, err error)
 
 // ReadFlavourNodes reads a value of the 'flavour_nodes' type from the given iterator.
 func ReadFlavourNodes(iterator *jsoniter.Iterator) *FlavourNodes {
-	object := &FlavourNodes{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &FlavourNodes{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadFlavourNodes(iterator *jsoniter.Iterator) *FlavourNodes {
 		case "master":
 			value := iterator.ReadInt()
 			object.master = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

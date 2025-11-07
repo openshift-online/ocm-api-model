@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
+// MetricsFederationBuilder contains the data and logic needed to build 'metrics_federation' objects.
+//
 // Representation of Metrics Federation
 type MetricsFederationBuilder struct {
-	fieldSet_   []bool
+	bitmap_     uint32
 	matchLabels map[string]string
 	matchNames  []string
 	namespace   string
@@ -30,66 +32,44 @@ type MetricsFederationBuilder struct {
 
 // NewMetricsFederation creates a new builder of 'metrics_federation' objects.
 func NewMetricsFederation() *MetricsFederationBuilder {
-	return &MetricsFederationBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &MetricsFederationBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *MetricsFederationBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // MatchLabels sets the value of the 'match_labels' attribute to the given value.
 func (b *MetricsFederationBuilder) MatchLabels(value map[string]string) *MetricsFederationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.matchLabels = value
 	if value != nil {
-		b.fieldSet_[0] = true
+		b.bitmap_ |= 1
 	} else {
-		b.fieldSet_[0] = false
+		b.bitmap_ &^= 1
 	}
 	return b
 }
 
 // MatchNames sets the value of the 'match_names' attribute to the given values.
 func (b *MetricsFederationBuilder) MatchNames(values ...string) *MetricsFederationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.matchNames = make([]string, len(values))
 	copy(b.matchNames, values)
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Namespace sets the value of the 'namespace' attribute to the given value.
 func (b *MetricsFederationBuilder) Namespace(value string) *MetricsFederationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.namespace = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // PortName sets the value of the 'port_name' attribute to the given value.
 func (b *MetricsFederationBuilder) PortName(value string) *MetricsFederationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.portName = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -98,10 +78,7 @@ func (b *MetricsFederationBuilder) Copy(object *MetricsFederation) *MetricsFeder
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if len(object.matchLabels) > 0 {
 		b.matchLabels = map[string]string{}
 		for k, v := range object.matchLabels {
@@ -124,10 +101,7 @@ func (b *MetricsFederationBuilder) Copy(object *MetricsFederation) *MetricsFeder
 // Build creates a 'metrics_federation' object using the configuration stored in the builder.
 func (b *MetricsFederationBuilder) Build() (object *MetricsFederation, err error) {
 	object = new(MetricsFederation)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.matchLabels != nil {
 		object.matchLabels = make(map[string]string)
 		for k, v := range b.matchLabels {

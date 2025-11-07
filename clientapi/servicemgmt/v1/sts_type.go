@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 //
 // Contains the necessary attributes to support role-based authentication on AWS.
 type STS struct {
-	fieldSet_          []bool
+	bitmap_            uint32
 	oidcEndpointURL    string
 	instanceIAMRoles   *InstanceIAMRoles
 	operatorIAMRoles   []*OperatorIAMRole
@@ -34,15 +34,7 @@ type STS struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *STS) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // OIDCEndpointURL returns the value of the 'OIDC_endpoint_URL' attribute, or
@@ -50,7 +42,7 @@ func (o *STS) Empty() bool {
 //
 // URL of the location where OIDC configuration and keys are available
 func (o *STS) OIDCEndpointURL() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.oidcEndpointURL
 	}
 	return ""
@@ -61,7 +53,7 @@ func (o *STS) OIDCEndpointURL() string {
 //
 // URL of the location where OIDC configuration and keys are available
 func (o *STS) GetOIDCEndpointURL() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.oidcEndpointURL
 	}
@@ -73,7 +65,7 @@ func (o *STS) GetOIDCEndpointURL() (value string, ok bool) {
 //
 // Instance IAM roles to use for the instance profiles of the master and worker instances
 func (o *STS) InstanceIAMRoles() *InstanceIAMRoles {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.instanceIAMRoles
 	}
 	return nil
@@ -84,7 +76,7 @@ func (o *STS) InstanceIAMRoles() *InstanceIAMRoles {
 //
 // Instance IAM roles to use for the instance profiles of the master and worker instances
 func (o *STS) GetInstanceIAMRoles() (value *InstanceIAMRoles, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.instanceIAMRoles
 	}
@@ -96,7 +88,7 @@ func (o *STS) GetInstanceIAMRoles() (value *InstanceIAMRoles, ok bool) {
 //
 // List of roles necessary to access the AWS resources of the various operators used during installation
 func (o *STS) OperatorIAMRoles() []*OperatorIAMRole {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.operatorIAMRoles
 	}
 	return nil
@@ -107,7 +99,7 @@ func (o *STS) OperatorIAMRoles() []*OperatorIAMRole {
 //
 // List of roles necessary to access the AWS resources of the various operators used during installation
 func (o *STS) GetOperatorIAMRoles() (value []*OperatorIAMRole, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.operatorIAMRoles
 	}
@@ -117,7 +109,7 @@ func (o *STS) GetOperatorIAMRoles() (value []*OperatorIAMRole, ok bool) {
 // OperatorRolePrefix returns the value of the 'operator_role_prefix' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *STS) OperatorRolePrefix() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.operatorRolePrefix
 	}
 	return ""
@@ -126,7 +118,7 @@ func (o *STS) OperatorRolePrefix() string {
 // GetOperatorRolePrefix returns the value of the 'operator_role_prefix' attribute and
 // a flag indicating if the attribute has a value.
 func (o *STS) GetOperatorRolePrefix() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.operatorRolePrefix
 	}
@@ -138,7 +130,7 @@ func (o *STS) GetOperatorRolePrefix() (value string, ok bool) {
 //
 // ARN of the AWS role to assume when installing the cluster
 func (o *STS) RoleARN() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.roleARN
 	}
 	return ""
@@ -149,7 +141,7 @@ func (o *STS) RoleARN() string {
 //
 // ARN of the AWS role to assume when installing the cluster
 func (o *STS) GetRoleARN() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.roleARN
 	}
@@ -161,7 +153,7 @@ func (o *STS) GetRoleARN() (value string, ok bool) {
 //
 // ARN of the AWS role used by SREs to access the cluster AWS account in order to provide support
 func (o *STS) SupportRoleARN() string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.supportRoleARN
 	}
 	return ""
@@ -172,7 +164,7 @@ func (o *STS) SupportRoleARN() string {
 //
 // ARN of the AWS role used by SREs to access the cluster AWS account in order to provide support
 func (o *STS) GetSupportRoleARN() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.supportRoleARN
 	}

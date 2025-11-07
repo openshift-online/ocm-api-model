@@ -21,7 +21,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // HTPasswdUser represents the values of the 'HT_passwd_user' type.
 type HTPasswdUser struct {
-	fieldSet_      []bool
+	bitmap_        uint32
 	id             string
 	hashedPassword string
 	password       string
@@ -30,15 +30,7 @@ type HTPasswdUser struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *HTPasswdUser) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // ID returns the value of the 'ID' attribute, or
@@ -46,7 +38,7 @@ func (o *HTPasswdUser) Empty() bool {
 //
 // ID for a secondary user in the _HTPasswd_ data file.
 func (o *HTPasswdUser) ID() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.id
 	}
 	return ""
@@ -57,7 +49,7 @@ func (o *HTPasswdUser) ID() string {
 //
 // ID for a secondary user in the _HTPasswd_ data file.
 func (o *HTPasswdUser) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.id
 	}
@@ -70,7 +62,7 @@ func (o *HTPasswdUser) GetID() (value string, ok bool) {
 // HTPasswd Hashed Password for a user in the _HTPasswd_ data file.
 // The value of this field is set as-is in the _HTPasswd_ data file for the HTPasswd IDP
 func (o *HTPasswdUser) HashedPassword() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.hashedPassword
 	}
 	return ""
@@ -82,7 +74,7 @@ func (o *HTPasswdUser) HashedPassword() string {
 // HTPasswd Hashed Password for a user in the _HTPasswd_ data file.
 // The value of this field is set as-is in the _HTPasswd_ data file for the HTPasswd IDP
 func (o *HTPasswdUser) GetHashedPassword() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.hashedPassword
 	}
@@ -95,7 +87,7 @@ func (o *HTPasswdUser) GetHashedPassword() (value string, ok bool) {
 // Password in plain-text for a  user in the _HTPasswd_ data file.
 // The value of this field is hashed before setting it in the  _HTPasswd_ data file for the HTPasswd IDP
 func (o *HTPasswdUser) Password() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.password
 	}
 	return ""
@@ -107,7 +99,7 @@ func (o *HTPasswdUser) Password() string {
 // Password in plain-text for a  user in the _HTPasswd_ data file.
 // The value of this field is hashed before setting it in the  _HTPasswd_ data file for the HTPasswd IDP
 func (o *HTPasswdUser) GetPassword() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.password
 	}
@@ -119,7 +111,7 @@ func (o *HTPasswdUser) GetPassword() (value string, ok bool) {
 //
 // Username for a secondary user in the _HTPasswd_ data file.
 func (o *HTPasswdUser) Username() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.username
 	}
 	return ""
@@ -130,7 +122,7 @@ func (o *HTPasswdUser) Username() string {
 //
 // Username for a secondary user in the _HTPasswd_ data file.
 func (o *HTPasswdUser) GetUsername() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.username
 	}

@@ -42,7 +42,7 @@ func WriteClusterRegistrationResponse(object *ClusterRegistrationResponse, strea
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteClusterRegistrationResponse(object *ClusterRegistrationResponse, strea
 		stream.WriteString(object.accountID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteClusterRegistrationResponse(object *ClusterRegistrationResponse, strea
 		stream.WriteString(object.authorizationToken)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteClusterRegistrationResponse(object *ClusterRegistrationResponse, strea
 		stream.WriteString(object.clusterID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,9 +94,7 @@ func UnmarshalClusterRegistrationResponse(source interface{}) (object *ClusterRe
 
 // ReadClusterRegistrationResponse reads a value of the 'cluster_registration_response' type from the given iterator.
 func ReadClusterRegistrationResponse(iterator *jsoniter.Iterator) *ClusterRegistrationResponse {
-	object := &ClusterRegistrationResponse{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &ClusterRegistrationResponse{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -106,19 +104,19 @@ func ReadClusterRegistrationResponse(iterator *jsoniter.Iterator) *ClusterRegist
 		case "account_id":
 			value := iterator.ReadString()
 			object.accountID = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "authorization_token":
 			value := iterator.ReadString()
 			object.authorizationToken = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterID = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "expires_at":
 			value := iterator.ReadString()
 			object.expiresAt = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

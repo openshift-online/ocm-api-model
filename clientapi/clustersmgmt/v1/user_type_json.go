@@ -42,13 +42,13 @@ func WriteUser(object *User, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(UserLinkKind)
 	} else {
 		stream.WriteString(UserKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteUser(object *User, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -80,9 +80,7 @@ func UnmarshalUser(source interface{}) (object *User, err error) {
 
 // ReadUser reads a value of the 'user' type from the given iterator.
 func ReadUser(iterator *jsoniter.Iterator) *User {
-	object := &User{
-		fieldSet_: make([]bool, 3),
-	}
+	object := &User{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -92,14 +90,14 @@ func ReadUser(iterator *jsoniter.Iterator) *User {
 		case "kind":
 			value := iterator.ReadString()
 			if value == UserLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		default:
 			iterator.ReadAny()
 		}

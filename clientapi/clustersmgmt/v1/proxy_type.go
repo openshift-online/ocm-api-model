@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Proxy configuration of a cluster.
 type Proxy struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	httpProxy  string
 	httpsProxy string
 	noProxy    string
@@ -31,15 +31,7 @@ type Proxy struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Proxy) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // HTTPProxy returns the value of the 'HTTP_proxy' attribute, or
@@ -47,7 +39,7 @@ func (o *Proxy) Empty() bool {
 //
 // HTTPProxy is the URL of the proxy for HTTP requests.
 func (o *Proxy) HTTPProxy() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.httpProxy
 	}
 	return ""
@@ -58,7 +50,7 @@ func (o *Proxy) HTTPProxy() string {
 //
 // HTTPProxy is the URL of the proxy for HTTP requests.
 func (o *Proxy) GetHTTPProxy() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.httpProxy
 	}
@@ -70,7 +62,7 @@ func (o *Proxy) GetHTTPProxy() (value string, ok bool) {
 //
 // HTTPSProxy is the URL of the proxy for HTTPS requests.
 func (o *Proxy) HTTPSProxy() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.httpsProxy
 	}
 	return ""
@@ -81,7 +73,7 @@ func (o *Proxy) HTTPSProxy() string {
 //
 // HTTPSProxy is the URL of the proxy for HTTPS requests.
 func (o *Proxy) GetHTTPSProxy() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.httpsProxy
 	}
@@ -94,7 +86,7 @@ func (o *Proxy) GetHTTPSProxy() (value string, ok bool) {
 // NoProxy is a comma-separated list of domains and CIDRs for which
 // the proxy should not be used
 func (o *Proxy) NoProxy() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.noProxy
 	}
 	return ""
@@ -106,7 +98,7 @@ func (o *Proxy) NoProxy() string {
 // NoProxy is a comma-separated list of domains and CIDRs for which
 // the proxy should not be used
 func (o *Proxy) GetNoProxy() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.noProxy
 	}

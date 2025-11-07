@@ -42,7 +42,7 @@ func WriteSelfAccessReviewResponse(object *SelfAccessReviewResponse, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteSelfAccessReviewResponse(object *SelfAccessReviewResponse, stream *jso
 		stream.WriteString(object.action)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteSelfAccessReviewResponse(object *SelfAccessReviewResponse, stream *jso
 		stream.WriteBool(object.allowed)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteSelfAccessReviewResponse(object *SelfAccessReviewResponse, stream *jso
 		stream.WriteString(object.clusterID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteSelfAccessReviewResponse(object *SelfAccessReviewResponse, stream *jso
 		stream.WriteString(object.clusterUUID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteSelfAccessReviewResponse(object *SelfAccessReviewResponse, stream *jso
 		stream.WriteBool(object.isOCMInternal)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -96,7 +96,7 @@ func WriteSelfAccessReviewResponse(object *SelfAccessReviewResponse, stream *jso
 		stream.WriteString(object.organizationID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -105,7 +105,7 @@ func WriteSelfAccessReviewResponse(object *SelfAccessReviewResponse, stream *jso
 		stream.WriteString(object.reason)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = object.bitmap_&128 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -114,7 +114,7 @@ func WriteSelfAccessReviewResponse(object *SelfAccessReviewResponse, stream *jso
 		stream.WriteString(object.resourceType)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
+	present_ = object.bitmap_&256 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -139,9 +139,7 @@ func UnmarshalSelfAccessReviewResponse(source interface{}) (object *SelfAccessRe
 
 // ReadSelfAccessReviewResponse reads a value of the 'self_access_review_response' type from the given iterator.
 func ReadSelfAccessReviewResponse(iterator *jsoniter.Iterator) *SelfAccessReviewResponse {
-	object := &SelfAccessReviewResponse{
-		fieldSet_: make([]bool, 9),
-	}
+	object := &SelfAccessReviewResponse{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -151,39 +149,39 @@ func ReadSelfAccessReviewResponse(iterator *jsoniter.Iterator) *SelfAccessReview
 		case "action":
 			value := iterator.ReadString()
 			object.action = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "allowed":
 			value := iterator.ReadBool()
 			object.allowed = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterID = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "cluster_uuid":
 			value := iterator.ReadString()
 			object.clusterUUID = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "is_ocm_internal":
 			value := iterator.ReadBool()
 			object.isOCMInternal = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "organization_id":
 			value := iterator.ReadString()
 			object.organizationID = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "reason":
 			value := iterator.ReadString()
 			object.reason = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "resource_type":
 			value := iterator.ReadString()
 			object.resourceType = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		case "subscription_id":
 			value := iterator.ReadString()
 			object.subscriptionID = value
-			object.fieldSet_[8] = true
+			object.bitmap_ |= 256
 		default:
 			iterator.ReadAny()
 		}

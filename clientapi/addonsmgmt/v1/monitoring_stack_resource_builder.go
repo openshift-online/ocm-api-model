@@ -19,50 +19,36 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
+// MonitoringStackResourceBuilder contains the data and logic needed to build 'monitoring_stack_resource' objects.
+//
 // Representation of Monitoring Stack Resource
 type MonitoringStackResourceBuilder struct {
-	fieldSet_ []bool
-	cpu       string
-	memory    string
+	bitmap_ uint32
+	cpu     string
+	memory  string
 }
 
 // NewMonitoringStackResource creates a new builder of 'monitoring_stack_resource' objects.
 func NewMonitoringStackResource() *MonitoringStackResourceBuilder {
-	return &MonitoringStackResourceBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &MonitoringStackResourceBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *MonitoringStackResourceBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Cpu sets the value of the 'cpu' attribute to the given value.
 func (b *MonitoringStackResourceBuilder) Cpu(value string) *MonitoringStackResourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.cpu = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Memory sets the value of the 'memory' attribute to the given value.
 func (b *MonitoringStackResourceBuilder) Memory(value string) *MonitoringStackResourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.memory = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -71,10 +57,7 @@ func (b *MonitoringStackResourceBuilder) Copy(object *MonitoringStackResource) *
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.cpu = object.cpu
 	b.memory = object.memory
 	return b
@@ -83,10 +66,7 @@ func (b *MonitoringStackResourceBuilder) Copy(object *MonitoringStackResource) *
 // Build creates a 'monitoring_stack_resource' object using the configuration stored in the builder.
 func (b *MonitoringStackResourceBuilder) Build() (object *MonitoringStackResource, err error) {
 	object = new(MonitoringStackResource)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.cpu = b.cpu
 	object.memory = b.memory
 	return

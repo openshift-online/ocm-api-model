@@ -21,22 +21,14 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // CIDRBlockAllowAccess represents the values of the 'CIDR_block_allow_access' type.
 type CIDRBlockAllowAccess struct {
-	fieldSet_ []bool
-	mode      string
-	values    []string
+	bitmap_ uint32
+	mode    string
+	values  []string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *CIDRBlockAllowAccess) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Mode returns the value of the 'mode' attribute, or
@@ -45,7 +37,7 @@ func (o *CIDRBlockAllowAccess) Empty() bool {
 // There are two modes: "allow_all" and "allow_list"; if "allow_list" is provided than a non-empty 'values' list must be provided.
 // Otherwise, if "allow_all" is provided then 'values' list should be omitted.
 func (o *CIDRBlockAllowAccess) Mode() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.mode
 	}
 	return ""
@@ -57,7 +49,7 @@ func (o *CIDRBlockAllowAccess) Mode() string {
 // There are two modes: "allow_all" and "allow_list"; if "allow_list" is provided than a non-empty 'values' list must be provided.
 // Otherwise, if "allow_all" is provided then 'values' list should be omitted.
 func (o *CIDRBlockAllowAccess) GetMode() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.mode
 	}
@@ -72,7 +64,7 @@ func (o *CIDRBlockAllowAccess) GetMode() (value string, ok bool) {
 // The value "0.0.0.0/0" is not considered a valid value, as the user can use "allow_all" mode to indicate this behavior.
 // The values should not contain the set of Private IP address ranges.
 func (o *CIDRBlockAllowAccess) Values() []string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.values
 	}
 	return nil
@@ -86,7 +78,7 @@ func (o *CIDRBlockAllowAccess) Values() []string {
 // The value "0.0.0.0/0" is not considered a valid value, as the user can use "allow_all" mode to indicate this behavior.
 // The values should not contain the set of Private IP address ranges.
 func (o *CIDRBlockAllowAccess) GetValues() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.values
 	}

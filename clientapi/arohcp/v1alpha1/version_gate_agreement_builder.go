@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// VersionGateAgreementBuilder contains the data and logic needed to build 'version_gate_agreement' objects.
+//
 // VersionGateAgreement represents a version gate that the user agreed to for a specific cluster.
 type VersionGateAgreementBuilder struct {
-	fieldSet_       []bool
+	bitmap_         uint32
 	id              string
 	href            string
 	agreedTimestamp time.Time
@@ -34,61 +36,38 @@ type VersionGateAgreementBuilder struct {
 
 // NewVersionGateAgreement creates a new builder of 'version_gate_agreement' objects.
 func NewVersionGateAgreement() *VersionGateAgreementBuilder {
-	return &VersionGateAgreementBuilder{
-		fieldSet_: make([]bool, 5),
-	}
+	return &VersionGateAgreementBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *VersionGateAgreementBuilder) Link(value bool) *VersionGateAgreementBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *VersionGateAgreementBuilder) ID(value string) *VersionGateAgreementBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *VersionGateAgreementBuilder) HREF(value string) *VersionGateAgreementBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *VersionGateAgreementBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // AgreedTimestamp sets the value of the 'agreed_timestamp' attribute to the given value.
 func (b *VersionGateAgreementBuilder) AgreedTimestamp(value time.Time) *VersionGateAgreementBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.agreedTimestamp = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -96,14 +75,11 @@ func (b *VersionGateAgreementBuilder) AgreedTimestamp(value time.Time) *VersionG
 //
 // Representation of an _OpenShift_ version gate.
 func (b *VersionGateAgreementBuilder) VersionGate(value *VersionGateBuilder) *VersionGateAgreementBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.versionGate = value
 	if value != nil {
-		b.fieldSet_[4] = true
+		b.bitmap_ |= 16
 	} else {
-		b.fieldSet_[4] = false
+		b.bitmap_ &^= 16
 	}
 	return b
 }
@@ -113,10 +89,7 @@ func (b *VersionGateAgreementBuilder) Copy(object *VersionGateAgreement) *Versio
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.agreedTimestamp = object.agreedTimestamp
@@ -133,10 +106,7 @@ func (b *VersionGateAgreementBuilder) Build() (object *VersionGateAgreement, err
 	object = new(VersionGateAgreement)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.agreedTimestamp = b.agreedTimestamp
 	if b.versionGate != nil {
 		object.versionGate, err = b.versionGate.Build()

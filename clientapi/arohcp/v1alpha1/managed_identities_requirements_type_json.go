@@ -42,13 +42,13 @@ func WriteManagedIdentitiesRequirements(object *ManagedIdentitiesRequirements, s
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(ManagedIdentitiesRequirementsLinkKind)
 	} else {
 		stream.WriteString(ManagedIdentitiesRequirementsKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteManagedIdentitiesRequirements(object *ManagedIdentitiesRequirements, s
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteManagedIdentitiesRequirements(object *ManagedIdentitiesRequirements, s
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.controlPlaneOperatorsIdentities != nil
+	present_ = object.bitmap_&8 != 0 && object.controlPlaneOperatorsIdentities != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteManagedIdentitiesRequirements(object *ManagedIdentitiesRequirements, s
 		WriteControlPlaneOperatorIdentityRequirementList(object.controlPlaneOperatorsIdentities, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.dataPlaneOperatorsIdentities != nil
+	present_ = object.bitmap_&16 != 0 && object.dataPlaneOperatorsIdentities != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -99,9 +99,7 @@ func UnmarshalManagedIdentitiesRequirements(source interface{}) (object *Managed
 
 // ReadManagedIdentitiesRequirements reads a value of the 'managed_identities_requirements' type from the given iterator.
 func ReadManagedIdentitiesRequirements(iterator *jsoniter.Iterator) *ManagedIdentitiesRequirements {
-	object := &ManagedIdentitiesRequirements{
-		fieldSet_: make([]bool, 5),
-	}
+	object := &ManagedIdentitiesRequirements{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -111,22 +109,22 @@ func ReadManagedIdentitiesRequirements(iterator *jsoniter.Iterator) *ManagedIden
 		case "kind":
 			value := iterator.ReadString()
 			if value == ManagedIdentitiesRequirementsLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "control_plane_operators_identities":
 			value := ReadControlPlaneOperatorIdentityRequirementList(iterator)
 			object.controlPlaneOperatorsIdentities = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "data_plane_operators_identities":
 			value := ReadDataPlaneOperatorIdentityRequirementList(iterator)
 			object.dataPlaneOperatorsIdentities = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		default:
 			iterator.ReadAny()
 		}

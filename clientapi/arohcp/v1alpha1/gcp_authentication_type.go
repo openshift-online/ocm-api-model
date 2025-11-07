@@ -23,23 +23,15 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Google cloud platform authentication method of a cluster.
 type GcpAuthentication struct {
-	fieldSet_ []bool
-	href      string
-	id        string
-	kind      string
+	bitmap_ uint32
+	href    string
+	id      string
+	kind    string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *GcpAuthentication) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Href returns the value of the 'href' attribute, or
@@ -47,7 +39,7 @@ func (o *GcpAuthentication) Empty() bool {
 //
 // Self link
 func (o *GcpAuthentication) Href() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.href
 	}
 	return ""
@@ -58,7 +50,7 @@ func (o *GcpAuthentication) Href() string {
 //
 // Self link
 func (o *GcpAuthentication) GetHref() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.href
 	}
@@ -70,7 +62,7 @@ func (o *GcpAuthentication) GetHref() (value string, ok bool) {
 //
 // Unique identifier of the object
 func (o *GcpAuthentication) Id() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -81,7 +73,7 @@ func (o *GcpAuthentication) Id() string {
 //
 // Unique identifier of the object
 func (o *GcpAuthentication) GetId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -93,7 +85,7 @@ func (o *GcpAuthentication) GetId() (value string, ok bool) {
 //
 // Indicates the type of this object
 func (o *GcpAuthentication) Kind() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.kind
 	}
 	return ""
@@ -104,7 +96,7 @@ func (o *GcpAuthentication) Kind() string {
 //
 // Indicates the type of this object
 func (o *GcpAuthentication) GetKind() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.kind
 	}

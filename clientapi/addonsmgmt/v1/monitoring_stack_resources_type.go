@@ -23,22 +23,14 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 //
 // Representation of Monitoring Stack Resources
 type MonitoringStackResources struct {
-	fieldSet_ []bool
-	limits    *MonitoringStackResource
-	requests  *MonitoringStackResource
+	bitmap_  uint32
+	limits   *MonitoringStackResource
+	requests *MonitoringStackResource
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *MonitoringStackResources) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Limits returns the value of the 'limits' attribute, or
@@ -46,7 +38,7 @@ func (o *MonitoringStackResources) Empty() bool {
 //
 // Indicates the limit of resource for monitoring stack.
 func (o *MonitoringStackResources) Limits() *MonitoringStackResource {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.limits
 	}
 	return nil
@@ -57,7 +49,7 @@ func (o *MonitoringStackResources) Limits() *MonitoringStackResource {
 //
 // Indicates the limit of resource for monitoring stack.
 func (o *MonitoringStackResources) GetLimits() (value *MonitoringStackResource, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.limits
 	}
@@ -69,7 +61,7 @@ func (o *MonitoringStackResources) GetLimits() (value *MonitoringStackResource, 
 //
 // Indicates the requested amount of resource for monitoring stack.
 func (o *MonitoringStackResources) Requests() *MonitoringStackResource {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.requests
 	}
 	return nil
@@ -80,7 +72,7 @@ func (o *MonitoringStackResources) Requests() *MonitoringStackResource {
 //
 // Indicates the requested amount of resource for monitoring stack.
 func (o *MonitoringStackResources) GetRequests() (value *MonitoringStackResource, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.requests
 	}

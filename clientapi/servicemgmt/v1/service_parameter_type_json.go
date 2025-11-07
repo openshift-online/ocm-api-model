@@ -42,7 +42,7 @@ func WriteServiceParameter(object *ServiceParameter, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteServiceParameter(object *ServiceParameter, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalServiceParameter(source interface{}) (object *ServiceParameter, er
 
 // ReadServiceParameter reads a value of the 'service_parameter' type from the given iterator.
 func ReadServiceParameter(iterator *jsoniter.Iterator) *ServiceParameter {
-	object := &ServiceParameter{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &ServiceParameter{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadServiceParameter(iterator *jsoniter.Iterator) *ServiceParameter {
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "value":
 			value := iterator.ReadString()
 			object.value = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

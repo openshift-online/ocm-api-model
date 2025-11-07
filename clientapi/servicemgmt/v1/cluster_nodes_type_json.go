@@ -42,7 +42,7 @@ func WriteClusterNodes(object *ClusterNodes, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.availabilityZones != nil
+	present_ = object.bitmap_&1 != 0 && object.availabilityZones != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalClusterNodes(source interface{}) (object *ClusterNodes, err error)
 
 // ReadClusterNodes reads a value of the 'cluster_nodes' type from the given iterator.
 func ReadClusterNodes(iterator *jsoniter.Iterator) *ClusterNodes {
-	object := &ClusterNodes{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &ClusterNodes{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadClusterNodes(iterator *jsoniter.Iterator) *ClusterNodes {
 		case "availability_zones":
 			value := ReadStringList(iterator)
 			object.availabilityZones = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

@@ -42,7 +42,7 @@ func WriteClusterAPI(object *ClusterAPI, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.cidrBlockAccess != nil
+	present_ = object.bitmap_&1 != 0 && object.cidrBlockAccess != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteClusterAPI(object *ClusterAPI, stream *jsoniter.Stream) {
 		WriteCIDRBlockAccess(object.cidrBlockAccess, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteClusterAPI(object *ClusterAPI, stream *jsoniter.Stream) {
 		stream.WriteString(object.url)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,9 +85,7 @@ func UnmarshalClusterAPI(source interface{}) (object *ClusterAPI, err error) {
 
 // ReadClusterAPI reads a value of the 'cluster_API' type from the given iterator.
 func ReadClusterAPI(iterator *jsoniter.Iterator) *ClusterAPI {
-	object := &ClusterAPI{
-		fieldSet_: make([]bool, 3),
-	}
+	object := &ClusterAPI{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -97,16 +95,16 @@ func ReadClusterAPI(iterator *jsoniter.Iterator) *ClusterAPI {
 		case "cidr_block_access":
 			value := ReadCIDRBlockAccess(iterator)
 			object.cidrBlockAccess = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "url":
 			value := iterator.ReadString()
 			object.url = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "listening":
 			text := iterator.ReadString()
 			value := ListeningMethod(text)
 			object.listening = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		default:
 			iterator.ReadAny()
 		}

@@ -42,7 +42,7 @@ func WriteClusterAutoNodeStatus(object *ClusterAutoNodeStatus, stream *jsoniter.
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalClusterAutoNodeStatus(source interface{}) (object *ClusterAutoNode
 
 // ReadClusterAutoNodeStatus reads a value of the 'cluster_auto_node_status' type from the given iterator.
 func ReadClusterAutoNodeStatus(iterator *jsoniter.Iterator) *ClusterAutoNodeStatus {
-	object := &ClusterAutoNodeStatus{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &ClusterAutoNodeStatus{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadClusterAutoNodeStatus(iterator *jsoniter.Iterator) *ClusterAutoNodeStat
 		case "message":
 			value := iterator.ReadString()
 			object.message = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

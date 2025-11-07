@@ -23,21 +23,13 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Contains the necessary attributes to support KMS encryption for Azure based clusters.
 type AzureKmsEncryption struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	activeKey *AzureKmsKey
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AzureKmsEncryption) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // ActiveKey returns the value of the 'active_key' attribute, or
@@ -46,7 +38,7 @@ func (o *AzureKmsEncryption) Empty() bool {
 // The details of the active key
 // Required during creation.
 func (o *AzureKmsEncryption) ActiveKey() *AzureKmsKey {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.activeKey
 	}
 	return nil
@@ -58,7 +50,7 @@ func (o *AzureKmsEncryption) ActiveKey() *AzureKmsKey {
 // The details of the active key
 // Required during creation.
 func (o *AzureKmsEncryption) GetActiveKey() (value *AzureKmsKey, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.activeKey
 	}

@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
+// AddonStatusBuilder contains the data and logic needed to build 'addon_status' objects.
+//
 // Representation of an addon status.
 type AddonStatusBuilder struct {
-	fieldSet_        []bool
+	bitmap_          uint32
 	id               string
 	href             string
 	addonId          string
@@ -32,92 +34,60 @@ type AddonStatusBuilder struct {
 
 // NewAddonStatus creates a new builder of 'addon_status' objects.
 func NewAddonStatus() *AddonStatusBuilder {
-	return &AddonStatusBuilder{
-		fieldSet_: make([]bool, 7),
-	}
+	return &AddonStatusBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddonStatusBuilder) Link(value bool) *AddonStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddonStatusBuilder) ID(value string) *AddonStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AddonStatusBuilder) HREF(value string) *AddonStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddonStatusBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // AddonId sets the value of the 'addon_id' attribute to the given value.
 func (b *AddonStatusBuilder) AddonId(value string) *AddonStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.addonId = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // CorrelationID sets the value of the 'correlation_ID' attribute to the given value.
 func (b *AddonStatusBuilder) CorrelationID(value string) *AddonStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.correlationID = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // StatusConditions sets the value of the 'status_conditions' attribute to the given values.
 func (b *AddonStatusBuilder) StatusConditions(values ...*AddonStatusConditionBuilder) *AddonStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.statusConditions = make([]*AddonStatusConditionBuilder, len(values))
 	copy(b.statusConditions, values)
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // Version sets the value of the 'version' attribute to the given value.
 func (b *AddonStatusBuilder) Version(value string) *AddonStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.version = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
@@ -126,10 +96,7 @@ func (b *AddonStatusBuilder) Copy(object *AddonStatus) *AddonStatusBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.addonId = object.addonId
@@ -151,10 +118,7 @@ func (b *AddonStatusBuilder) Build() (object *AddonStatus, err error) {
 	object = new(AddonStatus)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.addonId = b.addonId
 	object.correlationID = b.correlationID
 	if b.statusConditions != nil {

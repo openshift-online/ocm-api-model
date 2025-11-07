@@ -42,7 +42,7 @@ func WriteAddOnParameterOption(object *AddOnParameterOption, stream *jsoniter.St
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAddOnParameterOption(object *AddOnParameterOption, stream *jsoniter.St
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteAddOnParameterOption(object *AddOnParameterOption, stream *jsoniter.St
 		stream.WriteInt(object.rank)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.requirements != nil
+	present_ = object.bitmap_&4 != 0 && object.requirements != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteAddOnParameterOption(object *AddOnParameterOption, stream *jsoniter.St
 		WriteAddOnRequirementList(object.requirements, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,9 +94,7 @@ func UnmarshalAddOnParameterOption(source interface{}) (object *AddOnParameterOp
 
 // ReadAddOnParameterOption reads a value of the 'add_on_parameter_option' type from the given iterator.
 func ReadAddOnParameterOption(iterator *jsoniter.Iterator) *AddOnParameterOption {
-	object := &AddOnParameterOption{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &AddOnParameterOption{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -106,19 +104,19 @@ func ReadAddOnParameterOption(iterator *jsoniter.Iterator) *AddOnParameterOption
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "rank":
 			value := iterator.ReadInt()
 			object.rank = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "requirements":
 			value := ReadAddOnRequirementList(iterator)
 			object.requirements = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "value":
 			value := iterator.ReadString()
 			object.value = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

@@ -21,28 +21,20 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/osdfleetmgmt/v
 
 // LabelRequestPayload represents the values of the 'label_request_payload' type.
 type LabelRequestPayload struct {
-	fieldSet_ []bool
-	key       string
-	value     string
+	bitmap_ uint32
+	key     string
+	value   string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *LabelRequestPayload) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Key returns the value of the 'key' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *LabelRequestPayload) Key() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.key
 	}
 	return ""
@@ -51,7 +43,7 @@ func (o *LabelRequestPayload) Key() string {
 // GetKey returns the value of the 'key' attribute and
 // a flag indicating if the attribute has a value.
 func (o *LabelRequestPayload) GetKey() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.key
 	}
@@ -61,7 +53,7 @@ func (o *LabelRequestPayload) GetKey() (value string, ok bool) {
 // Value returns the value of the 'value' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *LabelRequestPayload) Value() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.value
 	}
 	return ""
@@ -70,7 +62,7 @@ func (o *LabelRequestPayload) Value() string {
 // GetValue returns the value of the 'value' attribute and
 // a flag indicating if the attribute has a value.
 func (o *LabelRequestPayload) GetValue() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.value
 	}

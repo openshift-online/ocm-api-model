@@ -42,13 +42,13 @@ func WriteAWSInfrastructureAccessRoleGrant(object *AWSInfrastructureAccessRoleGr
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(AWSInfrastructureAccessRoleGrantLinkKind)
 	} else {
 		stream.WriteString(AWSInfrastructureAccessRoleGrantKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteAWSInfrastructureAccessRoleGrant(object *AWSInfrastructureAccessRoleGr
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteAWSInfrastructureAccessRoleGrant(object *AWSInfrastructureAccessRoleGr
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteAWSInfrastructureAccessRoleGrant(object *AWSInfrastructureAccessRoleGr
 		stream.WriteString(object.consoleURL)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.role != nil
+	present_ = object.bitmap_&16 != 0 && object.role != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteAWSInfrastructureAccessRoleGrant(object *AWSInfrastructureAccessRoleGr
 		WriteAWSInfrastructureAccessRole(object.role, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -92,7 +92,7 @@ func WriteAWSInfrastructureAccessRoleGrant(object *AWSInfrastructureAccessRoleGr
 		stream.WriteString(string(object.state))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -101,7 +101,7 @@ func WriteAWSInfrastructureAccessRoleGrant(object *AWSInfrastructureAccessRoleGr
 		stream.WriteString(object.stateDescription)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = object.bitmap_&128 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -126,9 +126,7 @@ func UnmarshalAWSInfrastructureAccessRoleGrant(source interface{}) (object *AWSI
 
 // ReadAWSInfrastructureAccessRoleGrant reads a value of the 'AWS_infrastructure_access_role_grant' type from the given iterator.
 func ReadAWSInfrastructureAccessRoleGrant(iterator *jsoniter.Iterator) *AWSInfrastructureAccessRoleGrant {
-	object := &AWSInfrastructureAccessRoleGrant{
-		fieldSet_: make([]bool, 8),
-	}
+	object := &AWSInfrastructureAccessRoleGrant{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -138,35 +136,35 @@ func ReadAWSInfrastructureAccessRoleGrant(iterator *jsoniter.Iterator) *AWSInfra
 		case "kind":
 			value := iterator.ReadString()
 			if value == AWSInfrastructureAccessRoleGrantLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "console_url":
 			value := iterator.ReadString()
 			object.consoleURL = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "role":
 			value := ReadAWSInfrastructureAccessRole(iterator)
 			object.role = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "state":
 			text := iterator.ReadString()
 			value := AWSInfrastructureAccessRoleGrantState(text)
 			object.state = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "state_description":
 			value := iterator.ReadString()
 			object.stateDescription = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "user_arn":
 			value := iterator.ReadString()
 			object.userARN = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		default:
 			iterator.ReadAny()
 		}

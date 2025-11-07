@@ -39,7 +39,7 @@ const RegistryAllowlistNilKind = "RegistryAllowlistNil"
 //
 // RegistryAllowlist represents a single registry allowlist.
 type RegistryAllowlist struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	id                string
 	href              string
 	cloudProvider     *CloudProvider
@@ -52,7 +52,7 @@ func (o *RegistryAllowlist) Kind() string {
 	if o == nil {
 		return RegistryAllowlistNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return RegistryAllowlistLinkKind
 	}
 	return RegistryAllowlistKind
@@ -60,12 +60,12 @@ func (o *RegistryAllowlist) Kind() string {
 
 // Link returns true if this is a link.
 func (o *RegistryAllowlist) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *RegistryAllowlist) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -74,7 +74,7 @@ func (o *RegistryAllowlist) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *RegistryAllowlist) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -83,7 +83,7 @@ func (o *RegistryAllowlist) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *RegistryAllowlist) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -92,7 +92,7 @@ func (o *RegistryAllowlist) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *RegistryAllowlist) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -101,17 +101,7 @@ func (o *RegistryAllowlist) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *RegistryAllowlist) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // CloudProvider returns the value of the 'cloud_provider' attribute, or
@@ -119,7 +109,7 @@ func (o *RegistryAllowlist) Empty() bool {
 //
 // CloudProvider is the cloud provider for which this allowlist is valid.
 func (o *RegistryAllowlist) CloudProvider() *CloudProvider {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.cloudProvider
 	}
 	return nil
@@ -130,7 +120,7 @@ func (o *RegistryAllowlist) CloudProvider() *CloudProvider {
 //
 // CloudProvider is the cloud provider for which this allowlist is valid.
 func (o *RegistryAllowlist) GetCloudProvider() (value *CloudProvider, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.cloudProvider
 	}
@@ -142,7 +132,7 @@ func (o *RegistryAllowlist) GetCloudProvider() (value *CloudProvider, ok bool) {
 //
 // CreationTimestamp is the date and time when the allow list has been created.
 func (o *RegistryAllowlist) CreationTimestamp() time.Time {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.creationTimestamp
 	}
 	return time.Time{}
@@ -153,7 +143,7 @@ func (o *RegistryAllowlist) CreationTimestamp() time.Time {
 //
 // CreationTimestamp is the date and time when the allow list has been created.
 func (o *RegistryAllowlist) GetCreationTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.creationTimestamp
 	}
@@ -165,7 +155,7 @@ func (o *RegistryAllowlist) GetCreationTimestamp() (value time.Time, ok bool) {
 //
 // Registries is the list of registries contained in this Allowlist.
 func (o *RegistryAllowlist) Registries() []string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.registries
 	}
 	return nil
@@ -176,7 +166,7 @@ func (o *RegistryAllowlist) Registries() []string {
 //
 // Registries is the list of registries contained in this Allowlist.
 func (o *RegistryAllowlist) GetRegistries() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.registries
 	}

@@ -39,7 +39,7 @@ const JobNilKind = "JobNil"
 //
 // This struct is a job in a Job Queue.
 type Job struct {
-	fieldSet_   []bool
+	bitmap_     uint32
 	id          string
 	href        string
 	abandonedAt time.Time
@@ -55,7 +55,7 @@ func (o *Job) Kind() string {
 	if o == nil {
 		return JobNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return JobLinkKind
 	}
 	return JobKind
@@ -63,12 +63,12 @@ func (o *Job) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Job) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *Job) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -77,7 +77,7 @@ func (o *Job) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Job) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -86,7 +86,7 @@ func (o *Job) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Job) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -95,7 +95,7 @@ func (o *Job) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Job) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -104,17 +104,7 @@ func (o *Job) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Job) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // AbandonedAt returns the value of the 'abandoned_at' attribute, or
@@ -122,7 +112,7 @@ func (o *Job) Empty() bool {
 //
 // DLQ sent timestamp
 func (o *Job) AbandonedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.abandonedAt
 	}
 	return time.Time{}
@@ -133,7 +123,7 @@ func (o *Job) AbandonedAt() time.Time {
 //
 // DLQ sent timestamp
 func (o *Job) GetAbandonedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.abandonedAt
 	}
@@ -145,7 +135,7 @@ func (o *Job) GetAbandonedAt() (value time.Time, ok bool) {
 //
 // Arguments to run Job with.
 func (o *Job) Arguments() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.arguments
 	}
 	return ""
@@ -156,7 +146,7 @@ func (o *Job) Arguments() string {
 //
 // Arguments to run Job with.
 func (o *Job) GetArguments() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.arguments
 	}
@@ -168,7 +158,7 @@ func (o *Job) GetArguments() (value string, ok bool) {
 //
 // Number of retries.
 func (o *Job) Attempts() int {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.attempts
 	}
 	return 0
@@ -179,7 +169,7 @@ func (o *Job) Attempts() int {
 //
 // Number of retries.
 func (o *Job) GetAttempts() (value int, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.attempts
 	}
@@ -189,7 +179,7 @@ func (o *Job) GetAttempts() (value int, ok bool) {
 // CreatedAt returns the value of the 'created_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Job) CreatedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -198,7 +188,7 @@ func (o *Job) CreatedAt() time.Time {
 // GetCreatedAt returns the value of the 'created_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Job) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.createdAt
 	}
@@ -210,7 +200,7 @@ func (o *Job) GetCreatedAt() (value time.Time, ok bool) {
 //
 // Each time a specific job is pop'd, the receiptId will change, while the ID stays the same.
 func (o *Job) ReceiptId() string {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.receiptId
 	}
 	return ""
@@ -221,7 +211,7 @@ func (o *Job) ReceiptId() string {
 //
 // Each time a specific job is pop'd, the receiptId will change, while the ID stays the same.
 func (o *Job) GetReceiptId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.receiptId
 	}
@@ -231,7 +221,7 @@ func (o *Job) GetReceiptId() (value string, ok bool) {
 // UpdatedAt returns the value of the 'updated_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Job) UpdatedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -240,7 +230,7 @@ func (o *Job) UpdatedAt() time.Time {
 // GetUpdatedAt returns the value of the 'updated_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Job) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.updatedAt
 	}

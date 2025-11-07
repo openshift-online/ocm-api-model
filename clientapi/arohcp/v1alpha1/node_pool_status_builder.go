@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// NodePoolStatusBuilder contains the data and logic needed to build 'node_pool_status' objects.
+//
 // Representation of the status of a node pool.
 type NodePoolStatusBuilder struct {
-	fieldSet_       []bool
+	bitmap_         uint32
 	id              string
 	href            string
 	currentReplicas int
@@ -31,71 +33,45 @@ type NodePoolStatusBuilder struct {
 
 // NewNodePoolStatus creates a new builder of 'node_pool_status' objects.
 func NewNodePoolStatus() *NodePoolStatusBuilder {
-	return &NodePoolStatusBuilder{
-		fieldSet_: make([]bool, 6),
-	}
+	return &NodePoolStatusBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *NodePoolStatusBuilder) Link(value bool) *NodePoolStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *NodePoolStatusBuilder) ID(value string) *NodePoolStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *NodePoolStatusBuilder) HREF(value string) *NodePoolStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *NodePoolStatusBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // CurrentReplicas sets the value of the 'current_replicas' attribute to the given value.
 func (b *NodePoolStatusBuilder) CurrentReplicas(value int) *NodePoolStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.currentReplicas = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // Message sets the value of the 'message' attribute to the given value.
 func (b *NodePoolStatusBuilder) Message(value string) *NodePoolStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.message = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -103,14 +79,11 @@ func (b *NodePoolStatusBuilder) Message(value string) *NodePoolStatusBuilder {
 //
 // Representation of the status of a node pool.
 func (b *NodePoolStatusBuilder) State(value *NodePoolStateBuilder) *NodePoolStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.state = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
@@ -120,10 +93,7 @@ func (b *NodePoolStatusBuilder) Copy(object *NodePoolStatus) *NodePoolStatusBuil
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.currentReplicas = object.currentReplicas
@@ -141,10 +111,7 @@ func (b *NodePoolStatusBuilder) Build() (object *NodePoolStatus, err error) {
 	object = new(NodePoolStatus)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.currentReplicas = b.currentReplicas
 	object.message = b.message
 	if b.state != nil {

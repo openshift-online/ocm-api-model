@@ -19,81 +19,60 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// FlavourBuilder contains the data and logic needed to build 'flavour' objects.
+//
 // Set of predefined properties of a cluster. For example, a _huge_ flavour can be a cluster
 // with 10 infra nodes and 1000 compute nodes.
 type FlavourBuilder struct {
-	fieldSet_ []bool
-	id        string
-	href      string
-	aws       *AWSFlavourBuilder
-	gcp       *GCPFlavourBuilder
-	name      string
-	network   *NetworkBuilder
-	nodes     *FlavourNodesBuilder
+	bitmap_ uint32
+	id      string
+	href    string
+	aws     *AWSFlavourBuilder
+	gcp     *GCPFlavourBuilder
+	name    string
+	network *NetworkBuilder
+	nodes   *FlavourNodesBuilder
 }
 
 // NewFlavour creates a new builder of 'flavour' objects.
 func NewFlavour() *FlavourBuilder {
-	return &FlavourBuilder{
-		fieldSet_: make([]bool, 8),
-	}
+	return &FlavourBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *FlavourBuilder) Link(value bool) *FlavourBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *FlavourBuilder) ID(value string) *FlavourBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *FlavourBuilder) HREF(value string) *FlavourBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *FlavourBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // AWS sets the value of the 'AWS' attribute to the given value.
 //
 // Specification for different classes of nodes inside a flavour.
 func (b *FlavourBuilder) AWS(value *AWSFlavourBuilder) *FlavourBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.aws = value
 	if value != nil {
-		b.fieldSet_[3] = true
+		b.bitmap_ |= 8
 	} else {
-		b.fieldSet_[3] = false
+		b.bitmap_ &^= 8
 	}
 	return b
 }
@@ -102,25 +81,19 @@ func (b *FlavourBuilder) AWS(value *AWSFlavourBuilder) *FlavourBuilder {
 //
 // Specification for different classes of nodes inside a flavour.
 func (b *FlavourBuilder) GCP(value *GCPFlavourBuilder) *FlavourBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.gcp = value
 	if value != nil {
-		b.fieldSet_[4] = true
+		b.bitmap_ |= 16
 	} else {
-		b.fieldSet_[4] = false
+		b.bitmap_ &^= 16
 	}
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *FlavourBuilder) Name(value string) *FlavourBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.name = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
@@ -128,14 +101,11 @@ func (b *FlavourBuilder) Name(value string) *FlavourBuilder {
 //
 // Network configuration of a cluster.
 func (b *FlavourBuilder) Network(value *NetworkBuilder) *FlavourBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.network = value
 	if value != nil {
-		b.fieldSet_[6] = true
+		b.bitmap_ |= 64
 	} else {
-		b.fieldSet_[6] = false
+		b.bitmap_ &^= 64
 	}
 	return b
 }
@@ -144,14 +114,11 @@ func (b *FlavourBuilder) Network(value *NetworkBuilder) *FlavourBuilder {
 //
 // Counts of different classes of nodes inside a flavour.
 func (b *FlavourBuilder) Nodes(value *FlavourNodesBuilder) *FlavourBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.nodes = value
 	if value != nil {
-		b.fieldSet_[7] = true
+		b.bitmap_ |= 128
 	} else {
-		b.fieldSet_[7] = false
+		b.bitmap_ &^= 128
 	}
 	return b
 }
@@ -161,10 +128,7 @@ func (b *FlavourBuilder) Copy(object *Flavour) *FlavourBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.aws != nil {
@@ -196,10 +160,7 @@ func (b *FlavourBuilder) Build() (object *Flavour, err error) {
 	object = new(Flavour)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.aws != nil {
 		object.aws, err = b.aws.Build()
 		if err != nil {

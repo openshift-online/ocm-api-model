@@ -19,82 +19,58 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/statusboard/v1
 
+// OwnerBuilder contains the data and logic needed to build 'owner' objects.
+//
 // Definition of a Status Board owner.
 type OwnerBuilder struct {
-	fieldSet_ []bool
-	id        string
-	href      string
-	email     string
-	username  string
+	bitmap_  uint32
+	id       string
+	href     string
+	email    string
+	username string
 }
 
 // NewOwner creates a new builder of 'owner' objects.
 func NewOwner() *OwnerBuilder {
-	return &OwnerBuilder{
-		fieldSet_: make([]bool, 5),
-	}
+	return &OwnerBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *OwnerBuilder) Link(value bool) *OwnerBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *OwnerBuilder) ID(value string) *OwnerBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *OwnerBuilder) HREF(value string) *OwnerBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *OwnerBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // Email sets the value of the 'email' attribute to the given value.
 func (b *OwnerBuilder) Email(value string) *OwnerBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.email = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // Username sets the value of the 'username' attribute to the given value.
 func (b *OwnerBuilder) Username(value string) *OwnerBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.username = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -103,10 +79,7 @@ func (b *OwnerBuilder) Copy(object *Owner) *OwnerBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.email = object.email
@@ -119,10 +92,7 @@ func (b *OwnerBuilder) Build() (object *Owner, err error) {
 	object = new(Owner)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.email = b.email
 	object.username = b.username
 	return

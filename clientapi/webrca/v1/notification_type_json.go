@@ -43,13 +43,13 @@ func WriteNotification(object *Notification, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(NotificationLinkKind)
 	} else {
 		stream.WriteString(NotificationKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteNotification(object *Notification, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteNotification(object *Notification, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteNotification(object *Notification, stream *jsoniter.Stream) {
 		stream.WriteBool(object.checked)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteNotification(object *Notification, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteNotification(object *Notification, stream *jsoniter.Stream) {
 		stream.WriteString((object.deletedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.incident != nil
+	present_ = object.bitmap_&64 != 0 && object.incident != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteNotification(object *Notification, stream *jsoniter.Stream) {
 		WriteIncident(object.incident, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = object.bitmap_&128 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteNotification(object *Notification, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
+	present_ = object.bitmap_&256 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -120,7 +120,7 @@ func WriteNotification(object *Notification, stream *jsoniter.Stream) {
 		stream.WriteInt(object.rank)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = object.bitmap_&512 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -145,9 +145,7 @@ func UnmarshalNotification(source interface{}) (object *Notification, err error)
 
 // ReadNotification reads a value of the 'notification' type from the given iterator.
 func ReadNotification(iterator *jsoniter.Iterator) *Notification {
-	object := &Notification{
-		fieldSet_: make([]bool, 10),
-	}
+	object := &Notification{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -157,18 +155,18 @@ func ReadNotification(iterator *jsoniter.Iterator) *Notification {
 		case "kind":
 			value := iterator.ReadString()
 			if value == NotificationLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "checked":
 			value := iterator.ReadBool()
 			object.checked = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -176,7 +174,7 @@ func ReadNotification(iterator *jsoniter.Iterator) *Notification {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "deleted_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -184,19 +182,19 @@ func ReadNotification(iterator *jsoniter.Iterator) *Notification {
 				iterator.ReportError("", err.Error())
 			}
 			object.deletedAt = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "incident":
 			value := ReadIncident(iterator)
 			object.incident = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		case "rank":
 			value := iterator.ReadInt()
 			object.rank = value
-			object.fieldSet_[8] = true
+			object.bitmap_ |= 256
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -204,7 +202,7 @@ func ReadNotification(iterator *jsoniter.Iterator) *Notification {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.fieldSet_[9] = true
+			object.bitmap_ |= 512
 		default:
 			iterator.ReadAny()
 		}

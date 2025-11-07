@@ -42,7 +42,7 @@ func WriteAutoscalerScaleDownConfig(object *AutoscalerScaleDownConfig, stream *j
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAutoscalerScaleDownConfig(object *AutoscalerScaleDownConfig, stream *j
 		stream.WriteString(object.delayAfterAdd)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteAutoscalerScaleDownConfig(object *AutoscalerScaleDownConfig, stream *j
 		stream.WriteString(object.delayAfterDelete)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteAutoscalerScaleDownConfig(object *AutoscalerScaleDownConfig, stream *j
 		stream.WriteString(object.delayAfterFailure)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteAutoscalerScaleDownConfig(object *AutoscalerScaleDownConfig, stream *j
 		stream.WriteBool(object.enabled)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteAutoscalerScaleDownConfig(object *AutoscalerScaleDownConfig, stream *j
 		stream.WriteString(object.unneededTime)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -112,9 +112,7 @@ func UnmarshalAutoscalerScaleDownConfig(source interface{}) (object *AutoscalerS
 
 // ReadAutoscalerScaleDownConfig reads a value of the 'autoscaler_scale_down_config' type from the given iterator.
 func ReadAutoscalerScaleDownConfig(iterator *jsoniter.Iterator) *AutoscalerScaleDownConfig {
-	object := &AutoscalerScaleDownConfig{
-		fieldSet_: make([]bool, 6),
-	}
+	object := &AutoscalerScaleDownConfig{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -124,27 +122,27 @@ func ReadAutoscalerScaleDownConfig(iterator *jsoniter.Iterator) *AutoscalerScale
 		case "delay_after_add":
 			value := iterator.ReadString()
 			object.delayAfterAdd = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "delay_after_delete":
 			value := iterator.ReadString()
 			object.delayAfterDelete = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "delay_after_failure":
 			value := iterator.ReadString()
 			object.delayAfterFailure = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "unneeded_time":
 			value := iterator.ReadString()
 			object.unneededTime = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "utilization_threshold":
 			value := iterator.ReadString()
 			object.utilizationThreshold = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		default:
 			iterator.ReadAny()
 		}

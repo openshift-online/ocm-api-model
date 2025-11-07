@@ -42,7 +42,7 @@ func WriteGitlabIdentityProvider(object *GitlabIdentityProvider, stream *jsonite
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteGitlabIdentityProvider(object *GitlabIdentityProvider, stream *jsonite
 		stream.WriteString(object.ca)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteGitlabIdentityProvider(object *GitlabIdentityProvider, stream *jsonite
 		stream.WriteString(object.url)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteGitlabIdentityProvider(object *GitlabIdentityProvider, stream *jsonite
 		stream.WriteString(object.clientID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,9 +94,7 @@ func UnmarshalGitlabIdentityProvider(source interface{}) (object *GitlabIdentity
 
 // ReadGitlabIdentityProvider reads a value of the 'gitlab_identity_provider' type from the given iterator.
 func ReadGitlabIdentityProvider(iterator *jsoniter.Iterator) *GitlabIdentityProvider {
-	object := &GitlabIdentityProvider{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &GitlabIdentityProvider{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -106,19 +104,19 @@ func ReadGitlabIdentityProvider(iterator *jsoniter.Iterator) *GitlabIdentityProv
 		case "ca":
 			value := iterator.ReadString()
 			object.ca = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "url":
 			value := iterator.ReadString()
 			object.url = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "client_id":
 			value := iterator.ReadString()
 			object.clientID = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "client_secret":
 			value := iterator.ReadString()
 			object.clientSecret = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

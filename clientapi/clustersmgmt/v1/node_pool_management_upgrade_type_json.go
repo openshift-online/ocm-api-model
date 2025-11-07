@@ -42,13 +42,13 @@ func WriteNodePoolManagementUpgrade(object *NodePoolManagementUpgrade, stream *j
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(NodePoolManagementUpgradeLinkKind)
 	} else {
 		stream.WriteString(NodePoolManagementUpgradeKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteNodePoolManagementUpgrade(object *NodePoolManagementUpgrade, stream *j
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteNodePoolManagementUpgrade(object *NodePoolManagementUpgrade, stream *j
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteNodePoolManagementUpgrade(object *NodePoolManagementUpgrade, stream *j
 		stream.WriteString(object.maxSurge)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteNodePoolManagementUpgrade(object *NodePoolManagementUpgrade, stream *j
 		stream.WriteString(object.maxUnavailable)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -108,9 +108,7 @@ func UnmarshalNodePoolManagementUpgrade(source interface{}) (object *NodePoolMan
 
 // ReadNodePoolManagementUpgrade reads a value of the 'node_pool_management_upgrade' type from the given iterator.
 func ReadNodePoolManagementUpgrade(iterator *jsoniter.Iterator) *NodePoolManagementUpgrade {
-	object := &NodePoolManagementUpgrade{
-		fieldSet_: make([]bool, 6),
-	}
+	object := &NodePoolManagementUpgrade{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -120,26 +118,26 @@ func ReadNodePoolManagementUpgrade(iterator *jsoniter.Iterator) *NodePoolManagem
 		case "kind":
 			value := iterator.ReadString()
 			if value == NodePoolManagementUpgradeLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "max_surge":
 			value := iterator.ReadString()
 			object.maxSurge = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "max_unavailable":
 			value := iterator.ReadString()
 			object.maxUnavailable = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "type":
 			value := iterator.ReadString()
 			object.type_ = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		default:
 			iterator.ReadAny()
 		}

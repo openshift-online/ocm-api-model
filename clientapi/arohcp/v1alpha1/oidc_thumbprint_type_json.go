@@ -42,7 +42,7 @@ func WriteOidcThumbprint(object *OidcThumbprint, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteOidcThumbprint(object *OidcThumbprint, stream *jsoniter.Stream) {
 		stream.WriteString(object.href)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteOidcThumbprint(object *OidcThumbprint, stream *jsoniter.Stream) {
 		stream.WriteString(object.clusterId)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteOidcThumbprint(object *OidcThumbprint, stream *jsoniter.Stream) {
 		stream.WriteString(object.kind)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteOidcThumbprint(object *OidcThumbprint, stream *jsoniter.Stream) {
 		stream.WriteString(object.oidcConfigId)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -103,9 +103,7 @@ func UnmarshalOidcThumbprint(source interface{}) (object *OidcThumbprint, err er
 
 // ReadOidcThumbprint reads a value of the 'oidc_thumbprint' type from the given iterator.
 func ReadOidcThumbprint(iterator *jsoniter.Iterator) *OidcThumbprint {
-	object := &OidcThumbprint{
-		fieldSet_: make([]bool, 5),
-	}
+	object := &OidcThumbprint{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -115,23 +113,23 @@ func ReadOidcThumbprint(iterator *jsoniter.Iterator) *OidcThumbprint {
 		case "href":
 			value := iterator.ReadString()
 			object.href = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterId = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "kind":
 			value := iterator.ReadString()
 			object.kind = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "oidc_config_id":
 			value := iterator.ReadString()
 			object.oidcConfigId = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "thumbprint":
 			value := iterator.ReadString()
 			object.thumbprint = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		default:
 			iterator.ReadAny()
 		}

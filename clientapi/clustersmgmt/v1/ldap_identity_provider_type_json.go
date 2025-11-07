@@ -42,7 +42,7 @@ func WriteLDAPIdentityProvider(object *LDAPIdentityProvider, stream *jsoniter.St
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteLDAPIdentityProvider(object *LDAPIdentityProvider, stream *jsoniter.St
 		stream.WriteString(object.ca)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteLDAPIdentityProvider(object *LDAPIdentityProvider, stream *jsoniter.St
 		stream.WriteString(object.url)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.attributes != nil
+	present_ = object.bitmap_&4 != 0 && object.attributes != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteLDAPIdentityProvider(object *LDAPIdentityProvider, stream *jsoniter.St
 		WriteLDAPAttributes(object.attributes, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteLDAPIdentityProvider(object *LDAPIdentityProvider, stream *jsoniter.St
 		stream.WriteString(object.bindDN)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteLDAPIdentityProvider(object *LDAPIdentityProvider, stream *jsoniter.St
 		stream.WriteString(object.bindPassword)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -112,9 +112,7 @@ func UnmarshalLDAPIdentityProvider(source interface{}) (object *LDAPIdentityProv
 
 // ReadLDAPIdentityProvider reads a value of the 'LDAP_identity_provider' type from the given iterator.
 func ReadLDAPIdentityProvider(iterator *jsoniter.Iterator) *LDAPIdentityProvider {
-	object := &LDAPIdentityProvider{
-		fieldSet_: make([]bool, 6),
-	}
+	object := &LDAPIdentityProvider{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -124,27 +122,27 @@ func ReadLDAPIdentityProvider(iterator *jsoniter.Iterator) *LDAPIdentityProvider
 		case "ca":
 			value := iterator.ReadString()
 			object.ca = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "url":
 			value := iterator.ReadString()
 			object.url = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "attributes":
 			value := ReadLDAPAttributes(iterator)
 			object.attributes = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "bind_dn":
 			value := iterator.ReadString()
 			object.bindDN = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "bind_password":
 			value := iterator.ReadString()
 			object.bindPassword = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "insecure":
 			value := iterator.ReadBool()
 			object.insecure = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		default:
 			iterator.ReadAny()
 		}

@@ -23,8 +23,9 @@ import (
 	time "time"
 )
 
+// OrganizationBuilder contains the data and logic needed to build 'organization' objects.
 type OrganizationBuilder struct {
-	fieldSet_    []bool
+	bitmap_      uint32
 	id           string
 	href         string
 	capabilities []*CapabilityBuilder
@@ -38,123 +39,82 @@ type OrganizationBuilder struct {
 
 // NewOrganization creates a new builder of 'organization' objects.
 func NewOrganization() *OrganizationBuilder {
-	return &OrganizationBuilder{
-		fieldSet_: make([]bool, 10),
-	}
+	return &OrganizationBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *OrganizationBuilder) Link(value bool) *OrganizationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *OrganizationBuilder) ID(value string) *OrganizationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *OrganizationBuilder) HREF(value string) *OrganizationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *OrganizationBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // Capabilities sets the value of the 'capabilities' attribute to the given values.
 func (b *OrganizationBuilder) Capabilities(values ...*CapabilityBuilder) *OrganizationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.capabilities = make([]*CapabilityBuilder, len(values))
 	copy(b.capabilities, values)
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *OrganizationBuilder) CreatedAt(value time.Time) *OrganizationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.createdAt = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // EbsAccountID sets the value of the 'ebs_account_ID' attribute to the given value.
 func (b *OrganizationBuilder) EbsAccountID(value string) *OrganizationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.ebsAccountID = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // ExternalID sets the value of the 'external_ID' attribute to the given value.
 func (b *OrganizationBuilder) ExternalID(value string) *OrganizationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.externalID = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // Labels sets the value of the 'labels' attribute to the given values.
 func (b *OrganizationBuilder) Labels(values ...*LabelBuilder) *OrganizationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.labels = make([]*LabelBuilder, len(values))
 	copy(b.labels, values)
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *OrganizationBuilder) Name(value string) *OrganizationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.name = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *OrganizationBuilder) UpdatedAt(value time.Time) *OrganizationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.updatedAt = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
@@ -163,10 +123,7 @@ func (b *OrganizationBuilder) Copy(object *Organization) *OrganizationBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.capabilities != nil {
@@ -198,10 +155,7 @@ func (b *OrganizationBuilder) Build() (object *Organization, err error) {
 	object = new(Organization)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.capabilities != nil {
 		object.capabilities = make([]*Capability, len(b.capabilities))
 		for i, v := range b.capabilities {

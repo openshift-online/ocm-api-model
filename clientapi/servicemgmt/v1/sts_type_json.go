@@ -42,7 +42,7 @@ func WriteSTS(object *STS, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteSTS(object *STS, stream *jsoniter.Stream) {
 		stream.WriteString(object.oidcEndpointURL)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.instanceIAMRoles != nil
+	present_ = object.bitmap_&2 != 0 && object.instanceIAMRoles != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteSTS(object *STS, stream *jsoniter.Stream) {
 		WriteInstanceIAMRoles(object.instanceIAMRoles, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.operatorIAMRoles != nil
+	present_ = object.bitmap_&4 != 0 && object.operatorIAMRoles != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteSTS(object *STS, stream *jsoniter.Stream) {
 		WriteOperatorIAMRoleList(object.operatorIAMRoles, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteSTS(object *STS, stream *jsoniter.Stream) {
 		stream.WriteString(object.operatorRolePrefix)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteSTS(object *STS, stream *jsoniter.Stream) {
 		stream.WriteString(object.roleARN)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -112,9 +112,7 @@ func UnmarshalSTS(source interface{}) (object *STS, err error) {
 
 // ReadSTS reads a value of the 'STS' type from the given iterator.
 func ReadSTS(iterator *jsoniter.Iterator) *STS {
-	object := &STS{
-		fieldSet_: make([]bool, 6),
-	}
+	object := &STS{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -124,27 +122,27 @@ func ReadSTS(iterator *jsoniter.Iterator) *STS {
 		case "oidc_endpoint_url":
 			value := iterator.ReadString()
 			object.oidcEndpointURL = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "instance_iam_roles":
 			value := ReadInstanceIAMRoles(iterator)
 			object.instanceIAMRoles = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "operator_iam_roles":
 			value := ReadOperatorIAMRoleList(iterator)
 			object.operatorIAMRoles = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "operator_role_prefix":
 			value := iterator.ReadString()
 			object.operatorRolePrefix = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "role_arn":
 			value := iterator.ReadString()
 			object.roleARN = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "support_role_arn":
 			value := iterator.ReadString()
 			object.supportRoleARN = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		default:
 			iterator.ReadAny()
 		}

@@ -42,7 +42,7 @@ func WriteControlPlane(object *ControlPlane, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.backup != nil
+	present_ = object.bitmap_&1 != 0 && object.backup != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalControlPlane(source interface{}) (object *ControlPlane, err error)
 
 // ReadControlPlane reads a value of the 'control_plane' type from the given iterator.
 func ReadControlPlane(iterator *jsoniter.Iterator) *ControlPlane {
-	object := &ControlPlane{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &ControlPlane{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadControlPlane(iterator *jsoniter.Iterator) *ControlPlane {
 		case "backup":
 			value := ReadBackup(iterator)
 			object.backup = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

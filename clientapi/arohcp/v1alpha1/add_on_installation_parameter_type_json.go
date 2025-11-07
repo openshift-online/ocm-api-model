@@ -42,13 +42,13 @@ func WriteAddOnInstallationParameter(object *AddOnInstallationParameter, stream 
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(AddOnInstallationParameterLinkKind)
 	} else {
 		stream.WriteString(AddOnInstallationParameterKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteAddOnInstallationParameter(object *AddOnInstallationParameter, stream 
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteAddOnInstallationParameter(object *AddOnInstallationParameter, stream 
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -90,9 +90,7 @@ func UnmarshalAddOnInstallationParameter(source interface{}) (object *AddOnInsta
 
 // ReadAddOnInstallationParameter reads a value of the 'add_on_installation_parameter' type from the given iterator.
 func ReadAddOnInstallationParameter(iterator *jsoniter.Iterator) *AddOnInstallationParameter {
-	object := &AddOnInstallationParameter{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &AddOnInstallationParameter{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -102,18 +100,18 @@ func ReadAddOnInstallationParameter(iterator *jsoniter.Iterator) *AddOnInstallat
 		case "kind":
 			value := iterator.ReadString()
 			if value == AddOnInstallationParameterLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "value":
 			value := iterator.ReadString()
 			object.value = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

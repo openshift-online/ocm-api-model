@@ -35,11 +35,11 @@ const LabelNilKind = "LabelNil"
 //
 // label settings of the cluster.
 type Label struct {
-	fieldSet_ []bool
-	id        string
-	href      string
-	key       string
-	value     string
+	bitmap_ uint32
+	id      string
+	href    string
+	key     string
+	value   string
 }
 
 // Kind returns the name of the type of the object.
@@ -47,7 +47,7 @@ func (o *Label) Kind() string {
 	if o == nil {
 		return LabelNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return LabelLinkKind
 	}
 	return LabelKind
@@ -55,12 +55,12 @@ func (o *Label) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Label) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *Label) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -69,7 +69,7 @@ func (o *Label) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Label) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -78,7 +78,7 @@ func (o *Label) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Label) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -87,7 +87,7 @@ func (o *Label) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Label) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -96,17 +96,7 @@ func (o *Label) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Label) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // Key returns the value of the 'key' attribute, or
@@ -114,7 +104,7 @@ func (o *Label) Empty() bool {
 //
 // Label key associated to the OSD FM managed cluster
 func (o *Label) Key() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.key
 	}
 	return ""
@@ -125,7 +115,7 @@ func (o *Label) Key() string {
 //
 // Label key associated to the OSD FM managed cluster
 func (o *Label) GetKey() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.key
 	}
@@ -137,7 +127,7 @@ func (o *Label) GetKey() (value string, ok bool) {
 //
 // Label value associated to the OSD FM managed cluster
 func (o *Label) Value() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.value
 	}
 	return ""
@@ -148,7 +138,7 @@ func (o *Label) Value() string {
 //
 // Label value associated to the OSD FM managed cluster
 func (o *Label) GetValue() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.value
 	}

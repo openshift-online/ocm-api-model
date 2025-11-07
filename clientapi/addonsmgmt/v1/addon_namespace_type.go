@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 //
 // Representation of an addon namespace object.
 type AddonNamespace struct {
-	fieldSet_   []bool
+	bitmap_     uint32
 	annotations map[string]string
 	labels      map[string]string
 	name        string
@@ -32,15 +32,7 @@ type AddonNamespace struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddonNamespace) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Annotations returns the value of the 'annotations' attribute, or
@@ -48,7 +40,7 @@ func (o *AddonNamespace) Empty() bool {
 //
 // Annotations to be included in the addon namespace
 func (o *AddonNamespace) Annotations() map[string]string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.annotations
 	}
 	return nil
@@ -59,7 +51,7 @@ func (o *AddonNamespace) Annotations() map[string]string {
 //
 // Annotations to be included in the addon namespace
 func (o *AddonNamespace) GetAnnotations() (value map[string]string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.annotations
 	}
@@ -71,7 +63,7 @@ func (o *AddonNamespace) GetAnnotations() (value map[string]string, ok bool) {
 //
 // Enabled shows if this namespace object is in use
 func (o *AddonNamespace) Enabled() bool {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.enabled
 	}
 	return false
@@ -82,7 +74,7 @@ func (o *AddonNamespace) Enabled() bool {
 //
 // Enabled shows if this namespace object is in use
 func (o *AddonNamespace) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.enabled
 	}
@@ -94,7 +86,7 @@ func (o *AddonNamespace) GetEnabled() (value bool, ok bool) {
 //
 // Labels to be included in the addon namespace
 func (o *AddonNamespace) Labels() map[string]string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.labels
 	}
 	return nil
@@ -105,7 +97,7 @@ func (o *AddonNamespace) Labels() map[string]string {
 //
 // Labels to be included in the addon namespace
 func (o *AddonNamespace) GetLabels() (value map[string]string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.labels
 	}
@@ -117,7 +109,7 @@ func (o *AddonNamespace) GetLabels() (value map[string]string, ok bool) {
 //
 // Name of the namespace
 func (o *AddonNamespace) Name() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.name
 	}
 	return ""
@@ -128,7 +120,7 @@ func (o *AddonNamespace) Name() string {
 //
 // Name of the namespace
 func (o *AddonNamespace) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.name
 	}

@@ -39,7 +39,7 @@ const ProductMinimalVersionNilKind = "ProductMinimalVersionNil"
 //
 // Representation of a product minimal version.
 type ProductMinimalVersion struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	id        string
 	href      string
 	rosaCli   string
@@ -51,7 +51,7 @@ func (o *ProductMinimalVersion) Kind() string {
 	if o == nil {
 		return ProductMinimalVersionNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return ProductMinimalVersionLinkKind
 	}
 	return ProductMinimalVersionKind
@@ -59,12 +59,12 @@ func (o *ProductMinimalVersion) Kind() string {
 
 // Link returns true if this is a link.
 func (o *ProductMinimalVersion) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *ProductMinimalVersion) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -73,7 +73,7 @@ func (o *ProductMinimalVersion) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *ProductMinimalVersion) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -82,7 +82,7 @@ func (o *ProductMinimalVersion) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *ProductMinimalVersion) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -91,7 +91,7 @@ func (o *ProductMinimalVersion) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *ProductMinimalVersion) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -100,17 +100,7 @@ func (o *ProductMinimalVersion) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ProductMinimalVersion) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // RosaCli returns the value of the 'rosa_cli' attribute, or
@@ -118,7 +108,7 @@ func (o *ProductMinimalVersion) Empty() bool {
 //
 // The ROSA CLI minimal version.
 func (o *ProductMinimalVersion) RosaCli() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.rosaCli
 	}
 	return ""
@@ -129,7 +119,7 @@ func (o *ProductMinimalVersion) RosaCli() string {
 //
 // The ROSA CLI minimal version.
 func (o *ProductMinimalVersion) GetRosaCli() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.rosaCli
 	}
@@ -141,7 +131,7 @@ func (o *ProductMinimalVersion) GetRosaCli() (value string, ok bool) {
 //
 // The start date for this minimal version.
 func (o *ProductMinimalVersion) StartDate() time.Time {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.startDate
 	}
 	return time.Time{}
@@ -152,7 +142,7 @@ func (o *ProductMinimalVersion) StartDate() time.Time {
 //
 // The start date for this minimal version.
 func (o *ProductMinimalVersion) GetStartDate() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.startDate
 	}

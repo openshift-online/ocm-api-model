@@ -19,8 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
+// SupportCaseResponseBuilder contains the data and logic needed to build 'support_case_response' objects.
 type SupportCaseResponseBuilder struct {
-	fieldSet_      []bool
+	bitmap_        uint32
 	id             string
 	href           string
 	uri            string
@@ -36,141 +37,94 @@ type SupportCaseResponseBuilder struct {
 
 // NewSupportCaseResponse creates a new builder of 'support_case_response' objects.
 func NewSupportCaseResponse() *SupportCaseResponseBuilder {
-	return &SupportCaseResponseBuilder{
-		fieldSet_: make([]bool, 12),
-	}
+	return &SupportCaseResponseBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *SupportCaseResponseBuilder) Link(value bool) *SupportCaseResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *SupportCaseResponseBuilder) ID(value string) *SupportCaseResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *SupportCaseResponseBuilder) HREF(value string) *SupportCaseResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SupportCaseResponseBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // URI sets the value of the 'URI' attribute to the given value.
 func (b *SupportCaseResponseBuilder) URI(value string) *SupportCaseResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.uri = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // CaseNumber sets the value of the 'case_number' attribute to the given value.
 func (b *SupportCaseResponseBuilder) CaseNumber(value string) *SupportCaseResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.caseNumber = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *SupportCaseResponseBuilder) ClusterId(value string) *SupportCaseResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.clusterId = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // ClusterUuid sets the value of the 'cluster_uuid' attribute to the given value.
 func (b *SupportCaseResponseBuilder) ClusterUuid(value string) *SupportCaseResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.clusterUuid = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *SupportCaseResponseBuilder) Description(value string) *SupportCaseResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.description = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // Severity sets the value of the 'severity' attribute to the given value.
 func (b *SupportCaseResponseBuilder) Severity(value string) *SupportCaseResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.severity = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *SupportCaseResponseBuilder) Status(value string) *SupportCaseResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.status = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // SubscriptionId sets the value of the 'subscription_id' attribute to the given value.
 func (b *SupportCaseResponseBuilder) SubscriptionId(value string) *SupportCaseResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.subscriptionId = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
 // Summary sets the value of the 'summary' attribute to the given value.
 func (b *SupportCaseResponseBuilder) Summary(value string) *SupportCaseResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.summary = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
@@ -179,10 +133,7 @@ func (b *SupportCaseResponseBuilder) Copy(object *SupportCaseResponse) *SupportC
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.uri = object.uri
@@ -202,10 +153,7 @@ func (b *SupportCaseResponseBuilder) Build() (object *SupportCaseResponse, err e
 	object = new(SupportCaseResponse)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.uri = b.uri
 	object.caseNumber = b.caseNumber
 	object.clusterId = b.clusterId

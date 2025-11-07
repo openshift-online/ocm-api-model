@@ -19,50 +19,36 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
+// FeatureReviewResponseBuilder contains the data and logic needed to build 'feature_review_response' objects.
+//
 // Representation of a feature review response
 type FeatureReviewResponseBuilder struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	featureID string
 	enabled   bool
 }
 
 // NewFeatureReviewResponse creates a new builder of 'feature_review_response' objects.
 func NewFeatureReviewResponse() *FeatureReviewResponseBuilder {
-	return &FeatureReviewResponseBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &FeatureReviewResponseBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *FeatureReviewResponseBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *FeatureReviewResponseBuilder) Enabled(value bool) *FeatureReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.enabled = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // FeatureID sets the value of the 'feature_ID' attribute to the given value.
 func (b *FeatureReviewResponseBuilder) FeatureID(value string) *FeatureReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.featureID = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -71,10 +57,7 @@ func (b *FeatureReviewResponseBuilder) Copy(object *FeatureReviewResponse) *Feat
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.enabled = object.enabled
 	b.featureID = object.featureID
 	return b
@@ -83,10 +66,7 @@ func (b *FeatureReviewResponseBuilder) Copy(object *FeatureReviewResponse) *Feat
 // Build creates a 'feature_review_response' object using the configuration stored in the builder.
 func (b *FeatureReviewResponseBuilder) Build() (object *FeatureReviewResponse, err error) {
 	object = new(FeatureReviewResponse)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.enabled = b.enabled
 	object.featureID = b.featureID
 	return

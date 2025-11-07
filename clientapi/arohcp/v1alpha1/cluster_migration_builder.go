@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// ClusterMigrationBuilder contains the data and logic needed to build 'cluster_migration' objects.
+//
 // Representation of a cluster migration.
 type ClusterMigrationBuilder struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	id                string
 	href              string
 	clusterID         string
@@ -38,71 +40,45 @@ type ClusterMigrationBuilder struct {
 
 // NewClusterMigration creates a new builder of 'cluster_migration' objects.
 func NewClusterMigration() *ClusterMigrationBuilder {
-	return &ClusterMigrationBuilder{
-		fieldSet_: make([]bool, 9),
-	}
+	return &ClusterMigrationBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ClusterMigrationBuilder) Link(value bool) *ClusterMigrationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ClusterMigrationBuilder) ID(value string) *ClusterMigrationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ClusterMigrationBuilder) HREF(value string) *ClusterMigrationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterMigrationBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *ClusterMigrationBuilder) ClusterID(value string) *ClusterMigrationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.clusterID = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *ClusterMigrationBuilder) CreationTimestamp(value time.Time) *ClusterMigrationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.creationTimestamp = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -110,14 +86,11 @@ func (b *ClusterMigrationBuilder) CreationTimestamp(value time.Time) *ClusterMig
 //
 // Details for `SdnToOvn` cluster migrations.
 func (b *ClusterMigrationBuilder) SdnToOvn(value *SdnToOvnClusterMigrationBuilder) *ClusterMigrationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.sdnToOvn = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
@@ -126,14 +99,11 @@ func (b *ClusterMigrationBuilder) SdnToOvn(value *SdnToOvnClusterMigrationBuilde
 //
 // Representation of a cluster migration state.
 func (b *ClusterMigrationBuilder) State(value *ClusterMigrationStateBuilder) *ClusterMigrationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.state = value
 	if value != nil {
-		b.fieldSet_[6] = true
+		b.bitmap_ |= 64
 	} else {
-		b.fieldSet_[6] = false
+		b.bitmap_ &^= 64
 	}
 	return b
 }
@@ -142,21 +112,15 @@ func (b *ClusterMigrationBuilder) State(value *ClusterMigrationStateBuilder) *Cl
 //
 // Type of cluster migration.
 func (b *ClusterMigrationBuilder) Type(value ClusterMigrationType) *ClusterMigrationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.type_ = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // UpdatedTimestamp sets the value of the 'updated_timestamp' attribute to the given value.
 func (b *ClusterMigrationBuilder) UpdatedTimestamp(value time.Time) *ClusterMigrationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.updatedTimestamp = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
@@ -165,10 +129,7 @@ func (b *ClusterMigrationBuilder) Copy(object *ClusterMigration) *ClusterMigrati
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.clusterID = object.clusterID
@@ -193,10 +154,7 @@ func (b *ClusterMigrationBuilder) Build() (object *ClusterMigration, err error) 
 	object = new(ClusterMigration)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.clusterID = b.clusterID
 	object.creationTimestamp = b.creationTimestamp
 	if b.sdnToOvn != nil {

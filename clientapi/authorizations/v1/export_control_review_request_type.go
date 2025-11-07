@@ -21,27 +21,19 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations
 
 // ExportControlReviewRequest represents the values of the 'export_control_review_request' type.
 type ExportControlReviewRequest struct {
-	fieldSet_       []bool
+	bitmap_         uint32
 	accountUsername string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ExportControlReviewRequest) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // AccountUsername returns the value of the 'account_username' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ExportControlReviewRequest) AccountUsername() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.accountUsername
 	}
 	return ""
@@ -50,7 +42,7 @@ func (o *ExportControlReviewRequest) AccountUsername() string {
 // GetAccountUsername returns the value of the 'account_username' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ExportControlReviewRequest) GetAccountUsername() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.accountUsername
 	}

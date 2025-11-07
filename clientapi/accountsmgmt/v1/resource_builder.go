@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
+// ResourceBuilder contains the data and logic needed to build 'resource' objects.
+//
 // Identifies computing resources
 type ResourceBuilder struct {
-	fieldSet_            []bool
+	bitmap_              uint32
 	id                   string
 	href                 string
 	sku                  string
@@ -34,111 +36,73 @@ type ResourceBuilder struct {
 
 // NewResource creates a new builder of 'resource' objects.
 func NewResource() *ResourceBuilder {
-	return &ResourceBuilder{
-		fieldSet_: make([]bool, 9),
-	}
+	return &ResourceBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ResourceBuilder) Link(value bool) *ResourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ResourceBuilder) ID(value string) *ResourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ResourceBuilder) HREF(value string) *ResourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ResourceBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // BYOC sets the value of the 'BYOC' attribute to the given value.
 func (b *ResourceBuilder) BYOC(value bool) *ResourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.byoc = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // SKU sets the value of the 'SKU' attribute to the given value.
 func (b *ResourceBuilder) SKU(value string) *ResourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.sku = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // Allowed sets the value of the 'allowed' attribute to the given value.
 func (b *ResourceBuilder) Allowed(value int) *ResourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.allowed = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // AvailabilityZoneType sets the value of the 'availability_zone_type' attribute to the given value.
 func (b *ResourceBuilder) AvailabilityZoneType(value string) *ResourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.availabilityZoneType = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // ResourceName sets the value of the 'resource_name' attribute to the given value.
 func (b *ResourceBuilder) ResourceName(value string) *ResourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.resourceName = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *ResourceBuilder) ResourceType(value string) *ResourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
-	}
 	b.resourceType = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
@@ -147,10 +111,7 @@ func (b *ResourceBuilder) Copy(object *Resource) *ResourceBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.byoc = object.byoc
@@ -167,10 +128,7 @@ func (b *ResourceBuilder) Build() (object *Resource, err error) {
 	object = new(Resource)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.byoc = b.byoc
 	object.sku = b.sku
 	object.allowed = b.allowed

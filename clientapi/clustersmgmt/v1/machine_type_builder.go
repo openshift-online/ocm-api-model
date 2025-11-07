@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// MachineTypeBuilder contains the data and logic needed to build 'machine_type' objects.
+//
 // Machine type.
 type MachineTypeBuilder struct {
-	fieldSet_     []bool
+	bitmap_       uint32
 	id            string
 	href          string
 	cpu           *ValueBuilder
@@ -38,61 +40,38 @@ type MachineTypeBuilder struct {
 
 // NewMachineType creates a new builder of 'machine_type' objects.
 func NewMachineType() *MachineTypeBuilder {
-	return &MachineTypeBuilder{
-		fieldSet_: make([]bool, 13),
-	}
+	return &MachineTypeBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *MachineTypeBuilder) Link(value bool) *MachineTypeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *MachineTypeBuilder) ID(value string) *MachineTypeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *MachineTypeBuilder) HREF(value string) *MachineTypeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *MachineTypeBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // CCSOnly sets the value of the 'CCS_only' attribute to the given value.
 func (b *MachineTypeBuilder) CCSOnly(value bool) *MachineTypeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.ccsOnly = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -117,14 +96,11 @@ func (b *MachineTypeBuilder) CCSOnly(value bool) *MachineTypeBuilder {
 // - 1 TiB = 2^40 bytes
 // - 1 PiB = 2^50 bytes
 func (b *MachineTypeBuilder) CPU(value *ValueBuilder) *MachineTypeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.cpu = value
 	if value != nil {
-		b.fieldSet_[4] = true
+		b.bitmap_ |= 16
 	} else {
-		b.fieldSet_[4] = false
+		b.bitmap_ &^= 16
 	}
 	return b
 }
@@ -133,11 +109,8 @@ func (b *MachineTypeBuilder) CPU(value *ValueBuilder) *MachineTypeBuilder {
 //
 // Processor type category.
 func (b *MachineTypeBuilder) Architecture(value ProcessorType) *MachineTypeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.architecture = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
@@ -145,11 +118,8 @@ func (b *MachineTypeBuilder) Architecture(value ProcessorType) *MachineTypeBuild
 //
 // Machine type category.
 func (b *MachineTypeBuilder) Category(value MachineTypeCategory) *MachineTypeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.category = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
@@ -157,14 +127,11 @@ func (b *MachineTypeBuilder) Category(value MachineTypeCategory) *MachineTypeBui
 //
 // Cloud provider.
 func (b *MachineTypeBuilder) CloudProvider(value *CloudProviderBuilder) *MachineTypeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.cloudProvider = value
 	if value != nil {
-		b.fieldSet_[7] = true
+		b.bitmap_ |= 128
 	} else {
-		b.fieldSet_[7] = false
+		b.bitmap_ &^= 128
 	}
 	return b
 }
@@ -173,25 +140,19 @@ func (b *MachineTypeBuilder) CloudProvider(value *CloudProviderBuilder) *Machine
 //
 // Defines the features enabled or disabled on a particular machine type
 func (b *MachineTypeBuilder) Features(value *MachineTypeFeaturesBuilder) *MachineTypeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.features = value
 	if value != nil {
-		b.fieldSet_[8] = true
+		b.bitmap_ |= 256
 	} else {
-		b.fieldSet_[8] = false
+		b.bitmap_ &^= 256
 	}
 	return b
 }
 
 // GenericName sets the value of the 'generic_name' attribute to the given value.
 func (b *MachineTypeBuilder) GenericName(value string) *MachineTypeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.genericName = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
@@ -216,25 +177,19 @@ func (b *MachineTypeBuilder) GenericName(value string) *MachineTypeBuilder {
 // - 1 TiB = 2^40 bytes
 // - 1 PiB = 2^50 bytes
 func (b *MachineTypeBuilder) Memory(value *ValueBuilder) *MachineTypeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.memory = value
 	if value != nil {
-		b.fieldSet_[10] = true
+		b.bitmap_ |= 1024
 	} else {
-		b.fieldSet_[10] = false
+		b.bitmap_ &^= 1024
 	}
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *MachineTypeBuilder) Name(value string) *MachineTypeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.name = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
@@ -242,11 +197,8 @@ func (b *MachineTypeBuilder) Name(value string) *MachineTypeBuilder {
 //
 // Machine type size.
 func (b *MachineTypeBuilder) Size(value MachineTypeSize) *MachineTypeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.size = value
-	b.fieldSet_[12] = true
+	b.bitmap_ |= 4096
 	return b
 }
 
@@ -255,10 +207,7 @@ func (b *MachineTypeBuilder) Copy(object *MachineType) *MachineTypeBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.ccsOnly = object.ccsOnly
@@ -295,10 +244,7 @@ func (b *MachineTypeBuilder) Build() (object *MachineType, err error) {
 	object = new(MachineType)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.ccsOnly = b.ccsOnly
 	if b.cpu != nil {
 		object.cpu, err = b.cpu.Build()

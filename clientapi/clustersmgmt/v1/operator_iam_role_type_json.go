@@ -42,7 +42,7 @@ func WriteOperatorIAMRole(object *OperatorIAMRole, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteOperatorIAMRole(object *OperatorIAMRole, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteOperatorIAMRole(object *OperatorIAMRole, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteOperatorIAMRole(object *OperatorIAMRole, stream *jsoniter.Stream) {
 		stream.WriteString(object.namespace)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteOperatorIAMRole(object *OperatorIAMRole, stream *jsoniter.Stream) {
 		stream.WriteString(object.roleARN)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -103,9 +103,7 @@ func UnmarshalOperatorIAMRole(source interface{}) (object *OperatorIAMRole, err 
 
 // ReadOperatorIAMRole reads a value of the 'operator_IAM_role' type from the given iterator.
 func ReadOperatorIAMRole(iterator *jsoniter.Iterator) *OperatorIAMRole {
-	object := &OperatorIAMRole{
-		fieldSet_: make([]bool, 5),
-	}
+	object := &OperatorIAMRole{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -115,23 +113,23 @@ func ReadOperatorIAMRole(iterator *jsoniter.Iterator) *OperatorIAMRole {
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "namespace":
 			value := iterator.ReadString()
 			object.namespace = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "role_arn":
 			value := iterator.ReadString()
 			object.roleARN = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "service_account":
 			value := iterator.ReadString()
 			object.serviceAccount = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		default:
 			iterator.ReadAny()
 		}

@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/osdfleetmgmt/v
 //
 // ManagementClusterParent reference settings of the cluster.
 type ManagementClusterParent struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	clusterId string
 	href      string
 	kind      string
@@ -32,15 +32,7 @@ type ManagementClusterParent struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ManagementClusterParent) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // ClusterId returns the value of the 'cluster_id' attribute, or
@@ -48,7 +40,7 @@ func (o *ManagementClusterParent) Empty() bool {
 //
 // Parent Cluster ID
 func (o *ManagementClusterParent) ClusterId() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.clusterId
 	}
 	return ""
@@ -59,7 +51,7 @@ func (o *ManagementClusterParent) ClusterId() string {
 //
 // Parent Cluster ID
 func (o *ManagementClusterParent) GetClusterId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.clusterId
 	}
@@ -71,7 +63,7 @@ func (o *ManagementClusterParent) GetClusterId() (value string, ok bool) {
 //
 // Reference link to internal parent cluster
 func (o *ManagementClusterParent) Href() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.href
 	}
 	return ""
@@ -82,7 +74,7 @@ func (o *ManagementClusterParent) Href() string {
 //
 // Reference link to internal parent cluster
 func (o *ManagementClusterParent) GetHref() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.href
 	}
@@ -94,7 +86,7 @@ func (o *ManagementClusterParent) GetHref() (value string, ok bool) {
 //
 // Kind of internal parent cluster
 func (o *ManagementClusterParent) Kind() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.kind
 	}
 	return ""
@@ -105,7 +97,7 @@ func (o *ManagementClusterParent) Kind() string {
 //
 // Kind of internal parent cluster
 func (o *ManagementClusterParent) GetKind() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.kind
 	}
@@ -117,7 +109,7 @@ func (o *ManagementClusterParent) GetKind() (value string, ok bool) {
 //
 // Parent Cluster Name
 func (o *ManagementClusterParent) Name() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.name
 	}
 	return ""
@@ -128,7 +120,7 @@ func (o *ManagementClusterParent) Name() string {
 //
 // Parent Cluster Name
 func (o *ManagementClusterParent) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.name
 	}

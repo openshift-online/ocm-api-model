@@ -21,7 +21,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 
 // ClusterRegistrationResponse represents the values of the 'cluster_registration_response' type.
 type ClusterRegistrationResponse struct {
-	fieldSet_          []bool
+	bitmap_            uint32
 	accountID          string
 	authorizationToken string
 	clusterID          string
@@ -30,21 +30,13 @@ type ClusterRegistrationResponse struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterRegistrationResponse) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // AccountID returns the value of the 'account_ID' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterRegistrationResponse) AccountID() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.accountID
 	}
 	return ""
@@ -53,7 +45,7 @@ func (o *ClusterRegistrationResponse) AccountID() string {
 // GetAccountID returns the value of the 'account_ID' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterRegistrationResponse) GetAccountID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.accountID
 	}
@@ -63,7 +55,7 @@ func (o *ClusterRegistrationResponse) GetAccountID() (value string, ok bool) {
 // AuthorizationToken returns the value of the 'authorization_token' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterRegistrationResponse) AuthorizationToken() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.authorizationToken
 	}
 	return ""
@@ -72,7 +64,7 @@ func (o *ClusterRegistrationResponse) AuthorizationToken() string {
 // GetAuthorizationToken returns the value of the 'authorization_token' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterRegistrationResponse) GetAuthorizationToken() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.authorizationToken
 	}
@@ -82,7 +74,7 @@ func (o *ClusterRegistrationResponse) GetAuthorizationToken() (value string, ok 
 // ClusterID returns the value of the 'cluster_ID' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterRegistrationResponse) ClusterID() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.clusterID
 	}
 	return ""
@@ -91,7 +83,7 @@ func (o *ClusterRegistrationResponse) ClusterID() string {
 // GetClusterID returns the value of the 'cluster_ID' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterRegistrationResponse) GetClusterID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.clusterID
 	}
@@ -103,7 +95,7 @@ func (o *ClusterRegistrationResponse) GetClusterID() (value string, ok bool) {
 //
 // Cluster registration expiration.
 func (o *ClusterRegistrationResponse) ExpiresAt() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.expiresAt
 	}
 	return ""
@@ -114,7 +106,7 @@ func (o *ClusterRegistrationResponse) ExpiresAt() string {
 //
 // Cluster registration expiration.
 func (o *ClusterRegistrationResponse) GetExpiresAt() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.expiresAt
 	}

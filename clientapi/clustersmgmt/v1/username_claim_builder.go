@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// UsernameClaimBuilder contains the data and logic needed to build 'username_claim' objects.
+//
 // The username claim mapping.
 type UsernameClaimBuilder struct {
-	fieldSet_    []bool
+	bitmap_      uint32
 	claim        string
 	prefix       string
 	prefixPolicy string
@@ -29,51 +31,32 @@ type UsernameClaimBuilder struct {
 
 // NewUsernameClaim creates a new builder of 'username_claim' objects.
 func NewUsernameClaim() *UsernameClaimBuilder {
-	return &UsernameClaimBuilder{
-		fieldSet_: make([]bool, 3),
-	}
+	return &UsernameClaimBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *UsernameClaimBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Claim sets the value of the 'claim' attribute to the given value.
 func (b *UsernameClaimBuilder) Claim(value string) *UsernameClaimBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.claim = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Prefix sets the value of the 'prefix' attribute to the given value.
 func (b *UsernameClaimBuilder) Prefix(value string) *UsernameClaimBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.prefix = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // PrefixPolicy sets the value of the 'prefix_policy' attribute to the given value.
 func (b *UsernameClaimBuilder) PrefixPolicy(value string) *UsernameClaimBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.prefixPolicy = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
@@ -82,10 +65,7 @@ func (b *UsernameClaimBuilder) Copy(object *UsernameClaim) *UsernameClaimBuilder
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.claim = object.claim
 	b.prefix = object.prefix
 	b.prefixPolicy = object.prefixPolicy
@@ -95,10 +75,7 @@ func (b *UsernameClaimBuilder) Copy(object *UsernameClaim) *UsernameClaimBuilder
 // Build creates a 'username_claim' object using the configuration stored in the builder.
 func (b *UsernameClaimBuilder) Build() (object *UsernameClaim, err error) {
 	object = new(UsernameClaim)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.claim = b.claim
 	object.prefix = b.prefix
 	object.prefixPolicy = b.prefixPolicy

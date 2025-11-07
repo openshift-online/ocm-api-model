@@ -43,13 +43,13 @@ func WriteAttachment(object *Attachment, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(AttachmentLinkKind)
 	} else {
 		stream.WriteString(AttachmentKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteAttachment(object *Attachment, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteAttachment(object *Attachment, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteAttachment(object *Attachment, stream *jsoniter.Stream) {
 		stream.WriteString(object.contentType)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteAttachment(object *Attachment, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.creator != nil
+	present_ = object.bitmap_&32 != 0 && object.creator != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteAttachment(object *Attachment, stream *jsoniter.Stream) {
 		WriteUser(object.creator, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteAttachment(object *Attachment, stream *jsoniter.Stream) {
 		stream.WriteString((object.deletedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7] && object.event != nil
+	present_ = object.bitmap_&128 != 0 && object.event != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteAttachment(object *Attachment, stream *jsoniter.Stream) {
 		WriteEvent(object.event, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
+	present_ = object.bitmap_&256 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -120,7 +120,7 @@ func WriteAttachment(object *Attachment, stream *jsoniter.Stream) {
 		stream.WriteInt(object.fileSize)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = object.bitmap_&512 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -129,7 +129,7 @@ func WriteAttachment(object *Attachment, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
+	present_ = object.bitmap_&1024 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -154,9 +154,7 @@ func UnmarshalAttachment(source interface{}) (object *Attachment, err error) {
 
 // ReadAttachment reads a value of the 'attachment' type from the given iterator.
 func ReadAttachment(iterator *jsoniter.Iterator) *Attachment {
-	object := &Attachment{
-		fieldSet_: make([]bool, 11),
-	}
+	object := &Attachment{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -166,18 +164,18 @@ func ReadAttachment(iterator *jsoniter.Iterator) *Attachment {
 		case "kind":
 			value := iterator.ReadString()
 			if value == AttachmentLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "content_type":
 			value := iterator.ReadString()
 			object.contentType = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -185,11 +183,11 @@ func ReadAttachment(iterator *jsoniter.Iterator) *Attachment {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "creator":
 			value := ReadUser(iterator)
 			object.creator = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "deleted_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -197,19 +195,19 @@ func ReadAttachment(iterator *jsoniter.Iterator) *Attachment {
 				iterator.ReportError("", err.Error())
 			}
 			object.deletedAt = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "event":
 			value := ReadEvent(iterator)
 			object.event = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		case "file_size":
 			value := iterator.ReadInt()
 			object.fileSize = value
-			object.fieldSet_[8] = true
+			object.bitmap_ |= 256
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[9] = true
+			object.bitmap_ |= 512
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -217,7 +215,7 @@ func ReadAttachment(iterator *jsoniter.Iterator) *Attachment {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.fieldSet_[10] = true
+			object.bitmap_ |= 1024
 		default:
 			iterator.ReadAny()
 		}

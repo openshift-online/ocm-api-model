@@ -42,13 +42,13 @@ func WriteAddonVersion(object *AddonVersion, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(AddonVersionLinkKind)
 	} else {
 		stream.WriteString(AddonVersionKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteAddonVersion(object *AddonVersion, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteAddonVersion(object *AddonVersion, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.additionalCatalogSources != nil
+	present_ = object.bitmap_&8 != 0 && object.additionalCatalogSources != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteAddonVersion(object *AddonVersion, stream *jsoniter.Stream) {
 		WriteAdditionalCatalogSourceList(object.additionalCatalogSources, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.availableUpgrades != nil
+	present_ = object.bitmap_&16 != 0 && object.availableUpgrades != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteAddonVersion(object *AddonVersion, stream *jsoniter.Stream) {
 		WriteStringList(object.availableUpgrades, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -92,7 +92,7 @@ func WriteAddonVersion(object *AddonVersion, stream *jsoniter.Stream) {
 		stream.WriteString(object.channel)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.config != nil
+	present_ = object.bitmap_&64 != 0 && object.config != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -101,7 +101,7 @@ func WriteAddonVersion(object *AddonVersion, stream *jsoniter.Stream) {
 		WriteAddonConfig(object.config, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = object.bitmap_&128 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -110,7 +110,7 @@ func WriteAddonVersion(object *AddonVersion, stream *jsoniter.Stream) {
 		stream.WriteBool(object.enabled)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8] && object.metricsFederation != nil
+	present_ = object.bitmap_&256 != 0 && object.metricsFederation != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -119,7 +119,7 @@ func WriteAddonVersion(object *AddonVersion, stream *jsoniter.Stream) {
 		WriteMetricsFederation(object.metricsFederation, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9] && object.monitoringStack != nil
+	present_ = object.bitmap_&512 != 0 && object.monitoringStack != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -128,7 +128,7 @@ func WriteAddonVersion(object *AddonVersion, stream *jsoniter.Stream) {
 		WriteMonitoringStack(object.monitoringStack, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
+	present_ = object.bitmap_&1024 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -137,7 +137,7 @@ func WriteAddonVersion(object *AddonVersion, stream *jsoniter.Stream) {
 		stream.WriteString(object.packageImage)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11] && object.parameters != nil
+	present_ = object.bitmap_&2048 != 0 && object.parameters != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -146,7 +146,7 @@ func WriteAddonVersion(object *AddonVersion, stream *jsoniter.Stream) {
 		WriteAddonParameters(object.parameters, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
+	present_ = object.bitmap_&4096 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -155,7 +155,7 @@ func WriteAddonVersion(object *AddonVersion, stream *jsoniter.Stream) {
 		stream.WriteString(object.pullSecretName)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13] && object.requirements != nil
+	present_ = object.bitmap_&8192 != 0 && object.requirements != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -164,7 +164,7 @@ func WriteAddonVersion(object *AddonVersion, stream *jsoniter.Stream) {
 		WriteAddonRequirementList(object.requirements, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14]
+	present_ = object.bitmap_&16384 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -173,7 +173,7 @@ func WriteAddonVersion(object *AddonVersion, stream *jsoniter.Stream) {
 		stream.WriteString(object.sourceImage)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 15 && object.fieldSet_[15] && object.subOperators != nil
+	present_ = object.bitmap_&32768 != 0 && object.subOperators != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -182,7 +182,7 @@ func WriteAddonVersion(object *AddonVersion, stream *jsoniter.Stream) {
 		WriteAddonSubOperatorList(object.subOperators, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 16 && object.fieldSet_[16]
+	present_ = object.bitmap_&65536 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -207,9 +207,7 @@ func UnmarshalAddonVersion(source interface{}) (object *AddonVersion, err error)
 
 // ReadAddonVersion reads a value of the 'addon_version' type from the given iterator.
 func ReadAddonVersion(iterator *jsoniter.Iterator) *AddonVersion {
-	object := &AddonVersion{
-		fieldSet_: make([]bool, 17),
-	}
+	object := &AddonVersion{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -219,70 +217,70 @@ func ReadAddonVersion(iterator *jsoniter.Iterator) *AddonVersion {
 		case "kind":
 			value := iterator.ReadString()
 			if value == AddonVersionLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "additional_catalog_sources":
 			value := ReadAdditionalCatalogSourceList(iterator)
 			object.additionalCatalogSources = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "available_upgrades":
 			value := ReadStringList(iterator)
 			object.availableUpgrades = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "channel":
 			value := iterator.ReadString()
 			object.channel = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "config":
 			value := ReadAddonConfig(iterator)
 			object.config = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		case "metrics_federation":
 			value := ReadMetricsFederation(iterator)
 			object.metricsFederation = value
-			object.fieldSet_[8] = true
+			object.bitmap_ |= 256
 		case "monitoring_stack":
 			value := ReadMonitoringStack(iterator)
 			object.monitoringStack = value
-			object.fieldSet_[9] = true
+			object.bitmap_ |= 512
 		case "package_image":
 			value := iterator.ReadString()
 			object.packageImage = value
-			object.fieldSet_[10] = true
+			object.bitmap_ |= 1024
 		case "parameters":
 			value := ReadAddonParameters(iterator)
 			object.parameters = value
-			object.fieldSet_[11] = true
+			object.bitmap_ |= 2048
 		case "pull_secret_name":
 			value := iterator.ReadString()
 			object.pullSecretName = value
-			object.fieldSet_[12] = true
+			object.bitmap_ |= 4096
 		case "requirements":
 			value := ReadAddonRequirementList(iterator)
 			object.requirements = value
-			object.fieldSet_[13] = true
+			object.bitmap_ |= 8192
 		case "source_image":
 			value := iterator.ReadString()
 			object.sourceImage = value
-			object.fieldSet_[14] = true
+			object.bitmap_ |= 16384
 		case "sub_operators":
 			value := ReadAddonSubOperatorList(iterator)
 			object.subOperators = value
-			object.fieldSet_[15] = true
+			object.bitmap_ |= 32768
 		case "upgrade_plans_created":
 			value := iterator.ReadBool()
 			object.upgradePlansCreated = value
-			object.fieldSet_[16] = true
+			object.bitmap_ |= 65536
 		default:
 			iterator.ReadAny()
 		}

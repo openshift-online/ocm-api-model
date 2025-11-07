@@ -42,7 +42,7 @@ func WriteVersionInquiryRequest(object *VersionInquiryRequest, stream *jsoniter.
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalVersionInquiryRequest(source interface{}) (object *VersionInquiryR
 
 // ReadVersionInquiryRequest reads a value of the 'version_inquiry_request' type from the given iterator.
 func ReadVersionInquiryRequest(iterator *jsoniter.Iterator) *VersionInquiryRequest {
-	object := &VersionInquiryRequest{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &VersionInquiryRequest{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadVersionInquiryRequest(iterator *jsoniter.Iterator) *VersionInquiryReque
 		case "service_type":
 			value := iterator.ReadString()
 			object.serviceType = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

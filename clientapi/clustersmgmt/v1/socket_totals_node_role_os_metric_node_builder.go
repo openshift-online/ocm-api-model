@@ -19,41 +19,30 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// SocketTotalsNodeRoleOSMetricNodeBuilder contains the data and logic needed to build 'socket_totals_node_role_OS_metric_node' objects.
+//
 // Representation of information from telemetry about the socket capacity by node
 // role and OS of a cluster.
 type SocketTotalsNodeRoleOSMetricNodeBuilder struct {
-	fieldSet_    []bool
+	bitmap_      uint32
 	socketTotals []*SocketTotalNodeRoleOSMetricNodeBuilder
 }
 
 // NewSocketTotalsNodeRoleOSMetricNode creates a new builder of 'socket_totals_node_role_OS_metric_node' objects.
 func NewSocketTotalsNodeRoleOSMetricNode() *SocketTotalsNodeRoleOSMetricNodeBuilder {
-	return &SocketTotalsNodeRoleOSMetricNodeBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &SocketTotalsNodeRoleOSMetricNodeBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SocketTotalsNodeRoleOSMetricNodeBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // SocketTotals sets the value of the 'socket_totals' attribute to the given values.
 func (b *SocketTotalsNodeRoleOSMetricNodeBuilder) SocketTotals(values ...*SocketTotalNodeRoleOSMetricNodeBuilder) *SocketTotalsNodeRoleOSMetricNodeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.socketTotals = make([]*SocketTotalNodeRoleOSMetricNodeBuilder, len(values))
 	copy(b.socketTotals, values)
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -62,10 +51,7 @@ func (b *SocketTotalsNodeRoleOSMetricNodeBuilder) Copy(object *SocketTotalsNodeR
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.socketTotals != nil {
 		b.socketTotals = make([]*SocketTotalNodeRoleOSMetricNodeBuilder, len(object.socketTotals))
 		for i, v := range object.socketTotals {
@@ -80,10 +66,7 @@ func (b *SocketTotalsNodeRoleOSMetricNodeBuilder) Copy(object *SocketTotalsNodeR
 // Build creates a 'socket_totals_node_role_OS_metric_node' object using the configuration stored in the builder.
 func (b *SocketTotalsNodeRoleOSMetricNodeBuilder) Build() (object *SocketTotalsNodeRoleOSMetricNode, err error) {
 	object = new(SocketTotalsNodeRoleOSMetricNode)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.socketTotals != nil {
 		object.socketTotals = make([]*SocketTotalNodeRoleOSMetricNode, len(b.socketTotals))
 		for i, v := range b.socketTotals {

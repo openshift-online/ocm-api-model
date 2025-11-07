@@ -19,43 +19,32 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// TokenClaimMappingsBuilder contains the data and logic needed to build 'token_claim_mappings' objects.
+//
 // The claim mappings defined for users and groups.
 type TokenClaimMappingsBuilder struct {
-	fieldSet_ []bool
-	groups    *GroupsClaimBuilder
-	userName  *UsernameClaimBuilder
+	bitmap_  uint32
+	groups   *GroupsClaimBuilder
+	userName *UsernameClaimBuilder
 }
 
 // NewTokenClaimMappings creates a new builder of 'token_claim_mappings' objects.
 func NewTokenClaimMappings() *TokenClaimMappingsBuilder {
-	return &TokenClaimMappingsBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &TokenClaimMappingsBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *TokenClaimMappingsBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Groups sets the value of the 'groups' attribute to the given value.
 func (b *TokenClaimMappingsBuilder) Groups(value *GroupsClaimBuilder) *TokenClaimMappingsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.groups = value
 	if value != nil {
-		b.fieldSet_[0] = true
+		b.bitmap_ |= 1
 	} else {
-		b.fieldSet_[0] = false
+		b.bitmap_ &^= 1
 	}
 	return b
 }
@@ -64,14 +53,11 @@ func (b *TokenClaimMappingsBuilder) Groups(value *GroupsClaimBuilder) *TokenClai
 //
 // The username claim mapping.
 func (b *TokenClaimMappingsBuilder) UserName(value *UsernameClaimBuilder) *TokenClaimMappingsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.userName = value
 	if value != nil {
-		b.fieldSet_[1] = true
+		b.bitmap_ |= 2
 	} else {
-		b.fieldSet_[1] = false
+		b.bitmap_ &^= 2
 	}
 	return b
 }
@@ -81,10 +67,7 @@ func (b *TokenClaimMappingsBuilder) Copy(object *TokenClaimMappings) *TokenClaim
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.groups != nil {
 		b.groups = NewGroupsClaim().Copy(object.groups)
 	} else {
@@ -101,10 +84,7 @@ func (b *TokenClaimMappingsBuilder) Copy(object *TokenClaimMappings) *TokenClaim
 // Build creates a 'token_claim_mappings' object using the configuration stored in the builder.
 func (b *TokenClaimMappingsBuilder) Build() (object *TokenClaimMappings, err error) {
 	object = new(TokenClaimMappings)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.groups != nil {
 		object.groups, err = b.groups.Build()
 		if err != nil {

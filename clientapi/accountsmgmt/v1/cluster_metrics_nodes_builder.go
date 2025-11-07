@@ -19,71 +19,50 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
+// ClusterMetricsNodesBuilder contains the data and logic needed to build 'cluster_metrics_nodes' objects.
 type ClusterMetricsNodesBuilder struct {
-	fieldSet_ []bool
-	compute   float64
-	infra     float64
-	master    float64
-	total     float64
+	bitmap_ uint32
+	compute float64
+	infra   float64
+	master  float64
+	total   float64
 }
 
 // NewClusterMetricsNodes creates a new builder of 'cluster_metrics_nodes' objects.
 func NewClusterMetricsNodes() *ClusterMetricsNodesBuilder {
-	return &ClusterMetricsNodesBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &ClusterMetricsNodesBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterMetricsNodesBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Compute sets the value of the 'compute' attribute to the given value.
 func (b *ClusterMetricsNodesBuilder) Compute(value float64) *ClusterMetricsNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.compute = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Infra sets the value of the 'infra' attribute to the given value.
 func (b *ClusterMetricsNodesBuilder) Infra(value float64) *ClusterMetricsNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.infra = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Master sets the value of the 'master' attribute to the given value.
 func (b *ClusterMetricsNodesBuilder) Master(value float64) *ClusterMetricsNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.master = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Total sets the value of the 'total' attribute to the given value.
 func (b *ClusterMetricsNodesBuilder) Total(value float64) *ClusterMetricsNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.total = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -92,10 +71,7 @@ func (b *ClusterMetricsNodesBuilder) Copy(object *ClusterMetricsNodes) *ClusterM
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.compute = object.compute
 	b.infra = object.infra
 	b.master = object.master
@@ -106,10 +82,7 @@ func (b *ClusterMetricsNodesBuilder) Copy(object *ClusterMetricsNodes) *ClusterM
 // Build creates a 'cluster_metrics_nodes' object using the configuration stored in the builder.
 func (b *ClusterMetricsNodesBuilder) Build() (object *ClusterMetricsNodes, err error) {
 	object = new(ClusterMetricsNodes)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.compute = b.compute
 	object.infra = b.infra
 	object.master = b.master

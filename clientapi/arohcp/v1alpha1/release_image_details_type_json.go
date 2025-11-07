@@ -42,7 +42,7 @@ func WriteReleaseImageDetails(object *ReleaseImageDetails, stream *jsoniter.Stre
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.availableUpgrades != nil
+	present_ = object.bitmap_&1 != 0 && object.availableUpgrades != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteReleaseImageDetails(object *ReleaseImageDetails, stream *jsoniter.Stre
 		WriteStringList(object.availableUpgrades, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalReleaseImageDetails(source interface{}) (object *ReleaseImageDetai
 
 // ReadReleaseImageDetails reads a value of the 'release_image_details' type from the given iterator.
 func ReadReleaseImageDetails(iterator *jsoniter.Iterator) *ReleaseImageDetails {
-	object := &ReleaseImageDetails{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &ReleaseImageDetails{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadReleaseImageDetails(iterator *jsoniter.Iterator) *ReleaseImageDetails {
 		case "available_upgrades":
 			value := ReadStringList(iterator)
 			object.availableUpgrades = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "release_image":
 			value := iterator.ReadString()
 			object.releaseImage = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

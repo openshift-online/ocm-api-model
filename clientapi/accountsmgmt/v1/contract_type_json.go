@@ -43,7 +43,7 @@ func WriteContract(object *Contract, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.dimensions != nil
+	present_ = object.bitmap_&1 != 0 && object.dimensions != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -52,7 +52,7 @@ func WriteContract(object *Contract, stream *jsoniter.Stream) {
 		WriteContractDimensionList(object.dimensions, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -61,7 +61,7 @@ func WriteContract(object *Contract, stream *jsoniter.Stream) {
 		stream.WriteString((object.endDate).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -86,9 +86,7 @@ func UnmarshalContract(source interface{}) (object *Contract, err error) {
 
 // ReadContract reads a value of the 'contract' type from the given iterator.
 func ReadContract(iterator *jsoniter.Iterator) *Contract {
-	object := &Contract{
-		fieldSet_: make([]bool, 3),
-	}
+	object := &Contract{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -98,7 +96,7 @@ func ReadContract(iterator *jsoniter.Iterator) *Contract {
 		case "dimensions":
 			value := ReadContractDimensionList(iterator)
 			object.dimensions = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "end_date":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -106,7 +104,7 @@ func ReadContract(iterator *jsoniter.Iterator) *Contract {
 				iterator.ReportError("", err.Error())
 			}
 			object.endDate = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "start_date":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -114,7 +112,7 @@ func ReadContract(iterator *jsoniter.Iterator) *Contract {
 				iterator.ReportError("", err.Error())
 			}
 			object.startDate = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		default:
 			iterator.ReadAny()
 		}

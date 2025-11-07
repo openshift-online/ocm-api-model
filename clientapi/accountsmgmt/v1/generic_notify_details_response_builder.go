@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
+// GenericNotifyDetailsResponseBuilder contains the data and logic needed to build 'generic_notify_details_response' objects.
+//
 // class that defines notify details response in general.
 type GenericNotifyDetailsResponseBuilder struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	id         string
 	href       string
 	associates []string
@@ -31,84 +33,55 @@ type GenericNotifyDetailsResponseBuilder struct {
 
 // NewGenericNotifyDetailsResponse creates a new builder of 'generic_notify_details_response' objects.
 func NewGenericNotifyDetailsResponse() *GenericNotifyDetailsResponseBuilder {
-	return &GenericNotifyDetailsResponseBuilder{
-		fieldSet_: make([]bool, 6),
-	}
+	return &GenericNotifyDetailsResponseBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *GenericNotifyDetailsResponseBuilder) Link(value bool) *GenericNotifyDetailsResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *GenericNotifyDetailsResponseBuilder) ID(value string) *GenericNotifyDetailsResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *GenericNotifyDetailsResponseBuilder) HREF(value string) *GenericNotifyDetailsResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GenericNotifyDetailsResponseBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // Associates sets the value of the 'associates' attribute to the given values.
 func (b *GenericNotifyDetailsResponseBuilder) Associates(values ...string) *GenericNotifyDetailsResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.associates = make([]string, len(values))
 	copy(b.associates, values)
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // Items sets the value of the 'items' attribute to the given values.
 func (b *GenericNotifyDetailsResponseBuilder) Items(values ...*NotificationDetailsResponseBuilder) *GenericNotifyDetailsResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.items = make([]*NotificationDetailsResponseBuilder, len(values))
 	copy(b.items, values)
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // Recipients sets the value of the 'recipients' attribute to the given values.
 func (b *GenericNotifyDetailsResponseBuilder) Recipients(values ...string) *GenericNotifyDetailsResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.recipients = make([]string, len(values))
 	copy(b.recipients, values)
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
@@ -117,10 +90,7 @@ func (b *GenericNotifyDetailsResponseBuilder) Copy(object *GenericNotifyDetailsR
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.associates != nil {
@@ -151,10 +121,7 @@ func (b *GenericNotifyDetailsResponseBuilder) Build() (object *GenericNotifyDeta
 	object = new(GenericNotifyDetailsResponse)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.associates != nil {
 		object.associates = make([]string, len(b.associates))
 		copy(object.associates, b.associates)

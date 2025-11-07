@@ -19,8 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// AutoscalerResourceLimitsBuilder contains the data and logic needed to build 'autoscaler_resource_limits' objects.
 type AutoscalerResourceLimitsBuilder struct {
-	fieldSet_     []bool
+	bitmap_       uint32
 	gpus          []*AutoscalerResourceLimitsGPULimitBuilder
 	cores         *ResourceRangeBuilder
 	maxNodesTotal int
@@ -29,69 +30,47 @@ type AutoscalerResourceLimitsBuilder struct {
 
 // NewAutoscalerResourceLimits creates a new builder of 'autoscaler_resource_limits' objects.
 func NewAutoscalerResourceLimits() *AutoscalerResourceLimitsBuilder {
-	return &AutoscalerResourceLimitsBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &AutoscalerResourceLimitsBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AutoscalerResourceLimitsBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // GPUS sets the value of the 'GPUS' attribute to the given values.
 func (b *AutoscalerResourceLimitsBuilder) GPUS(values ...*AutoscalerResourceLimitsGPULimitBuilder) *AutoscalerResourceLimitsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.gpus = make([]*AutoscalerResourceLimitsGPULimitBuilder, len(values))
 	copy(b.gpus, values)
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Cores sets the value of the 'cores' attribute to the given value.
 func (b *AutoscalerResourceLimitsBuilder) Cores(value *ResourceRangeBuilder) *AutoscalerResourceLimitsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.cores = value
 	if value != nil {
-		b.fieldSet_[1] = true
+		b.bitmap_ |= 2
 	} else {
-		b.fieldSet_[1] = false
+		b.bitmap_ &^= 2
 	}
 	return b
 }
 
 // MaxNodesTotal sets the value of the 'max_nodes_total' attribute to the given value.
 func (b *AutoscalerResourceLimitsBuilder) MaxNodesTotal(value int) *AutoscalerResourceLimitsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.maxNodesTotal = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Memory sets the value of the 'memory' attribute to the given value.
 func (b *AutoscalerResourceLimitsBuilder) Memory(value *ResourceRangeBuilder) *AutoscalerResourceLimitsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.memory = value
 	if value != nil {
-		b.fieldSet_[3] = true
+		b.bitmap_ |= 8
 	} else {
-		b.fieldSet_[3] = false
+		b.bitmap_ &^= 8
 	}
 	return b
 }
@@ -101,10 +80,7 @@ func (b *AutoscalerResourceLimitsBuilder) Copy(object *AutoscalerResourceLimits)
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.gpus != nil {
 		b.gpus = make([]*AutoscalerResourceLimitsGPULimitBuilder, len(object.gpus))
 		for i, v := range object.gpus {
@@ -130,10 +106,7 @@ func (b *AutoscalerResourceLimitsBuilder) Copy(object *AutoscalerResourceLimits)
 // Build creates a 'autoscaler_resource_limits' object using the configuration stored in the builder.
 func (b *AutoscalerResourceLimitsBuilder) Build() (object *AutoscalerResourceLimits, err error) {
 	object = new(AutoscalerResourceLimits)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.gpus != nil {
 		object.gpus = make([]*AutoscalerResourceLimitsGPULimit, len(b.gpus))
 		for i, v := range b.gpus {

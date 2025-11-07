@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// PendingDeleteClusterBuilder contains the data and logic needed to build 'pending_delete_cluster' objects.
+//
 // Represents a pending delete entry for a specific cluster.
 type PendingDeleteClusterBuilder struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	id                string
 	href              string
 	cluster           *ClusterBuilder
@@ -35,61 +37,38 @@ type PendingDeleteClusterBuilder struct {
 
 // NewPendingDeleteCluster creates a new builder of 'pending_delete_cluster' objects.
 func NewPendingDeleteCluster() *PendingDeleteClusterBuilder {
-	return &PendingDeleteClusterBuilder{
-		fieldSet_: make([]bool, 6),
-	}
+	return &PendingDeleteClusterBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *PendingDeleteClusterBuilder) Link(value bool) *PendingDeleteClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *PendingDeleteClusterBuilder) ID(value string) *PendingDeleteClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *PendingDeleteClusterBuilder) HREF(value string) *PendingDeleteClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *PendingDeleteClusterBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // BestEffort sets the value of the 'best_effort' attribute to the given value.
 func (b *PendingDeleteClusterBuilder) BestEffort(value bool) *PendingDeleteClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.bestEffort = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -135,25 +114,19 @@ func (b *PendingDeleteClusterBuilder) BestEffort(value bool) *PendingDeleteClust
 // attributes are mandatory when creation a cluster with your own Amazon Web
 // Services account.
 func (b *PendingDeleteClusterBuilder) Cluster(value *ClusterBuilder) *PendingDeleteClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.cluster = value
 	if value != nil {
-		b.fieldSet_[4] = true
+		b.bitmap_ |= 16
 	} else {
-		b.fieldSet_[4] = false
+		b.bitmap_ &^= 16
 	}
 	return b
 }
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *PendingDeleteClusterBuilder) CreationTimestamp(value time.Time) *PendingDeleteClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.creationTimestamp = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
@@ -162,10 +135,7 @@ func (b *PendingDeleteClusterBuilder) Copy(object *PendingDeleteCluster) *Pendin
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.bestEffort = object.bestEffort
@@ -183,10 +153,7 @@ func (b *PendingDeleteClusterBuilder) Build() (object *PendingDeleteCluster, err
 	object = new(PendingDeleteCluster)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.bestEffort = b.bestEffort
 	if b.cluster != nil {
 		object.cluster, err = b.cluster.Build()

@@ -43,13 +43,13 @@ func WriteLabel(object *Label, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(LabelLinkKind)
 	} else {
 		stream.WriteString(LabelKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteLabel(object *Label, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteLabel(object *Label, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteLabel(object *Label, stream *jsoniter.Stream) {
 		stream.WriteString(object.accountID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteLabel(object *Label, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteLabel(object *Label, stream *jsoniter.Stream) {
 		stream.WriteBool(object.internal)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteLabel(object *Label, stream *jsoniter.Stream) {
 		stream.WriteString(object.key)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = object.bitmap_&128 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteLabel(object *Label, stream *jsoniter.Stream) {
 		stream.WriteString(object.managedBy)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
+	present_ = object.bitmap_&256 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -120,7 +120,7 @@ func WriteLabel(object *Label, stream *jsoniter.Stream) {
 		stream.WriteString(object.organizationID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = object.bitmap_&512 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -129,7 +129,7 @@ func WriteLabel(object *Label, stream *jsoniter.Stream) {
 		stream.WriteString(object.subscriptionID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
+	present_ = object.bitmap_&1024 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -138,7 +138,7 @@ func WriteLabel(object *Label, stream *jsoniter.Stream) {
 		stream.WriteString(object.type_)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
+	present_ = object.bitmap_&2048 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -147,7 +147,7 @@ func WriteLabel(object *Label, stream *jsoniter.Stream) {
 		stream.WriteString((object.updatedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
+	present_ = object.bitmap_&4096 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -172,9 +172,7 @@ func UnmarshalLabel(source interface{}) (object *Label, err error) {
 
 // ReadLabel reads a value of the 'label' type from the given iterator.
 func ReadLabel(iterator *jsoniter.Iterator) *Label {
-	object := &Label{
-		fieldSet_: make([]bool, 13),
-	}
+	object := &Label{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -184,18 +182,18 @@ func ReadLabel(iterator *jsoniter.Iterator) *Label {
 		case "kind":
 			value := iterator.ReadString()
 			if value == LabelLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "account_id":
 			value := iterator.ReadString()
 			object.accountID = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -203,31 +201,31 @@ func ReadLabel(iterator *jsoniter.Iterator) *Label {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "internal":
 			value := iterator.ReadBool()
 			object.internal = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "key":
 			value := iterator.ReadString()
 			object.key = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "managed_by":
 			value := iterator.ReadString()
 			object.managedBy = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		case "organization_id":
 			value := iterator.ReadString()
 			object.organizationID = value
-			object.fieldSet_[8] = true
+			object.bitmap_ |= 256
 		case "subscription_id":
 			value := iterator.ReadString()
 			object.subscriptionID = value
-			object.fieldSet_[9] = true
+			object.bitmap_ |= 512
 		case "type":
 			value := iterator.ReadString()
 			object.type_ = value
-			object.fieldSet_[10] = true
+			object.bitmap_ |= 1024
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -235,11 +233,11 @@ func ReadLabel(iterator *jsoniter.Iterator) *Label {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.fieldSet_[11] = true
+			object.bitmap_ |= 2048
 		case "value":
 			value := iterator.ReadString()
 			object.value = value
-			object.fieldSet_[12] = true
+			object.bitmap_ |= 4096
 		default:
 			iterator.ReadAny()
 		}

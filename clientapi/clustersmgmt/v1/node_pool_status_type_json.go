@@ -42,13 +42,13 @@ func WriteNodePoolStatus(object *NodePoolStatus, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(NodePoolStatusLinkKind)
 	} else {
 		stream.WriteString(NodePoolStatusKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteNodePoolStatus(object *NodePoolStatus, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteNodePoolStatus(object *NodePoolStatus, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteNodePoolStatus(object *NodePoolStatus, stream *jsoniter.Stream) {
 		stream.WriteInt(object.currentReplicas)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteNodePoolStatus(object *NodePoolStatus, stream *jsoniter.Stream) {
 		stream.WriteString(object.message)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.state != nil
+	present_ = object.bitmap_&32 != 0 && object.state != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -108,9 +108,7 @@ func UnmarshalNodePoolStatus(source interface{}) (object *NodePoolStatus, err er
 
 // ReadNodePoolStatus reads a value of the 'node_pool_status' type from the given iterator.
 func ReadNodePoolStatus(iterator *jsoniter.Iterator) *NodePoolStatus {
-	object := &NodePoolStatus{
-		fieldSet_: make([]bool, 6),
-	}
+	object := &NodePoolStatus{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -120,26 +118,26 @@ func ReadNodePoolStatus(iterator *jsoniter.Iterator) *NodePoolStatus {
 		case "kind":
 			value := iterator.ReadString()
 			if value == NodePoolStatusLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "current_replicas":
 			value := iterator.ReadInt()
 			object.currentReplicas = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "message":
 			value := iterator.ReadString()
 			object.message = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "state":
 			value := ReadNodePoolState(iterator)
 			object.state = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		default:
 			iterator.ReadAny()
 		}

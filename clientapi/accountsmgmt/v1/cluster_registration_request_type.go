@@ -21,28 +21,20 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 
 // ClusterRegistrationRequest represents the values of the 'cluster_registration_request' type.
 type ClusterRegistrationRequest struct {
-	fieldSet_          []bool
+	bitmap_            uint32
 	authorizationToken string
 	clusterID          string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterRegistrationRequest) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // AuthorizationToken returns the value of the 'authorization_token' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterRegistrationRequest) AuthorizationToken() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.authorizationToken
 	}
 	return ""
@@ -51,7 +43,7 @@ func (o *ClusterRegistrationRequest) AuthorizationToken() string {
 // GetAuthorizationToken returns the value of the 'authorization_token' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterRegistrationRequest) GetAuthorizationToken() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.authorizationToken
 	}
@@ -61,7 +53,7 @@ func (o *ClusterRegistrationRequest) GetAuthorizationToken() (value string, ok b
 // ClusterID returns the value of the 'cluster_ID' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterRegistrationRequest) ClusterID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.clusterID
 	}
 	return ""
@@ -70,7 +62,7 @@ func (o *ClusterRegistrationRequest) ClusterID() string {
 // GetClusterID returns the value of the 'cluster_ID' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterRegistrationRequest) GetClusterID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.clusterID
 	}

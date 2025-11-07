@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
+// CapabilityReviewRequestBuilder contains the data and logic needed to build 'capability_review_request' objects.
+//
 // Representation of a capability review.
 type CapabilityReviewRequestBuilder struct {
-	fieldSet_       []bool
+	bitmap_         uint32
 	accountUsername string
 	capability      string
 	clusterID       string
@@ -33,91 +35,60 @@ type CapabilityReviewRequestBuilder struct {
 
 // NewCapabilityReviewRequest creates a new builder of 'capability_review_request' objects.
 func NewCapabilityReviewRequest() *CapabilityReviewRequestBuilder {
-	return &CapabilityReviewRequestBuilder{
-		fieldSet_: make([]bool, 7),
-	}
+	return &CapabilityReviewRequestBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *CapabilityReviewRequestBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // AccountUsername sets the value of the 'account_username' attribute to the given value.
 func (b *CapabilityReviewRequestBuilder) AccountUsername(value string) *CapabilityReviewRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.accountUsername = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Capability sets the value of the 'capability' attribute to the given value.
 func (b *CapabilityReviewRequestBuilder) Capability(value string) *CapabilityReviewRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.capability = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *CapabilityReviewRequestBuilder) ClusterID(value string) *CapabilityReviewRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.clusterID = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *CapabilityReviewRequestBuilder) OrganizationID(value string) *CapabilityReviewRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.organizationID = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *CapabilityReviewRequestBuilder) ResourceType(value string) *CapabilityReviewRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.resourceType = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *CapabilityReviewRequestBuilder) SubscriptionID(value string) *CapabilityReviewRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.subscriptionID = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *CapabilityReviewRequestBuilder) Type(value string) *CapabilityReviewRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.type_ = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
@@ -126,10 +97,7 @@ func (b *CapabilityReviewRequestBuilder) Copy(object *CapabilityReviewRequest) *
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.accountUsername = object.accountUsername
 	b.capability = object.capability
 	b.clusterID = object.clusterID
@@ -143,10 +111,7 @@ func (b *CapabilityReviewRequestBuilder) Copy(object *CapabilityReviewRequest) *
 // Build creates a 'capability_review_request' object using the configuration stored in the builder.
 func (b *CapabilityReviewRequestBuilder) Build() (object *CapabilityReviewRequest, err error) {
 	object = new(CapabilityReviewRequest)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.accountUsername = b.accountUsername
 	object.capability = b.capability
 	object.clusterID = b.clusterID

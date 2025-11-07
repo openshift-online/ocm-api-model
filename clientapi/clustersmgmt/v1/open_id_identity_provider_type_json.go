@@ -43,7 +43,7 @@ func WriteOpenIDIdentityProvider(object *OpenIDIdentityProvider, stream *jsonite
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -52,7 +52,7 @@ func WriteOpenIDIdentityProvider(object *OpenIDIdentityProvider, stream *jsonite
 		stream.WriteString(object.ca)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.claims != nil
+	present_ = object.bitmap_&2 != 0 && object.claims != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -61,7 +61,7 @@ func WriteOpenIDIdentityProvider(object *OpenIDIdentityProvider, stream *jsonite
 		WriteOpenIDClaims(object.claims, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -70,7 +70,7 @@ func WriteOpenIDIdentityProvider(object *OpenIDIdentityProvider, stream *jsonite
 		stream.WriteString(object.clientID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -79,7 +79,7 @@ func WriteOpenIDIdentityProvider(object *OpenIDIdentityProvider, stream *jsonite
 		stream.WriteString(object.clientSecret)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.extraAuthorizeParameters != nil
+	present_ = object.bitmap_&16 != 0 && object.extraAuthorizeParameters != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -108,7 +108,7 @@ func WriteOpenIDIdentityProvider(object *OpenIDIdentityProvider, stream *jsonite
 		}
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.extraScopes != nil
+	present_ = object.bitmap_&32 != 0 && object.extraScopes != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -117,7 +117,7 @@ func WriteOpenIDIdentityProvider(object *OpenIDIdentityProvider, stream *jsonite
 		WriteStringList(object.extraScopes, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -142,9 +142,7 @@ func UnmarshalOpenIDIdentityProvider(source interface{}) (object *OpenIDIdentity
 
 // ReadOpenIDIdentityProvider reads a value of the 'open_ID_identity_provider' type from the given iterator.
 func ReadOpenIDIdentityProvider(iterator *jsoniter.Iterator) *OpenIDIdentityProvider {
-	object := &OpenIDIdentityProvider{
-		fieldSet_: make([]bool, 7),
-	}
+	object := &OpenIDIdentityProvider{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -154,19 +152,19 @@ func ReadOpenIDIdentityProvider(iterator *jsoniter.Iterator) *OpenIDIdentityProv
 		case "ca":
 			value := iterator.ReadString()
 			object.ca = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "claims":
 			value := ReadOpenIDClaims(iterator)
 			object.claims = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "client_id":
 			value := iterator.ReadString()
 			object.clientID = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "client_secret":
 			value := iterator.ReadString()
 			object.clientSecret = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "extra_authorize_parameters":
 			value := map[string]string{}
 			for {
@@ -178,15 +176,15 @@ func ReadOpenIDIdentityProvider(iterator *jsoniter.Iterator) *OpenIDIdentityProv
 				value[key] = item
 			}
 			object.extraAuthorizeParameters = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "extra_scopes":
 			value := ReadStringList(iterator)
 			object.extraScopes = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "issuer":
 			value := iterator.ReadString()
 			object.issuer = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		default:
 			iterator.ReadAny()
 		}

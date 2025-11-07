@@ -39,7 +39,7 @@ const IncidentNilKind = "IncidentNil"
 //
 // Definition of a Web RCA incident.
 type Incident struct {
-	fieldSet_            []bool
+	bitmap_              uint32
 	id                   string
 	href                 string
 	createdAt            time.Time
@@ -63,7 +63,7 @@ func (o *Incident) Kind() string {
 	if o == nil {
 		return IncidentNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return IncidentLinkKind
 	}
 	return IncidentKind
@@ -71,12 +71,12 @@ func (o *Incident) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Incident) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *Incident) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -85,7 +85,7 @@ func (o *Incident) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Incident) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -94,7 +94,7 @@ func (o *Incident) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Incident) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -103,7 +103,7 @@ func (o *Incident) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Incident) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -112,17 +112,7 @@ func (o *Incident) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Incident) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // CreatedAt returns the value of the 'created_at' attribute, or
@@ -130,7 +120,7 @@ func (o *Incident) Empty() bool {
 //
 // Object creation timestamp.
 func (o *Incident) CreatedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -141,7 +131,7 @@ func (o *Incident) CreatedAt() time.Time {
 //
 // Object creation timestamp.
 func (o *Incident) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.createdAt
 	}
@@ -151,7 +141,7 @@ func (o *Incident) GetCreatedAt() (value time.Time, ok bool) {
 // CreatorId returns the value of the 'creator_id' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Incident) CreatorId() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.creatorId
 	}
 	return ""
@@ -160,7 +150,7 @@ func (o *Incident) CreatorId() string {
 // GetCreatorId returns the value of the 'creator_id' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Incident) GetCreatorId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.creatorId
 	}
@@ -172,7 +162,7 @@ func (o *Incident) GetCreatorId() (value string, ok bool) {
 //
 // Object deletion timestamp.
 func (o *Incident) DeletedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.deletedAt
 	}
 	return time.Time{}
@@ -183,7 +173,7 @@ func (o *Incident) DeletedAt() time.Time {
 //
 // Object deletion timestamp.
 func (o *Incident) GetDeletedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.deletedAt
 	}
@@ -193,7 +183,7 @@ func (o *Incident) GetDeletedAt() (value time.Time, ok bool) {
 // Description returns the value of the 'description' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Incident) Description() string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.description
 	}
 	return ""
@@ -202,7 +192,7 @@ func (o *Incident) Description() string {
 // GetDescription returns the value of the 'description' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Incident) GetDescription() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.description
 	}
@@ -212,7 +202,7 @@ func (o *Incident) GetDescription() (value string, ok bool) {
 // ExternalCoordination returns the value of the 'external_coordination' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Incident) ExternalCoordination() []string {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.externalCoordination
 	}
 	return nil
@@ -221,7 +211,7 @@ func (o *Incident) ExternalCoordination() []string {
 // GetExternalCoordination returns the value of the 'external_coordination' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Incident) GetExternalCoordination() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.externalCoordination
 	}
@@ -231,7 +221,7 @@ func (o *Incident) GetExternalCoordination() (value []string, ok bool) {
 // IncidentId returns the value of the 'incident_id' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Incident) IncidentId() string {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.incidentId
 	}
 	return ""
@@ -240,7 +230,7 @@ func (o *Incident) IncidentId() string {
 // GetIncidentId returns the value of the 'incident_id' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Incident) GetIncidentId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.incidentId
 	}
@@ -250,7 +240,7 @@ func (o *Incident) GetIncidentId() (value string, ok bool) {
 // IncidentType returns the value of the 'incident_type' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Incident) IncidentType() string {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && o.bitmap_&512 != 0 {
 		return o.incidentType
 	}
 	return ""
@@ -259,7 +249,7 @@ func (o *Incident) IncidentType() string {
 // GetIncidentType returns the value of the 'incident_type' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Incident) GetIncidentType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && o.bitmap_&512 != 0
 	if ok {
 		value = o.incidentType
 	}
@@ -269,7 +259,7 @@ func (o *Incident) GetIncidentType() (value string, ok bool) {
 // LastUpdated returns the value of the 'last_updated' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Incident) LastUpdated() time.Time {
-	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+	if o != nil && o.bitmap_&1024 != 0 {
 		return o.lastUpdated
 	}
 	return time.Time{}
@@ -278,7 +268,7 @@ func (o *Incident) LastUpdated() time.Time {
 // GetLastUpdated returns the value of the 'last_updated' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Incident) GetLastUpdated() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	ok = o != nil && o.bitmap_&1024 != 0
 	if ok {
 		value = o.lastUpdated
 	}
@@ -288,7 +278,7 @@ func (o *Incident) GetLastUpdated() (value time.Time, ok bool) {
 // PrimaryTeam returns the value of the 'primary_team' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Incident) PrimaryTeam() string {
-	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
+	if o != nil && o.bitmap_&2048 != 0 {
 		return o.primaryTeam
 	}
 	return ""
@@ -297,7 +287,7 @@ func (o *Incident) PrimaryTeam() string {
 // GetPrimaryTeam returns the value of the 'primary_team' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Incident) GetPrimaryTeam() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
+	ok = o != nil && o.bitmap_&2048 != 0
 	if ok {
 		value = o.primaryTeam
 	}
@@ -307,7 +297,7 @@ func (o *Incident) GetPrimaryTeam() (value string, ok bool) {
 // Severity returns the value of the 'severity' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Incident) Severity() string {
-	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
+	if o != nil && o.bitmap_&4096 != 0 {
 		return o.severity
 	}
 	return ""
@@ -316,7 +306,7 @@ func (o *Incident) Severity() string {
 // GetSeverity returns the value of the 'severity' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Incident) GetSeverity() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
+	ok = o != nil && o.bitmap_&4096 != 0
 	if ok {
 		value = o.severity
 	}
@@ -326,7 +316,7 @@ func (o *Incident) GetSeverity() (value string, ok bool) {
 // Status returns the value of the 'status' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Incident) Status() string {
-	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
+	if o != nil && o.bitmap_&8192 != 0 {
 		return o.status
 	}
 	return ""
@@ -335,7 +325,7 @@ func (o *Incident) Status() string {
 // GetStatus returns the value of the 'status' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Incident) GetStatus() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
+	ok = o != nil && o.bitmap_&8192 != 0
 	if ok {
 		value = o.status
 	}
@@ -345,7 +335,7 @@ func (o *Incident) GetStatus() (value string, ok bool) {
 // Summary returns the value of the 'summary' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Incident) Summary() string {
-	if o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14] {
+	if o != nil && o.bitmap_&16384 != 0 {
 		return o.summary
 	}
 	return ""
@@ -354,7 +344,7 @@ func (o *Incident) Summary() string {
 // GetSummary returns the value of the 'summary' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Incident) GetSummary() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14]
+	ok = o != nil && o.bitmap_&16384 != 0
 	if ok {
 		value = o.summary
 	}
@@ -366,7 +356,7 @@ func (o *Incident) GetSummary() (value string, ok bool) {
 //
 // Object modification timestamp.
 func (o *Incident) UpdatedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15] {
+	if o != nil && o.bitmap_&32768 != 0 {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -377,7 +367,7 @@ func (o *Incident) UpdatedAt() time.Time {
 //
 // Object modification timestamp.
 func (o *Incident) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15]
+	ok = o != nil && o.bitmap_&32768 != 0
 	if ok {
 		value = o.updatedAt
 	}
@@ -387,7 +377,7 @@ func (o *Incident) GetUpdatedAt() (value time.Time, ok bool) {
 // WorkedAt returns the value of the 'worked_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Incident) WorkedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 16 && o.fieldSet_[16] {
+	if o != nil && o.bitmap_&65536 != 0 {
 		return o.workedAt
 	}
 	return time.Time{}
@@ -396,7 +386,7 @@ func (o *Incident) WorkedAt() time.Time {
 // GetWorkedAt returns the value of the 'worked_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Incident) GetWorkedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 16 && o.fieldSet_[16]
+	ok = o != nil && o.bitmap_&65536 != 0
 	if ok {
 		value = o.workedAt
 	}

@@ -19,84 +19,60 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// ImageOverridesBuilder contains the data and logic needed to build 'image_overrides' objects.
+//
 // ImageOverrides holds the lists of available images per cloud provider.
 type ImageOverridesBuilder struct {
-	fieldSet_ []bool
-	id        string
-	href      string
-	aws       []*AMIOverrideBuilder
-	gcp       []*GCPImageOverrideBuilder
+	bitmap_ uint32
+	id      string
+	href    string
+	aws     []*AMIOverrideBuilder
+	gcp     []*GCPImageOverrideBuilder
 }
 
 // NewImageOverrides creates a new builder of 'image_overrides' objects.
 func NewImageOverrides() *ImageOverridesBuilder {
-	return &ImageOverridesBuilder{
-		fieldSet_: make([]bool, 5),
-	}
+	return &ImageOverridesBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ImageOverridesBuilder) Link(value bool) *ImageOverridesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ImageOverridesBuilder) ID(value string) *ImageOverridesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ImageOverridesBuilder) HREF(value string) *ImageOverridesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ImageOverridesBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // AWS sets the value of the 'AWS' attribute to the given values.
 func (b *ImageOverridesBuilder) AWS(values ...*AMIOverrideBuilder) *ImageOverridesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.aws = make([]*AMIOverrideBuilder, len(values))
 	copy(b.aws, values)
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // GCP sets the value of the 'GCP' attribute to the given values.
 func (b *ImageOverridesBuilder) GCP(values ...*GCPImageOverrideBuilder) *ImageOverridesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.gcp = make([]*GCPImageOverrideBuilder, len(values))
 	copy(b.gcp, values)
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -105,10 +81,7 @@ func (b *ImageOverridesBuilder) Copy(object *ImageOverrides) *ImageOverridesBuil
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.aws != nil {
@@ -135,10 +108,7 @@ func (b *ImageOverridesBuilder) Build() (object *ImageOverrides, err error) {
 	object = new(ImageOverrides)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.aws != nil {
 		object.aws = make([]*AMIOverride, len(b.aws))
 		for i, v := range b.aws {

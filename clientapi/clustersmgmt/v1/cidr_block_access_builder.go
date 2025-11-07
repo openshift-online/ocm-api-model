@@ -19,44 +19,33 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// CIDRBlockAccessBuilder contains the data and logic needed to build 'CIDR_block_access' objects.
+//
 // Describes the CIDR Block access policy to the Kubernetes API server.
 // Currently, only supported for ARO-HCP based clusters.
 // The default policy mode is "allow_all" that is, all access is allowed.
 type CIDRBlockAccessBuilder struct {
-	fieldSet_ []bool
-	allow     *CIDRBlockAllowAccessBuilder
+	bitmap_ uint32
+	allow   *CIDRBlockAllowAccessBuilder
 }
 
 // NewCIDRBlockAccess creates a new builder of 'CIDR_block_access' objects.
 func NewCIDRBlockAccess() *CIDRBlockAccessBuilder {
-	return &CIDRBlockAccessBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &CIDRBlockAccessBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *CIDRBlockAccessBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Allow sets the value of the 'allow' attribute to the given value.
 func (b *CIDRBlockAccessBuilder) Allow(value *CIDRBlockAllowAccessBuilder) *CIDRBlockAccessBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.allow = value
 	if value != nil {
-		b.fieldSet_[0] = true
+		b.bitmap_ |= 1
 	} else {
-		b.fieldSet_[0] = false
+		b.bitmap_ &^= 1
 	}
 	return b
 }
@@ -66,10 +55,7 @@ func (b *CIDRBlockAccessBuilder) Copy(object *CIDRBlockAccess) *CIDRBlockAccessB
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.allow != nil {
 		b.allow = NewCIDRBlockAllowAccess().Copy(object.allow)
 	} else {
@@ -81,10 +67,7 @@ func (b *CIDRBlockAccessBuilder) Copy(object *CIDRBlockAccess) *CIDRBlockAccessB
 // Build creates a 'CIDR_block_access' object using the configuration stored in the builder.
 func (b *CIDRBlockAccessBuilder) Build() (object *CIDRBlockAccess, err error) {
 	object = new(CIDRBlockAccess)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.allow != nil {
 		object.allow, err = b.allow.Build()
 		if err != nil {

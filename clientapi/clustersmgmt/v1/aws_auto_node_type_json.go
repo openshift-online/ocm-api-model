@@ -42,7 +42,7 @@ func WriteAwsAutoNode(object *AwsAutoNode, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalAwsAutoNode(source interface{}) (object *AwsAutoNode, err error) {
 
 // ReadAwsAutoNode reads a value of the 'aws_auto_node' type from the given iterator.
 func ReadAwsAutoNode(iterator *jsoniter.Iterator) *AwsAutoNode {
-	object := &AwsAutoNode{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &AwsAutoNode{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadAwsAutoNode(iterator *jsoniter.Iterator) *AwsAutoNode {
 		case "role_arn":
 			value := iterator.ReadString()
 			object.roleArn = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

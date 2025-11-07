@@ -42,7 +42,7 @@ func WriteMonitoringStackResources(object *MonitoringStackResources, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.limits != nil
+	present_ = object.bitmap_&1 != 0 && object.limits != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteMonitoringStackResources(object *MonitoringStackResources, stream *jso
 		WriteMonitoringStackResource(object.limits, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.requests != nil
+	present_ = object.bitmap_&2 != 0 && object.requests != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalMonitoringStackResources(source interface{}) (object *MonitoringSt
 
 // ReadMonitoringStackResources reads a value of the 'monitoring_stack_resources' type from the given iterator.
 func ReadMonitoringStackResources(iterator *jsoniter.Iterator) *MonitoringStackResources {
-	object := &MonitoringStackResources{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &MonitoringStackResources{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadMonitoringStackResources(iterator *jsoniter.Iterator) *MonitoringStackR
 		case "limits":
 			value := ReadMonitoringStackResource(iterator)
 			object.limits = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "requests":
 			value := ReadMonitoringStackResource(iterator)
 			object.requests = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

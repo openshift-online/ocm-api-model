@@ -43,7 +43,7 @@ func WriteMetricsFederation(object *MetricsFederation, stream *jsoniter.Stream) 
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.matchLabels != nil
+	present_ = object.bitmap_&1 != 0 && object.matchLabels != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -72,7 +72,7 @@ func WriteMetricsFederation(object *MetricsFederation, stream *jsoniter.Stream) 
 		}
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.matchNames != nil
+	present_ = object.bitmap_&2 != 0 && object.matchNames != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -81,7 +81,7 @@ func WriteMetricsFederation(object *MetricsFederation, stream *jsoniter.Stream) 
 		WriteStringList(object.matchNames, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -90,7 +90,7 @@ func WriteMetricsFederation(object *MetricsFederation, stream *jsoniter.Stream) 
 		stream.WriteString(object.namespace)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -115,9 +115,7 @@ func UnmarshalMetricsFederation(source interface{}) (object *MetricsFederation, 
 
 // ReadMetricsFederation reads a value of the 'metrics_federation' type from the given iterator.
 func ReadMetricsFederation(iterator *jsoniter.Iterator) *MetricsFederation {
-	object := &MetricsFederation{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &MetricsFederation{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -135,19 +133,19 @@ func ReadMetricsFederation(iterator *jsoniter.Iterator) *MetricsFederation {
 				value[key] = item
 			}
 			object.matchLabels = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "match_names":
 			value := ReadStringList(iterator)
 			object.matchNames = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "namespace":
 			value := iterator.ReadString()
 			object.namespace = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "port_name":
 			value := iterator.ReadString()
 			object.portName = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

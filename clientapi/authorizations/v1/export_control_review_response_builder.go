@@ -19,38 +19,26 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
+// ExportControlReviewResponseBuilder contains the data and logic needed to build 'export_control_review_response' objects.
 type ExportControlReviewResponseBuilder struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	restricted bool
 }
 
 // NewExportControlReviewResponse creates a new builder of 'export_control_review_response' objects.
 func NewExportControlReviewResponse() *ExportControlReviewResponseBuilder {
-	return &ExportControlReviewResponseBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &ExportControlReviewResponseBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ExportControlReviewResponseBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Restricted sets the value of the 'restricted' attribute to the given value.
 func (b *ExportControlReviewResponseBuilder) Restricted(value bool) *ExportControlReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.restricted = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -59,10 +47,7 @@ func (b *ExportControlReviewResponseBuilder) Copy(object *ExportControlReviewRes
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.restricted = object.restricted
 	return b
 }
@@ -70,10 +55,7 @@ func (b *ExportControlReviewResponseBuilder) Copy(object *ExportControlReviewRes
 // Build creates a 'export_control_review_response' object using the configuration stored in the builder.
 func (b *ExportControlReviewResponseBuilder) Build() (object *ExportControlReviewResponse, err error) {
 	object = new(ExportControlReviewResponse)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.restricted = b.restricted
 	return
 }

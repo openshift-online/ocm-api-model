@@ -39,7 +39,7 @@ const ClusterResourcesNilKind = "ClusterResourcesNil"
 //
 // Cluster Resource which belongs to a cluster, example Cluster Deployment.
 type ClusterResources struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	id                string
 	href              string
 	clusterID         string
@@ -52,7 +52,7 @@ func (o *ClusterResources) Kind() string {
 	if o == nil {
 		return ClusterResourcesNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return ClusterResourcesLinkKind
 	}
 	return ClusterResourcesKind
@@ -60,12 +60,12 @@ func (o *ClusterResources) Kind() string {
 
 // Link returns true if this is a link.
 func (o *ClusterResources) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *ClusterResources) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -74,7 +74,7 @@ func (o *ClusterResources) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *ClusterResources) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -83,7 +83,7 @@ func (o *ClusterResources) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *ClusterResources) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -92,7 +92,7 @@ func (o *ClusterResources) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *ClusterResources) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -101,17 +101,7 @@ func (o *ClusterResources) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterResources) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // ClusterID returns the value of the 'cluster_ID' attribute, or
@@ -119,7 +109,7 @@ func (o *ClusterResources) Empty() bool {
 //
 // Cluster ID for the fetched resources
 func (o *ClusterResources) ClusterID() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.clusterID
 	}
 	return ""
@@ -130,7 +120,7 @@ func (o *ClusterResources) ClusterID() string {
 //
 // Cluster ID for the fetched resources
 func (o *ClusterResources) GetClusterID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.clusterID
 	}
@@ -142,7 +132,7 @@ func (o *ClusterResources) GetClusterID() (value string, ok bool) {
 //
 // Date and time when the resources were fetched.
 func (o *ClusterResources) CreationTimestamp() time.Time {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.creationTimestamp
 	}
 	return time.Time{}
@@ -153,7 +143,7 @@ func (o *ClusterResources) CreationTimestamp() time.Time {
 //
 // Date and time when the resources were fetched.
 func (o *ClusterResources) GetCreationTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.creationTimestamp
 	}
@@ -165,7 +155,7 @@ func (o *ClusterResources) GetCreationTimestamp() (value time.Time, ok bool) {
 //
 // Returned map of cluster resources fetched.
 func (o *ClusterResources) Resources() map[string]string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.resources
 	}
 	return nil
@@ -176,7 +166,7 @@ func (o *ClusterResources) Resources() map[string]string {
 //
 // Returned map of cluster resources fetched.
 func (o *ClusterResources) GetResources() (value map[string]string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.resources
 	}

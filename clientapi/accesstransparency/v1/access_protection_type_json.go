@@ -42,7 +42,7 @@ func WriteAccessProtection(object *AccessProtection, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalAccessProtection(source interface{}) (object *AccessProtection, er
 
 // ReadAccessProtection reads a value of the 'access_protection' type from the given iterator.
 func ReadAccessProtection(iterator *jsoniter.Iterator) *AccessProtection {
-	object := &AccessProtection{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &AccessProtection{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadAccessProtection(iterator *jsoniter.Iterator) *AccessProtection {
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

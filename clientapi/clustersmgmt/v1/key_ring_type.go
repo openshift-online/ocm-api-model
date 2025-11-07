@@ -35,10 +35,10 @@ const KeyRingNilKind = "KeyRingNil"
 //
 // Description of a cloud provider key ring.
 type KeyRing struct {
-	fieldSet_ []bool
-	id        string
-	href      string
-	name      string
+	bitmap_ uint32
+	id      string
+	href    string
+	name    string
 }
 
 // Kind returns the name of the type of the object.
@@ -46,7 +46,7 @@ func (o *KeyRing) Kind() string {
 	if o == nil {
 		return KeyRingNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return KeyRingLinkKind
 	}
 	return KeyRingKind
@@ -54,12 +54,12 @@ func (o *KeyRing) Kind() string {
 
 // Link returns true if this is a link.
 func (o *KeyRing) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *KeyRing) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -68,7 +68,7 @@ func (o *KeyRing) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *KeyRing) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -77,7 +77,7 @@ func (o *KeyRing) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *KeyRing) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -86,7 +86,7 @@ func (o *KeyRing) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *KeyRing) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -95,17 +95,7 @@ func (o *KeyRing) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *KeyRing) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // Name returns the value of the 'name' attribute, or
@@ -113,7 +103,7 @@ func (o *KeyRing) Empty() bool {
 //
 // Name of the key ring.
 func (o *KeyRing) Name() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.name
 	}
 	return ""
@@ -124,7 +114,7 @@ func (o *KeyRing) Name() string {
 //
 // Name of the key ring.
 func (o *KeyRing) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.name
 	}

@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Details for `SdnToOvn` cluster migrations.
 type SdnToOvnClusterMigration struct {
-	fieldSet_      []bool
+	bitmap_        uint32
 	joinIpv4       string
 	masqueradeIpv4 string
 	transitIpv4    string
@@ -31,15 +31,7 @@ type SdnToOvnClusterMigration struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *SdnToOvnClusterMigration) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // JoinIpv4 returns the value of the 'join_ipv_4' attribute, or
@@ -48,7 +40,7 @@ func (o *SdnToOvnClusterMigration) Empty() bool {
 // The IP address range to use for the internalJoinSubnet parameter of OVN-Kubernetes
 // upon migration.
 func (o *SdnToOvnClusterMigration) JoinIpv4() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.joinIpv4
 	}
 	return ""
@@ -60,7 +52,7 @@ func (o *SdnToOvnClusterMigration) JoinIpv4() string {
 // The IP address range to use for the internalJoinSubnet parameter of OVN-Kubernetes
 // upon migration.
 func (o *SdnToOvnClusterMigration) GetJoinIpv4() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.joinIpv4
 	}
@@ -73,7 +65,7 @@ func (o *SdnToOvnClusterMigration) GetJoinIpv4() (value string, ok bool) {
 // The IP address range to us for the internalMasqueradeSubnet parameter of OVN-Kubernetes
 // upon migration.
 func (o *SdnToOvnClusterMigration) MasqueradeIpv4() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.masqueradeIpv4
 	}
 	return ""
@@ -85,7 +77,7 @@ func (o *SdnToOvnClusterMigration) MasqueradeIpv4() string {
 // The IP address range to us for the internalMasqueradeSubnet parameter of OVN-Kubernetes
 // upon migration.
 func (o *SdnToOvnClusterMigration) GetMasqueradeIpv4() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.masqueradeIpv4
 	}
@@ -98,7 +90,7 @@ func (o *SdnToOvnClusterMigration) GetMasqueradeIpv4() (value string, ok bool) {
 // The IP address range to use for the internalTransSwitchSubnet parameter of OVN-Kubernetes
 // upon migration.
 func (o *SdnToOvnClusterMigration) TransitIpv4() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.transitIpv4
 	}
 	return ""
@@ -110,7 +102,7 @@ func (o *SdnToOvnClusterMigration) TransitIpv4() string {
 // The IP address range to use for the internalTransSwitchSubnet parameter of OVN-Kubernetes
 // upon migration.
 func (o *SdnToOvnClusterMigration) GetTransitIpv4() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.transitIpv4
 	}

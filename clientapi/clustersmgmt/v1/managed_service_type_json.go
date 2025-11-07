@@ -42,7 +42,7 @@ func WriteManagedService(object *ManagedService, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalManagedService(source interface{}) (object *ManagedService, err er
 
 // ReadManagedService reads a value of the 'managed_service' type from the given iterator.
 func ReadManagedService(iterator *jsoniter.Iterator) *ManagedService {
-	object := &ManagedService{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &ManagedService{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadManagedService(iterator *jsoniter.Iterator) *ManagedService {
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

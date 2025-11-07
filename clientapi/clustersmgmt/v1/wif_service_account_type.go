@@ -21,7 +21,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // WifServiceAccount represents the values of the 'wif_service_account' type.
 type WifServiceAccount struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	accessMethod      WifAccessMethod
 	credentialRequest *WifCredentialRequest
 	osdRole           string
@@ -31,21 +31,13 @@ type WifServiceAccount struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *WifServiceAccount) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // AccessMethod returns the value of the 'access_method' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifServiceAccount) AccessMethod() WifAccessMethod {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.accessMethod
 	}
 	return WifAccessMethod("")
@@ -54,7 +46,7 @@ func (o *WifServiceAccount) AccessMethod() WifAccessMethod {
 // GetAccessMethod returns the value of the 'access_method' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifServiceAccount) GetAccessMethod() (value WifAccessMethod, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.accessMethod
 	}
@@ -64,7 +56,7 @@ func (o *WifServiceAccount) GetAccessMethod() (value WifAccessMethod, ok bool) {
 // CredentialRequest returns the value of the 'credential_request' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifServiceAccount) CredentialRequest() *WifCredentialRequest {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.credentialRequest
 	}
 	return nil
@@ -73,7 +65,7 @@ func (o *WifServiceAccount) CredentialRequest() *WifCredentialRequest {
 // GetCredentialRequest returns the value of the 'credential_request' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifServiceAccount) GetCredentialRequest() (value *WifCredentialRequest, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.credentialRequest
 	}
@@ -83,7 +75,7 @@ func (o *WifServiceAccount) GetCredentialRequest() (value *WifCredentialRequest,
 // OsdRole returns the value of the 'osd_role' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifServiceAccount) OsdRole() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.osdRole
 	}
 	return ""
@@ -92,7 +84,7 @@ func (o *WifServiceAccount) OsdRole() string {
 // GetOsdRole returns the value of the 'osd_role' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifServiceAccount) GetOsdRole() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.osdRole
 	}
@@ -102,7 +94,7 @@ func (o *WifServiceAccount) GetOsdRole() (value string, ok bool) {
 // Roles returns the value of the 'roles' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifServiceAccount) Roles() []*WifRole {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.roles
 	}
 	return nil
@@ -111,7 +103,7 @@ func (o *WifServiceAccount) Roles() []*WifRole {
 // GetRoles returns the value of the 'roles' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifServiceAccount) GetRoles() (value []*WifRole, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.roles
 	}
@@ -121,7 +113,7 @@ func (o *WifServiceAccount) GetRoles() (value []*WifRole, ok bool) {
 // ServiceAccountId returns the value of the 'service_account_id' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifServiceAccount) ServiceAccountId() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.serviceAccountId
 	}
 	return ""
@@ -130,7 +122,7 @@ func (o *WifServiceAccount) ServiceAccountId() string {
 // GetServiceAccountId returns the value of the 'service_account_id' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifServiceAccount) GetServiceAccountId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.serviceAccountId
 	}

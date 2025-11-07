@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// MachinePoolBuilder contains the data and logic needed to build 'machine_pool' objects.
+//
 // Representation of a machine pool in a cluster.
 type MachinePoolBuilder struct {
-	fieldSet_            []bool
+	bitmap_              uint32
 	id                   string
 	href                 string
 	aws                  *AWSMachinePoolBuilder
@@ -39,66 +41,43 @@ type MachinePoolBuilder struct {
 
 // NewMachinePool creates a new builder of 'machine_pool' objects.
 func NewMachinePool() *MachinePoolBuilder {
-	return &MachinePoolBuilder{
-		fieldSet_: make([]bool, 14),
-	}
+	return &MachinePoolBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *MachinePoolBuilder) Link(value bool) *MachinePoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *MachinePoolBuilder) ID(value string) *MachinePoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *MachinePoolBuilder) HREF(value string) *MachinePoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *MachinePoolBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // AWS sets the value of the 'AWS' attribute to the given value.
 //
 // Representation of aws machine pool specific parameters.
 func (b *MachinePoolBuilder) AWS(value *AWSMachinePoolBuilder) *MachinePoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.aws = value
 	if value != nil {
-		b.fieldSet_[3] = true
+		b.bitmap_ |= 8
 	} else {
-		b.fieldSet_[3] = false
+		b.bitmap_ &^= 8
 	}
 	return b
 }
@@ -107,14 +86,11 @@ func (b *MachinePoolBuilder) AWS(value *AWSMachinePoolBuilder) *MachinePoolBuild
 //
 // Representation of gcp machine pool specific parameters.
 func (b *MachinePoolBuilder) GCP(value *GCPMachinePoolBuilder) *MachinePoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.gcp = value
 	if value != nil {
-		b.fieldSet_[4] = true
+		b.bitmap_ |= 16
 	} else {
-		b.fieldSet_[4] = false
+		b.bitmap_ &^= 16
 	}
 	return b
 }
@@ -123,60 +99,45 @@ func (b *MachinePoolBuilder) GCP(value *GCPMachinePoolBuilder) *MachinePoolBuild
 //
 // Representation of a autoscaling in a machine pool.
 func (b *MachinePoolBuilder) Autoscaling(value *MachinePoolAutoscalingBuilder) *MachinePoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.autoscaling = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
 
 // AvailabilityZones sets the value of the 'availability_zones' attribute to the given values.
 func (b *MachinePoolBuilder) AvailabilityZones(values ...string) *MachinePoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.availabilityZones = make([]string, len(values))
 	copy(b.availabilityZones, values)
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // InstanceType sets the value of the 'instance_type' attribute to the given value.
 func (b *MachinePoolBuilder) InstanceType(value string) *MachinePoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.instanceType = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // Labels sets the value of the 'labels' attribute to the given value.
 func (b *MachinePoolBuilder) Labels(value map[string]string) *MachinePoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.labels = value
 	if value != nil {
-		b.fieldSet_[8] = true
+		b.bitmap_ |= 256
 	} else {
-		b.fieldSet_[8] = false
+		b.bitmap_ &^= 256
 	}
 	return b
 }
 
 // Replicas sets the value of the 'replicas' attribute to the given value.
 func (b *MachinePoolBuilder) Replicas(value int) *MachinePoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.replicas = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
@@ -184,48 +145,36 @@ func (b *MachinePoolBuilder) Replicas(value int) *MachinePoolBuilder {
 //
 // Root volume capabilities.
 func (b *MachinePoolBuilder) RootVolume(value *RootVolumeBuilder) *MachinePoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.rootVolume = value
 	if value != nil {
-		b.fieldSet_[10] = true
+		b.bitmap_ |= 1024
 	} else {
-		b.fieldSet_[10] = false
+		b.bitmap_ &^= 1024
 	}
 	return b
 }
 
 // SecurityGroupFilters sets the value of the 'security_group_filters' attribute to the given values.
 func (b *MachinePoolBuilder) SecurityGroupFilters(values ...*MachinePoolSecurityGroupFilterBuilder) *MachinePoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.securityGroupFilters = make([]*MachinePoolSecurityGroupFilterBuilder, len(values))
 	copy(b.securityGroupFilters, values)
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
 // Subnets sets the value of the 'subnets' attribute to the given values.
 func (b *MachinePoolBuilder) Subnets(values ...string) *MachinePoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.subnets = make([]string, len(values))
 	copy(b.subnets, values)
-	b.fieldSet_[12] = true
+	b.bitmap_ |= 4096
 	return b
 }
 
 // Taints sets the value of the 'taints' attribute to the given values.
 func (b *MachinePoolBuilder) Taints(values ...*TaintBuilder) *MachinePoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.taints = make([]*TaintBuilder, len(values))
 	copy(b.taints, values)
-	b.fieldSet_[13] = true
+	b.bitmap_ |= 8192
 	return b
 }
 
@@ -234,10 +183,7 @@ func (b *MachinePoolBuilder) Copy(object *MachinePool) *MachinePoolBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.aws != nil {
@@ -306,10 +252,7 @@ func (b *MachinePoolBuilder) Build() (object *MachinePool, err error) {
 	object = new(MachinePool)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.aws != nil {
 		object.aws, err = b.aws.Build()
 		if err != nil {

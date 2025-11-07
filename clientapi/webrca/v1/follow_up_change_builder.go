@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// FollowUpChangeBuilder contains the data and logic needed to build 'follow_up_change' objects.
+//
 // Definition of a Web RCA event.
 type FollowUpChangeBuilder struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	id        string
 	href      string
 	createdAt time.Time
@@ -37,71 +39,45 @@ type FollowUpChangeBuilder struct {
 
 // NewFollowUpChange creates a new builder of 'follow_up_change' objects.
 func NewFollowUpChange() *FollowUpChangeBuilder {
-	return &FollowUpChangeBuilder{
-		fieldSet_: make([]bool, 8),
-	}
+	return &FollowUpChangeBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *FollowUpChangeBuilder) Link(value bool) *FollowUpChangeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *FollowUpChangeBuilder) ID(value string) *FollowUpChangeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *FollowUpChangeBuilder) HREF(value string) *FollowUpChangeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *FollowUpChangeBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *FollowUpChangeBuilder) CreatedAt(value time.Time) *FollowUpChangeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.createdAt = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *FollowUpChangeBuilder) DeletedAt(value time.Time) *FollowUpChangeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.deletedAt = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -109,35 +85,26 @@ func (b *FollowUpChangeBuilder) DeletedAt(value time.Time) *FollowUpChangeBuilde
 //
 // Definition of a Web RCA event.
 func (b *FollowUpChangeBuilder) FollowUp(value *FollowUpBuilder) *FollowUpChangeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.followUp = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *FollowUpChangeBuilder) Status(value interface{}) *FollowUpChangeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.status = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *FollowUpChangeBuilder) UpdatedAt(value time.Time) *FollowUpChangeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.updatedAt = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
@@ -146,10 +113,7 @@ func (b *FollowUpChangeBuilder) Copy(object *FollowUpChange) *FollowUpChangeBuil
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.createdAt = object.createdAt
@@ -169,10 +133,7 @@ func (b *FollowUpChangeBuilder) Build() (object *FollowUpChange, err error) {
 	object = new(FollowUpChange)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.createdAt = b.createdAt
 	object.deletedAt = b.deletedAt
 	if b.followUp != nil {

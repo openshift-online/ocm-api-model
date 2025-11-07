@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// EventBuilder contains the data and logic needed to build 'event' objects.
+//
 // Definition of a Web RCA event.
 type EventBuilder struct {
-	fieldSet_            []bool
+	bitmap_              uint32
 	id                   string
 	href                 string
 	createdAt            time.Time
@@ -45,61 +47,38 @@ type EventBuilder struct {
 
 // NewEvent creates a new builder of 'event' objects.
 func NewEvent() *EventBuilder {
-	return &EventBuilder{
-		fieldSet_: make([]bool, 16),
-	}
+	return &EventBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *EventBuilder) Link(value bool) *EventBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 16)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *EventBuilder) ID(value string) *EventBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 16)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *EventBuilder) HREF(value string) *EventBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 16)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *EventBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *EventBuilder) CreatedAt(value time.Time) *EventBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 16)
-	}
 	b.createdAt = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -107,25 +86,19 @@ func (b *EventBuilder) CreatedAt(value time.Time) *EventBuilder {
 //
 // Definition of a Web RCA user.
 func (b *EventBuilder) Creator(value *UserBuilder) *EventBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 16)
-	}
 	b.creator = value
 	if value != nil {
-		b.fieldSet_[4] = true
+		b.bitmap_ |= 16
 	} else {
-		b.fieldSet_[4] = false
+		b.bitmap_ &^= 16
 	}
 	return b
 }
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *EventBuilder) DeletedAt(value time.Time) *EventBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 16)
-	}
 	b.deletedAt = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
@@ -133,35 +106,26 @@ func (b *EventBuilder) DeletedAt(value time.Time) *EventBuilder {
 //
 // Definition of a Web RCA escalation.
 func (b *EventBuilder) Escalation(value *EscalationBuilder) *EventBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 16)
-	}
 	b.escalation = value
 	if value != nil {
-		b.fieldSet_[6] = true
+		b.bitmap_ |= 64
 	} else {
-		b.fieldSet_[6] = false
+		b.bitmap_ &^= 64
 	}
 	return b
 }
 
 // EventType sets the value of the 'event_type' attribute to the given value.
 func (b *EventBuilder) EventType(value string) *EventBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 16)
-	}
 	b.eventType = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // ExternalReferenceUrl sets the value of the 'external_reference_url' attribute to the given value.
 func (b *EventBuilder) ExternalReferenceUrl(value string) *EventBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 16)
-	}
 	b.externalReferenceUrl = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
@@ -169,14 +133,11 @@ func (b *EventBuilder) ExternalReferenceUrl(value string) *EventBuilder {
 //
 // Definition of a Web RCA event.
 func (b *EventBuilder) FollowUp(value *FollowUpBuilder) *EventBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 16)
-	}
 	b.followUp = value
 	if value != nil {
-		b.fieldSet_[9] = true
+		b.bitmap_ |= 512
 	} else {
-		b.fieldSet_[9] = false
+		b.bitmap_ &^= 512
 	}
 	return b
 }
@@ -185,14 +146,11 @@ func (b *EventBuilder) FollowUp(value *FollowUpBuilder) *EventBuilder {
 //
 // Definition of a Web RCA event.
 func (b *EventBuilder) FollowUpChange(value *FollowUpChangeBuilder) *EventBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 16)
-	}
 	b.followUpChange = value
 	if value != nil {
-		b.fieldSet_[10] = true
+		b.bitmap_ |= 1024
 	} else {
-		b.fieldSet_[10] = false
+		b.bitmap_ &^= 1024
 	}
 	return b
 }
@@ -201,14 +159,11 @@ func (b *EventBuilder) FollowUpChange(value *FollowUpChangeBuilder) *EventBuilde
 //
 // Definition of a Web RCA handoff.
 func (b *EventBuilder) Handoff(value *HandoffBuilder) *EventBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 16)
-	}
 	b.handoff = value
 	if value != nil {
-		b.fieldSet_[11] = true
+		b.bitmap_ |= 2048
 	} else {
-		b.fieldSet_[11] = false
+		b.bitmap_ &^= 2048
 	}
 	return b
 }
@@ -217,25 +172,19 @@ func (b *EventBuilder) Handoff(value *HandoffBuilder) *EventBuilder {
 //
 // Definition of a Web RCA incident.
 func (b *EventBuilder) Incident(value *IncidentBuilder) *EventBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 16)
-	}
 	b.incident = value
 	if value != nil {
-		b.fieldSet_[12] = true
+		b.bitmap_ |= 4096
 	} else {
-		b.fieldSet_[12] = false
+		b.bitmap_ &^= 4096
 	}
 	return b
 }
 
 // Note sets the value of the 'note' attribute to the given value.
 func (b *EventBuilder) Note(value string) *EventBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 16)
-	}
 	b.note = value
-	b.fieldSet_[13] = true
+	b.bitmap_ |= 8192
 	return b
 }
 
@@ -243,25 +192,19 @@ func (b *EventBuilder) Note(value string) *EventBuilder {
 //
 // Definition of a Web RCA event.
 func (b *EventBuilder) StatusChange(value *StatusChangeBuilder) *EventBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 16)
-	}
 	b.statusChange = value
 	if value != nil {
-		b.fieldSet_[14] = true
+		b.bitmap_ |= 16384
 	} else {
-		b.fieldSet_[14] = false
+		b.bitmap_ &^= 16384
 	}
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *EventBuilder) UpdatedAt(value time.Time) *EventBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 16)
-	}
 	b.updatedAt = value
-	b.fieldSet_[15] = true
+	b.bitmap_ |= 32768
 	return b
 }
 
@@ -270,10 +213,7 @@ func (b *EventBuilder) Copy(object *Event) *EventBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.createdAt = object.createdAt
@@ -325,10 +265,7 @@ func (b *EventBuilder) Build() (object *Event, err error) {
 	object = new(Event)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.createdAt = b.createdAt
 	if b.creator != nil {
 		object.creator, err = b.creator.Build()

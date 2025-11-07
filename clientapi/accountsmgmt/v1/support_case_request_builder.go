@@ -19,8 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
+// SupportCaseRequestBuilder contains the data and logic needed to build 'support_case_request' objects.
 type SupportCaseRequestBuilder struct {
-	fieldSet_      []bool
+	bitmap_        uint32
 	id             string
 	href           string
 	clusterId      string
@@ -34,121 +35,80 @@ type SupportCaseRequestBuilder struct {
 
 // NewSupportCaseRequest creates a new builder of 'support_case_request' objects.
 func NewSupportCaseRequest() *SupportCaseRequestBuilder {
-	return &SupportCaseRequestBuilder{
-		fieldSet_: make([]bool, 10),
-	}
+	return &SupportCaseRequestBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *SupportCaseRequestBuilder) Link(value bool) *SupportCaseRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *SupportCaseRequestBuilder) ID(value string) *SupportCaseRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *SupportCaseRequestBuilder) HREF(value string) *SupportCaseRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SupportCaseRequestBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *SupportCaseRequestBuilder) ClusterId(value string) *SupportCaseRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.clusterId = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // ClusterUuid sets the value of the 'cluster_uuid' attribute to the given value.
 func (b *SupportCaseRequestBuilder) ClusterUuid(value string) *SupportCaseRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.clusterUuid = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *SupportCaseRequestBuilder) Description(value string) *SupportCaseRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.description = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // EventStreamId sets the value of the 'event_stream_id' attribute to the given value.
 func (b *SupportCaseRequestBuilder) EventStreamId(value string) *SupportCaseRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.eventStreamId = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // Severity sets the value of the 'severity' attribute to the given value.
 func (b *SupportCaseRequestBuilder) Severity(value string) *SupportCaseRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.severity = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // SubscriptionId sets the value of the 'subscription_id' attribute to the given value.
 func (b *SupportCaseRequestBuilder) SubscriptionId(value string) *SupportCaseRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.subscriptionId = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // Summary sets the value of the 'summary' attribute to the given value.
 func (b *SupportCaseRequestBuilder) Summary(value string) *SupportCaseRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.summary = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
@@ -157,10 +117,7 @@ func (b *SupportCaseRequestBuilder) Copy(object *SupportCaseRequest) *SupportCas
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.clusterId = object.clusterId
@@ -178,10 +135,7 @@ func (b *SupportCaseRequestBuilder) Build() (object *SupportCaseRequest, err err
 	object = new(SupportCaseRequest)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.clusterId = b.clusterId
 	object.clusterUuid = b.clusterUuid
 	object.description = b.description

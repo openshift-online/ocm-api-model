@@ -42,13 +42,13 @@ func WriteGenericNotifyDetailsResponse(object *GenericNotifyDetailsResponse, str
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(GenericNotifyDetailsResponseLinkKind)
 	} else {
 		stream.WriteString(GenericNotifyDetailsResponseKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteGenericNotifyDetailsResponse(object *GenericNotifyDetailsResponse, str
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteGenericNotifyDetailsResponse(object *GenericNotifyDetailsResponse, str
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.associates != nil
+	present_ = object.bitmap_&8 != 0 && object.associates != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteGenericNotifyDetailsResponse(object *GenericNotifyDetailsResponse, str
 		WriteStringList(object.associates, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.items != nil
+	present_ = object.bitmap_&16 != 0 && object.items != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteGenericNotifyDetailsResponse(object *GenericNotifyDetailsResponse, str
 		WriteNotificationDetailsResponseList(object.items, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.recipients != nil
+	present_ = object.bitmap_&32 != 0 && object.recipients != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -108,9 +108,7 @@ func UnmarshalGenericNotifyDetailsResponse(source interface{}) (object *GenericN
 
 // ReadGenericNotifyDetailsResponse reads a value of the 'generic_notify_details_response' type from the given iterator.
 func ReadGenericNotifyDetailsResponse(iterator *jsoniter.Iterator) *GenericNotifyDetailsResponse {
-	object := &GenericNotifyDetailsResponse{
-		fieldSet_: make([]bool, 6),
-	}
+	object := &GenericNotifyDetailsResponse{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -120,26 +118,26 @@ func ReadGenericNotifyDetailsResponse(iterator *jsoniter.Iterator) *GenericNotif
 		case "kind":
 			value := iterator.ReadString()
 			if value == GenericNotifyDetailsResponseLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "associates":
 			value := ReadStringList(iterator)
 			object.associates = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "items":
 			value := ReadNotificationDetailsResponseList(iterator)
 			object.items = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "recipients":
 			value := ReadStringList(iterator)
 			object.recipients = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		default:
 			iterator.ReadAny()
 		}

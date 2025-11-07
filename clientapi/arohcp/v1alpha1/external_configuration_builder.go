@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// ExternalConfigurationBuilder contains the data and logic needed to build 'external_configuration' objects.
+//
 // Representation of cluster external configuration.
 type ExternalConfigurationBuilder struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	labels    *LabelListBuilder
 	manifests *ManifestListBuilder
 	syncsets  *SyncsetListBuilder
@@ -29,51 +31,32 @@ type ExternalConfigurationBuilder struct {
 
 // NewExternalConfiguration creates a new builder of 'external_configuration' objects.
 func NewExternalConfiguration() *ExternalConfigurationBuilder {
-	return &ExternalConfigurationBuilder{
-		fieldSet_: make([]bool, 3),
-	}
+	return &ExternalConfigurationBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ExternalConfigurationBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Labels sets the value of the 'labels' attribute to the given values.
 func (b *ExternalConfigurationBuilder) Labels(value *LabelListBuilder) *ExternalConfigurationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.labels = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Manifests sets the value of the 'manifests' attribute to the given values.
 func (b *ExternalConfigurationBuilder) Manifests(value *ManifestListBuilder) *ExternalConfigurationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.manifests = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Syncsets sets the value of the 'syncsets' attribute to the given values.
 func (b *ExternalConfigurationBuilder) Syncsets(value *SyncsetListBuilder) *ExternalConfigurationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.syncsets = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
@@ -82,10 +65,7 @@ func (b *ExternalConfigurationBuilder) Copy(object *ExternalConfiguration) *Exte
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.labels != nil {
 		b.labels = NewLabelList().Copy(object.labels)
 	} else {
@@ -107,10 +87,7 @@ func (b *ExternalConfigurationBuilder) Copy(object *ExternalConfiguration) *Exte
 // Build creates a 'external_configuration' object using the configuration stored in the builder.
 func (b *ExternalConfigurationBuilder) Build() (object *ExternalConfiguration, err error) {
 	object = new(ExternalConfiguration)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.labels != nil {
 		object.labels, err = b.labels.Build()
 		if err != nil {

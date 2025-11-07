@@ -42,7 +42,7 @@ func WriteAWSShard(object *AWSShard, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.ecrRepositoryURLs != nil
+	present_ = object.bitmap_&1 != 0 && object.ecrRepositoryURLs != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAWSShard(object *AWSShard, stream *jsoniter.Stream) {
 		WriteStringList(object.ecrRepositoryURLs, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.backupConfigs != nil
+	present_ = object.bitmap_&2 != 0 && object.backupConfigs != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalAWSShard(source interface{}) (object *AWSShard, err error) {
 
 // ReadAWSShard reads a value of the 'AWS_shard' type from the given iterator.
 func ReadAWSShard(iterator *jsoniter.Iterator) *AWSShard {
-	object := &AWSShard{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &AWSShard{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadAWSShard(iterator *jsoniter.Iterator) *AWSShard {
 		case "ecr_repository_urls":
 			value := ReadStringList(iterator)
 			object.ecrRepositoryURLs = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "backup_configs":
 			value := ReadAWSBackupConfigList(iterator)
 			object.backupConfigs = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

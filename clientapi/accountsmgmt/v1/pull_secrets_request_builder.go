@@ -19,38 +19,26 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
+// PullSecretsRequestBuilder contains the data and logic needed to build 'pull_secrets_request' objects.
 type PullSecretsRequestBuilder struct {
-	fieldSet_          []bool
+	bitmap_            uint32
 	externalResourceId string
 }
 
 // NewPullSecretsRequest creates a new builder of 'pull_secrets_request' objects.
 func NewPullSecretsRequest() *PullSecretsRequestBuilder {
-	return &PullSecretsRequestBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &PullSecretsRequestBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *PullSecretsRequestBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ExternalResourceId sets the value of the 'external_resource_id' attribute to the given value.
 func (b *PullSecretsRequestBuilder) ExternalResourceId(value string) *PullSecretsRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.externalResourceId = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -59,10 +47,7 @@ func (b *PullSecretsRequestBuilder) Copy(object *PullSecretsRequest) *PullSecret
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.externalResourceId = object.externalResourceId
 	return b
 }
@@ -70,10 +55,7 @@ func (b *PullSecretsRequestBuilder) Copy(object *PullSecretsRequest) *PullSecret
 // Build creates a 'pull_secrets_request' object using the configuration stored in the builder.
 func (b *PullSecretsRequestBuilder) Build() (object *PullSecretsRequest, err error) {
 	object = new(PullSecretsRequest)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.externalResourceId = b.externalResourceId
 	return
 }

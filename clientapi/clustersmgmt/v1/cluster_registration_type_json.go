@@ -42,7 +42,7 @@ func WriteClusterRegistration(object *ClusterRegistration, stream *jsoniter.Stre
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteClusterRegistration(object *ClusterRegistration, stream *jsoniter.Stre
 		stream.WriteString(object.consoleUrl)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteClusterRegistration(object *ClusterRegistration, stream *jsoniter.Stre
 		stream.WriteString(object.externalID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteClusterRegistration(object *ClusterRegistration, stream *jsoniter.Stre
 		stream.WriteString(object.organizationID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,9 +94,7 @@ func UnmarshalClusterRegistration(source interface{}) (object *ClusterRegistrati
 
 // ReadClusterRegistration reads a value of the 'cluster_registration' type from the given iterator.
 func ReadClusterRegistration(iterator *jsoniter.Iterator) *ClusterRegistration {
-	object := &ClusterRegistration{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &ClusterRegistration{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -106,19 +104,19 @@ func ReadClusterRegistration(iterator *jsoniter.Iterator) *ClusterRegistration {
 		case "console_url":
 			value := iterator.ReadString()
 			object.consoleUrl = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "external_id":
 			value := iterator.ReadString()
 			object.externalID = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "organization_id":
 			value := iterator.ReadString()
 			object.organizationID = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "subscription_id":
 			value := iterator.ReadString()
 			object.subscriptionID = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

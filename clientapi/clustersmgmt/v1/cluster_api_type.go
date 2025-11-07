@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Information about the API of a cluster.
 type ClusterAPI struct {
-	fieldSet_       []bool
+	bitmap_         uint32
 	cidrBlockAccess *CIDRBlockAccess
 	url             string
 	listening       ListeningMethod
@@ -31,15 +31,7 @@ type ClusterAPI struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterAPI) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // CIDRBlockAccess returns the value of the 'CIDR_block_access' attribute, or
@@ -47,7 +39,7 @@ func (o *ClusterAPI) Empty() bool {
 //
 // Describes the CIDR Block access policy to the Kubernetes API server.
 func (o *ClusterAPI) CIDRBlockAccess() *CIDRBlockAccess {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.cidrBlockAccess
 	}
 	return nil
@@ -58,7 +50,7 @@ func (o *ClusterAPI) CIDRBlockAccess() *CIDRBlockAccess {
 //
 // Describes the CIDR Block access policy to the Kubernetes API server.
 func (o *ClusterAPI) GetCIDRBlockAccess() (value *CIDRBlockAccess, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.cidrBlockAccess
 	}
@@ -70,7 +62,7 @@ func (o *ClusterAPI) GetCIDRBlockAccess() (value *CIDRBlockAccess, ok bool) {
 //
 // The URL of the API server of the cluster.
 func (o *ClusterAPI) URL() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.url
 	}
 	return ""
@@ -81,7 +73,7 @@ func (o *ClusterAPI) URL() string {
 //
 // The URL of the API server of the cluster.
 func (o *ClusterAPI) GetURL() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.url
 	}
@@ -93,7 +85,7 @@ func (o *ClusterAPI) GetURL() (value string, ok bool) {
 //
 // The listening method of the API server.
 func (o *ClusterAPI) Listening() ListeningMethod {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.listening
 	}
 	return ListeningMethod("")
@@ -104,7 +96,7 @@ func (o *ClusterAPI) Listening() ListeningMethod {
 //
 // The listening method of the API server.
 func (o *ClusterAPI) GetListening() (value ListeningMethod, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.listening
 	}

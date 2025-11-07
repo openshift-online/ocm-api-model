@@ -42,7 +42,7 @@ func WriteStsSupportJumpRole(object *StsSupportJumpRole, stream *jsoniter.Stream
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalStsSupportJumpRole(source interface{}) (object *StsSupportJumpRole
 
 // ReadStsSupportJumpRole reads a value of the 'sts_support_jump_role' type from the given iterator.
 func ReadStsSupportJumpRole(iterator *jsoniter.Iterator) *StsSupportJumpRole {
-	object := &StsSupportJumpRole{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &StsSupportJumpRole{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadStsSupportJumpRole(iterator *jsoniter.Iterator) *StsSupportJumpRole {
 		case "role_arn":
 			value := iterator.ReadString()
 			object.roleArn = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

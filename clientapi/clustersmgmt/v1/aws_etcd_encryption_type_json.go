@@ -42,7 +42,7 @@ func WriteAwsEtcdEncryption(object *AwsEtcdEncryption, stream *jsoniter.Stream) 
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalAwsEtcdEncryption(source interface{}) (object *AwsEtcdEncryption, 
 
 // ReadAwsEtcdEncryption reads a value of the 'aws_etcd_encryption' type from the given iterator.
 func ReadAwsEtcdEncryption(iterator *jsoniter.Iterator) *AwsEtcdEncryption {
-	object := &AwsEtcdEncryption{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &AwsEtcdEncryption{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadAwsEtcdEncryption(iterator *jsoniter.Iterator) *AwsEtcdEncryption {
 		case "kms_key_arn":
 			value := iterator.ReadString()
 			object.kmsKeyARN = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

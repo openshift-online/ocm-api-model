@@ -19,39 +19,28 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// GCPMachinePoolBuilder contains the data and logic needed to build 'GCP_machine_pool' objects.
+//
 // Representation of gcp machine pool specific parameters.
 type GCPMachinePoolBuilder struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	secureBoot bool
 }
 
 // NewGCPMachinePool creates a new builder of 'GCP_machine_pool' objects.
 func NewGCPMachinePool() *GCPMachinePoolBuilder {
-	return &GCPMachinePoolBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &GCPMachinePoolBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GCPMachinePoolBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // SecureBoot sets the value of the 'secure_boot' attribute to the given value.
 func (b *GCPMachinePoolBuilder) SecureBoot(value bool) *GCPMachinePoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.secureBoot = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -60,10 +49,7 @@ func (b *GCPMachinePoolBuilder) Copy(object *GCPMachinePool) *GCPMachinePoolBuil
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.secureBoot = object.secureBoot
 	return b
 }
@@ -71,10 +57,7 @@ func (b *GCPMachinePoolBuilder) Copy(object *GCPMachinePool) *GCPMachinePoolBuil
 // Build creates a 'GCP_machine_pool' object using the configuration stored in the builder.
 func (b *GCPMachinePoolBuilder) Build() (object *GCPMachinePool, err error) {
 	object = new(GCPMachinePool)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.secureBoot = b.secureBoot
 	return
 }

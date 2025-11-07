@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Defines the configuration of a Node Pool's OS disk.
 type AzureNodePoolOsDisk struct {
-	fieldSet_                  []bool
+	bitmap_                    uint32
 	persistence                string
 	sizeGibibytes              int
 	sseEncryptionSetResourceId string
@@ -32,15 +32,7 @@ type AzureNodePoolOsDisk struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AzureNodePoolOsDisk) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Persistence returns the value of the 'persistence' attribute, or
@@ -52,7 +44,7 @@ func (o *AzureNodePoolOsDisk) Empty() bool {
 // * ephemeral
 // If not specified, Persistent OS Disks are used.
 func (o *AzureNodePoolOsDisk) Persistence() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.persistence
 	}
 	return ""
@@ -67,7 +59,7 @@ func (o *AzureNodePoolOsDisk) Persistence() string {
 // * ephemeral
 // If not specified, Persistent OS Disks are used.
 func (o *AzureNodePoolOsDisk) GetPersistence() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.persistence
 	}
@@ -82,7 +74,7 @@ func (o *AzureNodePoolOsDisk) GetPersistence() (value string, ok bool) {
 // is the number of bytes x 1024^3.
 // If not specified, OS disk size is 64 GiB.
 func (o *AzureNodePoolOsDisk) SizeGibibytes() int {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.sizeGibibytes
 	}
 	return 0
@@ -96,7 +88,7 @@ func (o *AzureNodePoolOsDisk) SizeGibibytes() int {
 // is the number of bytes x 1024^3.
 // If not specified, OS disk size is 64 GiB.
 func (o *AzureNodePoolOsDisk) GetSizeGibibytes() (value int, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.sizeGibibytes
 	}
@@ -118,7 +110,7 @@ func (o *AzureNodePoolOsDisk) GetSizeGibibytes() (value int, ok bool) {
 // If not specified, Server-Side Encryption (SSE) on the OS Disks of the Nodes of the Node Pool
 // is performed with platform managed keys.
 func (o *AzureNodePoolOsDisk) SseEncryptionSetResourceId() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.sseEncryptionSetResourceId
 	}
 	return ""
@@ -139,7 +131,7 @@ func (o *AzureNodePoolOsDisk) SseEncryptionSetResourceId() string {
 // If not specified, Server-Side Encryption (SSE) on the OS Disks of the Nodes of the Node Pool
 // is performed with platform managed keys.
 func (o *AzureNodePoolOsDisk) GetSseEncryptionSetResourceId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.sseEncryptionSetResourceId
 	}
@@ -158,7 +150,7 @@ func (o *AzureNodePoolOsDisk) GetSseEncryptionSetResourceId() (value string, ok 
 //
 // If not specified, `Premium_LRS` is used.
 func (o *AzureNodePoolOsDisk) StorageAccountType() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.storageAccountType
 	}
 	return ""
@@ -176,7 +168,7 @@ func (o *AzureNodePoolOsDisk) StorageAccountType() string {
 //
 // If not specified, `Premium_LRS` is used.
 func (o *AzureNodePoolOsDisk) GetStorageAccountType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.storageAccountType
 	}

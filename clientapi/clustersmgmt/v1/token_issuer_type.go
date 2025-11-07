@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Representation of a token issuer used in an external authentication.
 type TokenIssuer struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	ca        string
 	url       string
 	audiences []string
@@ -31,15 +31,7 @@ type TokenIssuer struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *TokenIssuer) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // CA returns the value of the 'CA' attribute, or
@@ -47,7 +39,7 @@ func (o *TokenIssuer) Empty() bool {
 //
 // Certificate bundle to use to validate server certificates for the configured URL.
 func (o *TokenIssuer) CA() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.ca
 	}
 	return ""
@@ -58,7 +50,7 @@ func (o *TokenIssuer) CA() string {
 //
 // Certificate bundle to use to validate server certificates for the configured URL.
 func (o *TokenIssuer) GetCA() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.ca
 	}
@@ -72,7 +64,7 @@ func (o *TokenIssuer) GetCA() (value string, ok bool) {
 // It must be a valid url and use the 'https' scheme.
 // This is required.
 func (o *TokenIssuer) URL() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.url
 	}
 	return ""
@@ -85,7 +77,7 @@ func (o *TokenIssuer) URL() string {
 // It must be a valid url and use the 'https' scheme.
 // This is required.
 func (o *TokenIssuer) GetURL() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.url
 	}
@@ -101,7 +93,7 @@ func (o *TokenIssuer) GetURL() (value string, ok bool) {
 // Must have at least one audience and a maximum of ten.
 // Any clients defined for this external authentication must have their id included here.
 func (o *TokenIssuer) Audiences() []string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.audiences
 	}
 	return nil
@@ -116,7 +108,7 @@ func (o *TokenIssuer) Audiences() []string {
 // Must have at least one audience and a maximum of ten.
 // Any clients defined for this external authentication must have their id included here.
 func (o *TokenIssuer) GetAudiences() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.audiences
 	}

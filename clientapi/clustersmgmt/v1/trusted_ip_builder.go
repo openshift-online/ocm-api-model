@@ -19,71 +19,50 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// TrustedIpBuilder contains the data and logic needed to build 'trusted_ip' objects.
+//
 // Representation of a trusted ip address in clusterdeployment.
 type TrustedIpBuilder struct {
-	fieldSet_ []bool
-	id        string
-	href      string
-	enabled   bool
+	bitmap_ uint32
+	id      string
+	href    string
+	enabled bool
 }
 
 // NewTrustedIp creates a new builder of 'trusted_ip' objects.
 func NewTrustedIp() *TrustedIpBuilder {
-	return &TrustedIpBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &TrustedIpBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *TrustedIpBuilder) Link(value bool) *TrustedIpBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *TrustedIpBuilder) ID(value string) *TrustedIpBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *TrustedIpBuilder) HREF(value string) *TrustedIpBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *TrustedIpBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *TrustedIpBuilder) Enabled(value bool) *TrustedIpBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.enabled = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -92,10 +71,7 @@ func (b *TrustedIpBuilder) Copy(object *TrustedIp) *TrustedIpBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.enabled = object.enabled
@@ -107,10 +83,7 @@ func (b *TrustedIpBuilder) Build() (object *TrustedIp, err error) {
 	object = new(TrustedIp)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.enabled = b.enabled
 	return
 }

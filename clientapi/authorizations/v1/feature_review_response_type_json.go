@@ -42,7 +42,7 @@ func WriteFeatureReviewResponse(object *FeatureReviewResponse, stream *jsoniter.
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteFeatureReviewResponse(object *FeatureReviewResponse, stream *jsoniter.
 		stream.WriteBool(object.enabled)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalFeatureReviewResponse(source interface{}) (object *FeatureReviewRe
 
 // ReadFeatureReviewResponse reads a value of the 'feature_review_response' type from the given iterator.
 func ReadFeatureReviewResponse(iterator *jsoniter.Iterator) *FeatureReviewResponse {
-	object := &FeatureReviewResponse{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &FeatureReviewResponse{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadFeatureReviewResponse(iterator *jsoniter.Iterator) *FeatureReviewRespon
 		case "enabled":
 			value := iterator.ReadBool()
 			object.enabled = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "feature_id":
 			value := iterator.ReadString()
 			object.featureID = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

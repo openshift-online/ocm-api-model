@@ -19,39 +19,28 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// StsSupportJumpRoleBuilder contains the data and logic needed to build 'sts_support_jump_role' objects.
+//
 // Isolated STS support role created per organization.
 type StsSupportJumpRoleBuilder struct {
-	fieldSet_ []bool
-	roleArn   string
+	bitmap_ uint32
+	roleArn string
 }
 
 // NewStsSupportJumpRole creates a new builder of 'sts_support_jump_role' objects.
 func NewStsSupportJumpRole() *StsSupportJumpRoleBuilder {
-	return &StsSupportJumpRoleBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &StsSupportJumpRoleBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *StsSupportJumpRoleBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // RoleArn sets the value of the 'role_arn' attribute to the given value.
 func (b *StsSupportJumpRoleBuilder) RoleArn(value string) *StsSupportJumpRoleBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.roleArn = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -60,10 +49,7 @@ func (b *StsSupportJumpRoleBuilder) Copy(object *StsSupportJumpRole) *StsSupport
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.roleArn = object.roleArn
 	return b
 }
@@ -71,10 +57,7 @@ func (b *StsSupportJumpRoleBuilder) Copy(object *StsSupportJumpRole) *StsSupport
 // Build creates a 'sts_support_jump_role' object using the configuration stored in the builder.
 func (b *StsSupportJumpRoleBuilder) Build() (object *StsSupportJumpRole, err error) {
 	object = new(StsSupportJumpRole)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.roleArn = b.roleArn
 	return
 }

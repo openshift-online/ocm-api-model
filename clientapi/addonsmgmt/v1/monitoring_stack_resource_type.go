@@ -23,22 +23,14 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 //
 // Representation of Monitoring Stack Resource
 type MonitoringStackResource struct {
-	fieldSet_ []bool
-	cpu       string
-	memory    string
+	bitmap_ uint32
+	cpu     string
+	memory  string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *MonitoringStackResource) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Cpu returns the value of the 'cpu' attribute, or
@@ -46,7 +38,7 @@ func (o *MonitoringStackResource) Empty() bool {
 //
 // Indicates the CPU resource for monitoring stack.
 func (o *MonitoringStackResource) Cpu() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.cpu
 	}
 	return ""
@@ -57,7 +49,7 @@ func (o *MonitoringStackResource) Cpu() string {
 //
 // Indicates the CPU resource for monitoring stack.
 func (o *MonitoringStackResource) GetCpu() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.cpu
 	}
@@ -69,7 +61,7 @@ func (o *MonitoringStackResource) GetCpu() (value string, ok bool) {
 //
 // Indicates the memory resource for monitoring stack.
 func (o *MonitoringStackResource) Memory() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.memory
 	}
 	return ""
@@ -80,7 +72,7 @@ func (o *MonitoringStackResource) Memory() string {
 //
 // Indicates the memory resource for monitoring stack.
 func (o *MonitoringStackResource) GetMemory() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.memory
 	}

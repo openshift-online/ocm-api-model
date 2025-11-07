@@ -21,28 +21,20 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // WifSupport represents the values of the 'wif_support' type.
 type WifSupport struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	principal string
 	roles     []*WifRole
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *WifSupport) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Principal returns the value of the 'principal' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifSupport) Principal() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.principal
 	}
 	return ""
@@ -51,7 +43,7 @@ func (o *WifSupport) Principal() string {
 // GetPrincipal returns the value of the 'principal' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifSupport) GetPrincipal() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.principal
 	}
@@ -61,7 +53,7 @@ func (o *WifSupport) GetPrincipal() (value string, ok bool) {
 // Roles returns the value of the 'roles' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *WifSupport) Roles() []*WifRole {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.roles
 	}
 	return nil
@@ -70,7 +62,7 @@ func (o *WifSupport) Roles() []*WifRole {
 // GetRoles returns the value of the 'roles' attribute and
 // a flag indicating if the attribute has a value.
 func (o *WifSupport) GetRoles() (value []*WifRole, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.roles
 	}

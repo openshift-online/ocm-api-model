@@ -19,51 +19,37 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// AWSSTSAccountRoleBuilder contains the data and logic needed to build 'AWSSTS_account_role' objects.
+//
 // Representation of an sts account role for a rosa cluster
 type AWSSTSAccountRoleBuilder struct {
-	fieldSet_ []bool
-	items     []*AWSSTSRoleBuilder
-	prefix    string
+	bitmap_ uint32
+	items   []*AWSSTSRoleBuilder
+	prefix  string
 }
 
 // NewAWSSTSAccountRole creates a new builder of 'AWSSTS_account_role' objects.
 func NewAWSSTSAccountRole() *AWSSTSAccountRoleBuilder {
-	return &AWSSTSAccountRoleBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &AWSSTSAccountRoleBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AWSSTSAccountRoleBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Items sets the value of the 'items' attribute to the given values.
 func (b *AWSSTSAccountRoleBuilder) Items(values ...*AWSSTSRoleBuilder) *AWSSTSAccountRoleBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.items = make([]*AWSSTSRoleBuilder, len(values))
 	copy(b.items, values)
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Prefix sets the value of the 'prefix' attribute to the given value.
 func (b *AWSSTSAccountRoleBuilder) Prefix(value string) *AWSSTSAccountRoleBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.prefix = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -72,10 +58,7 @@ func (b *AWSSTSAccountRoleBuilder) Copy(object *AWSSTSAccountRole) *AWSSTSAccoun
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.items != nil {
 		b.items = make([]*AWSSTSRoleBuilder, len(object.items))
 		for i, v := range object.items {
@@ -91,10 +74,7 @@ func (b *AWSSTSAccountRoleBuilder) Copy(object *AWSSTSAccountRole) *AWSSTSAccoun
 // Build creates a 'AWSSTS_account_role' object using the configuration stored in the builder.
 func (b *AWSSTSAccountRoleBuilder) Build() (object *AWSSTSAccountRole, err error) {
 	object = new(AWSSTSAccountRole)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.items != nil {
 		object.items = make([]*AWSSTSRole, len(b.items))
 		for i, v := range b.items {

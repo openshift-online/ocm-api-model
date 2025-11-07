@@ -42,7 +42,7 @@ func WriteSubnetwork(object *Subnetwork, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteSubnetwork(object *Subnetwork, stream *jsoniter.Stream) {
 		stream.WriteString(object.cidrBlock)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteSubnetwork(object *Subnetwork, stream *jsoniter.Stream) {
 		stream.WriteString(object.availabilityZone)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteSubnetwork(object *Subnetwork, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteSubnetwork(object *Subnetwork, stream *jsoniter.Stream) {
 		stream.WriteBool(object.public)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteSubnetwork(object *Subnetwork, stream *jsoniter.Stream) {
 		stream.WriteBool(object.redHatManaged)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -112,9 +112,7 @@ func UnmarshalSubnetwork(source interface{}) (object *Subnetwork, err error) {
 
 // ReadSubnetwork reads a value of the 'subnetwork' type from the given iterator.
 func ReadSubnetwork(iterator *jsoniter.Iterator) *Subnetwork {
-	object := &Subnetwork{
-		fieldSet_: make([]bool, 6),
-	}
+	object := &Subnetwork{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -124,27 +122,27 @@ func ReadSubnetwork(iterator *jsoniter.Iterator) *Subnetwork {
 		case "cidr_block":
 			value := iterator.ReadString()
 			object.cidrBlock = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "availability_zone":
 			value := iterator.ReadString()
 			object.availabilityZone = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "public":
 			value := iterator.ReadBool()
 			object.public = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "red_hat_managed":
 			value := iterator.ReadBool()
 			object.redHatManaged = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "subnet_id":
 			value := iterator.ReadString()
 			object.subnetID = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		default:
 			iterator.ReadAny()
 		}

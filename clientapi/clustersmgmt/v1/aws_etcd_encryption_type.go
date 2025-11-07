@@ -23,21 +23,13 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Contains the necessary attributes to support etcd encryption for AWS based clusters.
 type AwsEtcdEncryption struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	kmsKeyARN string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AwsEtcdEncryption) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // KMSKeyARN returns the value of the 'KMS_key_ARN' attribute, or
@@ -45,7 +37,7 @@ func (o *AwsEtcdEncryption) Empty() bool {
 //
 // ARN of the KMS to be used for the etcd encryption
 func (o *AwsEtcdEncryption) KMSKeyARN() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.kmsKeyARN
 	}
 	return ""
@@ -56,7 +48,7 @@ func (o *AwsEtcdEncryption) KMSKeyARN() string {
 //
 // ARN of the KMS to be used for the etcd encryption
 func (o *AwsEtcdEncryption) GetKMSKeyARN() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.kmsKeyARN
 	}

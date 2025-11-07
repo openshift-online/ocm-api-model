@@ -35,7 +35,7 @@ const AWSInfrastructureAccessRoleGrantNilKind = "AWSInfrastructureAccessRoleGran
 //
 // Representation of an AWS infrastructure access role grant.
 type AWSInfrastructureAccessRoleGrant struct {
-	fieldSet_        []bool
+	bitmap_          uint32
 	id               string
 	href             string
 	consoleURL       string
@@ -50,7 +50,7 @@ func (o *AWSInfrastructureAccessRoleGrant) Kind() string {
 	if o == nil {
 		return AWSInfrastructureAccessRoleGrantNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return AWSInfrastructureAccessRoleGrantLinkKind
 	}
 	return AWSInfrastructureAccessRoleGrantKind
@@ -58,12 +58,12 @@ func (o *AWSInfrastructureAccessRoleGrant) Kind() string {
 
 // Link returns true if this is a link.
 func (o *AWSInfrastructureAccessRoleGrant) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *AWSInfrastructureAccessRoleGrant) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -72,7 +72,7 @@ func (o *AWSInfrastructureAccessRoleGrant) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *AWSInfrastructureAccessRoleGrant) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -81,7 +81,7 @@ func (o *AWSInfrastructureAccessRoleGrant) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *AWSInfrastructureAccessRoleGrant) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -90,7 +90,7 @@ func (o *AWSInfrastructureAccessRoleGrant) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *AWSInfrastructureAccessRoleGrant) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -99,17 +99,7 @@ func (o *AWSInfrastructureAccessRoleGrant) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AWSInfrastructureAccessRoleGrant) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // ConsoleURL returns the value of the 'console_URL' attribute, or
@@ -117,7 +107,7 @@ func (o *AWSInfrastructureAccessRoleGrant) Empty() bool {
 //
 // URL to switch to the role in AWS console.
 func (o *AWSInfrastructureAccessRoleGrant) ConsoleURL() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.consoleURL
 	}
 	return ""
@@ -128,7 +118,7 @@ func (o *AWSInfrastructureAccessRoleGrant) ConsoleURL() string {
 //
 // URL to switch to the role in AWS console.
 func (o *AWSInfrastructureAccessRoleGrant) GetConsoleURL() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.consoleURL
 	}
@@ -141,7 +131,7 @@ func (o *AWSInfrastructureAccessRoleGrant) GetConsoleURL() (value string, ok boo
 // Link to AWS infrastructure access role.
 // Grant must use a 'valid' role.
 func (o *AWSInfrastructureAccessRoleGrant) Role() *AWSInfrastructureAccessRole {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.role
 	}
 	return nil
@@ -153,7 +143,7 @@ func (o *AWSInfrastructureAccessRoleGrant) Role() *AWSInfrastructureAccessRole {
 // Link to AWS infrastructure access role.
 // Grant must use a 'valid' role.
 func (o *AWSInfrastructureAccessRoleGrant) GetRole() (value *AWSInfrastructureAccessRole, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.role
 	}
@@ -165,7 +155,7 @@ func (o *AWSInfrastructureAccessRoleGrant) GetRole() (value *AWSInfrastructureAc
 //
 // State of the grant.
 func (o *AWSInfrastructureAccessRoleGrant) State() AWSInfrastructureAccessRoleGrantState {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.state
 	}
 	return AWSInfrastructureAccessRoleGrantState("")
@@ -176,7 +166,7 @@ func (o *AWSInfrastructureAccessRoleGrant) State() AWSInfrastructureAccessRoleGr
 //
 // State of the grant.
 func (o *AWSInfrastructureAccessRoleGrant) GetState() (value AWSInfrastructureAccessRoleGrantState, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.state
 	}
@@ -189,7 +179,7 @@ func (o *AWSInfrastructureAccessRoleGrant) GetState() (value AWSInfrastructureAc
 // Description of the state.
 // Will be empty unless state is 'Failed'.
 func (o *AWSInfrastructureAccessRoleGrant) StateDescription() string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.stateDescription
 	}
 	return ""
@@ -201,7 +191,7 @@ func (o *AWSInfrastructureAccessRoleGrant) StateDescription() string {
 // Description of the state.
 // Will be empty unless state is 'Failed'.
 func (o *AWSInfrastructureAccessRoleGrant) GetStateDescription() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.stateDescription
 	}
@@ -213,7 +203,7 @@ func (o *AWSInfrastructureAccessRoleGrant) GetStateDescription() (value string, 
 //
 // The user AWS IAM ARN we want to grant the role.
 func (o *AWSInfrastructureAccessRoleGrant) UserARN() string {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.userARN
 	}
 	return ""
@@ -224,7 +214,7 @@ func (o *AWSInfrastructureAccessRoleGrant) UserARN() string {
 //
 // The user AWS IAM ARN we want to grant the role.
 func (o *AWSInfrastructureAccessRoleGrant) GetUserARN() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.userARN
 	}

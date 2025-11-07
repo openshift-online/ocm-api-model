@@ -23,22 +23,14 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Representation of the status of an external authentication provider.
 type ExternalAuthStatus struct {
-	fieldSet_ []bool
-	message   string
-	state     *ExternalAuthState
+	bitmap_ uint32
+	message string
+	state   *ExternalAuthState
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ExternalAuthStatus) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Message returns the value of the 'message' attribute, or
@@ -47,7 +39,7 @@ func (o *ExternalAuthStatus) Empty() bool {
 // A descriptive message providing additional context about the current
 // state of the external authentication provider.
 func (o *ExternalAuthStatus) Message() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.message
 	}
 	return ""
@@ -59,7 +51,7 @@ func (o *ExternalAuthStatus) Message() string {
 // A descriptive message providing additional context about the current
 // state of the external authentication provider.
 func (o *ExternalAuthStatus) GetMessage() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.message
 	}
@@ -71,7 +63,7 @@ func (o *ExternalAuthStatus) GetMessage() (value string, ok bool) {
 //
 // The current state of the external authentication provider.
 func (o *ExternalAuthStatus) State() *ExternalAuthState {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.state
 	}
 	return nil
@@ -82,7 +74,7 @@ func (o *ExternalAuthStatus) State() *ExternalAuthState {
 //
 // The current state of the external authentication provider.
 func (o *ExternalAuthStatus) GetState() (value *ExternalAuthState, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.state
 	}

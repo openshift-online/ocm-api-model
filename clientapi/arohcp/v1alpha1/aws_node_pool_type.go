@@ -35,7 +35,7 @@ const AWSNodePoolNilKind = "AWSNodePoolNil"
 //
 // Representation of aws node pool specific parameters.
 type AWSNodePool struct {
-	fieldSet_                  []bool
+	bitmap_                    uint32
 	id                         string
 	href                       string
 	additionalSecurityGroupIds []string
@@ -54,7 +54,7 @@ func (o *AWSNodePool) Kind() string {
 	if o == nil {
 		return AWSNodePoolNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return AWSNodePoolLinkKind
 	}
 	return AWSNodePoolKind
@@ -62,12 +62,12 @@ func (o *AWSNodePool) Kind() string {
 
 // Link returns true if this is a link.
 func (o *AWSNodePool) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *AWSNodePool) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -76,7 +76,7 @@ func (o *AWSNodePool) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *AWSNodePool) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -85,7 +85,7 @@ func (o *AWSNodePool) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *AWSNodePool) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -94,7 +94,7 @@ func (o *AWSNodePool) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *AWSNodePool) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -103,17 +103,7 @@ func (o *AWSNodePool) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AWSNodePool) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // AdditionalSecurityGroupIds returns the value of the 'additional_security_group_ids' attribute, or
@@ -121,7 +111,7 @@ func (o *AWSNodePool) Empty() bool {
 //
 // Additional AWS Security Groups to be added node pool.
 func (o *AWSNodePool) AdditionalSecurityGroupIds() []string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.additionalSecurityGroupIds
 	}
 	return nil
@@ -132,7 +122,7 @@ func (o *AWSNodePool) AdditionalSecurityGroupIds() []string {
 //
 // Additional AWS Security Groups to be added node pool.
 func (o *AWSNodePool) GetAdditionalSecurityGroupIds() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.additionalSecurityGroupIds
 	}
@@ -144,7 +134,7 @@ func (o *AWSNodePool) GetAdditionalSecurityGroupIds() (value []string, ok bool) 
 //
 // Associates nodepool availability zones with zone types (e.g. wavelength, local).
 func (o *AWSNodePool) AvailabilityZoneTypes() map[string]string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.availabilityZoneTypes
 	}
 	return nil
@@ -155,7 +145,7 @@ func (o *AWSNodePool) AvailabilityZoneTypes() map[string]string {
 //
 // Associates nodepool availability zones with zone types (e.g. wavelength, local).
 func (o *AWSNodePool) GetAvailabilityZoneTypes() (value map[string]string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.availabilityZoneTypes
 	}
@@ -167,7 +157,7 @@ func (o *AWSNodePool) GetAvailabilityZoneTypes() (value map[string]string, ok bo
 //
 // If present it defines the AWS Capacity Reservation used for this NodePool
 func (o *AWSNodePool) CapacityReservation() *AWSCapacityReservation {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.capacityReservation
 	}
 	return nil
@@ -178,7 +168,7 @@ func (o *AWSNodePool) CapacityReservation() *AWSCapacityReservation {
 //
 // If present it defines the AWS Capacity Reservation used for this NodePool
 func (o *AWSNodePool) GetCapacityReservation() (value *AWSCapacityReservation, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.capacityReservation
 	}
@@ -190,7 +180,7 @@ func (o *AWSNodePool) GetCapacityReservation() (value *AWSCapacityReservation, o
 //
 // Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances
 func (o *AWSNodePool) Ec2MetadataHttpTokens() Ec2MetadataHttpTokens {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.ec2MetadataHttpTokens
 	}
 	return Ec2MetadataHttpTokens("")
@@ -201,7 +191,7 @@ func (o *AWSNodePool) Ec2MetadataHttpTokens() Ec2MetadataHttpTokens {
 //
 // Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances
 func (o *AWSNodePool) GetEc2MetadataHttpTokens() (value Ec2MetadataHttpTokens, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.ec2MetadataHttpTokens
 	}
@@ -213,7 +203,7 @@ func (o *AWSNodePool) GetEc2MetadataHttpTokens() (value Ec2MetadataHttpTokens, o
 //
 // InstanceProfile is the AWS EC2 instance profile, which is a container for an IAM role that the EC2 instance uses.
 func (o *AWSNodePool) InstanceProfile() string {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.instanceProfile
 	}
 	return ""
@@ -224,7 +214,7 @@ func (o *AWSNodePool) InstanceProfile() string {
 //
 // InstanceProfile is the AWS EC2 instance profile, which is a container for an IAM role that the EC2 instance uses.
 func (o *AWSNodePool) GetInstanceProfile() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.instanceProfile
 	}
@@ -236,7 +226,7 @@ func (o *AWSNodePool) GetInstanceProfile() (value string, ok bool) {
 //
 // InstanceType is an ec2 instance type for node instances (e.g. m5.large).
 func (o *AWSNodePool) InstanceType() string {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.instanceType
 	}
 	return ""
@@ -247,7 +237,7 @@ func (o *AWSNodePool) InstanceType() string {
 //
 // InstanceType is an ec2 instance type for node instances (e.g. m5.large).
 func (o *AWSNodePool) GetInstanceType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.instanceType
 	}
@@ -259,7 +249,7 @@ func (o *AWSNodePool) GetInstanceType() (value string, ok bool) {
 //
 // AWS Volume specification to be used to set custom worker disk size
 func (o *AWSNodePool) RootVolume() *AWSVolume {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && o.bitmap_&512 != 0 {
 		return o.rootVolume
 	}
 	return nil
@@ -270,7 +260,7 @@ func (o *AWSNodePool) RootVolume() *AWSVolume {
 //
 // AWS Volume specification to be used to set custom worker disk size
 func (o *AWSNodePool) GetRootVolume() (value *AWSVolume, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && o.bitmap_&512 != 0
 	if ok {
 		value = o.rootVolume
 	}
@@ -282,7 +272,7 @@ func (o *AWSNodePool) GetRootVolume() (value *AWSVolume, ok bool) {
 //
 // Associates nodepool subnets with AWS Outposts.
 func (o *AWSNodePool) SubnetOutposts() map[string]string {
-	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+	if o != nil && o.bitmap_&1024 != 0 {
 		return o.subnetOutposts
 	}
 	return nil
@@ -293,7 +283,7 @@ func (o *AWSNodePool) SubnetOutposts() map[string]string {
 //
 // Associates nodepool subnets with AWS Outposts.
 func (o *AWSNodePool) GetSubnetOutposts() (value map[string]string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	ok = o != nil && o.bitmap_&1024 != 0
 	if ok {
 		value = o.subnetOutposts
 	}
@@ -312,7 +302,7 @@ func (o *AWSNodePool) GetSubnetOutposts() (value map[string]string, ok bool) {
 // - Tag values may be between 0 and 256 characters in length
 // - Tags may only contain letters, numbers, spaces, and the following characters: [_ . : / = + - @]
 func (o *AWSNodePool) Tags() map[string]string {
-	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
+	if o != nil && o.bitmap_&2048 != 0 {
 		return o.tags
 	}
 	return nil
@@ -330,7 +320,7 @@ func (o *AWSNodePool) Tags() map[string]string {
 // - Tag values may be between 0 and 256 characters in length
 // - Tags may only contain letters, numbers, spaces, and the following characters: [_ . : / = + - @]
 func (o *AWSNodePool) GetTags() (value map[string]string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
+	ok = o != nil && o.bitmap_&2048 != 0
 	if ok {
 		value = o.tags
 	}

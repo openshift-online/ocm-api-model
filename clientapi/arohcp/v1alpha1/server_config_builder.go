@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// ServerConfigBuilder contains the data and logic needed to build 'server_config' objects.
+//
 // Representation of a server config
 type ServerConfigBuilder struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	id         string
 	href       string
 	awsShard   *AWSShardBuilder
@@ -32,97 +34,65 @@ type ServerConfigBuilder struct {
 
 // NewServerConfig creates a new builder of 'server_config' objects.
 func NewServerConfig() *ServerConfigBuilder {
-	return &ServerConfigBuilder{
-		fieldSet_: make([]bool, 7),
-	}
+	return &ServerConfigBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ServerConfigBuilder) Link(value bool) *ServerConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ServerConfigBuilder) ID(value string) *ServerConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ServerConfigBuilder) HREF(value string) *ServerConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ServerConfigBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // AWSShard sets the value of the 'AWS_shard' attribute to the given value.
 //
 // Config for AWS provision shards
 func (b *ServerConfigBuilder) AWSShard(value *AWSShardBuilder) *ServerConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.awsShard = value
 	if value != nil {
-		b.fieldSet_[3] = true
+		b.bitmap_ |= 8
 	} else {
-		b.fieldSet_[3] = false
+		b.bitmap_ &^= 8
 	}
 	return b
 }
 
 // Kubeconfig sets the value of the 'kubeconfig' attribute to the given value.
 func (b *ServerConfigBuilder) Kubeconfig(value string) *ServerConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.kubeconfig = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // Server sets the value of the 'server' attribute to the given value.
 func (b *ServerConfigBuilder) Server(value string) *ServerConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.server = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // Topology sets the value of the 'topology' attribute to the given value.
 func (b *ServerConfigBuilder) Topology(value ProvisionShardTopology) *ServerConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.topology = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
@@ -131,10 +101,7 @@ func (b *ServerConfigBuilder) Copy(object *ServerConfig) *ServerConfigBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.awsShard != nil {
@@ -153,10 +120,7 @@ func (b *ServerConfigBuilder) Build() (object *ServerConfig, err error) {
 	object = new(ServerConfig)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.awsShard != nil {
 		object.awsShard, err = b.awsShard.Build()
 		if err != nil {

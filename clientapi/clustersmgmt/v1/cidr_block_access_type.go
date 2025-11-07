@@ -25,27 +25,19 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 // Currently, only supported for ARO-HCP based clusters.
 // The default policy mode is "allow_all" that is, all access is allowed.
 type CIDRBlockAccess struct {
-	fieldSet_ []bool
-	allow     *CIDRBlockAllowAccess
+	bitmap_ uint32
+	allow   *CIDRBlockAllowAccess
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *CIDRBlockAccess) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Allow returns the value of the 'allow' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *CIDRBlockAccess) Allow() *CIDRBlockAllowAccess {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.allow
 	}
 	return nil
@@ -54,7 +46,7 @@ func (o *CIDRBlockAccess) Allow() *CIDRBlockAllowAccess {
 // GetAllow returns the value of the 'allow' attribute and
 // a flag indicating if the attribute has a value.
 func (o *CIDRBlockAccess) GetAllow() (value *CIDRBlockAllowAccess, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.allow
 	}

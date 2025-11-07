@@ -19,8 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
+// ClusterRegistrationResponseBuilder contains the data and logic needed to build 'cluster_registration_response' objects.
 type ClusterRegistrationResponseBuilder struct {
-	fieldSet_          []bool
+	bitmap_            uint32
 	accountID          string
 	authorizationToken string
 	clusterID          string
@@ -29,61 +30,39 @@ type ClusterRegistrationResponseBuilder struct {
 
 // NewClusterRegistrationResponse creates a new builder of 'cluster_registration_response' objects.
 func NewClusterRegistrationResponse() *ClusterRegistrationResponseBuilder {
-	return &ClusterRegistrationResponseBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &ClusterRegistrationResponseBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterRegistrationResponseBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // AccountID sets the value of the 'account_ID' attribute to the given value.
 func (b *ClusterRegistrationResponseBuilder) AccountID(value string) *ClusterRegistrationResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.accountID = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // AuthorizationToken sets the value of the 'authorization_token' attribute to the given value.
 func (b *ClusterRegistrationResponseBuilder) AuthorizationToken(value string) *ClusterRegistrationResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.authorizationToken = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *ClusterRegistrationResponseBuilder) ClusterID(value string) *ClusterRegistrationResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.clusterID = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // ExpiresAt sets the value of the 'expires_at' attribute to the given value.
 func (b *ClusterRegistrationResponseBuilder) ExpiresAt(value string) *ClusterRegistrationResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.expiresAt = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -92,10 +71,7 @@ func (b *ClusterRegistrationResponseBuilder) Copy(object *ClusterRegistrationRes
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.accountID = object.accountID
 	b.authorizationToken = object.authorizationToken
 	b.clusterID = object.clusterID
@@ -106,10 +82,7 @@ func (b *ClusterRegistrationResponseBuilder) Copy(object *ClusterRegistrationRes
 // Build creates a 'cluster_registration_response' object using the configuration stored in the builder.
 func (b *ClusterRegistrationResponseBuilder) Build() (object *ClusterRegistrationResponse, err error) {
 	object = new(ClusterRegistrationResponse)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.accountID = b.accountID
 	object.authorizationToken = b.authorizationToken
 	object.clusterID = b.clusterID

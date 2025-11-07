@@ -42,7 +42,7 @@ func WriteWifRole(object *WifRole, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.permissions != nil
+	present_ = object.bitmap_&1 != 0 && object.permissions != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteWifRole(object *WifRole, stream *jsoniter.Stream) {
 		WriteStringList(object.permissions, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteWifRole(object *WifRole, stream *jsoniter.Stream) {
 		stream.WriteBool(object.predefined)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.resourceBindings != nil
+	present_ = object.bitmap_&4 != 0 && object.resourceBindings != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteWifRole(object *WifRole, stream *jsoniter.Stream) {
 		WriteWifResourceBindingList(object.resourceBindings, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,9 +94,7 @@ func UnmarshalWifRole(source interface{}) (object *WifRole, err error) {
 
 // ReadWifRole reads a value of the 'wif_role' type from the given iterator.
 func ReadWifRole(iterator *jsoniter.Iterator) *WifRole {
-	object := &WifRole{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &WifRole{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -106,19 +104,19 @@ func ReadWifRole(iterator *jsoniter.Iterator) *WifRole {
 		case "permissions":
 			value := ReadStringList(iterator)
 			object.permissions = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "predefined":
 			value := iterator.ReadBool()
 			object.predefined = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "resource_bindings":
 			value := ReadWifResourceBindingList(iterator)
 			object.resourceBindings = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "role_id":
 			value := iterator.ReadString()
 			object.roleId = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

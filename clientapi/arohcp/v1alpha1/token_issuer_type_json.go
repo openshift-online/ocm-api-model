@@ -42,7 +42,7 @@ func WriteTokenIssuer(object *TokenIssuer, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteTokenIssuer(object *TokenIssuer, stream *jsoniter.Stream) {
 		stream.WriteString(object.ca)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteTokenIssuer(object *TokenIssuer, stream *jsoniter.Stream) {
 		stream.WriteString(object.url)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.audiences != nil
+	present_ = object.bitmap_&4 != 0 && object.audiences != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,9 +85,7 @@ func UnmarshalTokenIssuer(source interface{}) (object *TokenIssuer, err error) {
 
 // ReadTokenIssuer reads a value of the 'token_issuer' type from the given iterator.
 func ReadTokenIssuer(iterator *jsoniter.Iterator) *TokenIssuer {
-	object := &TokenIssuer{
-		fieldSet_: make([]bool, 3),
-	}
+	object := &TokenIssuer{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -97,15 +95,15 @@ func ReadTokenIssuer(iterator *jsoniter.Iterator) *TokenIssuer {
 		case "ca":
 			value := iterator.ReadString()
 			object.ca = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "url":
 			value := iterator.ReadString()
 			object.url = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "audiences":
 			value := ReadStringList(iterator)
 			object.audiences = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		default:
 			iterator.ReadAny()
 		}

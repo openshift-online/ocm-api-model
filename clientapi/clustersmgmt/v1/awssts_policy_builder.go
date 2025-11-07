@@ -19,72 +19,52 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// AWSSTSPolicyBuilder contains the data and logic needed to build 'AWSSTS_policy' objects.
+//
 // Representation of an sts policies for rosa cluster
 type AWSSTSPolicyBuilder struct {
-	fieldSet_ []bool
-	arn       string
-	id        string
-	details   string
-	type_     string
+	bitmap_ uint32
+	arn     string
+	id      string
+	details string
+	type_   string
 }
 
 // NewAWSSTSPolicy creates a new builder of 'AWSSTS_policy' objects.
 func NewAWSSTSPolicy() *AWSSTSPolicyBuilder {
-	return &AWSSTSPolicyBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &AWSSTSPolicyBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AWSSTSPolicyBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ARN sets the value of the 'ARN' attribute to the given value.
 func (b *AWSSTSPolicyBuilder) ARN(value string) *AWSSTSPolicyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.arn = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *AWSSTSPolicyBuilder) ID(value string) *AWSSTSPolicyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Details sets the value of the 'details' attribute to the given value.
 func (b *AWSSTSPolicyBuilder) Details(value string) *AWSSTSPolicyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.details = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *AWSSTSPolicyBuilder) Type(value string) *AWSSTSPolicyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.type_ = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -93,10 +73,7 @@ func (b *AWSSTSPolicyBuilder) Copy(object *AWSSTSPolicy) *AWSSTSPolicyBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.arn = object.arn
 	b.id = object.id
 	b.details = object.details
@@ -107,10 +84,7 @@ func (b *AWSSTSPolicyBuilder) Copy(object *AWSSTSPolicy) *AWSSTSPolicyBuilder {
 // Build creates a 'AWSSTS_policy' object using the configuration stored in the builder.
 func (b *AWSSTSPolicyBuilder) Build() (object *AWSSTSPolicy, err error) {
 	object = new(AWSSTSPolicy)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.arn = b.arn
 	object.id = b.id
 	object.details = b.details

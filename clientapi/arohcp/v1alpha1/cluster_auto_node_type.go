@@ -23,22 +23,14 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // The AutoNode configuration for the Cluster.
 type ClusterAutoNode struct {
-	fieldSet_ []bool
-	mode      string
-	status    *ClusterAutoNodeStatus
+	bitmap_ uint32
+	mode    string
+	status  *ClusterAutoNodeStatus
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterAutoNode) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Mode returns the value of the 'mode' attribute, or
@@ -47,7 +39,7 @@ func (o *ClusterAutoNode) Empty() bool {
 // Mode indicates the current state of AutoNode on this cluster.
 // Valid values: "enabled", "disabled".
 func (o *ClusterAutoNode) Mode() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.mode
 	}
 	return ""
@@ -59,7 +51,7 @@ func (o *ClusterAutoNode) Mode() string {
 // Mode indicates the current state of AutoNode on this cluster.
 // Valid values: "enabled", "disabled".
 func (o *ClusterAutoNode) GetMode() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.mode
 	}
@@ -69,7 +61,7 @@ func (o *ClusterAutoNode) GetMode() (value string, ok bool) {
 // Status returns the value of the 'status' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterAutoNode) Status() *ClusterAutoNodeStatus {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.status
 	}
 	return nil
@@ -78,7 +70,7 @@ func (o *ClusterAutoNode) Status() *ClusterAutoNodeStatus {
 // GetStatus returns the value of the 'status' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterAutoNode) GetStatus() (value *ClusterAutoNodeStatus, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.status
 	}

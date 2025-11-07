@@ -19,71 +19,50 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 
+// StatefulObjectBuilder contains the data and logic needed to build 'stateful_object' objects.
 type StatefulObjectBuilder struct {
-	fieldSet_ []bool
-	id        string
-	href      string
-	kind      string
-	state     string
+	bitmap_ uint32
+	id      string
+	href    string
+	kind    string
+	state   string
 }
 
 // NewStatefulObject creates a new builder of 'stateful_object' objects.
 func NewStatefulObject() *StatefulObjectBuilder {
-	return &StatefulObjectBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &StatefulObjectBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *StatefulObjectBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *StatefulObjectBuilder) ID(value string) *StatefulObjectBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.id = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Href sets the value of the 'href' attribute to the given value.
 func (b *StatefulObjectBuilder) Href(value string) *StatefulObjectBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.href = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Kind sets the value of the 'kind' attribute to the given value.
 func (b *StatefulObjectBuilder) Kind(value string) *StatefulObjectBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.kind = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // State sets the value of the 'state' attribute to the given value.
 func (b *StatefulObjectBuilder) State(value string) *StatefulObjectBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.state = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -92,10 +71,7 @@ func (b *StatefulObjectBuilder) Copy(object *StatefulObject) *StatefulObjectBuil
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.kind = object.kind
@@ -106,10 +82,7 @@ func (b *StatefulObjectBuilder) Copy(object *StatefulObject) *StatefulObjectBuil
 // Build creates a 'stateful_object' object using the configuration stored in the builder.
 func (b *StatefulObjectBuilder) Build() (object *StatefulObject, err error) {
 	object = new(StatefulObject)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.id = b.id
 	object.href = b.href
 	object.kind = b.kind

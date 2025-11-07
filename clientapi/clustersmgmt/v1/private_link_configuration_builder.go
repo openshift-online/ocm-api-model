@@ -19,44 +19,33 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// PrivateLinkConfigurationBuilder contains the data and logic needed to build 'private_link_configuration' objects.
+//
 // Manages the configuration for the Private Links.
 type PrivateLinkConfigurationBuilder struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	principals *PrivateLinkPrincipalsBuilder
 }
 
 // NewPrivateLinkConfiguration creates a new builder of 'private_link_configuration' objects.
 func NewPrivateLinkConfiguration() *PrivateLinkConfigurationBuilder {
-	return &PrivateLinkConfigurationBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &PrivateLinkConfigurationBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *PrivateLinkConfigurationBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Principals sets the value of the 'principals' attribute to the given value.
 //
 // Contains a list of principals for the Private Link.
 func (b *PrivateLinkConfigurationBuilder) Principals(value *PrivateLinkPrincipalsBuilder) *PrivateLinkConfigurationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.principals = value
 	if value != nil {
-		b.fieldSet_[0] = true
+		b.bitmap_ |= 1
 	} else {
-		b.fieldSet_[0] = false
+		b.bitmap_ &^= 1
 	}
 	return b
 }
@@ -66,10 +55,7 @@ func (b *PrivateLinkConfigurationBuilder) Copy(object *PrivateLinkConfiguration)
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.principals != nil {
 		b.principals = NewPrivateLinkPrincipals().Copy(object.principals)
 	} else {
@@ -81,10 +67,7 @@ func (b *PrivateLinkConfigurationBuilder) Copy(object *PrivateLinkConfiguration)
 // Build creates a 'private_link_configuration' object using the configuration stored in the builder.
 func (b *PrivateLinkConfigurationBuilder) Build() (object *PrivateLinkConfiguration, err error) {
 	object = new(PrivateLinkConfiguration)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.principals != nil {
 		object.principals, err = b.principals.Build()
 		if err != nil {

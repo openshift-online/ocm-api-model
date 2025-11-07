@@ -43,13 +43,13 @@ func WriteBreakGlassCredential(object *BreakGlassCredential, stream *jsoniter.St
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(BreakGlassCredentialLinkKind)
 	} else {
 		stream.WriteString(BreakGlassCredentialKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteBreakGlassCredential(object *BreakGlassCredential, stream *jsoniter.St
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteBreakGlassCredential(object *BreakGlassCredential, stream *jsoniter.St
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteBreakGlassCredential(object *BreakGlassCredential, stream *jsoniter.St
 		stream.WriteString((object.expirationTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteBreakGlassCredential(object *BreakGlassCredential, stream *jsoniter.St
 		stream.WriteString(object.kubeconfig)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteBreakGlassCredential(object *BreakGlassCredential, stream *jsoniter.St
 		stream.WriteString((object.revocationTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteBreakGlassCredential(object *BreakGlassCredential, stream *jsoniter.St
 		stream.WriteString(string(object.status))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = object.bitmap_&128 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -127,9 +127,7 @@ func UnmarshalBreakGlassCredential(source interface{}) (object *BreakGlassCreden
 
 // ReadBreakGlassCredential reads a value of the 'break_glass_credential' type from the given iterator.
 func ReadBreakGlassCredential(iterator *jsoniter.Iterator) *BreakGlassCredential {
-	object := &BreakGlassCredential{
-		fieldSet_: make([]bool, 8),
-	}
+	object := &BreakGlassCredential{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -139,14 +137,14 @@ func ReadBreakGlassCredential(iterator *jsoniter.Iterator) *BreakGlassCredential
 		case "kind":
 			value := iterator.ReadString()
 			if value == BreakGlassCredentialLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "expiration_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -154,11 +152,11 @@ func ReadBreakGlassCredential(iterator *jsoniter.Iterator) *BreakGlassCredential
 				iterator.ReportError("", err.Error())
 			}
 			object.expirationTimestamp = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "kubeconfig":
 			value := iterator.ReadString()
 			object.kubeconfig = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "revocation_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -166,16 +164,16 @@ func ReadBreakGlassCredential(iterator *jsoniter.Iterator) *BreakGlassCredential
 				iterator.ReportError("", err.Error())
 			}
 			object.revocationTimestamp = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "status":
 			text := iterator.ReadString()
 			value := BreakGlassCredentialStatus(text)
 			object.status = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "username":
 			value := iterator.ReadString()
 			object.username = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		default:
 			iterator.ReadAny()
 		}

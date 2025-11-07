@@ -19,50 +19,36 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// AWSVolumeBuilder contains the data and logic needed to build 'AWS_volume' objects.
+//
 // Holds settings for an AWS storage volume.
 type AWSVolumeBuilder struct {
-	fieldSet_ []bool
-	iops      int
-	size      int
+	bitmap_ uint32
+	iops    int
+	size    int
 }
 
 // NewAWSVolume creates a new builder of 'AWS_volume' objects.
 func NewAWSVolume() *AWSVolumeBuilder {
-	return &AWSVolumeBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &AWSVolumeBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AWSVolumeBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // IOPS sets the value of the 'IOPS' attribute to the given value.
 func (b *AWSVolumeBuilder) IOPS(value int) *AWSVolumeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.iops = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Size sets the value of the 'size' attribute to the given value.
 func (b *AWSVolumeBuilder) Size(value int) *AWSVolumeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.size = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -71,10 +57,7 @@ func (b *AWSVolumeBuilder) Copy(object *AWSVolume) *AWSVolumeBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.iops = object.iops
 	b.size = object.size
 	return b
@@ -83,10 +66,7 @@ func (b *AWSVolumeBuilder) Copy(object *AWSVolume) *AWSVolumeBuilder {
 // Build creates a 'AWS_volume' object using the configuration stored in the builder.
 func (b *AWSVolumeBuilder) Build() (object *AWSVolume, err error) {
 	object = new(AWSVolume)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.iops = b.iops
 	object.size = b.size
 	return

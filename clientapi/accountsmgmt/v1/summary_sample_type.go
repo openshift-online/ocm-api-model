@@ -21,28 +21,20 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 
 // SummarySample represents the values of the 'summary_sample' type.
 type SummarySample struct {
-	fieldSet_ []bool
-	time      string
-	value     float64
+	bitmap_ uint32
+	time    string
+	value   float64
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *SummarySample) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Time returns the value of the 'time' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *SummarySample) Time() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.time
 	}
 	return ""
@@ -51,7 +43,7 @@ func (o *SummarySample) Time() string {
 // GetTime returns the value of the 'time' attribute and
 // a flag indicating if the attribute has a value.
 func (o *SummarySample) GetTime() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.time
 	}
@@ -61,7 +53,7 @@ func (o *SummarySample) GetTime() (value string, ok bool) {
 // Value returns the value of the 'value' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *SummarySample) Value() float64 {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.value
 	}
 	return 0.0
@@ -70,7 +62,7 @@ func (o *SummarySample) Value() float64 {
 // GetValue returns the value of the 'value' attribute and
 // a flag indicating if the attribute has a value.
 func (o *SummarySample) GetValue() (value float64, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.value
 	}

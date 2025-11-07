@@ -42,7 +42,7 @@ func WriteGCPNetwork(object *GCPNetwork, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteGCPNetwork(object *GCPNetwork, stream *jsoniter.Stream) {
 		stream.WriteString(object.vpcName)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteGCPNetwork(object *GCPNetwork, stream *jsoniter.Stream) {
 		stream.WriteString(object.vpcProjectID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteGCPNetwork(object *GCPNetwork, stream *jsoniter.Stream) {
 		stream.WriteString(object.computeSubnet)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,9 +94,7 @@ func UnmarshalGCPNetwork(source interface{}) (object *GCPNetwork, err error) {
 
 // ReadGCPNetwork reads a value of the 'GCP_network' type from the given iterator.
 func ReadGCPNetwork(iterator *jsoniter.Iterator) *GCPNetwork {
-	object := &GCPNetwork{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &GCPNetwork{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -106,19 +104,19 @@ func ReadGCPNetwork(iterator *jsoniter.Iterator) *GCPNetwork {
 		case "vpc_name":
 			value := iterator.ReadString()
 			object.vpcName = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "vpc_project_id":
 			value := iterator.ReadString()
 			object.vpcProjectID = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "compute_subnet":
 			value := iterator.ReadString()
 			object.computeSubnet = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "control_plane_subnet":
 			value := iterator.ReadString()
 			object.controlPlaneSubnet = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

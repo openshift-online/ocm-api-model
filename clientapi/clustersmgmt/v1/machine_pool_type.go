@@ -35,7 +35,7 @@ const MachinePoolNilKind = "MachinePoolNil"
 //
 // Representation of a machine pool in a cluster.
 type MachinePool struct {
-	fieldSet_            []bool
+	bitmap_              uint32
 	id                   string
 	href                 string
 	aws                  *AWSMachinePool
@@ -56,7 +56,7 @@ func (o *MachinePool) Kind() string {
 	if o == nil {
 		return MachinePoolNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return MachinePoolLinkKind
 	}
 	return MachinePoolKind
@@ -64,12 +64,12 @@ func (o *MachinePool) Kind() string {
 
 // Link returns true if this is a link.
 func (o *MachinePool) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *MachinePool) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -78,7 +78,7 @@ func (o *MachinePool) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *MachinePool) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -87,7 +87,7 @@ func (o *MachinePool) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *MachinePool) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -96,7 +96,7 @@ func (o *MachinePool) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *MachinePool) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -105,17 +105,7 @@ func (o *MachinePool) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *MachinePool) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // AWS returns the value of the 'AWS' attribute, or
@@ -123,7 +113,7 @@ func (o *MachinePool) Empty() bool {
 //
 // AWS specific parameters (Optional).
 func (o *MachinePool) AWS() *AWSMachinePool {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.aws
 	}
 	return nil
@@ -134,7 +124,7 @@ func (o *MachinePool) AWS() *AWSMachinePool {
 //
 // AWS specific parameters (Optional).
 func (o *MachinePool) GetAWS() (value *AWSMachinePool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.aws
 	}
@@ -146,7 +136,7 @@ func (o *MachinePool) GetAWS() (value *AWSMachinePool, ok bool) {
 //
 // GCP specific parameters (Optional).
 func (o *MachinePool) GCP() *GCPMachinePool {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.gcp
 	}
 	return nil
@@ -157,7 +147,7 @@ func (o *MachinePool) GCP() *GCPMachinePool {
 //
 // GCP specific parameters (Optional).
 func (o *MachinePool) GetGCP() (value *GCPMachinePool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.gcp
 	}
@@ -170,7 +160,7 @@ func (o *MachinePool) GetGCP() (value *GCPMachinePool, ok bool) {
 // Details for auto-scaling the machine pool.
 // Replicas and autoscaling cannot be used together.
 func (o *MachinePool) Autoscaling() *MachinePoolAutoscaling {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.autoscaling
 	}
 	return nil
@@ -182,7 +172,7 @@ func (o *MachinePool) Autoscaling() *MachinePoolAutoscaling {
 // Details for auto-scaling the machine pool.
 // Replicas and autoscaling cannot be used together.
 func (o *MachinePool) GetAutoscaling() (value *MachinePoolAutoscaling, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.autoscaling
 	}
@@ -194,7 +184,7 @@ func (o *MachinePool) GetAutoscaling() (value *MachinePoolAutoscaling, ok bool) 
 //
 // The availability zones upon which the nodes are created.
 func (o *MachinePool) AvailabilityZones() []string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.availabilityZones
 	}
 	return nil
@@ -205,7 +195,7 @@ func (o *MachinePool) AvailabilityZones() []string {
 //
 // The availability zones upon which the nodes are created.
 func (o *MachinePool) GetAvailabilityZones() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.availabilityZones
 	}
@@ -217,7 +207,7 @@ func (o *MachinePool) GetAvailabilityZones() (value []string, ok bool) {
 //
 // The instance type of Nodes to create.
 func (o *MachinePool) InstanceType() string {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.instanceType
 	}
 	return ""
@@ -228,7 +218,7 @@ func (o *MachinePool) InstanceType() string {
 //
 // The instance type of Nodes to create.
 func (o *MachinePool) GetInstanceType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.instanceType
 	}
@@ -240,7 +230,7 @@ func (o *MachinePool) GetInstanceType() (value string, ok bool) {
 //
 // The labels set on the Nodes created.
 func (o *MachinePool) Labels() map[string]string {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.labels
 	}
 	return nil
@@ -251,7 +241,7 @@ func (o *MachinePool) Labels() map[string]string {
 //
 // The labels set on the Nodes created.
 func (o *MachinePool) GetLabels() (value map[string]string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.labels
 	}
@@ -264,7 +254,7 @@ func (o *MachinePool) GetLabels() (value map[string]string, ok bool) {
 // The number of Machines (and Nodes) to create.
 // Replicas and autoscaling cannot be used together.
 func (o *MachinePool) Replicas() int {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && o.bitmap_&512 != 0 {
 		return o.replicas
 	}
 	return 0
@@ -276,7 +266,7 @@ func (o *MachinePool) Replicas() int {
 // The number of Machines (and Nodes) to create.
 // Replicas and autoscaling cannot be used together.
 func (o *MachinePool) GetReplicas() (value int, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && o.bitmap_&512 != 0
 	if ok {
 		value = o.replicas
 	}
@@ -288,7 +278,7 @@ func (o *MachinePool) GetReplicas() (value int, ok bool) {
 //
 // The machine root volume capabilities.
 func (o *MachinePool) RootVolume() *RootVolume {
-	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+	if o != nil && o.bitmap_&1024 != 0 {
 		return o.rootVolume
 	}
 	return nil
@@ -299,7 +289,7 @@ func (o *MachinePool) RootVolume() *RootVolume {
 //
 // The machine root volume capabilities.
 func (o *MachinePool) GetRootVolume() (value *RootVolume, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	ok = o != nil && o.bitmap_&1024 != 0
 	if ok {
 		value = o.rootVolume
 	}
@@ -311,7 +301,7 @@ func (o *MachinePool) GetRootVolume() (value *RootVolume, ok bool) {
 //
 // List of security groups to be applied to MachinePool (Optional)
 func (o *MachinePool) SecurityGroupFilters() []*MachinePoolSecurityGroupFilter {
-	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
+	if o != nil && o.bitmap_&2048 != 0 {
 		return o.securityGroupFilters
 	}
 	return nil
@@ -322,7 +312,7 @@ func (o *MachinePool) SecurityGroupFilters() []*MachinePoolSecurityGroupFilter {
 //
 // List of security groups to be applied to MachinePool (Optional)
 func (o *MachinePool) GetSecurityGroupFilters() (value []*MachinePoolSecurityGroupFilter, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
+	ok = o != nil && o.bitmap_&2048 != 0
 	if ok {
 		value = o.securityGroupFilters
 	}
@@ -334,7 +324,7 @@ func (o *MachinePool) GetSecurityGroupFilters() (value []*MachinePoolSecurityGro
 //
 // The subnets upon which the nodes are created.
 func (o *MachinePool) Subnets() []string {
-	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
+	if o != nil && o.bitmap_&4096 != 0 {
 		return o.subnets
 	}
 	return nil
@@ -345,7 +335,7 @@ func (o *MachinePool) Subnets() []string {
 //
 // The subnets upon which the nodes are created.
 func (o *MachinePool) GetSubnets() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
+	ok = o != nil && o.bitmap_&4096 != 0
 	if ok {
 		value = o.subnets
 	}
@@ -357,7 +347,7 @@ func (o *MachinePool) GetSubnets() (value []string, ok bool) {
 //
 // The taints set on the Nodes created.
 func (o *MachinePool) Taints() []*Taint {
-	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
+	if o != nil && o.bitmap_&8192 != 0 {
 		return o.taints
 	}
 	return nil
@@ -368,7 +358,7 @@ func (o *MachinePool) Taints() []*Taint {
 //
 // The taints set on the Nodes created.
 func (o *MachinePool) GetTaints() (value []*Taint, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
+	ok = o != nil && o.bitmap_&8192 != 0
 	if ok {
 		value = o.taints
 	}

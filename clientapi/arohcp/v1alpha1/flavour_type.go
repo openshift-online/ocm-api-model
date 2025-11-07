@@ -36,14 +36,14 @@ const FlavourNilKind = "FlavourNil"
 // Set of predefined properties of a cluster. For example, a _huge_ flavour can be a cluster
 // with 10 infra nodes and 1000 compute nodes.
 type Flavour struct {
-	fieldSet_ []bool
-	id        string
-	href      string
-	aws       *AWSFlavour
-	gcp       *GCPFlavour
-	name      string
-	network   *Network
-	nodes     *FlavourNodes
+	bitmap_ uint32
+	id      string
+	href    string
+	aws     *AWSFlavour
+	gcp     *GCPFlavour
+	name    string
+	network *Network
+	nodes   *FlavourNodes
 }
 
 // Kind returns the name of the type of the object.
@@ -51,7 +51,7 @@ func (o *Flavour) Kind() string {
 	if o == nil {
 		return FlavourNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return FlavourLinkKind
 	}
 	return FlavourKind
@@ -59,12 +59,12 @@ func (o *Flavour) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Flavour) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *Flavour) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -73,7 +73,7 @@ func (o *Flavour) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Flavour) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -82,7 +82,7 @@ func (o *Flavour) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Flavour) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -91,7 +91,7 @@ func (o *Flavour) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Flavour) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -100,17 +100,7 @@ func (o *Flavour) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Flavour) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // AWS returns the value of the 'AWS' attribute, or
@@ -118,7 +108,7 @@ func (o *Flavour) Empty() bool {
 //
 // Default _Amazon Web Services_ settings of the cluster.
 func (o *Flavour) AWS() *AWSFlavour {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.aws
 	}
 	return nil
@@ -129,7 +119,7 @@ func (o *Flavour) AWS() *AWSFlavour {
 //
 // Default _Amazon Web Services_ settings of the cluster.
 func (o *Flavour) GetAWS() (value *AWSFlavour, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.aws
 	}
@@ -141,7 +131,7 @@ func (o *Flavour) GetAWS() (value *AWSFlavour, ok bool) {
 //
 // Default _Google Cloud Platform_ settings of the cluster.
 func (o *Flavour) GCP() *GCPFlavour {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.gcp
 	}
 	return nil
@@ -152,7 +142,7 @@ func (o *Flavour) GCP() *GCPFlavour {
 //
 // Default _Google Cloud Platform_ settings of the cluster.
 func (o *Flavour) GetGCP() (value *GCPFlavour, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.gcp
 	}
@@ -167,7 +157,7 @@ func (o *Flavour) GetGCP() (value *GCPFlavour, ok bool) {
 // NOTE: Currently for all flavours the `id` and `name` attributes have exactly the
 // same values.
 func (o *Flavour) Name() string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.name
 	}
 	return ""
@@ -181,7 +171,7 @@ func (o *Flavour) Name() string {
 // NOTE: Currently for all flavours the `id` and `name` attributes have exactly the
 // same values.
 func (o *Flavour) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.name
 	}
@@ -195,7 +185,7 @@ func (o *Flavour) GetName() (value string, ok bool) {
 //
 // These can be overridden specifying in the cluster itself a different set of settings.
 func (o *Flavour) Network() *Network {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.network
 	}
 	return nil
@@ -208,7 +198,7 @@ func (o *Flavour) Network() *Network {
 //
 // These can be overridden specifying in the cluster itself a different set of settings.
 func (o *Flavour) GetNetwork() (value *Network, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.network
 	}
@@ -223,7 +213,7 @@ func (o *Flavour) GetNetwork() (value *Network, ok bool) {
 //
 // These can be overridden specifying in the cluster itself a different number of nodes.
 func (o *Flavour) Nodes() *FlavourNodes {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.nodes
 	}
 	return nil
@@ -237,7 +227,7 @@ func (o *Flavour) Nodes() *FlavourNodes {
 //
 // These can be overridden specifying in the cluster itself a different number of nodes.
 func (o *Flavour) GetNodes() (value *FlavourNodes, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.nodes
 	}

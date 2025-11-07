@@ -23,22 +23,14 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/osdfleetmgmt/v
 //
 // Provision Shard Reference of the cluster.
 type ProvisionShardReference struct {
-	fieldSet_ []bool
-	href      string
-	id        string
+	bitmap_ uint32
+	href    string
+	id      string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ProvisionShardReference) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Href returns the value of the 'href' attribute, or
@@ -46,7 +38,7 @@ func (o *ProvisionShardReference) Empty() bool {
 //
 // link to the Provision Shards associated to the cluster
 func (o *ProvisionShardReference) Href() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.href
 	}
 	return ""
@@ -57,7 +49,7 @@ func (o *ProvisionShardReference) Href() string {
 //
 // link to the Provision Shards associated to the cluster
 func (o *ProvisionShardReference) GetHref() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.href
 	}
@@ -69,7 +61,7 @@ func (o *ProvisionShardReference) GetHref() (value string, ok bool) {
 //
 // Id of the Provision Shards associated to the Ocluster
 func (o *ProvisionShardReference) Id() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -80,7 +72,7 @@ func (o *ProvisionShardReference) Id() string {
 //
 // Id of the Provision Shards associated to the Ocluster
 func (o *ProvisionShardReference) GetId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}

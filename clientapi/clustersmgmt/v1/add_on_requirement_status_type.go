@@ -23,22 +23,14 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Representation of an add-on requirement status.
 type AddOnRequirementStatus struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	errorMsgs []string
 	fulfilled bool
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddOnRequirementStatus) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // ErrorMsgs returns the value of the 'error_msgs' attribute, or
@@ -46,7 +38,7 @@ func (o *AddOnRequirementStatus) Empty() bool {
 //
 // Error messages detailing reasons for unfulfilled requirements.
 func (o *AddOnRequirementStatus) ErrorMsgs() []string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.errorMsgs
 	}
 	return nil
@@ -57,7 +49,7 @@ func (o *AddOnRequirementStatus) ErrorMsgs() []string {
 //
 // Error messages detailing reasons for unfulfilled requirements.
 func (o *AddOnRequirementStatus) GetErrorMsgs() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.errorMsgs
 	}
@@ -69,7 +61,7 @@ func (o *AddOnRequirementStatus) GetErrorMsgs() (value []string, ok bool) {
 //
 // Indicates if this requirement is fulfilled.
 func (o *AddOnRequirementStatus) Fulfilled() bool {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.fulfilled
 	}
 	return false
@@ -80,7 +72,7 @@ func (o *AddOnRequirementStatus) Fulfilled() bool {
 //
 // Indicates if this requirement is fulfilled.
 func (o *AddOnRequirementStatus) GetFulfilled() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.fulfilled
 	}

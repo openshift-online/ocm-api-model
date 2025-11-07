@@ -35,7 +35,7 @@ const ResourceNilKind = "ResourceNil"
 //
 // Identifies computing resources
 type Resource struct {
-	fieldSet_            []bool
+	bitmap_              uint32
 	id                   string
 	href                 string
 	sku                  string
@@ -51,7 +51,7 @@ func (o *Resource) Kind() string {
 	if o == nil {
 		return ResourceNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return ResourceLinkKind
 	}
 	return ResourceKind
@@ -59,12 +59,12 @@ func (o *Resource) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Resource) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *Resource) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -73,7 +73,7 @@ func (o *Resource) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Resource) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -82,7 +82,7 @@ func (o *Resource) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Resource) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -91,7 +91,7 @@ func (o *Resource) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Resource) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -100,23 +100,13 @@ func (o *Resource) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Resource) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // BYOC returns the value of the 'BYOC' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Resource) BYOC() bool {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.byoc
 	}
 	return false
@@ -125,7 +115,7 @@ func (o *Resource) BYOC() bool {
 // GetBYOC returns the value of the 'BYOC' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Resource) GetBYOC() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.byoc
 	}
@@ -135,7 +125,7 @@ func (o *Resource) GetBYOC() (value bool, ok bool) {
 // SKU returns the value of the 'SKU' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Resource) SKU() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.sku
 	}
 	return ""
@@ -144,7 +134,7 @@ func (o *Resource) SKU() string {
 // GetSKU returns the value of the 'SKU' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Resource) GetSKU() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.sku
 	}
@@ -156,7 +146,7 @@ func (o *Resource) GetSKU() (value string, ok bool) {
 //
 // Number of allowed nodes
 func (o *Resource) Allowed() int {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.allowed
 	}
 	return 0
@@ -167,7 +157,7 @@ func (o *Resource) Allowed() int {
 //
 // Number of allowed nodes
 func (o *Resource) GetAllowed() (value int, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.allowed
 	}
@@ -177,7 +167,7 @@ func (o *Resource) GetAllowed() (value int, ok bool) {
 // AvailabilityZoneType returns the value of the 'availability_zone_type' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Resource) AvailabilityZoneType() string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.availabilityZoneType
 	}
 	return ""
@@ -186,7 +176,7 @@ func (o *Resource) AvailabilityZoneType() string {
 // GetAvailabilityZoneType returns the value of the 'availability_zone_type' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Resource) GetAvailabilityZoneType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.availabilityZoneType
 	}
@@ -198,7 +188,7 @@ func (o *Resource) GetAvailabilityZoneType() (value string, ok bool) {
 //
 // platform-specific name, such as "M5.2Xlarge" for a type of EC2 node
 func (o *Resource) ResourceName() string {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.resourceName
 	}
 	return ""
@@ -209,7 +199,7 @@ func (o *Resource) ResourceName() string {
 //
 // platform-specific name, such as "M5.2Xlarge" for a type of EC2 node
 func (o *Resource) GetResourceName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.resourceName
 	}
@@ -219,7 +209,7 @@ func (o *Resource) GetResourceName() (value string, ok bool) {
 // ResourceType returns the value of the 'resource_type' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Resource) ResourceType() string {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.resourceType
 	}
 	return ""
@@ -228,7 +218,7 @@ func (o *Resource) ResourceType() string {
 // GetResourceType returns the value of the 'resource_type' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Resource) GetResourceType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.resourceType
 	}

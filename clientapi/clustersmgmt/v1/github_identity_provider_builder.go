@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// GithubIdentityProviderBuilder contains the data and logic needed to build 'github_identity_provider' objects.
+//
 // Details for `github` identity providers.
 type GithubIdentityProviderBuilder struct {
-	fieldSet_     []bool
+	bitmap_       uint32
 	ca            string
 	clientID      string
 	clientSecret  string
@@ -32,83 +34,55 @@ type GithubIdentityProviderBuilder struct {
 
 // NewGithubIdentityProvider creates a new builder of 'github_identity_provider' objects.
 func NewGithubIdentityProvider() *GithubIdentityProviderBuilder {
-	return &GithubIdentityProviderBuilder{
-		fieldSet_: make([]bool, 6),
-	}
+	return &GithubIdentityProviderBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GithubIdentityProviderBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // CA sets the value of the 'CA' attribute to the given value.
 func (b *GithubIdentityProviderBuilder) CA(value string) *GithubIdentityProviderBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.ca = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ClientID sets the value of the 'client_ID' attribute to the given value.
 func (b *GithubIdentityProviderBuilder) ClientID(value string) *GithubIdentityProviderBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.clientID = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // ClientSecret sets the value of the 'client_secret' attribute to the given value.
 func (b *GithubIdentityProviderBuilder) ClientSecret(value string) *GithubIdentityProviderBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.clientSecret = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Hostname sets the value of the 'hostname' attribute to the given value.
 func (b *GithubIdentityProviderBuilder) Hostname(value string) *GithubIdentityProviderBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.hostname = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // Organizations sets the value of the 'organizations' attribute to the given values.
 func (b *GithubIdentityProviderBuilder) Organizations(values ...string) *GithubIdentityProviderBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.organizations = make([]string, len(values))
 	copy(b.organizations, values)
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // Teams sets the value of the 'teams' attribute to the given values.
 func (b *GithubIdentityProviderBuilder) Teams(values ...string) *GithubIdentityProviderBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.teams = make([]string, len(values))
 	copy(b.teams, values)
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
@@ -117,10 +91,7 @@ func (b *GithubIdentityProviderBuilder) Copy(object *GithubIdentityProvider) *Gi
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.ca = object.ca
 	b.clientID = object.clientID
 	b.clientSecret = object.clientSecret
@@ -143,10 +114,7 @@ func (b *GithubIdentityProviderBuilder) Copy(object *GithubIdentityProvider) *Gi
 // Build creates a 'github_identity_provider' object using the configuration stored in the builder.
 func (b *GithubIdentityProviderBuilder) Build() (object *GithubIdentityProvider, err error) {
 	object = new(GithubIdentityProvider)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.ca = b.ca
 	object.clientID = b.clientID
 	object.clientSecret = b.clientSecret

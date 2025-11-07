@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// RegistryAllowlistBuilder contains the data and logic needed to build 'registry_allowlist' objects.
+//
 // RegistryAllowlist represents a single registry allowlist.
 type RegistryAllowlistBuilder struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	id                string
 	href              string
 	cloudProvider     *CloudProviderBuilder
@@ -35,88 +37,59 @@ type RegistryAllowlistBuilder struct {
 
 // NewRegistryAllowlist creates a new builder of 'registry_allowlist' objects.
 func NewRegistryAllowlist() *RegistryAllowlistBuilder {
-	return &RegistryAllowlistBuilder{
-		fieldSet_: make([]bool, 6),
-	}
+	return &RegistryAllowlistBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *RegistryAllowlistBuilder) Link(value bool) *RegistryAllowlistBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *RegistryAllowlistBuilder) ID(value string) *RegistryAllowlistBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *RegistryAllowlistBuilder) HREF(value string) *RegistryAllowlistBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *RegistryAllowlistBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // CloudProvider sets the value of the 'cloud_provider' attribute to the given value.
 //
 // Cloud provider.
 func (b *RegistryAllowlistBuilder) CloudProvider(value *CloudProviderBuilder) *RegistryAllowlistBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.cloudProvider = value
 	if value != nil {
-		b.fieldSet_[3] = true
+		b.bitmap_ |= 8
 	} else {
-		b.fieldSet_[3] = false
+		b.bitmap_ &^= 8
 	}
 	return b
 }
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *RegistryAllowlistBuilder) CreationTimestamp(value time.Time) *RegistryAllowlistBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.creationTimestamp = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // Registries sets the value of the 'registries' attribute to the given values.
 func (b *RegistryAllowlistBuilder) Registries(values ...string) *RegistryAllowlistBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.registries = make([]string, len(values))
 	copy(b.registries, values)
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
@@ -125,10 +98,7 @@ func (b *RegistryAllowlistBuilder) Copy(object *RegistryAllowlist) *RegistryAllo
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.cloudProvider != nil {
@@ -151,10 +121,7 @@ func (b *RegistryAllowlistBuilder) Build() (object *RegistryAllowlist, err error
 	object = new(RegistryAllowlist)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.cloudProvider != nil {
 		object.cloudProvider, err = b.cloudProvider.Build()
 		if err != nil {

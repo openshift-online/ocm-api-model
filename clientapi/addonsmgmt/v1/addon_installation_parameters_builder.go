@@ -19,40 +19,29 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
+// AddonInstallationParametersBuilder contains the data and logic needed to build 'addon_installation_parameters' objects.
+//
 // representation of addon installation parameter
 type AddonInstallationParametersBuilder struct {
-	fieldSet_ []bool
-	items     []*AddonInstallationParameterBuilder
+	bitmap_ uint32
+	items   []*AddonInstallationParameterBuilder
 }
 
 // NewAddonInstallationParameters creates a new builder of 'addon_installation_parameters' objects.
 func NewAddonInstallationParameters() *AddonInstallationParametersBuilder {
-	return &AddonInstallationParametersBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &AddonInstallationParametersBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddonInstallationParametersBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Items sets the value of the 'items' attribute to the given values.
 func (b *AddonInstallationParametersBuilder) Items(values ...*AddonInstallationParameterBuilder) *AddonInstallationParametersBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.items = make([]*AddonInstallationParameterBuilder, len(values))
 	copy(b.items, values)
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -61,10 +50,7 @@ func (b *AddonInstallationParametersBuilder) Copy(object *AddonInstallationParam
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.items != nil {
 		b.items = make([]*AddonInstallationParameterBuilder, len(object.items))
 		for i, v := range object.items {
@@ -79,10 +65,7 @@ func (b *AddonInstallationParametersBuilder) Copy(object *AddonInstallationParam
 // Build creates a 'addon_installation_parameters' object using the configuration stored in the builder.
 func (b *AddonInstallationParametersBuilder) Build() (object *AddonInstallationParameters, err error) {
 	object = new(AddonInstallationParameters)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.items != nil {
 		object.items = make([]*AddonInstallationParameter, len(b.items))
 		for i, v := range b.items {

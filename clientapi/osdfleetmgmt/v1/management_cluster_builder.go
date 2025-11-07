@@ -23,6 +23,8 @@ import (
 	time "time"
 )
 
+// ManagementClusterBuilder contains the data and logic needed to build 'management_cluster' objects.
+//
 // Definition of an _OpenShift_ cluster.
 //
 // The `cloud_provider` attribute is a reference to the cloud provider. When a
@@ -63,7 +65,7 @@ import (
 // attributes are mandatory when creation a cluster with your own Amazon Web
 // Services account.
 type ManagementClusterBuilder struct {
-	fieldSet_                  []bool
+	bitmap_                    uint32
 	id                         string
 	href                       string
 	dns                        *DNSBuilder
@@ -81,78 +83,51 @@ type ManagementClusterBuilder struct {
 
 // NewManagementCluster creates a new builder of 'management_cluster' objects.
 func NewManagementCluster() *ManagementClusterBuilder {
-	return &ManagementClusterBuilder{
-		fieldSet_: make([]bool, 14),
-	}
+	return &ManagementClusterBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ManagementClusterBuilder) Link(value bool) *ManagementClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ManagementClusterBuilder) ID(value string) *ManagementClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ManagementClusterBuilder) HREF(value string) *ManagementClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ManagementClusterBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // DNS sets the value of the 'DNS' attribute to the given value.
 //
 // DNS settings of the cluster.
 func (b *ManagementClusterBuilder) DNS(value *DNSBuilder) *ManagementClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.dns = value
 	if value != nil {
-		b.fieldSet_[3] = true
+		b.bitmap_ |= 8
 	} else {
-		b.fieldSet_[3] = false
+		b.bitmap_ &^= 8
 	}
 	return b
 }
 
 // CloudProvider sets the value of the 'cloud_provider' attribute to the given value.
 func (b *ManagementClusterBuilder) CloudProvider(value string) *ManagementClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.cloudProvider = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -160,46 +135,34 @@ func (b *ManagementClusterBuilder) CloudProvider(value string) *ManagementCluste
 //
 // Cluster Mgmt reference settings of the cluster.
 func (b *ManagementClusterBuilder) ClusterManagementReference(value *ClusterManagementReferenceBuilder) *ManagementClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.clusterManagementReference = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *ManagementClusterBuilder) CreationTimestamp(value time.Time) *ManagementClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.creationTimestamp = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // Labels sets the value of the 'labels' attribute to the given values.
 func (b *ManagementClusterBuilder) Labels(values ...*LabelBuilder) *ManagementClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.labels = make([]*LabelBuilder, len(values))
 	copy(b.labels, values)
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ManagementClusterBuilder) Name(value string) *ManagementClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.name = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
@@ -207,55 +170,40 @@ func (b *ManagementClusterBuilder) Name(value string) *ManagementClusterBuilder 
 //
 // ManagementClusterParent reference settings of the cluster.
 func (b *ManagementClusterBuilder) Parent(value *ManagementClusterParentBuilder) *ManagementClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.parent = value
 	if value != nil {
-		b.fieldSet_[9] = true
+		b.bitmap_ |= 512
 	} else {
-		b.fieldSet_[9] = false
+		b.bitmap_ &^= 512
 	}
 	return b
 }
 
 // Region sets the value of the 'region' attribute to the given value.
 func (b *ManagementClusterBuilder) Region(value string) *ManagementClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.region = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
 // Sector sets the value of the 'sector' attribute to the given value.
 func (b *ManagementClusterBuilder) Sector(value string) *ManagementClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.sector = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *ManagementClusterBuilder) Status(value string) *ManagementClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.status = value
-	b.fieldSet_[12] = true
+	b.bitmap_ |= 4096
 	return b
 }
 
 // UpdateTimestamp sets the value of the 'update_timestamp' attribute to the given value.
 func (b *ManagementClusterBuilder) UpdateTimestamp(value time.Time) *ManagementClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 14)
-	}
 	b.updateTimestamp = value
-	b.fieldSet_[13] = true
+	b.bitmap_ |= 8192
 	return b
 }
 
@@ -264,10 +212,7 @@ func (b *ManagementClusterBuilder) Copy(object *ManagementCluster) *ManagementCl
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.dns != nil {
@@ -308,10 +253,7 @@ func (b *ManagementClusterBuilder) Build() (object *ManagementCluster, err error
 	object = new(ManagementCluster)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.dns != nil {
 		object.dns, err = b.dns.Build()
 		if err != nil {

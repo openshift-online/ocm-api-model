@@ -42,13 +42,13 @@ func WriteCloudProvider(object *CloudProvider, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(CloudProviderLinkKind)
 	} else {
 		stream.WriteString(CloudProviderKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteCloudProvider(object *CloudProvider, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteCloudProvider(object *CloudProvider, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteCloudProvider(object *CloudProvider, stream *jsoniter.Stream) {
 		stream.WriteString(object.displayName)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteCloudProvider(object *CloudProvider, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.regions != nil
+	present_ = object.bitmap_&32 != 0 && object.regions != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -108,9 +108,7 @@ func UnmarshalCloudProvider(source interface{}) (object *CloudProvider, err erro
 
 // ReadCloudProvider reads a value of the 'cloud_provider' type from the given iterator.
 func ReadCloudProvider(iterator *jsoniter.Iterator) *CloudProvider {
-	object := &CloudProvider{
-		fieldSet_: make([]bool, 6),
-	}
+	object := &CloudProvider{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -120,26 +118,26 @@ func ReadCloudProvider(iterator *jsoniter.Iterator) *CloudProvider {
 		case "kind":
 			value := iterator.ReadString()
 			if value == CloudProviderLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "display_name":
 			value := iterator.ReadString()
 			object.displayName = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "regions":
 			value := ReadCloudRegionList(iterator)
 			object.regions = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		default:
 			iterator.ReadAny()
 		}

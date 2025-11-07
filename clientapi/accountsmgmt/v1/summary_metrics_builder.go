@@ -19,50 +19,35 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
+// SummaryMetricsBuilder contains the data and logic needed to build 'summary_metrics' objects.
 type SummaryMetricsBuilder struct {
-	fieldSet_ []bool
-	name      string
-	vector    []*SummarySampleBuilder
+	bitmap_ uint32
+	name    string
+	vector  []*SummarySampleBuilder
 }
 
 // NewSummaryMetrics creates a new builder of 'summary_metrics' objects.
 func NewSummaryMetrics() *SummaryMetricsBuilder {
-	return &SummaryMetricsBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &SummaryMetricsBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SummaryMetricsBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *SummaryMetricsBuilder) Name(value string) *SummaryMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.name = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Vector sets the value of the 'vector' attribute to the given values.
 func (b *SummaryMetricsBuilder) Vector(values ...*SummarySampleBuilder) *SummaryMetricsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.vector = make([]*SummarySampleBuilder, len(values))
 	copy(b.vector, values)
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -71,10 +56,7 @@ func (b *SummaryMetricsBuilder) Copy(object *SummaryMetrics) *SummaryMetricsBuil
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.name = object.name
 	if object.vector != nil {
 		b.vector = make([]*SummarySampleBuilder, len(object.vector))
@@ -90,10 +72,7 @@ func (b *SummaryMetricsBuilder) Copy(object *SummaryMetrics) *SummaryMetricsBuil
 // Build creates a 'summary_metrics' object using the configuration stored in the builder.
 func (b *SummaryMetricsBuilder) Build() (object *SummaryMetrics, err error) {
 	object = new(SummaryMetrics)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.name = b.name
 	if b.vector != nil {
 		object.vector = make([]*SummarySample, len(b.vector))

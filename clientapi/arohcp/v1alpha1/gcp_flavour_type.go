@@ -23,7 +23,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Specification for different classes of nodes inside a flavour.
 type GCPFlavour struct {
-	fieldSet_           []bool
+	bitmap_             uint32
 	computeInstanceType string
 	infraInstanceType   string
 	infraVolume         *GCPVolume
@@ -34,15 +34,7 @@ type GCPFlavour struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *GCPFlavour) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // ComputeInstanceType returns the value of the 'compute_instance_type' attribute, or
@@ -52,7 +44,7 @@ func (o *GCPFlavour) Empty() bool {
 //
 // User can be overridden specifying in the cluster itself a type for compute node.
 func (o *GCPFlavour) ComputeInstanceType() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.computeInstanceType
 	}
 	return ""
@@ -65,7 +57,7 @@ func (o *GCPFlavour) ComputeInstanceType() string {
 //
 // User can be overridden specifying in the cluster itself a type for compute node.
 func (o *GCPFlavour) GetComputeInstanceType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.computeInstanceType
 	}
@@ -77,7 +69,7 @@ func (o *GCPFlavour) GetComputeInstanceType() (value string, ok bool) {
 //
 // GCP default instance type for the infra volume.
 func (o *GCPFlavour) InfraInstanceType() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.infraInstanceType
 	}
 	return ""
@@ -88,7 +80,7 @@ func (o *GCPFlavour) InfraInstanceType() string {
 //
 // GCP default instance type for the infra volume.
 func (o *GCPFlavour) GetInfraInstanceType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.infraInstanceType
 	}
@@ -100,7 +92,7 @@ func (o *GCPFlavour) GetInfraInstanceType() (value string, ok bool) {
 //
 // Infra volume specification.
 func (o *GCPFlavour) InfraVolume() *GCPVolume {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.infraVolume
 	}
 	return nil
@@ -111,7 +103,7 @@ func (o *GCPFlavour) InfraVolume() *GCPVolume {
 //
 // Infra volume specification.
 func (o *GCPFlavour) GetInfraVolume() (value *GCPVolume, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.infraVolume
 	}
@@ -123,7 +115,7 @@ func (o *GCPFlavour) GetInfraVolume() (value *GCPVolume, ok bool) {
 //
 // GCP default instance type for the master volume.
 func (o *GCPFlavour) MasterInstanceType() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.masterInstanceType
 	}
 	return ""
@@ -134,7 +126,7 @@ func (o *GCPFlavour) MasterInstanceType() string {
 //
 // GCP default instance type for the master volume.
 func (o *GCPFlavour) GetMasterInstanceType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.masterInstanceType
 	}
@@ -146,7 +138,7 @@ func (o *GCPFlavour) GetMasterInstanceType() (value string, ok bool) {
 //
 // Master volume specification.
 func (o *GCPFlavour) MasterVolume() *GCPVolume {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.masterVolume
 	}
 	return nil
@@ -157,7 +149,7 @@ func (o *GCPFlavour) MasterVolume() *GCPVolume {
 //
 // Master volume specification.
 func (o *GCPFlavour) GetMasterVolume() (value *GCPVolume, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.masterVolume
 	}
@@ -169,7 +161,7 @@ func (o *GCPFlavour) GetMasterVolume() (value *GCPVolume, ok bool) {
 //
 // Worker volume specification.
 func (o *GCPFlavour) WorkerVolume() *GCPVolume {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.workerVolume
 	}
 	return nil
@@ -180,7 +172,7 @@ func (o *GCPFlavour) WorkerVolume() *GCPVolume {
 //
 // Worker volume specification.
 func (o *GCPFlavour) GetWorkerVolume() (value *GCPVolume, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.workerVolume
 	}

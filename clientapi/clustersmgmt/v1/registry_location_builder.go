@@ -19,51 +19,37 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// RegistryLocationBuilder contains the data and logic needed to build 'registry_location' objects.
+//
 // RegistryLocation contains a location of the registry specified by the registry domain
 // name. The domain name might include wildcards, like '*' or '??'.
 type RegistryLocationBuilder struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	domainName string
 	insecure   bool
 }
 
 // NewRegistryLocation creates a new builder of 'registry_location' objects.
 func NewRegistryLocation() *RegistryLocationBuilder {
-	return &RegistryLocationBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &RegistryLocationBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *RegistryLocationBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // DomainName sets the value of the 'domain_name' attribute to the given value.
 func (b *RegistryLocationBuilder) DomainName(value string) *RegistryLocationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.domainName = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Insecure sets the value of the 'insecure' attribute to the given value.
 func (b *RegistryLocationBuilder) Insecure(value bool) *RegistryLocationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.insecure = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -72,10 +58,7 @@ func (b *RegistryLocationBuilder) Copy(object *RegistryLocation) *RegistryLocati
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.domainName = object.domainName
 	b.insecure = object.insecure
 	return b
@@ -84,10 +67,7 @@ func (b *RegistryLocationBuilder) Copy(object *RegistryLocation) *RegistryLocati
 // Build creates a 'registry_location' object using the configuration stored in the builder.
 func (b *RegistryLocationBuilder) Build() (object *RegistryLocation, err error) {
 	object = new(RegistryLocation)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.domainName = b.domainName
 	object.insecure = b.insecure
 	return

@@ -19,51 +19,37 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
+// AddonRequirementStatusBuilder contains the data and logic needed to build 'addon_requirement_status' objects.
+//
 // Representation of an addon requirement status.
 type AddonRequirementStatusBuilder struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	errorMsgs []string
 	fulfilled bool
 }
 
 // NewAddonRequirementStatus creates a new builder of 'addon_requirement_status' objects.
 func NewAddonRequirementStatus() *AddonRequirementStatusBuilder {
-	return &AddonRequirementStatusBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &AddonRequirementStatusBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddonRequirementStatusBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ErrorMsgs sets the value of the 'error_msgs' attribute to the given values.
 func (b *AddonRequirementStatusBuilder) ErrorMsgs(values ...string) *AddonRequirementStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.errorMsgs = make([]string, len(values))
 	copy(b.errorMsgs, values)
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Fulfilled sets the value of the 'fulfilled' attribute to the given value.
 func (b *AddonRequirementStatusBuilder) Fulfilled(value bool) *AddonRequirementStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.fulfilled = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -72,10 +58,7 @@ func (b *AddonRequirementStatusBuilder) Copy(object *AddonRequirementStatus) *Ad
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.errorMsgs != nil {
 		b.errorMsgs = make([]string, len(object.errorMsgs))
 		copy(b.errorMsgs, object.errorMsgs)
@@ -89,10 +72,7 @@ func (b *AddonRequirementStatusBuilder) Copy(object *AddonRequirementStatus) *Ad
 // Build creates a 'addon_requirement_status' object using the configuration stored in the builder.
 func (b *AddonRequirementStatusBuilder) Build() (object *AddonRequirementStatus, err error) {
 	object = new(AddonRequirementStatus)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.errorMsgs != nil {
 		object.errorMsgs = make([]string, len(b.errorMsgs))
 		copy(object.errorMsgs, b.errorMsgs)

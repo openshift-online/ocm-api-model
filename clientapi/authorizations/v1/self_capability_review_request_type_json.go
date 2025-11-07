@@ -42,7 +42,7 @@ func WriteSelfCapabilityReviewRequest(object *SelfCapabilityReviewRequest, strea
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteSelfCapabilityReviewRequest(object *SelfCapabilityReviewRequest, strea
 		stream.WriteString(object.accountUsername)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteSelfCapabilityReviewRequest(object *SelfCapabilityReviewRequest, strea
 		stream.WriteString(object.capability)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteSelfCapabilityReviewRequest(object *SelfCapabilityReviewRequest, strea
 		stream.WriteString(object.clusterID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteSelfCapabilityReviewRequest(object *SelfCapabilityReviewRequest, strea
 		stream.WriteString(object.organizationID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteSelfCapabilityReviewRequest(object *SelfCapabilityReviewRequest, strea
 		stream.WriteString(object.resourceType)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -96,7 +96,7 @@ func WriteSelfCapabilityReviewRequest(object *SelfCapabilityReviewRequest, strea
 		stream.WriteString(object.subscriptionID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -121,9 +121,7 @@ func UnmarshalSelfCapabilityReviewRequest(source interface{}) (object *SelfCapab
 
 // ReadSelfCapabilityReviewRequest reads a value of the 'self_capability_review_request' type from the given iterator.
 func ReadSelfCapabilityReviewRequest(iterator *jsoniter.Iterator) *SelfCapabilityReviewRequest {
-	object := &SelfCapabilityReviewRequest{
-		fieldSet_: make([]bool, 7),
-	}
+	object := &SelfCapabilityReviewRequest{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -133,31 +131,31 @@ func ReadSelfCapabilityReviewRequest(iterator *jsoniter.Iterator) *SelfCapabilit
 		case "account_username":
 			value := iterator.ReadString()
 			object.accountUsername = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "capability":
 			value := iterator.ReadString()
 			object.capability = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterID = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "organization_id":
 			value := iterator.ReadString()
 			object.organizationID = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "resource_type":
 			value := iterator.ReadString()
 			object.resourceType = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "subscription_id":
 			value := iterator.ReadString()
 			object.subscriptionID = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "type":
 			value := iterator.ReadString()
 			object.type_ = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		default:
 			iterator.ReadAny()
 		}

@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
+// SelfAccessReviewRequestBuilder contains the data and logic needed to build 'self_access_review_request' objects.
+//
 // Representation of an access review performed against oneself
 type SelfAccessReviewRequestBuilder struct {
-	fieldSet_      []bool
+	bitmap_        uint32
 	action         string
 	clusterID      string
 	clusterUUID    string
@@ -32,81 +34,53 @@ type SelfAccessReviewRequestBuilder struct {
 
 // NewSelfAccessReviewRequest creates a new builder of 'self_access_review_request' objects.
 func NewSelfAccessReviewRequest() *SelfAccessReviewRequestBuilder {
-	return &SelfAccessReviewRequestBuilder{
-		fieldSet_: make([]bool, 6),
-	}
+	return &SelfAccessReviewRequestBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SelfAccessReviewRequestBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Action sets the value of the 'action' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) Action(value string) *SelfAccessReviewRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.action = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) ClusterID(value string) *SelfAccessReviewRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.clusterID = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // ClusterUUID sets the value of the 'cluster_UUID' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) ClusterUUID(value string) *SelfAccessReviewRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.clusterUUID = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) OrganizationID(value string) *SelfAccessReviewRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.organizationID = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // ResourceType sets the value of the 'resource_type' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) ResourceType(value string) *SelfAccessReviewRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.resourceType = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // SubscriptionID sets the value of the 'subscription_ID' attribute to the given value.
 func (b *SelfAccessReviewRequestBuilder) SubscriptionID(value string) *SelfAccessReviewRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 6)
-	}
 	b.subscriptionID = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
@@ -115,10 +89,7 @@ func (b *SelfAccessReviewRequestBuilder) Copy(object *SelfAccessReviewRequest) *
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.action = object.action
 	b.clusterID = object.clusterID
 	b.clusterUUID = object.clusterUUID
@@ -131,10 +102,7 @@ func (b *SelfAccessReviewRequestBuilder) Copy(object *SelfAccessReviewRequest) *
 // Build creates a 'self_access_review_request' object using the configuration stored in the builder.
 func (b *SelfAccessReviewRequestBuilder) Build() (object *SelfAccessReviewRequest, err error) {
 	object = new(SelfAccessReviewRequest)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.action = b.action
 	object.clusterID = b.clusterID
 	object.clusterUUID = b.clusterUUID

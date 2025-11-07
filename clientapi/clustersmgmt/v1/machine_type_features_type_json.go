@@ -42,7 +42,7 @@ func WriteMachineTypeFeatures(object *MachineTypeFeatures, stream *jsoniter.Stre
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalMachineTypeFeatures(source interface{}) (object *MachineTypeFeatur
 
 // ReadMachineTypeFeatures reads a value of the 'machine_type_features' type from the given iterator.
 func ReadMachineTypeFeatures(iterator *jsoniter.Iterator) *MachineTypeFeatures {
-	object := &MachineTypeFeatures{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &MachineTypeFeatures{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadMachineTypeFeatures(iterator *jsoniter.Iterator) *MachineTypeFeatures {
 		case "win_li":
 			value := iterator.ReadBool()
 			object.winLI = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

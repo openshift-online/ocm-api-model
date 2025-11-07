@@ -19,10 +19,12 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// AddOnSubOperatorBuilder contains the data and logic needed to build 'add_on_sub_operator' objects.
+//
 // Representation of an add-on sub operator. A sub operator is an operator
 // who's life cycle is controlled by the add-on umbrella operator.
 type AddOnSubOperatorBuilder struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	operatorName      string
 	operatorNamespace string
 	enabled           bool
@@ -30,51 +32,32 @@ type AddOnSubOperatorBuilder struct {
 
 // NewAddOnSubOperator creates a new builder of 'add_on_sub_operator' objects.
 func NewAddOnSubOperator() *AddOnSubOperatorBuilder {
-	return &AddOnSubOperatorBuilder{
-		fieldSet_: make([]bool, 3),
-	}
+	return &AddOnSubOperatorBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddOnSubOperatorBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AddOnSubOperatorBuilder) Enabled(value bool) *AddOnSubOperatorBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.enabled = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // OperatorName sets the value of the 'operator_name' attribute to the given value.
 func (b *AddOnSubOperatorBuilder) OperatorName(value string) *AddOnSubOperatorBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.operatorName = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // OperatorNamespace sets the value of the 'operator_namespace' attribute to the given value.
 func (b *AddOnSubOperatorBuilder) OperatorNamespace(value string) *AddOnSubOperatorBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.operatorNamespace = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
@@ -83,10 +66,7 @@ func (b *AddOnSubOperatorBuilder) Copy(object *AddOnSubOperator) *AddOnSubOperat
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.enabled = object.enabled
 	b.operatorName = object.operatorName
 	b.operatorNamespace = object.operatorNamespace
@@ -96,10 +76,7 @@ func (b *AddOnSubOperatorBuilder) Copy(object *AddOnSubOperator) *AddOnSubOperat
 // Build creates a 'add_on_sub_operator' object using the configuration stored in the builder.
 func (b *AddOnSubOperatorBuilder) Build() (object *AddOnSubOperator, err error) {
 	object = new(AddOnSubOperator)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.enabled = b.enabled
 	object.operatorName = b.operatorName
 	object.operatorNamespace = b.operatorNamespace

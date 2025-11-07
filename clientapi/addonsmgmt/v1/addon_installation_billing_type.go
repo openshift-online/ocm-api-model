@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 //
 // Representation of an add-on installation billing.
 type AddonInstallationBilling struct {
-	fieldSet_                 []bool
+	bitmap_                   uint32
 	billingMarketplaceAccount string
 	billingModel              BillingModel
 	href                      string
@@ -33,15 +33,7 @@ type AddonInstallationBilling struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddonInstallationBilling) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // BillingMarketplaceAccount returns the value of the 'billing_marketplace_account' attribute, or
@@ -49,7 +41,7 @@ func (o *AddonInstallationBilling) Empty() bool {
 //
 // Account ID for billing market place
 func (o *AddonInstallationBilling) BillingMarketplaceAccount() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.billingMarketplaceAccount
 	}
 	return ""
@@ -60,7 +52,7 @@ func (o *AddonInstallationBilling) BillingMarketplaceAccount() string {
 //
 // Account ID for billing market place
 func (o *AddonInstallationBilling) GetBillingMarketplaceAccount() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.billingMarketplaceAccount
 	}
@@ -72,7 +64,7 @@ func (o *AddonInstallationBilling) GetBillingMarketplaceAccount() (value string,
 //
 // Billing Model for addon resources
 func (o *AddonInstallationBilling) BillingModel() BillingModel {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.billingModel
 	}
 	return BillingModel("")
@@ -83,7 +75,7 @@ func (o *AddonInstallationBilling) BillingModel() BillingModel {
 //
 // Billing Model for addon resources
 func (o *AddonInstallationBilling) GetBillingModel() (value BillingModel, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.billingModel
 	}
@@ -95,7 +87,7 @@ func (o *AddonInstallationBilling) GetBillingModel() (value BillingModel, ok boo
 //
 // Self link
 func (o *AddonInstallationBilling) Href() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -106,7 +98,7 @@ func (o *AddonInstallationBilling) Href() string {
 //
 // Self link
 func (o *AddonInstallationBilling) GetHref() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -118,7 +110,7 @@ func (o *AddonInstallationBilling) GetHref() (value string, ok bool) {
 //
 // Unique identifier of the object
 func (o *AddonInstallationBilling) Id() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.id
 	}
 	return ""
@@ -129,7 +121,7 @@ func (o *AddonInstallationBilling) Id() string {
 //
 // Unique identifier of the object
 func (o *AddonInstallationBilling) GetId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.id
 	}
@@ -141,7 +133,7 @@ func (o *AddonInstallationBilling) GetId() (value string, ok bool) {
 //
 // Indicates the type of this object
 func (o *AddonInstallationBilling) Kind() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.kind
 	}
 	return ""
@@ -152,7 +144,7 @@ func (o *AddonInstallationBilling) Kind() string {
 //
 // Indicates the type of this object
 func (o *AddonInstallationBilling) GetKind() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.kind
 	}

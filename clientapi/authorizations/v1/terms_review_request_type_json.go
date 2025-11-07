@@ -42,7 +42,7 @@ func WriteTermsReviewRequest(object *TermsReviewRequest, stream *jsoniter.Stream
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteTermsReviewRequest(object *TermsReviewRequest, stream *jsoniter.Stream
 		stream.WriteString(object.accountUsername)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteTermsReviewRequest(object *TermsReviewRequest, stream *jsoniter.Stream
 		stream.WriteBool(object.checkOptionalTerms)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteTermsReviewRequest(object *TermsReviewRequest, stream *jsoniter.Stream
 		stream.WriteString(object.eventCode)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,9 +94,7 @@ func UnmarshalTermsReviewRequest(source interface{}) (object *TermsReviewRequest
 
 // ReadTermsReviewRequest reads a value of the 'terms_review_request' type from the given iterator.
 func ReadTermsReviewRequest(iterator *jsoniter.Iterator) *TermsReviewRequest {
-	object := &TermsReviewRequest{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &TermsReviewRequest{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -106,19 +104,19 @@ func ReadTermsReviewRequest(iterator *jsoniter.Iterator) *TermsReviewRequest {
 		case "account_username":
 			value := iterator.ReadString()
 			object.accountUsername = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "check_optional_terms":
 			value := iterator.ReadBool()
 			object.checkOptionalTerms = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "event_code":
 			value := iterator.ReadString()
 			object.eventCode = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "site_code":
 			value := iterator.ReadString()
 			object.siteCode = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

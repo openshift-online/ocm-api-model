@@ -42,7 +42,7 @@ func WriteControlPlaneOperatorIdentityRequirement(object *ControlPlaneOperatorId
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteControlPlaneOperatorIdentityRequirement(object *ControlPlaneOperatorId
 		stream.WriteString(object.maxOpenShiftVersion)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteControlPlaneOperatorIdentityRequirement(object *ControlPlaneOperatorId
 		stream.WriteString(object.minOpenShiftVersion)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteControlPlaneOperatorIdentityRequirement(object *ControlPlaneOperatorId
 		stream.WriteString(object.operatorName)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteControlPlaneOperatorIdentityRequirement(object *ControlPlaneOperatorId
 		stream.WriteString(object.required)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.roleDefinitions != nil
+	present_ = object.bitmap_&16 != 0 && object.roleDefinitions != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -103,9 +103,7 @@ func UnmarshalControlPlaneOperatorIdentityRequirement(source interface{}) (objec
 
 // ReadControlPlaneOperatorIdentityRequirement reads a value of the 'control_plane_operator_identity_requirement' type from the given iterator.
 func ReadControlPlaneOperatorIdentityRequirement(iterator *jsoniter.Iterator) *ControlPlaneOperatorIdentityRequirement {
-	object := &ControlPlaneOperatorIdentityRequirement{
-		fieldSet_: make([]bool, 5),
-	}
+	object := &ControlPlaneOperatorIdentityRequirement{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -115,23 +113,23 @@ func ReadControlPlaneOperatorIdentityRequirement(iterator *jsoniter.Iterator) *C
 		case "max_openshift_version":
 			value := iterator.ReadString()
 			object.maxOpenShiftVersion = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "min_openshift_version":
 			value := iterator.ReadString()
 			object.minOpenShiftVersion = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "operator_name":
 			value := iterator.ReadString()
 			object.operatorName = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "required":
 			value := iterator.ReadString()
 			object.required = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "role_definitions":
 			value := ReadRoleDefinitionOperatorIdentityRequirementList(iterator)
 			object.roleDefinitions = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		default:
 			iterator.ReadAny()
 		}

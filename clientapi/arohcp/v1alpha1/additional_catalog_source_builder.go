@@ -19,72 +19,52 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// AdditionalCatalogSourceBuilder contains the data and logic needed to build 'additional_catalog_source' objects.
+//
 // Representation of an addon catalog source object used by addon versions.
 type AdditionalCatalogSourceBuilder struct {
-	fieldSet_ []bool
-	id        string
-	image     string
-	name      string
-	enabled   bool
+	bitmap_ uint32
+	id      string
+	image   string
+	name    string
+	enabled bool
 }
 
 // NewAdditionalCatalogSource creates a new builder of 'additional_catalog_source' objects.
 func NewAdditionalCatalogSource() *AdditionalCatalogSourceBuilder {
-	return &AdditionalCatalogSourceBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &AdditionalCatalogSourceBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AdditionalCatalogSourceBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *AdditionalCatalogSourceBuilder) ID(value string) *AdditionalCatalogSourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.id = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Enabled sets the value of the 'enabled' attribute to the given value.
 func (b *AdditionalCatalogSourceBuilder) Enabled(value bool) *AdditionalCatalogSourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.enabled = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Image sets the value of the 'image' attribute to the given value.
 func (b *AdditionalCatalogSourceBuilder) Image(value string) *AdditionalCatalogSourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.image = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AdditionalCatalogSourceBuilder) Name(value string) *AdditionalCatalogSourceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.name = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -93,10 +73,7 @@ func (b *AdditionalCatalogSourceBuilder) Copy(object *AdditionalCatalogSource) *
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.enabled = object.enabled
 	b.image = object.image
@@ -107,10 +84,7 @@ func (b *AdditionalCatalogSourceBuilder) Copy(object *AdditionalCatalogSource) *
 // Build creates a 'additional_catalog_source' object using the configuration stored in the builder.
 func (b *AdditionalCatalogSourceBuilder) Build() (object *AdditionalCatalogSource, err error) {
 	object = new(AdditionalCatalogSource)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.id = b.id
 	object.enabled = b.enabled
 	object.image = b.image

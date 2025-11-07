@@ -43,13 +43,13 @@ func WriteIncident(object *Incident, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(IncidentLinkKind)
 	} else {
 		stream.WriteString(IncidentKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteIncident(object *Incident, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteIncident(object *Incident, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteIncident(object *Incident, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteIncident(object *Incident, stream *jsoniter.Stream) {
 		stream.WriteString(object.creatorId)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteIncident(object *Incident, stream *jsoniter.Stream) {
 		stream.WriteString((object.deletedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteIncident(object *Incident, stream *jsoniter.Stream) {
 		stream.WriteString(object.description)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7] && object.externalCoordination != nil
+	present_ = object.bitmap_&128 != 0 && object.externalCoordination != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteIncident(object *Incident, stream *jsoniter.Stream) {
 		WriteStringList(object.externalCoordination, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
+	present_ = object.bitmap_&256 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -120,7 +120,7 @@ func WriteIncident(object *Incident, stream *jsoniter.Stream) {
 		stream.WriteString(object.incidentId)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = object.bitmap_&512 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -129,7 +129,7 @@ func WriteIncident(object *Incident, stream *jsoniter.Stream) {
 		stream.WriteString(object.incidentType)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
+	present_ = object.bitmap_&1024 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -138,7 +138,7 @@ func WriteIncident(object *Incident, stream *jsoniter.Stream) {
 		stream.WriteString((object.lastUpdated).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
+	present_ = object.bitmap_&2048 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -147,7 +147,7 @@ func WriteIncident(object *Incident, stream *jsoniter.Stream) {
 		stream.WriteString(object.primaryTeam)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
+	present_ = object.bitmap_&4096 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -156,7 +156,7 @@ func WriteIncident(object *Incident, stream *jsoniter.Stream) {
 		stream.WriteString(object.severity)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13]
+	present_ = object.bitmap_&8192 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -165,7 +165,7 @@ func WriteIncident(object *Incident, stream *jsoniter.Stream) {
 		stream.WriteString(object.status)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14]
+	present_ = object.bitmap_&16384 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -174,7 +174,7 @@ func WriteIncident(object *Incident, stream *jsoniter.Stream) {
 		stream.WriteString(object.summary)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 15 && object.fieldSet_[15]
+	present_ = object.bitmap_&32768 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -183,7 +183,7 @@ func WriteIncident(object *Incident, stream *jsoniter.Stream) {
 		stream.WriteString((object.updatedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 16 && object.fieldSet_[16]
+	present_ = object.bitmap_&65536 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -208,9 +208,7 @@ func UnmarshalIncident(source interface{}) (object *Incident, err error) {
 
 // ReadIncident reads a value of the 'incident' type from the given iterator.
 func ReadIncident(iterator *jsoniter.Iterator) *Incident {
-	object := &Incident{
-		fieldSet_: make([]bool, 17),
-	}
+	object := &Incident{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -220,14 +218,14 @@ func ReadIncident(iterator *jsoniter.Iterator) *Incident {
 		case "kind":
 			value := iterator.ReadString()
 			if value == IncidentLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -235,11 +233,11 @@ func ReadIncident(iterator *jsoniter.Iterator) *Incident {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "creator_id":
 			value := iterator.ReadString()
 			object.creatorId = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "deleted_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -247,23 +245,23 @@ func ReadIncident(iterator *jsoniter.Iterator) *Incident {
 				iterator.ReportError("", err.Error())
 			}
 			object.deletedAt = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "description":
 			value := iterator.ReadString()
 			object.description = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "external_coordination":
 			value := ReadStringList(iterator)
 			object.externalCoordination = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		case "incident_id":
 			value := iterator.ReadString()
 			object.incidentId = value
-			object.fieldSet_[8] = true
+			object.bitmap_ |= 256
 		case "incident_type":
 			value := iterator.ReadString()
 			object.incidentType = value
-			object.fieldSet_[9] = true
+			object.bitmap_ |= 512
 		case "last_updated":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -271,23 +269,23 @@ func ReadIncident(iterator *jsoniter.Iterator) *Incident {
 				iterator.ReportError("", err.Error())
 			}
 			object.lastUpdated = value
-			object.fieldSet_[10] = true
+			object.bitmap_ |= 1024
 		case "primary_team":
 			value := iterator.ReadString()
 			object.primaryTeam = value
-			object.fieldSet_[11] = true
+			object.bitmap_ |= 2048
 		case "severity":
 			value := iterator.ReadString()
 			object.severity = value
-			object.fieldSet_[12] = true
+			object.bitmap_ |= 4096
 		case "status":
 			value := iterator.ReadString()
 			object.status = value
-			object.fieldSet_[13] = true
+			object.bitmap_ |= 8192
 		case "summary":
 			value := iterator.ReadString()
 			object.summary = value
-			object.fieldSet_[14] = true
+			object.bitmap_ |= 16384
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -295,7 +293,7 @@ func ReadIncident(iterator *jsoniter.Iterator) *Incident {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.fieldSet_[15] = true
+			object.bitmap_ |= 32768
 		case "worked_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -303,7 +301,7 @@ func ReadIncident(iterator *jsoniter.Iterator) *Incident {
 				iterator.ReportError("", err.Error())
 			}
 			object.workedAt = value
-			object.fieldSet_[16] = true
+			object.bitmap_ |= 65536
 		default:
 			iterator.ReadAny()
 		}

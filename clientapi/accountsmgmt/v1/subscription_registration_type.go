@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 //
 // Registration of a new subscription.
 type SubscriptionRegistration struct {
-	fieldSet_   []bool
+	bitmap_     uint32
 	clusterUUID string
 	consoleURL  string
 	displayName string
@@ -33,15 +33,7 @@ type SubscriptionRegistration struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *SubscriptionRegistration) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // ClusterUUID returns the value of the 'cluster_UUID' attribute, or
@@ -49,7 +41,7 @@ func (o *SubscriptionRegistration) Empty() bool {
 //
 // External cluster ID.
 func (o *SubscriptionRegistration) ClusterUUID() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.clusterUUID
 	}
 	return ""
@@ -60,7 +52,7 @@ func (o *SubscriptionRegistration) ClusterUUID() string {
 //
 // External cluster ID.
 func (o *SubscriptionRegistration) GetClusterUUID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.clusterUUID
 	}
@@ -72,7 +64,7 @@ func (o *SubscriptionRegistration) GetClusterUUID() (value string, ok bool) {
 //
 // Console URL of subscription (optional).
 func (o *SubscriptionRegistration) ConsoleURL() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.consoleURL
 	}
 	return ""
@@ -83,7 +75,7 @@ func (o *SubscriptionRegistration) ConsoleURL() string {
 //
 // Console URL of subscription (optional).
 func (o *SubscriptionRegistration) GetConsoleURL() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.consoleURL
 	}
@@ -95,7 +87,7 @@ func (o *SubscriptionRegistration) GetConsoleURL() (value string, ok bool) {
 //
 // Display name of subscription (optional).
 func (o *SubscriptionRegistration) DisplayName() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.displayName
 	}
 	return ""
@@ -106,7 +98,7 @@ func (o *SubscriptionRegistration) DisplayName() string {
 //
 // Display name of subscription (optional).
 func (o *SubscriptionRegistration) GetDisplayName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.displayName
 	}
@@ -118,7 +110,7 @@ func (o *SubscriptionRegistration) GetDisplayName() (value string, ok bool) {
 //
 // Plan ID of subscription.
 func (o *SubscriptionRegistration) PlanID() PlanID {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.planID
 	}
 	return PlanID("")
@@ -129,7 +121,7 @@ func (o *SubscriptionRegistration) PlanID() PlanID {
 //
 // Plan ID of subscription.
 func (o *SubscriptionRegistration) GetPlanID() (value PlanID, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.planID
 	}
@@ -141,7 +133,7 @@ func (o *SubscriptionRegistration) GetPlanID() (value PlanID, ok bool) {
 //
 // Status of subscription.
 func (o *SubscriptionRegistration) Status() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.status
 	}
 	return ""
@@ -152,7 +144,7 @@ func (o *SubscriptionRegistration) Status() string {
 //
 // Status of subscription.
 func (o *SubscriptionRegistration) GetStatus() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.status
 	}

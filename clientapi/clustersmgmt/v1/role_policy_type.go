@@ -21,29 +21,21 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 
 // RolePolicy represents the values of the 'role_policy' type.
 type RolePolicy struct {
-	fieldSet_ []bool
-	arn       string
-	name      string
-	type_     string
+	bitmap_ uint32
+	arn     string
+	name    string
+	type_   string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *RolePolicy) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Arn returns the value of the 'arn' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *RolePolicy) Arn() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.arn
 	}
 	return ""
@@ -52,7 +44,7 @@ func (o *RolePolicy) Arn() string {
 // GetArn returns the value of the 'arn' attribute and
 // a flag indicating if the attribute has a value.
 func (o *RolePolicy) GetArn() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.arn
 	}
@@ -62,7 +54,7 @@ func (o *RolePolicy) GetArn() (value string, ok bool) {
 // Name returns the value of the 'name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *RolePolicy) Name() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.name
 	}
 	return ""
@@ -71,7 +63,7 @@ func (o *RolePolicy) Name() string {
 // GetName returns the value of the 'name' attribute and
 // a flag indicating if the attribute has a value.
 func (o *RolePolicy) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.name
 	}
@@ -81,7 +73,7 @@ func (o *RolePolicy) GetName() (value string, ok bool) {
 // Type returns the value of the 'type' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *RolePolicy) Type() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.type_
 	}
 	return ""
@@ -90,7 +82,7 @@ func (o *RolePolicy) Type() string {
 // GetType returns the value of the 'type' attribute and
 // a flag indicating if the attribute has a value.
 func (o *RolePolicy) GetType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.type_
 	}

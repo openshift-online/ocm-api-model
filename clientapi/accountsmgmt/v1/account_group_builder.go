@@ -23,8 +23,9 @@ import (
 	time "time"
 )
 
+// AccountGroupBuilder contains the data and logic needed to build 'account_group' objects.
 type AccountGroupBuilder struct {
-	fieldSet_      []bool
+	bitmap_        uint32
 	id             string
 	href           string
 	createdAt      time.Time
@@ -38,121 +39,80 @@ type AccountGroupBuilder struct {
 
 // NewAccountGroup creates a new builder of 'account_group' objects.
 func NewAccountGroup() *AccountGroupBuilder {
-	return &AccountGroupBuilder{
-		fieldSet_: make([]bool, 10),
-	}
+	return &AccountGroupBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AccountGroupBuilder) Link(value bool) *AccountGroupBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AccountGroupBuilder) ID(value string) *AccountGroupBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AccountGroupBuilder) HREF(value string) *AccountGroupBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AccountGroupBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *AccountGroupBuilder) CreatedAt(value time.Time) *AccountGroupBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.createdAt = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *AccountGroupBuilder) Description(value string) *AccountGroupBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.description = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // ExternalID sets the value of the 'external_ID' attribute to the given value.
 func (b *AccountGroupBuilder) ExternalID(value string) *AccountGroupBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.externalID = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // ManagedBy sets the value of the 'managed_by' attribute to the given value.
 func (b *AccountGroupBuilder) ManagedBy(value AccountGroupManagedBy) *AccountGroupBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.managedBy = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AccountGroupBuilder) Name(value string) *AccountGroupBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.name = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *AccountGroupBuilder) OrganizationID(value string) *AccountGroupBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.organizationID = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *AccountGroupBuilder) UpdatedAt(value time.Time) *AccountGroupBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.updatedAt = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
@@ -161,10 +121,7 @@ func (b *AccountGroupBuilder) Copy(object *AccountGroup) *AccountGroupBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.createdAt = object.createdAt
@@ -182,10 +139,7 @@ func (b *AccountGroupBuilder) Build() (object *AccountGroup, err error) {
 	object = new(AccountGroup)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.createdAt = b.createdAt
 	object.description = b.description
 	object.externalID = b.externalID

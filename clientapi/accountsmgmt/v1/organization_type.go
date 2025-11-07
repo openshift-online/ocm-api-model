@@ -37,7 +37,7 @@ const OrganizationNilKind = "OrganizationNil"
 
 // Organization represents the values of the 'organization' type.
 type Organization struct {
-	fieldSet_    []bool
+	bitmap_      uint32
 	id           string
 	href         string
 	capabilities []*Capability
@@ -54,7 +54,7 @@ func (o *Organization) Kind() string {
 	if o == nil {
 		return OrganizationNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return OrganizationLinkKind
 	}
 	return OrganizationKind
@@ -62,12 +62,12 @@ func (o *Organization) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Organization) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *Organization) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -76,7 +76,7 @@ func (o *Organization) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Organization) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -85,7 +85,7 @@ func (o *Organization) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Organization) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -94,7 +94,7 @@ func (o *Organization) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Organization) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -103,23 +103,13 @@ func (o *Organization) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Organization) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // Capabilities returns the value of the 'capabilities' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Organization) Capabilities() []*Capability {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.capabilities
 	}
 	return nil
@@ -128,7 +118,7 @@ func (o *Organization) Capabilities() []*Capability {
 // GetCapabilities returns the value of the 'capabilities' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Organization) GetCapabilities() (value []*Capability, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.capabilities
 	}
@@ -138,7 +128,7 @@ func (o *Organization) GetCapabilities() (value []*Capability, ok bool) {
 // CreatedAt returns the value of the 'created_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Organization) CreatedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -147,7 +137,7 @@ func (o *Organization) CreatedAt() time.Time {
 // GetCreatedAt returns the value of the 'created_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Organization) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.createdAt
 	}
@@ -157,7 +147,7 @@ func (o *Organization) GetCreatedAt() (value time.Time, ok bool) {
 // EbsAccountID returns the value of the 'ebs_account_ID' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Organization) EbsAccountID() string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.ebsAccountID
 	}
 	return ""
@@ -166,7 +156,7 @@ func (o *Organization) EbsAccountID() string {
 // GetEbsAccountID returns the value of the 'ebs_account_ID' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Organization) GetEbsAccountID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.ebsAccountID
 	}
@@ -176,7 +166,7 @@ func (o *Organization) GetEbsAccountID() (value string, ok bool) {
 // ExternalID returns the value of the 'external_ID' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Organization) ExternalID() string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.externalID
 	}
 	return ""
@@ -185,7 +175,7 @@ func (o *Organization) ExternalID() string {
 // GetExternalID returns the value of the 'external_ID' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Organization) GetExternalID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.externalID
 	}
@@ -195,7 +185,7 @@ func (o *Organization) GetExternalID() (value string, ok bool) {
 // Labels returns the value of the 'labels' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Organization) Labels() []*Label {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.labels
 	}
 	return nil
@@ -204,7 +194,7 @@ func (o *Organization) Labels() []*Label {
 // GetLabels returns the value of the 'labels' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Organization) GetLabels() (value []*Label, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.labels
 	}
@@ -214,7 +204,7 @@ func (o *Organization) GetLabels() (value []*Label, ok bool) {
 // Name returns the value of the 'name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Organization) Name() string {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.name
 	}
 	return ""
@@ -223,7 +213,7 @@ func (o *Organization) Name() string {
 // GetName returns the value of the 'name' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Organization) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.name
 	}
@@ -233,7 +223,7 @@ func (o *Organization) GetName() (value string, ok bool) {
 // UpdatedAt returns the value of the 'updated_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Organization) UpdatedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && o.bitmap_&512 != 0 {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -242,7 +232,7 @@ func (o *Organization) UpdatedAt() time.Time {
 // GetUpdatedAt returns the value of the 'updated_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Organization) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && o.bitmap_&512 != 0
 	if ok {
 		value = o.updatedAt
 	}

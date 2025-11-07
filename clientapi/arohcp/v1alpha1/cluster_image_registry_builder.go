@@ -19,39 +19,28 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// ClusterImageRegistryBuilder contains the data and logic needed to build 'cluster_image_registry' objects.
+//
 // ClusterImageRegistry represents the configuration for the cluster's internal image registry.
 type ClusterImageRegistryBuilder struct {
-	fieldSet_ []bool
-	state     string
+	bitmap_ uint32
+	state   string
 }
 
 // NewClusterImageRegistry creates a new builder of 'cluster_image_registry' objects.
 func NewClusterImageRegistry() *ClusterImageRegistryBuilder {
-	return &ClusterImageRegistryBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &ClusterImageRegistryBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterImageRegistryBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // State sets the value of the 'state' attribute to the given value.
 func (b *ClusterImageRegistryBuilder) State(value string) *ClusterImageRegistryBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.state = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -60,10 +49,7 @@ func (b *ClusterImageRegistryBuilder) Copy(object *ClusterImageRegistry) *Cluste
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.state = object.state
 	return b
 }
@@ -71,10 +57,7 @@ func (b *ClusterImageRegistryBuilder) Copy(object *ClusterImageRegistry) *Cluste
 // Build creates a 'cluster_image_registry' object using the configuration stored in the builder.
 func (b *ClusterImageRegistryBuilder) Build() (object *ClusterImageRegistry, err error) {
 	object = new(ClusterImageRegistry)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.state = b.state
 	return
 }

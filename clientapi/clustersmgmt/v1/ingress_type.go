@@ -35,7 +35,7 @@ const IngressNilKind = "IngressNil"
 //
 // Representation of an ingress.
 type Ingress struct {
-	fieldSet_                     []bool
+	bitmap_                       uint32
 	id                            string
 	href                          string
 	dnsName                       string
@@ -56,7 +56,7 @@ func (o *Ingress) Kind() string {
 	if o == nil {
 		return IngressNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return IngressLinkKind
 	}
 	return IngressKind
@@ -64,12 +64,12 @@ func (o *Ingress) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Ingress) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *Ingress) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -78,7 +78,7 @@ func (o *Ingress) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Ingress) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -87,7 +87,7 @@ func (o *Ingress) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Ingress) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -96,7 +96,7 @@ func (o *Ingress) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Ingress) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -105,17 +105,7 @@ func (o *Ingress) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Ingress) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // DNSName returns the value of the 'DNS_name' attribute, or
@@ -123,7 +113,7 @@ func (o *Ingress) Empty() bool {
 //
 // DNS Name of the ingress.
 func (o *Ingress) DNSName() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.dnsName
 	}
 	return ""
@@ -134,7 +124,7 @@ func (o *Ingress) DNSName() string {
 //
 // DNS Name of the ingress.
 func (o *Ingress) GetDNSName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.dnsName
 	}
@@ -146,7 +136,7 @@ func (o *Ingress) GetDNSName() (value string, ok bool) {
 //
 // Cluster routes hostname.
 func (o *Ingress) ClusterRoutesHostname() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.clusterRoutesHostname
 	}
 	return ""
@@ -157,7 +147,7 @@ func (o *Ingress) ClusterRoutesHostname() string {
 //
 // Cluster routes hostname.
 func (o *Ingress) GetClusterRoutesHostname() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.clusterRoutesHostname
 	}
@@ -169,7 +159,7 @@ func (o *Ingress) GetClusterRoutesHostname() (value string, ok bool) {
 //
 // Cluster routes TLS Secret reference.
 func (o *Ingress) ClusterRoutesTlsSecretRef() string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.clusterRoutesTlsSecretRef
 	}
 	return ""
@@ -180,7 +170,7 @@ func (o *Ingress) ClusterRoutesTlsSecretRef() string {
 //
 // Cluster routes TLS Secret reference.
 func (o *Ingress) GetClusterRoutesTlsSecretRef() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.clusterRoutesTlsSecretRef
 	}
@@ -192,7 +182,7 @@ func (o *Ingress) GetClusterRoutesTlsSecretRef() (value string, ok bool) {
 //
 // Component Routes settings.
 func (o *Ingress) ComponentRoutes() map[string]*ComponentRoute {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.componentRoutes
 	}
 	return nil
@@ -203,7 +193,7 @@ func (o *Ingress) ComponentRoutes() map[string]*ComponentRoute {
 //
 // Component Routes settings.
 func (o *Ingress) GetComponentRoutes() (value map[string]*ComponentRoute, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.componentRoutes
 	}
@@ -215,7 +205,7 @@ func (o *Ingress) GetComponentRoutes() (value map[string]*ComponentRoute, ok boo
 //
 // Indicates if this is the default ingress.
 func (o *Ingress) Default() bool {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.default_
 	}
 	return false
@@ -226,7 +216,7 @@ func (o *Ingress) Default() bool {
 //
 // Indicates if this is the default ingress.
 func (o *Ingress) GetDefault() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.default_
 	}
@@ -238,7 +228,7 @@ func (o *Ingress) GetDefault() (value bool, ok bool) {
 //
 // A set of excluded namespaces for the ingress.
 func (o *Ingress) ExcludedNamespaces() []string {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.excludedNamespaces
 	}
 	return nil
@@ -249,7 +239,7 @@ func (o *Ingress) ExcludedNamespaces() []string {
 //
 // A set of excluded namespaces for the ingress.
 func (o *Ingress) GetExcludedNamespaces() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.excludedNamespaces
 	}
@@ -261,7 +251,7 @@ func (o *Ingress) GetExcludedNamespaces() (value []string, ok bool) {
 //
 // Listening method of the ingress
 func (o *Ingress) Listening() ListeningMethod {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && o.bitmap_&512 != 0 {
 		return o.listening
 	}
 	return ListeningMethod("")
@@ -272,7 +262,7 @@ func (o *Ingress) Listening() ListeningMethod {
 //
 // Listening method of the ingress
 func (o *Ingress) GetListening() (value ListeningMethod, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && o.bitmap_&512 != 0
 	if ok {
 		value = o.listening
 	}
@@ -284,7 +274,7 @@ func (o *Ingress) GetListening() (value ListeningMethod, ok bool) {
 //
 // Load Balancer type of the ingress
 func (o *Ingress) LoadBalancerType() LoadBalancerFlavor {
-	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+	if o != nil && o.bitmap_&1024 != 0 {
 		return o.loadBalancerType
 	}
 	return LoadBalancerFlavor("")
@@ -295,7 +285,7 @@ func (o *Ingress) LoadBalancerType() LoadBalancerFlavor {
 //
 // Load Balancer type of the ingress
 func (o *Ingress) GetLoadBalancerType() (value LoadBalancerFlavor, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	ok = o != nil && o.bitmap_&1024 != 0
 	if ok {
 		value = o.loadBalancerType
 	}
@@ -307,7 +297,7 @@ func (o *Ingress) GetLoadBalancerType() (value LoadBalancerFlavor, ok bool) {
 //
 // Namespace Ownership Policy for the ingress.
 func (o *Ingress) RouteNamespaceOwnershipPolicy() NamespaceOwnershipPolicy {
-	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
+	if o != nil && o.bitmap_&2048 != 0 {
 		return o.routeNamespaceOwnershipPolicy
 	}
 	return NamespaceOwnershipPolicy("")
@@ -318,7 +308,7 @@ func (o *Ingress) RouteNamespaceOwnershipPolicy() NamespaceOwnershipPolicy {
 //
 // Namespace Ownership Policy for the ingress.
 func (o *Ingress) GetRouteNamespaceOwnershipPolicy() (value NamespaceOwnershipPolicy, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
+	ok = o != nil && o.bitmap_&2048 != 0
 	if ok {
 		value = o.routeNamespaceOwnershipPolicy
 	}
@@ -330,7 +320,7 @@ func (o *Ingress) GetRouteNamespaceOwnershipPolicy() (value NamespaceOwnershipPo
 //
 // A set of labels for the ingress.
 func (o *Ingress) RouteSelectors() map[string]string {
-	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
+	if o != nil && o.bitmap_&4096 != 0 {
 		return o.routeSelectors
 	}
 	return nil
@@ -341,7 +331,7 @@ func (o *Ingress) RouteSelectors() map[string]string {
 //
 // A set of labels for the ingress.
 func (o *Ingress) GetRouteSelectors() (value map[string]string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
+	ok = o != nil && o.bitmap_&4096 != 0
 	if ok {
 		value = o.routeSelectors
 	}
@@ -353,7 +343,7 @@ func (o *Ingress) GetRouteSelectors() (value map[string]string, ok bool) {
 //
 // Wildcard policy for the ingress.
 func (o *Ingress) RouteWildcardPolicy() WildcardPolicy {
-	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
+	if o != nil && o.bitmap_&8192 != 0 {
 		return o.routeWildcardPolicy
 	}
 	return WildcardPolicy("")
@@ -364,7 +354,7 @@ func (o *Ingress) RouteWildcardPolicy() WildcardPolicy {
 //
 // Wildcard policy for the ingress.
 func (o *Ingress) GetRouteWildcardPolicy() (value WildcardPolicy, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
+	ok = o != nil && o.bitmap_&8192 != 0
 	if ok {
 		value = o.routeWildcardPolicy
 	}

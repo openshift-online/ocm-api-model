@@ -19,50 +19,36 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// OrganizationLinkBuilder contains the data and logic needed to build 'organization_link' objects.
+//
 // Definition of an organization link.
 type OrganizationLinkBuilder struct {
-	fieldSet_ []bool
-	href      string
-	id        string
+	bitmap_ uint32
+	href    string
+	id      string
 }
 
 // NewOrganizationLink creates a new builder of 'organization_link' objects.
 func NewOrganizationLink() *OrganizationLinkBuilder {
-	return &OrganizationLinkBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &OrganizationLinkBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *OrganizationLinkBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // HREF sets the value of the 'HREF' attribute to the given value.
 func (b *OrganizationLinkBuilder) HREF(value string) *OrganizationLinkBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.href = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *OrganizationLinkBuilder) ID(value string) *OrganizationLinkBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -71,10 +57,7 @@ func (b *OrganizationLinkBuilder) Copy(object *OrganizationLink) *OrganizationLi
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.href = object.href
 	b.id = object.id
 	return b
@@ -83,10 +66,7 @@ func (b *OrganizationLinkBuilder) Copy(object *OrganizationLink) *OrganizationLi
 // Build creates a 'organization_link' object using the configuration stored in the builder.
 func (b *OrganizationLinkBuilder) Build() (object *OrganizationLink, err error) {
 	object = new(OrganizationLink)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.href = b.href
 	object.id = b.id
 	return

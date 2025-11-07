@@ -19,40 +19,29 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// NodeInfoBuilder contains the data and logic needed to build 'node_info' objects.
+//
 // Provides information about a node from specific type in the cluster.
 type NodeInfoBuilder struct {
-	fieldSet_ []bool
-	amount    int
-	type_     NodeType
+	bitmap_ uint32
+	amount  int
+	type_   NodeType
 }
 
 // NewNodeInfo creates a new builder of 'node_info' objects.
 func NewNodeInfo() *NodeInfoBuilder {
-	return &NodeInfoBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &NodeInfoBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *NodeInfoBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Amount sets the value of the 'amount' attribute to the given value.
 func (b *NodeInfoBuilder) Amount(value int) *NodeInfoBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.amount = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -60,11 +49,8 @@ func (b *NodeInfoBuilder) Amount(value int) *NodeInfoBuilder {
 //
 // Type of node received via telemetry.
 func (b *NodeInfoBuilder) Type(value NodeType) *NodeInfoBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.type_ = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -73,10 +59,7 @@ func (b *NodeInfoBuilder) Copy(object *NodeInfo) *NodeInfoBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.amount = object.amount
 	b.type_ = object.type_
 	return b
@@ -85,10 +68,7 @@ func (b *NodeInfoBuilder) Copy(object *NodeInfo) *NodeInfoBuilder {
 // Build creates a 'node_info' object using the configuration stored in the builder.
 func (b *NodeInfoBuilder) Build() (object *NodeInfo, err error) {
 	object = new(NodeInfo)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.amount = b.amount
 	object.type_ = b.type_
 	return

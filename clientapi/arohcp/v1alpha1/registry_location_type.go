@@ -24,22 +24,14 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 // RegistryLocation contains a location of the registry specified by the registry domain
 // name. The domain name might include wildcards, like '*' or '??'.
 type RegistryLocation struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	domainName string
 	insecure   bool
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *RegistryLocation) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // DomainName returns the value of the 'domain_name' attribute, or
@@ -49,7 +41,7 @@ func (o *RegistryLocation) Empty() bool {
 // In case the registry use non-standard (80 or 443) port, the port should be included
 // in the domain name as well.
 func (o *RegistryLocation) DomainName() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.domainName
 	}
 	return ""
@@ -62,7 +54,7 @@ func (o *RegistryLocation) DomainName() string {
 // In case the registry use non-standard (80 or 443) port, the port should be included
 // in the domain name as well.
 func (o *RegistryLocation) GetDomainName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.domainName
 	}
@@ -75,7 +67,7 @@ func (o *RegistryLocation) GetDomainName() (value string, ok bool) {
 // insecure indicates whether the registry is secure (https) or insecure (http)
 // By default (if not specified) the registry is assumed as secure.
 func (o *RegistryLocation) Insecure() bool {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.insecure
 	}
 	return false
@@ -87,7 +79,7 @@ func (o *RegistryLocation) Insecure() bool {
 // insecure indicates whether the registry is secure (https) or insecure (http)
 // By default (if not specified) the registry is assumed as secure.
 func (o *RegistryLocation) GetInsecure() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.insecure
 	}

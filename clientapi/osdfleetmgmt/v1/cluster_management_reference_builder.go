@@ -19,50 +19,36 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/osdfleetmgmt/v1
 
+// ClusterManagementReferenceBuilder contains the data and logic needed to build 'cluster_management_reference' objects.
+//
 // Cluster Mgmt reference settings of the cluster.
 type ClusterManagementReferenceBuilder struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	clusterId string
 	href      string
 }
 
 // NewClusterManagementReference creates a new builder of 'cluster_management_reference' objects.
 func NewClusterManagementReference() *ClusterManagementReferenceBuilder {
-	return &ClusterManagementReferenceBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &ClusterManagementReferenceBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterManagementReferenceBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ClusterId sets the value of the 'cluster_id' attribute to the given value.
 func (b *ClusterManagementReferenceBuilder) ClusterId(value string) *ClusterManagementReferenceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.clusterId = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Href sets the value of the 'href' attribute to the given value.
 func (b *ClusterManagementReferenceBuilder) Href(value string) *ClusterManagementReferenceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.href = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -71,10 +57,7 @@ func (b *ClusterManagementReferenceBuilder) Copy(object *ClusterManagementRefere
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.clusterId = object.clusterId
 	b.href = object.href
 	return b
@@ -83,10 +66,7 @@ func (b *ClusterManagementReferenceBuilder) Copy(object *ClusterManagementRefere
 // Build creates a 'cluster_management_reference' object using the configuration stored in the builder.
 func (b *ClusterManagementReferenceBuilder) Build() (object *ClusterManagementReference, err error) {
 	object = new(ClusterManagementReference)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.clusterId = b.clusterId
 	object.href = b.href
 	return

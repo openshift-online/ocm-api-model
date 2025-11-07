@@ -35,7 +35,7 @@ const ExternalAuthConfigNilKind = "ExternalAuthConfigNil"
 //
 // Represents an external authentication configuration
 type ExternalAuthConfig struct {
-	fieldSet_     []bool
+	bitmap_       uint32
 	id            string
 	href          string
 	externalAuths *ExternalAuthList
@@ -48,7 +48,7 @@ func (o *ExternalAuthConfig) Kind() string {
 	if o == nil {
 		return ExternalAuthConfigNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return ExternalAuthConfigLinkKind
 	}
 	return ExternalAuthConfigKind
@@ -56,12 +56,12 @@ func (o *ExternalAuthConfig) Kind() string {
 
 // Link returns true if this is a link.
 func (o *ExternalAuthConfig) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *ExternalAuthConfig) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -70,7 +70,7 @@ func (o *ExternalAuthConfig) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *ExternalAuthConfig) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -79,7 +79,7 @@ func (o *ExternalAuthConfig) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *ExternalAuthConfig) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -88,7 +88,7 @@ func (o *ExternalAuthConfig) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *ExternalAuthConfig) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -97,17 +97,7 @@ func (o *ExternalAuthConfig) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ExternalAuthConfig) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // Enabled returns the value of the 'enabled' attribute, or
@@ -122,7 +112,7 @@ func (o *ExternalAuthConfig) Empty() bool {
 //
 // For ARO HCP clusters, use the "State" property to enable/disable this feature instead.
 func (o *ExternalAuthConfig) Enabled() bool {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.enabled
 	}
 	return false
@@ -140,7 +130,7 @@ func (o *ExternalAuthConfig) Enabled() bool {
 //
 // For ARO HCP clusters, use the "State" property to enable/disable this feature instead.
 func (o *ExternalAuthConfig) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.enabled
 	}
@@ -154,7 +144,7 @@ func (o *ExternalAuthConfig) GetEnabled() (value bool, ok bool) {
 //
 // Only one external authentication provider can be configured.
 func (o *ExternalAuthConfig) ExternalAuths() *ExternalAuthList {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.externalAuths
 	}
 	return nil
@@ -167,7 +157,7 @@ func (o *ExternalAuthConfig) ExternalAuths() *ExternalAuthList {
 //
 // Only one external authentication provider can be configured.
 func (o *ExternalAuthConfig) GetExternalAuths() (value *ExternalAuthList, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.externalAuths
 	}
@@ -183,7 +173,7 @@ func (o *ExternalAuthConfig) GetExternalAuths() (value *ExternalAuthList, ok boo
 //
 // FOR ROSA HCP clusters, use the "Enabled" boolean flag to enable/disable this feature instead.
 func (o *ExternalAuthConfig) State() ExternalAuthConfigState {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.state
 	}
 	return ExternalAuthConfigState("")
@@ -198,7 +188,7 @@ func (o *ExternalAuthConfig) State() ExternalAuthConfigState {
 //
 // FOR ROSA HCP clusters, use the "Enabled" boolean flag to enable/disable this feature instead.
 func (o *ExternalAuthConfig) GetState() (value ExternalAuthConfigState, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.state
 	}

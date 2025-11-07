@@ -19,41 +19,30 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// CPUTotalsNodeRoleOSMetricNodeBuilder contains the data and logic needed to build 'CPU_totals_node_role_OS_metric_node' objects.
+//
 // Representation of information from telemetry about the CPU capacity by node
 // role and OS of a cluster.
 type CPUTotalsNodeRoleOSMetricNodeBuilder struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	cpuTotals []*CPUTotalNodeRoleOSMetricNodeBuilder
 }
 
 // NewCPUTotalsNodeRoleOSMetricNode creates a new builder of 'CPU_totals_node_role_OS_metric_node' objects.
 func NewCPUTotalsNodeRoleOSMetricNode() *CPUTotalsNodeRoleOSMetricNodeBuilder {
-	return &CPUTotalsNodeRoleOSMetricNodeBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &CPUTotalsNodeRoleOSMetricNodeBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *CPUTotalsNodeRoleOSMetricNodeBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // CPUTotals sets the value of the 'CPU_totals' attribute to the given values.
 func (b *CPUTotalsNodeRoleOSMetricNodeBuilder) CPUTotals(values ...*CPUTotalNodeRoleOSMetricNodeBuilder) *CPUTotalsNodeRoleOSMetricNodeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.cpuTotals = make([]*CPUTotalNodeRoleOSMetricNodeBuilder, len(values))
 	copy(b.cpuTotals, values)
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -62,10 +51,7 @@ func (b *CPUTotalsNodeRoleOSMetricNodeBuilder) Copy(object *CPUTotalsNodeRoleOSM
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.cpuTotals != nil {
 		b.cpuTotals = make([]*CPUTotalNodeRoleOSMetricNodeBuilder, len(object.cpuTotals))
 		for i, v := range object.cpuTotals {
@@ -80,10 +66,7 @@ func (b *CPUTotalsNodeRoleOSMetricNodeBuilder) Copy(object *CPUTotalsNodeRoleOSM
 // Build creates a 'CPU_totals_node_role_OS_metric_node' object using the configuration stored in the builder.
 func (b *CPUTotalsNodeRoleOSMetricNodeBuilder) Build() (object *CPUTotalsNodeRoleOSMetricNode, err error) {
 	object = new(CPUTotalsNodeRoleOSMetricNode)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.cpuTotals != nil {
 		object.cpuTotals = make([]*CPUTotalNodeRoleOSMetricNode, len(b.cpuTotals))
 		for i, v := range b.cpuTotals {

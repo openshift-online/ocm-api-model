@@ -19,45 +19,34 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
+// MonitoringStackResourcesBuilder contains the data and logic needed to build 'monitoring_stack_resources' objects.
+//
 // Representation of Monitoring Stack Resources
 type MonitoringStackResourcesBuilder struct {
-	fieldSet_ []bool
-	limits    *MonitoringStackResourceBuilder
-	requests  *MonitoringStackResourceBuilder
+	bitmap_  uint32
+	limits   *MonitoringStackResourceBuilder
+	requests *MonitoringStackResourceBuilder
 }
 
 // NewMonitoringStackResources creates a new builder of 'monitoring_stack_resources' objects.
 func NewMonitoringStackResources() *MonitoringStackResourcesBuilder {
-	return &MonitoringStackResourcesBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &MonitoringStackResourcesBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *MonitoringStackResourcesBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Limits sets the value of the 'limits' attribute to the given value.
 //
 // Representation of Monitoring Stack Resource
 func (b *MonitoringStackResourcesBuilder) Limits(value *MonitoringStackResourceBuilder) *MonitoringStackResourcesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.limits = value
 	if value != nil {
-		b.fieldSet_[0] = true
+		b.bitmap_ |= 1
 	} else {
-		b.fieldSet_[0] = false
+		b.bitmap_ &^= 1
 	}
 	return b
 }
@@ -66,14 +55,11 @@ func (b *MonitoringStackResourcesBuilder) Limits(value *MonitoringStackResourceB
 //
 // Representation of Monitoring Stack Resource
 func (b *MonitoringStackResourcesBuilder) Requests(value *MonitoringStackResourceBuilder) *MonitoringStackResourcesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.requests = value
 	if value != nil {
-		b.fieldSet_[1] = true
+		b.bitmap_ |= 2
 	} else {
-		b.fieldSet_[1] = false
+		b.bitmap_ &^= 2
 	}
 	return b
 }
@@ -83,10 +69,7 @@ func (b *MonitoringStackResourcesBuilder) Copy(object *MonitoringStackResources)
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.limits != nil {
 		b.limits = NewMonitoringStackResource().Copy(object.limits)
 	} else {
@@ -103,10 +86,7 @@ func (b *MonitoringStackResourcesBuilder) Copy(object *MonitoringStackResources)
 // Build creates a 'monitoring_stack_resources' object using the configuration stored in the builder.
 func (b *MonitoringStackResourcesBuilder) Build() (object *MonitoringStackResources, err error) {
 	object = new(MonitoringStackResources)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.limits != nil {
 		object.limits, err = b.limits.Build()
 		if err != nil {

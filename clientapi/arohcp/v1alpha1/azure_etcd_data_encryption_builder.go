@@ -19,31 +19,23 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// AzureEtcdDataEncryptionBuilder contains the data and logic needed to build 'azure_etcd_data_encryption' objects.
+//
 // Contains the necessary attributes to support data encryption for Azure based clusters.
 type AzureEtcdDataEncryptionBuilder struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	customerManaged   *AzureEtcdDataEncryptionCustomerManagedBuilder
 	keyManagementMode string
 }
 
 // NewAzureEtcdDataEncryption creates a new builder of 'azure_etcd_data_encryption' objects.
 func NewAzureEtcdDataEncryption() *AzureEtcdDataEncryptionBuilder {
-	return &AzureEtcdDataEncryptionBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &AzureEtcdDataEncryptionBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AzureEtcdDataEncryptionBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // CustomerManaged sets the value of the 'customer_managed' attribute to the given value.
@@ -51,25 +43,19 @@ func (b *AzureEtcdDataEncryptionBuilder) Empty() bool {
 // Contains the necessary attributes to support etcd data encryption with customer managed keys
 // for Azure based clusters.
 func (b *AzureEtcdDataEncryptionBuilder) CustomerManaged(value *AzureEtcdDataEncryptionCustomerManagedBuilder) *AzureEtcdDataEncryptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.customerManaged = value
 	if value != nil {
-		b.fieldSet_[0] = true
+		b.bitmap_ |= 1
 	} else {
-		b.fieldSet_[0] = false
+		b.bitmap_ &^= 1
 	}
 	return b
 }
 
 // KeyManagementMode sets the value of the 'key_management_mode' attribute to the given value.
 func (b *AzureEtcdDataEncryptionBuilder) KeyManagementMode(value string) *AzureEtcdDataEncryptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.keyManagementMode = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -78,10 +64,7 @@ func (b *AzureEtcdDataEncryptionBuilder) Copy(object *AzureEtcdDataEncryption) *
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.customerManaged != nil {
 		b.customerManaged = NewAzureEtcdDataEncryptionCustomerManaged().Copy(object.customerManaged)
 	} else {
@@ -94,10 +77,7 @@ func (b *AzureEtcdDataEncryptionBuilder) Copy(object *AzureEtcdDataEncryption) *
 // Build creates a 'azure_etcd_data_encryption' object using the configuration stored in the builder.
 func (b *AzureEtcdDataEncryptionBuilder) Build() (object *AzureEtcdDataEncryption, err error) {
 	object = new(AzureEtcdDataEncryption)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.customerManaged != nil {
 		object.customerManaged, err = b.customerManaged.Build()
 		if err != nil {

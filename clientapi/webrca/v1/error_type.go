@@ -35,11 +35,11 @@ const ErrorNilKind = "ErrorNil"
 //
 // Definition of a Web RCA error.
 type Error struct {
-	fieldSet_ []bool
-	id        string
-	href      string
-	code      string
-	reason    string
+	bitmap_ uint32
+	id      string
+	href    string
+	code    string
+	reason  string
 }
 
 // Kind returns the name of the type of the object.
@@ -47,7 +47,7 @@ func (o *Error) Kind() string {
 	if o == nil {
 		return ErrorNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return ErrorLinkKind
 	}
 	return ErrorKind
@@ -55,12 +55,12 @@ func (o *Error) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Error) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *Error) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -69,7 +69,7 @@ func (o *Error) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Error) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -78,7 +78,7 @@ func (o *Error) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Error) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -87,7 +87,7 @@ func (o *Error) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Error) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -96,23 +96,13 @@ func (o *Error) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Error) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // Code returns the value of the 'code' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Error) Code() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.code
 	}
 	return ""
@@ -121,7 +111,7 @@ func (o *Error) Code() string {
 // GetCode returns the value of the 'code' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Error) GetCode() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.code
 	}
@@ -131,7 +121,7 @@ func (o *Error) GetCode() (value string, ok bool) {
 // Reason returns the value of the 'reason' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Error) Reason() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.reason
 	}
 	return ""
@@ -140,7 +130,7 @@ func (o *Error) Reason() string {
 // GetReason returns the value of the 'reason' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Error) GetReason() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.reason
 	}

@@ -39,7 +39,7 @@ const DNSDomainNilKind = "DNSDomainNil"
 //
 // Contains the properties of a DNS domain.
 type DNSDomain struct {
-	fieldSet_           []bool
+	bitmap_             uint32
 	id                  string
 	href                string
 	cluster             *ClusterLink
@@ -54,7 +54,7 @@ func (o *DNSDomain) Kind() string {
 	if o == nil {
 		return DNSDomainNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return DNSDomainLinkKind
 	}
 	return DNSDomainKind
@@ -62,12 +62,12 @@ func (o *DNSDomain) Kind() string {
 
 // Link returns true if this is a link.
 func (o *DNSDomain) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *DNSDomain) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -76,7 +76,7 @@ func (o *DNSDomain) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *DNSDomain) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -85,7 +85,7 @@ func (o *DNSDomain) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *DNSDomain) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -94,7 +94,7 @@ func (o *DNSDomain) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *DNSDomain) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -103,17 +103,7 @@ func (o *DNSDomain) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *DNSDomain) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // Cluster returns the value of the 'cluster' attribute, or
@@ -121,7 +111,7 @@ func (o *DNSDomain) Empty() bool {
 //
 // Link to the cluster that is registered with the DNS domain (optional).
 func (o *DNSDomain) Cluster() *ClusterLink {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.cluster
 	}
 	return nil
@@ -132,7 +122,7 @@ func (o *DNSDomain) Cluster() *ClusterLink {
 //
 // Link to the cluster that is registered with the DNS domain (optional).
 func (o *DNSDomain) GetCluster() (value *ClusterLink, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.cluster
 	}
@@ -144,7 +134,7 @@ func (o *DNSDomain) GetCluster() (value *ClusterLink, ok bool) {
 //
 // Signals which cluster architecture the domain is ready for.
 func (o *DNSDomain) ClusterArch() ClusterArchitecture {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.clusterArch
 	}
 	return ClusterArchitecture("")
@@ -155,7 +145,7 @@ func (o *DNSDomain) ClusterArch() ClusterArchitecture {
 //
 // Signals which cluster architecture the domain is ready for.
 func (o *DNSDomain) GetClusterArch() (value ClusterArchitecture, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.clusterArch
 	}
@@ -167,7 +157,7 @@ func (o *DNSDomain) GetClusterArch() (value ClusterArchitecture, ok bool) {
 //
 // Link to the organization that reserved the DNS domain.
 func (o *DNSDomain) Organization() *OrganizationLink {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.organization
 	}
 	return nil
@@ -178,7 +168,7 @@ func (o *DNSDomain) Organization() *OrganizationLink {
 //
 // Link to the organization that reserved the DNS domain.
 func (o *DNSDomain) GetOrganization() (value *OrganizationLink, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.organization
 	}
@@ -190,7 +180,7 @@ func (o *DNSDomain) GetOrganization() (value *OrganizationLink, ok bool) {
 //
 // Date and time when the DNS domain was reserved.
 func (o *DNSDomain) ReservedAtTimestamp() time.Time {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.reservedAtTimestamp
 	}
 	return time.Time{}
@@ -201,7 +191,7 @@ func (o *DNSDomain) ReservedAtTimestamp() time.Time {
 //
 // Date and time when the DNS domain was reserved.
 func (o *DNSDomain) GetReservedAtTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.reservedAtTimestamp
 	}
@@ -213,7 +203,7 @@ func (o *DNSDomain) GetReservedAtTimestamp() (value time.Time, ok bool) {
 //
 // Indicates if this dns domain is user defined.
 func (o *DNSDomain) UserDefined() bool {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.userDefined
 	}
 	return false
@@ -224,7 +214,7 @@ func (o *DNSDomain) UserDefined() bool {
 //
 // Indicates if this dns domain is user defined.
 func (o *DNSDomain) GetUserDefined() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.userDefined
 	}

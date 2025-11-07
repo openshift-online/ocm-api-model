@@ -42,7 +42,7 @@ func WriteRelatedResource(object *RelatedResource, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteRelatedResource(object *RelatedResource, stream *jsoniter.Stream) {
 		stream.WriteString(object.byoc)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteRelatedResource(object *RelatedResource, stream *jsoniter.Stream) {
 		stream.WriteString(object.availabilityZoneType)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteRelatedResource(object *RelatedResource, stream *jsoniter.Stream) {
 		stream.WriteString(object.billingModel)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteRelatedResource(object *RelatedResource, stream *jsoniter.Stream) {
 		stream.WriteString(object.cloudProvider)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteRelatedResource(object *RelatedResource, stream *jsoniter.Stream) {
 		stream.WriteInt(object.cost)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -96,7 +96,7 @@ func WriteRelatedResource(object *RelatedResource, stream *jsoniter.Stream) {
 		stream.WriteString(object.product)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -105,7 +105,7 @@ func WriteRelatedResource(object *RelatedResource, stream *jsoniter.Stream) {
 		stream.WriteString(object.resourceName)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = object.bitmap_&128 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -130,9 +130,7 @@ func UnmarshalRelatedResource(source interface{}) (object *RelatedResource, err 
 
 // ReadRelatedResource reads a value of the 'related_resource' type from the given iterator.
 func ReadRelatedResource(iterator *jsoniter.Iterator) *RelatedResource {
-	object := &RelatedResource{
-		fieldSet_: make([]bool, 8),
-	}
+	object := &RelatedResource{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -142,35 +140,35 @@ func ReadRelatedResource(iterator *jsoniter.Iterator) *RelatedResource {
 		case "byoc":
 			value := iterator.ReadString()
 			object.byoc = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "availability_zone_type":
 			value := iterator.ReadString()
 			object.availabilityZoneType = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "billing_model":
 			value := iterator.ReadString()
 			object.billingModel = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "cloud_provider":
 			value := iterator.ReadString()
 			object.cloudProvider = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "cost":
 			value := iterator.ReadInt()
 			object.cost = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "product":
 			value := iterator.ReadString()
 			object.product = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "resource_name":
 			value := iterator.ReadString()
 			object.resourceName = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "resource_type":
 			value := iterator.ReadString()
 			object.resourceType = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		default:
 			iterator.ReadAny()
 		}

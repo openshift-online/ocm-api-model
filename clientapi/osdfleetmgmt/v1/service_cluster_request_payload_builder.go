@@ -19,8 +19,9 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/osdfleetmgmt/v1
 
+// ServiceClusterRequestPayloadBuilder contains the data and logic needed to build 'service_cluster_request_payload' objects.
 type ServiceClusterRequestPayloadBuilder struct {
-	fieldSet_     []bool
+	bitmap_       uint32
 	cloudProvider string
 	labels        []*LabelRequestPayloadBuilder
 	region        string
@@ -28,52 +29,33 @@ type ServiceClusterRequestPayloadBuilder struct {
 
 // NewServiceClusterRequestPayload creates a new builder of 'service_cluster_request_payload' objects.
 func NewServiceClusterRequestPayload() *ServiceClusterRequestPayloadBuilder {
-	return &ServiceClusterRequestPayloadBuilder{
-		fieldSet_: make([]bool, 3),
-	}
+	return &ServiceClusterRequestPayloadBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ServiceClusterRequestPayloadBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // CloudProvider sets the value of the 'cloud_provider' attribute to the given value.
 func (b *ServiceClusterRequestPayloadBuilder) CloudProvider(value string) *ServiceClusterRequestPayloadBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.cloudProvider = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Labels sets the value of the 'labels' attribute to the given values.
 func (b *ServiceClusterRequestPayloadBuilder) Labels(values ...*LabelRequestPayloadBuilder) *ServiceClusterRequestPayloadBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.labels = make([]*LabelRequestPayloadBuilder, len(values))
 	copy(b.labels, values)
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Region sets the value of the 'region' attribute to the given value.
 func (b *ServiceClusterRequestPayloadBuilder) Region(value string) *ServiceClusterRequestPayloadBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.region = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
@@ -82,10 +64,7 @@ func (b *ServiceClusterRequestPayloadBuilder) Copy(object *ServiceClusterRequest
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.cloudProvider = object.cloudProvider
 	if object.labels != nil {
 		b.labels = make([]*LabelRequestPayloadBuilder, len(object.labels))
@@ -102,10 +81,7 @@ func (b *ServiceClusterRequestPayloadBuilder) Copy(object *ServiceClusterRequest
 // Build creates a 'service_cluster_request_payload' object using the configuration stored in the builder.
 func (b *ServiceClusterRequestPayloadBuilder) Build() (object *ServiceClusterRequestPayload, err error) {
 	object = new(ServiceClusterRequestPayload)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.cloudProvider = b.cloudProvider
 	if b.labels != nil {
 		object.labels = make([]*LabelRequestPayload, len(b.labels))

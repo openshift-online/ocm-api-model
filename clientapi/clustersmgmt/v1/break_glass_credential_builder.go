@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// BreakGlassCredentialBuilder contains the data and logic needed to build 'break_glass_credential' objects.
+//
 // Representation of a break glass credential.
 type BreakGlassCredentialBuilder struct {
-	fieldSet_           []bool
+	bitmap_             uint32
 	id                  string
 	href                string
 	expirationTimestamp time.Time
@@ -37,81 +39,52 @@ type BreakGlassCredentialBuilder struct {
 
 // NewBreakGlassCredential creates a new builder of 'break_glass_credential' objects.
 func NewBreakGlassCredential() *BreakGlassCredentialBuilder {
-	return &BreakGlassCredentialBuilder{
-		fieldSet_: make([]bool, 8),
-	}
+	return &BreakGlassCredentialBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *BreakGlassCredentialBuilder) Link(value bool) *BreakGlassCredentialBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *BreakGlassCredentialBuilder) ID(value string) *BreakGlassCredentialBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *BreakGlassCredentialBuilder) HREF(value string) *BreakGlassCredentialBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *BreakGlassCredentialBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // ExpirationTimestamp sets the value of the 'expiration_timestamp' attribute to the given value.
 func (b *BreakGlassCredentialBuilder) ExpirationTimestamp(value time.Time) *BreakGlassCredentialBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.expirationTimestamp = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // Kubeconfig sets the value of the 'kubeconfig' attribute to the given value.
 func (b *BreakGlassCredentialBuilder) Kubeconfig(value string) *BreakGlassCredentialBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.kubeconfig = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // RevocationTimestamp sets the value of the 'revocation_timestamp' attribute to the given value.
 func (b *BreakGlassCredentialBuilder) RevocationTimestamp(value time.Time) *BreakGlassCredentialBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.revocationTimestamp = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
@@ -119,21 +92,15 @@ func (b *BreakGlassCredentialBuilder) RevocationTimestamp(value time.Time) *Brea
 //
 // Status of the break glass credential.
 func (b *BreakGlassCredentialBuilder) Status(value BreakGlassCredentialStatus) *BreakGlassCredentialBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.status = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // Username sets the value of the 'username' attribute to the given value.
 func (b *BreakGlassCredentialBuilder) Username(value string) *BreakGlassCredentialBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.username = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
@@ -142,10 +109,7 @@ func (b *BreakGlassCredentialBuilder) Copy(object *BreakGlassCredential) *BreakG
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.expirationTimestamp = object.expirationTimestamp
@@ -161,10 +125,7 @@ func (b *BreakGlassCredentialBuilder) Build() (object *BreakGlassCredential, err
 	object = new(BreakGlassCredential)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.expirationTimestamp = b.expirationTimestamp
 	object.kubeconfig = b.kubeconfig
 	object.revocationTimestamp = b.revocationTimestamp

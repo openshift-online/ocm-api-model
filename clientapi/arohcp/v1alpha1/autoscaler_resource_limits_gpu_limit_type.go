@@ -21,28 +21,20 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 
 // AutoscalerResourceLimitsGPULimit represents the values of the 'autoscaler_resource_limits_GPU_limit' type.
 type AutoscalerResourceLimitsGPULimit struct {
-	fieldSet_ []bool
-	range_    *ResourceRange
-	type_     string
+	bitmap_ uint32
+	range_  *ResourceRange
+	type_   string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AutoscalerResourceLimitsGPULimit) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Range returns the value of the 'range' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *AutoscalerResourceLimitsGPULimit) Range() *ResourceRange {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.range_
 	}
 	return nil
@@ -51,7 +43,7 @@ func (o *AutoscalerResourceLimitsGPULimit) Range() *ResourceRange {
 // GetRange returns the value of the 'range' attribute and
 // a flag indicating if the attribute has a value.
 func (o *AutoscalerResourceLimitsGPULimit) GetRange() (value *ResourceRange, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.range_
 	}
@@ -67,7 +59,7 @@ func (o *AutoscalerResourceLimitsGPULimit) GetRange() (value *ResourceRange, ok 
 // `cluster-api/accelerator` with the label value being the same as the Type field will be counted towards
 // the resource limits by the Cluster Autoscaler.
 func (o *AutoscalerResourceLimitsGPULimit) Type() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.type_
 	}
 	return ""
@@ -82,7 +74,7 @@ func (o *AutoscalerResourceLimitsGPULimit) Type() string {
 // `cluster-api/accelerator` with the label value being the same as the Type field will be counted towards
 // the resource limits by the Cluster Autoscaler.
 func (o *AutoscalerResourceLimitsGPULimit) GetType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.type_
 	}

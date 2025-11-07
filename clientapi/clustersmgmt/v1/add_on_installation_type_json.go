@@ -43,13 +43,13 @@ func WriteAddOnInstallation(object *AddOnInstallation, stream *jsoniter.Stream) 
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(AddOnInstallationLinkKind)
 	} else {
 		stream.WriteString(AddOnInstallationKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteAddOnInstallation(object *AddOnInstallation, stream *jsoniter.Stream) 
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteAddOnInstallation(object *AddOnInstallation, stream *jsoniter.Stream) 
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.addon != nil
+	present_ = object.bitmap_&8 != 0 && object.addon != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteAddOnInstallation(object *AddOnInstallation, stream *jsoniter.Stream) 
 		WriteAddOn(object.addon, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.addonVersion != nil
+	present_ = object.bitmap_&16 != 0 && object.addonVersion != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteAddOnInstallation(object *AddOnInstallation, stream *jsoniter.Stream) 
 		WriteAddOnVersion(object.addonVersion, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.billing != nil
+	present_ = object.bitmap_&32 != 0 && object.billing != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteAddOnInstallation(object *AddOnInstallation, stream *jsoniter.Stream) 
 		WriteAddOnInstallationBilling(object.billing, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteAddOnInstallation(object *AddOnInstallation, stream *jsoniter.Stream) 
 		stream.WriteString((object.creationTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = object.bitmap_&128 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteAddOnInstallation(object *AddOnInstallation, stream *jsoniter.Stream) 
 		stream.WriteString(object.operatorVersion)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8] && object.parameters != nil
+	present_ = object.bitmap_&256 != 0 && object.parameters != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -123,7 +123,7 @@ func WriteAddOnInstallation(object *AddOnInstallation, stream *jsoniter.Stream) 
 		stream.WriteObjectEnd()
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = object.bitmap_&512 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -132,7 +132,7 @@ func WriteAddOnInstallation(object *AddOnInstallation, stream *jsoniter.Stream) 
 		stream.WriteString(string(object.state))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
+	present_ = object.bitmap_&1024 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -141,7 +141,7 @@ func WriteAddOnInstallation(object *AddOnInstallation, stream *jsoniter.Stream) 
 		stream.WriteString(object.stateDescription)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
+	present_ = object.bitmap_&2048 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -166,9 +166,7 @@ func UnmarshalAddOnInstallation(source interface{}) (object *AddOnInstallation, 
 
 // ReadAddOnInstallation reads a value of the 'add_on_installation' type from the given iterator.
 func ReadAddOnInstallation(iterator *jsoniter.Iterator) *AddOnInstallation {
-	object := &AddOnInstallation{
-		fieldSet_: make([]bool, 12),
-	}
+	object := &AddOnInstallation{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -178,26 +176,26 @@ func ReadAddOnInstallation(iterator *jsoniter.Iterator) *AddOnInstallation {
 		case "kind":
 			value := iterator.ReadString()
 			if value == AddOnInstallationLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "addon":
 			value := ReadAddOn(iterator)
 			object.addon = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "addon_version":
 			value := ReadAddOnVersion(iterator)
 			object.addonVersion = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "billing":
 			value := ReadAddOnInstallationBilling(iterator)
 			object.billing = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "creation_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -205,11 +203,11 @@ func ReadAddOnInstallation(iterator *jsoniter.Iterator) *AddOnInstallation {
 				iterator.ReportError("", err.Error())
 			}
 			object.creationTimestamp = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "operator_version":
 			value := iterator.ReadString()
 			object.operatorVersion = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		case "parameters":
 			value := &AddOnInstallationParameterList{}
 			for {
@@ -230,16 +228,16 @@ func ReadAddOnInstallation(iterator *jsoniter.Iterator) *AddOnInstallation {
 				}
 			}
 			object.parameters = value
-			object.fieldSet_[8] = true
+			object.bitmap_ |= 256
 		case "state":
 			text := iterator.ReadString()
 			value := AddOnInstallationState(text)
 			object.state = value
-			object.fieldSet_[9] = true
+			object.bitmap_ |= 512
 		case "state_description":
 			value := iterator.ReadString()
 			object.stateDescription = value
-			object.fieldSet_[10] = true
+			object.bitmap_ |= 1024
 		case "updated_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -247,7 +245,7 @@ func ReadAddOnInstallation(iterator *jsoniter.Iterator) *AddOnInstallation {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedTimestamp = value
-			object.fieldSet_[11] = true
+			object.bitmap_ |= 2048
 		default:
 			iterator.ReadAny()
 		}

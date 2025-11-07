@@ -19,39 +19,28 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// AwsEtcdEncryptionBuilder contains the data and logic needed to build 'aws_etcd_encryption' objects.
+//
 // Contains the necessary attributes to support etcd encryption for AWS based clusters.
 type AwsEtcdEncryptionBuilder struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	kmsKeyARN string
 }
 
 // NewAwsEtcdEncryption creates a new builder of 'aws_etcd_encryption' objects.
 func NewAwsEtcdEncryption() *AwsEtcdEncryptionBuilder {
-	return &AwsEtcdEncryptionBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &AwsEtcdEncryptionBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AwsEtcdEncryptionBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // KMSKeyARN sets the value of the 'KMS_key_ARN' attribute to the given value.
 func (b *AwsEtcdEncryptionBuilder) KMSKeyARN(value string) *AwsEtcdEncryptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.kmsKeyARN = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -60,10 +49,7 @@ func (b *AwsEtcdEncryptionBuilder) Copy(object *AwsEtcdEncryption) *AwsEtcdEncry
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.kmsKeyARN = object.kmsKeyARN
 	return b
 }
@@ -71,10 +57,7 @@ func (b *AwsEtcdEncryptionBuilder) Copy(object *AwsEtcdEncryption) *AwsEtcdEncry
 // Build creates a 'aws_etcd_encryption' object using the configuration stored in the builder.
 func (b *AwsEtcdEncryptionBuilder) Build() (object *AwsEtcdEncryption, err error) {
 	object = new(AwsEtcdEncryption)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.kmsKeyARN = b.kmsKeyARN
 	return
 }

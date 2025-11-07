@@ -19,38 +19,26 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v1
 
+// FeatureToggleQueryRequestBuilder contains the data and logic needed to build 'feature_toggle_query_request' objects.
 type FeatureToggleQueryRequestBuilder struct {
-	fieldSet_      []bool
+	bitmap_        uint32
 	organizationID string
 }
 
 // NewFeatureToggleQueryRequest creates a new builder of 'feature_toggle_query_request' objects.
 func NewFeatureToggleQueryRequest() *FeatureToggleQueryRequestBuilder {
-	return &FeatureToggleQueryRequestBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &FeatureToggleQueryRequestBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *FeatureToggleQueryRequestBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *FeatureToggleQueryRequestBuilder) OrganizationID(value string) *FeatureToggleQueryRequestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.organizationID = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -59,10 +47,7 @@ func (b *FeatureToggleQueryRequestBuilder) Copy(object *FeatureToggleQueryReques
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.organizationID = object.organizationID
 	return b
 }
@@ -70,10 +55,7 @@ func (b *FeatureToggleQueryRequestBuilder) Copy(object *FeatureToggleQueryReques
 // Build creates a 'feature_toggle_query_request' object using the configuration stored in the builder.
 func (b *FeatureToggleQueryRequestBuilder) Build() (object *FeatureToggleQueryRequest, err error) {
 	object = new(FeatureToggleQueryRequest)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.organizationID = b.organizationID
 	return
 }

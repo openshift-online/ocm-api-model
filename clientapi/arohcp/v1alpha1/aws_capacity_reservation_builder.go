@@ -19,40 +19,29 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// AWSCapacityReservationBuilder contains the data and logic needed to build 'AWS_capacity_reservation' objects.
+//
 // AWS Capacity Reservation specification.
 type AWSCapacityReservationBuilder struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	id         string
 	marketType MarketType
 }
 
 // NewAWSCapacityReservation creates a new builder of 'AWS_capacity_reservation' objects.
 func NewAWSCapacityReservation() *AWSCapacityReservationBuilder {
-	return &AWSCapacityReservationBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &AWSCapacityReservationBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AWSCapacityReservationBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Id sets the value of the 'id' attribute to the given value.
 func (b *AWSCapacityReservationBuilder) Id(value string) *AWSCapacityReservationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.id = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -60,11 +49,8 @@ func (b *AWSCapacityReservationBuilder) Id(value string) *AWSCapacityReservation
 //
 // Market type for AWS Capacity Reservations.
 func (b *AWSCapacityReservationBuilder) MarketType(value MarketType) *AWSCapacityReservationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.marketType = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -73,10 +59,7 @@ func (b *AWSCapacityReservationBuilder) Copy(object *AWSCapacityReservation) *AW
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.marketType = object.marketType
 	return b
@@ -85,10 +68,7 @@ func (b *AWSCapacityReservationBuilder) Copy(object *AWSCapacityReservation) *AW
 // Build creates a 'AWS_capacity_reservation' object using the configuration stored in the builder.
 func (b *AWSCapacityReservationBuilder) Build() (object *AWSCapacityReservation, err error) {
 	object = new(AWSCapacityReservation)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.id = b.id
 	object.marketType = b.marketType
 	return

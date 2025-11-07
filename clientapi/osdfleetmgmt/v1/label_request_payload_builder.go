@@ -19,49 +19,34 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/osdfleetmgmt/v1
 
+// LabelRequestPayloadBuilder contains the data and logic needed to build 'label_request_payload' objects.
 type LabelRequestPayloadBuilder struct {
-	fieldSet_ []bool
-	key       string
-	value     string
+	bitmap_ uint32
+	key     string
+	value   string
 }
 
 // NewLabelRequestPayload creates a new builder of 'label_request_payload' objects.
 func NewLabelRequestPayload() *LabelRequestPayloadBuilder {
-	return &LabelRequestPayloadBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &LabelRequestPayloadBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *LabelRequestPayloadBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Key sets the value of the 'key' attribute to the given value.
 func (b *LabelRequestPayloadBuilder) Key(value string) *LabelRequestPayloadBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.key = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *LabelRequestPayloadBuilder) Value(value string) *LabelRequestPayloadBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.value = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -70,10 +55,7 @@ func (b *LabelRequestPayloadBuilder) Copy(object *LabelRequestPayload) *LabelReq
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.key = object.key
 	b.value = object.value
 	return b
@@ -82,10 +64,7 @@ func (b *LabelRequestPayloadBuilder) Copy(object *LabelRequestPayload) *LabelReq
 // Build creates a 'label_request_payload' object using the configuration stored in the builder.
 func (b *LabelRequestPayloadBuilder) Build() (object *LabelRequestPayload, err error) {
 	object = new(LabelRequestPayload)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.key = b.key
 	object.value = b.value
 	return

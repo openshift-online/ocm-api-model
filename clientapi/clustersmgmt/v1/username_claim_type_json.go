@@ -42,7 +42,7 @@ func WriteUsernameClaim(object *UsernameClaim, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteUsernameClaim(object *UsernameClaim, stream *jsoniter.Stream) {
 		stream.WriteString(object.claim)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteUsernameClaim(object *UsernameClaim, stream *jsoniter.Stream) {
 		stream.WriteString(object.prefix)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,9 +85,7 @@ func UnmarshalUsernameClaim(source interface{}) (object *UsernameClaim, err erro
 
 // ReadUsernameClaim reads a value of the 'username_claim' type from the given iterator.
 func ReadUsernameClaim(iterator *jsoniter.Iterator) *UsernameClaim {
-	object := &UsernameClaim{
-		fieldSet_: make([]bool, 3),
-	}
+	object := &UsernameClaim{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -97,15 +95,15 @@ func ReadUsernameClaim(iterator *jsoniter.Iterator) *UsernameClaim {
 		case "claim":
 			value := iterator.ReadString()
 			object.claim = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "prefix":
 			value := iterator.ReadString()
 			object.prefix = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "prefix_policy":
 			value := iterator.ReadString()
 			object.prefixPolicy = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		default:
 			iterator.ReadAny()
 		}

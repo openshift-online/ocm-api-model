@@ -42,7 +42,7 @@ func WriteAzureNodePoolEncryptionAtHost(object *AzureNodePoolEncryptionAtHost, s
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalAzureNodePoolEncryptionAtHost(source interface{}) (object *AzureNo
 
 // ReadAzureNodePoolEncryptionAtHost reads a value of the 'azure_node_pool_encryption_at_host' type from the given iterator.
 func ReadAzureNodePoolEncryptionAtHost(iterator *jsoniter.Iterator) *AzureNodePoolEncryptionAtHost {
-	object := &AzureNodePoolEncryptionAtHost{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &AzureNodePoolEncryptionAtHost{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadAzureNodePoolEncryptionAtHost(iterator *jsoniter.Iterator) *AzureNodePo
 		case "state":
 			value := iterator.ReadString()
 			object.state = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

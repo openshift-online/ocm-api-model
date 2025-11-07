@@ -42,7 +42,7 @@ func WriteStorageQuota(object *StorageQuota, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteStorageQuota(object *StorageQuota, stream *jsoniter.Stream) {
 		stream.WriteString(object.unit)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalStorageQuota(source interface{}) (object *StorageQuota, err error)
 
 // ReadStorageQuota reads a value of the 'storage_quota' type from the given iterator.
 func ReadStorageQuota(iterator *jsoniter.Iterator) *StorageQuota {
-	object := &StorageQuota{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &StorageQuota{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadStorageQuota(iterator *jsoniter.Iterator) *StorageQuota {
 		case "unit":
 			value := iterator.ReadString()
 			object.unit = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "value":
 			value := iterator.ReadFloat64()
 			object.value = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

@@ -35,7 +35,7 @@ const NodePoolStatusNilKind = "NodePoolStatusNil"
 //
 // Representation of the status of a node pool.
 type NodePoolStatus struct {
-	fieldSet_       []bool
+	bitmap_         uint32
 	id              string
 	href            string
 	currentReplicas int
@@ -48,7 +48,7 @@ func (o *NodePoolStatus) Kind() string {
 	if o == nil {
 		return NodePoolStatusNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return NodePoolStatusLinkKind
 	}
 	return NodePoolStatusKind
@@ -56,12 +56,12 @@ func (o *NodePoolStatus) Kind() string {
 
 // Link returns true if this is a link.
 func (o *NodePoolStatus) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *NodePoolStatus) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -70,7 +70,7 @@ func (o *NodePoolStatus) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *NodePoolStatus) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -79,7 +79,7 @@ func (o *NodePoolStatus) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *NodePoolStatus) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -88,7 +88,7 @@ func (o *NodePoolStatus) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *NodePoolStatus) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -97,17 +97,7 @@ func (o *NodePoolStatus) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *NodePoolStatus) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // CurrentReplicas returns the value of the 'current_replicas' attribute, or
@@ -115,7 +105,7 @@ func (o *NodePoolStatus) Empty() bool {
 //
 // The current number of replicas for the node pool.
 func (o *NodePoolStatus) CurrentReplicas() int {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.currentReplicas
 	}
 	return 0
@@ -126,7 +116,7 @@ func (o *NodePoolStatus) CurrentReplicas() int {
 //
 // The current number of replicas for the node pool.
 func (o *NodePoolStatus) GetCurrentReplicas() (value int, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.currentReplicas
 	}
@@ -138,7 +128,7 @@ func (o *NodePoolStatus) GetCurrentReplicas() (value int, ok bool) {
 //
 // Adds additional information about the NodePool status when the node pool doesn't reach the desired replicas.
 func (o *NodePoolStatus) Message() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.message
 	}
 	return ""
@@ -149,7 +139,7 @@ func (o *NodePoolStatus) Message() string {
 //
 // Adds additional information about the NodePool status when the node pool doesn't reach the desired replicas.
 func (o *NodePoolStatus) GetMessage() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.message
 	}
@@ -161,7 +151,7 @@ func (o *NodePoolStatus) GetMessage() (value string, ok bool) {
 //
 // The current state of the node pool
 func (o *NodePoolStatus) State() *NodePoolState {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.state
 	}
 	return nil
@@ -172,7 +162,7 @@ func (o *NodePoolStatus) State() *NodePoolState {
 //
 // The current state of the node pool
 func (o *NodePoolStatus) GetState() (value *NodePoolState, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.state
 	}

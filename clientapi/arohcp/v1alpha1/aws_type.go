@@ -23,7 +23,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // _Amazon Web Services_ specific settings of a cluster.
 type AWS struct {
-	fieldSet_                              []bool
+	bitmap_                                uint32
 	kmsKeyArn                              string
 	sts                                    *STS
 	accessKeyID                            string
@@ -50,15 +50,7 @@ type AWS struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AWS) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // KMSKeyArn returns the value of the 'KMS_key_arn' attribute, or
@@ -66,7 +58,7 @@ func (o *AWS) Empty() bool {
 //
 // Customer Managed Key to encrypt EBS Volume
 func (o *AWS) KMSKeyArn() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.kmsKeyArn
 	}
 	return ""
@@ -77,7 +69,7 @@ func (o *AWS) KMSKeyArn() string {
 //
 // Customer Managed Key to encrypt EBS Volume
 func (o *AWS) GetKMSKeyArn() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.kmsKeyArn
 	}
@@ -89,7 +81,7 @@ func (o *AWS) GetKMSKeyArn() (value string, ok bool) {
 //
 // Contains the necessary attributes to support role-based authentication on AWS.
 func (o *AWS) STS() *STS {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.sts
 	}
 	return nil
@@ -100,7 +92,7 @@ func (o *AWS) STS() *STS {
 //
 // Contains the necessary attributes to support role-based authentication on AWS.
 func (o *AWS) GetSTS() (value *STS, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.sts
 	}
@@ -112,7 +104,7 @@ func (o *AWS) GetSTS() (value *STS, ok bool) {
 //
 // AWS access key identifier.
 func (o *AWS) AccessKeyID() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.accessKeyID
 	}
 	return ""
@@ -123,7 +115,7 @@ func (o *AWS) AccessKeyID() string {
 //
 // AWS access key identifier.
 func (o *AWS) GetAccessKeyID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.accessKeyID
 	}
@@ -135,7 +127,7 @@ func (o *AWS) GetAccessKeyID() (value string, ok bool) {
 //
 // AWS account identifier.
 func (o *AWS) AccountID() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.accountID
 	}
 	return ""
@@ -146,7 +138,7 @@ func (o *AWS) AccountID() string {
 //
 // AWS account identifier.
 func (o *AWS) GetAccountID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.accountID
 	}
@@ -158,7 +150,7 @@ func (o *AWS) GetAccountID() (value string, ok bool) {
 //
 // Additional allowed principal ARNs to be added to the hosted control plane's VPC Endpoint Service.
 func (o *AWS) AdditionalAllowedPrincipals() []string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.additionalAllowedPrincipals
 	}
 	return nil
@@ -169,7 +161,7 @@ func (o *AWS) AdditionalAllowedPrincipals() []string {
 //
 // Additional allowed principal ARNs to be added to the hosted control plane's VPC Endpoint Service.
 func (o *AWS) GetAdditionalAllowedPrincipals() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.additionalAllowedPrincipals
 	}
@@ -181,7 +173,7 @@ func (o *AWS) GetAdditionalAllowedPrincipals() (value []string, ok bool) {
 //
 // Additional AWS Security Groups to be added to default worker (compute) machine pool.
 func (o *AWS) AdditionalComputeSecurityGroupIds() []string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.additionalComputeSecurityGroupIds
 	}
 	return nil
@@ -192,7 +184,7 @@ func (o *AWS) AdditionalComputeSecurityGroupIds() []string {
 //
 // Additional AWS Security Groups to be added to default worker (compute) machine pool.
 func (o *AWS) GetAdditionalComputeSecurityGroupIds() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.additionalComputeSecurityGroupIds
 	}
@@ -204,7 +196,7 @@ func (o *AWS) GetAdditionalComputeSecurityGroupIds() (value []string, ok bool) {
 //
 // Additional AWS Security Groups to be added to default control plane machine pool.
 func (o *AWS) AdditionalControlPlaneSecurityGroupIds() []string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.additionalControlPlaneSecurityGroupIds
 	}
 	return nil
@@ -215,7 +207,7 @@ func (o *AWS) AdditionalControlPlaneSecurityGroupIds() []string {
 //
 // Additional AWS Security Groups to be added to default control plane machine pool.
 func (o *AWS) GetAdditionalControlPlaneSecurityGroupIds() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.additionalControlPlaneSecurityGroupIds
 	}
@@ -227,7 +219,7 @@ func (o *AWS) GetAdditionalControlPlaneSecurityGroupIds() (value []string, ok bo
 //
 // Additional AWS Security Groups to be added to default infra machine pool.
 func (o *AWS) AdditionalInfraSecurityGroupIds() []string {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.additionalInfraSecurityGroupIds
 	}
 	return nil
@@ -238,7 +230,7 @@ func (o *AWS) AdditionalInfraSecurityGroupIds() []string {
 //
 // Additional AWS Security Groups to be added to default infra machine pool.
 func (o *AWS) GetAdditionalInfraSecurityGroupIds() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.additionalInfraSecurityGroupIds
 	}
@@ -250,7 +242,7 @@ func (o *AWS) GetAdditionalInfraSecurityGroupIds() (value []string, ok bool) {
 //
 // Audit log forwarding configuration
 func (o *AWS) AuditLog() *AuditLog {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.auditLog
 	}
 	return nil
@@ -261,7 +253,7 @@ func (o *AWS) AuditLog() *AuditLog {
 //
 // Audit log forwarding configuration
 func (o *AWS) GetAuditLog() (value *AuditLog, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.auditLog
 	}
@@ -273,7 +265,7 @@ func (o *AWS) GetAuditLog() (value *AuditLog, ok bool) {
 //
 // AWS specific configuration for AutoNode
 func (o *AWS) AutoNode() *AwsAutoNode {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && o.bitmap_&512 != 0 {
 		return o.autoNode
 	}
 	return nil
@@ -284,7 +276,7 @@ func (o *AWS) AutoNode() *AwsAutoNode {
 //
 // AWS specific configuration for AutoNode
 func (o *AWS) GetAutoNode() (value *AwsAutoNode, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && o.bitmap_&512 != 0
 	if ok {
 		value = o.autoNode
 	}
@@ -296,7 +288,7 @@ func (o *AWS) GetAutoNode() (value *AwsAutoNode, ok bool) {
 //
 // BillingAccountID is the account used for billing subscriptions purchased via the marketplace
 func (o *AWS) BillingAccountID() string {
-	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+	if o != nil && o.bitmap_&1024 != 0 {
 		return o.billingAccountID
 	}
 	return ""
@@ -307,7 +299,7 @@ func (o *AWS) BillingAccountID() string {
 //
 // BillingAccountID is the account used for billing subscriptions purchased via the marketplace
 func (o *AWS) GetBillingAccountID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	ok = o != nil && o.bitmap_&1024 != 0
 	if ok {
 		value = o.billingAccountID
 	}
@@ -319,7 +311,7 @@ func (o *AWS) GetBillingAccountID() (value string, ok bool) {
 //
 // Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances
 func (o *AWS) Ec2MetadataHttpTokens() Ec2MetadataHttpTokens {
-	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
+	if o != nil && o.bitmap_&2048 != 0 {
 		return o.ec2MetadataHttpTokens
 	}
 	return Ec2MetadataHttpTokens("")
@@ -330,7 +322,7 @@ func (o *AWS) Ec2MetadataHttpTokens() Ec2MetadataHttpTokens {
 //
 // Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances
 func (o *AWS) GetEc2MetadataHttpTokens() (value Ec2MetadataHttpTokens, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
+	ok = o != nil && o.bitmap_&2048 != 0
 	if ok {
 		value = o.ec2MetadataHttpTokens
 	}
@@ -342,7 +334,7 @@ func (o *AWS) GetEc2MetadataHttpTokens() (value Ec2MetadataHttpTokens, ok bool) 
 //
 // Related etcd encryption configuration
 func (o *AWS) EtcdEncryption() *AwsEtcdEncryption {
-	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
+	if o != nil && o.bitmap_&4096 != 0 {
 		return o.etcdEncryption
 	}
 	return nil
@@ -353,7 +345,7 @@ func (o *AWS) EtcdEncryption() *AwsEtcdEncryption {
 //
 // Related etcd encryption configuration
 func (o *AWS) GetEtcdEncryption() (value *AwsEtcdEncryption, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
+	ok = o != nil && o.bitmap_&4096 != 0
 	if ok {
 		value = o.etcdEncryption
 	}
@@ -365,7 +357,7 @@ func (o *AWS) GetEtcdEncryption() (value *AwsEtcdEncryption, ok bool) {
 //
 // ID of local private hosted zone for hypershift internal communication.
 func (o *AWS) HcpInternalCommunicationHostedZoneId() string {
-	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
+	if o != nil && o.bitmap_&8192 != 0 {
 		return o.hcpInternalCommunicationHostedZoneId
 	}
 	return ""
@@ -376,7 +368,7 @@ func (o *AWS) HcpInternalCommunicationHostedZoneId() string {
 //
 // ID of local private hosted zone for hypershift internal communication.
 func (o *AWS) GetHcpInternalCommunicationHostedZoneId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
+	ok = o != nil && o.bitmap_&8192 != 0
 	if ok {
 		value = o.hcpInternalCommunicationHostedZoneId
 	}
@@ -388,7 +380,7 @@ func (o *AWS) GetHcpInternalCommunicationHostedZoneId() (value string, ok bool) 
 //
 // ID of private hosted zone.
 func (o *AWS) PrivateHostedZoneID() string {
-	if o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14] {
+	if o != nil && o.bitmap_&16384 != 0 {
 		return o.privateHostedZoneID
 	}
 	return ""
@@ -399,7 +391,7 @@ func (o *AWS) PrivateHostedZoneID() string {
 //
 // ID of private hosted zone.
 func (o *AWS) GetPrivateHostedZoneID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14]
+	ok = o != nil && o.bitmap_&16384 != 0
 	if ok {
 		value = o.privateHostedZoneID
 	}
@@ -411,7 +403,7 @@ func (o *AWS) GetPrivateHostedZoneID() (value string, ok bool) {
 //
 // Role ARN for private hosted zone.
 func (o *AWS) PrivateHostedZoneRoleARN() string {
-	if o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15] {
+	if o != nil && o.bitmap_&32768 != 0 {
 		return o.privateHostedZoneRoleARN
 	}
 	return ""
@@ -422,7 +414,7 @@ func (o *AWS) PrivateHostedZoneRoleARN() string {
 //
 // Role ARN for private hosted zone.
 func (o *AWS) GetPrivateHostedZoneRoleARN() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15]
+	ok = o != nil && o.bitmap_&32768 != 0
 	if ok {
 		value = o.privateHostedZoneRoleARN
 	}
@@ -434,7 +426,7 @@ func (o *AWS) GetPrivateHostedZoneRoleARN() (value string, ok bool) {
 //
 // Sets cluster to be inaccessible externally.
 func (o *AWS) PrivateLink() bool {
-	if o != nil && len(o.fieldSet_) > 16 && o.fieldSet_[16] {
+	if o != nil && o.bitmap_&65536 != 0 {
 		return o.privateLink
 	}
 	return false
@@ -445,7 +437,7 @@ func (o *AWS) PrivateLink() bool {
 //
 // Sets cluster to be inaccessible externally.
 func (o *AWS) GetPrivateLink() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 16 && o.fieldSet_[16]
+	ok = o != nil && o.bitmap_&65536 != 0
 	if ok {
 		value = o.privateLink
 	}
@@ -457,7 +449,7 @@ func (o *AWS) GetPrivateLink() (value bool, ok bool) {
 //
 // Manages additional configuration for Private Links.
 func (o *AWS) PrivateLinkConfiguration() *PrivateLinkClusterConfiguration {
-	if o != nil && len(o.fieldSet_) > 17 && o.fieldSet_[17] {
+	if o != nil && o.bitmap_&131072 != 0 {
 		return o.privateLinkConfiguration
 	}
 	return nil
@@ -468,7 +460,7 @@ func (o *AWS) PrivateLinkConfiguration() *PrivateLinkClusterConfiguration {
 //
 // Manages additional configuration for Private Links.
 func (o *AWS) GetPrivateLinkConfiguration() (value *PrivateLinkClusterConfiguration, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 17 && o.fieldSet_[17]
+	ok = o != nil && o.bitmap_&131072 != 0
 	if ok {
 		value = o.privateLinkConfiguration
 	}
@@ -480,7 +472,7 @@ func (o *AWS) GetPrivateLinkConfiguration() (value *PrivateLinkClusterConfigurat
 //
 // AWS secret access key.
 func (o *AWS) SecretAccessKey() string {
-	if o != nil && len(o.fieldSet_) > 18 && o.fieldSet_[18] {
+	if o != nil && o.bitmap_&262144 != 0 {
 		return o.secretAccessKey
 	}
 	return ""
@@ -491,7 +483,7 @@ func (o *AWS) SecretAccessKey() string {
 //
 // AWS secret access key.
 func (o *AWS) GetSecretAccessKey() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 18 && o.fieldSet_[18]
+	ok = o != nil && o.bitmap_&262144 != 0
 	if ok {
 		value = o.secretAccessKey
 	}
@@ -503,7 +495,7 @@ func (o *AWS) GetSecretAccessKey() (value string, ok bool) {
 //
 // The subnet ids to be used when installing the cluster.
 func (o *AWS) SubnetIDs() []string {
-	if o != nil && len(o.fieldSet_) > 19 && o.fieldSet_[19] {
+	if o != nil && o.bitmap_&524288 != 0 {
 		return o.subnetIDs
 	}
 	return nil
@@ -514,7 +506,7 @@ func (o *AWS) SubnetIDs() []string {
 //
 // The subnet ids to be used when installing the cluster.
 func (o *AWS) GetSubnetIDs() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 19 && o.fieldSet_[19]
+	ok = o != nil && o.bitmap_&524288 != 0
 	if ok {
 		value = o.subnetIDs
 	}
@@ -526,7 +518,7 @@ func (o *AWS) GetSubnetIDs() (value []string, ok bool) {
 //
 // Optional keys and values that the installer will add as tags to all AWS resources it creates
 func (o *AWS) Tags() map[string]string {
-	if o != nil && len(o.fieldSet_) > 20 && o.fieldSet_[20] {
+	if o != nil && o.bitmap_&1048576 != 0 {
 		return o.tags
 	}
 	return nil
@@ -537,7 +529,7 @@ func (o *AWS) Tags() map[string]string {
 //
 // Optional keys and values that the installer will add as tags to all AWS resources it creates
 func (o *AWS) GetTags() (value map[string]string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 20 && o.fieldSet_[20]
+	ok = o != nil && o.bitmap_&1048576 != 0
 	if ok {
 		value = o.tags
 	}
@@ -549,7 +541,7 @@ func (o *AWS) GetTags() (value map[string]string, ok bool) {
 //
 // Role ARN for VPC Endpoint Service cross account role.
 func (o *AWS) VpcEndpointRoleArn() string {
-	if o != nil && len(o.fieldSet_) > 21 && o.fieldSet_[21] {
+	if o != nil && o.bitmap_&2097152 != 0 {
 		return o.vpcEndpointRoleArn
 	}
 	return ""
@@ -560,7 +552,7 @@ func (o *AWS) VpcEndpointRoleArn() string {
 //
 // Role ARN for VPC Endpoint Service cross account role.
 func (o *AWS) GetVpcEndpointRoleArn() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 21 && o.fieldSet_[21]
+	ok = o != nil && o.bitmap_&2097152 != 0
 	if ok {
 		value = o.vpcEndpointRoleArn
 	}

@@ -19,49 +19,34 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// GroupsClaimBuilder contains the data and logic needed to build 'groups_claim' objects.
 type GroupsClaimBuilder struct {
-	fieldSet_ []bool
-	claim     string
-	prefix    string
+	bitmap_ uint32
+	claim   string
+	prefix  string
 }
 
 // NewGroupsClaim creates a new builder of 'groups_claim' objects.
 func NewGroupsClaim() *GroupsClaimBuilder {
-	return &GroupsClaimBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &GroupsClaimBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GroupsClaimBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Claim sets the value of the 'claim' attribute to the given value.
 func (b *GroupsClaimBuilder) Claim(value string) *GroupsClaimBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.claim = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Prefix sets the value of the 'prefix' attribute to the given value.
 func (b *GroupsClaimBuilder) Prefix(value string) *GroupsClaimBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.prefix = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -70,10 +55,7 @@ func (b *GroupsClaimBuilder) Copy(object *GroupsClaim) *GroupsClaimBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.claim = object.claim
 	b.prefix = object.prefix
 	return b
@@ -82,10 +64,7 @@ func (b *GroupsClaimBuilder) Copy(object *GroupsClaim) *GroupsClaimBuilder {
 // Build creates a 'groups_claim' object using the configuration stored in the builder.
 func (b *GroupsClaimBuilder) Build() (object *GroupsClaim, err error) {
 	object = new(GroupsClaim)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.claim = b.claim
 	object.prefix = b.prefix
 	return

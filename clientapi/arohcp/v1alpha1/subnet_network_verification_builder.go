@@ -19,74 +19,52 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// SubnetNetworkVerificationBuilder contains the data and logic needed to build 'subnet_network_verification' objects.
 type SubnetNetworkVerificationBuilder struct {
-	fieldSet_ []bool
-	id        string
-	href      string
-	details   []string
-	platform  Platform
-	state     string
-	tags      map[string]string
+	bitmap_  uint32
+	id       string
+	href     string
+	details  []string
+	platform Platform
+	state    string
+	tags     map[string]string
 }
 
 // NewSubnetNetworkVerification creates a new builder of 'subnet_network_verification' objects.
 func NewSubnetNetworkVerification() *SubnetNetworkVerificationBuilder {
-	return &SubnetNetworkVerificationBuilder{
-		fieldSet_: make([]bool, 7),
-	}
+	return &SubnetNetworkVerificationBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *SubnetNetworkVerificationBuilder) Link(value bool) *SubnetNetworkVerificationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *SubnetNetworkVerificationBuilder) ID(value string) *SubnetNetworkVerificationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *SubnetNetworkVerificationBuilder) HREF(value string) *SubnetNetworkVerificationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SubnetNetworkVerificationBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // Details sets the value of the 'details' attribute to the given values.
 func (b *SubnetNetworkVerificationBuilder) Details(values ...string) *SubnetNetworkVerificationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.details = make([]string, len(values))
 	copy(b.details, values)
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -94,34 +72,25 @@ func (b *SubnetNetworkVerificationBuilder) Details(values ...string) *SubnetNetw
 //
 // Representation of an platform type field.
 func (b *SubnetNetworkVerificationBuilder) Platform(value Platform) *SubnetNetworkVerificationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.platform = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // State sets the value of the 'state' attribute to the given value.
 func (b *SubnetNetworkVerificationBuilder) State(value string) *SubnetNetworkVerificationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.state = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // Tags sets the value of the 'tags' attribute to the given value.
 func (b *SubnetNetworkVerificationBuilder) Tags(value map[string]string) *SubnetNetworkVerificationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.tags = value
 	if value != nil {
-		b.fieldSet_[6] = true
+		b.bitmap_ |= 64
 	} else {
-		b.fieldSet_[6] = false
+		b.bitmap_ &^= 64
 	}
 	return b
 }
@@ -131,10 +100,7 @@ func (b *SubnetNetworkVerificationBuilder) Copy(object *SubnetNetworkVerificatio
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.details != nil {
@@ -161,10 +127,7 @@ func (b *SubnetNetworkVerificationBuilder) Build() (object *SubnetNetworkVerific
 	object = new(SubnetNetworkVerification)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.details != nil {
 		object.details = make([]string, len(b.details))
 		copy(object.details, b.details)

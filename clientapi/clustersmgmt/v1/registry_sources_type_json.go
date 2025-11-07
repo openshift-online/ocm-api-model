@@ -42,7 +42,7 @@ func WriteRegistrySources(object *RegistrySources, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.allowedRegistries != nil
+	present_ = object.bitmap_&1 != 0 && object.allowedRegistries != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteRegistrySources(object *RegistrySources, stream *jsoniter.Stream) {
 		WriteStringList(object.allowedRegistries, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.blockedRegistries != nil
+	present_ = object.bitmap_&2 != 0 && object.blockedRegistries != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteRegistrySources(object *RegistrySources, stream *jsoniter.Stream) {
 		WriteStringList(object.blockedRegistries, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.insecureRegistries != nil
+	present_ = object.bitmap_&4 != 0 && object.insecureRegistries != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,9 +85,7 @@ func UnmarshalRegistrySources(source interface{}) (object *RegistrySources, err 
 
 // ReadRegistrySources reads a value of the 'registry_sources' type from the given iterator.
 func ReadRegistrySources(iterator *jsoniter.Iterator) *RegistrySources {
-	object := &RegistrySources{
-		fieldSet_: make([]bool, 3),
-	}
+	object := &RegistrySources{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -97,15 +95,15 @@ func ReadRegistrySources(iterator *jsoniter.Iterator) *RegistrySources {
 		case "allowed_registries":
 			value := ReadStringList(iterator)
 			object.allowedRegistries = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "blocked_registries":
 			value := ReadStringList(iterator)
 			object.blockedRegistries = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "insecure_registries":
 			value := ReadStringList(iterator)
 			object.insecureRegistries = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		default:
 			iterator.ReadAny()
 		}

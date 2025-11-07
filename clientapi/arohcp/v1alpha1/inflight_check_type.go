@@ -39,7 +39,7 @@ const InflightCheckNilKind = "InflightCheckNil"
 //
 // Representation of check running before the cluster is provisioned.
 type InflightCheck struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	id        string
 	href      string
 	details   interface{}
@@ -55,7 +55,7 @@ func (o *InflightCheck) Kind() string {
 	if o == nil {
 		return InflightCheckNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return InflightCheckLinkKind
 	}
 	return InflightCheckKind
@@ -63,12 +63,12 @@ func (o *InflightCheck) Kind() string {
 
 // Link returns true if this is a link.
 func (o *InflightCheck) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *InflightCheck) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -77,7 +77,7 @@ func (o *InflightCheck) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *InflightCheck) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -86,7 +86,7 @@ func (o *InflightCheck) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *InflightCheck) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -95,7 +95,7 @@ func (o *InflightCheck) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *InflightCheck) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -104,17 +104,7 @@ func (o *InflightCheck) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *InflightCheck) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // Details returns the value of the 'details' attribute, or
@@ -122,7 +112,7 @@ func (o *InflightCheck) Empty() bool {
 //
 // Details regarding the state of the inflight check.
 func (o *InflightCheck) Details() interface{} {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.details
 	}
 	return nil
@@ -133,7 +123,7 @@ func (o *InflightCheck) Details() interface{} {
 //
 // Details regarding the state of the inflight check.
 func (o *InflightCheck) GetDetails() (value interface{}, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.details
 	}
@@ -145,7 +135,7 @@ func (o *InflightCheck) GetDetails() (value interface{}, ok bool) {
 //
 // The time the check finished running.
 func (o *InflightCheck) EndedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.endedAt
 	}
 	return time.Time{}
@@ -156,7 +146,7 @@ func (o *InflightCheck) EndedAt() time.Time {
 //
 // The time the check finished running.
 func (o *InflightCheck) GetEndedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.endedAt
 	}
@@ -168,7 +158,7 @@ func (o *InflightCheck) GetEndedAt() (value time.Time, ok bool) {
 //
 // The name of the inflight check.
 func (o *InflightCheck) Name() string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.name
 	}
 	return ""
@@ -179,7 +169,7 @@ func (o *InflightCheck) Name() string {
 //
 // The name of the inflight check.
 func (o *InflightCheck) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.name
 	}
@@ -191,7 +181,7 @@ func (o *InflightCheck) GetName() (value string, ok bool) {
 //
 // The number of times the inflight check restarted.
 func (o *InflightCheck) Restarts() int {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.restarts
 	}
 	return 0
@@ -202,7 +192,7 @@ func (o *InflightCheck) Restarts() int {
 //
 // The number of times the inflight check restarted.
 func (o *InflightCheck) GetRestarts() (value int, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.restarts
 	}
@@ -214,7 +204,7 @@ func (o *InflightCheck) GetRestarts() (value int, ok bool) {
 //
 // The time the check started running.
 func (o *InflightCheck) StartedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.startedAt
 	}
 	return time.Time{}
@@ -225,7 +215,7 @@ func (o *InflightCheck) StartedAt() time.Time {
 //
 // The time the check started running.
 func (o *InflightCheck) GetStartedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.startedAt
 	}
@@ -237,7 +227,7 @@ func (o *InflightCheck) GetStartedAt() (value time.Time, ok bool) {
 //
 // State of the inflight check.
 func (o *InflightCheck) State() InflightCheckState {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.state
 	}
 	return InflightCheckState("")
@@ -248,7 +238,7 @@ func (o *InflightCheck) State() InflightCheckState {
 //
 // State of the inflight check.
 func (o *InflightCheck) GetState() (value InflightCheckState, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.state
 	}

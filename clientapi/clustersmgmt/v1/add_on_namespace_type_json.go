@@ -43,13 +43,13 @@ func WriteAddOnNamespace(object *AddOnNamespace, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(AddOnNamespaceLinkKind)
 	} else {
 		stream.WriteString(AddOnNamespaceKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteAddOnNamespace(object *AddOnNamespace, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteAddOnNamespace(object *AddOnNamespace, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.annotations != nil
+	present_ = object.bitmap_&8 != 0 && object.annotations != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -95,7 +95,7 @@ func WriteAddOnNamespace(object *AddOnNamespace, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4] && object.labels != nil
+	present_ = object.bitmap_&16 != 0 && object.labels != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -124,7 +124,7 @@ func WriteAddOnNamespace(object *AddOnNamespace, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -149,9 +149,7 @@ func UnmarshalAddOnNamespace(source interface{}) (object *AddOnNamespace, err er
 
 // ReadAddOnNamespace reads a value of the 'add_on_namespace' type from the given iterator.
 func ReadAddOnNamespace(iterator *jsoniter.Iterator) *AddOnNamespace {
-	object := &AddOnNamespace{
-		fieldSet_: make([]bool, 6),
-	}
+	object := &AddOnNamespace{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -161,14 +159,14 @@ func ReadAddOnNamespace(iterator *jsoniter.Iterator) *AddOnNamespace {
 		case "kind":
 			value := iterator.ReadString()
 			if value == AddOnNamespaceLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "annotations":
 			value := map[string]string{}
 			for {
@@ -180,7 +178,7 @@ func ReadAddOnNamespace(iterator *jsoniter.Iterator) *AddOnNamespace {
 				value[key] = item
 			}
 			object.annotations = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "labels":
 			value := map[string]string{}
 			for {
@@ -192,11 +190,11 @@ func ReadAddOnNamespace(iterator *jsoniter.Iterator) *AddOnNamespace {
 				value[key] = item
 			}
 			object.labels = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		default:
 			iterator.ReadAny()
 		}

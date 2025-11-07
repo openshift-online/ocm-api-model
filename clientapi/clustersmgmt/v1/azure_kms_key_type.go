@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Contains the necessary attributes to support KMS encryption key for Azure based clusters
 type AzureKmsKey struct {
-	fieldSet_    []bool
+	bitmap_      uint32
 	keyName      string
 	keyVaultName string
 	keyVersion   string
@@ -31,15 +31,7 @@ type AzureKmsKey struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AzureKmsKey) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // KeyName returns the value of the 'key_name' attribute, or
@@ -48,7 +40,7 @@ func (o *AzureKmsKey) Empty() bool {
 // key_name is the name of the Azure Key Vault Key
 // Required during creation.
 func (o *AzureKmsKey) KeyName() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.keyName
 	}
 	return ""
@@ -60,7 +52,7 @@ func (o *AzureKmsKey) KeyName() string {
 // key_name is the name of the Azure Key Vault Key
 // Required during creation.
 func (o *AzureKmsKey) GetKeyName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.keyName
 	}
@@ -73,7 +65,7 @@ func (o *AzureKmsKey) GetKeyName() (value string, ok bool) {
 // key_vault_name is the name of the Azure Key Vault that contains the encryption key
 // Required during creation.
 func (o *AzureKmsKey) KeyVaultName() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.keyVaultName
 	}
 	return ""
@@ -85,7 +77,7 @@ func (o *AzureKmsKey) KeyVaultName() string {
 // key_vault_name is the name of the Azure Key Vault that contains the encryption key
 // Required during creation.
 func (o *AzureKmsKey) GetKeyVaultName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.keyVaultName
 	}
@@ -98,7 +90,7 @@ func (o *AzureKmsKey) GetKeyVaultName() (value string, ok bool) {
 // key_version is the version of the Azure Key Vault key
 // Required during creation.
 func (o *AzureKmsKey) KeyVersion() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.keyVersion
 	}
 	return ""
@@ -110,7 +102,7 @@ func (o *AzureKmsKey) KeyVersion() string {
 // key_version is the version of the Azure Key Vault key
 // Required during creation.
 func (o *AzureKmsKey) GetKeyVersion() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.keyVersion
 	}

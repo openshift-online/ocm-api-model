@@ -21,22 +21,14 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 
 // ServiceParameter represents the values of the 'service_parameter' type.
 type ServiceParameter struct {
-	fieldSet_ []bool
-	id        string
-	value     string
+	bitmap_ uint32
+	id      string
+	value   string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ServiceParameter) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // ID returns the value of the 'ID' attribute, or
@@ -44,7 +36,7 @@ func (o *ServiceParameter) Empty() bool {
 //
 // Name of the parameter
 func (o *ServiceParameter) ID() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.id
 	}
 	return ""
@@ -55,7 +47,7 @@ func (o *ServiceParameter) ID() string {
 //
 // Name of the parameter
 func (o *ServiceParameter) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.id
 	}
@@ -67,7 +59,7 @@ func (o *ServiceParameter) GetID() (value string, ok bool) {
 //
 // Value of the parameter
 func (o *ServiceParameter) Value() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.value
 	}
 	return ""
@@ -78,7 +70,7 @@ func (o *ServiceParameter) Value() string {
 //
 // Value of the parameter
 func (o *ServiceParameter) GetValue() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.value
 	}

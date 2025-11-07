@@ -21,30 +21,22 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 
 // StatefulObject represents the values of the 'stateful_object' type.
 type StatefulObject struct {
-	fieldSet_ []bool
-	id        string
-	href      string
-	kind      string
-	state     string
+	bitmap_ uint32
+	id      string
+	href    string
+	kind    string
+	state   string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *StatefulObject) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // ID returns the value of the 'ID' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *StatefulObject) ID() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.id
 	}
 	return ""
@@ -53,7 +45,7 @@ func (o *StatefulObject) ID() string {
 // GetID returns the value of the 'ID' attribute and
 // a flag indicating if the attribute has a value.
 func (o *StatefulObject) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.id
 	}
@@ -63,7 +55,7 @@ func (o *StatefulObject) GetID() (value string, ok bool) {
 // Href returns the value of the 'href' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *StatefulObject) Href() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.href
 	}
 	return ""
@@ -72,7 +64,7 @@ func (o *StatefulObject) Href() string {
 // GetHref returns the value of the 'href' attribute and
 // a flag indicating if the attribute has a value.
 func (o *StatefulObject) GetHref() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.href
 	}
@@ -82,7 +74,7 @@ func (o *StatefulObject) GetHref() (value string, ok bool) {
 // Kind returns the value of the 'kind' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *StatefulObject) Kind() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.kind
 	}
 	return ""
@@ -91,7 +83,7 @@ func (o *StatefulObject) Kind() string {
 // GetKind returns the value of the 'kind' attribute and
 // a flag indicating if the attribute has a value.
 func (o *StatefulObject) GetKind() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.kind
 	}
@@ -101,7 +93,7 @@ func (o *StatefulObject) GetKind() (value string, ok bool) {
 // State returns the value of the 'state' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *StatefulObject) State() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.state
 	}
 	return ""
@@ -110,7 +102,7 @@ func (o *StatefulObject) State() string {
 // GetState returns the value of the 'state' attribute and
 // a flag indicating if the attribute has a value.
 func (o *StatefulObject) GetState() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.state
 	}

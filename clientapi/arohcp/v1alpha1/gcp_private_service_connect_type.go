@@ -23,21 +23,13 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Google cloud platform private service connect configuration of a cluster.
 type GcpPrivateServiceConnect struct {
-	fieldSet_               []bool
+	bitmap_                 uint32
 	serviceAttachmentSubnet string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *GcpPrivateServiceConnect) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // ServiceAttachmentSubnet returns the value of the 'service_attachment_subnet' attribute, or
@@ -45,7 +37,7 @@ func (o *GcpPrivateServiceConnect) Empty() bool {
 //
 // The name of the subnet where the PSC service attachment is created
 func (o *GcpPrivateServiceConnect) ServiceAttachmentSubnet() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.serviceAttachmentSubnet
 	}
 	return ""
@@ -56,7 +48,7 @@ func (o *GcpPrivateServiceConnect) ServiceAttachmentSubnet() string {
 //
 // The name of the subnet where the PSC service attachment is created
 func (o *GcpPrivateServiceConnect) GetServiceAttachmentSubnet() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.serviceAttachmentSubnet
 	}

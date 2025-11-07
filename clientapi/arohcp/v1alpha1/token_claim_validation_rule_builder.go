@@ -19,50 +19,36 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// TokenClaimValidationRuleBuilder contains the data and logic needed to build 'token_claim_validation_rule' objects.
+//
 // The rule that is applied to validate token claims to authenticate users.
 type TokenClaimValidationRuleBuilder struct {
-	fieldSet_     []bool
+	bitmap_       uint32
 	claim         string
 	requiredValue string
 }
 
 // NewTokenClaimValidationRule creates a new builder of 'token_claim_validation_rule' objects.
 func NewTokenClaimValidationRule() *TokenClaimValidationRuleBuilder {
-	return &TokenClaimValidationRuleBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &TokenClaimValidationRuleBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *TokenClaimValidationRuleBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Claim sets the value of the 'claim' attribute to the given value.
 func (b *TokenClaimValidationRuleBuilder) Claim(value string) *TokenClaimValidationRuleBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.claim = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // RequiredValue sets the value of the 'required_value' attribute to the given value.
 func (b *TokenClaimValidationRuleBuilder) RequiredValue(value string) *TokenClaimValidationRuleBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.requiredValue = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -71,10 +57,7 @@ func (b *TokenClaimValidationRuleBuilder) Copy(object *TokenClaimValidationRule)
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.claim = object.claim
 	b.requiredValue = object.requiredValue
 	return b
@@ -83,10 +66,7 @@ func (b *TokenClaimValidationRuleBuilder) Copy(object *TokenClaimValidationRule)
 // Build creates a 'token_claim_validation_rule' object using the configuration stored in the builder.
 func (b *TokenClaimValidationRuleBuilder) Build() (object *TokenClaimValidationRule, err error) {
 	object = new(TokenClaimValidationRule)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.claim = b.claim
 	object.requiredValue = b.requiredValue
 	return

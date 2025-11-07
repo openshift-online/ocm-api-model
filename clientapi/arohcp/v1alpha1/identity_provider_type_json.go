@@ -42,13 +42,13 @@ func WriteIdentityProvider(object *IdentityProvider, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(IdentityProviderLinkKind)
 	} else {
 		stream.WriteString(IdentityProviderKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteIdentityProvider(object *IdentityProvider, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteIdentityProvider(object *IdentityProvider, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.ldap != nil
+	present_ = object.bitmap_&8 != 0 && object.ldap != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteIdentityProvider(object *IdentityProvider, stream *jsoniter.Stream) {
 		WriteLDAPIdentityProvider(object.ldap, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteIdentityProvider(object *IdentityProvider, stream *jsoniter.Stream) {
 		stream.WriteBool(object.challenge)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.github != nil
+	present_ = object.bitmap_&32 != 0 && object.github != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -92,7 +92,7 @@ func WriteIdentityProvider(object *IdentityProvider, stream *jsoniter.Stream) {
 		WriteGithubIdentityProvider(object.github, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.gitlab != nil
+	present_ = object.bitmap_&64 != 0 && object.gitlab != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -101,7 +101,7 @@ func WriteIdentityProvider(object *IdentityProvider, stream *jsoniter.Stream) {
 		WriteGitlabIdentityProvider(object.gitlab, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7] && object.google != nil
+	present_ = object.bitmap_&128 != 0 && object.google != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -110,7 +110,7 @@ func WriteIdentityProvider(object *IdentityProvider, stream *jsoniter.Stream) {
 		WriteGoogleIdentityProvider(object.google, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8] && object.htpasswd != nil
+	present_ = object.bitmap_&256 != 0 && object.htpasswd != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -119,7 +119,7 @@ func WriteIdentityProvider(object *IdentityProvider, stream *jsoniter.Stream) {
 		WriteHTPasswdIdentityProvider(object.htpasswd, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = object.bitmap_&512 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -128,7 +128,7 @@ func WriteIdentityProvider(object *IdentityProvider, stream *jsoniter.Stream) {
 		stream.WriteBool(object.login)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
+	present_ = object.bitmap_&1024 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -137,7 +137,7 @@ func WriteIdentityProvider(object *IdentityProvider, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.mappingMethod))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
+	present_ = object.bitmap_&2048 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -146,7 +146,7 @@ func WriteIdentityProvider(object *IdentityProvider, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12] && object.openID != nil
+	present_ = object.bitmap_&4096 != 0 && object.openID != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -155,7 +155,7 @@ func WriteIdentityProvider(object *IdentityProvider, stream *jsoniter.Stream) {
 		WriteOpenIDIdentityProvider(object.openID, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13]
+	present_ = object.bitmap_&8192 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -180,9 +180,7 @@ func UnmarshalIdentityProvider(source interface{}) (object *IdentityProvider, er
 
 // ReadIdentityProvider reads a value of the 'identity_provider' type from the given iterator.
 func ReadIdentityProvider(iterator *jsoniter.Iterator) *IdentityProvider {
-	object := &IdentityProvider{
-		fieldSet_: make([]bool, 14),
-	}
+	object := &IdentityProvider{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -192,60 +190,60 @@ func ReadIdentityProvider(iterator *jsoniter.Iterator) *IdentityProvider {
 		case "kind":
 			value := iterator.ReadString()
 			if value == IdentityProviderLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "ldap":
 			value := ReadLDAPIdentityProvider(iterator)
 			object.ldap = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "challenge":
 			value := iterator.ReadBool()
 			object.challenge = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "github":
 			value := ReadGithubIdentityProvider(iterator)
 			object.github = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "gitlab":
 			value := ReadGitlabIdentityProvider(iterator)
 			object.gitlab = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "google":
 			value := ReadGoogleIdentityProvider(iterator)
 			object.google = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		case "htpasswd":
 			value := ReadHTPasswdIdentityProvider(iterator)
 			object.htpasswd = value
-			object.fieldSet_[8] = true
+			object.bitmap_ |= 256
 		case "login":
 			value := iterator.ReadBool()
 			object.login = value
-			object.fieldSet_[9] = true
+			object.bitmap_ |= 512
 		case "mapping_method":
 			text := iterator.ReadString()
 			value := IdentityProviderMappingMethod(text)
 			object.mappingMethod = value
-			object.fieldSet_[10] = true
+			object.bitmap_ |= 1024
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[11] = true
+			object.bitmap_ |= 2048
 		case "open_id":
 			value := ReadOpenIDIdentityProvider(iterator)
 			object.openID = value
-			object.fieldSet_[12] = true
+			object.bitmap_ |= 4096
 		case "type":
 			text := iterator.ReadString()
 			value := IdentityProviderType(text)
 			object.type_ = value
-			object.fieldSet_[13] = true
+			object.bitmap_ |= 8192
 		default:
 			iterator.ReadAny()
 		}

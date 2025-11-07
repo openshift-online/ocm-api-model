@@ -19,40 +19,29 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// ClusterOperatorsInfoBuilder contains the data and logic needed to build 'cluster_operators_info' objects.
+//
 // Provides detailed information about the operators installed on the cluster.
 type ClusterOperatorsInfoBuilder struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	operators []*ClusterOperatorInfoBuilder
 }
 
 // NewClusterOperatorsInfo creates a new builder of 'cluster_operators_info' objects.
 func NewClusterOperatorsInfo() *ClusterOperatorsInfoBuilder {
-	return &ClusterOperatorsInfoBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &ClusterOperatorsInfoBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterOperatorsInfoBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Operators sets the value of the 'operators' attribute to the given values.
 func (b *ClusterOperatorsInfoBuilder) Operators(values ...*ClusterOperatorInfoBuilder) *ClusterOperatorsInfoBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.operators = make([]*ClusterOperatorInfoBuilder, len(values))
 	copy(b.operators, values)
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -61,10 +50,7 @@ func (b *ClusterOperatorsInfoBuilder) Copy(object *ClusterOperatorsInfo) *Cluste
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.operators != nil {
 		b.operators = make([]*ClusterOperatorInfoBuilder, len(object.operators))
 		for i, v := range object.operators {
@@ -79,10 +65,7 @@ func (b *ClusterOperatorsInfoBuilder) Copy(object *ClusterOperatorsInfo) *Cluste
 // Build creates a 'cluster_operators_info' object using the configuration stored in the builder.
 func (b *ClusterOperatorsInfoBuilder) Build() (object *ClusterOperatorsInfo, err error) {
 	object = new(ClusterOperatorsInfo)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.operators != nil {
 		object.operators = make([]*ClusterOperatorInfo, len(b.operators))
 		for i, v := range b.operators {

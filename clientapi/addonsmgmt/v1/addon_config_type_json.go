@@ -42,7 +42,7 @@ func WriteAddonConfig(object *AddonConfig, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.addOnEnvironmentVariables != nil
+	present_ = object.bitmap_&1 != 0 && object.addOnEnvironmentVariables != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAddonConfig(object *AddonConfig, stream *jsoniter.Stream) {
 		WriteAddonEnvironmentVariableList(object.addOnEnvironmentVariables, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.addOnSecretPropagations != nil
+	present_ = object.bitmap_&2 != 0 && object.addOnSecretPropagations != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalAddonConfig(source interface{}) (object *AddonConfig, err error) {
 
 // ReadAddonConfig reads a value of the 'addon_config' type from the given iterator.
 func ReadAddonConfig(iterator *jsoniter.Iterator) *AddonConfig {
-	object := &AddonConfig{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &AddonConfig{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadAddonConfig(iterator *jsoniter.Iterator) *AddonConfig {
 		case "add_on_environment_variables":
 			value := ReadAddonEnvironmentVariableList(iterator)
 			object.addOnEnvironmentVariables = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "add_on_secret_propagations":
 			value := ReadAddonSecretPropagationList(iterator)
 			object.addOnSecretPropagations = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

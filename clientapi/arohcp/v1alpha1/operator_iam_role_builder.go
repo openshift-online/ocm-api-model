@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// OperatorIAMRoleBuilder contains the data and logic needed to build 'operator_IAM_role' objects.
+//
 // Contains the necessary attributes to allow each operator to access the necessary AWS resources
 type OperatorIAMRoleBuilder struct {
-	fieldSet_      []bool
+	bitmap_        uint32
 	id             string
 	name           string
 	namespace      string
@@ -31,71 +33,46 @@ type OperatorIAMRoleBuilder struct {
 
 // NewOperatorIAMRole creates a new builder of 'operator_IAM_role' objects.
 func NewOperatorIAMRole() *OperatorIAMRoleBuilder {
-	return &OperatorIAMRoleBuilder{
-		fieldSet_: make([]bool, 5),
-	}
+	return &OperatorIAMRoleBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *OperatorIAMRoleBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *OperatorIAMRoleBuilder) ID(value string) *OperatorIAMRoleBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.id = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *OperatorIAMRoleBuilder) Name(value string) *OperatorIAMRoleBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.name = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Namespace sets the value of the 'namespace' attribute to the given value.
 func (b *OperatorIAMRoleBuilder) Namespace(value string) *OperatorIAMRoleBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.namespace = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // RoleARN sets the value of the 'role_ARN' attribute to the given value.
 func (b *OperatorIAMRoleBuilder) RoleARN(value string) *OperatorIAMRoleBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.roleARN = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // ServiceAccount sets the value of the 'service_account' attribute to the given value.
 func (b *OperatorIAMRoleBuilder) ServiceAccount(value string) *OperatorIAMRoleBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.serviceAccount = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -104,10 +81,7 @@ func (b *OperatorIAMRoleBuilder) Copy(object *OperatorIAMRole) *OperatorIAMRoleB
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.name = object.name
 	b.namespace = object.namespace
@@ -119,10 +93,7 @@ func (b *OperatorIAMRoleBuilder) Copy(object *OperatorIAMRole) *OperatorIAMRoleB
 // Build creates a 'operator_IAM_role' object using the configuration stored in the builder.
 func (b *OperatorIAMRoleBuilder) Build() (object *OperatorIAMRole, err error) {
 	object = new(OperatorIAMRole)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.id = b.id
 	object.name = b.name
 	object.namespace = b.namespace

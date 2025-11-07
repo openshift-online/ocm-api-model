@@ -42,7 +42,7 @@ func WriteAzureControlPlaneManagedIdentity(object *AzureControlPlaneManagedIdent
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAzureControlPlaneManagedIdentity(object *AzureControlPlaneManagedIdent
 		stream.WriteString(object.clientID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteAzureControlPlaneManagedIdentity(object *AzureControlPlaneManagedIdent
 		stream.WriteString(object.principalID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,9 +85,7 @@ func UnmarshalAzureControlPlaneManagedIdentity(source interface{}) (object *Azur
 
 // ReadAzureControlPlaneManagedIdentity reads a value of the 'azure_control_plane_managed_identity' type from the given iterator.
 func ReadAzureControlPlaneManagedIdentity(iterator *jsoniter.Iterator) *AzureControlPlaneManagedIdentity {
-	object := &AzureControlPlaneManagedIdentity{
-		fieldSet_: make([]bool, 3),
-	}
+	object := &AzureControlPlaneManagedIdentity{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -97,15 +95,15 @@ func ReadAzureControlPlaneManagedIdentity(iterator *jsoniter.Iterator) *AzureCon
 		case "client_id":
 			value := iterator.ReadString()
 			object.clientID = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "principal_id":
 			value := iterator.ReadString()
 			object.principalID = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "resource_id":
 			value := iterator.ReadString()
 			object.resourceID = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		default:
 			iterator.ReadAny()
 		}

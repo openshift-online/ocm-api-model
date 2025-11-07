@@ -23,21 +23,13 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // The configuration of the node outbound connectivity
 type AzureNodesOutboundConnectivity struct {
-	fieldSet_    []bool
+	bitmap_      uint32
 	outboundType string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AzureNodesOutboundConnectivity) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // OutboundType returns the value of the 'outbound_type' attribute, or
@@ -47,7 +39,7 @@ func (o *AzureNodesOutboundConnectivity) Empty() bool {
 // The default and only accepted value is 'load_balancer'.
 // This value is immutable.
 func (o *AzureNodesOutboundConnectivity) OutboundType() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.outboundType
 	}
 	return ""
@@ -60,7 +52,7 @@ func (o *AzureNodesOutboundConnectivity) OutboundType() string {
 // The default and only accepted value is 'load_balancer'.
 // This value is immutable.
 func (o *AzureNodesOutboundConnectivity) GetOutboundType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.outboundType
 	}

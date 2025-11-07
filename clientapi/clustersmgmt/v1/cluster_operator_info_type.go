@@ -25,7 +25,7 @@ import (
 
 // ClusterOperatorInfo represents the values of the 'cluster_operator_info' type.
 type ClusterOperatorInfo struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	condition ClusterOperatorState
 	name      string
 	reason    string
@@ -35,15 +35,7 @@ type ClusterOperatorInfo struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterOperatorInfo) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Condition returns the value of the 'condition' attribute, or
@@ -51,7 +43,7 @@ func (o *ClusterOperatorInfo) Empty() bool {
 //
 // Operator status.  Empty string if unknown.
 func (o *ClusterOperatorInfo) Condition() ClusterOperatorState {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.condition
 	}
 	return ClusterOperatorState("")
@@ -62,7 +54,7 @@ func (o *ClusterOperatorInfo) Condition() ClusterOperatorState {
 //
 // Operator status.  Empty string if unknown.
 func (o *ClusterOperatorInfo) GetCondition() (value ClusterOperatorState, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.condition
 	}
@@ -74,7 +66,7 @@ func (o *ClusterOperatorInfo) GetCondition() (value ClusterOperatorState, ok boo
 //
 // Name of the operator.
 func (o *ClusterOperatorInfo) Name() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.name
 	}
 	return ""
@@ -85,7 +77,7 @@ func (o *ClusterOperatorInfo) Name() string {
 //
 // Name of the operator.
 func (o *ClusterOperatorInfo) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.name
 	}
@@ -97,7 +89,7 @@ func (o *ClusterOperatorInfo) GetName() (value string, ok bool) {
 //
 // Extra detail on condition, if available.  Empty string if unknown.
 func (o *ClusterOperatorInfo) Reason() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.reason
 	}
 	return ""
@@ -108,7 +100,7 @@ func (o *ClusterOperatorInfo) Reason() string {
 //
 // Extra detail on condition, if available.  Empty string if unknown.
 func (o *ClusterOperatorInfo) GetReason() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.reason
 	}
@@ -120,7 +112,7 @@ func (o *ClusterOperatorInfo) GetReason() (value string, ok bool) {
 //
 // Time when the sample was obtained, in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 func (o *ClusterOperatorInfo) Time() time.Time {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.time
 	}
 	return time.Time{}
@@ -131,7 +123,7 @@ func (o *ClusterOperatorInfo) Time() time.Time {
 //
 // Time when the sample was obtained, in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 func (o *ClusterOperatorInfo) GetTime() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.time
 	}
@@ -143,7 +135,7 @@ func (o *ClusterOperatorInfo) GetTime() (value time.Time, ok bool) {
 //
 // Current version of the operator.  Empty string if unknown.
 func (o *ClusterOperatorInfo) Version() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.version
 	}
 	return ""
@@ -154,7 +146,7 @@ func (o *ClusterOperatorInfo) Version() string {
 //
 // Current version of the operator.  Empty string if unknown.
 func (o *ClusterOperatorInfo) GetVersion() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.version
 	}

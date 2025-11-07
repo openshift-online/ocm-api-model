@@ -23,8 +23,9 @@ import (
 	time "time"
 )
 
+// RolePolicyBindingBuilder contains the data and logic needed to build 'role_policy_binding' objects.
 type RolePolicyBindingBuilder struct {
-	fieldSet_           []bool
+	bitmap_             uint32
 	arn                 string
 	creationTimestamp   time.Time
 	lastUpdateTimestamp time.Time
@@ -36,96 +37,65 @@ type RolePolicyBindingBuilder struct {
 
 // NewRolePolicyBinding creates a new builder of 'role_policy_binding' objects.
 func NewRolePolicyBinding() *RolePolicyBindingBuilder {
-	return &RolePolicyBindingBuilder{
-		fieldSet_: make([]bool, 7),
-	}
+	return &RolePolicyBindingBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *RolePolicyBindingBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Arn sets the value of the 'arn' attribute to the given value.
 func (b *RolePolicyBindingBuilder) Arn(value string) *RolePolicyBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.arn = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *RolePolicyBindingBuilder) CreationTimestamp(value time.Time) *RolePolicyBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.creationTimestamp = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // LastUpdateTimestamp sets the value of the 'last_update_timestamp' attribute to the given value.
 func (b *RolePolicyBindingBuilder) LastUpdateTimestamp(value time.Time) *RolePolicyBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.lastUpdateTimestamp = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *RolePolicyBindingBuilder) Name(value string) *RolePolicyBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.name = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // Policies sets the value of the 'policies' attribute to the given values.
 func (b *RolePolicyBindingBuilder) Policies(values ...*RolePolicyBuilder) *RolePolicyBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.policies = make([]*RolePolicyBuilder, len(values))
 	copy(b.policies, values)
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *RolePolicyBindingBuilder) Status(value *RolePolicyBindingStatusBuilder) *RolePolicyBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.status = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *RolePolicyBindingBuilder) Type(value string) *RolePolicyBindingBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 7)
-	}
 	b.type_ = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
@@ -134,10 +104,7 @@ func (b *RolePolicyBindingBuilder) Copy(object *RolePolicyBinding) *RolePolicyBi
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.arn = object.arn
 	b.creationTimestamp = object.creationTimestamp
 	b.lastUpdateTimestamp = object.lastUpdateTimestamp
@@ -162,10 +129,7 @@ func (b *RolePolicyBindingBuilder) Copy(object *RolePolicyBinding) *RolePolicyBi
 // Build creates a 'role_policy_binding' object using the configuration stored in the builder.
 func (b *RolePolicyBindingBuilder) Build() (object *RolePolicyBinding, err error) {
 	object = new(RolePolicyBinding)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.arn = b.arn
 	object.creationTimestamp = b.creationTimestamp
 	object.lastUpdateTimestamp = b.lastUpdateTimestamp

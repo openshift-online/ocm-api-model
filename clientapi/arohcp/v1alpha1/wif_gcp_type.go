@@ -21,7 +21,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 
 // WifGcp represents the values of the 'wif_gcp' type.
 type WifGcp struct {
-	fieldSet_              []bool
+	bitmap_                uint32
 	federatedProjectId     string
 	federatedProjectNumber string
 	impersonatorEmail      string
@@ -35,15 +35,7 @@ type WifGcp struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *WifGcp) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // FederatedProjectId returns the value of the 'federated_project_id' attribute, or
@@ -52,7 +44,7 @@ func (o *WifGcp) Empty() bool {
 // This represents the GCP project ID in which, when specified,
 // the wif workload WorkloadIdentityPool resources will be configured.
 func (o *WifGcp) FederatedProjectId() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.federatedProjectId
 	}
 	return ""
@@ -64,7 +56,7 @@ func (o *WifGcp) FederatedProjectId() string {
 // This represents the GCP project ID in which, when specified,
 // the wif workload WorkloadIdentityPool resources will be configured.
 func (o *WifGcp) GetFederatedProjectId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.federatedProjectId
 	}
@@ -77,7 +69,7 @@ func (o *WifGcp) GetFederatedProjectId() (value string, ok bool) {
 // This represents the GCP project number in which, when specified,
 // the wif workload WorkloadIdentityPool resources will be configured.
 func (o *WifGcp) FederatedProjectNumber() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.federatedProjectNumber
 	}
 	return ""
@@ -89,7 +81,7 @@ func (o *WifGcp) FederatedProjectNumber() string {
 // This represents the GCP project number in which, when specified,
 // the wif workload WorkloadIdentityPool resources will be configured.
 func (o *WifGcp) GetFederatedProjectNumber() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.federatedProjectNumber
 	}
@@ -101,7 +93,7 @@ func (o *WifGcp) GetFederatedProjectNumber() (value string, ok bool) {
 //
 // This is the service account email that OCM will use to access other SAs.
 func (o *WifGcp) ImpersonatorEmail() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.impersonatorEmail
 	}
 	return ""
@@ -112,7 +104,7 @@ func (o *WifGcp) ImpersonatorEmail() string {
 //
 // This is the service account email that OCM will use to access other SAs.
 func (o *WifGcp) GetImpersonatorEmail() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.impersonatorEmail
 	}
@@ -124,7 +116,7 @@ func (o *WifGcp) GetImpersonatorEmail() (value string, ok bool) {
 //
 // This represents the GCP project ID in which the wif resources will be configured.
 func (o *WifGcp) ProjectId() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.projectId
 	}
 	return ""
@@ -135,7 +127,7 @@ func (o *WifGcp) ProjectId() string {
 //
 // This represents the GCP project ID in which the wif resources will be configured.
 func (o *WifGcp) GetProjectId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.projectId
 	}
@@ -147,7 +139,7 @@ func (o *WifGcp) GetProjectId() (value string, ok bool) {
 //
 // This represents the GCP project number in which the wif resources will be configured.
 func (o *WifGcp) ProjectNumber() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.projectNumber
 	}
 	return ""
@@ -158,7 +150,7 @@ func (o *WifGcp) ProjectNumber() string {
 //
 // This represents the GCP project number in which the wif resources will be configured.
 func (o *WifGcp) GetProjectNumber() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.projectNumber
 	}
@@ -170,7 +162,7 @@ func (o *WifGcp) GetProjectNumber() (value string, ok bool) {
 //
 // Prefix for naming GCP custom roles configured.
 func (o *WifGcp) RolePrefix() string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.rolePrefix
 	}
 	return ""
@@ -181,7 +173,7 @@ func (o *WifGcp) RolePrefix() string {
 //
 // Prefix for naming GCP custom roles configured.
 func (o *WifGcp) GetRolePrefix() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.rolePrefix
 	}
@@ -194,7 +186,7 @@ func (o *WifGcp) GetRolePrefix() (value string, ok bool) {
 // The list of service accounts and their associated roles that will need to be
 // configured on the user's GCP project.
 func (o *WifGcp) ServiceAccounts() []*WifServiceAccount {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.serviceAccounts
 	}
 	return nil
@@ -206,7 +198,7 @@ func (o *WifGcp) ServiceAccounts() []*WifServiceAccount {
 // The list of service accounts and their associated roles that will need to be
 // configured on the user's GCP project.
 func (o *WifGcp) GetServiceAccounts() (value []*WifServiceAccount, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.serviceAccounts
 	}
@@ -218,7 +210,7 @@ func (o *WifGcp) GetServiceAccounts() (value []*WifServiceAccount, ok bool) {
 //
 // Defines the access configuration for support.
 func (o *WifGcp) Support() *WifSupport {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.support
 	}
 	return nil
@@ -229,7 +221,7 @@ func (o *WifGcp) Support() *WifSupport {
 //
 // Defines the access configuration for support.
 func (o *WifGcp) GetSupport() (value *WifSupport, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.support
 	}
@@ -242,7 +234,7 @@ func (o *WifGcp) GetSupport() (value *WifSupport, ok bool) {
 // The workload identity configuration data that will be used to create the
 // workload identity pool on the user's account.
 func (o *WifGcp) WorkloadIdentityPool() *WifPool {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.workloadIdentityPool
 	}
 	return nil
@@ -254,7 +246,7 @@ func (o *WifGcp) WorkloadIdentityPool() *WifPool {
 // The workload identity configuration data that will be used to create the
 // workload identity pool on the user's account.
 func (o *WifGcp) GetWorkloadIdentityPool() (value *WifPool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.workloadIdentityPool
 	}

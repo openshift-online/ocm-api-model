@@ -19,6 +19,8 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// ClusterRegistryConfigBuilder contains the data and logic needed to build 'cluster_registry_config' objects.
+//
 // ClusterRegistryConfig describes the configuration of registries for the cluster.
 // Its format reflects the OpenShift Image Configuration, for which docs are available on
 // [docs.openshift.com](https://docs.openshift.com/container-platform/4.16/openshift_images/image-configuration.html)
@@ -37,7 +39,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // ```
 type ClusterRegistryConfigBuilder struct {
-	fieldSet_                  []bool
+	bitmap_                    uint32
 	additionalTrustedCa        map[string]string
 	allowedRegistriesForImport []*RegistryLocationBuilder
 	platformAllowlist          *RegistryAllowlistBuilder
@@ -46,46 +48,30 @@ type ClusterRegistryConfigBuilder struct {
 
 // NewClusterRegistryConfig creates a new builder of 'cluster_registry_config' objects.
 func NewClusterRegistryConfig() *ClusterRegistryConfigBuilder {
-	return &ClusterRegistryConfigBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &ClusterRegistryConfigBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterRegistryConfigBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // AdditionalTrustedCa sets the value of the 'additional_trusted_ca' attribute to the given value.
 func (b *ClusterRegistryConfigBuilder) AdditionalTrustedCa(value map[string]string) *ClusterRegistryConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.additionalTrustedCa = value
 	if value != nil {
-		b.fieldSet_[0] = true
+		b.bitmap_ |= 1
 	} else {
-		b.fieldSet_[0] = false
+		b.bitmap_ &^= 1
 	}
 	return b
 }
 
 // AllowedRegistriesForImport sets the value of the 'allowed_registries_for_import' attribute to the given values.
 func (b *ClusterRegistryConfigBuilder) AllowedRegistriesForImport(values ...*RegistryLocationBuilder) *ClusterRegistryConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.allowedRegistriesForImport = make([]*RegistryLocationBuilder, len(values))
 	copy(b.allowedRegistriesForImport, values)
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -93,14 +79,11 @@ func (b *ClusterRegistryConfigBuilder) AllowedRegistriesForImport(values ...*Reg
 //
 // RegistryAllowlist represents a single registry allowlist.
 func (b *ClusterRegistryConfigBuilder) PlatformAllowlist(value *RegistryAllowlistBuilder) *ClusterRegistryConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.platformAllowlist = value
 	if value != nil {
-		b.fieldSet_[2] = true
+		b.bitmap_ |= 4
 	} else {
-		b.fieldSet_[2] = false
+		b.bitmap_ &^= 4
 	}
 	return b
 }
@@ -111,14 +94,11 @@ func (b *ClusterRegistryConfigBuilder) PlatformAllowlist(value *RegistryAllowlis
 // registries when accessing images for builds and pods. For instance, whether or not to allow insecure access.
 // It does not contain configuration for the internal cluster registry.
 func (b *ClusterRegistryConfigBuilder) RegistrySources(value *RegistrySourcesBuilder) *ClusterRegistryConfigBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.registrySources = value
 	if value != nil {
-		b.fieldSet_[3] = true
+		b.bitmap_ |= 8
 	} else {
-		b.fieldSet_[3] = false
+		b.bitmap_ &^= 8
 	}
 	return b
 }
@@ -128,10 +108,7 @@ func (b *ClusterRegistryConfigBuilder) Copy(object *ClusterRegistryConfig) *Clus
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if len(object.additionalTrustedCa) > 0 {
 		b.additionalTrustedCa = map[string]string{}
 		for k, v := range object.additionalTrustedCa {
@@ -164,10 +141,7 @@ func (b *ClusterRegistryConfigBuilder) Copy(object *ClusterRegistryConfig) *Clus
 // Build creates a 'cluster_registry_config' object using the configuration stored in the builder.
 func (b *ClusterRegistryConfigBuilder) Build() (object *ClusterRegistryConfig, err error) {
 	object = new(ClusterRegistryConfig)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.additionalTrustedCa != nil {
 		object.additionalTrustedCa = make(map[string]string)
 		for k, v := range b.additionalTrustedCa {

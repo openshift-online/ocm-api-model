@@ -43,13 +43,13 @@ func WriteCloudResource(object *CloudResource, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(CloudResourceLinkKind)
 	} else {
 		stream.WriteString(CloudResourceKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteCloudResource(object *CloudResource, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteCloudResource(object *CloudResource, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteCloudResource(object *CloudResource, stream *jsoniter.Stream) {
 		stream.WriteBool(object.active)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteCloudResource(object *CloudResource, stream *jsoniter.Stream) {
 		stream.WriteString(object.category)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteCloudResource(object *CloudResource, stream *jsoniter.Stream) {
 		stream.WriteString(object.categoryPretty)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +102,7 @@ func WriteCloudResource(object *CloudResource, stream *jsoniter.Stream) {
 		stream.WriteString(object.cloudProvider)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = object.bitmap_&128 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +111,7 @@ func WriteCloudResource(object *CloudResource, stream *jsoniter.Stream) {
 		stream.WriteInt(object.cpuCores)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
+	present_ = object.bitmap_&256 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -120,7 +120,7 @@ func WriteCloudResource(object *CloudResource, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = object.bitmap_&512 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -129,7 +129,7 @@ func WriteCloudResource(object *CloudResource, stream *jsoniter.Stream) {
 		stream.WriteString(object.genericName)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
+	present_ = object.bitmap_&1024 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -138,7 +138,7 @@ func WriteCloudResource(object *CloudResource, stream *jsoniter.Stream) {
 		stream.WriteInt(object.memory)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
+	present_ = object.bitmap_&2048 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -147,7 +147,7 @@ func WriteCloudResource(object *CloudResource, stream *jsoniter.Stream) {
 		stream.WriteString(object.memoryPretty)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
+	present_ = object.bitmap_&4096 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -156,7 +156,7 @@ func WriteCloudResource(object *CloudResource, stream *jsoniter.Stream) {
 		stream.WriteString(object.namePretty)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13]
+	present_ = object.bitmap_&8192 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -165,7 +165,7 @@ func WriteCloudResource(object *CloudResource, stream *jsoniter.Stream) {
 		stream.WriteString(object.resourceType)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14]
+	present_ = object.bitmap_&16384 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -174,7 +174,7 @@ func WriteCloudResource(object *CloudResource, stream *jsoniter.Stream) {
 		stream.WriteString(object.sizePretty)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 15 && object.fieldSet_[15]
+	present_ = object.bitmap_&32768 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -199,9 +199,7 @@ func UnmarshalCloudResource(source interface{}) (object *CloudResource, err erro
 
 // ReadCloudResource reads a value of the 'cloud_resource' type from the given iterator.
 func ReadCloudResource(iterator *jsoniter.Iterator) *CloudResource {
-	object := &CloudResource{
-		fieldSet_: make([]bool, 16),
-	}
+	object := &CloudResource{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -211,34 +209,34 @@ func ReadCloudResource(iterator *jsoniter.Iterator) *CloudResource {
 		case "kind":
 			value := iterator.ReadString()
 			if value == CloudResourceLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "active":
 			value := iterator.ReadBool()
 			object.active = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "category":
 			value := iterator.ReadString()
 			object.category = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "category_pretty":
 			value := iterator.ReadString()
 			object.categoryPretty = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "cloud_provider":
 			value := iterator.ReadString()
 			object.cloudProvider = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		case "cpu_cores":
 			value := iterator.ReadInt()
 			object.cpuCores = value
-			object.fieldSet_[7] = true
+			object.bitmap_ |= 128
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -246,31 +244,31 @@ func ReadCloudResource(iterator *jsoniter.Iterator) *CloudResource {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.fieldSet_[8] = true
+			object.bitmap_ |= 256
 		case "generic_name":
 			value := iterator.ReadString()
 			object.genericName = value
-			object.fieldSet_[9] = true
+			object.bitmap_ |= 512
 		case "memory":
 			value := iterator.ReadInt()
 			object.memory = value
-			object.fieldSet_[10] = true
+			object.bitmap_ |= 1024
 		case "memory_pretty":
 			value := iterator.ReadString()
 			object.memoryPretty = value
-			object.fieldSet_[11] = true
+			object.bitmap_ |= 2048
 		case "name_pretty":
 			value := iterator.ReadString()
 			object.namePretty = value
-			object.fieldSet_[12] = true
+			object.bitmap_ |= 4096
 		case "resource_type":
 			value := iterator.ReadString()
 			object.resourceType = value
-			object.fieldSet_[13] = true
+			object.bitmap_ |= 8192
 		case "size_pretty":
 			value := iterator.ReadString()
 			object.sizePretty = value
-			object.fieldSet_[14] = true
+			object.bitmap_ |= 16384
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -278,7 +276,7 @@ func ReadCloudResource(iterator *jsoniter.Iterator) *CloudResource {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.fieldSet_[15] = true
+			object.bitmap_ |= 32768
 		default:
 			iterator.ReadAny()
 		}

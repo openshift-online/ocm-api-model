@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// ClusterStatusBuilder contains the data and logic needed to build 'cluster_status' objects.
+//
 // Detailed status of a cluster.
 type ClusterStatusBuilder struct {
-	fieldSet_                 []bool
+	bitmap_                   uint32
 	id                        string
 	href                      string
 	configurationMode         ClusterConfigurationMode
@@ -37,71 +39,45 @@ type ClusterStatusBuilder struct {
 
 // NewClusterStatus creates a new builder of 'cluster_status' objects.
 func NewClusterStatus() *ClusterStatusBuilder {
-	return &ClusterStatusBuilder{
-		fieldSet_: make([]bool, 12),
-	}
+	return &ClusterStatusBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ClusterStatusBuilder) Link(value bool) *ClusterStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ClusterStatusBuilder) ID(value string) *ClusterStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ClusterStatusBuilder) HREF(value string) *ClusterStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterStatusBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // DNSReady sets the value of the 'DNS_ready' attribute to the given value.
 func (b *ClusterStatusBuilder) DNSReady(value bool) *ClusterStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.dnsReady = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // OIDCReady sets the value of the 'OIDC_ready' attribute to the given value.
 func (b *ClusterStatusBuilder) OIDCReady(value bool) *ClusterStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.oidcReady = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -109,61 +85,43 @@ func (b *ClusterStatusBuilder) OIDCReady(value bool) *ClusterStatusBuilder {
 //
 // Configuration mode of a cluster.
 func (b *ClusterStatusBuilder) ConfigurationMode(value ClusterConfigurationMode) *ClusterStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.configurationMode = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // CurrentCompute sets the value of the 'current_compute' attribute to the given value.
 func (b *ClusterStatusBuilder) CurrentCompute(value int) *ClusterStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.currentCompute = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *ClusterStatusBuilder) Description(value string) *ClusterStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.description = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // LimitedSupportReasonCount sets the value of the 'limited_support_reason_count' attribute to the given value.
 func (b *ClusterStatusBuilder) LimitedSupportReasonCount(value int) *ClusterStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.limitedSupportReasonCount = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // ProvisionErrorCode sets the value of the 'provision_error_code' attribute to the given value.
 func (b *ClusterStatusBuilder) ProvisionErrorCode(value string) *ClusterStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.provisionErrorCode = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // ProvisionErrorMessage sets the value of the 'provision_error_message' attribute to the given value.
 func (b *ClusterStatusBuilder) ProvisionErrorMessage(value string) *ClusterStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.provisionErrorMessage = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
@@ -171,11 +129,8 @@ func (b *ClusterStatusBuilder) ProvisionErrorMessage(value string) *ClusterStatu
 //
 // Overall state of a cluster.
 func (b *ClusterStatusBuilder) State(value ClusterState) *ClusterStatusBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.state = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
@@ -184,10 +139,7 @@ func (b *ClusterStatusBuilder) Copy(object *ClusterStatus) *ClusterStatusBuilder
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.dnsReady = object.dnsReady
@@ -207,10 +159,7 @@ func (b *ClusterStatusBuilder) Build() (object *ClusterStatus, err error) {
 	object = new(ClusterStatus)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.dnsReady = b.dnsReady
 	object.oidcReady = b.oidcReady
 	object.configurationMode = b.configurationMode

@@ -19,10 +19,12 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations/v1
 
+// TermsReviewResponseBuilder contains the data and logic needed to build 'terms_review_response' objects.
+//
 // Representation of Red Hat's Terms and Conditions for using OpenShift Dedicated and Amazon Red Hat OpenShift [Terms]
 // review response.
 type TermsReviewResponseBuilder struct {
-	fieldSet_      []bool
+	bitmap_        uint32
 	accountId      string
 	organizationID string
 	redirectUrl    string
@@ -32,71 +34,46 @@ type TermsReviewResponseBuilder struct {
 
 // NewTermsReviewResponse creates a new builder of 'terms_review_response' objects.
 func NewTermsReviewResponse() *TermsReviewResponseBuilder {
-	return &TermsReviewResponseBuilder{
-		fieldSet_: make([]bool, 5),
-	}
+	return &TermsReviewResponseBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *TermsReviewResponseBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // AccountId sets the value of the 'account_id' attribute to the given value.
 func (b *TermsReviewResponseBuilder) AccountId(value string) *TermsReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.accountId = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // OrganizationID sets the value of the 'organization_ID' attribute to the given value.
 func (b *TermsReviewResponseBuilder) OrganizationID(value string) *TermsReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.organizationID = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // RedirectUrl sets the value of the 'redirect_url' attribute to the given value.
 func (b *TermsReviewResponseBuilder) RedirectUrl(value string) *TermsReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.redirectUrl = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // TermsAvailable sets the value of the 'terms_available' attribute to the given value.
 func (b *TermsReviewResponseBuilder) TermsAvailable(value bool) *TermsReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.termsAvailable = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // TermsRequired sets the value of the 'terms_required' attribute to the given value.
 func (b *TermsReviewResponseBuilder) TermsRequired(value bool) *TermsReviewResponseBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.termsRequired = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -105,10 +82,7 @@ func (b *TermsReviewResponseBuilder) Copy(object *TermsReviewResponse) *TermsRev
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.accountId = object.accountId
 	b.organizationID = object.organizationID
 	b.redirectUrl = object.redirectUrl
@@ -120,10 +94,7 @@ func (b *TermsReviewResponseBuilder) Copy(object *TermsReviewResponse) *TermsRev
 // Build creates a 'terms_review_response' object using the configuration stored in the builder.
 func (b *TermsReviewResponseBuilder) Build() (object *TermsReviewResponse, err error) {
 	object = new(TermsReviewResponse)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.accountId = b.accountId
 	object.organizationID = b.organizationID
 	object.redirectUrl = b.redirectUrl

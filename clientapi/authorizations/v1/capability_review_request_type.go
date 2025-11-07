@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations
 //
 // Representation of a capability review.
 type CapabilityReviewRequest struct {
-	fieldSet_       []bool
+	bitmap_         uint32
 	accountUsername string
 	capability      string
 	clusterID       string
@@ -35,15 +35,7 @@ type CapabilityReviewRequest struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *CapabilityReviewRequest) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // AccountUsername returns the value of the 'account_username' attribute, or
@@ -51,7 +43,7 @@ func (o *CapabilityReviewRequest) Empty() bool {
 //
 // Defines the username of the account of which capability is being reviewed.
 func (o *CapabilityReviewRequest) AccountUsername() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.accountUsername
 	}
 	return ""
@@ -62,7 +54,7 @@ func (o *CapabilityReviewRequest) AccountUsername() string {
 //
 // Defines the username of the account of which capability is being reviewed.
 func (o *CapabilityReviewRequest) GetAccountUsername() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.accountUsername
 	}
@@ -74,7 +66,7 @@ func (o *CapabilityReviewRequest) GetAccountUsername() (value string, ok bool) {
 //
 // Capability to review [manage_cluster_admin].
 func (o *CapabilityReviewRequest) Capability() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.capability
 	}
 	return ""
@@ -85,7 +77,7 @@ func (o *CapabilityReviewRequest) Capability() string {
 //
 // Capability to review [manage_cluster_admin].
 func (o *CapabilityReviewRequest) GetCapability() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.capability
 	}
@@ -97,7 +89,7 @@ func (o *CapabilityReviewRequest) GetCapability() (value string, ok bool) {
 //
 // Indicates which Cluster (internal id) the resource type belongs to.
 func (o *CapabilityReviewRequest) ClusterID() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.clusterID
 	}
 	return ""
@@ -108,7 +100,7 @@ func (o *CapabilityReviewRequest) ClusterID() string {
 //
 // Indicates which Cluster (internal id) the resource type belongs to.
 func (o *CapabilityReviewRequest) GetClusterID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.clusterID
 	}
@@ -120,7 +112,7 @@ func (o *CapabilityReviewRequest) GetClusterID() (value string, ok bool) {
 //
 // Indicates which Organization the resource type belongs to.
 func (o *CapabilityReviewRequest) OrganizationID() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.organizationID
 	}
 	return ""
@@ -131,7 +123,7 @@ func (o *CapabilityReviewRequest) OrganizationID() string {
 //
 // Indicates which Organization the resource type belongs to.
 func (o *CapabilityReviewRequest) GetOrganizationID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.organizationID
 	}
@@ -144,7 +136,7 @@ func (o *CapabilityReviewRequest) GetOrganizationID() (value string, ok bool) {
 // Indicates the type of the resource.
 // See uhc-account-manager/openapi/openapi.yaml for a list of possible values.
 func (o *CapabilityReviewRequest) ResourceType() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.resourceType
 	}
 	return ""
@@ -156,7 +148,7 @@ func (o *CapabilityReviewRequest) ResourceType() string {
 // Indicates the type of the resource.
 // See uhc-account-manager/openapi/openapi.yaml for a list of possible values.
 func (o *CapabilityReviewRequest) GetResourceType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.resourceType
 	}
@@ -168,7 +160,7 @@ func (o *CapabilityReviewRequest) GetResourceType() (value string, ok bool) {
 //
 // Indicates which Subscription the resource type belongs to.
 func (o *CapabilityReviewRequest) SubscriptionID() string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.subscriptionID
 	}
 	return ""
@@ -179,7 +171,7 @@ func (o *CapabilityReviewRequest) SubscriptionID() string {
 //
 // Indicates which Subscription the resource type belongs to.
 func (o *CapabilityReviewRequest) GetSubscriptionID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.subscriptionID
 	}
@@ -191,7 +183,7 @@ func (o *CapabilityReviewRequest) GetSubscriptionID() (value string, ok bool) {
 //
 // Type of capability [Cluster].
 func (o *CapabilityReviewRequest) Type() string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.type_
 	}
 	return ""
@@ -202,7 +194,7 @@ func (o *CapabilityReviewRequest) Type() string {
 //
 // Type of capability [Cluster].
 func (o *CapabilityReviewRequest) GetType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.type_
 	}

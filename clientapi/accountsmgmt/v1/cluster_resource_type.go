@@ -25,7 +25,7 @@ import (
 
 // ClusterResource represents the values of the 'cluster_resource' type.
 type ClusterResource struct {
-	fieldSet_        []bool
+	bitmap_          uint32
 	total            *ValueUnit
 	updatedTimestamp time.Time
 	used             *ValueUnit
@@ -33,21 +33,13 @@ type ClusterResource struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterResource) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Total returns the value of the 'total' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterResource) Total() *ValueUnit {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.total
 	}
 	return nil
@@ -56,7 +48,7 @@ func (o *ClusterResource) Total() *ValueUnit {
 // GetTotal returns the value of the 'total' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterResource) GetTotal() (value *ValueUnit, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.total
 	}
@@ -66,7 +58,7 @@ func (o *ClusterResource) GetTotal() (value *ValueUnit, ok bool) {
 // UpdatedTimestamp returns the value of the 'updated_timestamp' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterResource) UpdatedTimestamp() time.Time {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.updatedTimestamp
 	}
 	return time.Time{}
@@ -75,7 +67,7 @@ func (o *ClusterResource) UpdatedTimestamp() time.Time {
 // GetUpdatedTimestamp returns the value of the 'updated_timestamp' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterResource) GetUpdatedTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.updatedTimestamp
 	}
@@ -85,7 +77,7 @@ func (o *ClusterResource) GetUpdatedTimestamp() (value time.Time, ok bool) {
 // Used returns the value of the 'used' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ClusterResource) Used() *ValueUnit {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.used
 	}
 	return nil
@@ -94,7 +86,7 @@ func (o *ClusterResource) Used() *ValueUnit {
 // GetUsed returns the value of the 'used' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ClusterResource) GetUsed() (value *ValueUnit, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.used
 	}

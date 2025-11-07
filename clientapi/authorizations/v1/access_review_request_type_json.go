@@ -42,7 +42,7 @@ func WriteAccessReviewRequest(object *AccessReviewRequest, stream *jsoniter.Stre
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAccessReviewRequest(object *AccessReviewRequest, stream *jsoniter.Stre
 		stream.WriteString(object.accountUsername)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteAccessReviewRequest(object *AccessReviewRequest, stream *jsoniter.Stre
 		stream.WriteString(object.action)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteAccessReviewRequest(object *AccessReviewRequest, stream *jsoniter.Stre
 		stream.WriteString(object.clusterID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteAccessReviewRequest(object *AccessReviewRequest, stream *jsoniter.Stre
 		stream.WriteString(object.clusterUUID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -87,7 +87,7 @@ func WriteAccessReviewRequest(object *AccessReviewRequest, stream *jsoniter.Stre
 		stream.WriteString(object.organizationID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -96,7 +96,7 @@ func WriteAccessReviewRequest(object *AccessReviewRequest, stream *jsoniter.Stre
 		stream.WriteString(object.resourceType)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = object.bitmap_&64 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -121,9 +121,7 @@ func UnmarshalAccessReviewRequest(source interface{}) (object *AccessReviewReque
 
 // ReadAccessReviewRequest reads a value of the 'access_review_request' type from the given iterator.
 func ReadAccessReviewRequest(iterator *jsoniter.Iterator) *AccessReviewRequest {
-	object := &AccessReviewRequest{
-		fieldSet_: make([]bool, 7),
-	}
+	object := &AccessReviewRequest{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -133,31 +131,31 @@ func ReadAccessReviewRequest(iterator *jsoniter.Iterator) *AccessReviewRequest {
 		case "account_username":
 			value := iterator.ReadString()
 			object.accountUsername = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "action":
 			value := iterator.ReadString()
 			object.action = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterID = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "cluster_uuid":
 			value := iterator.ReadString()
 			object.clusterUUID = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "organization_id":
 			value := iterator.ReadString()
 			object.organizationID = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "resource_type":
 			value := iterator.ReadString()
 			object.resourceType = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "subscription_id":
 			value := iterator.ReadString()
 			object.subscriptionID = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		default:
 			iterator.ReadAny()
 		}

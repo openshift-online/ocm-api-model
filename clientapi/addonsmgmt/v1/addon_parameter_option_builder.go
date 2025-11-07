@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 
+// AddonParameterOptionBuilder contains the data and logic needed to build 'addon_parameter_option' objects.
+//
 // Representation of an addon parameter option.
 type AddonParameterOptionBuilder struct {
-	fieldSet_    []bool
+	bitmap_      uint32
 	name         string
 	rank         int
 	requirements []*AddonRequirementBuilder
@@ -30,62 +32,40 @@ type AddonParameterOptionBuilder struct {
 
 // NewAddonParameterOption creates a new builder of 'addon_parameter_option' objects.
 func NewAddonParameterOption() *AddonParameterOptionBuilder {
-	return &AddonParameterOptionBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &AddonParameterOptionBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddonParameterOptionBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AddonParameterOptionBuilder) Name(value string) *AddonParameterOptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.name = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Rank sets the value of the 'rank' attribute to the given value.
 func (b *AddonParameterOptionBuilder) Rank(value int) *AddonParameterOptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.rank = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Requirements sets the value of the 'requirements' attribute to the given values.
 func (b *AddonParameterOptionBuilder) Requirements(values ...*AddonRequirementBuilder) *AddonParameterOptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.requirements = make([]*AddonRequirementBuilder, len(values))
 	copy(b.requirements, values)
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *AddonParameterOptionBuilder) Value(value string) *AddonParameterOptionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.value = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -94,10 +74,7 @@ func (b *AddonParameterOptionBuilder) Copy(object *AddonParameterOption) *AddonP
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.name = object.name
 	b.rank = object.rank
 	if object.requirements != nil {
@@ -115,10 +92,7 @@ func (b *AddonParameterOptionBuilder) Copy(object *AddonParameterOption) *AddonP
 // Build creates a 'addon_parameter_option' object using the configuration stored in the builder.
 func (b *AddonParameterOptionBuilder) Build() (object *AddonParameterOption, err error) {
 	object = new(AddonParameterOption)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.name = b.name
 	object.rank = b.rank
 	if b.requirements != nil {

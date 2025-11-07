@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// ManifestBuilder contains the data and logic needed to build 'manifest' objects.
+//
 // Representation of a manifestwork.
 type ManifestBuilder struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	id                string
 	href              string
 	creationTimestamp time.Time
@@ -37,102 +39,67 @@ type ManifestBuilder struct {
 
 // NewManifest creates a new builder of 'manifest' objects.
 func NewManifest() *ManifestBuilder {
-	return &ManifestBuilder{
-		fieldSet_: make([]bool, 8),
-	}
+	return &ManifestBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ManifestBuilder) Link(value bool) *ManifestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ManifestBuilder) ID(value string) *ManifestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ManifestBuilder) HREF(value string) *ManifestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ManifestBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *ManifestBuilder) CreationTimestamp(value time.Time) *ManifestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.creationTimestamp = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // LiveResource sets the value of the 'live_resource' attribute to the given value.
 func (b *ManifestBuilder) LiveResource(value interface{}) *ManifestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.liveResource = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // Spec sets the value of the 'spec' attribute to the given value.
 func (b *ManifestBuilder) Spec(value interface{}) *ManifestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.spec = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // UpdatedTimestamp sets the value of the 'updated_timestamp' attribute to the given value.
 func (b *ManifestBuilder) UpdatedTimestamp(value time.Time) *ManifestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.updatedTimestamp = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // Workloads sets the value of the 'workloads' attribute to the given values.
 func (b *ManifestBuilder) Workloads(values ...interface{}) *ManifestBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.workloads = make([]interface{}, len(values))
 	copy(b.workloads, values)
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
@@ -141,10 +108,7 @@ func (b *ManifestBuilder) Copy(object *Manifest) *ManifestBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.creationTimestamp = object.creationTimestamp
@@ -165,10 +129,7 @@ func (b *ManifestBuilder) Build() (object *Manifest, err error) {
 	object = new(Manifest)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.creationTimestamp = b.creationTimestamp
 	object.liveResource = b.liveResource
 	object.spec = b.spec

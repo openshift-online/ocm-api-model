@@ -19,56 +19,41 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// ReleaseImagesBuilder contains the data and logic needed to build 'release_images' objects.
 type ReleaseImagesBuilder struct {
-	fieldSet_ []bool
-	arm64     *ReleaseImageDetailsBuilder
-	multi     *ReleaseImageDetailsBuilder
+	bitmap_ uint32
+	arm64   *ReleaseImageDetailsBuilder
+	multi   *ReleaseImageDetailsBuilder
 }
 
 // NewReleaseImages creates a new builder of 'release_images' objects.
 func NewReleaseImages() *ReleaseImagesBuilder {
-	return &ReleaseImagesBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &ReleaseImagesBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ReleaseImagesBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ARM64 sets the value of the 'ARM64' attribute to the given value.
 func (b *ReleaseImagesBuilder) ARM64(value *ReleaseImageDetailsBuilder) *ReleaseImagesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.arm64 = value
 	if value != nil {
-		b.fieldSet_[0] = true
+		b.bitmap_ |= 1
 	} else {
-		b.fieldSet_[0] = false
+		b.bitmap_ &^= 1
 	}
 	return b
 }
 
 // Multi sets the value of the 'multi' attribute to the given value.
 func (b *ReleaseImagesBuilder) Multi(value *ReleaseImageDetailsBuilder) *ReleaseImagesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.multi = value
 	if value != nil {
-		b.fieldSet_[1] = true
+		b.bitmap_ |= 2
 	} else {
-		b.fieldSet_[1] = false
+		b.bitmap_ &^= 2
 	}
 	return b
 }
@@ -78,10 +63,7 @@ func (b *ReleaseImagesBuilder) Copy(object *ReleaseImages) *ReleaseImagesBuilder
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.arm64 != nil {
 		b.arm64 = NewReleaseImageDetails().Copy(object.arm64)
 	} else {
@@ -98,10 +80,7 @@ func (b *ReleaseImagesBuilder) Copy(object *ReleaseImages) *ReleaseImagesBuilder
 // Build creates a 'release_images' object using the configuration stored in the builder.
 func (b *ReleaseImagesBuilder) Build() (object *ReleaseImages, err error) {
 	object = new(ReleaseImages)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.arm64 != nil {
 		object.arm64, err = b.arm64.Build()
 		if err != nil {

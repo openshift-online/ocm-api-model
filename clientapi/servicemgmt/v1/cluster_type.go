@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 //
 // This represents the parameters needed by Managed Service to create a cluster.
 type Cluster struct {
-	fieldSet_   []bool
+	bitmap_     uint32
 	api         *ClusterAPI
 	aws         *AWS
 	displayName string
@@ -40,21 +40,13 @@ type Cluster struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Cluster) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // API returns the value of the 'API' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Cluster) API() *ClusterAPI {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.api
 	}
 	return nil
@@ -63,7 +55,7 @@ func (o *Cluster) API() *ClusterAPI {
 // GetAPI returns the value of the 'API' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Cluster) GetAPI() (value *ClusterAPI, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.api
 	}
@@ -73,7 +65,7 @@ func (o *Cluster) GetAPI() (value *ClusterAPI, ok bool) {
 // AWS returns the value of the 'AWS' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Cluster) AWS() *AWS {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.aws
 	}
 	return nil
@@ -82,7 +74,7 @@ func (o *Cluster) AWS() *AWS {
 // GetAWS returns the value of the 'AWS' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Cluster) GetAWS() (value *AWS, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.aws
 	}
@@ -95,7 +87,7 @@ func (o *Cluster) GetAWS() (value *AWS, ok bool) {
 // DisplayName is the name of the cluster for display purposes.
 // It can contain spaces.
 func (o *Cluster) DisplayName() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.displayName
 	}
 	return ""
@@ -107,7 +99,7 @@ func (o *Cluster) DisplayName() string {
 // DisplayName is the name of the cluster for display purposes.
 // It can contain spaces.
 func (o *Cluster) GetDisplayName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.displayName
 	}
@@ -117,7 +109,7 @@ func (o *Cluster) GetDisplayName() (value string, ok bool) {
 // Href returns the value of the 'href' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Cluster) Href() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.href
 	}
 	return ""
@@ -126,7 +118,7 @@ func (o *Cluster) Href() string {
 // GetHref returns the value of the 'href' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Cluster) GetHref() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.href
 	}
@@ -136,7 +128,7 @@ func (o *Cluster) GetHref() (value string, ok bool) {
 // Id returns the value of the 'id' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Cluster) Id() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.id
 	}
 	return ""
@@ -145,7 +137,7 @@ func (o *Cluster) Id() string {
 // GetId returns the value of the 'id' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Cluster) GetId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.id
 	}
@@ -159,7 +151,7 @@ func (o *Cluster) GetId() (value string, ok bool) {
 // different availability zones or all the nodes in a single one
 // randomly selected.
 func (o *Cluster) MultiAZ() bool {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.multiAZ
 	}
 	return false
@@ -172,7 +164,7 @@ func (o *Cluster) MultiAZ() bool {
 // different availability zones or all the nodes in a single one
 // randomly selected.
 func (o *Cluster) GetMultiAZ() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.multiAZ
 	}
@@ -182,7 +174,7 @@ func (o *Cluster) GetMultiAZ() (value bool, ok bool) {
 // Name returns the value of the 'name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Cluster) Name() string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.name
 	}
 	return ""
@@ -191,7 +183,7 @@ func (o *Cluster) Name() string {
 // GetName returns the value of the 'name' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Cluster) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.name
 	}
@@ -201,7 +193,7 @@ func (o *Cluster) GetName() (value string, ok bool) {
 // Network returns the value of the 'network' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Cluster) Network() *Network {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.network
 	}
 	return nil
@@ -210,7 +202,7 @@ func (o *Cluster) Network() *Network {
 // GetNetwork returns the value of the 'network' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Cluster) GetNetwork() (value *Network, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.network
 	}
@@ -220,7 +212,7 @@ func (o *Cluster) GetNetwork() (value *Network, ok bool) {
 // Nodes returns the value of the 'nodes' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Cluster) Nodes() *ClusterNodes {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.nodes
 	}
 	return nil
@@ -229,7 +221,7 @@ func (o *Cluster) Nodes() *ClusterNodes {
 // GetNodes returns the value of the 'nodes' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Cluster) GetNodes() (value *ClusterNodes, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.nodes
 	}
@@ -239,7 +231,7 @@ func (o *Cluster) GetNodes() (value *ClusterNodes, ok bool) {
 // Properties returns the value of the 'properties' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Cluster) Properties() map[string]string {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && o.bitmap_&512 != 0 {
 		return o.properties
 	}
 	return nil
@@ -248,7 +240,7 @@ func (o *Cluster) Properties() map[string]string {
 // GetProperties returns the value of the 'properties' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Cluster) GetProperties() (value map[string]string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && o.bitmap_&512 != 0
 	if ok {
 		value = o.properties
 	}
@@ -258,7 +250,7 @@ func (o *Cluster) GetProperties() (value map[string]string, ok bool) {
 // Region returns the value of the 'region' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Cluster) Region() *CloudRegion {
-	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+	if o != nil && o.bitmap_&1024 != 0 {
 		return o.region
 	}
 	return nil
@@ -267,7 +259,7 @@ func (o *Cluster) Region() *CloudRegion {
 // GetRegion returns the value of the 'region' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Cluster) GetRegion() (value *CloudRegion, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	ok = o != nil && o.bitmap_&1024 != 0
 	if ok {
 		value = o.region
 	}
@@ -277,7 +269,7 @@ func (o *Cluster) GetRegion() (value *CloudRegion, ok bool) {
 // State returns the value of the 'state' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Cluster) State() string {
-	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
+	if o != nil && o.bitmap_&2048 != 0 {
 		return o.state
 	}
 	return ""
@@ -286,7 +278,7 @@ func (o *Cluster) State() string {
 // GetState returns the value of the 'state' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Cluster) GetState() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
+	ok = o != nil && o.bitmap_&2048 != 0
 	if ok {
 		value = o.state
 	}

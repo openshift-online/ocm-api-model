@@ -23,7 +23,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // GCP Network configuration of a cluster.
 type GCPNetwork struct {
-	fieldSet_          []bool
+	bitmap_            uint32
 	vpcName            string
 	vpcProjectID       string
 	computeSubnet      string
@@ -32,15 +32,7 @@ type GCPNetwork struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *GCPNetwork) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // VPCName returns the value of the 'VPC_name' attribute, or
@@ -48,7 +40,7 @@ func (o *GCPNetwork) Empty() bool {
 //
 // VPC mame used by the cluster.
 func (o *GCPNetwork) VPCName() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.vpcName
 	}
 	return ""
@@ -59,7 +51,7 @@ func (o *GCPNetwork) VPCName() string {
 //
 // VPC mame used by the cluster.
 func (o *GCPNetwork) GetVPCName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.vpcName
 	}
@@ -71,7 +63,7 @@ func (o *GCPNetwork) GetVPCName() (value string, ok bool) {
 //
 // The name of the host project where the shared VPC exists.
 func (o *GCPNetwork) VPCProjectID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.vpcProjectID
 	}
 	return ""
@@ -82,7 +74,7 @@ func (o *GCPNetwork) VPCProjectID() string {
 //
 // The name of the host project where the shared VPC exists.
 func (o *GCPNetwork) GetVPCProjectID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.vpcProjectID
 	}
@@ -94,7 +86,7 @@ func (o *GCPNetwork) GetVPCProjectID() (value string, ok bool) {
 //
 // Compute subnet used by the cluster.
 func (o *GCPNetwork) ComputeSubnet() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.computeSubnet
 	}
 	return ""
@@ -105,7 +97,7 @@ func (o *GCPNetwork) ComputeSubnet() string {
 //
 // Compute subnet used by the cluster.
 func (o *GCPNetwork) GetComputeSubnet() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.computeSubnet
 	}
@@ -117,7 +109,7 @@ func (o *GCPNetwork) GetComputeSubnet() (value string, ok bool) {
 //
 // Control plane subnet used by the cluster.
 func (o *GCPNetwork) ControlPlaneSubnet() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.controlPlaneSubnet
 	}
 	return ""
@@ -128,7 +120,7 @@ func (o *GCPNetwork) ControlPlaneSubnet() string {
 //
 // Control plane subnet used by the cluster.
 func (o *GCPNetwork) GetControlPlaneSubnet() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.controlPlaneSubnet
 	}

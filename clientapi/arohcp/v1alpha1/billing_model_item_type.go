@@ -35,7 +35,7 @@ const BillingModelItemNilKind = "BillingModelItemNil"
 //
 // BillingModelItem represents a billing model
 type BillingModelItem struct {
-	fieldSet_        []bool
+	bitmap_          uint32
 	id               string
 	href             string
 	billingModelType string
@@ -49,7 +49,7 @@ func (o *BillingModelItem) Kind() string {
 	if o == nil {
 		return BillingModelItemNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return BillingModelItemLinkKind
 	}
 	return BillingModelItemKind
@@ -57,12 +57,12 @@ func (o *BillingModelItem) Kind() string {
 
 // Link returns true if this is a link.
 func (o *BillingModelItem) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *BillingModelItem) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -71,7 +71,7 @@ func (o *BillingModelItem) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *BillingModelItem) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -80,7 +80,7 @@ func (o *BillingModelItem) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *BillingModelItem) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -89,7 +89,7 @@ func (o *BillingModelItem) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *BillingModelItem) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -98,17 +98,7 @@ func (o *BillingModelItem) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *BillingModelItem) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // BillingModelType returns the value of the 'billing_model_type' attribute, or
@@ -116,7 +106,7 @@ func (o *BillingModelItem) Empty() bool {
 //
 // BillingModelType is the type of the BillingModel. e.g. standard, marketplace.
 func (o *BillingModelItem) BillingModelType() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.billingModelType
 	}
 	return ""
@@ -127,7 +117,7 @@ func (o *BillingModelItem) BillingModelType() string {
 //
 // BillingModelType is the type of the BillingModel. e.g. standard, marketplace.
 func (o *BillingModelItem) GetBillingModelType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.billingModelType
 	}
@@ -139,7 +129,7 @@ func (o *BillingModelItem) GetBillingModelType() (value string, ok bool) {
 //
 // Single line description of the billing model.
 func (o *BillingModelItem) Description() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.description
 	}
 	return ""
@@ -150,7 +140,7 @@ func (o *BillingModelItem) Description() string {
 //
 // Single line description of the billing model.
 func (o *BillingModelItem) GetDescription() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.description
 	}
@@ -162,7 +152,7 @@ func (o *BillingModelItem) GetDescription() (value string, ok bool) {
 //
 // User friendly display name of the billing model.
 func (o *BillingModelItem) DisplayName() string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.displayName
 	}
 	return ""
@@ -173,7 +163,7 @@ func (o *BillingModelItem) DisplayName() string {
 //
 // User friendly display name of the billing model.
 func (o *BillingModelItem) GetDisplayName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.displayName
 	}
@@ -185,7 +175,7 @@ func (o *BillingModelItem) GetDisplayName() (value string, ok bool) {
 //
 // Indicates the marketplace of the billing model. e.g. gcp, aws, etc.
 func (o *BillingModelItem) Marketplace() string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.marketplace
 	}
 	return ""
@@ -196,7 +186,7 @@ func (o *BillingModelItem) Marketplace() string {
 //
 // Indicates the marketplace of the billing model. e.g. gcp, aws, etc.
 func (o *BillingModelItem) GetMarketplace() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.marketplace
 	}

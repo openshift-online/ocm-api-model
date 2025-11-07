@@ -42,13 +42,13 @@ func WriteSkuRule(object *SkuRule, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(SkuRuleLinkKind)
 	} else {
 		stream.WriteString(SkuRuleKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteSkuRule(object *SkuRule, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteSkuRule(object *SkuRule, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteSkuRule(object *SkuRule, stream *jsoniter.Stream) {
 		stream.WriteInt(object.allowed)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteSkuRule(object *SkuRule, stream *jsoniter.Stream) {
 		stream.WriteString(object.quotaId)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -108,9 +108,7 @@ func UnmarshalSkuRule(source interface{}) (object *SkuRule, err error) {
 
 // ReadSkuRule reads a value of the 'sku_rule' type from the given iterator.
 func ReadSkuRule(iterator *jsoniter.Iterator) *SkuRule {
-	object := &SkuRule{
-		fieldSet_: make([]bool, 6),
-	}
+	object := &SkuRule{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -120,26 +118,26 @@ func ReadSkuRule(iterator *jsoniter.Iterator) *SkuRule {
 		case "kind":
 			value := iterator.ReadString()
 			if value == SkuRuleLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "allowed":
 			value := iterator.ReadInt()
 			object.allowed = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "quota_id":
 			value := iterator.ReadString()
 			object.quotaId = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "sku":
 			value := iterator.ReadString()
 			object.sku = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		default:
 			iterator.ReadAny()
 		}

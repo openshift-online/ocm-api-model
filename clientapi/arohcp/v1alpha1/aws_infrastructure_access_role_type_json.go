@@ -42,13 +42,13 @@ func WriteAWSInfrastructureAccessRole(object *AWSInfrastructureAccessRole, strea
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(AWSInfrastructureAccessRoleLinkKind)
 	} else {
 		stream.WriteString(AWSInfrastructureAccessRoleKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteAWSInfrastructureAccessRole(object *AWSInfrastructureAccessRole, strea
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteAWSInfrastructureAccessRole(object *AWSInfrastructureAccessRole, strea
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteAWSInfrastructureAccessRole(object *AWSInfrastructureAccessRole, strea
 		stream.WriteString(object.description)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -83,7 +83,7 @@ func WriteAWSInfrastructureAccessRole(object *AWSInfrastructureAccessRole, strea
 		stream.WriteString(object.displayName)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -108,9 +108,7 @@ func UnmarshalAWSInfrastructureAccessRole(source interface{}) (object *AWSInfras
 
 // ReadAWSInfrastructureAccessRole reads a value of the 'AWS_infrastructure_access_role' type from the given iterator.
 func ReadAWSInfrastructureAccessRole(iterator *jsoniter.Iterator) *AWSInfrastructureAccessRole {
-	object := &AWSInfrastructureAccessRole{
-		fieldSet_: make([]bool, 6),
-	}
+	object := &AWSInfrastructureAccessRole{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -120,27 +118,27 @@ func ReadAWSInfrastructureAccessRole(iterator *jsoniter.Iterator) *AWSInfrastruc
 		case "kind":
 			value := iterator.ReadString()
 			if value == AWSInfrastructureAccessRoleLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "description":
 			value := iterator.ReadString()
 			object.description = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "display_name":
 			value := iterator.ReadString()
 			object.displayName = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "state":
 			text := iterator.ReadString()
 			value := AWSInfrastructureAccessRoleState(text)
 			object.state = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		default:
 			iterator.ReadAny()
 		}

@@ -42,7 +42,7 @@ func WriteSecurityGroup(object *SecurityGroup, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteSecurityGroup(object *SecurityGroup, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteSecurityGroup(object *SecurityGroup, stream *jsoniter.Stream) {
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,9 +85,7 @@ func UnmarshalSecurityGroup(source interface{}) (object *SecurityGroup, err erro
 
 // ReadSecurityGroup reads a value of the 'security_group' type from the given iterator.
 func ReadSecurityGroup(iterator *jsoniter.Iterator) *SecurityGroup {
-	object := &SecurityGroup{
-		fieldSet_: make([]bool, 3),
-	}
+	object := &SecurityGroup{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -97,15 +95,15 @@ func ReadSecurityGroup(iterator *jsoniter.Iterator) *SecurityGroup {
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "red_hat_managed":
 			value := iterator.ReadBool()
 			object.redHatManaged = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		default:
 			iterator.ReadAny()
 		}

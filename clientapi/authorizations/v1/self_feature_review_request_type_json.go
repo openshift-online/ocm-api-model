@@ -42,7 +42,7 @@ func WriteSelfFeatureReviewRequest(object *SelfFeatureReviewRequest, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalSelfFeatureReviewRequest(source interface{}) (object *SelfFeatureR
 
 // ReadSelfFeatureReviewRequest reads a value of the 'self_feature_review_request' type from the given iterator.
 func ReadSelfFeatureReviewRequest(iterator *jsoniter.Iterator) *SelfFeatureReviewRequest {
-	object := &SelfFeatureReviewRequest{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &SelfFeatureReviewRequest{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadSelfFeatureReviewRequest(iterator *jsoniter.Iterator) *SelfFeatureRevie
 		case "feature":
 			value := iterator.ReadString()
 			object.feature = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

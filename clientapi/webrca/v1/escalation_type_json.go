@@ -43,13 +43,13 @@ func WriteEscalation(object *Escalation, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(EscalationLinkKind)
 	} else {
 		stream.WriteString(EscalationKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -57,7 +57,7 @@ func WriteEscalation(object *Escalation, stream *jsoniter.Stream) {
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -66,7 +66,7 @@ func WriteEscalation(object *Escalation, stream *jsoniter.Stream) {
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -75,7 +75,7 @@ func WriteEscalation(object *Escalation, stream *jsoniter.Stream) {
 		stream.WriteString((object.createdAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +84,7 @@ func WriteEscalation(object *Escalation, stream *jsoniter.Stream) {
 		stream.WriteString((object.deletedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = object.bitmap_&32 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +93,7 @@ func WriteEscalation(object *Escalation, stream *jsoniter.Stream) {
 		stream.WriteString((object.updatedAt).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6] && object.user != nil
+	present_ = object.bitmap_&64 != 0 && object.user != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -118,9 +118,7 @@ func UnmarshalEscalation(source interface{}) (object *Escalation, err error) {
 
 // ReadEscalation reads a value of the 'escalation' type from the given iterator.
 func ReadEscalation(iterator *jsoniter.Iterator) *Escalation {
-	object := &Escalation{
-		fieldSet_: make([]bool, 7),
-	}
+	object := &Escalation{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -130,14 +128,14 @@ func ReadEscalation(iterator *jsoniter.Iterator) *Escalation {
 		case "kind":
 			value := iterator.ReadString()
 			if value == EscalationLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "created_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -145,7 +143,7 @@ func ReadEscalation(iterator *jsoniter.Iterator) *Escalation {
 				iterator.ReportError("", err.Error())
 			}
 			object.createdAt = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "deleted_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -153,7 +151,7 @@ func ReadEscalation(iterator *jsoniter.Iterator) *Escalation {
 				iterator.ReportError("", err.Error())
 			}
 			object.deletedAt = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		case "updated_at":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -161,11 +159,11 @@ func ReadEscalation(iterator *jsoniter.Iterator) *Escalation {
 				iterator.ReportError("", err.Error())
 			}
 			object.updatedAt = value
-			object.fieldSet_[5] = true
+			object.bitmap_ |= 32
 		case "user":
 			value := ReadUser(iterator)
 			object.user = value
-			object.fieldSet_[6] = true
+			object.bitmap_ |= 64
 		default:
 			iterator.ReadAny()
 		}

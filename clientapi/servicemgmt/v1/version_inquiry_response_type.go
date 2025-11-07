@@ -21,27 +21,19 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 
 // VersionInquiryResponse represents the values of the 'version_inquiry_response' type.
 type VersionInquiryResponse struct {
-	fieldSet_ []bool
-	version   string
+	bitmap_ uint32
+	version string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *VersionInquiryResponse) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Version returns the value of the 'version' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *VersionInquiryResponse) Version() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.version
 	}
 	return ""
@@ -50,7 +42,7 @@ func (o *VersionInquiryResponse) Version() string {
 // GetVersion returns the value of the 'version' attribute and
 // a flag indicating if the attribute has a value.
 func (o *VersionInquiryResponse) GetVersion() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.version
 	}

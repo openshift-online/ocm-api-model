@@ -42,7 +42,7 @@ func WriteCredentialRequest(object *CredentialRequest, stream *jsoniter.Stream) 
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteCredentialRequest(object *CredentialRequest, stream *jsoniter.Stream) 
 		stream.WriteString(object.name)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteCredentialRequest(object *CredentialRequest, stream *jsoniter.Stream) 
 		stream.WriteString(object.namespace)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.policyPermissions != nil
+	present_ = object.bitmap_&4 != 0 && object.policyPermissions != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteCredentialRequest(object *CredentialRequest, stream *jsoniter.Stream) 
 		WriteStringList(object.policyPermissions, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,9 +94,7 @@ func UnmarshalCredentialRequest(source interface{}) (object *CredentialRequest, 
 
 // ReadCredentialRequest reads a value of the 'credential_request' type from the given iterator.
 func ReadCredentialRequest(iterator *jsoniter.Iterator) *CredentialRequest {
-	object := &CredentialRequest{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &CredentialRequest{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -106,19 +104,19 @@ func ReadCredentialRequest(iterator *jsoniter.Iterator) *CredentialRequest {
 		case "name":
 			value := iterator.ReadString()
 			object.name = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "namespace":
 			value := iterator.ReadString()
 			object.namespace = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "policy_permissions":
 			value := ReadStringList(iterator)
 			object.policyPermissions = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "service_account":
 			value := iterator.ReadString()
 			object.serviceAccount = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

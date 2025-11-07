@@ -19,51 +19,37 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// AdminCredentialsBuilder contains the data and logic needed to build 'admin_credentials' objects.
+//
 // Temporary administrator credentials generated during the installation of the
 // cluster.
 type AdminCredentialsBuilder struct {
-	fieldSet_ []bool
-	password  string
-	user      string
+	bitmap_  uint32
+	password string
+	user     string
 }
 
 // NewAdminCredentials creates a new builder of 'admin_credentials' objects.
 func NewAdminCredentials() *AdminCredentialsBuilder {
-	return &AdminCredentialsBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &AdminCredentialsBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AdminCredentialsBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Password sets the value of the 'password' attribute to the given value.
 func (b *AdminCredentialsBuilder) Password(value string) *AdminCredentialsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.password = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // User sets the value of the 'user' attribute to the given value.
 func (b *AdminCredentialsBuilder) User(value string) *AdminCredentialsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.user = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -72,10 +58,7 @@ func (b *AdminCredentialsBuilder) Copy(object *AdminCredentials) *AdminCredentia
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.password = object.password
 	b.user = object.user
 	return b
@@ -84,10 +67,7 @@ func (b *AdminCredentialsBuilder) Copy(object *AdminCredentials) *AdminCredentia
 // Build creates a 'admin_credentials' object using the configuration stored in the builder.
 func (b *AdminCredentialsBuilder) Build() (object *AdminCredentials, err error) {
 	object = new(AdminCredentials)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.password = b.password
 	object.user = b.user
 	return

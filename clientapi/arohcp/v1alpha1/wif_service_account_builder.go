@@ -19,8 +19,9 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// WifServiceAccountBuilder contains the data and logic needed to build 'wif_service_account' objects.
 type WifServiceAccountBuilder struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	accessMethod      WifAccessMethod
 	credentialRequest *WifCredentialRequestBuilder
 	osdRole           string
@@ -30,76 +31,51 @@ type WifServiceAccountBuilder struct {
 
 // NewWifServiceAccount creates a new builder of 'wif_service_account' objects.
 func NewWifServiceAccount() *WifServiceAccountBuilder {
-	return &WifServiceAccountBuilder{
-		fieldSet_: make([]bool, 5),
-	}
+	return &WifServiceAccountBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *WifServiceAccountBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // AccessMethod sets the value of the 'access_method' attribute to the given value.
 func (b *WifServiceAccountBuilder) AccessMethod(value WifAccessMethod) *WifServiceAccountBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.accessMethod = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // CredentialRequest sets the value of the 'credential_request' attribute to the given value.
 func (b *WifServiceAccountBuilder) CredentialRequest(value *WifCredentialRequestBuilder) *WifServiceAccountBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.credentialRequest = value
 	if value != nil {
-		b.fieldSet_[1] = true
+		b.bitmap_ |= 2
 	} else {
-		b.fieldSet_[1] = false
+		b.bitmap_ &^= 2
 	}
 	return b
 }
 
 // OsdRole sets the value of the 'osd_role' attribute to the given value.
 func (b *WifServiceAccountBuilder) OsdRole(value string) *WifServiceAccountBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.osdRole = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Roles sets the value of the 'roles' attribute to the given values.
 func (b *WifServiceAccountBuilder) Roles(values ...*WifRoleBuilder) *WifServiceAccountBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.roles = make([]*WifRoleBuilder, len(values))
 	copy(b.roles, values)
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // ServiceAccountId sets the value of the 'service_account_id' attribute to the given value.
 func (b *WifServiceAccountBuilder) ServiceAccountId(value string) *WifServiceAccountBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 5)
-	}
 	b.serviceAccountId = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -108,10 +84,7 @@ func (b *WifServiceAccountBuilder) Copy(object *WifServiceAccount) *WifServiceAc
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.accessMethod = object.accessMethod
 	if object.credentialRequest != nil {
 		b.credentialRequest = NewWifCredentialRequest().Copy(object.credentialRequest)
@@ -134,10 +107,7 @@ func (b *WifServiceAccountBuilder) Copy(object *WifServiceAccount) *WifServiceAc
 // Build creates a 'wif_service_account' object using the configuration stored in the builder.
 func (b *WifServiceAccountBuilder) Build() (object *WifServiceAccount, err error) {
 	object = new(WifServiceAccount)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.accessMethod = b.accessMethod
 	if b.credentialRequest != nil {
 		object.credentialRequest, err = b.credentialRequest.Build()

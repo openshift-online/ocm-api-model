@@ -42,7 +42,7 @@ func WriteGcpSecurity(object *GcpSecurity, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalGcpSecurity(source interface{}) (object *GcpSecurity, err error) {
 
 // ReadGcpSecurity reads a value of the 'gcp_security' type from the given iterator.
 func ReadGcpSecurity(iterator *jsoniter.Iterator) *GcpSecurity {
-	object := &GcpSecurity{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &GcpSecurity{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadGcpSecurity(iterator *jsoniter.Iterator) *GcpSecurity {
 		case "secure_boot":
 			value := iterator.ReadBool()
 			object.secureBoot = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

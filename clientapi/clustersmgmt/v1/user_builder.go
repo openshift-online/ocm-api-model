@@ -19,61 +19,43 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// UserBuilder contains the data and logic needed to build 'user' objects.
+//
 // Representation of a user.
 type UserBuilder struct {
-	fieldSet_ []bool
-	id        string
-	href      string
+	bitmap_ uint32
+	id      string
+	href    string
 }
 
 // NewUser creates a new builder of 'user' objects.
 func NewUser() *UserBuilder {
-	return &UserBuilder{
-		fieldSet_: make([]bool, 3),
-	}
+	return &UserBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *UserBuilder) Link(value bool) *UserBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *UserBuilder) ID(value string) *UserBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *UserBuilder) HREF(value string) *UserBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *UserBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // Copy copies the attributes of the given object into this builder, discarding any previous values.
@@ -81,10 +63,7 @@ func (b *UserBuilder) Copy(object *User) *UserBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	return b
@@ -95,9 +74,6 @@ func (b *UserBuilder) Build() (object *User, err error) {
 	object = new(User)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	return
 }

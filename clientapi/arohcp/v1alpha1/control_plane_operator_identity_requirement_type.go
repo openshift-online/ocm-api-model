@@ -21,7 +21,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 
 // ControlPlaneOperatorIdentityRequirement represents the values of the 'control_plane_operator_identity_requirement' type.
 type ControlPlaneOperatorIdentityRequirement struct {
-	fieldSet_           []bool
+	bitmap_             uint32
 	maxOpenShiftVersion string
 	minOpenShiftVersion string
 	operatorName        string
@@ -31,15 +31,7 @@ type ControlPlaneOperatorIdentityRequirement struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ControlPlaneOperatorIdentityRequirement) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // MaxOpenShiftVersion returns the value of the 'max_open_shift_version' attribute, or
@@ -49,7 +41,7 @@ func (o *ControlPlaneOperatorIdentityRequirement) Empty() bool {
 // Not specifying it indicates support for this operator in all Openshift versions,
 // starting from min_openshift_version if min_openshift_version is defined.
 func (o *ControlPlaneOperatorIdentityRequirement) MaxOpenShiftVersion() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.maxOpenShiftVersion
 	}
 	return ""
@@ -62,7 +54,7 @@ func (o *ControlPlaneOperatorIdentityRequirement) MaxOpenShiftVersion() string {
 // Not specifying it indicates support for this operator in all Openshift versions,
 // starting from min_openshift_version if min_openshift_version is defined.
 func (o *ControlPlaneOperatorIdentityRequirement) GetMaxOpenShiftVersion() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.maxOpenShiftVersion
 	}
@@ -76,7 +68,7 @@ func (o *ControlPlaneOperatorIdentityRequirement) GetMaxOpenShiftVersion() (valu
 // Not specifying it indicates support for this operator in all Openshift versions,
 // or up to max_openshift_version, if defined.
 func (o *ControlPlaneOperatorIdentityRequirement) MinOpenShiftVersion() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.minOpenShiftVersion
 	}
 	return ""
@@ -89,7 +81,7 @@ func (o *ControlPlaneOperatorIdentityRequirement) MinOpenShiftVersion() string {
 // Not specifying it indicates support for this operator in all Openshift versions,
 // or up to max_openshift_version, if defined.
 func (o *ControlPlaneOperatorIdentityRequirement) GetMinOpenShiftVersion() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.minOpenShiftVersion
 	}
@@ -101,7 +93,7 @@ func (o *ControlPlaneOperatorIdentityRequirement) GetMinOpenShiftVersion() (valu
 //
 // The name of the control plane operator that needs the identity
 func (o *ControlPlaneOperatorIdentityRequirement) OperatorName() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.operatorName
 	}
 	return ""
@@ -112,7 +104,7 @@ func (o *ControlPlaneOperatorIdentityRequirement) OperatorName() string {
 //
 // The name of the control plane operator that needs the identity
 func (o *ControlPlaneOperatorIdentityRequirement) GetOperatorName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.operatorName
 	}
@@ -128,7 +120,7 @@ func (o *ControlPlaneOperatorIdentityRequirement) GetOperatorName() (value strin
 // that leverages the operator is enabled.
 // Possible values are ("always", "on_enablement")
 func (o *ControlPlaneOperatorIdentityRequirement) Required() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.required
 	}
 	return ""
@@ -143,7 +135,7 @@ func (o *ControlPlaneOperatorIdentityRequirement) Required() string {
 // that leverages the operator is enabled.
 // Possible values are ("always", "on_enablement")
 func (o *ControlPlaneOperatorIdentityRequirement) GetRequired() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.required
 	}
@@ -155,7 +147,7 @@ func (o *ControlPlaneOperatorIdentityRequirement) GetRequired() (value string, o
 //
 // A list of roles that are required by the operator
 func (o *ControlPlaneOperatorIdentityRequirement) RoleDefinitions() []*RoleDefinitionOperatorIdentityRequirement {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.roleDefinitions
 	}
 	return nil
@@ -166,7 +158,7 @@ func (o *ControlPlaneOperatorIdentityRequirement) RoleDefinitions() []*RoleDefin
 //
 // A list of roles that are required by the operator
 func (o *ControlPlaneOperatorIdentityRequirement) GetRoleDefinitions() (value []*RoleDefinitionOperatorIdentityRequirement, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.roleDefinitions
 	}

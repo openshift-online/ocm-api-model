@@ -42,7 +42,7 @@ func WriteLDAPAttributes(object *LDAPAttributes, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.id != nil
+	present_ = object.bitmap_&1 != 0 && object.id != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteLDAPAttributes(object *LDAPAttributes, stream *jsoniter.Stream) {
 		WriteStringList(object.id, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.email != nil
+	present_ = object.bitmap_&2 != 0 && object.email != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteLDAPAttributes(object *LDAPAttributes, stream *jsoniter.Stream) {
 		WriteStringList(object.email, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.name != nil
+	present_ = object.bitmap_&4 != 0 && object.name != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteLDAPAttributes(object *LDAPAttributes, stream *jsoniter.Stream) {
 		WriteStringList(object.name, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3] && object.preferredUsername != nil
+	present_ = object.bitmap_&8 != 0 && object.preferredUsername != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,9 +94,7 @@ func UnmarshalLDAPAttributes(source interface{}) (object *LDAPAttributes, err er
 
 // ReadLDAPAttributes reads a value of the 'LDAP_attributes' type from the given iterator.
 func ReadLDAPAttributes(iterator *jsoniter.Iterator) *LDAPAttributes {
-	object := &LDAPAttributes{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &LDAPAttributes{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -106,19 +104,19 @@ func ReadLDAPAttributes(iterator *jsoniter.Iterator) *LDAPAttributes {
 		case "id":
 			value := ReadStringList(iterator)
 			object.id = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "email":
 			value := ReadStringList(iterator)
 			object.email = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "name":
 			value := ReadStringList(iterator)
 			object.name = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "preferred_username":
 			value := ReadStringList(iterator)
 			object.preferredUsername = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

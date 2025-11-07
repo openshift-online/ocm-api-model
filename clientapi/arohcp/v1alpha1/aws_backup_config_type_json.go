@@ -42,7 +42,7 @@ func WriteAWSBackupConfig(object *AWSBackupConfig, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAWSBackupConfig(object *AWSBackupConfig, stream *jsoniter.Stream) {
 		stream.WriteString(object.s3Bucket)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteAWSBackupConfig(object *AWSBackupConfig, stream *jsoniter.Stream) {
 		stream.WriteString(object.accountId)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteAWSBackupConfig(object *AWSBackupConfig, stream *jsoniter.Stream) {
 		stream.WriteString(object.identityProviderArn)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteAWSBackupConfig(object *AWSBackupConfig, stream *jsoniter.Stream) {
 		stream.WriteString(object.managementCluster)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -103,9 +103,7 @@ func UnmarshalAWSBackupConfig(source interface{}) (object *AWSBackupConfig, err 
 
 // ReadAWSBackupConfig reads a value of the 'AWS_backup_config' type from the given iterator.
 func ReadAWSBackupConfig(iterator *jsoniter.Iterator) *AWSBackupConfig {
-	object := &AWSBackupConfig{
-		fieldSet_: make([]bool, 5),
-	}
+	object := &AWSBackupConfig{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -115,23 +113,23 @@ func ReadAWSBackupConfig(iterator *jsoniter.Iterator) *AWSBackupConfig {
 		case "s3_bucket":
 			value := iterator.ReadString()
 			object.s3Bucket = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "account_id":
 			value := iterator.ReadString()
 			object.accountId = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "identity_provider_arn":
 			value := iterator.ReadString()
 			object.identityProviderArn = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "management_cluster":
 			value := iterator.ReadString()
 			object.managementCluster = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "role_arn":
 			value := iterator.ReadString()
 			object.roleArn = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		default:
 			iterator.ReadAny()
 		}

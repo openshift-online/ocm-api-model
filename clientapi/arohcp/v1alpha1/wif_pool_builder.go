@@ -19,8 +19,9 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// WifPoolBuilder contains the data and logic needed to build 'wif_pool' objects.
 type WifPoolBuilder struct {
-	fieldSet_        []bool
+	bitmap_          uint32
 	identityProvider *WifIdentityProviderBuilder
 	poolId           string
 	poolName         string
@@ -28,55 +29,36 @@ type WifPoolBuilder struct {
 
 // NewWifPool creates a new builder of 'wif_pool' objects.
 func NewWifPool() *WifPoolBuilder {
-	return &WifPoolBuilder{
-		fieldSet_: make([]bool, 3),
-	}
+	return &WifPoolBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *WifPoolBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // IdentityProvider sets the value of the 'identity_provider' attribute to the given value.
 func (b *WifPoolBuilder) IdentityProvider(value *WifIdentityProviderBuilder) *WifPoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.identityProvider = value
 	if value != nil {
-		b.fieldSet_[0] = true
+		b.bitmap_ |= 1
 	} else {
-		b.fieldSet_[0] = false
+		b.bitmap_ &^= 1
 	}
 	return b
 }
 
 // PoolId sets the value of the 'pool_id' attribute to the given value.
 func (b *WifPoolBuilder) PoolId(value string) *WifPoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.poolId = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // PoolName sets the value of the 'pool_name' attribute to the given value.
 func (b *WifPoolBuilder) PoolName(value string) *WifPoolBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.poolName = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
@@ -85,10 +67,7 @@ func (b *WifPoolBuilder) Copy(object *WifPool) *WifPoolBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.identityProvider != nil {
 		b.identityProvider = NewWifIdentityProvider().Copy(object.identityProvider)
 	} else {
@@ -102,10 +81,7 @@ func (b *WifPoolBuilder) Copy(object *WifPool) *WifPoolBuilder {
 // Build creates a 'wif_pool' object using the configuration stored in the builder.
 func (b *WifPoolBuilder) Build() (object *WifPool, err error) {
 	object = new(WifPool)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.identityProvider != nil {
 		object.identityProvider, err = b.identityProvider.Build()
 		if err != nil {

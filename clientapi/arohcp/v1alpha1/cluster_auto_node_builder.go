@@ -19,40 +19,29 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// ClusterAutoNodeBuilder contains the data and logic needed to build 'cluster_auto_node' objects.
+//
 // The AutoNode configuration for the Cluster.
 type ClusterAutoNodeBuilder struct {
-	fieldSet_ []bool
-	mode      string
-	status    *ClusterAutoNodeStatusBuilder
+	bitmap_ uint32
+	mode    string
+	status  *ClusterAutoNodeStatusBuilder
 }
 
 // NewClusterAutoNode creates a new builder of 'cluster_auto_node' objects.
 func NewClusterAutoNode() *ClusterAutoNodeBuilder {
-	return &ClusterAutoNodeBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &ClusterAutoNodeBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ClusterAutoNodeBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Mode sets the value of the 'mode' attribute to the given value.
 func (b *ClusterAutoNodeBuilder) Mode(value string) *ClusterAutoNodeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.mode = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -60,14 +49,11 @@ func (b *ClusterAutoNodeBuilder) Mode(value string) *ClusterAutoNodeBuilder {
 //
 // Additional status information on the AutoNode configuration on this Cluster
 func (b *ClusterAutoNodeBuilder) Status(value *ClusterAutoNodeStatusBuilder) *ClusterAutoNodeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.status = value
 	if value != nil {
-		b.fieldSet_[1] = true
+		b.bitmap_ |= 2
 	} else {
-		b.fieldSet_[1] = false
+		b.bitmap_ &^= 2
 	}
 	return b
 }
@@ -77,10 +63,7 @@ func (b *ClusterAutoNodeBuilder) Copy(object *ClusterAutoNode) *ClusterAutoNodeB
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.mode = object.mode
 	if object.status != nil {
 		b.status = NewClusterAutoNodeStatus().Copy(object.status)
@@ -93,10 +76,7 @@ func (b *ClusterAutoNodeBuilder) Copy(object *ClusterAutoNode) *ClusterAutoNodeB
 // Build creates a 'cluster_auto_node' object using the configuration stored in the builder.
 func (b *ClusterAutoNodeBuilder) Build() (object *ClusterAutoNode, err error) {
 	object = new(ClusterAutoNode)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.mode = b.mode
 	if b.status != nil {
 		object.status, err = b.status.Build()

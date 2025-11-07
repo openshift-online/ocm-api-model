@@ -42,7 +42,7 @@ func WriteClusterLink(object *ClusterLink, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteClusterLink(object *ClusterLink, stream *jsoniter.Stream) {
 		stream.WriteString(object.href)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalClusterLink(source interface{}) (object *ClusterLink, err error) {
 
 // ReadClusterLink reads a value of the 'cluster_link' type from the given iterator.
 func ReadClusterLink(iterator *jsoniter.Iterator) *ClusterLink {
-	object := &ClusterLink{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &ClusterLink{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadClusterLink(iterator *jsoniter.Iterator) *ClusterLink {
 		case "href":
 			value := iterator.ReadString()
 			object.href = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "id":
 			value := iterator.ReadString()
 			object.id = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

@@ -24,21 +24,13 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 // The configuration that the operators of the
 // cluster have to authenticate to Azure.
 type AzureOperatorsAuthentication struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	managedIdentities *AzureOperatorsAuthenticationManagedIdentities
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AzureOperatorsAuthentication) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // ManagedIdentities returns the value of the 'managed_identities' attribute, or
@@ -48,7 +40,7 @@ func (o *AzureOperatorsAuthentication) Empty() bool {
 // to Azure using Azure User-Assigned Managed Identities.
 // Required during creation.
 func (o *AzureOperatorsAuthentication) ManagedIdentities() *AzureOperatorsAuthenticationManagedIdentities {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.managedIdentities
 	}
 	return nil
@@ -61,7 +53,7 @@ func (o *AzureOperatorsAuthentication) ManagedIdentities() *AzureOperatorsAuthen
 // to Azure using Azure User-Assigned Managed Identities.
 // Required during creation.
 func (o *AzureOperatorsAuthentication) GetManagedIdentities() (value *AzureOperatorsAuthenticationManagedIdentities, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.managedIdentities
 	}

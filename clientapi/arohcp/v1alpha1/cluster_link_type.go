@@ -23,22 +23,14 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Definition of a cluster link.
 type ClusterLink struct {
-	fieldSet_ []bool
-	href      string
-	id        string
+	bitmap_ uint32
+	href    string
+	id      string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClusterLink) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // HREF returns the value of the 'HREF' attribute, or
@@ -46,7 +38,7 @@ func (o *ClusterLink) Empty() bool {
 //
 // HREF for the cluster, filled in response.
 func (o *ClusterLink) HREF() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.href
 	}
 	return ""
@@ -57,7 +49,7 @@ func (o *ClusterLink) HREF() string {
 //
 // HREF for the cluster, filled in response.
 func (o *ClusterLink) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.href
 	}
@@ -69,7 +61,7 @@ func (o *ClusterLink) GetHREF() (value string, ok bool) {
 //
 // The cluster's ID.
 func (o *ClusterLink) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -80,7 +72,7 @@ func (o *ClusterLink) ID() string {
 //
 // The cluster's ID.
 func (o *ClusterLink) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}

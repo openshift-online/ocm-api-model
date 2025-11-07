@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 //
 // Representation of Metrics Federation
 type MetricsFederation struct {
-	fieldSet_   []bool
+	bitmap_     uint32
 	matchLabels map[string]string
 	matchNames  []string
 	namespace   string
@@ -32,15 +32,7 @@ type MetricsFederation struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *MetricsFederation) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // MatchLabels returns the value of the 'match_labels' attribute, or
@@ -48,7 +40,7 @@ func (o *MetricsFederation) Empty() bool {
 //
 // List of labels used to discover the prometheus server(s) to be federated.
 func (o *MetricsFederation) MatchLabels() map[string]string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.matchLabels
 	}
 	return nil
@@ -59,7 +51,7 @@ func (o *MetricsFederation) MatchLabels() map[string]string {
 //
 // List of labels used to discover the prometheus server(s) to be federated.
 func (o *MetricsFederation) GetMatchLabels() (value map[string]string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.matchLabels
 	}
@@ -71,7 +63,7 @@ func (o *MetricsFederation) GetMatchLabels() (value map[string]string, ok bool) 
 //
 // List of series names to federate from the prometheus server.
 func (o *MetricsFederation) MatchNames() []string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.matchNames
 	}
 	return nil
@@ -82,7 +74,7 @@ func (o *MetricsFederation) MatchNames() []string {
 //
 // List of series names to federate from the prometheus server.
 func (o *MetricsFederation) GetMatchNames() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.matchNames
 	}
@@ -94,7 +86,7 @@ func (o *MetricsFederation) GetMatchNames() (value []string, ok bool) {
 //
 // Namespace where the prometheus server is running.
 func (o *MetricsFederation) Namespace() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.namespace
 	}
 	return ""
@@ -105,7 +97,7 @@ func (o *MetricsFederation) Namespace() string {
 //
 // Namespace where the prometheus server is running.
 func (o *MetricsFederation) GetNamespace() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.namespace
 	}
@@ -117,7 +109,7 @@ func (o *MetricsFederation) GetNamespace() (value string, ok bool) {
 //
 // Indicates the name of the service port fronting the prometheus server.
 func (o *MetricsFederation) PortName() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.portName
 	}
 	return ""
@@ -128,7 +120,7 @@ func (o *MetricsFederation) PortName() string {
 //
 // Indicates the name of the service port fronting the prometheus server.
 func (o *MetricsFederation) GetPortName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.portName
 	}

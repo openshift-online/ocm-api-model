@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// CPUTotalNodeRoleOSMetricNodeBuilder contains the data and logic needed to build 'CPU_total_node_role_OS_metric_node' objects.
+//
 // Representation of information from telemetry about a the CPU capacity by node role and OS.
 type CPUTotalNodeRoleOSMetricNodeBuilder struct {
-	fieldSet_       []bool
+	bitmap_         uint32
 	cpuTotal        float64
 	nodeRoles       []string
 	operatingSystem string
@@ -34,62 +36,40 @@ type CPUTotalNodeRoleOSMetricNodeBuilder struct {
 
 // NewCPUTotalNodeRoleOSMetricNode creates a new builder of 'CPU_total_node_role_OS_metric_node' objects.
 func NewCPUTotalNodeRoleOSMetricNode() *CPUTotalNodeRoleOSMetricNodeBuilder {
-	return &CPUTotalNodeRoleOSMetricNodeBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &CPUTotalNodeRoleOSMetricNodeBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *CPUTotalNodeRoleOSMetricNodeBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // CPUTotal sets the value of the 'CPU_total' attribute to the given value.
 func (b *CPUTotalNodeRoleOSMetricNodeBuilder) CPUTotal(value float64) *CPUTotalNodeRoleOSMetricNodeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.cpuTotal = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // NodeRoles sets the value of the 'node_roles' attribute to the given values.
 func (b *CPUTotalNodeRoleOSMetricNodeBuilder) NodeRoles(values ...string) *CPUTotalNodeRoleOSMetricNodeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.nodeRoles = make([]string, len(values))
 	copy(b.nodeRoles, values)
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // OperatingSystem sets the value of the 'operating_system' attribute to the given value.
 func (b *CPUTotalNodeRoleOSMetricNodeBuilder) OperatingSystem(value string) *CPUTotalNodeRoleOSMetricNodeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.operatingSystem = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Time sets the value of the 'time' attribute to the given value.
 func (b *CPUTotalNodeRoleOSMetricNodeBuilder) Time(value time.Time) *CPUTotalNodeRoleOSMetricNodeBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.time = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -98,10 +78,7 @@ func (b *CPUTotalNodeRoleOSMetricNodeBuilder) Copy(object *CPUTotalNodeRoleOSMet
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.cpuTotal = object.cpuTotal
 	if object.nodeRoles != nil {
 		b.nodeRoles = make([]string, len(object.nodeRoles))
@@ -117,10 +94,7 @@ func (b *CPUTotalNodeRoleOSMetricNodeBuilder) Copy(object *CPUTotalNodeRoleOSMet
 // Build creates a 'CPU_total_node_role_OS_metric_node' object using the configuration stored in the builder.
 func (b *CPUTotalNodeRoleOSMetricNodeBuilder) Build() (object *CPUTotalNodeRoleOSMetricNode, err error) {
 	object = new(CPUTotalNodeRoleOSMetricNode)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.cpuTotal = b.cpuTotal
 	if b.nodeRoles != nil {
 		object.nodeRoles = make([]string, len(b.nodeRoles))

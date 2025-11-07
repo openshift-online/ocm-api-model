@@ -23,21 +23,13 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/servicemgmt/v1
 //
 // Description of a region of a cloud provider.
 type CloudRegion struct {
-	fieldSet_ []bool
-	id        string
+	bitmap_ uint32
+	id      string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *CloudRegion) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // ID returns the value of the 'ID' attribute, or
@@ -45,7 +37,7 @@ func (o *CloudRegion) Empty() bool {
 //
 // Human-friendly identifier of the region, for example `us-east-1`.
 func (o *CloudRegion) ID() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.id
 	}
 	return ""
@@ -56,7 +48,7 @@ func (o *CloudRegion) ID() string {
 //
 // Human-friendly identifier of the region, for example `us-east-1`.
 func (o *CloudRegion) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.id
 	}

@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// DecisionBuilder contains the data and logic needed to build 'decision' objects.
+//
 // Representation of an decision.
 type DecisionBuilder struct {
-	fieldSet_     []bool
+	bitmap_       uint32
 	id            string
 	href          string
 	createdAt     time.Time
@@ -37,71 +39,45 @@ type DecisionBuilder struct {
 
 // NewDecision creates a new builder of 'decision' objects.
 func NewDecision() *DecisionBuilder {
-	return &DecisionBuilder{
-		fieldSet_: make([]bool, 8),
-	}
+	return &DecisionBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *DecisionBuilder) Link(value bool) *DecisionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *DecisionBuilder) ID(value string) *DecisionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *DecisionBuilder) HREF(value string) *DecisionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *DecisionBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *DecisionBuilder) CreatedAt(value time.Time) *DecisionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.createdAt = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // DecidedBy sets the value of the 'decided_by' attribute to the given value.
 func (b *DecisionBuilder) DecidedBy(value string) *DecisionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.decidedBy = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -109,31 +85,22 @@ func (b *DecisionBuilder) DecidedBy(value string) *DecisionBuilder {
 //
 // Possible decisions to a decision status.
 func (b *DecisionBuilder) Decision(value DecisionDecision) *DecisionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.decision = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // Justification sets the value of the 'justification' attribute to the given value.
 func (b *DecisionBuilder) Justification(value string) *DecisionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.justification = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *DecisionBuilder) UpdatedAt(value time.Time) *DecisionBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 8)
-	}
 	b.updatedAt = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
@@ -142,10 +109,7 @@ func (b *DecisionBuilder) Copy(object *Decision) *DecisionBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.createdAt = object.createdAt
@@ -161,10 +125,7 @@ func (b *DecisionBuilder) Build() (object *Decision, err error) {
 	object = new(Decision)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.createdAt = b.createdAt
 	object.decidedBy = b.decidedBy
 	object.decision = b.decision

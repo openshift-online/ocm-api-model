@@ -23,22 +23,14 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/authorizations
 //
 // Representation of a feature review response
 type FeatureReviewResponse struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	featureID string
 	enabled   bool
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *FeatureReviewResponse) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Enabled returns the value of the 'enabled' attribute, or
@@ -46,7 +38,7 @@ func (o *FeatureReviewResponse) Empty() bool {
 //
 // Defines whether the feature can be toggled
 func (o *FeatureReviewResponse) Enabled() bool {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.enabled
 	}
 	return false
@@ -57,7 +49,7 @@ func (o *FeatureReviewResponse) Enabled() bool {
 //
 // Defines whether the feature can be toggled
 func (o *FeatureReviewResponse) GetEnabled() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.enabled
 	}
@@ -69,7 +61,7 @@ func (o *FeatureReviewResponse) GetEnabled() (value bool, ok bool) {
 //
 // Defines the feature id which can be toggled
 func (o *FeatureReviewResponse) FeatureID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.featureID
 	}
 	return ""
@@ -80,7 +72,7 @@ func (o *FeatureReviewResponse) FeatureID() string {
 //
 // Defines the feature id which can be toggled
 func (o *FeatureReviewResponse) GetFeatureID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.featureID
 	}

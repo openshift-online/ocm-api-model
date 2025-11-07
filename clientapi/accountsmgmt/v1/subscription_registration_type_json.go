@@ -42,7 +42,7 @@ func WriteSubscriptionRegistration(object *SubscriptionRegistration, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteSubscriptionRegistration(object *SubscriptionRegistration, stream *jso
 		stream.WriteString(object.clusterUUID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteSubscriptionRegistration(object *SubscriptionRegistration, stream *jso
 		stream.WriteString(object.consoleURL)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteSubscriptionRegistration(object *SubscriptionRegistration, stream *jso
 		stream.WriteString(object.displayName)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -78,7 +78,7 @@ func WriteSubscriptionRegistration(object *SubscriptionRegistration, stream *jso
 		stream.WriteString(string(object.planID))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -103,9 +103,7 @@ func UnmarshalSubscriptionRegistration(source interface{}) (object *Subscription
 
 // ReadSubscriptionRegistration reads a value of the 'subscription_registration' type from the given iterator.
 func ReadSubscriptionRegistration(iterator *jsoniter.Iterator) *SubscriptionRegistration {
-	object := &SubscriptionRegistration{
-		fieldSet_: make([]bool, 5),
-	}
+	object := &SubscriptionRegistration{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -115,24 +113,24 @@ func ReadSubscriptionRegistration(iterator *jsoniter.Iterator) *SubscriptionRegi
 		case "cluster_uuid":
 			value := iterator.ReadString()
 			object.clusterUUID = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "console_url":
 			value := iterator.ReadString()
 			object.consoleURL = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "display_name":
 			value := iterator.ReadString()
 			object.displayName = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "plan_id":
 			text := iterator.ReadString()
 			value := PlanID(text)
 			object.planID = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "status":
 			value := iterator.ReadString()
 			object.status = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		default:
 			iterator.ReadAny()
 		}

@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// VersionGateBuilder contains the data and logic needed to build 'version_gate' objects.
+//
 // Representation of an _OpenShift_ version gate.
 type VersionGateBuilder struct {
-	fieldSet_          []bool
+	bitmap_            uint32
 	id                 string
 	href               string
 	clusterCondition   string
@@ -41,141 +43,94 @@ type VersionGateBuilder struct {
 
 // NewVersionGate creates a new builder of 'version_gate' objects.
 func NewVersionGate() *VersionGateBuilder {
-	return &VersionGateBuilder{
-		fieldSet_: make([]bool, 12),
-	}
+	return &VersionGateBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *VersionGateBuilder) Link(value bool) *VersionGateBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *VersionGateBuilder) ID(value string) *VersionGateBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *VersionGateBuilder) HREF(value string) *VersionGateBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *VersionGateBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // STSOnly sets the value of the 'STS_only' attribute to the given value.
 func (b *VersionGateBuilder) STSOnly(value bool) *VersionGateBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.stsOnly = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // ClusterCondition sets the value of the 'cluster_condition' attribute to the given value.
 func (b *VersionGateBuilder) ClusterCondition(value string) *VersionGateBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.clusterCondition = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *VersionGateBuilder) CreationTimestamp(value time.Time) *VersionGateBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.creationTimestamp = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // Description sets the value of the 'description' attribute to the given value.
 func (b *VersionGateBuilder) Description(value string) *VersionGateBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.description = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // DocumentationURL sets the value of the 'documentation_URL' attribute to the given value.
 func (b *VersionGateBuilder) DocumentationURL(value string) *VersionGateBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.documentationURL = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // Label sets the value of the 'label' attribute to the given value.
 func (b *VersionGateBuilder) Label(value string) *VersionGateBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.label = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // Value sets the value of the 'value' attribute to the given value.
 func (b *VersionGateBuilder) Value(value string) *VersionGateBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.value = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // VersionRawIDPrefix sets the value of the 'version_raw_ID_prefix' attribute to the given value.
 func (b *VersionGateBuilder) VersionRawIDPrefix(value string) *VersionGateBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.versionRawIDPrefix = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
 // WarningMessage sets the value of the 'warning_message' attribute to the given value.
 func (b *VersionGateBuilder) WarningMessage(value string) *VersionGateBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.warningMessage = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
@@ -184,10 +139,7 @@ func (b *VersionGateBuilder) Copy(object *VersionGate) *VersionGateBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.stsOnly = object.stsOnly
@@ -207,10 +159,7 @@ func (b *VersionGateBuilder) Build() (object *VersionGate, err error) {
 	object = new(VersionGate)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.stsOnly = b.stsOnly
 	object.clusterCondition = b.clusterCondition
 	object.creationTimestamp = b.creationTimestamp

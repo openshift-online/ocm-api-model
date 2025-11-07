@@ -42,7 +42,7 @@ func WriteWifConfigStatus(object *WifConfigStatus, stream *jsoniter.Stream) {
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteWifConfigStatus(object *WifConfigStatus, stream *jsoniter.Stream) {
 		stream.WriteBool(object.configured)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalWifConfigStatus(source interface{}) (object *WifConfigStatus, err 
 
 // ReadWifConfigStatus reads a value of the 'wif_config_status' type from the given iterator.
 func ReadWifConfigStatus(iterator *jsoniter.Iterator) *WifConfigStatus {
-	object := &WifConfigStatus{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &WifConfigStatus{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadWifConfigStatus(iterator *jsoniter.Iterator) *WifConfigStatus {
 		case "configured":
 			value := iterator.ReadBool()
 			object.configured = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "description":
 			value := iterator.ReadString()
 			object.description = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

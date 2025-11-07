@@ -23,24 +23,16 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/addonsmgmt/v1
 //
 // representation of addon installation parameter
 type AddonInstallationParameter struct {
-	fieldSet_ []bool
-	href      string
-	id        string
-	kind      string
-	value     string
+	bitmap_ uint32
+	href    string
+	id      string
+	kind    string
+	value   string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AddonInstallationParameter) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Href returns the value of the 'href' attribute, or
@@ -48,7 +40,7 @@ func (o *AddonInstallationParameter) Empty() bool {
 //
 // Self link
 func (o *AddonInstallationParameter) Href() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.href
 	}
 	return ""
@@ -59,7 +51,7 @@ func (o *AddonInstallationParameter) Href() string {
 //
 // Self link
 func (o *AddonInstallationParameter) GetHref() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.href
 	}
@@ -71,7 +63,7 @@ func (o *AddonInstallationParameter) GetHref() (value string, ok bool) {
 //
 // Unique identifier of the object
 func (o *AddonInstallationParameter) Id() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -82,7 +74,7 @@ func (o *AddonInstallationParameter) Id() string {
 //
 // Unique identifier of the object
 func (o *AddonInstallationParameter) GetId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -94,7 +86,7 @@ func (o *AddonInstallationParameter) GetId() (value string, ok bool) {
 //
 // Indicates the type of this object
 func (o *AddonInstallationParameter) Kind() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.kind
 	}
 	return ""
@@ -105,7 +97,7 @@ func (o *AddonInstallationParameter) Kind() string {
 //
 // Indicates the type of this object
 func (o *AddonInstallationParameter) GetKind() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.kind
 	}
@@ -117,7 +109,7 @@ func (o *AddonInstallationParameter) GetKind() (value string, ok bool) {
 //
 // Value of the parameter
 func (o *AddonInstallationParameter) Value() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.value
 	}
 	return ""
@@ -128,7 +120,7 @@ func (o *AddonInstallationParameter) Value() string {
 //
 // Value of the parameter
 func (o *AddonInstallationParameter) GetValue() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.value
 	}

@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // _OpenID_ identity provider claims.
 type OpenIDClaims struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	email             []string
 	groups            []string
 	name              []string
@@ -32,15 +32,7 @@ type OpenIDClaims struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *OpenIDClaims) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Email returns the value of the 'email' attribute, or
@@ -48,7 +40,7 @@ func (o *OpenIDClaims) Empty() bool {
 //
 // List of claims to use as the mail address.
 func (o *OpenIDClaims) Email() []string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.email
 	}
 	return nil
@@ -59,7 +51,7 @@ func (o *OpenIDClaims) Email() []string {
 //
 // List of claims to use as the mail address.
 func (o *OpenIDClaims) GetEmail() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.email
 	}
@@ -71,7 +63,7 @@ func (o *OpenIDClaims) GetEmail() (value []string, ok bool) {
 //
 // List of claims to use as the group name.
 func (o *OpenIDClaims) Groups() []string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.groups
 	}
 	return nil
@@ -82,7 +74,7 @@ func (o *OpenIDClaims) Groups() []string {
 //
 // List of claims to use as the group name.
 func (o *OpenIDClaims) GetGroups() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.groups
 	}
@@ -94,7 +86,7 @@ func (o *OpenIDClaims) GetGroups() (value []string, ok bool) {
 //
 // List of claims to use as the display name.
 func (o *OpenIDClaims) Name() []string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.name
 	}
 	return nil
@@ -105,7 +97,7 @@ func (o *OpenIDClaims) Name() []string {
 //
 // List of claims to use as the display name.
 func (o *OpenIDClaims) GetName() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.name
 	}
@@ -117,7 +109,7 @@ func (o *OpenIDClaims) GetName() (value []string, ok bool) {
 //
 // List of claims to use as the preferred user name when provisioning a user.
 func (o *OpenIDClaims) PreferredUsername() []string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.preferredUsername
 	}
 	return nil
@@ -128,7 +120,7 @@ func (o *OpenIDClaims) PreferredUsername() []string {
 //
 // List of claims to use as the preferred user name when provisioning a user.
 func (o *OpenIDClaims) GetPreferredUsername() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.preferredUsername
 	}

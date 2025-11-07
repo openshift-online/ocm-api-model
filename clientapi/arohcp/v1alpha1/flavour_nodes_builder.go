@@ -19,39 +19,28 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// FlavourNodesBuilder contains the data and logic needed to build 'flavour_nodes' objects.
+//
 // Counts of different classes of nodes inside a flavour.
 type FlavourNodesBuilder struct {
-	fieldSet_ []bool
-	master    int
+	bitmap_ uint32
+	master  int
 }
 
 // NewFlavourNodes creates a new builder of 'flavour_nodes' objects.
 func NewFlavourNodes() *FlavourNodesBuilder {
-	return &FlavourNodesBuilder{
-		fieldSet_: make([]bool, 1),
-	}
+	return &FlavourNodesBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *FlavourNodesBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Master sets the value of the 'master' attribute to the given value.
 func (b *FlavourNodesBuilder) Master(value int) *FlavourNodesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 1)
-	}
 	b.master = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
@@ -60,10 +49,7 @@ func (b *FlavourNodesBuilder) Copy(object *FlavourNodes) *FlavourNodesBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.master = object.master
 	return b
 }
@@ -71,10 +57,7 @@ func (b *FlavourNodesBuilder) Copy(object *FlavourNodes) *FlavourNodesBuilder {
 // Build creates a 'flavour_nodes' object using the configuration stored in the builder.
 func (b *FlavourNodesBuilder) Build() (object *FlavourNodes, err error) {
 	object = new(FlavourNodes)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.master = b.master
 	return
 }

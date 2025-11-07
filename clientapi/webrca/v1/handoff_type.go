@@ -39,7 +39,7 @@ const HandoffNilKind = "HandoffNil"
 //
 // Definition of a Web RCA handoff.
 type Handoff struct {
-	fieldSet_   []bool
+	bitmap_     uint32
 	id          string
 	href        string
 	createdAt   time.Time
@@ -55,7 +55,7 @@ func (o *Handoff) Kind() string {
 	if o == nil {
 		return HandoffNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return HandoffLinkKind
 	}
 	return HandoffKind
@@ -63,12 +63,12 @@ func (o *Handoff) Kind() string {
 
 // Link returns true if this is a link.
 func (o *Handoff) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *Handoff) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -77,7 +77,7 @@ func (o *Handoff) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *Handoff) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -86,7 +86,7 @@ func (o *Handoff) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *Handoff) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -95,7 +95,7 @@ func (o *Handoff) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *Handoff) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -104,17 +104,7 @@ func (o *Handoff) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *Handoff) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // CreatedAt returns the value of the 'created_at' attribute, or
@@ -122,7 +112,7 @@ func (o *Handoff) Empty() bool {
 //
 // Object creation timestamp.
 func (o *Handoff) CreatedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -133,7 +123,7 @@ func (o *Handoff) CreatedAt() time.Time {
 //
 // Object creation timestamp.
 func (o *Handoff) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.createdAt
 	}
@@ -145,7 +135,7 @@ func (o *Handoff) GetCreatedAt() (value time.Time, ok bool) {
 //
 // Object deletion timestamp.
 func (o *Handoff) DeletedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.deletedAt
 	}
 	return time.Time{}
@@ -156,7 +146,7 @@ func (o *Handoff) DeletedAt() time.Time {
 //
 // Object deletion timestamp.
 func (o *Handoff) GetDeletedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.deletedAt
 	}
@@ -166,7 +156,7 @@ func (o *Handoff) GetDeletedAt() (value time.Time, ok bool) {
 // HandoffFrom returns the value of the 'handoff_from' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Handoff) HandoffFrom() *User {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.handoffFrom
 	}
 	return nil
@@ -175,7 +165,7 @@ func (o *Handoff) HandoffFrom() *User {
 // GetHandoffFrom returns the value of the 'handoff_from' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Handoff) GetHandoffFrom() (value *User, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.handoffFrom
 	}
@@ -185,7 +175,7 @@ func (o *Handoff) GetHandoffFrom() (value *User, ok bool) {
 // HandoffTo returns the value of the 'handoff_to' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Handoff) HandoffTo() *User {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.handoffTo
 	}
 	return nil
@@ -194,7 +184,7 @@ func (o *Handoff) HandoffTo() *User {
 // GetHandoffTo returns the value of the 'handoff_to' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Handoff) GetHandoffTo() (value *User, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.handoffTo
 	}
@@ -204,7 +194,7 @@ func (o *Handoff) GetHandoffTo() (value *User, ok bool) {
 // HandoffType returns the value of the 'handoff_type' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *Handoff) HandoffType() string {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.handoffType
 	}
 	return ""
@@ -213,7 +203,7 @@ func (o *Handoff) HandoffType() string {
 // GetHandoffType returns the value of the 'handoff_type' attribute and
 // a flag indicating if the attribute has a value.
 func (o *Handoff) GetHandoffType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.handoffType
 	}
@@ -225,7 +215,7 @@ func (o *Handoff) GetHandoffType() (value string, ok bool) {
 //
 // Object modification timestamp.
 func (o *Handoff) UpdatedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -236,7 +226,7 @@ func (o *Handoff) UpdatedAt() time.Time {
 //
 // Object modification timestamp.
 func (o *Handoff) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.updatedAt
 	}

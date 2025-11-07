@@ -23,7 +23,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // Backup configuration for AWS clusters
 type AWSBackupConfig struct {
-	fieldSet_           []bool
+	bitmap_             uint32
 	s3Bucket            string
 	accountId           string
 	identityProviderArn string
@@ -33,15 +33,7 @@ type AWSBackupConfig struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AWSBackupConfig) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // S3Bucket returns the value of the 'S3_bucket' attribute, or
@@ -49,7 +41,7 @@ func (o *AWSBackupConfig) Empty() bool {
 //
 // Name of the S3 bucket used to save the backup
 func (o *AWSBackupConfig) S3Bucket() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.s3Bucket
 	}
 	return ""
@@ -60,7 +52,7 @@ func (o *AWSBackupConfig) S3Bucket() string {
 //
 // Name of the S3 bucket used to save the backup
 func (o *AWSBackupConfig) GetS3Bucket() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.s3Bucket
 	}
@@ -72,7 +64,7 @@ func (o *AWSBackupConfig) GetS3Bucket() (value string, ok bool) {
 //
 // ID of the AWS Disaster Recovery (DR) account
 func (o *AWSBackupConfig) AccountId() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.accountId
 	}
 	return ""
@@ -83,7 +75,7 @@ func (o *AWSBackupConfig) AccountId() string {
 //
 // ID of the AWS Disaster Recovery (DR) account
 func (o *AWSBackupConfig) GetAccountId() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.accountId
 	}
@@ -95,7 +87,7 @@ func (o *AWSBackupConfig) GetAccountId() (value string, ok bool) {
 //
 // ARN of the identity provider created in the Disaster Recovery (DR) account for the Management Cluster
 func (o *AWSBackupConfig) IdentityProviderArn() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.identityProviderArn
 	}
 	return ""
@@ -106,7 +98,7 @@ func (o *AWSBackupConfig) IdentityProviderArn() string {
 //
 // ARN of the identity provider created in the Disaster Recovery (DR) account for the Management Cluster
 func (o *AWSBackupConfig) GetIdentityProviderArn() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.identityProviderArn
 	}
@@ -118,7 +110,7 @@ func (o *AWSBackupConfig) GetIdentityProviderArn() (value string, ok bool) {
 //
 // Name of the management cluster the backup config refers to
 func (o *AWSBackupConfig) ManagementCluster() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.managementCluster
 	}
 	return ""
@@ -129,7 +121,7 @@ func (o *AWSBackupConfig) ManagementCluster() string {
 //
 // Name of the management cluster the backup config refers to
 func (o *AWSBackupConfig) GetManagementCluster() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.managementCluster
 	}
@@ -141,7 +133,7 @@ func (o *AWSBackupConfig) GetManagementCluster() (value string, ok bool) {
 //
 // ARN of the role used by the CS Trusted Account to gain access to the Disaster Recovery (DR) account
 func (o *AWSBackupConfig) RoleArn() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.roleArn
 	}
 	return ""
@@ -152,7 +144,7 @@ func (o *AWSBackupConfig) RoleArn() string {
 //
 // ARN of the role used by the CS Trusted Account to gain access to the Disaster Recovery (DR) account
 func (o *AWSBackupConfig) GetRoleArn() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.roleArn
 	}

@@ -19,6 +19,8 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/osdfleetmgmt/v1
 
+// ServiceClusterBuilder contains the data and logic needed to build 'service_cluster' objects.
+//
 // Definition of an _OpenShift_ cluster.
 //
 // The `cloud_provider` attribute is a reference to the cloud provider. When a
@@ -59,7 +61,7 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/osdfleetmgmt/v
 // attributes are mandatory when creation a cluster with your own Amazon Web
 // Services account.
 type ServiceClusterBuilder struct {
-	fieldSet_                  []bool
+	bitmap_                    uint32
 	id                         string
 	href                       string
 	dns                        *DNSBuilder
@@ -75,78 +77,51 @@ type ServiceClusterBuilder struct {
 
 // NewServiceCluster creates a new builder of 'service_cluster' objects.
 func NewServiceCluster() *ServiceClusterBuilder {
-	return &ServiceClusterBuilder{
-		fieldSet_: make([]bool, 12),
-	}
+	return &ServiceClusterBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ServiceClusterBuilder) Link(value bool) *ServiceClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ServiceClusterBuilder) ID(value string) *ServiceClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ServiceClusterBuilder) HREF(value string) *ServiceClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ServiceClusterBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // DNS sets the value of the 'DNS' attribute to the given value.
 //
 // DNS settings of the cluster.
 func (b *ServiceClusterBuilder) DNS(value *DNSBuilder) *ServiceClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.dns = value
 	if value != nil {
-		b.fieldSet_[3] = true
+		b.bitmap_ |= 8
 	} else {
-		b.fieldSet_[3] = false
+		b.bitmap_ &^= 8
 	}
 	return b
 }
 
 // CloudProvider sets the value of the 'cloud_provider' attribute to the given value.
 func (b *ServiceClusterBuilder) CloudProvider(value string) *ServiceClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.cloudProvider = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -154,36 +129,27 @@ func (b *ServiceClusterBuilder) CloudProvider(value string) *ServiceClusterBuild
 //
 // Cluster Mgmt reference settings of the cluster.
 func (b *ServiceClusterBuilder) ClusterManagementReference(value *ClusterManagementReferenceBuilder) *ServiceClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.clusterManagementReference = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
 
 // Labels sets the value of the 'labels' attribute to the given values.
 func (b *ServiceClusterBuilder) Labels(values ...*LabelBuilder) *ServiceClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.labels = make([]*LabelBuilder, len(values))
 	copy(b.labels, values)
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ServiceClusterBuilder) Name(value string) *ServiceClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.name = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
@@ -191,45 +157,33 @@ func (b *ServiceClusterBuilder) Name(value string) *ServiceClusterBuilder {
 //
 // Provision Shard Reference of the cluster.
 func (b *ServiceClusterBuilder) ProvisionShardReference(value *ProvisionShardReferenceBuilder) *ServiceClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.provisionShardReference = value
 	if value != nil {
-		b.fieldSet_[8] = true
+		b.bitmap_ |= 256
 	} else {
-		b.fieldSet_[8] = false
+		b.bitmap_ &^= 256
 	}
 	return b
 }
 
 // Region sets the value of the 'region' attribute to the given value.
 func (b *ServiceClusterBuilder) Region(value string) *ServiceClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.region = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // Sector sets the value of the 'sector' attribute to the given value.
 func (b *ServiceClusterBuilder) Sector(value string) *ServiceClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.sector = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
 // Status sets the value of the 'status' attribute to the given value.
 func (b *ServiceClusterBuilder) Status(value string) *ServiceClusterBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 12)
-	}
 	b.status = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
@@ -238,10 +192,7 @@ func (b *ServiceClusterBuilder) Copy(object *ServiceCluster) *ServiceClusterBuil
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.dns != nil {
@@ -280,10 +231,7 @@ func (b *ServiceClusterBuilder) Build() (object *ServiceCluster, err error) {
 	object = new(ServiceCluster)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.dns != nil {
 		object.dns, err = b.dns.Build()
 		if err != nil {

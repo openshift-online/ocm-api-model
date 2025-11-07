@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// SecurityGroupBuilder contains the data and logic needed to build 'security_group' objects.
+//
 // AWS security group object
 type SecurityGroupBuilder struct {
-	fieldSet_     []bool
+	bitmap_       uint32
 	id            string
 	name          string
 	redHatManaged bool
@@ -29,51 +31,32 @@ type SecurityGroupBuilder struct {
 
 // NewSecurityGroup creates a new builder of 'security_group' objects.
 func NewSecurityGroup() *SecurityGroupBuilder {
-	return &SecurityGroupBuilder{
-		fieldSet_: make([]bool, 3),
-	}
+	return &SecurityGroupBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *SecurityGroupBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ID sets the value of the 'ID' attribute to the given value.
 func (b *SecurityGroupBuilder) ID(value string) *SecurityGroupBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.id = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *SecurityGroupBuilder) Name(value string) *SecurityGroupBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.name = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // RedHatManaged sets the value of the 'red_hat_managed' attribute to the given value.
 func (b *SecurityGroupBuilder) RedHatManaged(value bool) *SecurityGroupBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 3)
-	}
 	b.redHatManaged = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
@@ -82,10 +65,7 @@ func (b *SecurityGroupBuilder) Copy(object *SecurityGroup) *SecurityGroupBuilder
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.name = object.name
 	b.redHatManaged = object.redHatManaged
@@ -95,10 +75,7 @@ func (b *SecurityGroupBuilder) Copy(object *SecurityGroup) *SecurityGroupBuilder
 // Build creates a 'security_group' object using the configuration stored in the builder.
 func (b *SecurityGroupBuilder) Build() (object *SecurityGroup, err error) {
 	object = new(SecurityGroup)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.id = b.id
 	object.name = b.name
 	object.redHatManaged = b.redHatManaged

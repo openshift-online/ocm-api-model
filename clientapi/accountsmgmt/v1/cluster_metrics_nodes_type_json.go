@@ -42,7 +42,7 @@ func WriteClusterMetricsNodes(object *ClusterMetricsNodes, stream *jsoniter.Stre
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteClusterMetricsNodes(object *ClusterMetricsNodes, stream *jsoniter.Stre
 		stream.WriteFloat64(object.compute)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteClusterMetricsNodes(object *ClusterMetricsNodes, stream *jsoniter.Stre
 		stream.WriteFloat64(object.infra)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteClusterMetricsNodes(object *ClusterMetricsNodes, stream *jsoniter.Stre
 		stream.WriteFloat64(object.master)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,9 +94,7 @@ func UnmarshalClusterMetricsNodes(source interface{}) (object *ClusterMetricsNod
 
 // ReadClusterMetricsNodes reads a value of the 'cluster_metrics_nodes' type from the given iterator.
 func ReadClusterMetricsNodes(iterator *jsoniter.Iterator) *ClusterMetricsNodes {
-	object := &ClusterMetricsNodes{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &ClusterMetricsNodes{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -106,19 +104,19 @@ func ReadClusterMetricsNodes(iterator *jsoniter.Iterator) *ClusterMetricsNodes {
 		case "compute":
 			value := iterator.ReadFloat64()
 			object.compute = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "infra":
 			value := iterator.ReadFloat64()
 			object.infra = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "master":
 			value := iterator.ReadFloat64()
 			object.master = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "total":
 			value := iterator.ReadFloat64()
 			object.total = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

@@ -21,28 +21,20 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/accountsmgmt/v
 
 // AccessTokenAuth represents the values of the 'access_token_auth' type.
 type AccessTokenAuth struct {
-	fieldSet_ []bool
-	auth      string
-	email     string
+	bitmap_ uint32
+	auth    string
+	email   string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AccessTokenAuth) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Auth returns the value of the 'auth' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *AccessTokenAuth) Auth() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.auth
 	}
 	return ""
@@ -51,7 +43,7 @@ func (o *AccessTokenAuth) Auth() string {
 // GetAuth returns the value of the 'auth' attribute and
 // a flag indicating if the attribute has a value.
 func (o *AccessTokenAuth) GetAuth() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.auth
 	}
@@ -61,7 +53,7 @@ func (o *AccessTokenAuth) GetAuth() (value string, ok bool) {
 // Email returns the value of the 'email' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *AccessTokenAuth) Email() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.email
 	}
 	return ""
@@ -70,7 +62,7 @@ func (o *AccessTokenAuth) Email() string {
 // GetEmail returns the value of the 'email' attribute and
 // a flag indicating if the attribute has a value.
 func (o *AccessTokenAuth) GetEmail() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.email
 	}

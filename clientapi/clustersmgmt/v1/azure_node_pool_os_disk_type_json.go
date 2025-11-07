@@ -42,7 +42,7 @@ func WriteAzureNodePoolOsDisk(object *AzureNodePoolOsDisk, stream *jsoniter.Stre
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteAzureNodePoolOsDisk(object *AzureNodePoolOsDisk, stream *jsoniter.Stre
 		stream.WriteString(object.persistence)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteAzureNodePoolOsDisk(object *AzureNodePoolOsDisk, stream *jsoniter.Stre
 		stream.WriteInt(object.sizeGibibytes)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -69,7 +69,7 @@ func WriteAzureNodePoolOsDisk(object *AzureNodePoolOsDisk, stream *jsoniter.Stre
 		stream.WriteString(object.sseEncryptionSetResourceId)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -94,9 +94,7 @@ func UnmarshalAzureNodePoolOsDisk(source interface{}) (object *AzureNodePoolOsDi
 
 // ReadAzureNodePoolOsDisk reads a value of the 'azure_node_pool_os_disk' type from the given iterator.
 func ReadAzureNodePoolOsDisk(iterator *jsoniter.Iterator) *AzureNodePoolOsDisk {
-	object := &AzureNodePoolOsDisk{
-		fieldSet_: make([]bool, 4),
-	}
+	object := &AzureNodePoolOsDisk{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -106,19 +104,19 @@ func ReadAzureNodePoolOsDisk(iterator *jsoniter.Iterator) *AzureNodePoolOsDisk {
 		case "persistence":
 			value := iterator.ReadString()
 			object.persistence = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "size_gibibytes":
 			value := iterator.ReadInt()
 			object.sizeGibibytes = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "sse_encryption_set_resource_id":
 			value := iterator.ReadString()
 			object.sseEncryptionSetResourceId = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "storage_account_type":
 			value := iterator.ReadString()
 			object.storageAccountType = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		default:
 			iterator.ReadAny()
 		}

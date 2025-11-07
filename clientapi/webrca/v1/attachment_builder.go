@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// AttachmentBuilder contains the data and logic needed to build 'attachment' objects.
+//
 // Definition of a Web RCA attachment.
 type AttachmentBuilder struct {
-	fieldSet_   []bool
+	bitmap_     uint32
 	id          string
 	href        string
 	contentType string
@@ -40,71 +42,45 @@ type AttachmentBuilder struct {
 
 // NewAttachment creates a new builder of 'attachment' objects.
 func NewAttachment() *AttachmentBuilder {
-	return &AttachmentBuilder{
-		fieldSet_: make([]bool, 11),
-	}
+	return &AttachmentBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AttachmentBuilder) Link(value bool) *AttachmentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AttachmentBuilder) ID(value string) *AttachmentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AttachmentBuilder) HREF(value string) *AttachmentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AttachmentBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // ContentType sets the value of the 'content_type' attribute to the given value.
 func (b *AttachmentBuilder) ContentType(value string) *AttachmentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.contentType = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *AttachmentBuilder) CreatedAt(value time.Time) *AttachmentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.createdAt = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
@@ -112,25 +88,19 @@ func (b *AttachmentBuilder) CreatedAt(value time.Time) *AttachmentBuilder {
 //
 // Definition of a Web RCA user.
 func (b *AttachmentBuilder) Creator(value *UserBuilder) *AttachmentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.creator = value
 	if value != nil {
-		b.fieldSet_[5] = true
+		b.bitmap_ |= 32
 	} else {
-		b.fieldSet_[5] = false
+		b.bitmap_ &^= 32
 	}
 	return b
 }
 
 // DeletedAt sets the value of the 'deleted_at' attribute to the given value.
 func (b *AttachmentBuilder) DeletedAt(value time.Time) *AttachmentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.deletedAt = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
@@ -138,45 +108,33 @@ func (b *AttachmentBuilder) DeletedAt(value time.Time) *AttachmentBuilder {
 //
 // Definition of a Web RCA event.
 func (b *AttachmentBuilder) Event(value *EventBuilder) *AttachmentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.event = value
 	if value != nil {
-		b.fieldSet_[7] = true
+		b.bitmap_ |= 128
 	} else {
-		b.fieldSet_[7] = false
+		b.bitmap_ &^= 128
 	}
 	return b
 }
 
 // FileSize sets the value of the 'file_size' attribute to the given value.
 func (b *AttachmentBuilder) FileSize(value int) *AttachmentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.fileSize = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *AttachmentBuilder) Name(value string) *AttachmentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.name = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *AttachmentBuilder) UpdatedAt(value time.Time) *AttachmentBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
-	}
 	b.updatedAt = value
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
@@ -185,10 +143,7 @@ func (b *AttachmentBuilder) Copy(object *Attachment) *AttachmentBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.contentType = object.contentType
@@ -215,10 +170,7 @@ func (b *AttachmentBuilder) Build() (object *Attachment, err error) {
 	object = new(Attachment)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.contentType = b.contentType
 	object.createdAt = b.createdAt
 	if b.creator != nil {

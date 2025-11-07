@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// GCPBuilder contains the data and logic needed to build 'GCP' objects.
+//
 // Google cloud platform settings of a cluster.
 type GCPBuilder struct {
-	fieldSet_               []bool
+	bitmap_                 uint32
 	authURI                 string
 	authProviderX509CertURL string
 	authentication          *GcpAuthenticationBuilder
@@ -39,41 +41,25 @@ type GCPBuilder struct {
 
 // NewGCP creates a new builder of 'GCP' objects.
 func NewGCP() *GCPBuilder {
-	return &GCPBuilder{
-		fieldSet_: make([]bool, 13),
-	}
+	return &GCPBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *GCPBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // AuthURI sets the value of the 'auth_URI' attribute to the given value.
 func (b *GCPBuilder) AuthURI(value string) *GCPBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.authURI = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // AuthProviderX509CertURL sets the value of the 'auth_provider_X509_cert_URL' attribute to the given value.
 func (b *GCPBuilder) AuthProviderX509CertURL(value string) *GCPBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.authProviderX509CertURL = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -81,65 +67,47 @@ func (b *GCPBuilder) AuthProviderX509CertURL(value string) *GCPBuilder {
 //
 // Google cloud platform authentication method of a cluster.
 func (b *GCPBuilder) Authentication(value *GcpAuthenticationBuilder) *GCPBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.authentication = value
 	if value != nil {
-		b.fieldSet_[2] = true
+		b.bitmap_ |= 4
 	} else {
-		b.fieldSet_[2] = false
+		b.bitmap_ &^= 4
 	}
 	return b
 }
 
 // ClientID sets the value of the 'client_ID' attribute to the given value.
 func (b *GCPBuilder) ClientID(value string) *GCPBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.clientID = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // ClientX509CertURL sets the value of the 'client_X509_cert_URL' attribute to the given value.
 func (b *GCPBuilder) ClientX509CertURL(value string) *GCPBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.clientX509CertURL = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // ClientEmail sets the value of the 'client_email' attribute to the given value.
 func (b *GCPBuilder) ClientEmail(value string) *GCPBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.clientEmail = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // PrivateKey sets the value of the 'private_key' attribute to the given value.
 func (b *GCPBuilder) PrivateKey(value string) *GCPBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.privateKey = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // PrivateKeyID sets the value of the 'private_key_ID' attribute to the given value.
 func (b *GCPBuilder) PrivateKeyID(value string) *GCPBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.privateKeyID = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
@@ -147,25 +115,19 @@ func (b *GCPBuilder) PrivateKeyID(value string) *GCPBuilder {
 //
 // Google cloud platform private service connect configuration of a cluster.
 func (b *GCPBuilder) PrivateServiceConnect(value *GcpPrivateServiceConnectBuilder) *GCPBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.privateServiceConnect = value
 	if value != nil {
-		b.fieldSet_[8] = true
+		b.bitmap_ |= 256
 	} else {
-		b.fieldSet_[8] = false
+		b.bitmap_ &^= 256
 	}
 	return b
 }
 
 // ProjectID sets the value of the 'project_ID' attribute to the given value.
 func (b *GCPBuilder) ProjectID(value string) *GCPBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.projectID = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
@@ -173,35 +135,26 @@ func (b *GCPBuilder) ProjectID(value string) *GCPBuilder {
 //
 // Google cloud platform security settings of a cluster.
 func (b *GCPBuilder) Security(value *GcpSecurityBuilder) *GCPBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.security = value
 	if value != nil {
-		b.fieldSet_[10] = true
+		b.bitmap_ |= 1024
 	} else {
-		b.fieldSet_[10] = false
+		b.bitmap_ &^= 1024
 	}
 	return b
 }
 
 // TokenURI sets the value of the 'token_URI' attribute to the given value.
 func (b *GCPBuilder) TokenURI(value string) *GCPBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.tokenURI = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
 // Type sets the value of the 'type' attribute to the given value.
 func (b *GCPBuilder) Type(value string) *GCPBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 13)
-	}
 	b.type_ = value
-	b.fieldSet_[12] = true
+	b.bitmap_ |= 4096
 	return b
 }
 
@@ -210,10 +163,7 @@ func (b *GCPBuilder) Copy(object *GCP) *GCPBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.authURI = object.authURI
 	b.authProviderX509CertURL = object.authProviderX509CertURL
 	if object.authentication != nil {
@@ -245,10 +195,7 @@ func (b *GCPBuilder) Copy(object *GCP) *GCPBuilder {
 // Build creates a 'GCP' object using the configuration stored in the builder.
 func (b *GCPBuilder) Build() (object *GCP, err error) {
 	object = new(GCP)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.authURI = b.authURI
 	object.authProviderX509CertURL = b.authProviderX509CertURL
 	if b.authentication != nil {

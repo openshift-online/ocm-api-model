@@ -42,7 +42,7 @@ func WriteRolePolicyBindingStatus(object *RolePolicyBindingStatus, stream *jsoni
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteRolePolicyBindingStatus(object *RolePolicyBindingStatus, stream *jsoni
 		stream.WriteString(object.description)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalRolePolicyBindingStatus(source interface{}) (object *RolePolicyBin
 
 // ReadRolePolicyBindingStatus reads a value of the 'role_policy_binding_status' type from the given iterator.
 func ReadRolePolicyBindingStatus(iterator *jsoniter.Iterator) *RolePolicyBindingStatus {
-	object := &RolePolicyBindingStatus{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &RolePolicyBindingStatus{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadRolePolicyBindingStatus(iterator *jsoniter.Iterator) *RolePolicyBinding
 		case "description":
 			value := iterator.ReadString()
 			object.description = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "value":
 			value := iterator.ReadString()
 			object.value = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
+// LDAPAttributesBuilder contains the data and logic needed to build 'LDAP_attributes' objects.
+//
 // LDAP attributes used to configure the LDAP identity provider.
 type LDAPAttributesBuilder struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	id                []string
 	email             []string
 	name              []string
@@ -30,65 +32,43 @@ type LDAPAttributesBuilder struct {
 
 // NewLDAPAttributes creates a new builder of 'LDAP_attributes' objects.
 func NewLDAPAttributes() *LDAPAttributesBuilder {
-	return &LDAPAttributesBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &LDAPAttributesBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *LDAPAttributesBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // ID sets the value of the 'ID' attribute to the given values.
 func (b *LDAPAttributesBuilder) ID(values ...string) *LDAPAttributesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.id = make([]string, len(values))
 	copy(b.id, values)
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Email sets the value of the 'email' attribute to the given values.
 func (b *LDAPAttributesBuilder) Email(values ...string) *LDAPAttributesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.email = make([]string, len(values))
 	copy(b.email, values)
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given values.
 func (b *LDAPAttributesBuilder) Name(values ...string) *LDAPAttributesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.name = make([]string, len(values))
 	copy(b.name, values)
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // PreferredUsername sets the value of the 'preferred_username' attribute to the given values.
 func (b *LDAPAttributesBuilder) PreferredUsername(values ...string) *LDAPAttributesBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.preferredUsername = make([]string, len(values))
 	copy(b.preferredUsername, values)
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -97,10 +77,7 @@ func (b *LDAPAttributesBuilder) Copy(object *LDAPAttributes) *LDAPAttributesBuil
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.id != nil {
 		b.id = make([]string, len(object.id))
 		copy(b.id, object.id)
@@ -131,10 +108,7 @@ func (b *LDAPAttributesBuilder) Copy(object *LDAPAttributes) *LDAPAttributesBuil
 // Build creates a 'LDAP_attributes' object using the configuration stored in the builder.
 func (b *LDAPAttributesBuilder) Build() (object *LDAPAttributes, err error) {
 	object = new(LDAPAttributes)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.id != nil {
 		object.id = make([]string, len(b.id))
 		copy(object.id, b.id)

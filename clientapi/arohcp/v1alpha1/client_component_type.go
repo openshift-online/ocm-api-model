@@ -23,22 +23,14 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // The reference of a component that will consume the client configuration.
 type ClientComponent struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	name      string
 	namespace string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ClientComponent) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // Name returns the value of the 'name' attribute, or
@@ -46,7 +38,7 @@ func (o *ClientComponent) Empty() bool {
 //
 // The name of the component.
 func (o *ClientComponent) Name() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.name
 	}
 	return ""
@@ -57,7 +49,7 @@ func (o *ClientComponent) Name() string {
 //
 // The name of the component.
 func (o *ClientComponent) GetName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.name
 	}
@@ -69,7 +61,7 @@ func (o *ClientComponent) GetName() (value string, ok bool) {
 //
 // The namespace of the component.
 func (o *ClientComponent) Namespace() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.namespace
 	}
 	return ""
@@ -80,7 +72,7 @@ func (o *ClientComponent) Namespace() string {
 //
 // The namespace of the component.
 func (o *ClientComponent) GetNamespace() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.namespace
 	}

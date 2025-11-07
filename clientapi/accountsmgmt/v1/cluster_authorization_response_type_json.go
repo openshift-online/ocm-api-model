@@ -42,7 +42,7 @@ func WriteClusterAuthorizationResponse(object *ClusterAuthorizationResponse, str
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteClusterAuthorizationResponse(object *ClusterAuthorizationResponse, str
 		stream.WriteBool(object.allowed)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.excessResources != nil
+	present_ = object.bitmap_&2 != 0 && object.excessResources != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteClusterAuthorizationResponse(object *ClusterAuthorizationResponse, str
 		WriteReservedResourceList(object.excessResources, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2] && object.subscription != nil
+	present_ = object.bitmap_&4 != 0 && object.subscription != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,9 +85,7 @@ func UnmarshalClusterAuthorizationResponse(source interface{}) (object *ClusterA
 
 // ReadClusterAuthorizationResponse reads a value of the 'cluster_authorization_response' type from the given iterator.
 func ReadClusterAuthorizationResponse(iterator *jsoniter.Iterator) *ClusterAuthorizationResponse {
-	object := &ClusterAuthorizationResponse{
-		fieldSet_: make([]bool, 3),
-	}
+	object := &ClusterAuthorizationResponse{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -97,15 +95,15 @@ func ReadClusterAuthorizationResponse(iterator *jsoniter.Iterator) *ClusterAutho
 		case "allowed":
 			value := iterator.ReadBool()
 			object.allowed = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "excess_resources":
 			value := ReadReservedResourceList(iterator)
 			object.excessResources = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "subscription":
 			value := ReadSubscription(iterator)
 			object.subscription = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		default:
 			iterator.ReadAny()
 		}

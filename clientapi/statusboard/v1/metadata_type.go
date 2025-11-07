@@ -21,13 +21,13 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/statusboard/v1
 
 // Metadata contains the version metadata.
 type Metadata struct {
-	fieldSet_     []bool
+	bitmap_       uint32
 	serverVersion string
 }
 
 // ServerVersion returns the version of the server.
 func (m *Metadata) ServerVersion() string {
-	if m != nil && len(m.fieldSet_) > 0 && m.fieldSet_[0] {
+	if m != nil && m.bitmap_&1 != 0 {
 		return m.serverVersion
 	}
 	return ""
@@ -36,7 +36,7 @@ func (m *Metadata) ServerVersion() string {
 // GetServerVersion returns the value of the server version and a flag indicating if
 // the attribute has a value.
 func (m *Metadata) GetServerVersion() (value string, ok bool) {
-	ok = m != nil && len(m.fieldSet_) > 0 && m.fieldSet_[0]
+	ok = m != nil && m.bitmap_&1 != 0
 	if ok {
 		value = m.serverVersion
 	}

@@ -23,21 +23,13 @@ package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v
 //
 // AWS provider configuration settings when using AutoNode on a ROSA HCP Cluster
 type AwsAutoNode struct {
-	fieldSet_ []bool
-	roleArn   string
+	bitmap_ uint32
+	roleArn string
 }
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AwsAutoNode) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // RoleArn returns the value of the 'role_arn' attribute, or
@@ -47,7 +39,7 @@ func (o *AwsAutoNode) Empty() bool {
 // controller.
 // The role must exist prior to enabling AutoNode on the cluster.
 func (o *AwsAutoNode) RoleArn() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.roleArn
 	}
 	return ""
@@ -60,7 +52,7 @@ func (o *AwsAutoNode) RoleArn() string {
 // controller.
 // The role must exist prior to enabling AutoNode on the cluster.
 func (o *AwsAutoNode) GetRoleArn() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.roleArn
 	}

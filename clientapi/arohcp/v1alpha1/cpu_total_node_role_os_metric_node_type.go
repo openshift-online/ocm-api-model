@@ -27,7 +27,7 @@ import (
 //
 // Representation of information from telemetry about a the CPU capacity by node role and OS.
 type CPUTotalNodeRoleOSMetricNode struct {
-	fieldSet_       []bool
+	bitmap_         uint32
 	cpuTotal        float64
 	nodeRoles       []string
 	operatingSystem string
@@ -36,15 +36,7 @@ type CPUTotalNodeRoleOSMetricNode struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *CPUTotalNodeRoleOSMetricNode) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // CPUTotal returns the value of the 'CPU_total' attribute, or
@@ -52,7 +44,7 @@ func (o *CPUTotalNodeRoleOSMetricNode) Empty() bool {
 //
 // The total CPU capacity of nodes with this set of roles and operating system.
 func (o *CPUTotalNodeRoleOSMetricNode) CPUTotal() float64 {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.cpuTotal
 	}
 	return 0.0
@@ -63,7 +55,7 @@ func (o *CPUTotalNodeRoleOSMetricNode) CPUTotal() float64 {
 //
 // The total CPU capacity of nodes with this set of roles and operating system.
 func (o *CPUTotalNodeRoleOSMetricNode) GetCPUTotal() (value float64, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.cpuTotal
 	}
@@ -75,7 +67,7 @@ func (o *CPUTotalNodeRoleOSMetricNode) GetCPUTotal() (value float64, ok bool) {
 //
 // Representation of the node role for a cluster.
 func (o *CPUTotalNodeRoleOSMetricNode) NodeRoles() []string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.nodeRoles
 	}
 	return nil
@@ -86,7 +78,7 @@ func (o *CPUTotalNodeRoleOSMetricNode) NodeRoles() []string {
 //
 // Representation of the node role for a cluster.
 func (o *CPUTotalNodeRoleOSMetricNode) GetNodeRoles() (value []string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.nodeRoles
 	}
@@ -98,7 +90,7 @@ func (o *CPUTotalNodeRoleOSMetricNode) GetNodeRoles() (value []string, ok bool) 
 //
 // The operating system.
 func (o *CPUTotalNodeRoleOSMetricNode) OperatingSystem() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.operatingSystem
 	}
 	return ""
@@ -109,7 +101,7 @@ func (o *CPUTotalNodeRoleOSMetricNode) OperatingSystem() string {
 //
 // The operating system.
 func (o *CPUTotalNodeRoleOSMetricNode) GetOperatingSystem() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.operatingSystem
 	}
@@ -119,7 +111,7 @@ func (o *CPUTotalNodeRoleOSMetricNode) GetOperatingSystem() (value string, ok bo
 // Time returns the value of the 'time' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *CPUTotalNodeRoleOSMetricNode) Time() time.Time {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.time
 	}
 	return time.Time{}
@@ -128,7 +120,7 @@ func (o *CPUTotalNodeRoleOSMetricNode) Time() time.Time {
 // GetTime returns the value of the 'time' attribute and
 // a flag indicating if the attribute has a value.
 func (o *CPUTotalNodeRoleOSMetricNode) GetTime() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.time
 	}

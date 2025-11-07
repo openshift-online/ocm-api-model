@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// ApplicationBuilder contains the data and logic needed to build 'application' objects.
+//
 // Definition of a Status Board application.
 type ApplicationBuilder struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	id        string
 	href      string
 	createdAt time.Time
@@ -39,102 +41,67 @@ type ApplicationBuilder struct {
 
 // NewApplication creates a new builder of 'application' objects.
 func NewApplication() *ApplicationBuilder {
-	return &ApplicationBuilder{
-		fieldSet_: make([]bool, 10),
-	}
+	return &ApplicationBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ApplicationBuilder) Link(value bool) *ApplicationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ApplicationBuilder) ID(value string) *ApplicationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ApplicationBuilder) HREF(value string) *ApplicationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ApplicationBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ApplicationBuilder) CreatedAt(value time.Time) *ApplicationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.createdAt = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // Fullname sets the value of the 'fullname' attribute to the given value.
 func (b *ApplicationBuilder) Fullname(value string) *ApplicationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.fullname = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // Metadata sets the value of the 'metadata' attribute to the given value.
 func (b *ApplicationBuilder) Metadata(value interface{}) *ApplicationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.metadata = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ApplicationBuilder) Name(value string) *ApplicationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.name = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // Owners sets the value of the 'owners' attribute to the given values.
 func (b *ApplicationBuilder) Owners(values ...*OwnerBuilder) *ApplicationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.owners = make([]*OwnerBuilder, len(values))
 	copy(b.owners, values)
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
@@ -142,25 +109,19 @@ func (b *ApplicationBuilder) Owners(values ...*OwnerBuilder) *ApplicationBuilder
 //
 // Definition of a Status Board product.
 func (b *ApplicationBuilder) Product(value *ProductBuilder) *ApplicationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.product = value
 	if value != nil {
-		b.fieldSet_[8] = true
+		b.bitmap_ |= 256
 	} else {
-		b.fieldSet_[8] = false
+		b.bitmap_ &^= 256
 	}
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ApplicationBuilder) UpdatedAt(value time.Time) *ApplicationBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.updatedAt = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
@@ -169,10 +130,7 @@ func (b *ApplicationBuilder) Copy(object *Application) *ApplicationBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.createdAt = object.createdAt
@@ -201,10 +159,7 @@ func (b *ApplicationBuilder) Build() (object *Application, err error) {
 	object = new(Application)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.createdAt = b.createdAt
 	object.fullname = b.fullname
 	object.metadata = b.metadata

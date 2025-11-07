@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// ServiceBuilder contains the data and logic needed to build 'service' objects.
+//
 // Definition of a Status Board Service.
 type ServiceBuilder struct {
-	fieldSet_       []bool
+	bitmap_         uint32
 	id              string
 	href            string
 	application     *ApplicationBuilder
@@ -46,198 +48,136 @@ type ServiceBuilder struct {
 
 // NewService creates a new builder of 'service' objects.
 func NewService() *ServiceBuilder {
-	return &ServiceBuilder{
-		fieldSet_: make([]bool, 17),
-	}
+	return &ServiceBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ServiceBuilder) Link(value bool) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *ServiceBuilder) ID(value string) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *ServiceBuilder) HREF(value string) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *ServiceBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // Application sets the value of the 'application' attribute to the given value.
 //
 // Definition of a Status Board application.
 func (b *ServiceBuilder) Application(value *ApplicationBuilder) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.application = value
 	if value != nil {
-		b.fieldSet_[3] = true
+		b.bitmap_ |= 8
 	} else {
-		b.fieldSet_[3] = false
+		b.bitmap_ &^= 8
 	}
 	return b
 }
 
 // CreatedAt sets the value of the 'created_at' attribute to the given value.
 func (b *ServiceBuilder) CreatedAt(value time.Time) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.createdAt = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // CurrentStatus sets the value of the 'current_status' attribute to the given value.
 func (b *ServiceBuilder) CurrentStatus(value string) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.currentStatus = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // Fullname sets the value of the 'fullname' attribute to the given value.
 func (b *ServiceBuilder) Fullname(value string) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.fullname = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // LastPingAt sets the value of the 'last_ping_at' attribute to the given value.
 func (b *ServiceBuilder) LastPingAt(value time.Time) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.lastPingAt = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // Metadata sets the value of the 'metadata' attribute to the given value.
 func (b *ServiceBuilder) Metadata(value interface{}) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.metadata = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *ServiceBuilder) Name(value string) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.name = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
 // Owners sets the value of the 'owners' attribute to the given values.
 func (b *ServiceBuilder) Owners(values ...*OwnerBuilder) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.owners = make([]*OwnerBuilder, len(values))
 	copy(b.owners, values)
-	b.fieldSet_[10] = true
+	b.bitmap_ |= 1024
 	return b
 }
 
 // Private sets the value of the 'private' attribute to the given value.
 func (b *ServiceBuilder) Private(value bool) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.private = value
-	b.fieldSet_[11] = true
+	b.bitmap_ |= 2048
 	return b
 }
 
 // ServiceEndpoint sets the value of the 'service_endpoint' attribute to the given value.
 func (b *ServiceBuilder) ServiceEndpoint(value string) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.serviceEndpoint = value
-	b.fieldSet_[12] = true
+	b.bitmap_ |= 4096
 	return b
 }
 
 // StatusType sets the value of the 'status_type' attribute to the given value.
 func (b *ServiceBuilder) StatusType(value string) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.statusType = value
-	b.fieldSet_[13] = true
+	b.bitmap_ |= 8192
 	return b
 }
 
 // StatusUpdatedAt sets the value of the 'status_updated_at' attribute to the given value.
 func (b *ServiceBuilder) StatusUpdatedAt(value time.Time) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.statusUpdatedAt = value
-	b.fieldSet_[14] = true
+	b.bitmap_ |= 16384
 	return b
 }
 
 // Token sets the value of the 'token' attribute to the given value.
 func (b *ServiceBuilder) Token(value string) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.token = value
-	b.fieldSet_[15] = true
+	b.bitmap_ |= 32768
 	return b
 }
 
 // UpdatedAt sets the value of the 'updated_at' attribute to the given value.
 func (b *ServiceBuilder) UpdatedAt(value time.Time) *ServiceBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 17)
-	}
 	b.updatedAt = value
-	b.fieldSet_[16] = true
+	b.bitmap_ |= 65536
 	return b
 }
 
@@ -246,10 +186,7 @@ func (b *ServiceBuilder) Copy(object *Service) *ServiceBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	if object.application != nil {
@@ -285,10 +222,7 @@ func (b *ServiceBuilder) Build() (object *Service, err error) {
 	object = new(Service)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.application != nil {
 		object.application, err = b.application.Build()
 		if err != nil {

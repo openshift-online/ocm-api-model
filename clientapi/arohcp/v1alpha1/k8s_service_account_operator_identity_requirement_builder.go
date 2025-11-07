@@ -19,49 +19,34 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// K8sServiceAccountOperatorIdentityRequirementBuilder contains the data and logic needed to build 'K8s_service_account_operator_identity_requirement' objects.
 type K8sServiceAccountOperatorIdentityRequirementBuilder struct {
-	fieldSet_ []bool
+	bitmap_   uint32
 	name      string
 	namespace string
 }
 
 // NewK8sServiceAccountOperatorIdentityRequirement creates a new builder of 'K8s_service_account_operator_identity_requirement' objects.
 func NewK8sServiceAccountOperatorIdentityRequirement() *K8sServiceAccountOperatorIdentityRequirementBuilder {
-	return &K8sServiceAccountOperatorIdentityRequirementBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &K8sServiceAccountOperatorIdentityRequirementBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *K8sServiceAccountOperatorIdentityRequirementBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *K8sServiceAccountOperatorIdentityRequirementBuilder) Name(value string) *K8sServiceAccountOperatorIdentityRequirementBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.name = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Namespace sets the value of the 'namespace' attribute to the given value.
 func (b *K8sServiceAccountOperatorIdentityRequirementBuilder) Namespace(value string) *K8sServiceAccountOperatorIdentityRequirementBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.namespace = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -70,10 +55,7 @@ func (b *K8sServiceAccountOperatorIdentityRequirementBuilder) Copy(object *K8sSe
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.name = object.name
 	b.namespace = object.namespace
 	return b
@@ -82,10 +64,7 @@ func (b *K8sServiceAccountOperatorIdentityRequirementBuilder) Copy(object *K8sSe
 // Build creates a 'K8s_service_account_operator_identity_requirement' object using the configuration stored in the builder.
 func (b *K8sServiceAccountOperatorIdentityRequirementBuilder) Build() (object *K8sServiceAccountOperatorIdentityRequirement, err error) {
 	object = new(K8sServiceAccountOperatorIdentityRequirement)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.name = b.name
 	object.namespace = b.namespace
 	return

@@ -42,7 +42,7 @@ func WriteSdnToOvnClusterMigration(object *SdnToOvnClusterMigration, stream *jso
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0]
+	present_ = object.bitmap_&1 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteSdnToOvnClusterMigration(object *SdnToOvnClusterMigration, stream *jso
 		stream.WriteString(object.joinIpv4)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1]
+	present_ = object.bitmap_&2 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -60,7 +60,7 @@ func WriteSdnToOvnClusterMigration(object *SdnToOvnClusterMigration, stream *jso
 		stream.WriteString(object.masqueradeIpv4)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 2 && object.fieldSet_[2]
+	present_ = object.bitmap_&4 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -85,9 +85,7 @@ func UnmarshalSdnToOvnClusterMigration(source interface{}) (object *SdnToOvnClus
 
 // ReadSdnToOvnClusterMigration reads a value of the 'sdn_to_ovn_cluster_migration' type from the given iterator.
 func ReadSdnToOvnClusterMigration(iterator *jsoniter.Iterator) *SdnToOvnClusterMigration {
-	object := &SdnToOvnClusterMigration{
-		fieldSet_: make([]bool, 3),
-	}
+	object := &SdnToOvnClusterMigration{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -97,15 +95,15 @@ func ReadSdnToOvnClusterMigration(iterator *jsoniter.Iterator) *SdnToOvnClusterM
 		case "join_ipv4":
 			value := iterator.ReadString()
 			object.joinIpv4 = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "masquerade_ipv4":
 			value := iterator.ReadString()
 			object.masqueradeIpv4 = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "transit_ipv4":
 			value := iterator.ReadString()
 			object.transitIpv4 = value
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		default:
 			iterator.ReadAny()
 		}

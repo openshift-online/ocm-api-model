@@ -42,7 +42,7 @@ func WriteSocketTotalsNodeRoleOSMetricNode(object *SocketTotalsNodeRoleOSMetricN
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.socketTotals != nil
+	present_ = object.bitmap_&1 != 0 && object.socketTotals != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -67,9 +67,7 @@ func UnmarshalSocketTotalsNodeRoleOSMetricNode(source interface{}) (object *Sock
 
 // ReadSocketTotalsNodeRoleOSMetricNode reads a value of the 'socket_totals_node_role_OS_metric_node' type from the given iterator.
 func ReadSocketTotalsNodeRoleOSMetricNode(iterator *jsoniter.Iterator) *SocketTotalsNodeRoleOSMetricNode {
-	object := &SocketTotalsNodeRoleOSMetricNode{
-		fieldSet_: make([]bool, 1),
-	}
+	object := &SocketTotalsNodeRoleOSMetricNode{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -79,7 +77,7 @@ func ReadSocketTotalsNodeRoleOSMetricNode(iterator *jsoniter.Iterator) *SocketTo
 		case "socket_totals":
 			value := ReadSocketTotalNodeRoleOSMetricNodeList(iterator)
 			object.socketTotals = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		default:
 			iterator.ReadAny()
 		}

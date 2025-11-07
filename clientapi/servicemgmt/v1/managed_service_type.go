@@ -39,7 +39,7 @@ const ManagedServiceNilKind = "ManagedServiceNil"
 //
 // Represents data about a running Managed Service.
 type ManagedService struct {
-	fieldSet_    []bool
+	bitmap_      uint32
 	id           string
 	href         string
 	addon        *StatefulObject
@@ -58,7 +58,7 @@ func (o *ManagedService) Kind() string {
 	if o == nil {
 		return ManagedServiceNilKind
 	}
-	if len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o.bitmap_&1 != 0 {
 		return ManagedServiceLinkKind
 	}
 	return ManagedServiceKind
@@ -66,12 +66,12 @@ func (o *ManagedService) Kind() string {
 
 // Link returns true if this is a link.
 func (o *ManagedService) Link() bool {
-	return o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	return o != nil && o.bitmap_&1 != 0
 }
 
 // ID returns the identifier of the object.
 func (o *ManagedService) ID() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.id
 	}
 	return ""
@@ -80,7 +80,7 @@ func (o *ManagedService) ID() string {
 // GetID returns the identifier of the object and a flag indicating if the
 // identifier has a value.
 func (o *ManagedService) GetID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.id
 	}
@@ -89,7 +89,7 @@ func (o *ManagedService) GetID() (value string, ok bool) {
 
 // HREF returns the link to the object.
 func (o *ManagedService) HREF() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.href
 	}
 	return ""
@@ -98,7 +98,7 @@ func (o *ManagedService) HREF() string {
 // GetHREF returns the link of the object and a flag indicating if the
 // link has a value.
 func (o *ManagedService) GetHREF() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.href
 	}
@@ -107,23 +107,13 @@ func (o *ManagedService) GetHREF() (value string, ok bool) {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *ManagedService) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(o.fieldSet_); i++ {
-		if o.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_&^1 == 0
 }
 
 // Addon returns the value of the 'addon' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ManagedService) Addon() *StatefulObject {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.addon
 	}
 	return nil
@@ -132,7 +122,7 @@ func (o *ManagedService) Addon() *StatefulObject {
 // GetAddon returns the value of the 'addon' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ManagedService) GetAddon() (value *StatefulObject, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.addon
 	}
@@ -142,7 +132,7 @@ func (o *ManagedService) GetAddon() (value *StatefulObject, ok bool) {
 // Cluster returns the value of the 'cluster' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ManagedService) Cluster() *Cluster {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.cluster
 	}
 	return nil
@@ -151,7 +141,7 @@ func (o *ManagedService) Cluster() *Cluster {
 // GetCluster returns the value of the 'cluster' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ManagedService) GetCluster() (value *Cluster, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.cluster
 	}
@@ -161,7 +151,7 @@ func (o *ManagedService) GetCluster() (value *Cluster, ok bool) {
 // CreatedAt returns the value of the 'created_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ManagedService) CreatedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.createdAt
 	}
 	return time.Time{}
@@ -170,7 +160,7 @@ func (o *ManagedService) CreatedAt() time.Time {
 // GetCreatedAt returns the value of the 'created_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ManagedService) GetCreatedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.createdAt
 	}
@@ -180,7 +170,7 @@ func (o *ManagedService) GetCreatedAt() (value time.Time, ok bool) {
 // ExpiredAt returns the value of the 'expired_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ManagedService) ExpiredAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && o.bitmap_&64 != 0 {
 		return o.expiredAt
 	}
 	return time.Time{}
@@ -189,7 +179,7 @@ func (o *ManagedService) ExpiredAt() time.Time {
 // GetExpiredAt returns the value of the 'expired_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ManagedService) GetExpiredAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && o.bitmap_&64 != 0
 	if ok {
 		value = o.expiredAt
 	}
@@ -199,7 +189,7 @@ func (o *ManagedService) GetExpiredAt() (value time.Time, ok bool) {
 // Parameters returns the value of the 'parameters' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ManagedService) Parameters() []*ServiceParameter {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && o.bitmap_&128 != 0 {
 		return o.parameters
 	}
 	return nil
@@ -208,7 +198,7 @@ func (o *ManagedService) Parameters() []*ServiceParameter {
 // GetParameters returns the value of the 'parameters' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ManagedService) GetParameters() (value []*ServiceParameter, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && o.bitmap_&128 != 0
 	if ok {
 		value = o.parameters
 	}
@@ -218,7 +208,7 @@ func (o *ManagedService) GetParameters() (value []*ServiceParameter, ok bool) {
 // Resources returns the value of the 'resources' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ManagedService) Resources() []*StatefulObject {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && o.bitmap_&256 != 0 {
 		return o.resources
 	}
 	return nil
@@ -227,7 +217,7 @@ func (o *ManagedService) Resources() []*StatefulObject {
 // GetResources returns the value of the 'resources' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ManagedService) GetResources() (value []*StatefulObject, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && o.bitmap_&256 != 0
 	if ok {
 		value = o.resources
 	}
@@ -237,7 +227,7 @@ func (o *ManagedService) GetResources() (value []*StatefulObject, ok bool) {
 // Service returns the value of the 'service' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ManagedService) Service() string {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && o.bitmap_&512 != 0 {
 		return o.service
 	}
 	return ""
@@ -246,7 +236,7 @@ func (o *ManagedService) Service() string {
 // GetService returns the value of the 'service' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ManagedService) GetService() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && o.bitmap_&512 != 0
 	if ok {
 		value = o.service
 	}
@@ -256,7 +246,7 @@ func (o *ManagedService) GetService() (value string, ok bool) {
 // ServiceState returns the value of the 'service_state' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ManagedService) ServiceState() string {
-	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+	if o != nil && o.bitmap_&1024 != 0 {
 		return o.serviceState
 	}
 	return ""
@@ -265,7 +255,7 @@ func (o *ManagedService) ServiceState() string {
 // GetServiceState returns the value of the 'service_state' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ManagedService) GetServiceState() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	ok = o != nil && o.bitmap_&1024 != 0
 	if ok {
 		value = o.serviceState
 	}
@@ -275,7 +265,7 @@ func (o *ManagedService) GetServiceState() (value string, ok bool) {
 // UpdatedAt returns the value of the 'updated_at' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 func (o *ManagedService) UpdatedAt() time.Time {
-	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
+	if o != nil && o.bitmap_&2048 != 0 {
 		return o.updatedAt
 	}
 	return time.Time{}
@@ -284,7 +274,7 @@ func (o *ManagedService) UpdatedAt() time.Time {
 // GetUpdatedAt returns the value of the 'updated_at' attribute and
 // a flag indicating if the attribute has a value.
 func (o *ManagedService) GetUpdatedAt() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
+	ok = o != nil && o.bitmap_&2048 != 0
 	if ok {
 		value = o.updatedAt
 	}

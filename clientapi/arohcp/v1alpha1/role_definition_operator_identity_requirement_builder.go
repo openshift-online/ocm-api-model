@@ -19,49 +19,34 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// RoleDefinitionOperatorIdentityRequirementBuilder contains the data and logic needed to build 'role_definition_operator_identity_requirement' objects.
 type RoleDefinitionOperatorIdentityRequirementBuilder struct {
-	fieldSet_  []bool
+	bitmap_    uint32
 	name       string
 	resourceId string
 }
 
 // NewRoleDefinitionOperatorIdentityRequirement creates a new builder of 'role_definition_operator_identity_requirement' objects.
 func NewRoleDefinitionOperatorIdentityRequirement() *RoleDefinitionOperatorIdentityRequirementBuilder {
-	return &RoleDefinitionOperatorIdentityRequirementBuilder{
-		fieldSet_: make([]bool, 2),
-	}
+	return &RoleDefinitionOperatorIdentityRequirementBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *RoleDefinitionOperatorIdentityRequirementBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Name sets the value of the 'name' attribute to the given value.
 func (b *RoleDefinitionOperatorIdentityRequirementBuilder) Name(value string) *RoleDefinitionOperatorIdentityRequirementBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.name = value
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ResourceId sets the value of the 'resource_id' attribute to the given value.
 func (b *RoleDefinitionOperatorIdentityRequirementBuilder) ResourceId(value string) *RoleDefinitionOperatorIdentityRequirementBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 2)
-	}
 	b.resourceId = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
@@ -70,10 +55,7 @@ func (b *RoleDefinitionOperatorIdentityRequirementBuilder) Copy(object *RoleDefi
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.name = object.name
 	b.resourceId = object.resourceId
 	return b
@@ -82,10 +64,7 @@ func (b *RoleDefinitionOperatorIdentityRequirementBuilder) Copy(object *RoleDefi
 // Build creates a 'role_definition_operator_identity_requirement' object using the configuration stored in the builder.
 func (b *RoleDefinitionOperatorIdentityRequirementBuilder) Build() (object *RoleDefinitionOperatorIdentityRequirement, err error) {
 	object = new(RoleDefinitionOperatorIdentityRequirement)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.name = b.name
 	object.resourceId = b.resourceId
 	return

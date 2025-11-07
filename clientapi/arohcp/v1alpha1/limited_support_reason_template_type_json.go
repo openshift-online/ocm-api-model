@@ -42,13 +42,13 @@ func WriteLimitedSupportReasonTemplate(object *LimitedSupportReasonTemplate, str
 	count := 0
 	stream.WriteObjectStart()
 	stream.WriteObjectField("kind")
-	if len(object.fieldSet_) > 0 && object.fieldSet_[0] {
+	if object.bitmap_&1 != 0 {
 		stream.WriteString(LimitedSupportReasonTemplateLinkKind)
 	} else {
 		stream.WriteString(LimitedSupportReasonTemplateKind)
 	}
 	count++
-	if len(object.fieldSet_) > 1 && object.fieldSet_[1] {
+	if object.bitmap_&2 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -56,7 +56,7 @@ func WriteLimitedSupportReasonTemplate(object *LimitedSupportReasonTemplate, str
 		stream.WriteString(object.id)
 		count++
 	}
-	if len(object.fieldSet_) > 2 && object.fieldSet_[2] {
+	if object.bitmap_&4 != 0 {
 		if count > 0 {
 			stream.WriteMore()
 		}
@@ -65,7 +65,7 @@ func WriteLimitedSupportReasonTemplate(object *LimitedSupportReasonTemplate, str
 		count++
 	}
 	var present_ bool
-	present_ = len(object.fieldSet_) > 3 && object.fieldSet_[3]
+	present_ = object.bitmap_&8 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -74,7 +74,7 @@ func WriteLimitedSupportReasonTemplate(object *LimitedSupportReasonTemplate, str
 		stream.WriteString(object.details)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = object.bitmap_&16 != 0
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -99,9 +99,7 @@ func UnmarshalLimitedSupportReasonTemplate(source interface{}) (object *LimitedS
 
 // ReadLimitedSupportReasonTemplate reads a value of the 'limited_support_reason_template' type from the given iterator.
 func ReadLimitedSupportReasonTemplate(iterator *jsoniter.Iterator) *LimitedSupportReasonTemplate {
-	object := &LimitedSupportReasonTemplate{
-		fieldSet_: make([]bool, 5),
-	}
+	object := &LimitedSupportReasonTemplate{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -111,22 +109,22 @@ func ReadLimitedSupportReasonTemplate(iterator *jsoniter.Iterator) *LimitedSuppo
 		case "kind":
 			value := iterator.ReadString()
 			if value == LimitedSupportReasonTemplateLinkKind {
-				object.fieldSet_[0] = true
+				object.bitmap_ |= 1
 			}
 		case "id":
 			object.id = iterator.ReadString()
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		case "href":
 			object.href = iterator.ReadString()
-			object.fieldSet_[2] = true
+			object.bitmap_ |= 4
 		case "details":
 			value := iterator.ReadString()
 			object.details = value
-			object.fieldSet_[3] = true
+			object.bitmap_ |= 8
 		case "summary":
 			value := iterator.ReadString()
 			object.summary = value
-			object.fieldSet_[4] = true
+			object.bitmap_ |= 16
 		default:
 			iterator.ReadAny()
 		}

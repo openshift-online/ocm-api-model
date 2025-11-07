@@ -23,9 +23,11 @@ import (
 	time "time"
 )
 
+// AddonUpgradePolicyBuilder contains the data and logic needed to build 'addon_upgrade_policy' objects.
+//
 // Representation of an upgrade policy that can be set for a cluster.
 type AddonUpgradePolicyBuilder struct {
-	fieldSet_    []bool
+	bitmap_      uint32
 	id           string
 	href         string
 	addonID      string
@@ -39,121 +41,80 @@ type AddonUpgradePolicyBuilder struct {
 
 // NewAddonUpgradePolicy creates a new builder of 'addon_upgrade_policy' objects.
 func NewAddonUpgradePolicy() *AddonUpgradePolicyBuilder {
-	return &AddonUpgradePolicyBuilder{
-		fieldSet_: make([]bool, 10),
-	}
+	return &AddonUpgradePolicyBuilder{}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *AddonUpgradePolicyBuilder) Link(value bool) *AddonUpgradePolicyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // ID sets the identifier of the object.
 func (b *AddonUpgradePolicyBuilder) ID(value string) *AddonUpgradePolicyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.id = value
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // HREF sets the link to the object.
 func (b *AddonUpgradePolicyBuilder) HREF(value string) *AddonUpgradePolicyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.href = value
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *AddonUpgradePolicyBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	// Check all fields except the link flag (index 0)
-	for i := 1; i < len(b.fieldSet_); i++ {
-		if b.fieldSet_[i] {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_&^1 == 0
 }
 
 // AddonID sets the value of the 'addon_ID' attribute to the given value.
 func (b *AddonUpgradePolicyBuilder) AddonID(value string) *AddonUpgradePolicyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.addonID = value
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
 // ClusterID sets the value of the 'cluster_ID' attribute to the given value.
 func (b *AddonUpgradePolicyBuilder) ClusterID(value string) *AddonUpgradePolicyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.clusterID = value
-	b.fieldSet_[4] = true
+	b.bitmap_ |= 16
 	return b
 }
 
 // NextRun sets the value of the 'next_run' attribute to the given value.
 func (b *AddonUpgradePolicyBuilder) NextRun(value time.Time) *AddonUpgradePolicyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.nextRun = value
-	b.fieldSet_[5] = true
+	b.bitmap_ |= 32
 	return b
 }
 
 // Schedule sets the value of the 'schedule' attribute to the given value.
 func (b *AddonUpgradePolicyBuilder) Schedule(value string) *AddonUpgradePolicyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.schedule = value
-	b.fieldSet_[6] = true
+	b.bitmap_ |= 64
 	return b
 }
 
 // ScheduleType sets the value of the 'schedule_type' attribute to the given value.
 func (b *AddonUpgradePolicyBuilder) ScheduleType(value string) *AddonUpgradePolicyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.scheduleType = value
-	b.fieldSet_[7] = true
+	b.bitmap_ |= 128
 	return b
 }
 
 // UpgradeType sets the value of the 'upgrade_type' attribute to the given value.
 func (b *AddonUpgradePolicyBuilder) UpgradeType(value string) *AddonUpgradePolicyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.upgradeType = value
-	b.fieldSet_[8] = true
+	b.bitmap_ |= 256
 	return b
 }
 
 // Version sets the value of the 'version' attribute to the given value.
 func (b *AddonUpgradePolicyBuilder) Version(value string) *AddonUpgradePolicyBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 10)
-	}
 	b.version = value
-	b.fieldSet_[9] = true
+	b.bitmap_ |= 512
 	return b
 }
 
@@ -162,10 +123,7 @@ func (b *AddonUpgradePolicyBuilder) Copy(object *AddonUpgradePolicy) *AddonUpgra
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	b.id = object.id
 	b.href = object.href
 	b.addonID = object.addonID
@@ -183,10 +141,7 @@ func (b *AddonUpgradePolicyBuilder) Build() (object *AddonUpgradePolicy, err err
 	object = new(AddonUpgradePolicy)
 	object.id = b.id
 	object.href = b.href
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	object.addonID = b.addonID
 	object.clusterID = b.clusterID
 	object.nextRun = b.nextRun

@@ -23,7 +23,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 //
 // Representation of an sts role for a rosa cluster
 type AWSSTSRole struct {
-	fieldSet_          []bool
+	bitmap_            uint32
 	roleARN            string
 	roleType           string
 	roleVersion        string
@@ -34,15 +34,7 @@ type AWSSTSRole struct {
 
 // Empty returns true if the object is empty, i.e. no attribute has a value.
 func (o *AWSSTSRole) Empty() bool {
-	if o == nil || len(o.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range o.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return o == nil || o.bitmap_ == 0
 }
 
 // HcpManagedPolicies returns the value of the 'hcp_managed_policies' attribute, or
@@ -50,7 +42,7 @@ func (o *AWSSTSRole) Empty() bool {
 //
 // Does this Role have HCP Managed Policies?
 func (o *AWSSTSRole) HcpManagedPolicies() bool {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && o.bitmap_&1 != 0 {
 		return o.hcpManagedPolicies
 	}
 	return false
@@ -61,7 +53,7 @@ func (o *AWSSTSRole) HcpManagedPolicies() bool {
 //
 // Does this Role have HCP Managed Policies?
 func (o *AWSSTSRole) GetHcpManagedPolicies() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && o.bitmap_&1 != 0
 	if ok {
 		value = o.hcpManagedPolicies
 	}
@@ -73,7 +65,7 @@ func (o *AWSSTSRole) GetHcpManagedPolicies() (value bool, ok bool) {
 //
 // Does this role have Admin permission?
 func (o *AWSSTSRole) IsAdmin() bool {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && o.bitmap_&2 != 0 {
 		return o.isAdmin
 	}
 	return false
@@ -84,7 +76,7 @@ func (o *AWSSTSRole) IsAdmin() bool {
 //
 // Does this role have Admin permission?
 func (o *AWSSTSRole) GetIsAdmin() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && o.bitmap_&2 != 0
 	if ok {
 		value = o.isAdmin
 	}
@@ -96,7 +88,7 @@ func (o *AWSSTSRole) GetIsAdmin() (value bool, ok bool) {
 //
 // Does this Role have Managed Policies?
 func (o *AWSSTSRole) ManagedPolicies() bool {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && o.bitmap_&4 != 0 {
 		return o.managedPolicies
 	}
 	return false
@@ -107,7 +99,7 @@ func (o *AWSSTSRole) ManagedPolicies() bool {
 //
 // Does this Role have Managed Policies?
 func (o *AWSSTSRole) GetManagedPolicies() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && o.bitmap_&4 != 0
 	if ok {
 		value = o.managedPolicies
 	}
@@ -119,7 +111,7 @@ func (o *AWSSTSRole) GetManagedPolicies() (value bool, ok bool) {
 //
 // The AWS ARN for this Role
 func (o *AWSSTSRole) RoleARN() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && o.bitmap_&8 != 0 {
 		return o.roleARN
 	}
 	return ""
@@ -130,7 +122,7 @@ func (o *AWSSTSRole) RoleARN() string {
 //
 // The AWS ARN for this Role
 func (o *AWSSTSRole) GetRoleARN() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && o.bitmap_&8 != 0
 	if ok {
 		value = o.roleARN
 	}
@@ -142,7 +134,7 @@ func (o *AWSSTSRole) GetRoleARN() (value string, ok bool) {
 //
 // The type of this Role
 func (o *AWSSTSRole) RoleType() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && o.bitmap_&16 != 0 {
 		return o.roleType
 	}
 	return ""
@@ -153,7 +145,7 @@ func (o *AWSSTSRole) RoleType() string {
 //
 // The type of this Role
 func (o *AWSSTSRole) GetRoleType() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && o.bitmap_&16 != 0
 	if ok {
 		value = o.roleType
 	}
@@ -165,7 +157,7 @@ func (o *AWSSTSRole) GetRoleType() (value string, ok bool) {
 //
 // The Openshift Version for this Role
 func (o *AWSSTSRole) RoleVersion() string {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && o.bitmap_&32 != 0 {
 		return o.roleVersion
 	}
 	return ""
@@ -176,7 +168,7 @@ func (o *AWSSTSRole) RoleVersion() string {
 //
 // The Openshift Version for this Role
 func (o *AWSSTSRole) GetRoleVersion() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && o.bitmap_&32 != 0
 	if ok {
 		value = o.roleVersion
 	}

@@ -42,7 +42,7 @@ func WriteExternalAuthClaim(object *ExternalAuthClaim, stream *jsoniter.Stream) 
 	count := 0
 	stream.WriteObjectStart()
 	var present_ bool
-	present_ = len(object.fieldSet_) > 0 && object.fieldSet_[0] && object.mappings != nil
+	present_ = object.bitmap_&1 != 0 && object.mappings != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -51,7 +51,7 @@ func WriteExternalAuthClaim(object *ExternalAuthClaim, stream *jsoniter.Stream) 
 		WriteTokenClaimMappings(object.mappings, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 1 && object.fieldSet_[1] && object.validationRules != nil
+	present_ = object.bitmap_&2 != 0 && object.validationRules != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -76,9 +76,7 @@ func UnmarshalExternalAuthClaim(source interface{}) (object *ExternalAuthClaim, 
 
 // ReadExternalAuthClaim reads a value of the 'external_auth_claim' type from the given iterator.
 func ReadExternalAuthClaim(iterator *jsoniter.Iterator) *ExternalAuthClaim {
-	object := &ExternalAuthClaim{
-		fieldSet_: make([]bool, 2),
-	}
+	object := &ExternalAuthClaim{}
 	for {
 		field := iterator.ReadObject()
 		if field == "" {
@@ -88,11 +86,11 @@ func ReadExternalAuthClaim(iterator *jsoniter.Iterator) *ExternalAuthClaim {
 		case "mappings":
 			value := ReadTokenClaimMappings(iterator)
 			object.mappings = value
-			object.fieldSet_[0] = true
+			object.bitmap_ |= 1
 		case "validation_rules":
 			value := ReadTokenClaimValidationRuleList(iterator)
 			object.validationRules = value
-			object.fieldSet_[1] = true
+			object.bitmap_ |= 2
 		default:
 			iterator.ReadAny()
 		}

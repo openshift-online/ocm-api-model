@@ -19,9 +19,11 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
+// OpenIDClaimsBuilder contains the data and logic needed to build 'open_ID_claims' objects.
+//
 // _OpenID_ identity provider claims.
 type OpenIDClaimsBuilder struct {
-	fieldSet_         []bool
+	bitmap_           uint32
 	email             []string
 	groups            []string
 	name              []string
@@ -30,65 +32,43 @@ type OpenIDClaimsBuilder struct {
 
 // NewOpenIDClaims creates a new builder of 'open_ID_claims' objects.
 func NewOpenIDClaims() *OpenIDClaimsBuilder {
-	return &OpenIDClaimsBuilder{
-		fieldSet_: make([]bool, 4),
-	}
+	return &OpenIDClaimsBuilder{}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
 func (b *OpenIDClaimsBuilder) Empty() bool {
-	if b == nil || len(b.fieldSet_) == 0 {
-		return true
-	}
-	for _, set := range b.fieldSet_ {
-		if set {
-			return false
-		}
-	}
-	return true
+	return b == nil || b.bitmap_ == 0
 }
 
 // Email sets the value of the 'email' attribute to the given values.
 func (b *OpenIDClaimsBuilder) Email(values ...string) *OpenIDClaimsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.email = make([]string, len(values))
 	copy(b.email, values)
-	b.fieldSet_[0] = true
+	b.bitmap_ |= 1
 	return b
 }
 
 // Groups sets the value of the 'groups' attribute to the given values.
 func (b *OpenIDClaimsBuilder) Groups(values ...string) *OpenIDClaimsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.groups = make([]string, len(values))
 	copy(b.groups, values)
-	b.fieldSet_[1] = true
+	b.bitmap_ |= 2
 	return b
 }
 
 // Name sets the value of the 'name' attribute to the given values.
 func (b *OpenIDClaimsBuilder) Name(values ...string) *OpenIDClaimsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.name = make([]string, len(values))
 	copy(b.name, values)
-	b.fieldSet_[2] = true
+	b.bitmap_ |= 4
 	return b
 }
 
 // PreferredUsername sets the value of the 'preferred_username' attribute to the given values.
 func (b *OpenIDClaimsBuilder) PreferredUsername(values ...string) *OpenIDClaimsBuilder {
-	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 4)
-	}
 	b.preferredUsername = make([]string, len(values))
 	copy(b.preferredUsername, values)
-	b.fieldSet_[3] = true
+	b.bitmap_ |= 8
 	return b
 }
 
@@ -97,10 +77,7 @@ func (b *OpenIDClaimsBuilder) Copy(object *OpenIDClaims) *OpenIDClaimsBuilder {
 	if object == nil {
 		return b
 	}
-	if len(object.fieldSet_) > 0 {
-		b.fieldSet_ = make([]bool, len(object.fieldSet_))
-		copy(b.fieldSet_, object.fieldSet_)
-	}
+	b.bitmap_ = object.bitmap_
 	if object.email != nil {
 		b.email = make([]string, len(object.email))
 		copy(b.email, object.email)
@@ -131,10 +108,7 @@ func (b *OpenIDClaimsBuilder) Copy(object *OpenIDClaims) *OpenIDClaimsBuilder {
 // Build creates a 'open_ID_claims' object using the configuration stored in the builder.
 func (b *OpenIDClaimsBuilder) Build() (object *OpenIDClaims, err error) {
 	object = new(OpenIDClaims)
-	if len(b.fieldSet_) > 0 {
-		object.fieldSet_ = make([]bool, len(b.fieldSet_))
-		copy(object.fieldSet_, b.fieldSet_)
-	}
+	object.bitmap_ = b.bitmap_
 	if b.email != nil {
 		object.email = make([]string, len(b.email))
 		copy(object.email, b.email)
