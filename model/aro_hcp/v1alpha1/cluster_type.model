@@ -219,10 +219,6 @@ class Cluster {
 	// Billing model for cluster resources.
 	BillingModel BillingModel
 
-	// Indicates whether the User workload monitoring is enabled or not
-	// It is enabled by default
-	DisableUserWorkloadMonitoring Boolean
-
     // Contains information about Managed Service
     ManagedService ManagedService
 
