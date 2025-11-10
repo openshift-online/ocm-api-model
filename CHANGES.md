@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.437 Nov 10 2025
+
+- Add `LogForwarders` APIs/resources to `clusters_mgmt`
+- Remove DisableUserWorkloadMonitoring field from ARO-HCP
+
 ## 0.0.436 Oct 30 2025
 
 - Add ImageType enum to the NodePool model
