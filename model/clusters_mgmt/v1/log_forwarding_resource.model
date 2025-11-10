@@ -14,12 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of a Control Plane
-struct ControlPlane {
-	// Information about the backup of the control plane
-	Backup Backup
+// Manages log forwarding related resources.
+resource LogForwarding {
+	// Reference to the collection of log forwarding group versions.
+	locator Groups {
+		target LogForwardingGroups
+	}
 
-	// Control plane log forwarders configuration.
-	// This can be set during cluster creation to configure control plane log forwarders.
-	link LogForwarders []LogForwarder
+	// Reference to the collection of log forwarder applications.
+	locator Applications {
+		target LogForwardingApplications
+	}
 }
+

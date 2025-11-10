@@ -14,12 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of a Control Plane
-struct ControlPlane {
-	// Information about the backup of the control plane
-	Backup Backup
+// Represents the status of a log forwarder.
+struct LogForwarderStatus {
+    // The current state of the log forwarder.
+    State String
 
-	// Control plane log forwarders configuration.
-	// This can be set during cluster creation to configure control plane log forwarders.
-	link LogForwarders []LogForwarder
+    // A descriptive message providing additional context about the current
+    // state of the log forwarder.
+    Message String
+
+    // The list of applications that are resolved for log forwarding,
+    // including the explicitly specified applications and any default applications.
+    ResolvedApplications []String
 }

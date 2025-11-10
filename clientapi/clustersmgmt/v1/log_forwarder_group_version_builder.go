@@ -19,22 +19,22 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// Representation of a Control Plane
-type ControlPlaneBuilder struct {
-	fieldSet_     []bool
-	backup        *BackupBuilder
-	logForwarders *LogForwarderListBuilder
+// Represents a version of a log forwarder group.
+type LogForwarderGroupVersionBuilder struct {
+	fieldSet_    []bool
+	id           string
+	applications []string
 }
 
-// NewControlPlane creates a new builder of 'control_plane' objects.
-func NewControlPlane() *ControlPlaneBuilder {
-	return &ControlPlaneBuilder{
+// NewLogForwarderGroupVersion creates a new builder of 'log_forwarder_group_version' objects.
+func NewLogForwarderGroupVersion() *LogForwarderGroupVersionBuilder {
+	return &LogForwarderGroupVersionBuilder{
 		fieldSet_: make([]bool, 2),
 	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
-func (b *ControlPlaneBuilder) Empty() bool {
+func (b *LogForwarderGroupVersionBuilder) Empty() bool {
 	if b == nil || len(b.fieldSet_) == 0 {
 		return true
 	}
@@ -46,34 +46,29 @@ func (b *ControlPlaneBuilder) Empty() bool {
 	return true
 }
 
-// Backup sets the value of the 'backup' attribute to the given value.
-//
-// Representation of a Backup.
-func (b *ControlPlaneBuilder) Backup(value *BackupBuilder) *ControlPlaneBuilder {
+// ID sets the value of the 'ID' attribute to the given value.
+func (b *LogForwarderGroupVersionBuilder) ID(value string) *LogForwarderGroupVersionBuilder {
 	if len(b.fieldSet_) == 0 {
 		b.fieldSet_ = make([]bool, 2)
 	}
-	b.backup = value
-	if value != nil {
-		b.fieldSet_[0] = true
-	} else {
-		b.fieldSet_[0] = false
-	}
+	b.id = value
+	b.fieldSet_[0] = true
 	return b
 }
 
-// LogForwarders sets the value of the 'log_forwarders' attribute to the given values.
-func (b *ControlPlaneBuilder) LogForwarders(value *LogForwarderListBuilder) *ControlPlaneBuilder {
+// Applications sets the value of the 'applications' attribute to the given values.
+func (b *LogForwarderGroupVersionBuilder) Applications(values ...string) *LogForwarderGroupVersionBuilder {
 	if len(b.fieldSet_) == 0 {
 		b.fieldSet_ = make([]bool, 2)
 	}
-	b.logForwarders = value
+	b.applications = make([]string, len(values))
+	copy(b.applications, values)
 	b.fieldSet_[1] = true
 	return b
 }
 
 // Copy copies the attributes of the given object into this builder, discarding any previous values.
-func (b *ControlPlaneBuilder) Copy(object *ControlPlane) *ControlPlaneBuilder {
+func (b *LogForwarderGroupVersionBuilder) Copy(object *LogForwarderGroupVersion) *LogForwarderGroupVersionBuilder {
 	if object == nil {
 		return b
 	}
@@ -81,37 +76,27 @@ func (b *ControlPlaneBuilder) Copy(object *ControlPlane) *ControlPlaneBuilder {
 		b.fieldSet_ = make([]bool, len(object.fieldSet_))
 		copy(b.fieldSet_, object.fieldSet_)
 	}
-	if object.backup != nil {
-		b.backup = NewBackup().Copy(object.backup)
+	b.id = object.id
+	if object.applications != nil {
+		b.applications = make([]string, len(object.applications))
+		copy(b.applications, object.applications)
 	} else {
-		b.backup = nil
-	}
-	if object.logForwarders != nil {
-		b.logForwarders = NewLogForwarderList().Copy(object.logForwarders)
-	} else {
-		b.logForwarders = nil
+		b.applications = nil
 	}
 	return b
 }
 
-// Build creates a 'control_plane' object using the configuration stored in the builder.
-func (b *ControlPlaneBuilder) Build() (object *ControlPlane, err error) {
-	object = new(ControlPlane)
+// Build creates a 'log_forwarder_group_version' object using the configuration stored in the builder.
+func (b *LogForwarderGroupVersionBuilder) Build() (object *LogForwarderGroupVersion, err error) {
+	object = new(LogForwarderGroupVersion)
 	if len(b.fieldSet_) > 0 {
 		object.fieldSet_ = make([]bool, len(b.fieldSet_))
 		copy(object.fieldSet_, b.fieldSet_)
 	}
-	if b.backup != nil {
-		object.backup, err = b.backup.Build()
-		if err != nil {
-			return
-		}
-	}
-	if b.logForwarders != nil {
-		object.logForwarders, err = b.logForwarders.Build()
-		if err != nil {
-			return
-		}
+	object.id = b.id
+	if b.applications != nil {
+		object.applications = make([]string, len(b.applications))
+		copy(object.applications, b.applications)
 	}
 	return
 }

@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of a Control Plane
-struct ControlPlane {
-	// Information about the backup of the control plane
-	Backup Backup
+// S3 configuration for log forwarding.
+struct LogForwarderS3Config {
+    // The name of the S3 bucket.
+    BucketName String
 
-	// Control plane log forwarders configuration.
-	// This can be set during cluster creation to configure control plane log forwarders.
-	link LogForwarders []LogForwarder
+    // The prefix to use for objects stored in the S3 bucket.
+    BucketPrefix String
 }

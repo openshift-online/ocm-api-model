@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of a Control Plane
-struct ControlPlane {
-	// Information about the backup of the control plane
-	Backup Backup
+// Represents an application that can be configured for log forwarding.
+struct LogForwarderApplication {
+    // The identifier of the application.
+    ID String
 
-	// Control plane log forwarders configuration.
-	// This can be set during cluster creation to configure control plane log forwarders.
-	link LogForwarders []LogForwarder
+    // Indicates whether this application is available for use for log forwarding.
+    State String
 }
+

@@ -19,22 +19,22 @@ limitations under the License.
 
 package v1 // github.com/openshift-online/ocm-api-model/clientapi/clustersmgmt/v1
 
-// Representation of a Control Plane
-type ControlPlaneBuilder struct {
-	fieldSet_     []bool
-	backup        *BackupBuilder
-	logForwarders *LogForwarderListBuilder
+// Represents a log forwarder group.
+type LogForwarderGroupBuilder struct {
+	fieldSet_ []bool
+	id        string
+	version   string
 }
 
-// NewControlPlane creates a new builder of 'control_plane' objects.
-func NewControlPlane() *ControlPlaneBuilder {
-	return &ControlPlaneBuilder{
+// NewLogForwarderGroup creates a new builder of 'log_forwarder_group' objects.
+func NewLogForwarderGroup() *LogForwarderGroupBuilder {
+	return &LogForwarderGroupBuilder{
 		fieldSet_: make([]bool, 2),
 	}
 }
 
 // Empty returns true if the builder is empty, i.e. no attribute has a value.
-func (b *ControlPlaneBuilder) Empty() bool {
+func (b *LogForwarderGroupBuilder) Empty() bool {
 	if b == nil || len(b.fieldSet_) == 0 {
 		return true
 	}
@@ -46,34 +46,28 @@ func (b *ControlPlaneBuilder) Empty() bool {
 	return true
 }
 
-// Backup sets the value of the 'backup' attribute to the given value.
-//
-// Representation of a Backup.
-func (b *ControlPlaneBuilder) Backup(value *BackupBuilder) *ControlPlaneBuilder {
+// ID sets the value of the 'ID' attribute to the given value.
+func (b *LogForwarderGroupBuilder) ID(value string) *LogForwarderGroupBuilder {
 	if len(b.fieldSet_) == 0 {
 		b.fieldSet_ = make([]bool, 2)
 	}
-	b.backup = value
-	if value != nil {
-		b.fieldSet_[0] = true
-	} else {
-		b.fieldSet_[0] = false
-	}
+	b.id = value
+	b.fieldSet_[0] = true
 	return b
 }
 
-// LogForwarders sets the value of the 'log_forwarders' attribute to the given values.
-func (b *ControlPlaneBuilder) LogForwarders(value *LogForwarderListBuilder) *ControlPlaneBuilder {
+// Version sets the value of the 'version' attribute to the given value.
+func (b *LogForwarderGroupBuilder) Version(value string) *LogForwarderGroupBuilder {
 	if len(b.fieldSet_) == 0 {
 		b.fieldSet_ = make([]bool, 2)
 	}
-	b.logForwarders = value
+	b.version = value
 	b.fieldSet_[1] = true
 	return b
 }
 
 // Copy copies the attributes of the given object into this builder, discarding any previous values.
-func (b *ControlPlaneBuilder) Copy(object *ControlPlane) *ControlPlaneBuilder {
+func (b *LogForwarderGroupBuilder) Copy(object *LogForwarderGroup) *LogForwarderGroupBuilder {
 	if object == nil {
 		return b
 	}
@@ -81,37 +75,19 @@ func (b *ControlPlaneBuilder) Copy(object *ControlPlane) *ControlPlaneBuilder {
 		b.fieldSet_ = make([]bool, len(object.fieldSet_))
 		copy(b.fieldSet_, object.fieldSet_)
 	}
-	if object.backup != nil {
-		b.backup = NewBackup().Copy(object.backup)
-	} else {
-		b.backup = nil
-	}
-	if object.logForwarders != nil {
-		b.logForwarders = NewLogForwarderList().Copy(object.logForwarders)
-	} else {
-		b.logForwarders = nil
-	}
+	b.id = object.id
+	b.version = object.version
 	return b
 }
 
-// Build creates a 'control_plane' object using the configuration stored in the builder.
-func (b *ControlPlaneBuilder) Build() (object *ControlPlane, err error) {
-	object = new(ControlPlane)
+// Build creates a 'log_forwarder_group' object using the configuration stored in the builder.
+func (b *LogForwarderGroupBuilder) Build() (object *LogForwarderGroup, err error) {
+	object = new(LogForwarderGroup)
 	if len(b.fieldSet_) > 0 {
 		object.fieldSet_ = make([]bool, len(b.fieldSet_))
 		copy(object.fieldSet_, b.fieldSet_)
 	}
-	if b.backup != nil {
-		object.backup, err = b.backup.Build()
-		if err != nil {
-			return
-		}
-	}
-	if b.logForwarders != nil {
-		object.logForwarders, err = b.logForwarders.Build()
-		if err != nil {
-			return
-		}
-	}
+	object.id = b.id
+	object.version = b.version
 	return
 }
