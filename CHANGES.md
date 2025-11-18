@@ -2,6 +2,11 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.438 Nov 18 2025
+
+- Add fields `LastClusterImagesetSync`, `LastHibernationCheck`, and
+  `LastLimitedSupportOverrideCheck` to `Environment` resource
+
 ## 0.0.437 Nov 10 2025
 
 - Add `LogForwarders` APIs/resources to `clusters_mgmt`
