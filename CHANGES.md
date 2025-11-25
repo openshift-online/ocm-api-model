@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.439 Nov 25 2025
+- Add patch operation on version gates
+
 ## 0.0.438 Nov 18 2025
 
 - Add fields `LastClusterImagesetSync`, `LastHibernationCheck`, and
