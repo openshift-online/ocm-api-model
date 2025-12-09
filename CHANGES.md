@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.440 Dec 09 2025
+- Align log forwarding config endpoints with API
+
 ## 0.0.439 Nov 25 2025
 - Add patch operation on version gates
 
