@@ -6781,7 +6781,7 @@
         }
       },
       "ProvisionShard": {
-        "description": "Contains the properties of the provision shard, including AWS and GCP related configurations",
+        "description": "Contains the properties of the provision shard",
         "properties": {
           "kind": {
             "description": "Indicates the type of this object. Will be 'ProvisionShard' if this is a complete object or 'ProvisionShardLink' if it is just a link.",
@@ -6795,22 +6795,6 @@
             "description": "Self link.",
             "type": "string"
           },
-          "aws_account_operator_config": {
-            "description": "Contains the configuration for the AWS account operator.",
-            "$ref": "#/components/schemas/ServerConfig"
-          },
-          "aws_base_domain": {
-            "description": "Contains the AWS base domain.",
-            "type": "string"
-          },
-          "gcp_base_domain": {
-            "description": "Contains the GCP base domain.",
-            "type": "string"
-          },
-          "gcp_project_operator": {
-            "description": "Contains the configuration for the GCP project operator.",
-            "$ref": "#/components/schemas/ServerConfig"
-          },
           "cloud_provider": {
             "description": "Contains the cloud provider name.",
             "$ref": "#/components/schemas/CloudProvider"
@@ -6820,22 +6804,10 @@
             "type": "string",
             "format": "date-time"
           },
-          "hive_config": {
-            "description": "Contains the configuration for Hive.",
-            "$ref": "#/components/schemas/ServerConfig"
-          },
-          "hypershift_config": {
-            "description": "Contains the configuration for Hypershift.",
-            "$ref": "#/components/schemas/ServerConfig"
-          },
           "last_update_timestamp": {
             "description": "Date and time when the provision shard was last updated, using the\nformat defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).",
             "type": "string",
             "format": "date-time"
-          },
-          "management_cluster": {
-            "description": "Contains the name of the management cluster for Hypershift clusters that are assigned to this shard.\nThis field is populated by OCM, and must not be overwritten via API.",
-            "type": "string"
           },
           "region": {
             "description": "Contains the cloud-provider region in which the provisioner spins up the cluster.",
@@ -6843,6 +6815,10 @@
           },
           "status": {
             "description": "Status of the provision shard. Possible values: active/maintenance/offline.",
+            "type": "string"
+          },
+          "topology": {
+            "description": "The topology of a provision shard (Optional).",
             "type": "string"
           }
         }
@@ -7098,39 +7074,6 @@
           "red_hat_managed": {
             "description": "If the resource is RH managed.",
             "type": "boolean"
-          }
-        }
-      },
-      "ServerConfig": {
-        "description": "Representation of a server config",
-        "properties": {
-          "kind": {
-            "description": "Indicates the type of this object. Will be 'ServerConfig' if this is a complete object or 'ServerConfigLink' if it is just a link.",
-            "type": "string"
-          },
-          "id": {
-            "description": "Unique identifier of the object.",
-            "type": "string"
-          },
-          "href": {
-            "description": "Self link.",
-            "type": "string"
-          },
-          "aws_shard": {
-            "description": "Config for AWS provision shards",
-            "$ref": "#/components/schemas/AWSShard"
-          },
-          "kubeconfig": {
-            "description": "The kubeconfig of the server.",
-            "type": "string"
-          },
-          "server": {
-            "description": "The URL of the server.",
-            "type": "string"
-          },
-          "topology": {
-            "description": "The topology of a provision shard (Optional).",
-            "$ref": "#/components/schemas/ProvisionShardTopology"
           }
         }
       },
