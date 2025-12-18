@@ -217,6 +217,8 @@ class Cluster {
 
 	// Indicates whether that etcd is encrypted or not.
 	// This is set only during cluster creation.
+	// For ROSA-HCP Clusters, etcd is always encrypted, if not set/false, or kms user's key not set, 
+	// defaults true indicates 'encrypted by internal key'.
 	// For ARO-HCP Clusters, this is a readonly attribute, always set to true.
 	EtcdEncryption Boolean
 
