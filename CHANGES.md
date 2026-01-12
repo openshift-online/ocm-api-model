@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.441 Jan 12 2026
+- Add `cloud_provider` field to CS `dns_domains` type
+
 ## 0.0.440 Dec 09 2025
 - Align log forwarding config endpoints with API
 
