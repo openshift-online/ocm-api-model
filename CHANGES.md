@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.443 Jan 20 2026
+- Add `Channel` field to `Cluster` type for Y-stream update channel management
+
 ## 0.0.442 Jan 16 2026
 - Exposed new endpoints: `/deleted_clusters`, and `/deleted_clusters/{deleted_cluster_id}`
 - Added `DeletedCluster` model to support requests to the `deleted_cluster` endpoint.
