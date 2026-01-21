@@ -2,6 +2,8 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.445 Jan 21 2026
+
 ## 0.0.444 Jan 21 2026
 - Add `ExcludedNamespaceSelectors` to ingress type
 
