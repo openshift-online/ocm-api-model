@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.444 Jan 21 2026
+- Add `ExcludedNamespaceSelectors` to ingress type
+
 ## 0.0.443 Jan 20 2026
 - Add `Channel` field to `Cluster` type for Y-stream update channel management
 
