@@ -55,6 +55,10 @@ resource Subscriptions {
 		//
 		// If the parameter isn't provided, or if the value is empty, then the order of the
 		// results is undefined.
+		@http(name = "orderBy")
+		in OrderBy String
+
+		// Deprecated, it is not functional. Use OrderBy instead
 		in Order String
 
 		// Projection
