@@ -38,7 +38,27 @@ class ProvisionShard {
 	// Optional.
 	Topology String
 
-	// Status of the provision shard. Possible values: active/maintenance/offline.
+	// The Azure related configuration of the Provision Shard.
+	// Required during creation.
+	AzureShard AzureShard
+
+	// The Maestro related configuration of the Provision Shard.
+	// Required during creation.
+	MaestroConfig ProvisionShardMaestroConfig
+
+	// Status of the provision shard.
+	// Optional. By default it is set to `maintenance`.
+	// During creation the possible values are: `maintenance`.
+	// During update the possible values are: `active`, `maintenance`, `offline`.
+	// Adding a new shard and activating it requires creating it
+	// in `maintenance` status and then perform an aditional update call setting it
+	// to `active` status.
+	// A shard in `active` status is available for selection when a Cluster needs
+	// to be allocated to a shard.
+	// A shard in `maintenance` status is not available for selection when a Cluster
+	// needs to be allocated to a shard.
+	// A shard in `offline` status is not available for selection when a Cluster
+	// needs to be allocated to a shard.
 	Status String
 
 	// Date and time when the provision shard was initially created, using the
