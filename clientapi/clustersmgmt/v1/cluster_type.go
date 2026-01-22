@@ -783,6 +783,8 @@ func (o *Cluster) GetDomainPrefix() (value string, ok bool) {
 //
 // Indicates whether that etcd is encrypted or not.
 // This is set only during cluster creation.
+// For ROSA-HCP Clusters, etcd is always encrypted, if not set/false, or kms user's key not set,
+// defaults true indicates 'encrypted by internal key'.
 // For ARO-HCP Clusters, this is a readonly attribute, always set to true.
 func (o *Cluster) EtcdEncryption() bool {
 	if o != nil && len(o.fieldSet_) > 27 && o.fieldSet_[27] {
@@ -796,6 +798,8 @@ func (o *Cluster) EtcdEncryption() bool {
 //
 // Indicates whether that etcd is encrypted or not.
 // This is set only during cluster creation.
+// For ROSA-HCP Clusters, etcd is always encrypted, if not set/false, or kms user's key not set,
+// defaults true indicates 'encrypted by internal key'.
 // For ARO-HCP Clusters, this is a readonly attribute, always set to true.
 func (o *Cluster) GetEtcdEncryption() (value bool, ok bool) {
 	ok = o != nil && len(o.fieldSet_) > 27 && o.fieldSet_[27]
