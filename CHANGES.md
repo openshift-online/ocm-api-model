@@ -2,6 +2,13 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.445 Jan 22 2026
+- Add `AzureShard` and `ProvisionShardMaestroConfig` to ARO-HCP `ProvisionShard`
+  type
+- Remove `HypershiftConfig`, `ManagementCluster`, `HiveConfig`,
+  `AWSAccountOperatorConfig`, `GCPProjectOperator`, `AWSBaseDomain`, `AWSBaseDomain`
+  from ARO-HCP `ProvisionShard` type
+
 ## 0.0.444 Jan 21 2026
 - Add `ExcludedNamespaceSelectors` to ingress type
 
