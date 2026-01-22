@@ -23,6 +23,10 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 type ProvisionShardTopology string
 
 const (
+	// Provision shard for hosted clusters is configured in a "shared" topology.
+	ProvisionShardTopologyDedicated ProvisionShardTopology = "shared"
 	// Provision shard for hosted clusters is configured in a "dedicated" topology.
 	ProvisionShardTopologyDedicated ProvisionShardTopology = "dedicated"
+	// Provision shard for hosted clusters is configured in a "dedicated-v2" topology.
+	ProvisionShardTopologyDedicatedV2 ProvisionShardTopology = "dedicated-v2"
 )

@@ -15,8 +15,15 @@ limitations under the License.
 */
 
 enum ProvisionShardTopology {
+    // Provision shard for hosted clusters is configured in a "shared" topology.
+    @json(name = "shared")
+    Dedicated
 
     // Provision shard for hosted clusters is configured in a "dedicated" topology.
     @json(name = "dedicated")
     Dedicated
+
+    // Provision shard for hosted clusters is configured in a "dedicated-v2" topology.
+    @json(name = "dedicated-v2")
+    DedicatedV2
 }
