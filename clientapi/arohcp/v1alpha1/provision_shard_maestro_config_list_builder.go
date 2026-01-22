@@ -19,53 +19,53 @@ limitations under the License.
 
 package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v1alpha1
 
-// ServerConfigListBuilder contains the data and logic needed to build
-// 'server_config' objects.
-type ServerConfigListBuilder struct {
-	items []*ServerConfigBuilder
+// ProvisionShardMaestroConfigListBuilder contains the data and logic needed to build
+// 'provision_shard_maestro_config' objects.
+type ProvisionShardMaestroConfigListBuilder struct {
+	items []*ProvisionShardMaestroConfigBuilder
 }
 
-// NewServerConfigList creates a new builder of 'server_config' objects.
-func NewServerConfigList() *ServerConfigListBuilder {
-	return new(ServerConfigListBuilder)
+// NewProvisionShardMaestroConfigList creates a new builder of 'provision_shard_maestro_config' objects.
+func NewProvisionShardMaestroConfigList() *ProvisionShardMaestroConfigListBuilder {
+	return new(ProvisionShardMaestroConfigListBuilder)
 }
 
 // Items sets the items of the list.
-func (b *ServerConfigListBuilder) Items(values ...*ServerConfigBuilder) *ServerConfigListBuilder {
-	b.items = make([]*ServerConfigBuilder, len(values))
+func (b *ProvisionShardMaestroConfigListBuilder) Items(values ...*ProvisionShardMaestroConfigBuilder) *ProvisionShardMaestroConfigListBuilder {
+	b.items = make([]*ProvisionShardMaestroConfigBuilder, len(values))
 	copy(b.items, values)
 	return b
 }
 
 // Empty returns true if the list is empty.
-func (b *ServerConfigListBuilder) Empty() bool {
+func (b *ProvisionShardMaestroConfigListBuilder) Empty() bool {
 	return b == nil || len(b.items) == 0
 }
 
 // Copy copies the items of the given list into this builder, discarding any previous items.
-func (b *ServerConfigListBuilder) Copy(list *ServerConfigList) *ServerConfigListBuilder {
+func (b *ProvisionShardMaestroConfigListBuilder) Copy(list *ProvisionShardMaestroConfigList) *ProvisionShardMaestroConfigListBuilder {
 	if list == nil || list.items == nil {
 		b.items = nil
 	} else {
-		b.items = make([]*ServerConfigBuilder, len(list.items))
+		b.items = make([]*ProvisionShardMaestroConfigBuilder, len(list.items))
 		for i, v := range list.items {
-			b.items[i] = NewServerConfig().Copy(v)
+			b.items[i] = NewProvisionShardMaestroConfig().Copy(v)
 		}
 	}
 	return b
 }
 
-// Build creates a list of 'server_config' objects using the
+// Build creates a list of 'provision_shard_maestro_config' objects using the
 // configuration stored in the builder.
-func (b *ServerConfigListBuilder) Build() (list *ServerConfigList, err error) {
-	items := make([]*ServerConfig, len(b.items))
+func (b *ProvisionShardMaestroConfigListBuilder) Build() (list *ProvisionShardMaestroConfigList, err error) {
+	items := make([]*ProvisionShardMaestroConfig, len(b.items))
 	for i, item := range b.items {
 		items[i], err = item.Build()
 		if err != nil {
 			return
 		}
 	}
-	list = new(ServerConfigList)
+	list = new(ProvisionShardMaestroConfigList)
 	list.items = items
 	return
 }
