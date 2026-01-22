@@ -26,11 +26,11 @@ import (
 	"github.com/openshift-online/ocm-api-model/clientapi/helpers"
 )
 
-// MarshalServerConfigList writes a list of values of the 'server_config' type to
+// MarshalProvisionShardMaestroConfigList writes a list of values of the 'provision_shard_maestro_config' type to
 // the given writer.
-func MarshalServerConfigList(list []*ServerConfig, writer io.Writer) error {
+func MarshalProvisionShardMaestroConfigList(list []*ProvisionShardMaestroConfig, writer io.Writer) error {
 	stream := helpers.NewStream(writer)
-	WriteServerConfigList(list, stream)
+	WriteProvisionShardMaestroConfigList(list, stream)
 	err := stream.Flush()
 	if err != nil {
 		return err
@@ -38,37 +38,37 @@ func MarshalServerConfigList(list []*ServerConfig, writer io.Writer) error {
 	return stream.Error
 }
 
-// WriteServerConfigList writes a list of value of the 'server_config' type to
+// WriteProvisionShardMaestroConfigList writes a list of value of the 'provision_shard_maestro_config' type to
 // the given stream.
-func WriteServerConfigList(list []*ServerConfig, stream *jsoniter.Stream) {
+func WriteProvisionShardMaestroConfigList(list []*ProvisionShardMaestroConfig, stream *jsoniter.Stream) {
 	stream.WriteArrayStart()
 	for i, value := range list {
 		if i > 0 {
 			stream.WriteMore()
 		}
-		WriteServerConfig(value, stream)
+		WriteProvisionShardMaestroConfig(value, stream)
 	}
 	stream.WriteArrayEnd()
 }
 
-// UnmarshalServerConfigList reads a list of values of the 'server_config' type
+// UnmarshalProvisionShardMaestroConfigList reads a list of values of the 'provision_shard_maestro_config' type
 // from the given source, which can be a slice of bytes, a string or a reader.
-func UnmarshalServerConfigList(source interface{}) (items []*ServerConfig, err error) {
+func UnmarshalProvisionShardMaestroConfigList(source interface{}) (items []*ProvisionShardMaestroConfig, err error) {
 	iterator, err := helpers.NewIterator(source)
 	if err != nil {
 		return
 	}
-	items = ReadServerConfigList(iterator)
+	items = ReadProvisionShardMaestroConfigList(iterator)
 	err = iterator.Error
 	return
 }
 
-// ReadServerConfigList reads list of values of the ”server_config' type from
+// ReadProvisionShardMaestroConfigList reads list of values of the ”provision_shard_maestro_config' type from
 // the given iterator.
-func ReadServerConfigList(iterator *jsoniter.Iterator) []*ServerConfig {
-	list := []*ServerConfig{}
+func ReadProvisionShardMaestroConfigList(iterator *jsoniter.Iterator) []*ProvisionShardMaestroConfig {
+	list := []*ProvisionShardMaestroConfig{}
 	for iterator.ReadArray() {
-		item := ReadServerConfig(iterator)
+		item := ReadProvisionShardMaestroConfig(iterator)
 		list = append(list, item)
 	}
 	return list
