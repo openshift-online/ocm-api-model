@@ -14,45 +14,40 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Contains the properties of the provision shard, including AWS and GCP related configurations
+// Contains the properties of the provision shard
 class ProvisionShard {
-
-	// Contains the configuration for Hive.
-	HiveConfig ServerConfig
-
-	// Contains the configuration for the AWS account operator.
-	AWSAccountOperatorConfig ServerConfig
-
-	// Contains the configuration for the GCP project operator.
-	GCPProjectOperator ServerConfig
-
-	// Contains the AWS base domain.
-	AWSBaseDomain String
-
-	// Contains the GCP base domain.
-	GCPBaseDomain String
-
 	// Contains the cloud-provider region in which the provisioner spins up the cluster.
+	// Required during creation.
+	// Immutable.
 	link Region CloudRegion
 
 	// Contains the cloud provider name.
+	// Required during creation.
+	// Immutable.
 	link CloudProvider CloudProvider
 
-	// Contains the configuration for Hypershift.
-	HypershiftConfig ServerConfig
-
-	// Contains the name of the management cluster for Hypershift clusters that are assigned to this shard.
-	// This field is populated by OCM, and must not be overwritten via API.
-	ManagementCluster String
+	// The topology of a provision shard.
+	// As of now a shared topology is used by default when not specified. However,
+	// at the moment of writing this (2025-12-11) in ARO-HCP our provision shards have
+	// a topology value set to Dedicated. There is a task to reevaluate if
+	// Dedicated is appropriate/accurate for our existing provision shards in ARO-HCP
+	// and its implications: ARO-22019. Work from that might change what the topology
+	// value we specify for provision shards and even the default at API level.
+	// In the meantime, set explicitly the topology to the value that our provision
+	// shards have.
+	// Optional.
+	Topology String
 
 	// Status of the provision shard. Possible values: active/maintenance/offline.
 	Status String
 
 	// Date and time when the provision shard was initially created, using the
 	// format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
+	// Readonly.
 	CreationTimestamp Date
 
 	// Date and time when the provision shard was last updated, using the
 	// format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
+	// Readonly.
 	LastUpdateTimestamp Date
 }
