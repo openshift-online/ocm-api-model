@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.446 Jan 22 2026
+- Release just to bump the git tags. goproxy cached the previous tag and did
+  not recognize changes after refresh of the tag
+
 ## 0.0.445 Jan 22 2026
 - Add `AzureShard` and `ProvisionShardMaestroConfig` to ARO-HCP `ProvisionShard`
   type
