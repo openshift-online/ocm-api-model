@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2025 Red Hat, Inc.
+Copyright (c) 2026 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,25 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Root of the tree of resources of the aro_hcp service.
-resource Root {
-	// Reference to the resource that manages the collection of clusters.
-	locator Clusters {
-		target Clusters
+// Manages a Provision Shard
+resource ProvisionShard {
+	// Retrieves the details of the provision shard.
+	method Get {
+		out Body ProvisionShard
 	}
 
-	// Reference to the resource that manage the collection of versions.
-	locator Versions {
-		target Versions
+	// Updates the details of the provision shard.
+	method Update {
+		in out Body ProvisionShard
 	}
 
-	locator ManagedIdentitiesRequirements {
-		target ManagedIdentitiesRequirements
+	// Deletes the provision shard.
+	method Delete {
 	}
-
-	// Reference to the resource that manages the collection of provision shards.
-	locator ProvisionShards {
-		target ProvisionShards
-	}
-
 }
