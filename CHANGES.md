@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.447 Jan 23 2026
+- Make `Topology` attribute of ARO-HCP `ProvisionShard` required and restrict
+  its allowed value to `shared`
+
 ## 0.0.446 Jan 22 2026
 - Release just to bump the git tags. goproxy cached the previous tag and did
   not recognize changes after refresh of the tag
