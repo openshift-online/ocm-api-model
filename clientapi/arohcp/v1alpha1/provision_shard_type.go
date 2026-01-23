@@ -327,25 +327,9 @@ func (o *ProvisionShard) GetStatus() (value string, ok bool) {
 // Topology returns the value of the 'topology' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
-// The topology of a provision shard.
-// WARNING:
-// This attribute is inherited from the OCM Commercial CS codebase. At the moment
-// of writing this (2025-01-22) in ARO-HCP our provision shards have
-// a topology value set to Dedicated. There is a task to analyze what is the
-// accurate meaning of topology, how it applies to ARO-HCP, reevaluate if
-// Dedicated is appropriate/accurate for our existing provision shards in ARO-HCP
-// and its implications, analyze what places in CS are influenced by its value, as
-// well as whether we should change the value for our existing shards and what would
-// be the implications: ARO-22019. Work from that might change what the topology
-// value we specify for provision shards, or even dropping the concept of topology.
-// In the meantime, set the topology to the value that our provision
-// shards have. We must not create any new provision shard in a permanent ARO-HCP
-// environment until the previously mentioned task and its outcomes are completed.
-// As of now, this attribute is not consistent with how the control plane workloads
-// are allocated in ARO-HCP. They are all alocated in the same nodes which would be
-// equivalent to shared tenancy on that side.
-// In the meantime, set explicitly the topology to the value that our provision
-// shards have even if for now semantically it is not accurate.
+// Topology sets how the control plane workloads that are request serving
+// (those receiving communication from outside the control plane)
+// are mapped to Nodes in the control plane K8s Cluster.
 // Required during creation.
 func (o *ProvisionShard) Topology() string {
 	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
@@ -357,25 +341,9 @@ func (o *ProvisionShard) Topology() string {
 // GetTopology returns the value of the 'topology' attribute and
 // a flag indicating if the attribute has a value.
 //
-// The topology of a provision shard.
-// WARNING:
-// This attribute is inherited from the OCM Commercial CS codebase. At the moment
-// of writing this (2025-01-22) in ARO-HCP our provision shards have
-// a topology value set to Dedicated. There is a task to analyze what is the
-// accurate meaning of topology, how it applies to ARO-HCP, reevaluate if
-// Dedicated is appropriate/accurate for our existing provision shards in ARO-HCP
-// and its implications, analyze what places in CS are influenced by its value, as
-// well as whether we should change the value for our existing shards and what would
-// be the implications: ARO-22019. Work from that might change what the topology
-// value we specify for provision shards, or even dropping the concept of topology.
-// In the meantime, set the topology to the value that our provision
-// shards have. We must not create any new provision shard in a permanent ARO-HCP
-// environment until the previously mentioned task and its outcomes are completed.
-// As of now, this attribute is not consistent with how the control plane workloads
-// are allocated in ARO-HCP. They are all alocated in the same nodes which would be
-// equivalent to shared tenancy on that side.
-// In the meantime, set explicitly the topology to the value that our provision
-// shards have even if for now semantically it is not accurate.
+// Topology sets how the control plane workloads that are request serving
+// (those receiving communication from outside the control plane)
+// are mapped to Nodes in the control plane K8s Cluster.
 // Required during creation.
 func (o *ProvisionShard) GetTopology() (value string, ok bool) {
 	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
