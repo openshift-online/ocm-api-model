@@ -2,6 +2,12 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.448 Jan 25 2026
+- Add `VnetIntegrationSubnetResourceID` field to ARO-HCP Azure type for SWIFT
+  networking (Azure Container Networking Interface) support
+- Expose ARO-HCP cluster's provision shard subresource GET endpoint
+- Expose ARO-HCP provision shard global endpoints
+
 ## 0.0.447 Jan 23 2026
 - Make `Topology` attribute of ARO-HCP `ProvisionShard` required and restrict
   its allowed value to `shared`
