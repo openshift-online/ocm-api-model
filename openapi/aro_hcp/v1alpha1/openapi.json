@@ -3513,6 +3513,10 @@
           "tenant_id": {
             "description": "The Microsoft Entra Tenant ID where the cluster belongs.\nRequired during creation.\nImmutable.",
             "type": "string"
+          },
+          "vnet_integration_subnet_resource_id": {
+            "description": "Vnet Integration Subnet Resource ID is the Azure Resource ID of a pre-existing Azure\nSubnet used for SWIFT networking (Azure Container Networking Interface).\nThis subnet is delegated to Microsoft.RedHatOpenShift/hcpOpenShiftClusters\nvia a Service Association Link and is used for pod networking in the cluster.\nVnet Integration Subnet Resource ID must be located in the same Azure location as the\ncluster's region and in the same VNet as Subnet Resource ID.\nThe Azure Subscription specified as part of the Vnet Integration Subnet Resource ID must\nbe located in the same Azure Subscription as Subscription ID.\nThis field is optional - if not specified, SWIFT networking will not be enabled.\nImmutable.",
+            "type": "string"
           }
         }
       },
