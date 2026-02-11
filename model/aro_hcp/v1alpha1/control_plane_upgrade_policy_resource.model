@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2023 Red Hat, Inc.
+Copyright (c) 2026 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,20 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Representation of an upgrade policy that can be set for a cluster.
-class ControlPlaneUpgradePolicy {
-	// Cluster ID this upgrade policy for control plane is defined for.
-	ClusterID String
+// Manages a specific upgrade policy for the control plane.
+resource ControlPlaneUpgradePolicy {
+	// Retrieves the details of the upgrade policy for the control plane.
+	method Get {
+		out Body ControlPlaneUpgradePolicy
+	}
 
-	// Version is the desired upgrade version.
-	Version String
+	// Update the upgrade policy for the control plane.
+	method Update {
+		in out Body ControlPlaneUpgradePolicy
+	}
 
-	// State of the upgrade policy for the hosted control plane.
-	State UpgradePolicyState
-
-	// Timestamp for creation of resource.
-	CreationTimestamp Date
-
-	// Timestamp for last update that happened to resource.
-	LastUpdateTimestamp Date
+	// Deletes the upgrade policy for the control plane.
+	method Delete {
+	}
 }

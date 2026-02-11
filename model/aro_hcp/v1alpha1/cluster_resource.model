@@ -70,4 +70,8 @@ resource Cluster {
 		target ClusterProvisionShardSubresource
 	}
 
+	// Reference to the resource that manages the collection of upgrade policies for the control plane.
+	locator ControlPlaneUpgradePolicies {
+		target ControlPlaneUpgradePolicies
+	}
 }
