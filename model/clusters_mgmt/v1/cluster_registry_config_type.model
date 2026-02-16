@@ -50,6 +50,8 @@ struct ClusterRegistryConfig {
 	// whether or not to allow insecure access). It does not contain configuration for the
 	// internal cluster registry.
 	RegistrySources RegistrySources
+	// ImageDigestMirrors contains the configuration for the image mirroring based on digest.
+	ImageDigestMirrors []ImageMirror
 }
 
 // RegistrySources contains configuration that determines how the container runtime should treat individual

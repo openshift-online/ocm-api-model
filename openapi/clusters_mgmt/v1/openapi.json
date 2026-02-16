@@ -17218,6 +17218,13 @@
               "$ref": "#/components/schemas/RegistryLocation"
             }
           },
+          "image_digest_mirrors": {
+            "description": "ImageDigestMirrors contains the configuration for the image mirroring based on digest.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageMirror"
+            }
+          },
           "platform_allowlist": {
             "description": "PlatformAllowlist contains a reference to a RegistryAllowlist which is a list of internal registries\nwhich needs to be whitelisted for the platform to work. It can be omitted at creation and \nupdating and its lifecycle can be managed separately if needed.",
             "$ref": "#/components/schemas/RegistryAllowlist"

@@ -42,6 +42,7 @@ type ClusterRegistryConfig struct {
 	fieldSet_                  []bool
 	additionalTrustedCa        map[string]string
 	allowedRegistriesForImport []*RegistryLocation
+	imageDigestMirrors         []*ImageMirror
 	platformAllowlist          *RegistryAllowlist
 	registrySources            *RegistrySources
 }
@@ -117,6 +118,29 @@ func (o *ClusterRegistryConfig) GetAllowedRegistriesForImport() (value []*Regist
 	return
 }
 
+// ImageDigestMirrors returns the value of the 'image_digest_mirrors' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// ImageDigestMirrors contains the configuration for the image mirroring based on digest.
+func (o *ClusterRegistryConfig) ImageDigestMirrors() []*ImageMirror {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+		return o.imageDigestMirrors
+	}
+	return nil
+}
+
+// GetImageDigestMirrors returns the value of the 'image_digest_mirrors' attribute and
+// a flag indicating if the attribute has a value.
+//
+// ImageDigestMirrors contains the configuration for the image mirroring based on digest.
+func (o *ClusterRegistryConfig) GetImageDigestMirrors() (value []*ImageMirror, ok bool) {
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	if ok {
+		value = o.imageDigestMirrors
+	}
+	return
+}
+
 // PlatformAllowlist returns the value of the 'platform_allowlist' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
@@ -124,7 +148,7 @@ func (o *ClusterRegistryConfig) GetAllowedRegistriesForImport() (value []*Regist
 // which needs to be whitelisted for the platform to work. It can be omitted at creation and
 // updating and its lifecycle can be managed separately if needed.
 func (o *ClusterRegistryConfig) PlatformAllowlist() *RegistryAllowlist {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.platformAllowlist
 	}
 	return nil
@@ -137,7 +161,7 @@ func (o *ClusterRegistryConfig) PlatformAllowlist() *RegistryAllowlist {
 // which needs to be whitelisted for the platform to work. It can be omitted at creation and
 // updating and its lifecycle can be managed separately if needed.
 func (o *ClusterRegistryConfig) GetPlatformAllowlist() (value *RegistryAllowlist, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.platformAllowlist
 	}
@@ -152,7 +176,7 @@ func (o *ClusterRegistryConfig) GetPlatformAllowlist() (value *RegistryAllowlist
 // whether or not to allow insecure access). It does not contain configuration for the
 // internal cluster registry.
 func (o *ClusterRegistryConfig) RegistrySources() *RegistrySources {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.registrySources
 	}
 	return nil
@@ -166,7 +190,7 @@ func (o *ClusterRegistryConfig) RegistrySources() *RegistrySources {
 // whether or not to allow insecure access). It does not contain configuration for the
 // internal cluster registry.
 func (o *ClusterRegistryConfig) GetRegistrySources() (value *RegistrySources, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.registrySources
 	}
