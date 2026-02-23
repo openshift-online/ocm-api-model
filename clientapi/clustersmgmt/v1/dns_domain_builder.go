@@ -31,6 +31,7 @@ type DNSDomainBuilder struct {
 	cloudProvider       DnsCloudProvider
 	cluster             *ClusterLinkBuilder
 	clusterArch         ClusterArchitecture
+	gcp                 *GcpDnsDomainBuilder
 	organization        *OrganizationLinkBuilder
 	reservedAtTimestamp time.Time
 	userDefined         bool
@@ -39,14 +40,14 @@ type DNSDomainBuilder struct {
 // NewDNSDomain creates a new builder of 'DNS_domain' objects.
 func NewDNSDomain() *DNSDomainBuilder {
 	return &DNSDomainBuilder{
-		fieldSet_: make([]bool, 9),
+		fieldSet_: make([]bool, 10),
 	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *DNSDomainBuilder) Link(value bool) *DNSDomainBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
+		b.fieldSet_ = make([]bool, 10)
 	}
 	b.fieldSet_[0] = true
 	return b
@@ -55,7 +56,7 @@ func (b *DNSDomainBuilder) Link(value bool) *DNSDomainBuilder {
 // ID sets the identifier of the object.
 func (b *DNSDomainBuilder) ID(value string) *DNSDomainBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
+		b.fieldSet_ = make([]bool, 10)
 	}
 	b.id = value
 	b.fieldSet_[1] = true
@@ -65,7 +66,7 @@ func (b *DNSDomainBuilder) ID(value string) *DNSDomainBuilder {
 // HREF sets the link to the object.
 func (b *DNSDomainBuilder) HREF(value string) *DNSDomainBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
+		b.fieldSet_ = make([]bool, 10)
 	}
 	b.href = value
 	b.fieldSet_[2] = true
@@ -89,7 +90,7 @@ func (b *DNSDomainBuilder) Empty() bool {
 // CloudProvider sets the value of the 'cloud_provider' attribute to the given value.
 func (b *DNSDomainBuilder) CloudProvider(value DnsCloudProvider) *DNSDomainBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
+		b.fieldSet_ = make([]bool, 10)
 	}
 	b.cloudProvider = value
 	b.fieldSet_[3] = true
@@ -101,7 +102,7 @@ func (b *DNSDomainBuilder) CloudProvider(value DnsCloudProvider) *DNSDomainBuild
 // Definition of a cluster link.
 func (b *DNSDomainBuilder) Cluster(value *ClusterLinkBuilder) *DNSDomainBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
+		b.fieldSet_ = make([]bool, 10)
 	}
 	b.cluster = value
 	if value != nil {
@@ -117,21 +118,22 @@ func (b *DNSDomainBuilder) Cluster(value *ClusterLinkBuilder) *DNSDomainBuilder 
 // Possible cluster architectures.
 func (b *DNSDomainBuilder) ClusterArch(value ClusterArchitecture) *DNSDomainBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
+		b.fieldSet_ = make([]bool, 10)
 	}
 	b.clusterArch = value
 	b.fieldSet_[5] = true
 	return b
 }
 
-// Organization sets the value of the 'organization' attribute to the given value.
+// Gcp sets the value of the 'gcp' attribute to the given value.
 //
-// Definition of an organization link.
-func (b *DNSDomainBuilder) Organization(value *OrganizationLinkBuilder) *DNSDomainBuilder {
+// GcpDnsDomain represents configuration for Google Cloud Platform DNS domain settings
+// used in cluster DNS configuration for GCP-hosted clusters.
+func (b *DNSDomainBuilder) Gcp(value *GcpDnsDomainBuilder) *DNSDomainBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
+		b.fieldSet_ = make([]bool, 10)
 	}
-	b.organization = value
+	b.gcp = value
 	if value != nil {
 		b.fieldSet_[6] = true
 	} else {
@@ -140,23 +142,39 @@ func (b *DNSDomainBuilder) Organization(value *OrganizationLinkBuilder) *DNSDoma
 	return b
 }
 
+// Organization sets the value of the 'organization' attribute to the given value.
+//
+// Definition of an organization link.
+func (b *DNSDomainBuilder) Organization(value *OrganizationLinkBuilder) *DNSDomainBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 10)
+	}
+	b.organization = value
+	if value != nil {
+		b.fieldSet_[7] = true
+	} else {
+		b.fieldSet_[7] = false
+	}
+	return b
+}
+
 // ReservedAtTimestamp sets the value of the 'reserved_at_timestamp' attribute to the given value.
 func (b *DNSDomainBuilder) ReservedAtTimestamp(value time.Time) *DNSDomainBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
+		b.fieldSet_ = make([]bool, 10)
 	}
 	b.reservedAtTimestamp = value
-	b.fieldSet_[7] = true
+	b.fieldSet_[8] = true
 	return b
 }
 
 // UserDefined sets the value of the 'user_defined' attribute to the given value.
 func (b *DNSDomainBuilder) UserDefined(value bool) *DNSDomainBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 9)
+		b.fieldSet_ = make([]bool, 10)
 	}
 	b.userDefined = value
-	b.fieldSet_[8] = true
+	b.fieldSet_[9] = true
 	return b
 }
 
@@ -178,6 +196,11 @@ func (b *DNSDomainBuilder) Copy(object *DNSDomain) *DNSDomainBuilder {
 		b.cluster = nil
 	}
 	b.clusterArch = object.clusterArch
+	if object.gcp != nil {
+		b.gcp = NewGcpDnsDomain().Copy(object.gcp)
+	} else {
+		b.gcp = nil
+	}
 	if object.organization != nil {
 		b.organization = NewOrganizationLink().Copy(object.organization)
 	} else {
@@ -205,6 +228,12 @@ func (b *DNSDomainBuilder) Build() (object *DNSDomain, err error) {
 		}
 	}
 	object.clusterArch = b.clusterArch
+	if b.gcp != nil {
+		object.gcp, err = b.gcp.Build()
+		if err != nil {
+			return
+		}
+	}
 	if b.organization != nil {
 		object.organization, err = b.organization.Build()
 		if err != nil {
