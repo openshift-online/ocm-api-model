@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.450 Feb 23 2026
+- Add `ImageDigestMirrors` field to `ClusterRegistryConfig` for ARO-HCP.
+
 ## 0.0.449 Feb 11 2026
 - Add upgrade policies resources for both control plane and node pool for ARO-HCP
 - Add `ControlPlaneUpgradePolicies` resource to manage control plane upgrade policies
