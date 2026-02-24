@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.451 Feb 24 2026
+- Add the `GcpDnsDomain` type and include in the `DNSDomain` as a field.
+
 ## 0.0.450 Feb 23 2026
 - Add `ImageDigestMirrors` field to `ClusterRegistryConfig` for ARO-HCP.
 
