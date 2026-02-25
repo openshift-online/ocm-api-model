@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.452 Feb 25 2026
+- Add support for the `AvailableChannels` of the Version type.
+
 ## 0.0.451 Feb 24 2026
 - Add the `GcpDnsDomain` type and include in the `DNSDomain` as a field.
 
