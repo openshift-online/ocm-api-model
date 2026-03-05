@@ -4139,8 +4139,20 @@
           "active_key": {
             "description": "The details of the active key\nRequired during creation.",
             "$ref": "#/components/schemas/AzureKmsKey"
+          },
+          "visibility": {
+            "description": "visibility defines the visibility of the Azure Key Vault.\nAccepted values are `public` and `private`.\nDefaults to `public` if not set.",
+            "$ref": "#/components/schemas/AzureKmsEncryptionVisibility"
           }
         }
+      },
+      "AzureKmsEncryptionVisibility": {
+        "description": "AzureKmsEncryptionVisibility defines the visibility of the Azure KMS key vault.",
+        "type": "string",
+        "enum": [
+          "private",
+          "public"
+        ]
       },
       "AzureKmsKey": {
         "description": "Contains the necessary attributes to support KMS encryption key for Azure based clusters",
