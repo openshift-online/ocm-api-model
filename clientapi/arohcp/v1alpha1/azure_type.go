@@ -218,7 +218,6 @@ func (o *Azure) GetNodesOutboundConnectivity() (value *AzureNodesOutboundConnect
 //
 // The OIDC issuer URL for workload identity federation
 // This URL is used by Azure managed identities to establish trust with cluster.
-// Format: https://<storage-account>.z1.web.core.windows.net/<tenant-id>/<cluster-id>
 // Readonly
 func (o *Azure) OidcIssuerUrl() string {
 	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
@@ -232,7 +231,6 @@ func (o *Azure) OidcIssuerUrl() string {
 //
 // The OIDC issuer URL for workload identity federation
 // This URL is used by Azure managed identities to establish trust with cluster.
-// Format: https://<storage-account>.z1.web.core.windows.net/<tenant-id>/<cluster-id>
 // Readonly
 func (o *Azure) GetOidcIssuerUrl() (value string, ok bool) {
 	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]

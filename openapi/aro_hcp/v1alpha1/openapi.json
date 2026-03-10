@@ -4043,7 +4043,7 @@
             "$ref": "#/components/schemas/AzureNodesOutboundConnectivity"
           },
           "oidc_issuer_url": {
-            "description": "The OIDC issuer URL for workload identity federation\nThis URL is used by Azure managed identities to establish trust with cluster.\nFormat: https://<storage-account>.z1.web.core.windows.net/<tenant-id>/<cluster-id>\nReadonly",
+            "description": "The OIDC issuer URL for workload identity federation\nThis URL is used by Azure managed identities to establish trust with cluster.\nReadonly",
             "type": "string"
           },
           "operators_authentication": {
