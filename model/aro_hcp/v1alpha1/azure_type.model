@@ -115,7 +115,6 @@ struct Azure {
 
 	// The OIDC issuer URL for workload identity federation
 	// This URL is used by Azure managed identities to establish trust with cluster.
-	// Format: https://<storage-account>.z1.web.core.windows.net/<tenant-id>/<cluster-id>
 	// Readonly
 	OidcIssuerUrl String
 
