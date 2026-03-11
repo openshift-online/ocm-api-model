@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.453 Mar 11 2026
+- Add `Visibility` field of type `AzureKmsEncryptionVisibility` to the `AzureKmsEncryption` type.
+- Add `OidcIssuerUrl` field to ARO-HCP `Azure` type.
+
 ## 0.0.452 Feb 25 2026
 - Add support for the `AvailableChannels` of the Version type.
 
