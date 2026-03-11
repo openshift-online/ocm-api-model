@@ -4042,6 +4042,10 @@
             "description": "NodesOutboundConnectivity defines how the network outbound\nconfiguration of the Cluster's Node Pool's Nodes is performed.\nBy default this is configured as Azure Load Balancer. This value is immutable.",
             "$ref": "#/components/schemas/AzureNodesOutboundConnectivity"
           },
+          "oidc_issuer_url": {
+            "description": "The OIDC issuer URL for workload identity federation\nThis URL is used by Azure managed identities to establish trust with cluster.\nReadonly",
+            "type": "string"
+          },
           "operators_authentication": {
             "description": "Defines how the operators of the cluster authenticate to Azure.\nRequired during creation.\nImmutable.",
             "$ref": "#/components/schemas/AzureOperatorsAuthentication"
