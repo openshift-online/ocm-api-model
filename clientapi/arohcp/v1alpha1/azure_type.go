@@ -25,6 +25,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 type Azure struct {
 	fieldSet_                       []bool
 	etcdEncryption                  *AzureEtcdEncryption
+	imageRegistryCredentials        *AzureImageRegistryCredentials
 	managedResourceGroupName        string
 	networkSecurityGroupResourceID  string
 	nodesOutboundConnectivity       *AzureNodesOutboundConnectivity
@@ -80,6 +81,29 @@ func (o *Azure) GetEtcdEncryption() (value *AzureEtcdEncryption, ok bool) {
 	return
 }
 
+// ImageRegistryCredentials returns the value of the 'image_registry_credentials' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// Azure image registry credentials configuration for ACR image pulling.
+func (o *Azure) ImageRegistryCredentials() *AzureImageRegistryCredentials {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+		return o.imageRegistryCredentials
+	}
+	return nil
+}
+
+// GetImageRegistryCredentials returns the value of the 'image_registry_credentials' attribute and
+// a flag indicating if the attribute has a value.
+//
+// Azure image registry credentials configuration for ACR image pulling.
+func (o *Azure) GetImageRegistryCredentials() (value *AzureImageRegistryCredentials, ok bool) {
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	if ok {
+		value = o.imageRegistryCredentials
+	}
+	return
+}
+
 // ManagedResourceGroupName returns the value of the 'managed_resource_group_name' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
@@ -95,7 +119,7 @@ func (o *Azure) GetEtcdEncryption() (value *AzureEtcdEncryption, ok bool) {
 // Required during creation.
 // Immutable.
 func (o *Azure) ManagedResourceGroupName() string {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.managedResourceGroupName
 	}
 	return ""
@@ -116,7 +140,7 @@ func (o *Azure) ManagedResourceGroupName() string {
 // Required during creation.
 // Immutable.
 func (o *Azure) GetManagedResourceGroupName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.managedResourceGroupName
 	}
@@ -148,7 +172,7 @@ func (o *Azure) GetManagedResourceGroupName() (value string, ok bool) {
 // Required during creation.
 // Immutable.
 func (o *Azure) NetworkSecurityGroupResourceID() string {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.networkSecurityGroupResourceID
 	}
 	return ""
@@ -179,7 +203,7 @@ func (o *Azure) NetworkSecurityGroupResourceID() string {
 // Required during creation.
 // Immutable.
 func (o *Azure) GetNetworkSecurityGroupResourceID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.networkSecurityGroupResourceID
 	}
@@ -193,7 +217,7 @@ func (o *Azure) GetNetworkSecurityGroupResourceID() (value string, ok bool) {
 // configuration of the Cluster's Node Pool's Nodes is performed.
 // By default this is configured as Azure Load Balancer. This value is immutable.
 func (o *Azure) NodesOutboundConnectivity() *AzureNodesOutboundConnectivity {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.nodesOutboundConnectivity
 	}
 	return nil
@@ -206,7 +230,7 @@ func (o *Azure) NodesOutboundConnectivity() *AzureNodesOutboundConnectivity {
 // configuration of the Cluster's Node Pool's Nodes is performed.
 // By default this is configured as Azure Load Balancer. This value is immutable.
 func (o *Azure) GetNodesOutboundConnectivity() (value *AzureNodesOutboundConnectivity, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.nodesOutboundConnectivity
 	}
@@ -220,7 +244,7 @@ func (o *Azure) GetNodesOutboundConnectivity() (value *AzureNodesOutboundConnect
 // This URL is used by Azure managed identities to establish trust with cluster.
 // Readonly
 func (o *Azure) OidcIssuerUrl() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.oidcIssuerUrl
 	}
 	return ""
@@ -233,7 +257,7 @@ func (o *Azure) OidcIssuerUrl() string {
 // This URL is used by Azure managed identities to establish trust with cluster.
 // Readonly
 func (o *Azure) GetOidcIssuerUrl() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.oidcIssuerUrl
 	}
@@ -247,7 +271,7 @@ func (o *Azure) GetOidcIssuerUrl() (value string, ok bool) {
 // Required during creation.
 // Immutable.
 func (o *Azure) OperatorsAuthentication() *AzureOperatorsAuthentication {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.operatorsAuthentication
 	}
 	return nil
@@ -260,7 +284,7 @@ func (o *Azure) OperatorsAuthentication() *AzureOperatorsAuthentication {
 // Required during creation.
 // Immutable.
 func (o *Azure) GetOperatorsAuthentication() (value *AzureOperatorsAuthentication, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.operatorsAuthentication
 	}
@@ -278,7 +302,7 @@ func (o *Azure) GetOperatorsAuthentication() (value *AzureOperatorsAuthenticatio
 // Required during creation.
 // Immutable.
 func (o *Azure) ResourceGroupName() string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.resourceGroupName
 	}
 	return ""
@@ -295,7 +319,7 @@ func (o *Azure) ResourceGroupName() string {
 // Required during creation.
 // Immutable.
 func (o *Azure) GetResourceGroupName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.resourceGroupName
 	}
@@ -311,7 +335,7 @@ func (o *Azure) GetResourceGroupName() (value string, ok bool) {
 // Required during creation.
 // Immutable.
 func (o *Azure) ResourceName() string {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.resourceName
 	}
 	return ""
@@ -326,7 +350,7 @@ func (o *Azure) ResourceName() string {
 // Required during creation.
 // Immutable.
 func (o *Azure) GetResourceName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.resourceName
 	}
@@ -353,7 +377,7 @@ func (o *Azure) GetResourceName() (value string, ok bool) {
 // Required during creation.
 // Immutable.
 func (o *Azure) SubnetResourceID() string {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.subnetResourceID
 	}
 	return ""
@@ -379,7 +403,7 @@ func (o *Azure) SubnetResourceID() string {
 // Required during creation.
 // Immutable.
 func (o *Azure) GetSubnetResourceID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.subnetResourceID
 	}
@@ -394,7 +418,7 @@ func (o *Azure) GetSubnetResourceID() (value string, ok bool) {
 // Required during creation.
 // Immutable.
 func (o *Azure) SubscriptionID() string {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.subscriptionID
 	}
 	return ""
@@ -408,7 +432,7 @@ func (o *Azure) SubscriptionID() string {
 // Required during creation.
 // Immutable.
 func (o *Azure) GetSubscriptionID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.subscriptionID
 	}
@@ -422,7 +446,7 @@ func (o *Azure) GetSubscriptionID() (value string, ok bool) {
 // Required during creation.
 // Immutable.
 func (o *Azure) TenantID() string {
-	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.tenantID
 	}
 	return ""
@@ -435,7 +459,7 @@ func (o *Azure) TenantID() string {
 // Required during creation.
 // Immutable.
 func (o *Azure) GetTenantID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.tenantID
 	}
@@ -456,7 +480,7 @@ func (o *Azure) GetTenantID() (value string, ok bool) {
 // This field is optional - if not specified, SWIFT networking will not be enabled.
 // Immutable.
 func (o *Azure) VnetIntegrationSubnetResourceID() string {
-	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
+	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
 		return o.vnetIntegrationSubnetResourceID
 	}
 	return ""
@@ -476,7 +500,7 @@ func (o *Azure) VnetIntegrationSubnetResourceID() string {
 // This field is optional - if not specified, SWIFT networking will not be enabled.
 // Immutable.
 func (o *Azure) GetVnetIntegrationSubnetResourceID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
+	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
 	if ok {
 		value = o.vnetIntegrationSubnetResourceID
 	}

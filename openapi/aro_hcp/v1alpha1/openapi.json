@@ -4030,6 +4030,10 @@
             "description": "Etcd encryption configuration.\nIf not specified, etcd data is encrypted with platform managed keys.\nCurrently etcd data encryption is only supported with customer managed keys.\nCreating a cluster with platform managed keys will result in a failure creating the cluster.",
             "$ref": "#/components/schemas/AzureEtcdEncryption"
           },
+          "image_registry_credentials": {
+            "description": "Azure image registry credentials configuration for ACR image pulling.",
+            "$ref": "#/components/schemas/AzureImageRegistryCredentials"
+          },
           "managed_resource_group_name": {
             "description": "The desired name of the Azure Resource Group where the Azure Resources related\nto the cluster are created. It must not previously exist. The Azure Resource\nGroup is created with the given value, within the Azure Subscription\n`subscription_id` of the cluster.\n`managed_resource_group_name` cannot be equal to the value of `managed_resource_group`.\n`managed_resource_group_name` is located in the same Azure location as the\ncluster's region.\nNot to be confused with `resource_group_name`, which is the Azure Resource Group Name\nwhere the own Azure Resource associated to the cluster resides.\nRequired during creation.\nImmutable.",
             "type": "string"
@@ -4134,6 +4138,15 @@
           "data_encryption": {
             "description": "etcd data encryption settings.\nIf not specified, etcd data is encrypted with platform managed keys.",
             "$ref": "#/components/schemas/AzureEtcdDataEncryption"
+          }
+        }
+      },
+      "AzureImageRegistryCredentials": {
+        "description": "Azure image registry credentials configuration for an ARO HCP Cluster.\nConfigures a user-assigned managed identity for authenticating container\nimage pulls from Azure Container Registry (ACR).",
+        "properties": {
+          "managed_identity_resource_id": {
+            "description": "The Azure Resource ID of the user-assigned managed identity that has\nthe permissions required for ACR image pulling.",
+            "type": "string"
           }
         }
       },
