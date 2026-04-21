@@ -1,5 +1,13 @@
 # OpenShift cluster manager API model
 
+## Quick Start
+
+```bash
+make check       # Validate model definitions
+make openapi     # Generate OpenAPI specs
+make clientapi   # Generate Go client code
+```
+
 ## Introduction
 
 This project contains the specification of the OpenShift cluster manager API,
