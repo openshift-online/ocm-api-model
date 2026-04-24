@@ -222,4 +222,9 @@ resource Cluster {
 	locator ImageMirrors {
 		target ImageMirrors
 	}
+
+	// Reference to the resource that manages service inquiries for the cluster.
+	locator ServiceInquiries {
+		target ServiceInquiries
+	}
 }
