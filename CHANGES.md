@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.454 Apr 24 2026
+- Add `ZeroEgress` resource and type for ROSA HCP
+
 ## 0.0.453 Mar 11 2026
 - Add `Visibility` field of type `AzureKmsEncryptionVisibility` to the `AzureKmsEncryption` type.
 - Add `OidcIssuerUrl` field to ARO-HCP `Azure` type.
