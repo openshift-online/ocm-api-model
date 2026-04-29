@@ -14196,6 +14196,10 @@
           "vpc_endpoint_role_arn": {
             "description": "Role ARN for VPC Endpoint Service cross account role.",
             "type": "string"
+          },
+          "zero_egress": {
+            "description": "Zero egress configuration.",
+            "$ref": "#/components/schemas/ZeroEgress"
           }
         }
       },
@@ -20866,6 +20870,22 @@
           "WildcardsAllowed",
           "WildcardsDisallowed"
         ]
+      },
+      "ZeroEgress": {
+        "description": "Zero egress configuration.",
+        "properties": {
+          "enabled": {
+            "description": "Indicates if zero egress is enabled for this cluster.",
+            "type": "boolean"
+          },
+          "no_proxy_default_domains": {
+            "description": "List of default no-proxy domains automatically added to the cluster's\nno-proxy configuration when zero egress is enabled.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
       },
       "Error": {
         "type": "object",
