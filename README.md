@@ -468,3 +468,23 @@ in Search String
 
 This documentation is used to automatically generate OpenAPI reference
 documentation.
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/openshift-online/ocm-api-model.git
+cd ocm-api-model
+```
+
+### Prerequisites
+
+- Go (for generated client code)
+- [ocm-api-metamodel](https://github.com/openshift-online/ocm-api-metamodel) tool (for code generation)
+
+Install the metamodel tool:
+
+```bash
+make metamodel
+```
