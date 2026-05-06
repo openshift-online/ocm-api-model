@@ -137,6 +137,8 @@ type Cluster struct {
 	storageQuota                      *Value
 	subscription                      *Subscription
 	version                           *Version
+	creatorId                         string
+	creatorUsername                   string
 	fips                              bool
 	disableUserWorkloadMonitoring     bool
 	etcdEncryption                    bool
@@ -1725,6 +1727,52 @@ func (o *Cluster) GetVersion() (value *Version, ok bool) {
 	ok = o != nil && len(o.fieldSet_) > 65 && o.fieldSet_[65]
 	if ok {
 		value = o.version
+	}
+	return
+}
+
+// CreatorId returns the value of the 'creator_id' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// Identifier of the account that created the cluster, populated from the subscription creator.
+func (o *Cluster) CreatorId() string {
+	if o != nil && len(o.fieldSet_) > 66 && o.fieldSet_[66] {
+		return o.creatorId
+	}
+	return ""
+}
+
+// GetCreatorId returns the value of the 'creator_id' attribute and
+// a flag indicating if the attribute has a value.
+//
+// Identifier of the account that created the cluster, populated from the subscription creator.
+func (o *Cluster) GetCreatorId() (value string, ok bool) {
+	ok = o != nil && len(o.fieldSet_) > 66 && o.fieldSet_[66]
+	if ok {
+		value = o.creatorId
+	}
+	return
+}
+
+// CreatorUsername returns the value of the 'creator_username' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// Username of the account that created the cluster, populated from the subscription creator.
+func (o *Cluster) CreatorUsername() string {
+	if o != nil && len(o.fieldSet_) > 67 && o.fieldSet_[67] {
+		return o.creatorUsername
+	}
+	return ""
+}
+
+// GetCreatorUsername returns the value of the 'creator_username' attribute and
+// a flag indicating if the attribute has a value.
+//
+// Username of the account that created the cluster, populated from the subscription creator.
+func (o *Cluster) GetCreatorUsername() (value string, ok bool) {
+	ok = o != nil && len(o.fieldSet_) > 67 && o.fieldSet_[67]
+	if ok {
+		value = o.creatorUsername
 	}
 	return
 }

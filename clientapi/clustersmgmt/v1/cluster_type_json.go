@@ -676,6 +676,24 @@ func WriteCluster(object *Cluster, stream *jsoniter.Stream) {
 		}
 		stream.WriteObjectField("version")
 		WriteVersion(object.version, stream)
+		count++
+	}
+	present_ = len(object.fieldSet_) > 66 && object.fieldSet_[66]
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
+		stream.WriteObjectField("creator_id")
+		stream.WriteString(object.creatorId)
+		count++
+	}
+	present_ = len(object.fieldSet_) > 67 && object.fieldSet_[67]
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
+		stream.WriteObjectField("creator_username")
+		stream.WriteString(object.creatorUsername)
 	}
 	stream.WriteObjectEnd()
 }
@@ -695,7 +713,7 @@ func UnmarshalCluster(source interface{}) (object *Cluster, err error) {
 // ReadCluster reads a value of the 'cluster' type from the given iterator.
 func ReadCluster(iterator *jsoniter.Iterator) *Cluster {
 	object := &Cluster{
-		fieldSet_: make([]bool, 66),
+		fieldSet_: make([]bool, 68),
 	}
 	for {
 		field := iterator.ReadObject()
@@ -1121,6 +1139,14 @@ func ReadCluster(iterator *jsoniter.Iterator) *Cluster {
 			value := ReadVersion(iterator)
 			object.version = value
 			object.fieldSet_[65] = true
+		case "creator_id":
+			value := iterator.ReadString()
+			object.creatorId = value
+			object.fieldSet_[66] = true
+		case "creator_username":
+			value := iterator.ReadString()
+			object.creatorUsername = value
+			object.fieldSet_[67] = true
 		default:
 			iterator.ReadAny()
 		}
