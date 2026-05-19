@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.455 May 19 2026
+- Add the `AccessSharedRoleArn` field to the `AWSBackupConfig` type.
+- Add the `NodeCount` field to the `ClusterAutoNode` type.
+
 ## 0.0.454 May 01 2026
 - Add the `ZeroEgress` type and include in the `AWS` as a field.
 
