@@ -118,6 +118,9 @@ struct Azure {
 	// Readonly
 	OidcIssuerUrl String
 
+	// Azure image registry credentials configuration for ACR image pulling.
+	ImageRegistryCredentials AzureImageRegistryCredentials
+
     // Vnet Integration Subnet Resource ID is the Azure Resource ID of a pre-existing Azure
     // Subnet used for SWIFT networking (Azure Container Networking Interface).
     // This subnet is delegated to Microsoft.RedHatOpenShift/hcpOpenShiftClusters
