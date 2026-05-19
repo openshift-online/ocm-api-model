@@ -16884,6 +16884,11 @@
           "message": {
             "description": "Messages relating to the status of the AutoNode installation on this Cluster",
             "type": "string"
+          },
+          "node_count": {
+            "description": "The number of Nodes AutoNode has provisioned in the cluster",
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
