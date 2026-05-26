@@ -1,0 +1,138 @@
+#
+# Copyright (c) 2026 Red Hat, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+name: Auto-tag on merge
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'model/**'
+      - 'clientapi/**'
+      - 'metamodel_generator/**'
+
+concurrency:
+  group: auto-tag-main
+  cancel-in-progress: false
+
+jobs:
+  auto-tag:
+    name: Create release tags
+    runs-on: ubuntu-latest
+    # Skip if the commit is a release commit (avoid infinite loop)
+    if: "!startsWith(github.event.head_commit.message, 'Release v')"
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Use PAT instead of GITHUB_TOKEN so that tag pushes trigger
+          # downstream workflows (publish-release, sync-sdk).
+          # GITHUB_TOKEN events don't trigger other workflows by design.
+          token: ${{ secrets.OCM_SDK_SYNC_TOKEN }}
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Determine next version
+        id: version
+        run: |
+          # Get the latest root tag
+          LATEST=$(git tag -l 'v0.0.*' --sort=-version:refname | head -1)
+          if [ -z "$LATEST" ]; then
+            echo "next=v0.0.1" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # Extract patch number and bump
+          PATCH=$(echo "$LATEST" | sed 's/v0\.0\.//')
+          NEXT=$((PATCH + 1))
+          echo "next=v0.0.${NEXT}" >> "$GITHUB_OUTPUT"
+          echo "Latest tag: ${LATEST}, next: v0.0.${NEXT}"
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Regenerate clientapi and openapi
+        run: make update
+
+      - name: Update CHANGES.md
+        env:
+          VERSION: ${{ steps.version.outputs.next }}
+        run: |
+          VERSION_NUM="${VERSION#v}"
+          DATE=$(date '+%b %d %Y')
+
+          # Collect commit messages since last tag
+          LATEST_TAG=$(git tag -l 'v0.0.*' --sort=-version:refname | head -1)
+          CHANGES_FILE=$(mktemp)
+          if [ -n "$LATEST_TAG" ]; then
+            git log "${LATEST_TAG}..HEAD" --pretty=format:"- %s" \
+              --no-merges > "$CHANGES_FILE"
+          fi
+          if [ ! -s "$CHANGES_FILE" ]; then
+            git log -1 --format="- %s" > "$CHANGES_FILE"
+          fi
+
+          # Build new CHANGES.md with the entry inserted after the header
+          {
+            echo "# Changes"
+            echo ""
+            echo "This document describes the relevant changes between releases of the API model."
+            echo ""
+            echo "## ${VERSION_NUM} ${DATE}"
+            cat "$CHANGES_FILE"
+            echo ""
+            # Append everything after the original header block
+            tail -n +4 CHANGES.md
+          } > CHANGES.md.new
+          mv CHANGES.md.new CHANGES.md
+          rm -f "$CHANGES_FILE"
+
+      - name: Commit and tag
+        env:
+          VERSION: ${{ steps.version.outputs.next }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add CHANGES.md clientapi/ openapi/
+          git commit -m "Release ${VERSION}" || echo "No changes to commit"
+
+          # Create all 4 tags on this commit (Go multi-module convention)
+          git tag "${VERSION}"
+          git tag "clientapi/${VERSION}"
+          git tag "model/${VERSION}"
+          git tag "metamodel_generator/${VERSION}"
+
+          git push --atomic origin main --tags
+
+      - name: Create release
+        env:
+          VERSION: ${{ steps.version.outputs.next }}
+          GH_TOKEN: ${{ secrets.OCM_SDK_SYNC_TOKEN }}
+        run: |
+          VERSION_NUM="${VERSION#v}"
+
+          # Extract changelog for this version from CHANGES.md
+          NOTES=$(sed -n "/^## ${VERSION_NUM} /,/^## /{ /^## ${VERSION_NUM} /d; /^## /d; p; }" CHANGES.md)
+
+          gh release create "${VERSION}" \
+            --title "Release ${VERSION_NUM}" \
+            --notes "${NOTES}" \
+            --target main

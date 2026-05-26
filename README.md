@@ -56,17 +56,23 @@ also known as the _model_.
 
 ## Releasing a new OCM API Model version
 
-To use any updates to the [ocm-api-model](https://github.com/openshift-online/ocm-api-model), the version
-must be incremented for consumption in ocm-sdk-go generation. The version is defined by the release.
+### Automated (recommended)
 
-Once all changes to the OCM API Model have been defined and reviewed, the client types for the model need to be generated via the `make update` target
-in the `ocm-api-model` project.
+When model changes merge to main, the release pipeline runs automatically:
 
-Once all changes to the OCM API Model have been committed to the main branch, you will need to create a git tag for the changes in the ocm-api-model.
+1. **Auto-tag** — bumps the patch version, regenerates `clientapi/` and `openapi/`, updates `CHANGES.md`, creates all sub-module tags, and publishes a GitHub Release.
+2. **SDK sync** — the release triggers a PR in [ocm-sdk-go](https://github.com/openshift-online/ocm-sdk-go) with the bumped dependency and regenerated SDK code.
 
-To do that you can use a dedicated make target:
+No manual steps required beyond merging the model change PR.
 
-```
+### Manual
+
+If the automation is not available, follow these steps:
+
+1. Generate the client types: `make update`
+2. Create and push release tags:
+
+```shell
 make release VERSION=<vX.Y.Z>
 ```
 
