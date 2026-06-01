@@ -63,7 +63,7 @@ clientapi: metamodel goimports-install
 		--generators=types,builders,json \
 		--base=github.com/openshift-online/ocm-api-model/clientapi \
 		--output=clientapi
-	pushd clientapi; go mod tidy; popd
+	cd clientapi && go mod tidy
 
 verify-clientapi: metamodel goimports-install
 	$(eval TMPDIR := $(shell mktemp -d))
