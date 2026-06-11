@@ -2,6 +2,10 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.457 Jun 11 2026
+- feat: add Azure Container Registry credentials model to ARO HCP API
+- ci: add automated release pipeline
+
 ## 0.0.456 May 19 2026
 - Fix 0.0.455 release version
 
