@@ -46,15 +46,6 @@ func (o *AzureUserAssignedManagedIdentity) Empty() bool {
 // The Azure Resource ID of the Azure User-Assigned Managed Identity.
 // The managed identity represented must exist before creating or
 // updating the cluster.
-// The Azure Resource Group Name specified as part of the Resource ID
-// must belong to the Azure Subscription specified in `.azure.subscription_id`,
-// and in the same Azure location as the cluster's region.
-// The Azure Resource Group Name specified as part of the Resource ID
-// must be a different Resource Group Name than the one specified in
-// `.azure.managed_resource_group_name`.
-// The Azure Resource Group Name specified as part of the Resource ID
-// can be the same, or a different one than the one specified in
-// `.azure.resource_group_name`.
 // Required.
 func (o *AzureUserAssignedManagedIdentity) ResourceID() string {
 	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
@@ -69,15 +60,6 @@ func (o *AzureUserAssignedManagedIdentity) ResourceID() string {
 // The Azure Resource ID of the Azure User-Assigned Managed Identity.
 // The managed identity represented must exist before creating or
 // updating the cluster.
-// The Azure Resource Group Name specified as part of the Resource ID
-// must belong to the Azure Subscription specified in `.azure.subscription_id`,
-// and in the same Azure location as the cluster's region.
-// The Azure Resource Group Name specified as part of the Resource ID
-// must be a different Resource Group Name than the one specified in
-// `.azure.managed_resource_group_name`.
-// The Azure Resource Group Name specified as part of the Resource ID
-// can be the same, or a different one than the one specified in
-// `.azure.resource_group_name`.
 // Required.
 func (o *AzureUserAssignedManagedIdentity) GetResourceID() (value string, ok bool) {
 	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]

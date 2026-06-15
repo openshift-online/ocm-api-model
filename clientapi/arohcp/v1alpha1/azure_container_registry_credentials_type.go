@@ -48,6 +48,13 @@ func (o *AzureContainerRegistryCredentials) Empty() bool {
 //
 // The user-assigned managed identity used for ACR image pulls
 // on Data Plane worker nodes.
+// The managed identity must be in the same Microsoft Entra tenant
+// as the cluster's Azure Subscription.
+// The managed identity can be in any Azure Subscription or location
+// within the tenant.
+// The Azure Resource Group Name specified as part of the Resource ID
+// must be a different Resource Group Name than the one specified in
+// `.azure.managed_resource_group_name`.
 // Required when type is ManagedIdentity.
 func (o *AzureContainerRegistryCredentials) ManagedIdentity() *AzureUserAssignedManagedIdentity {
 	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
@@ -61,6 +68,13 @@ func (o *AzureContainerRegistryCredentials) ManagedIdentity() *AzureUserAssigned
 //
 // The user-assigned managed identity used for ACR image pulls
 // on Data Plane worker nodes.
+// The managed identity must be in the same Microsoft Entra tenant
+// as the cluster's Azure Subscription.
+// The managed identity can be in any Azure Subscription or location
+// within the tenant.
+// The Azure Resource Group Name specified as part of the Resource ID
+// must be a different Resource Group Name than the one specified in
+// `.azure.managed_resource_group_name`.
 // Required when type is ManagedIdentity.
 func (o *AzureContainerRegistryCredentials) GetManagedIdentity() (value *AzureUserAssignedManagedIdentity, ok bool) {
 	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
