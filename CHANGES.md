@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.458 Jun 19 2026
+- fix: relax subscription and location constraints on ACR pull managed identity
+
 ## 0.0.457 Jun 11 2026
 - feat: add Azure Container Registry credentials model to ARO HCP API
 - ci: add automated release pipeline
