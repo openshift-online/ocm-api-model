@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.459 Jun 23 2026
+- Add Resources subresource to Cluster resource (#1175)
+
 ## 0.0.458 Jun 19 2026
 - fix: relax subscription and location constraints on ACR pull managed identity
 
