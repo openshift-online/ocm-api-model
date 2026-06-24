@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.460 Jun 24 2026
+- Fix ClusterResources description comment (#1176)
+
 ## 0.0.459 Jun 23 2026
 - Add Resources subresource to Cluster resource (#1175)
 
