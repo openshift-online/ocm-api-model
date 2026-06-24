@@ -16652,6 +16652,14 @@
             "type": "string",
             "format": "date-time"
           },
+          "creator_id": {
+            "description": "Identifier of the account that created the cluster, populated from the subscription creator.\nThis is a convenience field to avoid a secondary lookup to the subscription resource.",
+            "type": "string"
+          },
+          "creator_username": {
+            "description": "Username of the account that created the cluster, populated from the subscription creator.\nThis is a convenience field to avoid a secondary lookup to the subscription resource.",
+            "type": "string"
+          },
           "delete_protection": {
             "description": "Delete protection",
             "$ref": "#/components/schemas/DeleteProtection"
