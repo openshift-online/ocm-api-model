@@ -214,7 +214,16 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.secretAccessKey)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 19 && object.fieldSet_[19] && object.subnetIDs != nil
+	present_ = len(object.fieldSet_) > 19 && object.fieldSet_[19]
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
+		stream.WriteObjectField("spot_termination_handler_queue_url")
+		stream.WriteString(object.spotTerminationHandlerQueueUrl)
+		count++
+	}
+	present_ = len(object.fieldSet_) > 20 && object.fieldSet_[20] && object.subnetIDs != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -223,7 +232,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		WriteStringList(object.subnetIDs, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 20 && object.fieldSet_[20] && object.tags != nil
+	present_ = len(object.fieldSet_) > 21 && object.fieldSet_[21] && object.tags != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -252,7 +261,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		}
 		count++
 	}
-	present_ = len(object.fieldSet_) > 21 && object.fieldSet_[21]
+	present_ = len(object.fieldSet_) > 22 && object.fieldSet_[22]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -261,7 +270,7 @@ func WriteAWS(object *AWS, stream *jsoniter.Stream) {
 		stream.WriteString(object.vpcEndpointRoleArn)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 22 && object.fieldSet_[22] && object.zeroEgress != nil
+	present_ = len(object.fieldSet_) > 23 && object.fieldSet_[23] && object.zeroEgress != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -287,7 +296,7 @@ func UnmarshalAWS(source interface{}) (object *AWS, err error) {
 // ReadAWS reads a value of the 'AWS' type from the given iterator.
 func ReadAWS(iterator *jsoniter.Iterator) *AWS {
 	object := &AWS{
-		fieldSet_: make([]bool, 23),
+		fieldSet_: make([]bool, 24),
 	}
 	for {
 		field := iterator.ReadObject()
@@ -372,10 +381,14 @@ func ReadAWS(iterator *jsoniter.Iterator) *AWS {
 			value := iterator.ReadString()
 			object.secretAccessKey = value
 			object.fieldSet_[18] = true
+		case "spot_termination_handler_queue_url":
+			value := iterator.ReadString()
+			object.spotTerminationHandlerQueueUrl = value
+			object.fieldSet_[19] = true
 		case "subnet_ids":
 			value := ReadStringList(iterator)
 			object.subnetIDs = value
-			object.fieldSet_[19] = true
+			object.fieldSet_[20] = true
 		case "tags":
 			value := map[string]string{}
 			for {
@@ -387,15 +400,15 @@ func ReadAWS(iterator *jsoniter.Iterator) *AWS {
 				value[key] = item
 			}
 			object.tags = value
-			object.fieldSet_[20] = true
+			object.fieldSet_[21] = true
 		case "vpc_endpoint_role_arn":
 			value := iterator.ReadString()
 			object.vpcEndpointRoleArn = value
-			object.fieldSet_[21] = true
+			object.fieldSet_[22] = true
 		case "zero_egress":
 			value := ReadZeroEgress(iterator)
 			object.zeroEgress = value
-			object.fieldSet_[22] = true
+			object.fieldSet_[23] = true
 		default:
 			iterator.ReadAny()
 		}
