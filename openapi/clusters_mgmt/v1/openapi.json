@@ -14215,6 +14215,10 @@
             "description": "AWS secret access key.",
             "type": "string"
           },
+          "spot_termination_handler_queue_url": {
+            "description": "URL of the SQS queue used for graceful Spot instance interruption handling.\nWhen set, HyperShift deploys the AWS Node Termination Handler in the hosted\ncontrol plane. Queue must be in the same region as the cluster.",
+            "type": "string"
+          },
           "subnet_ids": {
             "description": "The subnet ids to be used when installing the cluster.",
             "type": "array",
@@ -14497,6 +14501,10 @@
           "root_volume": {
             "description": "AWS Volume specification to be used to set custom worker disk size",
             "$ref": "#/components/schemas/AWSVolume"
+          },
+          "spot_market_options": {
+            "description": "Use spot instances on this node pool to reduce cost.",
+            "$ref": "#/components/schemas/AWSSpotMarketOptions"
           },
           "subnet_outposts": {
             "description": "Associates nodepool subnets with AWS Outposts.",
