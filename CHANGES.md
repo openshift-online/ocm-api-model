@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.461 Jul 02 2026
+- ROSAENG-59819 | feat: add severity constants for HCC alignment
+
 ## 0.0.460 Jun 24 2026
 - Fix ClusterResources description comment (#1176)
 
