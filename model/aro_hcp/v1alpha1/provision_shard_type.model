@@ -64,4 +64,8 @@ class ProvisionShard {
 	// format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 	// Readonly.
 	LastUpdateTimestamp Date
+
+	// Maximum number of clusters that can be placed on this provision shard.
+	// When not set, the global default is used.
+	ClusterLimit Integer
 }

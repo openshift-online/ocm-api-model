@@ -44,6 +44,7 @@ type ProvisionShard struct {
 	href                string
 	azureShard          *AzureShard
 	cloudProvider       *CloudProvider
+	clusterLimit        int
 	creationTimestamp   time.Time
 	lastUpdateTimestamp time.Time
 	maestroConfig       *ProvisionShardMaestroConfig
@@ -171,6 +172,31 @@ func (o *ProvisionShard) GetCloudProvider() (value *CloudProvider, ok bool) {
 	return
 }
 
+// ClusterLimit returns the value of the 'cluster_limit' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// Maximum number of clusters that can be placed on this provision shard.
+// When not set, the global default is used.
+func (o *ProvisionShard) ClusterLimit() int {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+		return o.clusterLimit
+	}
+	return 0
+}
+
+// GetClusterLimit returns the value of the 'cluster_limit' attribute and
+// a flag indicating if the attribute has a value.
+//
+// Maximum number of clusters that can be placed on this provision shard.
+// When not set, the global default is used.
+func (o *ProvisionShard) GetClusterLimit() (value int, ok bool) {
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	if ok {
+		value = o.clusterLimit
+	}
+	return
+}
+
 // CreationTimestamp returns the value of the 'creation_timestamp' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
@@ -178,7 +204,7 @@ func (o *ProvisionShard) GetCloudProvider() (value *CloudProvider, ok bool) {
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 // Readonly.
 func (o *ProvisionShard) CreationTimestamp() time.Time {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.creationTimestamp
 	}
 	return time.Time{}
@@ -191,7 +217,7 @@ func (o *ProvisionShard) CreationTimestamp() time.Time {
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 // Readonly.
 func (o *ProvisionShard) GetCreationTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.creationTimestamp
 	}
@@ -205,7 +231,7 @@ func (o *ProvisionShard) GetCreationTimestamp() (value time.Time, ok bool) {
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 // Readonly.
 func (o *ProvisionShard) LastUpdateTimestamp() time.Time {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.lastUpdateTimestamp
 	}
 	return time.Time{}
@@ -218,7 +244,7 @@ func (o *ProvisionShard) LastUpdateTimestamp() time.Time {
 // format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
 // Readonly.
 func (o *ProvisionShard) GetLastUpdateTimestamp() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.lastUpdateTimestamp
 	}
@@ -231,7 +257,7 @@ func (o *ProvisionShard) GetLastUpdateTimestamp() (value time.Time, ok bool) {
 // The Maestro related configuration of the Provision Shard.
 // Required during creation.
 func (o *ProvisionShard) MaestroConfig() *ProvisionShardMaestroConfig {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.maestroConfig
 	}
 	return nil
@@ -243,7 +269,7 @@ func (o *ProvisionShard) MaestroConfig() *ProvisionShardMaestroConfig {
 // The Maestro related configuration of the Provision Shard.
 // Required during creation.
 func (o *ProvisionShard) GetMaestroConfig() (value *ProvisionShardMaestroConfig, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.maestroConfig
 	}
@@ -257,7 +283,7 @@ func (o *ProvisionShard) GetMaestroConfig() (value *ProvisionShardMaestroConfig,
 // Required during creation.
 // Immutable.
 func (o *ProvisionShard) Region() *CloudRegion {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.region
 	}
 	return nil
@@ -270,7 +296,7 @@ func (o *ProvisionShard) Region() *CloudRegion {
 // Required during creation.
 // Immutable.
 func (o *ProvisionShard) GetRegion() (value *CloudRegion, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.region
 	}
@@ -294,7 +320,7 @@ func (o *ProvisionShard) GetRegion() (value *CloudRegion, ok bool) {
 // A shard in `offline` status is not available for selection when a Cluster
 // needs to be allocated to a shard.
 func (o *ProvisionShard) Status() string {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.status
 	}
 	return ""
@@ -317,7 +343,7 @@ func (o *ProvisionShard) Status() string {
 // A shard in `offline` status is not available for selection when a Cluster
 // needs to be allocated to a shard.
 func (o *ProvisionShard) GetStatus() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.status
 	}
@@ -332,7 +358,7 @@ func (o *ProvisionShard) GetStatus() (value string, ok bool) {
 // are mapped to Nodes in the control plane K8s Cluster.
 // Required during creation.
 func (o *ProvisionShard) Topology() string {
-	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.topology
 	}
 	return ""
@@ -346,7 +372,7 @@ func (o *ProvisionShard) Topology() string {
 // are mapped to Nodes in the control plane K8s Cluster.
 // Required during creation.
 func (o *ProvisionShard) GetTopology() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.topology
 	}

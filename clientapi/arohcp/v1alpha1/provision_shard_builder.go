@@ -30,6 +30,7 @@ type ProvisionShardBuilder struct {
 	href                string
 	azureShard          *AzureShardBuilder
 	cloudProvider       *CloudProviderBuilder
+	clusterLimit        int
 	creationTimestamp   time.Time
 	lastUpdateTimestamp time.Time
 	maestroConfig       *ProvisionShardMaestroConfigBuilder
@@ -41,14 +42,14 @@ type ProvisionShardBuilder struct {
 // NewProvisionShard creates a new builder of 'provision_shard' objects.
 func NewProvisionShard() *ProvisionShardBuilder {
 	return &ProvisionShardBuilder{
-		fieldSet_: make([]bool, 11),
+		fieldSet_: make([]bool, 12),
 	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ProvisionShardBuilder) Link(value bool) *ProvisionShardBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
+		b.fieldSet_ = make([]bool, 12)
 	}
 	b.fieldSet_[0] = true
 	return b
@@ -57,7 +58,7 @@ func (b *ProvisionShardBuilder) Link(value bool) *ProvisionShardBuilder {
 // ID sets the identifier of the object.
 func (b *ProvisionShardBuilder) ID(value string) *ProvisionShardBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
+		b.fieldSet_ = make([]bool, 12)
 	}
 	b.id = value
 	b.fieldSet_[1] = true
@@ -67,7 +68,7 @@ func (b *ProvisionShardBuilder) ID(value string) *ProvisionShardBuilder {
 // HREF sets the link to the object.
 func (b *ProvisionShardBuilder) HREF(value string) *ProvisionShardBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
+		b.fieldSet_ = make([]bool, 12)
 	}
 	b.href = value
 	b.fieldSet_[2] = true
@@ -93,7 +94,7 @@ func (b *ProvisionShardBuilder) Empty() bool {
 // The Azure related configuration of the Provision Shard
 func (b *ProvisionShardBuilder) AzureShard(value *AzureShardBuilder) *ProvisionShardBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
+		b.fieldSet_ = make([]bool, 12)
 	}
 	b.azureShard = value
 	if value != nil {
@@ -109,7 +110,7 @@ func (b *ProvisionShardBuilder) AzureShard(value *AzureShardBuilder) *ProvisionS
 // Cloud provider.
 func (b *ProvisionShardBuilder) CloudProvider(value *CloudProviderBuilder) *ProvisionShardBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
+		b.fieldSet_ = make([]bool, 12)
 	}
 	b.cloudProvider = value
 	if value != nil {
@@ -120,23 +121,33 @@ func (b *ProvisionShardBuilder) CloudProvider(value *CloudProviderBuilder) *Prov
 	return b
 }
 
+// ClusterLimit sets the value of the 'cluster_limit' attribute to the given value.
+func (b *ProvisionShardBuilder) ClusterLimit(value int) *ProvisionShardBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 12)
+	}
+	b.clusterLimit = value
+	b.fieldSet_[5] = true
+	return b
+}
+
 // CreationTimestamp sets the value of the 'creation_timestamp' attribute to the given value.
 func (b *ProvisionShardBuilder) CreationTimestamp(value time.Time) *ProvisionShardBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
+		b.fieldSet_ = make([]bool, 12)
 	}
 	b.creationTimestamp = value
-	b.fieldSet_[5] = true
+	b.fieldSet_[6] = true
 	return b
 }
 
 // LastUpdateTimestamp sets the value of the 'last_update_timestamp' attribute to the given value.
 func (b *ProvisionShardBuilder) LastUpdateTimestamp(value time.Time) *ProvisionShardBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
+		b.fieldSet_ = make([]bool, 12)
 	}
 	b.lastUpdateTimestamp = value
-	b.fieldSet_[6] = true
+	b.fieldSet_[7] = true
 	return b
 }
 
@@ -149,13 +160,13 @@ func (b *ProvisionShardBuilder) LastUpdateTimestamp(value time.Time) *ProvisionS
 // must be unique across shards.
 func (b *ProvisionShardBuilder) MaestroConfig(value *ProvisionShardMaestroConfigBuilder) *ProvisionShardBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
+		b.fieldSet_ = make([]bool, 12)
 	}
 	b.maestroConfig = value
 	if value != nil {
-		b.fieldSet_[7] = true
+		b.fieldSet_[8] = true
 	} else {
-		b.fieldSet_[7] = false
+		b.fieldSet_[8] = false
 	}
 	return b
 }
@@ -165,13 +176,13 @@ func (b *ProvisionShardBuilder) MaestroConfig(value *ProvisionShardMaestroConfig
 // Description of a region of a cloud provider.
 func (b *ProvisionShardBuilder) Region(value *CloudRegionBuilder) *ProvisionShardBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
+		b.fieldSet_ = make([]bool, 12)
 	}
 	b.region = value
 	if value != nil {
-		b.fieldSet_[8] = true
+		b.fieldSet_[9] = true
 	} else {
-		b.fieldSet_[8] = false
+		b.fieldSet_[9] = false
 	}
 	return b
 }
@@ -179,20 +190,20 @@ func (b *ProvisionShardBuilder) Region(value *CloudRegionBuilder) *ProvisionShar
 // Status sets the value of the 'status' attribute to the given value.
 func (b *ProvisionShardBuilder) Status(value string) *ProvisionShardBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
+		b.fieldSet_ = make([]bool, 12)
 	}
 	b.status = value
-	b.fieldSet_[9] = true
+	b.fieldSet_[10] = true
 	return b
 }
 
 // Topology sets the value of the 'topology' attribute to the given value.
 func (b *ProvisionShardBuilder) Topology(value string) *ProvisionShardBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 11)
+		b.fieldSet_ = make([]bool, 12)
 	}
 	b.topology = value
-	b.fieldSet_[10] = true
+	b.fieldSet_[11] = true
 	return b
 }
 
@@ -217,6 +228,7 @@ func (b *ProvisionShardBuilder) Copy(object *ProvisionShard) *ProvisionShardBuil
 	} else {
 		b.cloudProvider = nil
 	}
+	b.clusterLimit = object.clusterLimit
 	b.creationTimestamp = object.creationTimestamp
 	b.lastUpdateTimestamp = object.lastUpdateTimestamp
 	if object.maestroConfig != nil {
@@ -255,6 +267,7 @@ func (b *ProvisionShardBuilder) Build() (object *ProvisionShard, err error) {
 			return
 		}
 	}
+	object.clusterLimit = b.clusterLimit
 	object.creationTimestamp = b.creationTimestamp
 	object.lastUpdateTimestamp = b.lastUpdateTimestamp
 	if b.maestroConfig != nil {

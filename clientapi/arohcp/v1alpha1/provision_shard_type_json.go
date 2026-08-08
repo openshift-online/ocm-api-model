@@ -89,11 +89,20 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		if count > 0 {
 			stream.WriteMore()
 		}
+		stream.WriteObjectField("cluster_limit")
+		stream.WriteInt(object.clusterLimit)
+		count++
+	}
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
 		stream.WriteObjectField("creation_timestamp")
 		stream.WriteString((object.creationTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +111,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		stream.WriteString((object.lastUpdateTimestamp).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7] && object.maestroConfig != nil
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8] && object.maestroConfig != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +120,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		WriteProvisionShardMaestroConfig(object.maestroConfig, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8] && object.region != nil
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9] && object.region != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -120,7 +129,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		WriteCloudRegion(object.region, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -129,7 +138,7 @@ func WriteProvisionShard(object *ProvisionShard, stream *jsoniter.Stream) {
 		stream.WriteString(object.status)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -155,7 +164,7 @@ func UnmarshalProvisionShard(source interface{}) (object *ProvisionShard, err er
 // ReadProvisionShard reads a value of the 'provision_shard' type from the given iterator.
 func ReadProvisionShard(iterator *jsoniter.Iterator) *ProvisionShard {
 	object := &ProvisionShard{
-		fieldSet_: make([]bool, 11),
+		fieldSet_: make([]bool, 12),
 	}
 	for {
 		field := iterator.ReadObject()
@@ -182,6 +191,10 @@ func ReadProvisionShard(iterator *jsoniter.Iterator) *ProvisionShard {
 			value := ReadCloudProvider(iterator)
 			object.cloudProvider = value
 			object.fieldSet_[4] = true
+		case "cluster_limit":
+			value := iterator.ReadInt()
+			object.clusterLimit = value
+			object.fieldSet_[5] = true
 		case "creation_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -189,7 +202,7 @@ func ReadProvisionShard(iterator *jsoniter.Iterator) *ProvisionShard {
 				iterator.ReportError("", err.Error())
 			}
 			object.creationTimestamp = value
-			object.fieldSet_[5] = true
+			object.fieldSet_[6] = true
 		case "last_update_timestamp":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -197,23 +210,23 @@ func ReadProvisionShard(iterator *jsoniter.Iterator) *ProvisionShard {
 				iterator.ReportError("", err.Error())
 			}
 			object.lastUpdateTimestamp = value
-			object.fieldSet_[6] = true
+			object.fieldSet_[7] = true
 		case "maestro_config":
 			value := ReadProvisionShardMaestroConfig(iterator)
 			object.maestroConfig = value
-			object.fieldSet_[7] = true
+			object.fieldSet_[8] = true
 		case "region":
 			value := ReadCloudRegion(iterator)
 			object.region = value
-			object.fieldSet_[8] = true
+			object.fieldSet_[9] = true
 		case "status":
 			value := iterator.ReadString()
 			object.status = value
-			object.fieldSet_[9] = true
+			object.fieldSet_[10] = true
 		case "topology":
 			value := iterator.ReadString()
 			object.topology = value
-			object.fieldSet_[10] = true
+			object.fieldSet_[11] = true
 		default:
 			iterator.ReadAny()
 		}
