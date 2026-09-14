@@ -272,4 +272,12 @@ class Cluster {
 	// The AutoNode settings for this cluster.
 	// This is currently only supported for ROSA HCP
 	AutoNode ClusterAutoNode
+
+	// Identifier of the account that created the cluster, populated from the subscription creator.
+	// This is a convenience field to avoid a secondary lookup to the subscription resource.
+	CreatorId String
+
+	// Username of the account that created the cluster, populated from the subscription creator.
+	// This is a convenience field to avoid a secondary lookup to the subscription resource.
+	CreatorUsername String
 }
