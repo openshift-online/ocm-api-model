@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.469 Sep 25 2026
+- ROSAENG-67619 | feat: add maintenance type and resource
+
 ## 0.0.468 Sep 14 2026
 - ARO-29491 | feat: add key_vault_type field to AzureKmsEncryption for Managed HSM support
 
