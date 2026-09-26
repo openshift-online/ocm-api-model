@@ -85,7 +85,7 @@ metamodel:
 
 # Enforce indentation by tabs. License contains 2 spaces, so reject 3+.
 lint:
-	find -name '*.model' -print0 | xargs -0 sh -c '! egrep --with-filename --line-number "^(   |\t+ )" "$$@"'
+	find . -name '*.model' -print0 | xargs -0 sh -c '! egrep --with-filename --line-number "^(   |\t+ )" "$$@"'
 
 .PHONY: clean
 clean:
