@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.470 Sep 29 2026
+- ROSAENG-59820 | feat: remove deprecated HCC severity constants
+
 ## 0.0.469 Sep 25 2026
 - ROSAENG-67619 | feat: add maintenance type and resource
 
