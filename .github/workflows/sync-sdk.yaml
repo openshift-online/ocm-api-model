@@ -26,10 +26,18 @@ jobs:
     name: Trigger SDK update
     runs-on: ubuntu-latest
     steps:
+      - name: Generate token from GitHub App
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.OCM_SDK_APP_ID }}
+          private-key: ${{ secrets.OCM_SDK_APP_PRIVATE_KEY }}
+          repositories: ocm-sdk-go
+
       - name: Send repository dispatch to ocm-sdk-go
         uses: peter-evans/repository-dispatch@v3
         with:
-          token: ${{ secrets.OCM_SDK_SYNC_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           repository: openshift-online/ocm-sdk-go
           event-type: model-updated
           client-payload: >-
