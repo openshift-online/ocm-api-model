@@ -151,4 +151,9 @@ resource Root {
 	locator LogForwarding {
 		target LogForwarding
 	}
+
+	// Reference to the resource that manages the collection of scheduled upgrades.
+	locator ScheduledUpgrades {
+		target ScheduledUpgrades
+	}
 }
