@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.471 Oct 16 2026
+- ROSAENG-62796 | feat: add ScheduledUpgrade list API to clusters_mgmt model
+
 ## 0.0.470 Sep 29 2026
 - ROSAENG-59820 | feat: remove deprecated HCC severity constants
 
