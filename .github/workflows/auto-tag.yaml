@@ -39,7 +39,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # Use PAT instead of GITHUB_TOKEN so that tag pushes trigger
           # downstream workflows (publish-release, sync-sdk).
