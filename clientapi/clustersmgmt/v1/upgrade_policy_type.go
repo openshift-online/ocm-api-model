@@ -42,6 +42,7 @@ type UpgradePolicy struct {
 	fieldSet_                  []bool
 	id                         string
 	href                       string
+	architecture               UpgradeArchitecture
 	clusterID                  string
 	nextRun                    time.Time
 	schedule                   string
@@ -118,12 +119,41 @@ func (o *UpgradePolicy) Empty() bool {
 	return true
 }
 
+// Architecture returns the value of the 'architecture' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// Optional architecture migration target for a manual upgrade on a non-HCP cluster.
+// The only supported value is Multi. Omit this field for an ordinary version upgrade.
+// Architecture migrations must be enabled for the cluster's organization.
+// This field cannot be changed after the policy is created.
+func (o *UpgradePolicy) Architecture() UpgradeArchitecture {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+		return o.architecture
+	}
+	return UpgradeArchitecture("")
+}
+
+// GetArchitecture returns the value of the 'architecture' attribute and
+// a flag indicating if the attribute has a value.
+//
+// Optional architecture migration target for a manual upgrade on a non-HCP cluster.
+// The only supported value is Multi. Omit this field for an ordinary version upgrade.
+// Architecture migrations must be enabled for the cluster's organization.
+// This field cannot be changed after the policy is created.
+func (o *UpgradePolicy) GetArchitecture() (value UpgradeArchitecture, ok bool) {
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	if ok {
+		value = o.architecture
+	}
+	return
+}
+
 // ClusterID returns the value of the 'cluster_ID' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
 // Cluster ID this upgrade policy is defined for.
 func (o *UpgradePolicy) ClusterID() string {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.clusterID
 	}
 	return ""
@@ -134,7 +164,7 @@ func (o *UpgradePolicy) ClusterID() string {
 //
 // Cluster ID this upgrade policy is defined for.
 func (o *UpgradePolicy) GetClusterID() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.clusterID
 	}
@@ -146,7 +176,7 @@ func (o *UpgradePolicy) GetClusterID() (value string, ok bool) {
 //
 // Indicates if minor version upgrades are allowed for automatic upgrades (for manual it's always allowed).
 func (o *UpgradePolicy) EnableMinorVersionUpgrades() bool {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.enableMinorVersionUpgrades
 	}
 	return false
@@ -157,7 +187,7 @@ func (o *UpgradePolicy) EnableMinorVersionUpgrades() bool {
 //
 // Indicates if minor version upgrades are allowed for automatic upgrades (for manual it's always allowed).
 func (o *UpgradePolicy) GetEnableMinorVersionUpgrades() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.enableMinorVersionUpgrades
 	}
@@ -169,7 +199,7 @@ func (o *UpgradePolicy) GetEnableMinorVersionUpgrades() (value bool, ok bool) {
 //
 // Next time the upgrade should run.
 func (o *UpgradePolicy) NextRun() time.Time {
-	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
+	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
 		return o.nextRun
 	}
 	return time.Time{}
@@ -180,7 +210,7 @@ func (o *UpgradePolicy) NextRun() time.Time {
 //
 // Next time the upgrade should run.
 func (o *UpgradePolicy) GetNextRun() (value time.Time, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
+	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
 	if ok {
 		value = o.nextRun
 	}
@@ -192,7 +222,7 @@ func (o *UpgradePolicy) GetNextRun() (value time.Time, ok bool) {
 //
 // Schedule cron expression that defines automatic upgrade scheduling.
 func (o *UpgradePolicy) Schedule() string {
-	if o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6] {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
 		return o.schedule
 	}
 	return ""
@@ -203,7 +233,7 @@ func (o *UpgradePolicy) Schedule() string {
 //
 // Schedule cron expression that defines automatic upgrade scheduling.
 func (o *UpgradePolicy) GetSchedule() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 6 && o.fieldSet_[6]
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
 	if ok {
 		value = o.schedule
 	}
@@ -215,7 +245,7 @@ func (o *UpgradePolicy) GetSchedule() (value string, ok bool) {
 //
 // Schedule type of the upgrade.
 func (o *UpgradePolicy) ScheduleType() ScheduleType {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
 		return o.scheduleType
 	}
 	return ScheduleType("")
@@ -226,7 +256,7 @@ func (o *UpgradePolicy) ScheduleType() ScheduleType {
 //
 // Schedule type of the upgrade.
 func (o *UpgradePolicy) GetScheduleType() (value ScheduleType, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
 	if ok {
 		value = o.scheduleType
 	}
@@ -238,7 +268,7 @@ func (o *UpgradePolicy) GetScheduleType() (value ScheduleType, ok bool) {
 //
 // Upgrade type specify the type of the upgrade.
 func (o *UpgradePolicy) UpgradeType() UpgradeType {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.upgradeType
 	}
 	return UpgradeType("")
@@ -249,7 +279,7 @@ func (o *UpgradePolicy) UpgradeType() UpgradeType {
 //
 // Upgrade type specify the type of the upgrade.
 func (o *UpgradePolicy) GetUpgradeType() (value UpgradeType, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.upgradeType
 	}
@@ -261,7 +291,7 @@ func (o *UpgradePolicy) GetUpgradeType() (value UpgradeType, ok bool) {
 //
 // Version is the desired upgrade version.
 func (o *UpgradePolicy) Version() string {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.version
 	}
 	return ""
@@ -272,7 +302,7 @@ func (o *UpgradePolicy) Version() string {
 //
 // Version is the desired upgrade version.
 func (o *UpgradePolicy) GetVersion() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.version
 	}
