@@ -17,6 +17,9 @@ limitations under the License.
 // Retrieves the details of the WifConfig status.
 resource WifConfigStatus {
 	method Get {
+		// Whether to include support access validation in WIF config status verification.
+		in CheckSupportAccess Boolean = false
+
 		out Body WifConfigStatus
 	}
 }
