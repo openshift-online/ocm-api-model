@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.472 Oct 29 2026
+- ROSAENG-74872 | add check_support_access wif-config status query param
+
 ## 0.0.471 Oct 16 2026
 - ROSAENG-62796 | feat: add ScheduledUpgrade list API to clusters_mgmt model
 
