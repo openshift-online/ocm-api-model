@@ -71,11 +71,20 @@ func WriteUpgradePolicy(object *UpgradePolicy, stream *jsoniter.Stream) {
 		if count > 0 {
 			stream.WriteMore()
 		}
+		stream.WriteObjectField("architecture")
+		stream.WriteString(string(object.architecture))
+		count++
+	}
+	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
 		stream.WriteObjectField("cluster_id")
 		stream.WriteString(object.clusterID)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 4 && object.fieldSet_[4]
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -84,7 +93,7 @@ func WriteUpgradePolicy(object *UpgradePolicy, stream *jsoniter.Stream) {
 		stream.WriteBool(object.enableMinorVersionUpgrades)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -93,7 +102,7 @@ func WriteUpgradePolicy(object *UpgradePolicy, stream *jsoniter.Stream) {
 		stream.WriteString((object.nextRun).Format(time.RFC3339))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -102,7 +111,7 @@ func WriteUpgradePolicy(object *UpgradePolicy, stream *jsoniter.Stream) {
 		stream.WriteString(object.schedule)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -111,7 +120,7 @@ func WriteUpgradePolicy(object *UpgradePolicy, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.scheduleType))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -120,7 +129,7 @@ func WriteUpgradePolicy(object *UpgradePolicy, stream *jsoniter.Stream) {
 		stream.WriteString(string(object.upgradeType))
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -146,7 +155,7 @@ func UnmarshalUpgradePolicy(source interface{}) (object *UpgradePolicy, err erro
 // ReadUpgradePolicy reads a value of the 'upgrade_policy' type from the given iterator.
 func ReadUpgradePolicy(iterator *jsoniter.Iterator) *UpgradePolicy {
 	object := &UpgradePolicy{
-		fieldSet_: make([]bool, 10),
+		fieldSet_: make([]bool, 11),
 	}
 	for {
 		field := iterator.ReadObject()
@@ -165,14 +174,19 @@ func ReadUpgradePolicy(iterator *jsoniter.Iterator) *UpgradePolicy {
 		case "href":
 			object.href = iterator.ReadString()
 			object.fieldSet_[2] = true
+		case "architecture":
+			text := iterator.ReadString()
+			value := UpgradeArchitecture(text)
+			object.architecture = value
+			object.fieldSet_[3] = true
 		case "cluster_id":
 			value := iterator.ReadString()
 			object.clusterID = value
-			object.fieldSet_[3] = true
+			object.fieldSet_[4] = true
 		case "enable_minor_version_upgrades":
 			value := iterator.ReadBool()
 			object.enableMinorVersionUpgrades = value
-			object.fieldSet_[4] = true
+			object.fieldSet_[5] = true
 		case "next_run":
 			text := iterator.ReadString()
 			value, err := time.Parse(time.RFC3339, text)
@@ -180,25 +194,25 @@ func ReadUpgradePolicy(iterator *jsoniter.Iterator) *UpgradePolicy {
 				iterator.ReportError("", err.Error())
 			}
 			object.nextRun = value
-			object.fieldSet_[5] = true
+			object.fieldSet_[6] = true
 		case "schedule":
 			value := iterator.ReadString()
 			object.schedule = value
-			object.fieldSet_[6] = true
+			object.fieldSet_[7] = true
 		case "schedule_type":
 			text := iterator.ReadString()
 			value := ScheduleType(text)
 			object.scheduleType = value
-			object.fieldSet_[7] = true
+			object.fieldSet_[8] = true
 		case "upgrade_type":
 			text := iterator.ReadString()
 			value := UpgradeType(text)
 			object.upgradeType = value
-			object.fieldSet_[8] = true
+			object.fieldSet_[9] = true
 		case "version":
 			value := iterator.ReadString()
 			object.version = value
-			object.fieldSet_[9] = true
+			object.fieldSet_[10] = true
 		default:
 			iterator.ReadAny()
 		}
