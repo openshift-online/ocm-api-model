@@ -50,4 +50,11 @@ struct AzureNodePool {
 	// When specified, the provided image is used instead of the default RHCOS image.
 	// Optional during creation. Immutable.
 	Image AzureNodePoolImage
+
+	// IPForwarding controls which source and destination IP addresses the network interfaces
+	// of the Nodes in the Node Pool may send and receive traffic for.
+	// Accepted values are `interface_addresses_only` and `allow_all_addresses`.
+	// Defaults to `interface_addresses_only` if not set.
+	// Changing this value replaces the Nodes in the Node Pool.
+	IPForwarding AzureNodePoolIPForwarding
 }

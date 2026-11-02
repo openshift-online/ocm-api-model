@@ -16648,6 +16648,10 @@
       "AzureNodePool": {
         "description": "Representation of azure node pool specific parameters.",
         "properties": {
+          "ip_forwarding": {
+            "description": "IPForwarding controls which source and destination IP addresses the network interfaces\nof the Nodes in the Node Pool may send and receive traffic for.\nAccepted values are `interface_addresses_only` and `allow_all_addresses`.\nDefaults to `interface_addresses_only` if not set.\nChanging this value replaces the Nodes in the Node Pool.",
+            "$ref": "#/components/schemas/AzureNodePoolIPForwarding"
+          },
           "vm_size": {
             "description": "The Azure Virtual Machine size identifier used for the\nNodes of the Node Pool.\nAvailability of VM sizes are dependent on the Azure Location\nof the parent Cluster.\nRequired during creation.",
             "type": "string"
@@ -16669,6 +16673,14 @@
             "type": "string"
           }
         }
+      },
+      "AzureNodePoolIPForwarding": {
+        "description": "AzureNodePoolIPForwarding defines which source and destination IP addresses the network\ninterfaces of the Nodes in the Node Pool may send and receive traffic for.",
+        "type": "string",
+        "enum": [
+          "allow_all_addresses",
+          "interface_addresses_only"
+        ]
       },
       "AzureNodePoolEncryptionAtHost": {
         "description": "AzureNodePoolEncryptionAtHost defines the encryption setting for Encryption At Host.\nIf not specified, Encryption at Host is not enabled.",

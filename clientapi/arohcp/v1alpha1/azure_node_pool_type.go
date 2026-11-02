@@ -24,6 +24,7 @@ package v1alpha1 // github.com/openshift-online/ocm-api-model/clientapi/arohcp/v
 // Representation of azure node pool specific parameters.
 type AzureNodePool struct {
 	fieldSet_        []bool
+	ipForwarding     AzureNodePoolIPForwarding
 	vmSize           string
 	encryptionAtHost *AzureNodePoolEncryptionAtHost
 	image            *AzureNodePoolImage
@@ -44,6 +45,37 @@ func (o *AzureNodePool) Empty() bool {
 	return true
 }
 
+// IPForwarding returns the value of the 'IP_forwarding' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// IPForwarding controls which source and destination IP addresses the network interfaces
+// of the Nodes in the Node Pool may send and receive traffic for.
+// Accepted values are `interface_addresses_only` and `allow_all_addresses`.
+// Defaults to `interface_addresses_only` if not set.
+// Changing this value replaces the Nodes in the Node Pool.
+func (o *AzureNodePool) IPForwarding() AzureNodePoolIPForwarding {
+	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+		return o.ipForwarding
+	}
+	return AzureNodePoolIPForwarding("")
+}
+
+// GetIPForwarding returns the value of the 'IP_forwarding' attribute and
+// a flag indicating if the attribute has a value.
+//
+// IPForwarding controls which source and destination IP addresses the network interfaces
+// of the Nodes in the Node Pool may send and receive traffic for.
+// Accepted values are `interface_addresses_only` and `allow_all_addresses`.
+// Defaults to `interface_addresses_only` if not set.
+// Changing this value replaces the Nodes in the Node Pool.
+func (o *AzureNodePool) GetIPForwarding() (value AzureNodePoolIPForwarding, ok bool) {
+	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	if ok {
+		value = o.ipForwarding
+	}
+	return
+}
+
 // VMSize returns the value of the 'VM_size' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
@@ -53,7 +85,7 @@ func (o *AzureNodePool) Empty() bool {
 // of the parent Cluster.
 // Required during creation.
 func (o *AzureNodePool) VMSize() string {
-	if o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0] {
+	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
 		return o.vmSize
 	}
 	return ""
@@ -68,7 +100,7 @@ func (o *AzureNodePool) VMSize() string {
 // of the parent Cluster.
 // Required during creation.
 func (o *AzureNodePool) GetVMSize() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 0 && o.fieldSet_[0]
+	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
 	if ok {
 		value = o.vmSize
 	}
@@ -84,7 +116,7 @@ func (o *AzureNodePool) GetVMSize() (value string, ok bool) {
 // If not specified, Encryption at Host is not enabled.
 // Immutable.
 func (o *AzureNodePool) EncryptionAtHost() *AzureNodePoolEncryptionAtHost {
-	if o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1] {
+	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
 		return o.encryptionAtHost
 	}
 	return nil
@@ -99,7 +131,7 @@ func (o *AzureNodePool) EncryptionAtHost() *AzureNodePoolEncryptionAtHost {
 // If not specified, Encryption at Host is not enabled.
 // Immutable.
 func (o *AzureNodePool) GetEncryptionAtHost() (value *AzureNodePoolEncryptionAtHost, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 1 && o.fieldSet_[1]
+	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
 	if ok {
 		value = o.encryptionAtHost
 	}
@@ -113,7 +145,7 @@ func (o *AzureNodePool) GetEncryptionAtHost() (value *AzureNodePoolEncryptionAtH
 // When specified, the provided image is used instead of the default RHCOS image.
 // Optional during creation. Immutable.
 func (o *AzureNodePool) Image() *AzureNodePoolImage {
-	if o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2] {
+	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
 		return o.image
 	}
 	return nil
@@ -126,7 +158,7 @@ func (o *AzureNodePool) Image() *AzureNodePoolImage {
 // When specified, the provided image is used instead of the default RHCOS image.
 // Optional during creation. Immutable.
 func (o *AzureNodePool) GetImage() (value *AzureNodePoolImage, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 2 && o.fieldSet_[2]
+	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
 	if ok {
 		value = o.image
 	}
@@ -138,7 +170,7 @@ func (o *AzureNodePool) GetImage() (value *AzureNodePoolImage, ok bool) {
 //
 // The configuration for the OS disk used by the nodes in the Node Pool.
 func (o *AzureNodePool) OsDisk() *AzureNodePoolOsDisk {
-	if o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3] {
+	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
 		return o.osDisk
 	}
 	return nil
@@ -149,7 +181,7 @@ func (o *AzureNodePool) OsDisk() *AzureNodePoolOsDisk {
 //
 // The configuration for the OS disk used by the nodes in the Node Pool.
 func (o *AzureNodePool) GetOsDisk() (value *AzureNodePoolOsDisk, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 3 && o.fieldSet_[3]
+	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
 	if ok {
 		value = o.osDisk
 	}
@@ -171,7 +203,7 @@ func (o *AzureNodePool) GetOsDisk() (value *AzureNodePoolOsDisk, ok bool) {
 // Required during creation.
 // Immutable.
 func (o *AzureNodePool) ResourceName() string {
-	if o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4] {
+	if o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5] {
 		return o.resourceName
 	}
 	return ""
@@ -192,7 +224,7 @@ func (o *AzureNodePool) ResourceName() string {
 // Required during creation.
 // Immutable.
 func (o *AzureNodePool) GetResourceName() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 4 && o.fieldSet_[4]
+	ok = o != nil && len(o.fieldSet_) > 5 && o.fieldSet_[5]
 	if ok {
 		value = o.resourceName
 	}
