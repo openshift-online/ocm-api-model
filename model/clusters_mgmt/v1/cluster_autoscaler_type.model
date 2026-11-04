@@ -49,6 +49,22 @@ class ClusterAutoscaler {
 	// to prevent cluster autoscaler from splitting nodes into different node groups based on its value.
 	BalancingIgnoredLabels []String
 
+	// Ordered list of strategies used to select which node group to grow when scaling up.
+	// The strategies are applied in the given order, and each one only breaks the ties left
+	// by the previous one, so the order is significant.
+	// Accepted values are `LeastWaste`, `Priority` and `Random`. One to three entries are
+	// allowed, and duplicates are not accepted. `Random` always resolves to a single node
+	// group, so when more than one strategy is given it must be the last entry.
+	// Only supported on ROSA HCP clusters.
+	Expanders []String
+
+	// Maximum difference in free resources tolerated between two node groups for them to still
+	// be considered similar, and therefore eligible to be balanced against each other.
+	// Expressed as a ratio of the smaller node group's free resource, a decimal string between "0.0" and "1.0", where "0.1" means 10%.
+	// Values outside that range, and values with more than two decimal places, are not accepted.
+	// Only supported on ROSA HCP clusters.
+	MaxFreeDifferenceRatio String
+
 	// Constraints of autoscaling resources.
 	ResourceLimits AutoscalerResourceLimits
 
