@@ -83,7 +83,16 @@ func WriteClusterAutoscaler(object *ClusterAutoscaler, stream *jsoniter.Stream) 
 		WriteStringList(object.balancingIgnoredLabels, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5]
+	present_ = len(object.fieldSet_) > 5 && object.fieldSet_[5] && object.expanders != nil
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
+		stream.WriteObjectField("expanders")
+		WriteStringList(object.expanders, stream)
+		count++
+	}
+	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -92,7 +101,7 @@ func WriteClusterAutoscaler(object *ClusterAutoscaler, stream *jsoniter.Stream) 
 		stream.WriteBool(object.ignoreDaemonsetsUtilization)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 6 && object.fieldSet_[6]
+	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -101,7 +110,16 @@ func WriteClusterAutoscaler(object *ClusterAutoscaler, stream *jsoniter.Stream) 
 		stream.WriteInt(object.logVerbosity)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 7 && object.fieldSet_[7]
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
+		stream.WriteObjectField("max_free_difference_ratio")
+		stream.WriteString(object.maxFreeDifferenceRatio)
+		count++
+	}
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -110,7 +128,7 @@ func WriteClusterAutoscaler(object *ClusterAutoscaler, stream *jsoniter.Stream) 
 		stream.WriteString(object.maxNodeProvisionTime)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -119,7 +137,7 @@ func WriteClusterAutoscaler(object *ClusterAutoscaler, stream *jsoniter.Stream) 
 		stream.WriteInt(object.maxPodGracePeriod)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -128,7 +146,7 @@ func WriteClusterAutoscaler(object *ClusterAutoscaler, stream *jsoniter.Stream) 
 		stream.WriteInt(object.podPriorityThreshold)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10] && object.resourceLimits != nil
+	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12] && object.resourceLimits != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -137,7 +155,7 @@ func WriteClusterAutoscaler(object *ClusterAutoscaler, stream *jsoniter.Stream) 
 		WriteAutoscalerResourceLimits(object.resourceLimits, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11] && object.scaleDown != nil
+	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13] && object.scaleDown != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -146,7 +164,7 @@ func WriteClusterAutoscaler(object *ClusterAutoscaler, stream *jsoniter.Stream) 
 		WriteAutoscalerScaleDownConfig(object.scaleDown, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
+	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -172,7 +190,7 @@ func UnmarshalClusterAutoscaler(source interface{}) (object *ClusterAutoscaler, 
 // ReadClusterAutoscaler reads a value of the 'cluster_autoscaler' type from the given iterator.
 func ReadClusterAutoscaler(iterator *jsoniter.Iterator) *ClusterAutoscaler {
 	object := &ClusterAutoscaler{
-		fieldSet_: make([]bool, 13),
+		fieldSet_: make([]bool, 15),
 	}
 	for {
 		field := iterator.ReadObject()
@@ -199,38 +217,46 @@ func ReadClusterAutoscaler(iterator *jsoniter.Iterator) *ClusterAutoscaler {
 			value := ReadStringList(iterator)
 			object.balancingIgnoredLabels = value
 			object.fieldSet_[4] = true
+		case "expanders":
+			value := ReadStringList(iterator)
+			object.expanders = value
+			object.fieldSet_[5] = true
 		case "ignore_daemonsets_utilization":
 			value := iterator.ReadBool()
 			object.ignoreDaemonsetsUtilization = value
-			object.fieldSet_[5] = true
+			object.fieldSet_[6] = true
 		case "log_verbosity":
 			value := iterator.ReadInt()
 			object.logVerbosity = value
-			object.fieldSet_[6] = true
+			object.fieldSet_[7] = true
+		case "max_free_difference_ratio":
+			value := iterator.ReadString()
+			object.maxFreeDifferenceRatio = value
+			object.fieldSet_[8] = true
 		case "max_node_provision_time":
 			value := iterator.ReadString()
 			object.maxNodeProvisionTime = value
-			object.fieldSet_[7] = true
+			object.fieldSet_[9] = true
 		case "max_pod_grace_period":
 			value := iterator.ReadInt()
 			object.maxPodGracePeriod = value
-			object.fieldSet_[8] = true
+			object.fieldSet_[10] = true
 		case "pod_priority_threshold":
 			value := iterator.ReadInt()
 			object.podPriorityThreshold = value
-			object.fieldSet_[9] = true
+			object.fieldSet_[11] = true
 		case "resource_limits":
 			value := ReadAutoscalerResourceLimits(iterator)
 			object.resourceLimits = value
-			object.fieldSet_[10] = true
+			object.fieldSet_[12] = true
 		case "scale_down":
 			value := ReadAutoscalerScaleDownConfig(iterator)
 			object.scaleDown = value
-			object.fieldSet_[11] = true
+			object.fieldSet_[13] = true
 		case "skip_nodes_with_local_storage":
 			value := iterator.ReadBool()
 			object.skipNodesWithLocalStorage = value
-			object.fieldSet_[12] = true
+			object.fieldSet_[14] = true
 		default:
 			iterator.ReadAny()
 		}
