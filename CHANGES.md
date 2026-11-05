@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.473 Nov 05 2026
+- ROSAENG-74987 | feat: add Expanders and MaxFreeDifferenceRatio to the ClusterAutoscaler API
+
 ## 0.0.472 Oct 29 2026
 - ROSAENG-74872 | add check_support_access wif-config status query param
 
