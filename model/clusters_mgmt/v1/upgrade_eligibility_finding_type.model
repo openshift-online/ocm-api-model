@@ -1,0 +1,38 @@
+/*
+Copyright (c) 2026 Red Hat, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+// A single finding from the upgrade eligibility evaluation.
+class UpgradeEligibilityFinding {
+    // Severity of the finding.
+    Severity UpgradeEligibilityFindingSeverity
+
+    // ReasonCode is a stable machine-readable identifier for this finding type,
+    // suitable for programmatic handling (e.g. CLUSTER_NOT_READY, LIMITED_SUPPORT,
+    // UPGRADE_IN_FLIGHT, NO_TARGETS_AVAILABLE, GATE_UNACKNOWLEDGED, AT_LATEST_VERSION).
+    ReasonCode String
+
+    // Owner identifies who must act to resolve this finding.
+    Owner UpgradeEligibilityFindingOwner
+
+    // Summary is a short human-readable description of the finding.
+    Summary String
+
+    // Detail provides additional context explaining why this finding was raised.
+    Detail String
+
+    // Action describes the recommended remediation step.
+    Action String
+}

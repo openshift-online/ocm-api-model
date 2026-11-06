@@ -141,6 +141,11 @@ resource Cluster {
 		target UpgradePolicies
 	}
 
+	// Reference to the resource that evaluates upgrade eligibility for this cluster.
+	locator UpgradeEligibility {
+		target UpgradeEligibility
+	}
+
 	// Reference to the resource that manages the collection of upgrade policies defined for control plane for this cluster.
 	locator ControlPlane {
 		target ControlPlane
