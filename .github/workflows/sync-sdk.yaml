@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send repository dispatch to ocm-sdk-go
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.OCM_SDK_SYNC_TOKEN }}
           repository: openshift-online/ocm-sdk-go
