@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.474 Nov 17 2026
+- ROSAENG-74267 | feat: add KubeClientQPS and KubeClientBurst to the ClusterAutoscaler API
+
 ## 0.0.473 Nov 05 2026
 - ROSAENG-74987 | feat: add Expanders and MaxFreeDifferenceRatio to the ClusterAutoscaler API
 
