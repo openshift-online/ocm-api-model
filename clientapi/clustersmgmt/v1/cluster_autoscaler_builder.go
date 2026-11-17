@@ -26,6 +26,8 @@ type ClusterAutoscalerBuilder struct {
 	href                        string
 	balancingIgnoredLabels      []string
 	expanders                   []string
+	kubeClientQPS               int
+	kubeClientBurst             int
 	logVerbosity                int
 	maxFreeDifferenceRatio      string
 	maxNodeProvisionTime        string
@@ -41,14 +43,14 @@ type ClusterAutoscalerBuilder struct {
 // NewClusterAutoscaler creates a new builder of 'cluster_autoscaler' objects.
 func NewClusterAutoscaler() *ClusterAutoscalerBuilder {
 	return &ClusterAutoscalerBuilder{
-		fieldSet_: make([]bool, 15),
+		fieldSet_: make([]bool, 17),
 	}
 }
 
 // Link sets the flag that indicates if this is a link.
 func (b *ClusterAutoscalerBuilder) Link(value bool) *ClusterAutoscalerBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
+		b.fieldSet_ = make([]bool, 17)
 	}
 	b.fieldSet_[0] = true
 	return b
@@ -57,7 +59,7 @@ func (b *ClusterAutoscalerBuilder) Link(value bool) *ClusterAutoscalerBuilder {
 // ID sets the identifier of the object.
 func (b *ClusterAutoscalerBuilder) ID(value string) *ClusterAutoscalerBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
+		b.fieldSet_ = make([]bool, 17)
 	}
 	b.id = value
 	b.fieldSet_[1] = true
@@ -67,7 +69,7 @@ func (b *ClusterAutoscalerBuilder) ID(value string) *ClusterAutoscalerBuilder {
 // HREF sets the link to the object.
 func (b *ClusterAutoscalerBuilder) HREF(value string) *ClusterAutoscalerBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
+		b.fieldSet_ = make([]bool, 17)
 	}
 	b.href = value
 	b.fieldSet_[2] = true
@@ -91,7 +93,7 @@ func (b *ClusterAutoscalerBuilder) Empty() bool {
 // BalanceSimilarNodeGroups sets the value of the 'balance_similar_node_groups' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) BalanceSimilarNodeGroups(value bool) *ClusterAutoscalerBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
+		b.fieldSet_ = make([]bool, 17)
 	}
 	b.balanceSimilarNodeGroups = value
 	b.fieldSet_[3] = true
@@ -101,7 +103,7 @@ func (b *ClusterAutoscalerBuilder) BalanceSimilarNodeGroups(value bool) *Cluster
 // BalancingIgnoredLabels sets the value of the 'balancing_ignored_labels' attribute to the given values.
 func (b *ClusterAutoscalerBuilder) BalancingIgnoredLabels(values ...string) *ClusterAutoscalerBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
+		b.fieldSet_ = make([]bool, 17)
 	}
 	b.balancingIgnoredLabels = make([]string, len(values))
 	copy(b.balancingIgnoredLabels, values)
@@ -112,7 +114,7 @@ func (b *ClusterAutoscalerBuilder) BalancingIgnoredLabels(values ...string) *Clu
 // Expanders sets the value of the 'expanders' attribute to the given values.
 func (b *ClusterAutoscalerBuilder) Expanders(values ...string) *ClusterAutoscalerBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
+		b.fieldSet_ = make([]bool, 17)
 	}
 	b.expanders = make([]string, len(values))
 	copy(b.expanders, values)
@@ -123,73 +125,93 @@ func (b *ClusterAutoscalerBuilder) Expanders(values ...string) *ClusterAutoscale
 // IgnoreDaemonsetsUtilization sets the value of the 'ignore_daemonsets_utilization' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) IgnoreDaemonsetsUtilization(value bool) *ClusterAutoscalerBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
+		b.fieldSet_ = make([]bool, 17)
 	}
 	b.ignoreDaemonsetsUtilization = value
 	b.fieldSet_[6] = true
 	return b
 }
 
+// KubeClientQPS sets the value of the 'kube_client_QPS' attribute to the given value.
+func (b *ClusterAutoscalerBuilder) KubeClientQPS(value int) *ClusterAutoscalerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
+	b.kubeClientQPS = value
+	b.fieldSet_[7] = true
+	return b
+}
+
+// KubeClientBurst sets the value of the 'kube_client_burst' attribute to the given value.
+func (b *ClusterAutoscalerBuilder) KubeClientBurst(value int) *ClusterAutoscalerBuilder {
+	if len(b.fieldSet_) == 0 {
+		b.fieldSet_ = make([]bool, 17)
+	}
+	b.kubeClientBurst = value
+	b.fieldSet_[8] = true
+	return b
+}
+
 // LogVerbosity sets the value of the 'log_verbosity' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) LogVerbosity(value int) *ClusterAutoscalerBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
+		b.fieldSet_ = make([]bool, 17)
 	}
 	b.logVerbosity = value
-	b.fieldSet_[7] = true
+	b.fieldSet_[9] = true
 	return b
 }
 
 // MaxFreeDifferenceRatio sets the value of the 'max_free_difference_ratio' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) MaxFreeDifferenceRatio(value string) *ClusterAutoscalerBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
+		b.fieldSet_ = make([]bool, 17)
 	}
 	b.maxFreeDifferenceRatio = value
-	b.fieldSet_[8] = true
+	b.fieldSet_[10] = true
 	return b
 }
 
 // MaxNodeProvisionTime sets the value of the 'max_node_provision_time' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) MaxNodeProvisionTime(value string) *ClusterAutoscalerBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
+		b.fieldSet_ = make([]bool, 17)
 	}
 	b.maxNodeProvisionTime = value
-	b.fieldSet_[9] = true
+	b.fieldSet_[11] = true
 	return b
 }
 
 // MaxPodGracePeriod sets the value of the 'max_pod_grace_period' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) MaxPodGracePeriod(value int) *ClusterAutoscalerBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
+		b.fieldSet_ = make([]bool, 17)
 	}
 	b.maxPodGracePeriod = value
-	b.fieldSet_[10] = true
+	b.fieldSet_[12] = true
 	return b
 }
 
 // PodPriorityThreshold sets the value of the 'pod_priority_threshold' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) PodPriorityThreshold(value int) *ClusterAutoscalerBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
+		b.fieldSet_ = make([]bool, 17)
 	}
 	b.podPriorityThreshold = value
-	b.fieldSet_[11] = true
+	b.fieldSet_[13] = true
 	return b
 }
 
 // ResourceLimits sets the value of the 'resource_limits' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) ResourceLimits(value *AutoscalerResourceLimitsBuilder) *ClusterAutoscalerBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
+		b.fieldSet_ = make([]bool, 17)
 	}
 	b.resourceLimits = value
 	if value != nil {
-		b.fieldSet_[12] = true
+		b.fieldSet_[14] = true
 	} else {
-		b.fieldSet_[12] = false
+		b.fieldSet_[14] = false
 	}
 	return b
 }
@@ -197,13 +219,13 @@ func (b *ClusterAutoscalerBuilder) ResourceLimits(value *AutoscalerResourceLimit
 // ScaleDown sets the value of the 'scale_down' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) ScaleDown(value *AutoscalerScaleDownConfigBuilder) *ClusterAutoscalerBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
+		b.fieldSet_ = make([]bool, 17)
 	}
 	b.scaleDown = value
 	if value != nil {
-		b.fieldSet_[13] = true
+		b.fieldSet_[15] = true
 	} else {
-		b.fieldSet_[13] = false
+		b.fieldSet_[15] = false
 	}
 	return b
 }
@@ -211,10 +233,10 @@ func (b *ClusterAutoscalerBuilder) ScaleDown(value *AutoscalerScaleDownConfigBui
 // SkipNodesWithLocalStorage sets the value of the 'skip_nodes_with_local_storage' attribute to the given value.
 func (b *ClusterAutoscalerBuilder) SkipNodesWithLocalStorage(value bool) *ClusterAutoscalerBuilder {
 	if len(b.fieldSet_) == 0 {
-		b.fieldSet_ = make([]bool, 15)
+		b.fieldSet_ = make([]bool, 17)
 	}
 	b.skipNodesWithLocalStorage = value
-	b.fieldSet_[14] = true
+	b.fieldSet_[16] = true
 	return b
 }
 
@@ -243,6 +265,8 @@ func (b *ClusterAutoscalerBuilder) Copy(object *ClusterAutoscaler) *ClusterAutos
 		b.expanders = nil
 	}
 	b.ignoreDaemonsetsUtilization = object.ignoreDaemonsetsUtilization
+	b.kubeClientQPS = object.kubeClientQPS
+	b.kubeClientBurst = object.kubeClientBurst
 	b.logVerbosity = object.logVerbosity
 	b.maxFreeDifferenceRatio = object.maxFreeDifferenceRatio
 	b.maxNodeProvisionTime = object.maxNodeProvisionTime
@@ -281,6 +305,8 @@ func (b *ClusterAutoscalerBuilder) Build() (object *ClusterAutoscaler, err error
 		copy(object.expanders, b.expanders)
 	}
 	object.ignoreDaemonsetsUtilization = b.ignoreDaemonsetsUtilization
+	object.kubeClientQPS = b.kubeClientQPS
+	object.kubeClientBurst = b.kubeClientBurst
 	object.logVerbosity = b.logVerbosity
 	object.maxFreeDifferenceRatio = b.maxFreeDifferenceRatio
 	object.maxNodeProvisionTime = b.maxNodeProvisionTime

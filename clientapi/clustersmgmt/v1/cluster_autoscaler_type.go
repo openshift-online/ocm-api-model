@@ -40,6 +40,8 @@ type ClusterAutoscaler struct {
 	href                        string
 	balancingIgnoredLabels      []string
 	expanders                   []string
+	kubeClientQPS               int
+	kubeClientBurst             int
 	logVerbosity                int
 	maxFreeDifferenceRatio      string
 	maxNodeProvisionTime        string
@@ -235,13 +237,77 @@ func (o *ClusterAutoscaler) GetIgnoreDaemonsetsUtilization() (value bool, ok boo
 	return
 }
 
+// KubeClientQPS returns the value of the 'kube_client_QPS' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// Maximum number of queries per second the cluster autoscaler is allowed to send to the
+// Kubernetes API server.
+// Accepted values are between -1 and 1000. `-1` disables client side rate limiting, and
+// `0` leaves the client-go default of 5 queries per second in place.
+// When not set the autoscaler applies its own default of 200.
+// Only supported on ROSA HCP clusters.
+func (o *ClusterAutoscaler) KubeClientQPS() int {
+	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+		return o.kubeClientQPS
+	}
+	return 0
+}
+
+// GetKubeClientQPS returns the value of the 'kube_client_QPS' attribute and
+// a flag indicating if the attribute has a value.
+//
+// Maximum number of queries per second the cluster autoscaler is allowed to send to the
+// Kubernetes API server.
+// Accepted values are between -1 and 1000. `-1` disables client side rate limiting, and
+// `0` leaves the client-go default of 5 queries per second in place.
+// When not set the autoscaler applies its own default of 200.
+// Only supported on ROSA HCP clusters.
+func (o *ClusterAutoscaler) GetKubeClientQPS() (value int, ok bool) {
+	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	if ok {
+		value = o.kubeClientQPS
+	}
+	return
+}
+
+// KubeClientBurst returns the value of the 'kube_client_burst' attribute, or
+// the zero value of the type if the attribute doesn't have a value.
+//
+// Maximum number of queries the cluster autoscaler is allowed to send to the Kubernetes
+// API server in a single burst, on top of the sustained rate given by `kube_client_qps`.
+// Accepted values are between 1 and 2000.
+// When not set the autoscaler applies its own default of 300.
+// Only supported on ROSA HCP clusters.
+func (o *ClusterAutoscaler) KubeClientBurst() int {
+	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+		return o.kubeClientBurst
+	}
+	return 0
+}
+
+// GetKubeClientBurst returns the value of the 'kube_client_burst' attribute and
+// a flag indicating if the attribute has a value.
+//
+// Maximum number of queries the cluster autoscaler is allowed to send to the Kubernetes
+// API server in a single burst, on top of the sustained rate given by `kube_client_qps`.
+// Accepted values are between 1 and 2000.
+// When not set the autoscaler applies its own default of 300.
+// Only supported on ROSA HCP clusters.
+func (o *ClusterAutoscaler) GetKubeClientBurst() (value int, ok bool) {
+	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	if ok {
+		value = o.kubeClientBurst
+	}
+	return
+}
+
 // LogVerbosity returns the value of the 'log_verbosity' attribute, or
 // the zero value of the type if the attribute doesn't have a value.
 //
 // Sets the autoscaler log level.
 // Default value is 1, level 4 is recommended for DEBUGGING and level 6 will enable almost everything.
 func (o *ClusterAutoscaler) LogVerbosity() int {
-	if o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7] {
+	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
 		return o.logVerbosity
 	}
 	return 0
@@ -253,7 +319,7 @@ func (o *ClusterAutoscaler) LogVerbosity() int {
 // Sets the autoscaler log level.
 // Default value is 1, level 4 is recommended for DEBUGGING and level 6 will enable almost everything.
 func (o *ClusterAutoscaler) GetLogVerbosity() (value int, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 7 && o.fieldSet_[7]
+	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
 	if ok {
 		value = o.logVerbosity
 	}
@@ -269,7 +335,7 @@ func (o *ClusterAutoscaler) GetLogVerbosity() (value int, ok bool) {
 // Values outside that range, and values with more than two decimal places, are not accepted.
 // Only supported on ROSA HCP clusters.
 func (o *ClusterAutoscaler) MaxFreeDifferenceRatio() string {
-	if o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8] {
+	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
 		return o.maxFreeDifferenceRatio
 	}
 	return ""
@@ -284,7 +350,7 @@ func (o *ClusterAutoscaler) MaxFreeDifferenceRatio() string {
 // Values outside that range, and values with more than two decimal places, are not accepted.
 // Only supported on ROSA HCP clusters.
 func (o *ClusterAutoscaler) GetMaxFreeDifferenceRatio() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 8 && o.fieldSet_[8]
+	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
 	if ok {
 		value = o.maxFreeDifferenceRatio
 	}
@@ -296,7 +362,7 @@ func (o *ClusterAutoscaler) GetMaxFreeDifferenceRatio() (value string, ok bool) 
 //
 // Maximum time CA waits for node to be provisioned.
 func (o *ClusterAutoscaler) MaxNodeProvisionTime() string {
-	if o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9] {
+	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
 		return o.maxNodeProvisionTime
 	}
 	return ""
@@ -307,7 +373,7 @@ func (o *ClusterAutoscaler) MaxNodeProvisionTime() string {
 //
 // Maximum time CA waits for node to be provisioned.
 func (o *ClusterAutoscaler) GetMaxNodeProvisionTime() (value string, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 9 && o.fieldSet_[9]
+	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
 	if ok {
 		value = o.maxNodeProvisionTime
 	}
@@ -319,7 +385,7 @@ func (o *ClusterAutoscaler) GetMaxNodeProvisionTime() (value string, ok bool) {
 //
 // Gives pods graceful termination time before scaling down.
 func (o *ClusterAutoscaler) MaxPodGracePeriod() int {
-	if o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10] {
+	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
 		return o.maxPodGracePeriod
 	}
 	return 0
@@ -330,7 +396,7 @@ func (o *ClusterAutoscaler) MaxPodGracePeriod() int {
 //
 // Gives pods graceful termination time before scaling down.
 func (o *ClusterAutoscaler) GetMaxPodGracePeriod() (value int, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 10 && o.fieldSet_[10]
+	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
 	if ok {
 		value = o.maxPodGracePeriod
 	}
@@ -344,7 +410,7 @@ func (o *ClusterAutoscaler) GetMaxPodGracePeriod() (value int, ok bool) {
 // Cluster Autoscaler actions, but only run when there are spare resources available,
 // More info: https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#how-does-cluster-autoscaler-work-with-pod-priority-and-preemption.
 func (o *ClusterAutoscaler) PodPriorityThreshold() int {
-	if o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11] {
+	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
 		return o.podPriorityThreshold
 	}
 	return 0
@@ -357,7 +423,7 @@ func (o *ClusterAutoscaler) PodPriorityThreshold() int {
 // Cluster Autoscaler actions, but only run when there are spare resources available,
 // More info: https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#how-does-cluster-autoscaler-work-with-pod-priority-and-preemption.
 func (o *ClusterAutoscaler) GetPodPriorityThreshold() (value int, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 11 && o.fieldSet_[11]
+	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
 	if ok {
 		value = o.podPriorityThreshold
 	}
@@ -369,7 +435,7 @@ func (o *ClusterAutoscaler) GetPodPriorityThreshold() (value int, ok bool) {
 //
 // Constraints of autoscaling resources.
 func (o *ClusterAutoscaler) ResourceLimits() *AutoscalerResourceLimits {
-	if o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12] {
+	if o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14] {
 		return o.resourceLimits
 	}
 	return nil
@@ -380,7 +446,7 @@ func (o *ClusterAutoscaler) ResourceLimits() *AutoscalerResourceLimits {
 //
 // Constraints of autoscaling resources.
 func (o *ClusterAutoscaler) GetResourceLimits() (value *AutoscalerResourceLimits, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 12 && o.fieldSet_[12]
+	ok = o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14]
 	if ok {
 		value = o.resourceLimits
 	}
@@ -392,7 +458,7 @@ func (o *ClusterAutoscaler) GetResourceLimits() (value *AutoscalerResourceLimits
 //
 // Configuration of scale down operation.
 func (o *ClusterAutoscaler) ScaleDown() *AutoscalerScaleDownConfig {
-	if o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13] {
+	if o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15] {
 		return o.scaleDown
 	}
 	return nil
@@ -403,7 +469,7 @@ func (o *ClusterAutoscaler) ScaleDown() *AutoscalerScaleDownConfig {
 //
 // Configuration of scale down operation.
 func (o *ClusterAutoscaler) GetScaleDown() (value *AutoscalerScaleDownConfig, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 13 && o.fieldSet_[13]
+	ok = o != nil && len(o.fieldSet_) > 15 && o.fieldSet_[15]
 	if ok {
 		value = o.scaleDown
 	}
@@ -415,7 +481,7 @@ func (o *ClusterAutoscaler) GetScaleDown() (value *AutoscalerScaleDownConfig, ok
 //
 // Enables/Disables `--skip-nodes-with-local-storage` CA feature flag. If true cluster autoscaler will never delete nodes with pods with local storage, e.g. EmptyDir or HostPath. true by default at autoscaler.
 func (o *ClusterAutoscaler) SkipNodesWithLocalStorage() bool {
-	if o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14] {
+	if o != nil && len(o.fieldSet_) > 16 && o.fieldSet_[16] {
 		return o.skipNodesWithLocalStorage
 	}
 	return false
@@ -426,7 +492,7 @@ func (o *ClusterAutoscaler) SkipNodesWithLocalStorage() bool {
 //
 // Enables/Disables `--skip-nodes-with-local-storage` CA feature flag. If true cluster autoscaler will never delete nodes with pods with local storage, e.g. EmptyDir or HostPath. true by default at autoscaler.
 func (o *ClusterAutoscaler) GetSkipNodesWithLocalStorage() (value bool, ok bool) {
-	ok = o != nil && len(o.fieldSet_) > 14 && o.fieldSet_[14]
+	ok = o != nil && len(o.fieldSet_) > 16 && o.fieldSet_[16]
 	if ok {
 		value = o.skipNodesWithLocalStorage
 	}

@@ -65,6 +65,21 @@ class ClusterAutoscaler {
 	// Only supported on ROSA HCP clusters.
 	MaxFreeDifferenceRatio String
 
+	// Maximum number of queries per second the cluster autoscaler is allowed to send to the
+	// Kubernetes API server.
+	// Accepted values are between -1 and 1000. `-1` disables client side rate limiting, and
+	// `0` leaves the client-go default of 5 queries per second in place.
+	// When not set the autoscaler applies its own default of 200.
+	// Only supported on ROSA HCP clusters.
+	KubeClientQPS Integer
+
+	// Maximum number of queries the cluster autoscaler is allowed to send to the Kubernetes
+	// API server in a single burst, on top of the sustained rate given by `kube_client_qps`.
+	// Accepted values are between 1 and 2000.
+	// When not set the autoscaler applies its own default of 300.
+	// Only supported on ROSA HCP clusters.
+	KubeClientBurst Integer
+
 	// Constraints of autoscaling resources.
 	ResourceLimits AutoscalerResourceLimits
 
