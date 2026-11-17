@@ -106,11 +106,29 @@ func WriteClusterAutoscaler(object *ClusterAutoscaler, stream *jsoniter.Stream) 
 		if count > 0 {
 			stream.WriteMore()
 		}
+		stream.WriteObjectField("kube_client_qps")
+		stream.WriteInt(object.kubeClientQPS)
+		count++
+	}
+	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
+		stream.WriteObjectField("kube_client_burst")
+		stream.WriteInt(object.kubeClientBurst)
+		count++
+	}
+	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	if present_ {
+		if count > 0 {
+			stream.WriteMore()
+		}
 		stream.WriteObjectField("log_verbosity")
 		stream.WriteInt(object.logVerbosity)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 8 && object.fieldSet_[8]
+	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -119,7 +137,7 @@ func WriteClusterAutoscaler(object *ClusterAutoscaler, stream *jsoniter.Stream) 
 		stream.WriteString(object.maxFreeDifferenceRatio)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 9 && object.fieldSet_[9]
+	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -128,7 +146,7 @@ func WriteClusterAutoscaler(object *ClusterAutoscaler, stream *jsoniter.Stream) 
 		stream.WriteString(object.maxNodeProvisionTime)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 10 && object.fieldSet_[10]
+	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -137,7 +155,7 @@ func WriteClusterAutoscaler(object *ClusterAutoscaler, stream *jsoniter.Stream) 
 		stream.WriteInt(object.maxPodGracePeriod)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 11 && object.fieldSet_[11]
+	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -146,7 +164,7 @@ func WriteClusterAutoscaler(object *ClusterAutoscaler, stream *jsoniter.Stream) 
 		stream.WriteInt(object.podPriorityThreshold)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 12 && object.fieldSet_[12] && object.resourceLimits != nil
+	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14] && object.resourceLimits != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -155,7 +173,7 @@ func WriteClusterAutoscaler(object *ClusterAutoscaler, stream *jsoniter.Stream) 
 		WriteAutoscalerResourceLimits(object.resourceLimits, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 13 && object.fieldSet_[13] && object.scaleDown != nil
+	present_ = len(object.fieldSet_) > 15 && object.fieldSet_[15] && object.scaleDown != nil
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -164,7 +182,7 @@ func WriteClusterAutoscaler(object *ClusterAutoscaler, stream *jsoniter.Stream) 
 		WriteAutoscalerScaleDownConfig(object.scaleDown, stream)
 		count++
 	}
-	present_ = len(object.fieldSet_) > 14 && object.fieldSet_[14]
+	present_ = len(object.fieldSet_) > 16 && object.fieldSet_[16]
 	if present_ {
 		if count > 0 {
 			stream.WriteMore()
@@ -190,7 +208,7 @@ func UnmarshalClusterAutoscaler(source interface{}) (object *ClusterAutoscaler, 
 // ReadClusterAutoscaler reads a value of the 'cluster_autoscaler' type from the given iterator.
 func ReadClusterAutoscaler(iterator *jsoniter.Iterator) *ClusterAutoscaler {
 	object := &ClusterAutoscaler{
-		fieldSet_: make([]bool, 15),
+		fieldSet_: make([]bool, 17),
 	}
 	for {
 		field := iterator.ReadObject()
@@ -225,38 +243,46 @@ func ReadClusterAutoscaler(iterator *jsoniter.Iterator) *ClusterAutoscaler {
 			value := iterator.ReadBool()
 			object.ignoreDaemonsetsUtilization = value
 			object.fieldSet_[6] = true
+		case "kube_client_qps":
+			value := iterator.ReadInt()
+			object.kubeClientQPS = value
+			object.fieldSet_[7] = true
+		case "kube_client_burst":
+			value := iterator.ReadInt()
+			object.kubeClientBurst = value
+			object.fieldSet_[8] = true
 		case "log_verbosity":
 			value := iterator.ReadInt()
 			object.logVerbosity = value
-			object.fieldSet_[7] = true
+			object.fieldSet_[9] = true
 		case "max_free_difference_ratio":
 			value := iterator.ReadString()
 			object.maxFreeDifferenceRatio = value
-			object.fieldSet_[8] = true
+			object.fieldSet_[10] = true
 		case "max_node_provision_time":
 			value := iterator.ReadString()
 			object.maxNodeProvisionTime = value
-			object.fieldSet_[9] = true
+			object.fieldSet_[11] = true
 		case "max_pod_grace_period":
 			value := iterator.ReadInt()
 			object.maxPodGracePeriod = value
-			object.fieldSet_[10] = true
+			object.fieldSet_[12] = true
 		case "pod_priority_threshold":
 			value := iterator.ReadInt()
 			object.podPriorityThreshold = value
-			object.fieldSet_[11] = true
+			object.fieldSet_[13] = true
 		case "resource_limits":
 			value := ReadAutoscalerResourceLimits(iterator)
 			object.resourceLimits = value
-			object.fieldSet_[12] = true
+			object.fieldSet_[14] = true
 		case "scale_down":
 			value := ReadAutoscalerScaleDownConfig(iterator)
 			object.scaleDown = value
-			object.fieldSet_[13] = true
+			object.fieldSet_[15] = true
 		case "skip_nodes_with_local_storage":
 			value := iterator.ReadBool()
 			object.skipNodesWithLocalStorage = value
-			object.fieldSet_[14] = true
+			object.fieldSet_[16] = true
 		default:
 			iterator.ReadAny()
 		}
