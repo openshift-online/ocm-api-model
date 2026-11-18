@@ -1,0 +1,47 @@
+/*
+Copyright (c) 2026 Red Hat, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+// Result of evaluating a cluster's upgrade readiness. Returned by the
+// upgrade_eligibility sub-resource of a cluster.
+//
+// All evaluation is performed server-side. Clients should treat this as
+// advisory — it reflects OCM-visible state at the time of the request and
+// does not guarantee that an upgrade scheduling call will succeed.
+class UpgradeEligibility {
+    // Eligible indicates whether the cluster passed all eligibility checks.
+    // False when one or more findings with severity Blocker are present.
+    Eligible Boolean
+
+    // TargetVersion is the specific version that was checked, when provided
+    // by the caller. Empty when the check evaluated general availability.
+    TargetVersion String
+
+    // AvailableUpgrades lists the upgrade targets available for this cluster,
+    // filtered by product (HCP or Classic) as appropriate.
+    AvailableUpgrades []String
+
+    // Findings lists the individual evaluation results, ordered from most
+    // severe to least severe.
+    Findings []UpgradeEligibilityFinding
+
+    // Gates lists the version gates relevant for the minor-version transition
+    // implied by the target, with acknowledgement status per cluster.
+    // Empty for z-stream (patch-only) upgrades.
+    Gates []UpgradeEligibilityGate
+
+    // EvaluatedAt is the timestamp when this evaluation was performed.
+    EvaluatedAt Date
+}
