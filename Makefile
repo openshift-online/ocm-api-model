@@ -154,3 +154,9 @@ release: tag-and-push-modules
 goimports-install:
 	@GOBIN=$(LOCAL_BIN_PATH) go install golang.org/x/tools/cmd/goimports@$(goimports_version)
 
+.PHONY: boilerplate-update
+boilerplate-update:
+	@boilerplate/update
+
+# Include after the existing targets to preserve the default goal.
+include boilerplate/generated-includes.mk

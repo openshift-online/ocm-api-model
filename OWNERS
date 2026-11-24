@@ -6,11 +6,13 @@ approvers:
 - miguelsorianod
 - machi1990
 # ROSA approvers
+- rosa-services-focaccia
 - robpblake
 - lucasponce
 - gdbranco
 - andreadecorte
 reviewers:
+- rosa-services-focaccia
 - ahitacat
 - davidleerh
 - gdbranco
