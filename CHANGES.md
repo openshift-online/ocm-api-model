@@ -2,6 +2,9 @@
 
 This document describes the relevant changes between releases of the API model.
 
+## 0.0.475 Nov 24 2026
+- feat: add architecture target to cluster upgrade policies
+
 ## 0.0.474 Nov 17 2026
 - ROSAENG-74267 | feat: add KubeClientQPS and KubeClientBurst to the ClusterAutoscaler API
 
