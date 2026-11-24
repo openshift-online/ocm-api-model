@@ -4957,6 +4957,13 @@
             "description": "Network settings of the cluster.",
             "$ref": "#/components/schemas/Network"
           },
+          "node_ssh_public_keys": {
+            "description": "One or more SSH public keys used for secure access to worker nodes. When set,\nthese keys are distributed to all nodes, enabling SSH access for debugging\nand maintenance purposes. If changed, all keys previously set will be replaced.\n\nWARNING: Setting or changing this field currently causes the recreation of all worker nodes.\nThis behavior is subject to change in a future OpenShift release.\n\nSSH public key format: <algorithm> <base64-encoded-key> [comment]\nKey constraints: algorithm + space + base64 blob required; comment optional; no newlines within key.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "node_drain_grace_period": {
             "description": "Node drain grace period.",
             "$ref": "#/components/schemas/Value"
